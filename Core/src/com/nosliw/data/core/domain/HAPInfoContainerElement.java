@@ -19,7 +19,8 @@ public abstract class HAPInfoContainerElement extends HAPEntityInfoImp{
 	
 	public String getInfoType() {  return this.m_elementInfoType;    }
 	
-	public HAPIdEntityInDomain getElementId() {   return this.m_entityId;   }
+	public HAPIdEntityInDomain getElementEntityId() {   return this.m_entityId;   }
+	public void setElementEntityId(HAPIdEntityInDomain entityId) {    this.m_entityId = entityId;   }
 
 	public void setElementId(HAPIdEntityInDomain entityId) {   this.m_entityId = entityId;   }
 	

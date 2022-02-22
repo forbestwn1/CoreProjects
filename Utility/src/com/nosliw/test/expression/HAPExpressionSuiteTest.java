@@ -7,15 +7,15 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.value.HAPJsonValueUtility;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.domain.HAPInfoEntityComplex;
 import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionResource;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
@@ -45,8 +45,8 @@ public class HAPExpressionSuiteTest {
 				HAPInfoEntityComplex entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
 				HAPExecutableExpressionGroup expresionExecutable = (HAPExecutableExpressionGroup)entityInfo.getExecutable();
 				HAPDefinitionEntityComplex expressionDef = entityInfo.getDefinition();
-				HAPComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
-				HAPContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();
+				HAPDefinitionEntityComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
+				HAPDefinitionEntityContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();
 
 				//print out in json
 				System.out.println(expresionExecutable.toString(expressionInDomain.getDomainContext().getExecutableDomain()));

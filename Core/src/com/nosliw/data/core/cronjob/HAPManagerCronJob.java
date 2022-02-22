@@ -1,10 +1,10 @@
 package com.nosliw.data.core.cronjob;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -50,7 +50,7 @@ public class HAPManagerCronJob {
 		this.m_scheduleDefManager = new HAPManagerScheduleDefinition();
 	}
 	
-	public HAPDefinitionCronJob getCronJobDefinition(HAPResourceId cronJobId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionCronJob getCronJobDefinition(HAPResourceId cronJobId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		//get definition itself
 		HAPDefinitionCronJob cronJobDef = (HAPDefinitionCronJob)this.m_resourceDefManager.getAdjustedComplextResourceDefinition(cronJobId, parentAttachment);
 		return cronJobDef;
@@ -60,10 +60,10 @@ public class HAPManagerCronJob {
 		return this.getEmbededCronJob(cronJobId, null, null);
 	}
 	
-	public HAPExecutableCronJob getEmbededCronJob(HAPEntityOrReference defOrRef, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
+	public HAPExecutableCronJob getEmbededCronJob(HAPEntityOrReference defOrRef, HAPDefinitionEntityContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPDefinitionCronJob cronJobDef = null;
 		String id = null;
-		HAPContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
+		HAPDefinitionEntityContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId cronJobId = (HAPResourceId)defOrRef;
 			cronJobDef = getCronJobDefinition(cronJobId, attachmentEx);

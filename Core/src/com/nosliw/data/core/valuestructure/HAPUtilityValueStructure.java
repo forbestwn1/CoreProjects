@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
@@ -66,7 +66,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static Map<String, Object> replaceValueNameWithId(HAPComplexValueStructure valueStructureComplex, Map<String, Object> values){
+	public static Map<String, Object> replaceValueNameWithId(HAPDefinitionEntityComplexValueStructure valueStructureComplex, Map<String, Object> values){
 
 	}
 	
@@ -104,7 +104,7 @@ public class HAPUtilityValueStructure {
 	}
 
 	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
-		HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+		HAPDefinitionEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
@@ -121,7 +121,7 @@ public class HAPUtilityValueStructure {
 	}
 
 	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
-		HAPComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+		HAPDefinitionEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {

@@ -3,12 +3,15 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
-public class HAPComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
+
+	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
 
 	private int m_idIndex;
 	
@@ -16,7 +19,7 @@ public class HAPComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
 	
 	private HAPGeneratorId m_idGenerator;
 	 
-	public HAPComplexValueStructure() {
+	public HAPDefinitionEntityComplexValueStructure() {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
 	}
 	
@@ -55,8 +58,8 @@ public class HAPComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
 		HAPUtilityComplexValueStructure.sortParts(m_parts);
 	}
 	
-	public HAPComplexValueStructure cloneValueStructureComplex() {
-		HAPComplexValueStructure out = new HAPComplexValueStructure();
+	public HAPDefinitionEntityComplexValueStructure cloneValueStructureComplex() {
+		HAPDefinitionEntityComplexValueStructure out = new HAPDefinitionEntityComplexValueStructure();
 		for(HAPPartComplexValueStructure part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}

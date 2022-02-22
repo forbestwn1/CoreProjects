@@ -1,4 +1,4 @@
-package com.nosliw.data.core.complex.attachment;
+package com.nosliw.data.core.domain.entity.attachment;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -6,23 +6,25 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
+import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
-public class HAPContainerAttachment extends HAPSerializableImp{
+public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityInDomainSimple{
 
+	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT;
+	
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
 	//all attachment by type and by name
 	private Map<String, Map<String, HAPAttachment>> m_element;
 
-	public HAPContainerAttachment() {
+	public HAPDefinitionEntityContainerAttachment() {
 		this.m_element = new LinkedHashMap<>();
 	}
 
@@ -46,12 +48,12 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 		byName.put(attachment.getName(), attachment);
 	}
 
-	public void merge(HAPContainerAttachment parent, HAPConfigureComplexRelationAttachment mode) {
+	public void merge(HAPDefinitionEntityContainerAttachment parent, HAPConfigureComplexRelationAttachment mode) {
 		this.merge(parent, mode.getMergeMode());
 	}
 	
 	//merge with parent
-	public void merge(HAPContainerAttachment parent, String mode) {
+	public void merge(HAPDefinitionEntityContainerAttachment parent, String mode) {
 		if(parent==null)  return;
 		if(mode==null)   mode = HAPConstant.INHERITMODE_CHILD;
 		if(mode.equals(HAPConstant.INHERITMODE_NONE))  return;
@@ -90,8 +92,8 @@ public class HAPContainerAttachment extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPContainerAttachment cloneAttachmentContainer() {
-		HAPContainerAttachment out = new HAPContainerAttachment();
+	public HAPDefinitionEntityContainerAttachment cloneAttachmentContainer() {
+		HAPDefinitionEntityContainerAttachment out = new HAPDefinitionEntityContainerAttachment();
 		for(String type : this.m_element.keySet()) {
 			Map<String, HAPAttachment> byName = this.m_element.get(type);
 			for(String name : byName.keySet()) {

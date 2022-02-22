@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 
 public class HAPResourceIdLocal  extends HAPResourceId{
 
@@ -48,7 +48,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 		String[] segs = HAPUtilityNamingConversion.splitTextByElements(idLiterate, SEPERATOR);
 		this.m_name = segs[0];
 		if(segs.length>=2) {
-			this.m_basePath = new HAPLocalReferenceBase(segs[1]);
+			this.m_basePath = new HAPPathLocationBase(segs[1]);
 		}
 	}
 
@@ -62,7 +62,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	protected void buildCoreIdByJSON(JSONObject jsonObj) {
 		Object basePathObj = jsonObj.opt(BASEPATH);
 		if(basePathObj!=null) {
-			this.m_basePath = new HAPLocalReferenceBase((String)basePathObj);
+			this.m_basePath = new HAPPathLocationBase((String)basePathObj);
 		}
 		this.m_name = jsonObj.optString(NAME);
 	}

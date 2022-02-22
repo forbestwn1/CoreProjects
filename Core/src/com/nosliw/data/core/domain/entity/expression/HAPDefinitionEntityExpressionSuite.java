@@ -9,27 +9,33 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElementSet;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 
-public class HAPDefinitionExpressionSuite extends HAPDefinitionEntityComplex{
+public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityComplex{
 
 	@HAPAttribute
-	public static String ELEMENT = "element";
+	public static String GROUP = "group";
 
 	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
-	public HAPDefinitionExpressionSuite() {
+	public HAPDefinitionEntityExpressionSuite() {
 		super(ENTITY_TYPE);
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 
 	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {
-		this.addContainerElementAttribute(ELEMENT, eleInfo);
+		this.addContainerElementAttribute(GROUP, eleInfo);
+	}
+
+	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {
+		this.addContainerElementAttribute(GROUP, eleInfo);
 	}
 	
+	public HAPIdEntityInDomain getExpressionGroup() {}
 	
 	@Override
 	public void addEntityElement(HAPDefinitionExpressionGroup1 expressionGroup) {
@@ -56,7 +62,7 @@ public class HAPDefinitionExpressionSuite extends HAPDefinitionEntityComplex{
 
 	@Override
 	public HAPDefinitionExpressionSuite1 cloneExpressionSuiteDefinition() {
-		HAPDefinitionExpressionSuite out = new HAPDefinitionExpressionSuite();
+		HAPDefinitionEntityExpressionSuite out = new HAPDefinitionEntityExpressionSuite();
 		out.m_valueStructureComplex = this.m_valueStructureComplex.cloneValueStructureComplex();
 		for(String id : this.m_expressionGroups.keySet()) {
 			out.m_expressionGroups.put(id, this.m_expressionGroups.get(id).cloneExpressionGroupDefinition());

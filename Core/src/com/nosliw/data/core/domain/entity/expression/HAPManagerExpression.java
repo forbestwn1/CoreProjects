@@ -4,10 +4,10 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.HAPManagerResourceComplexEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceEntityExpressionSuite;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -37,19 +37,19 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 	
 	
 	
-	public HAPResourceEntityExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
+	public HAPResourceEntityExpressionSuite getExpressionSuiteDefinition(HAPResourceId suiteId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceEntityExpressionSuite suiteDef = (HAPResourceEntityExpressionSuite)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 
-	public HAPResourceEntityExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPContainerAttachment parentAttachment) {
+	public HAPResourceEntityExpressionGroup getExpressionDefinition(HAPResourceId expressionId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceEntityExpressionGroup expressionDef = (HAPResourceEntityExpressionGroup)getResourceDefinitionManager().getAdjustedComplextResourceDefinition(expressionId, parentAttachment);
 		return expressionDef;
 	}
 	
 	public HAPExecutableExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
-		HAPDefinitionExpressionGroup expressionGroupDef = new HAPDefinitionExpressionGroup();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		HAPValueStructureDefinitionFlat valueStructure = new HAPValueStructureDefinitionFlat();
 		if(varCriteria!=null) {
 			for(String varName : varCriteria.keySet()) {
@@ -66,7 +66,7 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 
 	public HAPExecutableExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
-		HAPDefinitionExpressionGroup expressionGroupDef = new HAPDefinitionExpressionGroup();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		HAPUtilityWithValueStructure.setValueStructure(expressionGroupDef, new HAPValueStructureDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		

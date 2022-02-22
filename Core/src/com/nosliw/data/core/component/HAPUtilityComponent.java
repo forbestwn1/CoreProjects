@@ -7,8 +7,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
@@ -77,7 +77,7 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPValueStructure resolveContextReference(HAPValueStructure context, List<HAPContextReference> contextRefs, HAPContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPValueStructure resolveContextReference(HAPValueStructure context, List<HAPContextReference> contextRefs, HAPDefinitionEntityContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
 //		String contextType = context.getType();
 //		
 //		for(HAPContextReference contextRef : contextRefs) {
@@ -129,26 +129,26 @@ public class HAPUtilityComponent {
 //	}
 
 	//parent attachment merge to child, child attachment has higher priority
-	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPContainerAttachment parentAttachment) {
+	public static void mergeWithParentAttachment(HAPWithAttachment withAttachment, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		withAttachment.getAttachmentContainer().merge(parentAttachment, HAPConstant.INHERITMODE_CHILD);
 	}
 
-	public static HAPContainerAttachment buildNameMappedAttachment(HAPContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
-		HAPContainerAttachment out = null;
+	public static HAPDefinitionEntityContainerAttachment buildNameMappedAttachment(HAPDefinitionEntityContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
+		HAPDefinitionEntityContainerAttachment out = null;
 		if(withNameMapping==null)   out = attachment;
 		else out = withNameMapping.getNameMapping().mapAttachment(attachment);
-		if(out==null)  out = new HAPContainerAttachment();
+		if(out==null)  out = new HAPDefinitionEntityContainerAttachment();
 		return out;
 	}
 
 	//build attachment mapping for internal component
-	public static HAPContainerAttachment buildInternalAttachment(HAPResourceId resourceId, HAPContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
-		HAPContainerAttachment out = buildNameMappedAttachment(attachment, withNameMapping); 
+	public static HAPDefinitionEntityContainerAttachment buildInternalAttachment(HAPResourceId resourceId, HAPDefinitionEntityContainerAttachment attachment, HAPWithNameMapping withNameMapping) {
+		HAPDefinitionEntityContainerAttachment out = buildNameMappedAttachment(attachment, withNameMapping); 
 		HAPUtilityAttachment.mergeAttachmentInResourceIdSupplementToContainer(resourceId, out, HAPConstant.INHERITMODE_PARENT);
 		return out;
 	}
 	
-	public static void buildServiceChildrenComponent(HAPContainerChildReferenceResource out, HAPWithServiceUse withServiceProvider, HAPContainerAttachment attachment) {
+	public static void buildServiceChildrenComponent(HAPContainerChildReferenceResource out, HAPWithServiceUse withServiceProvider, HAPDefinitionEntityContainerAttachment attachment) {
 		Map<String, HAPDefinitionServiceProvider> allServiceProviders = withServiceProvider.getServiceProviderDefinitions(); 
 		Map<String, HAPDefinitionServiceUse> serviceUseDefs = withServiceProvider.getServiceUseDefinitions();
 		for(String serviceName : serviceUseDefs.keySet()) {

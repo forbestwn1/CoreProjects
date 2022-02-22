@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpression;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
@@ -64,7 +64,7 @@ public class HAPProcessorScript {
 		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//expression definition containing all expression in script 
-		HAPDefinitionExpressionGroup expressionGroupDef = new HAPDefinitionExpressionGroup();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		//value structure for expression
 		expressionGroupDef.setValueStructureWrapper(valueStructureWrapper);
 		//data constant for expression

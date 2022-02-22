@@ -6,6 +6,10 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 
 	private int m_index;
 	
+	public HAPInfoContainerElementList(HAPIdEntityInDomain entityId) {
+		super(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST, entityId);
+	}
+
 	public HAPInfoContainerElementList() {
 		super(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST);
 	}

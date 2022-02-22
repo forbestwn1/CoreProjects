@@ -1,4 +1,4 @@
-package com.nosliw.data.core.complex.attachment;
+package com.nosliw.data.core.domain.entity.attachment;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,9 +26,9 @@ public class HAPUtilityAttachment {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
-	public static void mergeContainerToResourceIdSupplement(HAPResourceId resourceId, HAPContainerAttachment sourceContainer) {
+	public static void mergeContainerToResourceIdSupplement(HAPResourceId resourceId, HAPDefinitionEntityContainerAttachment sourceContainer) {
 		//resource Id to attachment container
-		HAPContainerAttachment merged = new HAPContainerAttachment();
+		HAPDefinitionEntityContainerAttachment merged = new HAPDefinitionEntityContainerAttachment();
 		{
 			Map<String, Map<String, HAPResourceId>> resourceIds = resourceId.getSupplement().getAllSupplymentResourceId();
 			for(String type : resourceIds.keySet()) {
@@ -61,11 +61,11 @@ public class HAPUtilityAttachment {
 		resourceId.setSupplement(mergedSupplement);
 	}
 	
-	public static void mergeAttachmentInResourceIdSupplementToContainer(HAPResourceId resourceId, HAPContainerAttachment targetContainer, String mode) {
+	public static void mergeAttachmentInResourceIdSupplementToContainer(HAPResourceId resourceId, HAPDefinitionEntityContainerAttachment targetContainer, String mode) {
 		if(resourceId==null)  return;
 		HAPSupplementResourceId resourceIdSupplement = resourceId.getSupplement();
 		if(resourceIdSupplement!=null) {
-			HAPContainerAttachment tempContainer = new HAPContainerAttachment();
+			HAPDefinitionEntityContainerAttachment tempContainer = new HAPDefinitionEntityContainerAttachment();
 			Map<String, Map<String, HAPResourceId>> resourceIds = resourceIdSupplement.getAllSupplymentResourceId();
 			for(String type : resourceIds.keySet()) {
 				Map<String, HAPResourceId> byId = resourceIds.get(type);
@@ -82,7 +82,7 @@ public class HAPUtilityAttachment {
 		return HAPUtilityAttachment.getContextDataFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 	
-	public static HAPContextDataFlat getContextDataFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
+	public static HAPContextDataFlat getContextDataFromAttachment(HAPDefinitionEntityContainerAttachment attContainer, String type, String name) {
 		HAPContextDataFlat out = new HAPContextDataFlat();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
@@ -96,11 +96,11 @@ public class HAPUtilityAttachment {
 		return HAPUtilityAttachment.getContextValueFromAttachment(withAttachment.getAttachmentContainer(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 
-	public static Map<String, Object> getTestValueFromAttachment(HAPContainerAttachment attachment, String name) {
+	public static Map<String, Object> getTestValueFromAttachment(HAPDefinitionEntityContainerAttachment attachment, String name) {
 		return HAPUtilityAttachment.getContextValueFromAttachment(attachment, HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA, name);
 	}
 
-	public static Map<String, Object> getContextValueFromAttachment(HAPContainerAttachment attContainer, String type, String name) {
+	public static Map<String, Object> getContextValueFromAttachment(HAPDefinitionEntityContainerAttachment attContainer, String type, String name) {
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
@@ -113,7 +113,7 @@ public class HAPUtilityAttachment {
 		return out;
 	}
 	
-	public static HAPResourceDefinition1 getResourceDefinition(HAPContainerAttachment attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPResourceDefinition1 getResourceDefinition(HAPDefinitionEntityContainerAttachment attContainer, String type, String name, HAPManagerResourceDefinition resourceDefMan) {
 		HAPAttachment attachment = attContainer.getElement(type, name);
 		return getResourceDefinition(attachment, resourceDefMan);
 	}
@@ -130,7 +130,7 @@ public class HAPUtilityAttachment {
 		return out;
 	}
 	
-	public static void parseDefinition(JSONObject attachmentDefJson, HAPContainerAttachment attachmentContainer) {
+	public static void parseDefinition(JSONObject attachmentDefJson, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		for(Object key : attachmentDefJson.keySet()) {
 			String type = (String)key;
 			JSONArray byNameArray = attachmentDefJson.getJSONArray(type);

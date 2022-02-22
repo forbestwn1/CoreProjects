@@ -2,7 +2,7 @@ package com.nosliw.data.core.resource;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPResourceDefinition1 extends HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
@@ -17,8 +17,8 @@ public interface HAPResourceDefinition1 extends HAPResourceDefinitionOrId, HAPEn
 	void setEntityId(HAPIdEntityInDomain entityId);
 	
 	//path base for local resource reference
-	HAPLocalReferenceBase getLocalReferenceBase();
-	void setLocalReferenceBase(HAPLocalReferenceBase localRefBase);
+	HAPPathLocationBase getLocalReferenceBase();
+	void setLocalReferenceBase(HAPPathLocationBase localRefBase);
 
 	void cloneToResourceDefinition(HAPResourceDefinition1 resourceDef);
 

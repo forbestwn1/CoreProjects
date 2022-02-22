@@ -3,15 +3,15 @@ package com.nosliw.data.core.component;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPInfoAttachment;
-import com.nosliw.data.core.complex.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.HAPContextDomain;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -27,11 +27,11 @@ public class HAPContextProcessor {
 //	private HAPIdEntityInDomain m_complexEntityId;
 	
 	//local ref base for 
-	private HAPLocalReferenceBase m_localRefBase;
+	private HAPPathLocationBase m_localRefBase;
 	
 	private HAPProcessTracker m_processTracker;
 	
-	public HAPContextProcessor(HAPContextDomain domainContext, HAPLocalReferenceBase localRefBase, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPContextProcessor(HAPContextDomain domainContext, HAPPathLocationBase localRefBase, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_complexEntity = complexEntity;
 		this.m_valueStructurePool = valueStructurePool;
@@ -64,13 +64,13 @@ public class HAPContextProcessor {
 	
 	public HAPContextDomain getDomainContext() {    return this.m_domainContext;    }
 	public HAPDomainDefinitionEntity getComplexDefinitionDomain() {   return this.definitionDomain;   }
-	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localRefBase;    }
+	public HAPPathLocationBase getLocalReferenceBase() {   return this.m_localRefBase;    }
 	
 	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
 	
-	public HAPComplexValueStructure getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureComplex();     }
+	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureComplex();     }
 	
-	public HAPContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
+	public HAPDefinitionEntityContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
 	
 	public HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
 

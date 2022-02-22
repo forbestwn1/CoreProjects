@@ -6,6 +6,7 @@ import com.nosliw.data.core.component.HAPLocalReferenceBase;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
+import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPIdExpressionGroup;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
@@ -52,7 +53,8 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	}
 	
 	private HAPIdEntityInDomain createGroupThroughSuite(HAPIdEntityInDomain suitEntityId, String groupId, HAPDomainDefinitionEntity entityDomain) {
-		HAPResourceEntityExpressionSuite suite = (HAPResourceEntityExpressionSuite)entityDomain.getEntity(suitEntityId);
+		HAPDefinitionEntityExpressionSuite suite = (HAPDefinitionEntityExpressionSuite)entityDomain.getEntityInfo(suitEntityId).getEntity();
+		suite.get
 		HAPElementContainerResourceDefinitionEntityExpressionSuite expressionGroup = suite.getContainerElement(groupId);
 		HAPIdEntityInDomain groupEntityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityDefinition(expressionGroup, new HAPConfigureParentRelationComplex()));
 		return groupEntityId;

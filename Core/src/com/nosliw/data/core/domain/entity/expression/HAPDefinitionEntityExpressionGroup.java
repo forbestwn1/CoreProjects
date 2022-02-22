@@ -12,7 +12,7 @@ import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 
 //normal expression group
-public class HAPDefinitionExpressionGroup extends HAPDefinitionEntityComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
+public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
 
 	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;
 
@@ -20,7 +20,7 @@ public class HAPDefinitionExpressionGroup extends HAPDefinitionEntityComplex imp
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
-	public HAPDefinitionExpressionGroup() {
+	public HAPDefinitionEntityExpressionGroup() {
 		super(ENTITY_TYPE);
 		this.m_elements = new LinkedHashMap<String, HAPDefinitionExpression>();
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
@@ -56,7 +56,7 @@ public class HAPDefinitionExpressionGroup extends HAPDefinitionEntityComplex imp
 
 	@Override
 	public HAPDefinitionExpressionGroup1 cloneExpressionGroupDefinition() {
-		HAPDefinitionExpressionGroup out = new HAPDefinitionExpressionGroup();
+		HAPDefinitionEntityExpressionGroup out = new HAPDefinitionEntityExpressionGroup();
 		out.m_valueStructureComplex = this.m_valueStructureComplex.cloneValueStructureComplex();
 		for(String id : this.m_elements.keySet()) {
 			out.m_elements.put(id, this.m_elements.get(id).cloneDefinitionExpression());

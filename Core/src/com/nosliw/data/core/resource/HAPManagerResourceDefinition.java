@@ -4,15 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
 public class HAPManagerResourceDefinition {
@@ -29,7 +29,7 @@ public class HAPManagerResourceDefinition {
 		return getResourceDefinition(resourceId, entityDomain, null);
 	}
 
-	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
+	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainDefinitionEntity entityDomain, HAPPathLocationBase localRefBase) {
 		HAPResourceDefinition out = new HAPResourceDefinition(resourceId);
 		String resourceType = resourceId.getResourceType();
 		String resourceStructure = resourceId.getStructure();
@@ -66,11 +66,11 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 	
-	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
+	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainDefinitionEntity entityDomain, HAPPathLocationBase localRefBase) {
 		return this.m_plugins.get(entityType).parseResourceEntity(obj, entityDomain, localRefBase);
 	}
 	
-	public HAPDefinitionResourceComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionResourceComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPDefinitionResourceComplex out = (HAPDefinitionResourceComplex)this.getResourceDefinition(resourceId);
 		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;

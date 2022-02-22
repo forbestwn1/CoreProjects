@@ -15,7 +15,7 @@ public class HAPPoolValueStructure {
 	private Map<String, HAPWrapperValueStructure> m_valueStructure;
 	
 	//all value structure complex by id
-	private Map<String, HAPComplexValueStructure> m_valueStructureComplex;
+	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
 	
 	//value structure complex tree
 	private Map<String, String> m_parents;
@@ -28,7 +28,7 @@ public class HAPPoolValueStructure {
 		this.m_idIndex = 0;
 	}
 	
-	public String addValueStructureComplex(HAPComplexValueStructure valueStructureComplex, String parentId) {
+	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplex, String parentId) {
 		String id = this.generateId();
 		valueStructureComplex.setId(id);
 		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {

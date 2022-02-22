@@ -2,9 +2,10 @@ package com.nosliw.data.core.complex;
 
 import java.util.Set;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
-public class HAPConfigureParentRelationComplex {
+public class HAPConfigureParentRelationComplex extends HAPSerializableImp{
 
 	private HAPConfigureComplexRelationValueStructure m_valueStructureConfigure;
 	private HAPConfigureComplexRelationAttachment m_attachmentMode;
@@ -27,4 +28,9 @@ public class HAPConfigureParentRelationComplex {
 	
 	public HAPConfigureComplexRelationValueStructure getValueStructureRelationMode() {   return this.m_valueStructureConfigure;    }
 	public void setValueStructureRelationMode(HAPConfigureComplexRelationValueStructure valueStructureConfigure) {    this.m_valueStructureConfigure = valueStructureConfigure;    }
+	
+	public void mergeHard(HAPConfigureParentRelationComplex configure) {
+		
+	}
+	
 }

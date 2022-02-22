@@ -4,13 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.mirror.HAPProcessorDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.dataassociation.none.HAPProcessorDataAssociationNone;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
@@ -18,11 +18,11 @@ public class HAPProcessorDataAssociation {
 
 	
 	
-	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure externalContext, HAPInfo configure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure externalContext, HAPInfo configure, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		return processDataAssociationWithTask(taskWrapperDef, taskExe, externalContext, configure, externalContext, configure, attachmentContainer, runtimeEnv);
 	}
 
-	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure inputStructure, HAPInfo inputConfigure, HAPContainerStructure outputStructure, HAPInfo outputConfigure, HAPContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure inputStructure, HAPInfo inputConfigure, HAPContainerStructure outputStructure, HAPInfo outputConfigure, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableWrapperTask out = new HAPExecutableWrapperTask();
 		out.setTask(taskExe);
 		//process input mapping

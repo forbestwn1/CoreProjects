@@ -3,22 +3,22 @@ package com.nosliw.data.core.component;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 
 public class HAPWithAttachmentImp1 extends HAPEntityInfoWritableImp implements HAPWithAttachment{
 	
-	private HAPContainerAttachment m_attachmentContainer;
+	private HAPDefinitionEntityContainerAttachment m_attachmentContainer;
 
 	public HAPWithAttachmentImp1() {
-		this.m_attachmentContainer = new HAPContainerAttachment();
+		this.m_attachmentContainer = new HAPDefinitionEntityContainerAttachment();
 	}
 
 	@Override
-	public HAPContainerAttachment getAttachmentContainer() {		return this.m_attachmentContainer;	}
+	public HAPDefinitionEntityContainerAttachment getAttachmentContainer() {		return this.m_attachmentContainer;	}
 	@Override
-	public void setAttachmentContainer(HAPContainerAttachment attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
+	public void setAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer) {  this.m_attachmentContainer = attachmentContainer;}  
 
 	@Override
 	public Map<String, HAPAttachment> getAttachmentsByType(String type) {	return this.m_attachmentContainer.getAttachmentByType(type);	}

@@ -14,8 +14,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
@@ -41,7 +41,7 @@ public class HAPProcessorContextConstant {
 	static public HAPValueStructureDefinitionGroup process(
 			HAPValueStructureDefinitionGroup originalContextGroup,
 			HAPContainerStructure parent,
-			HAPContainerAttachment attachmentContainer,
+			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			String inheritMode,
 			HAPRuntimeEnvironment runtimeEnv){
 
@@ -128,7 +128,7 @@ public class HAPProcessorContextConstant {
 
 	static private HAPValueStructureDefinitionGroup solidateConstantRefs(
 			HAPValueStructureDefinitionGroup contextGroup,
-			HAPContainerAttachment attachmentContainer,
+			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPRuntimeEnvironment runtimeEnv){
 		if(attachmentContainer==null)   return contextGroup;
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();

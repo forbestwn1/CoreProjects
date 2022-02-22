@@ -8,13 +8,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.interactive.HAPOutputInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
@@ -77,7 +77,7 @@ public class HAPUtilityServiceUse {
 	
 	//build service provider from attachment
 	public static Map<String, HAPDefinitionServiceProvider> buildServiceProvider(
-			HAPContainerAttachment attachment,
+			HAPDefinitionEntityContainerAttachment attachment,
 			Map<String, HAPDefinitionServiceProvider> parent, 
 			HAPManagerServiceDefinition serviceDefinitionMan) {
 		Map<String, HAPDefinitionServiceProvider> out = new LinkedHashMap<>();

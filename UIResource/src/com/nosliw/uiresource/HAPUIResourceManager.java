@@ -3,10 +3,10 @@ package com.nosliw.uiresource;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.HAPResourceCache;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -64,13 +64,13 @@ public class HAPUIResourceManager {
 		HAPParserElement.registerStoryNode(HAPStoryNodeUITagOther.STORYNODE_TYPE, HAPStoryNodeUITagOther.class);
 	}
 
-	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionApp getMiniAppDefinition(HAPResourceId appId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		//get definition itself
 		HAPDefinitionApp appDef = (HAPDefinitionApp)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(appId, parentAttachment);
 		return appDef;
 	}
 	
-	public HAPDefinitionAppEntry getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionAppEntry getMiniAppEntryDefinition(HAPResourceId appEntryId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPDefinitionAppEntry appEntryDef = (HAPDefinitionAppEntry)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(appEntryId, parentAttachment);
 		return appEntryDef;
 	}
@@ -79,15 +79,15 @@ public class HAPUIResourceManager {
 		return this.getEmbededMiniAppEntry(appEntryId, null, null);
 	}
 	
-	public HAPExecutableAppEntry getEmbededMiniAppEntry(HAPResourceId appEntryId, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
-		HAPContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
+	public HAPExecutableAppEntry getEmbededMiniAppEntry(HAPResourceId appEntryId, HAPDefinitionEntityContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
+		HAPDefinitionEntityContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		HAPDefinitionAppEntry appEntryDef = this.getMiniAppEntryDefinition(appEntryId, attachmentEx);
 		HAPProcessTracker processTracker = new HAPProcessTracker(); 
 		HAPExecutableAppEntry out = HAPProcessMiniAppEntry.process(appEntryDef, null, this.m_runtimeEnv, this, processTracker);
 		return out;
 	}
 	
-	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionModule getModuleDefinition(HAPResourceId moduleId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		//get definition itself
 		HAPDefinitionModule moduleDef = (HAPDefinitionModule)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(moduleId, parentAttachment);
 		return moduleDef;
@@ -101,10 +101,10 @@ public class HAPUIResourceManager {
 		return out;
 	}
 
-	public HAPExecutableModule getEmbededUIModule(HAPEntityOrReference defOrRef, HAPContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
+	public HAPExecutableModule getEmbededUIModule(HAPEntityOrReference defOrRef, HAPDefinitionEntityContainerAttachment parentAttachment, HAPWithNameMapping withNameMapping) {
 		HAPDefinitionModule moduleDef = null;
 		String id = null;
-		HAPContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
+		HAPDefinitionEntityContainerAttachment attachmentEx = HAPUtilityComponent.buildNameMappedAttachment(parentAttachment, withNameMapping);
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId moduleId = (HAPResourceId)defOrRef;
 			moduleDef = getModuleDefinition(moduleId, attachmentEx);
@@ -126,14 +126,14 @@ public class HAPUIResourceManager {
 		return out;
 	}
 	
-	public HAPDefinitionUIUnitPage getUIPageDefinition(HAPResourceId pageResourceId, HAPContainerAttachment parentAttachment) {
+	public HAPDefinitionUIUnitPage getUIPageDefinition(HAPResourceId pageResourceId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPDefinitionUIUnitPage pageDefinition = (HAPDefinitionUIUnitPage)this.m_runtimeEnv.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(pageResourceId, parentAttachment);
 		return pageDefinition;
 	}
 
 	public HAPExecutableUIUnitPage getEmbededUIPage(HAPEntityOrReference defOrRef, String id, HAPContextProcessor processContext, HAPWithNameMapping withNameMapping){
 		HAPDefinitionUIUnitPage pageDef = null;
-		HAPContainerAttachment attachmentEx = null;
+		HAPDefinitionEntityContainerAttachment attachmentEx = null;
 		if(defOrRef instanceof HAPResourceId) {
 			HAPResourceId pageId = (HAPResourceId)defOrRef;
 			attachmentEx = HAPUtilityComponent.buildInternalAttachment(pageId, processContext==null?null:processContext.getAttachmentContainer(), withNameMapping);

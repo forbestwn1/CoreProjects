@@ -10,7 +10,7 @@ import java.util.List;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
@@ -118,7 +118,7 @@ public class HAPUtilityResourceId {
 		String localFile = isFileBased(resourceId);
 		if(localFile!=null) {
 			//if file base
-			return new HAPInfoResourceLocation(new File(localFile), new HAPLocalReferenceBase(localFile));
+			return new HAPInfoResourceLocation(new File(localFile), new HAPPathLocationBase(localFile));
 		}
 		else {
 			//check single file first
@@ -131,7 +131,7 @@ public class HAPUtilityResourceId {
 					HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
 				}
 			}
-			return new HAPInfoResourceLocation(file, new HAPLocalReferenceBase(basePath));
+			return new HAPInfoResourceLocation(file, new HAPPathLocationBase(basePath));
 		}
 	}
 	

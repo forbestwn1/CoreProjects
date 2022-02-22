@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
@@ -49,7 +49,7 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 		this.m_resourceId = HAPFactoryResourceId.newInstance(objJson.opt(RESOURCEID));
 		Object localRefBase = objJson.opt(LOCALREFERENCEBASE);
 		if(localRefBase!=null) {
-			this.m_localReferenceBase = new HAPLocalReferenceBase();
+			this.m_localReferenceBase = new HAPPathLocationBase();
 			this.m_localReferenceBase.buildObject(localRefBase, HAPSerializationFormat.LITERATE);
 		}
 		return true;  

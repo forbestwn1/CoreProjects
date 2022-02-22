@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 
 public class HAPPluginResourceDefinitionImp1 implements HAPPluginResourceDefinition{
 
@@ -28,7 +28,7 @@ public class HAPPluginResourceDefinitionImp1 implements HAPPluginResourceDefinit
 		//parse file
 		HAPResourceDefinition1 moduleDef = this.parseResourceEntity(resourceLocInfo.getFiile()); 
 		//set local base path
-		moduleDef.setLocalReferenceBase(new HAPLocalReferenceBase(resourceLocInfo.getBasePath()));
+		moduleDef.setLocalReferenceBase(new HAPPathLocationBase(resourceLocInfo.getBasePath()));
 		return moduleDef;
 	}
 

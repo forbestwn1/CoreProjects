@@ -11,10 +11,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //component that defined as element of another container component
@@ -52,9 +52,9 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	}
 
 	@Override
-	public HAPComplexValueStructure getValueStructureComplex() {	return this.m_componentEntity.getValueStructureComplex();	}
+	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {	return this.m_componentEntity.getValueStructureComplex();	}
 
-	public HAPComplexValueStructure getContainerValueStructureComplex() {	return this.m_componentContainer.getValueStructureComplex();	}
+	public HAPDefinitionEntityComplexValueStructure getContainerValueStructureComplex() {	return this.m_componentContainer.getValueStructureComplex();	}
 	
 	
 	public HAPDefinitionEntityContainer getResourceContainer() {   return this.m_componentContainer;    }
@@ -69,7 +69,7 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	public HAPInfo getInfo() {		return this.m_componentEntity.getInfo();	}
 	
 	@Override
-	public HAPContainerAttachment getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
+	public HAPDefinitionEntityContainerAttachment getAttachmentContainer() {  return this.getComponentEntity().getAttachmentContainer(); }
 
 	@Override
 	public HAPAttachment getAttachment(String type, String name) {  return this.getAttachmentContainer().getElement(type, name);  }
@@ -172,7 +172,7 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	}
 
 	@Override
-	public void setAttachmentContainer(HAPContainerAttachment attachmentContainer) {
+	public void setAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		// TODO Auto-generated method stub
 		
 	}

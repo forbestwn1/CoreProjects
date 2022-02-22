@@ -2,17 +2,17 @@ package com.nosliw.data.core.component;
 
 import java.util.Map;
 
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 
 public interface HAPWithAttachment1 {
 
 	public static final String ATTACHMENT = "attachment";
 
 	//all attachments
-	HAPContainerAttachment getAttachmentContainer();
-	void setAttachmentContainer(HAPContainerAttachment attachmentContainer);
+	HAPDefinitionEntityContainerAttachment getAttachmentContainer();
+	void setAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer);
 	
 	Map<String, HAPAttachment> getAttachmentsByType(String type);
 	HAPAttachment getAttachment(String type, String name);

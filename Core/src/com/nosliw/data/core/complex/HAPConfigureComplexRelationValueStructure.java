@@ -1,6 +1,8 @@
 package com.nosliw.data.core.complex;
 
-public class HAPConfigureComplexRelationValueStructure {
+import com.nosliw.common.serialization.HAPSerializableImp;
+
+public class HAPConfigureComplexRelationValueStructure extends HAPSerializableImp{
 
 	//value structure inheritance
 	public String getInheritanceMode() {   return null;    }

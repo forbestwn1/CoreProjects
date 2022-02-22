@@ -14,6 +14,7 @@ public class HAPManagerDomainEntity {
 	}
 	
 	public HAPIdEntityInDomain parseDefinition(String entityType, JSONObject jsonObj, HAPContextParser parseContext) {
+		if(jsonObj==null)  return null;
 		return this.m_entityDefinitionPlugin.get(entityType).parseDefinition(jsonObj, parseContext);
 	}
 	

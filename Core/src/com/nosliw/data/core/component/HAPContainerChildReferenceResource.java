@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPContainerChildReferenceResource {
@@ -17,7 +17,7 @@ public class HAPContainerChildReferenceResource {
 		this.m_children = new LinkedHashMap<String, List<HAPInfoChildResource>>();
 	}
 	
-	public void addChildCompoentId(HAPInfoChildResource childResourceInfo, HAPContainerAttachment parentAttachment) {
+	public void addChildCompoentId(HAPInfoChildResource childResourceInfo, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceId resourceId = childResourceInfo.getResourceId();
 		
 		HAPUtilityAttachment.mergeContainerToResourceIdSupplement(resourceId, parentAttachment);

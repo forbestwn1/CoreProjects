@@ -1,6 +1,6 @@
 package com.nosliw.data.core.resource;
 
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 
 public class HAPContextResourceDefinition {
@@ -9,10 +9,10 @@ public class HAPContextResourceDefinition {
 	private HAPDomainDefinitionEntity m_complexEntityDomain;
 	
 	//local path base for local reference
-	private HAPLocalReferenceBase m_localRefBase;
+	private HAPPathLocationBase m_localRefBase;
 	
 	public HAPDomainDefinitionEntity getComplexEntityDomain() {    return this.m_complexEntityDomain;     }
 	
-	public HAPLocalReferenceBase getLocalReferenceBase() {     return this.m_localRefBase;       }
+	public HAPPathLocationBase getLocalReferenceBase() {     return this.m_localRefBase;       }
 	
 }

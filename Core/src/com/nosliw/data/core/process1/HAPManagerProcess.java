@@ -5,11 +5,11 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPEntityWithResourceContext;
@@ -29,17 +29,17 @@ public class HAPManagerProcess {
 		this.m_runtimeEnv = runtimeEnv;
 	}
 
-	public HAPResourceDefinitionProcessSuite getProcessSuiteDefinition(HAPResourceId suiteId, HAPContainerAttachment parentAttachment) {
+	public HAPResourceDefinitionProcessSuite getProcessSuiteDefinition(HAPResourceId suiteId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceDefinitionProcessSuite suiteDef = (HAPResourceDefinitionProcessSuite)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(suiteId, parentAttachment);
 		return suiteDef;
 	}
 	
-	public HAPResourceDefinitionProcess getProcessDefinition(HAPResourceId processId, HAPContainerAttachment parentAttachment) {
+	public HAPResourceDefinitionProcess getProcessDefinition(HAPResourceId processId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceDefinitionProcess processDef = (HAPResourceDefinitionProcess)this.getResourceDefinitionManager().getAdjustedComplextResourceDefinition(processId, parentAttachment);
 		return processDef;
 	}
 	
-	public HAPEntityWithResourceContext getProcessDefinitionWithContext(HAPResourceId processId, HAPContainerAttachment parentAttachment) {
+	public HAPEntityWithResourceContext getProcessDefinitionWithContext(HAPResourceId processId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPResourceDefinitionProcess processDef = this.getProcessDefinition(processId, parentAttachment);
 		HAPEntityWithResourceContext out = new HAPEntityWithResourceContext(processDef, HAPContextProcessor.createContext(processDef.getSuite(), this.getResourceDefinitionManager()));
 		return out;

@@ -3,16 +3,16 @@ package com.nosliw.data.core.domain;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 
-public class HAPInfoDefinitionEntityInDomainComplex extends HAPInfoDefinitionEntityInDomain{
+public class HAPInfoParentComplex {
 
 	//parent complex entity
 	private HAPIdEntityInDomain m_parentId;
 	private String m_parentAlias;
 
-
 	//parent info for complex
 	private HAPConfigureParentRelationComplex m_parentRelation;
 
+	
 	public HAPIdEntityInDomain getParentId() {    return this.m_parentId;   }
 	
 	public void setParentId(HAPIdEntityInDomain parentId) {    this.m_parentId = parentId;     }
@@ -26,9 +26,13 @@ public class HAPInfoDefinitionEntityInDomainComplex extends HAPInfoDefinitionEnt
 	@Override
 	public boolean isComplexEntity() {   return true;   }
 
+	public void hardMerge(HAPInfoParentComplex parentInfo) {
+		
+	}
+	
 	@Override
 	public HAPInfoDefinitionEntityInDomain cloneEntityDefinitionInfo() {
-		HAPInfoDefinitionEntityInDomainComplex out = new HAPInfoDefinitionEntityInDomainComplex();
+		HAPConfigureEntityInDomainComplex out = new HAPConfigureEntityInDomainComplex();
 		this.cloneToInfoDefinitionEntityInDomain(out);
 		return out;
 	}
@@ -36,8 +40,8 @@ public class HAPInfoDefinitionEntityInDomainComplex extends HAPInfoDefinitionEnt
 	@Override
 	public void cloneToInfoDefinitionEntityInDomain(HAPInfoDefinitionEntityInDomain out) {
 		super.cloneToInfoDefinitionEntityInDomain(out);
-		if(out instanceof HAPInfoDefinitionEntityInDomainComplex) {
-			this.m_parentId = ((HAPInfoDefinitionEntityInDomainComplex)out).getParentId();
+		if(out instanceof HAPConfigureEntityInDomainComplex) {
+			this.m_parentId = ((HAPConfigureEntityInDomainComplex)out).getParentId();
 		}
 	}
 

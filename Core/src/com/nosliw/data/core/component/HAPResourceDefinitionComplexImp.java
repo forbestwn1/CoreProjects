@@ -14,7 +14,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPDefinitionEntit
 
 	private HAPResourceId m_resourceId;
 	
-	private HAPLocalReferenceBase m_localReferenceBase;
+	private HAPPathLocationBase m_localReferenceBase;
 
 	public HAPResourceDefinitionComplexImp() {
 	}
@@ -37,10 +37,10 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPDefinitionEntit
 
 	//path base for local resource reference
 	@Override
-	public HAPLocalReferenceBase getLocalReferenceBase() {   return this.m_localReferenceBase;	}
+	public HAPPathLocationBase getLocalReferenceBase() {   return this.m_localReferenceBase;	}
 
 	@Override
-	public void setLocalReferenceBase(HAPLocalReferenceBase localRefBase) {   this.m_localReferenceBase = localRefBase;  }
+	public void setLocalReferenceBase(HAPPathLocationBase localRefBase) {   this.m_localReferenceBase = localRefBase;  }
 	
 	//all external resource reffered by this complex resource, for debug purpose
 	public HAPContainerChildReferenceResource getChildrenReferencedResource() {	return null;	}

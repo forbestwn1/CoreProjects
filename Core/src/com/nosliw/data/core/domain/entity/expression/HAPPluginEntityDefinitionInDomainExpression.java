@@ -11,20 +11,20 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainExpression extends HAPPluginEntityDefinitionInDomainComplex{
 
 	public HAPPluginEntityDefinitionInDomainExpression(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionExpressionGroup.class, runtimeEnv);
+		super(HAPDefinitionEntityExpressionGroup.class, runtimeEnv);
 	}
 
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
 			HAPDomainDefinitionEntity definitionDomain) {
-		HAPDefinitionExpressionGroup expressionGroupEntity = (HAPDefinitionExpressionGroup)definitionDomain.getComplexEntityInfo(entityId).getComplexEntity();
+		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)definitionDomain.getComplexEntityInfo(entityId).getComplexEntity();
 		
 		//parse expression items
 		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj);
 	}
 	
-	private void parseExpressionDefinitionList(HAPDefinitionExpressionGroup expressionGroup, JSONObject jsonObj){
-		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionExpressionGroup.ELEMENT);
+	private void parseExpressionDefinitionList(HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj){
+		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionGroup.ELEMENT);
 		if(eleArrayJson!=null) {
 			for(int i=0; i<eleArrayJson.length(); i++) {
 				JSONObject expressionJsonObj = eleArrayJson.getJSONObject(i);

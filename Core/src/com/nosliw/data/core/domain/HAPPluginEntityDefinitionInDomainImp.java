@@ -50,8 +50,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		return out;
 	}
 
-	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getDefinitionDomain().getEntityInfo(entityId).getEntity();
+	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
+		HAPDefinitionEntityInDomain entity = definitionDomain.getEntityInfo(entityId).getEntity();
 		return entity;
 	}
 	

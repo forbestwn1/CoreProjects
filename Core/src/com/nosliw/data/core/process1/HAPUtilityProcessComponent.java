@@ -5,12 +5,12 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentReference;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
 import com.nosliw.data.core.process1.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
@@ -53,7 +53,7 @@ public class HAPUtilityProcessComponent {
 		return out;
 	}
 	
-	public static HAPElementInContainerEntityDefinition getProcessDefinitionElementFromAttachment(String name, HAPContainerAttachment attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPElementInContainerEntityDefinition getProcessDefinitionElementFromAttachment(String name, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPManagerActivityPlugin activityPluginMan) {
 		HAPAttachment attachment = attachmentContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, name);
 		return HAPUtilityProcessComponent.getProcessDefinitionElementFromAttachment(attachment, activityPluginMan);
 	}

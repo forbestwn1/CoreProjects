@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.HAPConfigureEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPManagerDomainEntity;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 
@@ -20,10 +20,10 @@ public class HAPUtilityParserComplex {
 	public static void parseValueStructureInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntity domainEntityManager) {
 		HAPInfoDefinitionEntityInDomain complexEntityInfo = definitionDomain.getEntityInfo(complexEntityId);
 		
-		//value structure
+		//parse value structure
 		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
+		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 		
-		HAPIdEntityInDomain valueStructureEntityId = domainEntityManager.parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, valueStructureJsonObj, new HAPContextParser(definitionDomain, complexEntityInfo.getLocalBaseReference()));
 		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setValueStructureComplexId(valueStructureEntityId);
 	}
 	
@@ -31,10 +31,10 @@ public class HAPUtilityParserComplex {
 	public static void parseAttachmentInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntity domainEntityManager) {
 		HAPInfoDefinitionEntityInDomain complexEntityInfo = definitionDomain.getEntityInfo(complexEntityId);
 		
-		//value structure
+		//parse attachment
 		JSONObject attachmentJsonObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-		
-		HAPIdEntityInDomain attachmentEntityId = domainEntityManager.parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, attachmentJsonObj, new HAPContextParser(definitionDomain, complexEntityInfo.getLocalBaseReference()));
+		HAPIdEntityInDomain attachmentEntityId = HAPUtilityParserEntity.parseEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
+
 		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setAttachmentContainerId(attachmentEntityId);
 	}
 
@@ -55,7 +55,7 @@ public class HAPUtilityParserComplex {
 			containerEntity.addEntityElement(eleEntityId);
 			
 			//build parent relation for complex child
-			HAPInfoDefinitionEntityInDomainComplex entityInfo = (HAPInfoDefinitionEntityInDomainComplex)parserContext.getDefinitionDomain().getEntityInfo(eleEntityId);
+			HAPConfigureEntityInDomainComplex entityInfo = (HAPConfigureEntityInDomainComplex)parserContext.getDefinitionDomain().getEntityInfo(eleEntityId);
 			entityInfo.setParentId(entityId);
 			entityInfo.setParentRelationConfigure(parentRelation);
 		}

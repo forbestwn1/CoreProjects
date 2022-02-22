@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPContextProcessAttachmentReferenceExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpression;
@@ -72,7 +72,7 @@ public class HAPProcessorScript2 {
 		Map<String, Object> constantsValue = HAPUtilityComplexConstant.getConstantsValue(scriptGroupDef, out.getValueStructureFlat());
 		
 		//expression definition containing all expression in script 
-		HAPDefinitionExpressionGroup expressionGroupDef = new HAPDefinitionExpressionGroup();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		expressionGroupDef.setValueContext(contextStructure);
 
 		//constant --- discover constant from attachment and context

@@ -15,8 +15,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
-import com.nosliw.data.core.complex.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPInfoRuntimeTaskScript;
@@ -35,7 +35,7 @@ public class HAPProcessorElementConstant {
 	static public HAPStructure process(
 			HAPStructure structure,
 			HAPContainerStructure parent,
-			HAPContainerAttachment attachmentContainer,
+			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPConfigureProcessorStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 
@@ -115,7 +115,7 @@ public class HAPProcessorElementConstant {
 	//process constant reference element, replace with constant element
 	static private HAPStructure solidateConstantRefs(
 			HAPStructure structure,
-			HAPContainerAttachment attachmentContainer,
+			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPRuntimeEnvironment runtimeEnv){
 		if(attachmentContainer==null)   return structure;
 		HAPStructure out = structure.cloneStructure();

@@ -3,20 +3,20 @@ package com.nosliw.data.core.component;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 //this object store information for path base for local resource id reference defined in component
-public class HAPLocalReferenceBase extends HAPSerializableImp{
+public class HAPPathLocationBase extends HAPSerializableImp{
 
 	private String m_path;
 	
-	public HAPLocalReferenceBase(String path) {
+	public HAPPathLocationBase(String path) {
 		this.m_path = path;
 	}
 	
-	public HAPLocalReferenceBase() {	}
+	public HAPPathLocationBase() {	}
 
 	public String getPath() {    return this.m_path;    }
 
-	public HAPLocalReferenceBase cloneLocalReferenceBase() {
-		return new HAPLocalReferenceBase(this.m_path);
+	public HAPPathLocationBase cloneLocalReferenceBase() {
+		return new HAPPathLocationBase(this.m_path);
 	}
 	
 	@Override

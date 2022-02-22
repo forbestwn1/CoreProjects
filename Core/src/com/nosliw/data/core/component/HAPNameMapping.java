@@ -9,8 +9,8 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritable;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 //mapping from external name to internal name of component 
 public class HAPNameMapping {
@@ -50,11 +50,11 @@ public class HAPNameMapping {
 		return out;
 	}	
 
-	public HAPContainerAttachment mapAttachment(HAPContainerAttachment original) {
-		HAPContainerAttachment mapped;
+	public HAPDefinitionEntityContainerAttachment mapAttachment(HAPDefinitionEntityContainerAttachment original) {
+		HAPDefinitionEntityContainerAttachment mapped;
 		if(m_nameMapping==null || m_nameMapping.isEmpty())  mapped = original;
 		else {
-			mapped = new HAPContainerAttachment();
+			mapped = new HAPDefinitionEntityContainerAttachment();
 			for(String type : m_nameMapping.keySet()) {
 				Map<String, String> byParentName = m_nameMapping.get(type);
 				for(String parentName : byParentName.keySet()) {

@@ -3,11 +3,11 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public abstract class HAPDefinitionEntityInDomain extends HAPEntityInfoImp implements HAPEntityOrReference{
+public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
 	//simple attribute by name
 	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
@@ -65,7 +65,6 @@ public abstract class HAPDefinitionEntityInDomain extends HAPEntityInfoImp imple
 	}
 
 	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomain) {
-		this.cloneToEntityInfo(entityDefinitionInDomain);
 		entityDefinitionInDomain.m_entityType = this.m_entityType;
 		for(String attrName : this.m_attributesSimple.keySet()) {
 			entityDefinitionInDomain.m_attributesSimple.put(attrName, this.m_attributesSimple.get(attrName));

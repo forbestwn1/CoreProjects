@@ -1,4 +1,4 @@
-package com.nosliw.data.core.complex.attachment;
+package com.nosliw.data.core.domain.entity.attachment;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritable;

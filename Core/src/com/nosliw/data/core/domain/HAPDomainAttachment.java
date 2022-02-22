@@ -1,14 +1,14 @@
 package com.nosliw.data.core.domain;
 
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 public class HAPDomainAttachment {
 
-	public void addAttachmentContainer(HAPContainerAttachment attachmentContainer, HAPIdEntityInDomain complexId) {
+	public void addAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer, HAPIdEntityInDomain complexId) {
 		
 	}
 	
-	public HAPContainerAttachment getAttachmentContainer(HAPIdEntityInDomain complexeId) {
+	public HAPDefinitionEntityContainerAttachment getAttachmentContainer(HAPIdEntityInDomain complexeId) {
 		
 	}
 	

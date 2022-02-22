@@ -1,8 +1,8 @@
 package com.nosliw.data.core.valuestructure;
 
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.complex.attachment.HAPInfoAttachment;
-import com.nosliw.data.core.complex.attachment.HAPProcessorAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
 import com.nosliw.data.core.structure.HAPParserStructure;
 
 public class HAPProcessorAttachmentEntityValueStructure implements HAPProcessorAttachmentEntity{

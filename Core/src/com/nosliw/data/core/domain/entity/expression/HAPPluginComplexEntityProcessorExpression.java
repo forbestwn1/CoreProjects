@@ -22,7 +22,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -83,7 +83,7 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	private void buildExpression(HAPIdEntityInDomain expreesionGroupEntityIdExe, String expressionId, HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
 		
 		//expression element
 		if(expressionId==null) {
@@ -103,7 +103,7 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	private void buildConstant(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
 		
 		//constant
 		//constant --- discover constant from attachment and context
@@ -118,7 +118,7 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 			HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
 
 		Map<String, HAPExecutableExpression> expressionExe = expressionGroupExe.getExpressionItems();
 		for(String key : expressionExe.keySet()) {
@@ -163,8 +163,8 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	private static void replaceVarNameWithId(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
-		HAPComplexValueStructure valueStructureComplex = complexEntityInfo.getValueStructureComplex();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityComplexValueStructure valueStructureComplex = complexEntityInfo.getValueStructureComplex();
 		
 		Map<String, HAPExecutableExpression> expressionItems = expressionGroupExe.getExpressionItems();
 		for(String name : expressionItems.keySet()) {
@@ -208,7 +208,7 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	private static void discoverExpressionItemVariable(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
 		
 		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroupExe.getVariablesInfo();
 		Map<String, HAPExecutableExpression> items = expressionGroupExe.getExpressionItems();
@@ -228,7 +228,7 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	private static void buildVariableInfoInExpression(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionExpressionGroup expressionGroupDef = (HAPDefinitionExpressionGroup)complexEntityInfo.getDefinition();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
 
 		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = new HAPContainerVariableCriteriaInfo();
 		
@@ -241,8 +241,8 @@ public class HAPPluginComplexEntityProcessorExpression implements HAPPluginCompl
 	
 
 	
-	private static Triple<HAPDefinitionExpressionGroup, HAPExecutableExpressionGroup, HAPComplexValueStructure> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
-		Triple<HAPDefinitionEntityComplex, HAPExecutableEntityComplex, HAPComplexValueStructure> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
+	private static Triple<HAPDefinitionEntityExpressionGroup, HAPExecutableExpressionGroup, HAPDefinitionEntityComplexValueStructure> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
+		Triple<HAPDefinitionEntityComplex, HAPExecutableEntityComplex, HAPDefinitionEntityComplexValueStructure> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)triple.getMiddle();
 		HAPDefinitionExpressionGroup1 expressionGroupDef = (HAPDefinitionExpressionGroup1)triple.getLeft();
 		return Triple.of(expressionGroupDef, expressionGroupExe, triple.getRight());

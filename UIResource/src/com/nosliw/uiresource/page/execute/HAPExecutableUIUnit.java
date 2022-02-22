@@ -17,7 +17,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite;
+import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -117,7 +117,7 @@ public class HAPExecutableUIUnit extends HAPExecutableComponent{
 	public HAPContextProcessExpressionScript getProcessExpressionScriptContext(){   return this.m_processScriptContext;   }
 	public void setProcessExpressionScriptContext(HAPContextProcessExpressionScript context){  this.m_processScriptContext = context;   }
 
-	public HAPDefinitionExpressionSuite getExpressionSuiteInContext() {    return (HAPDefinitionExpressionSuite)this.m_processScriptContext.getExpressionDefinitionSuite();   }
+	public HAPDefinitionEntityExpressionSuite getExpressionSuiteInContext() {    return (HAPDefinitionEntityExpressionSuite)this.m_processScriptContext.getExpressionDefinitionSuite();   }
 	
 	public Collection<HAPExecutableUITag> getUITags(){return this.m_uiTags.values();} 
 	public HAPExecutableUITag getUITag(String id){return this.m_uiTags.get(id);} 

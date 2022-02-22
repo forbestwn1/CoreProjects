@@ -3,7 +3,7 @@ package com.nosliw.data.core.resource;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPFileUtility;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -37,13 +37,13 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	}
 
 	@Override
-	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPLocalReferenceBase localRefBase, HAPDomainDefinitionEntity definitionDomain) {
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPPathLocationBase localRefBase, HAPDomainDefinitionEntity definitionDomain) {
 		String path = localRefBase.getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
 		HAPIdEntityInDomain out = this.parseEntity(HAPFileUtility.readFile(path), definitionDomain, localRefBase);
 		return out;
 	}
 
-	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainDefinitionEntity definitionDomain, HAPLocalReferenceBase localRefBase) {
+	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainDefinitionEntity definitionDomain, HAPPathLocationBase localRefBase) {
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
 		else if(content instanceof String)  jsonObj = new JSONObject(content);

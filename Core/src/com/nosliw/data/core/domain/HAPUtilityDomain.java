@@ -36,12 +36,12 @@ public class HAPUtilityDomain {
 	}
 	
 	public static HAPContextParser getContextParse(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
-		return new HAPContextParser(definitionDomain, definitionDomain.getComplexEntityInfo(entityId).getLocalBaseReference());
+		return new HAPContextParser(definitionDomain, definitionDomain.getComplexEntityInfo(entityId).getBaseLocationPath());
 	}
 	
 	public static HAPContextProcessor createProcessContext(HAPContextDomain domainContext, HAPIdEntityInDomain entityId, HAPRuntimeEnvironment runtimeEnv) {
 		HAPInfoDefinitionEntityInDomain entityInfo = domainContext.getDefinitionDomain().getEntityInfo(entityId);
-		HAPContextProcessor out = new HAPContextProcessor(domainContext, entityInfo.getLocalBaseReference(), runtimeEnv);
+		HAPContextProcessor out = new HAPContextProcessor(domainContext, entityInfo.getBaseLocationPath(), runtimeEnv);
 		return out;
 	}
 

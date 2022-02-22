@@ -6,8 +6,6 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPInfoUtility;
-import com.nosliw.data.core.complex.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.complex.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPContainerEntity;
@@ -17,8 +15,10 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.HAPConfigureEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
@@ -35,7 +35,7 @@ public class HAPUtilityComplexEntity {
 		traversComplexEntityDefinitionTree(processContext.getDomainContext().getDefinitionDomain().getComplexEntityInfo(entityId), null, processor, processContext);
 	}
 
-	private static void traversComplexEntityDefinitionTree(HAPInfoDefinitionEntityInDomainComplex complexEntityInfo, HAPInfoDefinitionEntityInDomainComplex parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
+	private static void traversComplexEntityDefinitionTree(HAPConfigureEntityInDomainComplex complexEntityInfo, HAPConfigureEntityInDomainComplex parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
 		//process current entity
 		processor.process(complexEntityInfo, parentComplexEntityInfo, processContext);
 		
@@ -50,7 +50,7 @@ public class HAPUtilityComplexEntity {
 			HAPIdEntityInDomain attrEntityDefId = simpleAttributes.get(attrName);
 			HAPInfoDefinitionEntityInDomain attrEntityInfo = defDomain.getEntityInfo(attrEntityDefId);
 			if(attrEntityInfo.isComplexEntity()) {
-				traversComplexEntityDefinitionTree((HAPInfoDefinitionEntityInDomainComplex)attrEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getLocalBaseReference(), processContext.getRuntimeEnvironment()));
+				traversComplexEntityDefinitionTree((HAPConfigureEntityInDomainComplex)attrEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 			}
 		}
 
@@ -60,10 +60,10 @@ public class HAPUtilityComplexEntity {
 			HAPContainerEntity container = containerAttributes.get(attrName);
 			List<HAPInfoContainerElement> eleInfos = container.getElements();
 			for(HAPInfoContainerElement eleInfo : eleInfos) {
-				HAPIdEntityInDomain eleId = eleInfo.getElementId();
+				HAPIdEntityInDomain eleId = eleInfo.getElementEntityId();
 				HAPInfoDefinitionEntityInDomain eleEntityInfo = defDomain.getEntityInfo(eleId);
 				if(eleEntityInfo.isComplexEntity()) {
-					traversComplexEntityDefinitionTree((HAPInfoDefinitionEntityInDomainComplex)eleEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getLocalBaseReference(), processContext.getRuntimeEnvironment()));
+					traversComplexEntityDefinitionTree((HAPConfigureEntityInDomainComplex)eleEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 				}
 			}
 		}
@@ -144,7 +144,7 @@ public class HAPUtilityComplexEntity {
 		
 		 //inheritance
 		if(valueStructureRelation.isInheritable()) {
-			HAPComplexValueStructure parentValueStructureComplex = parentEntity.getValueStructureComplex();
+			HAPDefinitionEntityComplexValueStructure parentValueStructureComplex = parentEntity.getValueStructureComplex();
 			List<HAPPartComplexValueStructure> parts = parentValueStructureComplex.getParts();
 			
 			if(valueStructureRelation.isShareRuntimeData()) {

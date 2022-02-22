@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
@@ -18,7 +18,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 public class HAPDomainValueStructure {
 
 	//value structure complex by id
-	private Map<String, HAPComplexValueStructure> m_valueStructureComplex;
+	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
 	
 	//value structure definitions by id
 	private Map<String, HAPWrapperValueStructure> m_valueStructure;
@@ -33,10 +33,10 @@ public class HAPDomainValueStructure {
 		this.m_idGenerator = idGenerator;
 		this.m_valueStructure = new LinkedHashMap<String, HAPWrapperValueStructure>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
-		this.m_valueStructureComplex = new LinkedHashMap<String, HAPComplexValueStructure>();
+		this.m_valueStructureComplex = new LinkedHashMap<String, HAPDefinitionEntityComplexValueStructure>();
 	}
 
-	public String addValueStructureComplex(HAPComplexValueStructure valueStructureComplex) {
+	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplex) {
 		String out = this.m_idGenerator.generateId();
 		this.m_valueStructureComplex.put(out, valueStructureComplex);
 		//extra value structure
@@ -57,7 +57,7 @@ public class HAPDomainValueStructure {
 	
 	public HAPWrapperValueStructure getValueStructureWrapperByRuntimeId(String runtimeId) {	return this.m_valueStructure.get(this.m_definitionIdByRuntimeId.get(runtimeId));}
 	
-	public HAPComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
+	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
 	
 	//create another runtime that has common definition
 	//return new runtime id

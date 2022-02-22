@@ -22,12 +22,12 @@ public class HAPUtilityComplexValueStructure {
 	
 
 	
-	public static List<HAPInfoPartSimple> findCandidateSimplePart(String partRef, HAPComplexValueStructure valueStructureComplex){
+	public static List<HAPInfoPartSimple> findCandidateSimplePart(String partRef, HAPDefinitionEntityComplexValueStructure valueStructureComplex){
 		List<HAPInfoPartSimple> out = getAllSimpleParts(valueStructureComplex);
 		return out;
 	}
 	
-	public static List<HAPInfoPartSimple> getAllSimpleParts(HAPComplexValueStructure valueStructureComplex){
+	public static List<HAPInfoPartSimple> getAllSimpleParts(HAPDefinitionEntityComplexValueStructure valueStructureComplex){
 		List<HAPPartComplexValueStructureSimple> out = new ArrayList<HAPPartComplexValueStructureSimple>();
 		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
 			getAllChildren(null, part, out);
@@ -51,7 +51,7 @@ public class HAPUtilityComplexValueStructure {
 		}
 	}
 	
-	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPComplexValueStructure valueStructureComplex) {
+	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPDefinitionEntityComplexValueStructure valueStructureComplex) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		List<HAPPartComplexValueStructureSimple> parts = getAllSimpleParts(valueStructureComplex);
 		for(int i=parts.size()-1; i>=0; i--) {
@@ -101,13 +101,13 @@ public class HAPUtilityComplexValueStructure {
 	public static HAPInfoPartValueStructure createPartInfoDefault() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_DEFAULT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_DEFAULT);	}
 	public static HAPInfoPartValueStructure createPartInfoFromParent() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
-	public static void setValueStructureDefault(HAPComplexValueStructure valueStructureComplex, HAPValueStructure valueStructure) {
+	public static void setValueStructureDefault(HAPDefinitionEntityComplexValueStructure valueStructureComplex, HAPValueStructure valueStructure) {
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityComplexValueStructure.createPartInfoDefault());
 	}
 	
 
 	public static void setValueStructureFromParent(HAPWithValueStructure withValueStructure, List<HAPPartComplexValueStructure> partsFromParent) {
-		HAPComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
+		HAPDefinitionEntityComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
 		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityComplexValueStructure.createPartInfoFromParent());
 	}
 	

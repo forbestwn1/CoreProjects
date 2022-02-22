@@ -9,12 +9,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
-import com.nosliw.data.core.complex.attachment.HAPAttachment;
-import com.nosliw.data.core.complex.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.complex.attachment.HAPContainerAttachment;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPValue;
@@ -88,7 +88,7 @@ public class HAPUtilityComplexConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer, HAPStructure structure){
+	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPDefinitionEntityContainerAttachment attContainer, HAPStructure structure){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
 		out.addAll(buildConstantDefinition(attContainer));
 		
@@ -100,11 +100,11 @@ public class HAPUtilityComplexConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer, HAPStructure context){
+	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPDefinitionEntityContainerAttachment attContainer, HAPStructure context){
 		return filterOutDataConstant(buildConstantDefinition(attContainer, context));
 	}
 	
-	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPContainerAttachment attContainer){
+	public static Set<HAPDefinitionConstant> buildConstantDefinition(HAPDefinitionEntityContainerAttachment attContainer){
 		Set<HAPDefinitionConstant> out = new HashSet<HAPDefinitionConstant>();
 		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
 		for(String id : attrs.keySet()) {
@@ -119,11 +119,11 @@ public class HAPUtilityComplexConstant {
 		return out;
 	}
 
-	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPContainerAttachment attContainer){
+	public static Set<HAPDefinitionConstant> buildDataConstantDefinition(HAPDefinitionEntityContainerAttachment attContainer){
 		return filterOutDataConstant(buildConstantDefinition(attContainer));
 	}
 
-	public static Map<String, Object> buildConstantValue(HAPContainerAttachment attContainer){
+	public static Map<String, Object> buildConstantValue(HAPDefinitionEntityContainerAttachment attContainer){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		Set<HAPDefinitionConstant> constants = buildConstantDefinition(attContainer);
 		for(HAPDefinitionConstant constant : constants) {
@@ -132,7 +132,7 @@ public class HAPUtilityComplexConstant {
 		return out;
 	}
 	
-	public static Map<String, HAPData> buildConstantData(HAPContainerAttachment attContainer){
+	public static Map<String, HAPData> buildConstantData(HAPDefinitionEntityContainerAttachment attContainer){
 		Map<String, HAPData> out = new LinkedHashMap<String, HAPData>();
 		Set<HAPDefinitionConstant> constants = buildDataConstantDefinition(attContainer);
 		for(HAPDefinitionConstant constant : constants) {
