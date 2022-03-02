@@ -1,12 +1,11 @@
 package com.nosliw.data.core.domain;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 
 //container for entity
-public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends Collection<T>{
+public interface HAPContainerEntity<T extends HAPInfoContainerElement>{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";

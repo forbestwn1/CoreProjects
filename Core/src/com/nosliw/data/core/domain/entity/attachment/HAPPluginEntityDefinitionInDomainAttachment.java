@@ -14,9 +14,9 @@ public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntity
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,	HAPDomainDefinitionEntity definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainDefinitionEntity definitionDomain) {
 		HAPDefinitionEntityContainerAttachment attachmentContainer = (HAPDefinitionEntityContainerAttachment)this.getEntity(entityId, definitionDomain);
-		HAPUtilityAttachment.parseDefinition(jsonObj, attachmentContainer);
+		HAPUtilityAttachment.parseDefinition((JSONObject)obj, attachmentContainer);
 	}
 
 }

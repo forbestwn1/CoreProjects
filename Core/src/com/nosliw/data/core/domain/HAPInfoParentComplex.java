@@ -1,7 +1,6 @@
 package com.nosliw.data.core.domain;
 
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 
 public class HAPInfoParentComplex {
 
@@ -12,6 +11,9 @@ public class HAPInfoParentComplex {
 	//parent info for complex
 	private HAPConfigureParentRelationComplex m_parentRelation;
 
+	public HAPInfoParentComplex() {
+		this.m_parentRelation = new HAPConfigureParentRelationComplex();
+	}
 	
 	public HAPIdEntityInDomain getParentId() {    return this.m_parentId;   }
 	
@@ -21,11 +23,6 @@ public class HAPInfoParentComplex {
 	
 	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelation) {    this.m_parentRelation = parentRelation;    }
 	
-	public HAPDefinitionEntityComplex getComplexEntity() {     return (HAPDefinitionEntityComplex)this.getEntity();     }
-
-	@Override
-	public boolean isComplexEntity() {   return true;   }
-
 	public void hardMerge(HAPInfoParentComplex parentInfo) {
 		
 	}

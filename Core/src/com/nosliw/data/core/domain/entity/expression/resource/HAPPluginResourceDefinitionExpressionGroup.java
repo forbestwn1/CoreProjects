@@ -1,11 +1,9 @@
 package com.nosliw.data.core.domain.entity.expression.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.component.HAPLocalReferenceBase;
+import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPIdExpressionGroup;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -39,7 +37,7 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 	}
 
 	@Override
-	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPLocalReferenceBase localRefBase, HAPDomainDefinitionEntity entityDomain) {
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPPathLocationBase localRefBase, HAPDomainDefinitionEntity entityDomain) {
 		HAPIdExpressionGroup expressionGroupId = new HAPIdExpressionGroup(resourceId.getName());
 		
 		HAPResourceIdLocal suiteResourceId = new HAPResourceIdLocal(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE);
@@ -52,12 +50,9 @@ public class HAPPluginResourceDefinitionExpressionGroup implements HAPPluginReso
 		return groupEntityId;
 	}
 	
-	private HAPIdEntityInDomain createGroupThroughSuite(HAPIdEntityInDomain suitEntityId, String groupId, HAPDomainDefinitionEntity entityDomain) {
+	private HAPIdEntityInDomain createGroupThroughSuite(HAPIdEntityInDomain suitEntityId, String groupName, HAPDomainDefinitionEntity entityDomain) {
 		HAPDefinitionEntityExpressionSuite suite = (HAPDefinitionEntityExpressionSuite)entityDomain.getEntityInfo(suitEntityId).getEntity();
-		suite.get
-		HAPElementContainerResourceDefinitionEntityExpressionSuite expressionGroup = suite.getContainerElement(groupId);
-		HAPIdEntityInDomain groupEntityId = entityDomain.addComplexEntity(new HAPInfoComplexEntityDefinition(expressionGroup, new HAPConfigureParentRelationComplex()));
-		return groupEntityId;
+		return suite.getExpressionGroup(groupName);
 	}
 
 }

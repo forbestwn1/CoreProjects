@@ -5,14 +5,18 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
 import com.nosliw.data.core.component.HAPHandlerComplexEntity;
 import com.nosliw.data.core.component.HAPPathLocationBase;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.structure.HAPProcessorElementConstant;
 import com.nosliw.data.core.structure.HAPProcessorElementRule;
 import com.nosliw.data.core.structure.HAPProcessorElementSolidateConstantScript;
@@ -52,8 +56,45 @@ public class HAPDomainDefinitionEntity{
 		this.m_idGenerator = idGenerator;
 		this.m_rootEntity = new HashSet<HAPIdEntityInDomain>();
 		this.m_entity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomain>();
+		this.m_parentComplexInfo = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoParentComplex>();
 	}
 
+	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, HAPInfoDefinitionEntityInDomain entityInfo) {
+		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain();
+		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
+		String entityType = null; 
+		String type = entityOrRef.getEntityOrReferenceType();
+		if(type.equals(HAPConstantShared.ENTITY)) {
+			HAPDefinitionEntityInDomain entity = (HAPDefinitionEntityInDomain)entityOrRef;
+			out.setEntity(entity);
+			entityType = entity.getEntityType();
+		}
+		else if(type.equals(HAPConstantShared.RESOURCEID)) {
+			HAPResourceId resourceId = (HAPResourceId)entityOrRef;
+			out.setResourceId(resourceId);
+			entityType = resourceId.getResourceType();
+		}
+		else if(type.equals(HAPConstantShared.REFERENCE)) {
+			HAPReferenceAttachment attachmentRef = (HAPReferenceAttachment)entityOrRef;
+			out.setAttachmentReference(attachmentRef);
+			entityType = attachmentRef.getDataType();
+		}
+		out.setEntityId(new HAPIdEntityInDomain(this.generateId(), entityType));
+		this.m_entity.put(out.getEntityId(), out);
+		return out.getEntityId();
+	}
+	
+	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, HAPPathLocationBase basePath) {
+		HAPInfoDefinitionEntityInDomain entityInfo = new HAPInfoDefinitionEntityInDomain();
+		entityInfo.setBaseLocationPath(basePath);
+		return this.addEntityOrReference(entityOrRef, entityInfo);
+	}
+
+	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef) {
+		HAPInfoDefinitionEntityInDomain entityInfo = new HAPInfoDefinitionEntityInDomain();
+		return this.addEntityOrReference(entityOrRef, entityInfo);
+	}
+	
 	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPInfoDefinitionEntityInDomain entityInfo) {
 		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain();
 		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
@@ -69,13 +110,18 @@ public class HAPDomainDefinitionEntity{
 		return this.addEntity(entity, entityInfo);
 	}
 
+	public void setEntity(HAPIdEntityInDomain entityId, HAPDefinitionEntityInDomain entity, HAPPathLocationBase basePath) {
+		HAPInfoDefinitionEntityInDomain entityInfo = this.getEntityInfo(entityId);
+		entityInfo.setEntity(entity);
+		entityInfo.setBaseLocationPath(basePath);
+	}
+	
 	public void buildComplexParentRelation(HAPIdEntityInDomain entityId, HAPInfoParentComplex parentInfo) {
 		this.m_parentComplexInfo.put(entityId, parentInfo);
 	}
 	
 	public HAPInfoDefinitionEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {		return this.m_entity.get(entityId); 	}
 	
-	public HAPConfigureEntityInDomainComplex getComplexEntityInfo(HAPIdEntityInDomain entityId) {		return (HAPConfigureEntityInDomainComplex)this.getEntityInfo(entityId);	}
 
 	
 	private String generateId() {    return this.m_idGenerator.generateId();    } 

@@ -4,6 +4,8 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 
 public abstract class HAPInfoContainerElement extends HAPEntityInfoImp{
 
+	public static final String ELEMENT_INFO = "eleInfo";
+	
 	private HAPIdEntityInDomain m_entityId;
 
 	private String m_elementInfoType;

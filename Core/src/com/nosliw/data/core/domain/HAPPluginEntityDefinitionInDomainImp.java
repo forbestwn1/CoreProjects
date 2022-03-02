@@ -2,8 +2,6 @@ package com.nosliw.data.core.domain;
 
 import java.lang.reflect.Field;
 
-import org.json.JSONObject;
-
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -31,23 +29,38 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	public String getEntityType() {  return this.m_entityType;	}
 
 	@Override
-	public HAPIdEntityInDomain parseDefinition(JSONObject jsonObj, HAPContextParser parserContext) {
+	public HAPIdEntityInDomain parseDefinition(Object obj, HAPContextParser parserContext) {
 		HAPIdEntityInDomain out = null;
 		try {
 			
 			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
-			entity.buildEntityInfoByJson(jsonObj);
 			
 			//add to domain
 			out = parserContext.getDefinitionDomain().addEntity(entity, parserContext.getLocalReferenceBase());
 
 			//parse entity content
-			this.parseDefinitionContent(out, jsonObj, parserContext.getDefinitionDomain());
+			this.parseDefinitionContent(out, obj, parserContext.getDefinitionDomain());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		return out;
+	}
+
+	@Override
+	public void parseDefinition(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		try {
+			
+			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
+			
+			//add to domain
+			parserContext.getDefinitionDomain().setEntity(entityId, entity, parserContext.getLocalReferenceBase());
+
+			//parse entity content
+			this.parseDefinitionContent(entityId, obj, parserContext.getDefinitionDomain());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
@@ -57,5 +70,5 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
 
-	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainDefinitionEntity definitionDomain);
+	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainDefinitionEntity definitionDomain);
 }

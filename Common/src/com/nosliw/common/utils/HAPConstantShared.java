@@ -741,6 +741,7 @@ public class HAPConstantShared {
 
 		public static final String REFERENCE = "reference";
 		public static final String ENTITY = "entity";
+		public static final String RESOURCEID = "resourceId";
 
 
 

@@ -792,6 +792,7 @@
 			<definition type="space"/>
 			<definition name="REFERENCE" value="reference"/>
 			<definition name="ENTITY" value="entity"/>
+			<definition name="RESOURCEID" value="resourceid"/>
 
 			<definition type="space"/>
 			<definition name="DATARULE_TYPE_ENUM" value="enum"/>

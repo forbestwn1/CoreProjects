@@ -39,7 +39,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	}
 	
 	@Override
-	public String getEntityOrReferenceType() {   return HAPConstantShared.REFERENCE;    }
+	public String getEntityOrReferenceType() {   return HAPConstantShared.RESOURCEID;    }
 
 	public String getResourceType() {  return this.m_resourceType;  }
 	protected void setResourceType(String type) {    this.m_resourceType = type;    }

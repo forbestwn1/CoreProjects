@@ -27,25 +27,11 @@ public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityCompl
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 
-	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {
-		this.addContainerElementAttribute(GROUP, eleInfo);
-	}
-
-	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {
-		this.addContainerElementAttribute(GROUP, eleInfo);
+	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {	this.addContainerElementAttribute(GROUP, eleInfo);	}
+	public HAPIdEntityInDomain getExpressionGroup(String name) {
+		return this.getConatinerAttributeElementByName(GROUP, name);
 	}
 	
-	public HAPIdEntityInDomain getExpressionGroup() {}
-	
-	@Override
-	public void addEntityElement(HAPDefinitionExpressionGroup1 expressionGroup) {
-		this.setElementParentPart(expressionGroup);
-		for(String id : this.m_constantDefinitions.keySet()) {
-			expressionGroup.addConstantDefinition(this.m_constantDefinitions.get(id).cloneConstantDefinition());
-		}
-		this.m_expressionGroups.put(expressionGroup.getId(), expressionGroup); 
-	}
-
 	@Override
 	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet<HAPDefinitionConstant>(this.m_constantDefinitions.values()); }
 

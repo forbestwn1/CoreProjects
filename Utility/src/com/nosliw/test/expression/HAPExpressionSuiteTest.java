@@ -27,7 +27,7 @@ public class HAPExpressionSuiteTest {
 	public static void main(String[] args) {
 
 		try {
-			String suite = "test1";
+			String suite = "test_temp";
 			String[] ids1 = {"test10", "test11", "test12", "test20", "test21", "test22", "test23", "test24", "test25", "test26"};
 			String[] ids = {"test10"};
 			String[] failure = {"test24"};

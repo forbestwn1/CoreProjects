@@ -8,6 +8,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceDefinition{
@@ -47,7 +48,7 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
 		else if(content instanceof String)  jsonObj = new JSONObject(content);
-		HAPIdEntityInDomain entityId = this.m_domainEntityManager.parseDefinition(this.getResourceType(), jsonObj, new HAPContextParser(definitionDomain, localRefBase));
+		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), new HAPContextParser(definitionDomain, localRefBase), this.m_domainEntityManager); 
 		return entityId;
 	}
 

@@ -36,7 +36,7 @@ public class HAPUtilityDomain {
 	}
 	
 	public static HAPContextParser getContextParse(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
-		return new HAPContextParser(definitionDomain, definitionDomain.getComplexEntityInfo(entityId).getBaseLocationPath());
+		return new HAPContextParser(definitionDomain, definitionDomain.getEntityInfo(entityId).getBaseLocationPath());
 	}
 	
 	public static HAPContextProcessor createProcessContext(HAPContextDomain domainContext, HAPIdEntityInDomain entityId, HAPRuntimeEnvironment runtimeEnv) {

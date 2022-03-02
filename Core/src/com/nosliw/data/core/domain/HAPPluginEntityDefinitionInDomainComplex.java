@@ -12,7 +12,8 @@ public abstract class HAPPluginEntityDefinitionInDomainComplex extends HAPPlugin
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainDefinitionEntity definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainDefinitionEntity definitionDomain) {
+		JSONObject jsonObj = (JSONObject)obj;
 		HAPUtilityParserComplex.parseValueStructureInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());
 		HAPUtilityParserComplex.parseAttachmentInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());
 		this.parseComplexDefinitionContent(entityId, jsonObj, definitionDomain);

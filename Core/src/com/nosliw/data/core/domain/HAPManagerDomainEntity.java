@@ -3,8 +3,6 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 public class HAPManagerDomainEntity {
 
 	private Map<String, HAPPluginEntityDefinitionInDomain> m_entityDefinitionPlugin;
@@ -13,9 +11,9 @@ public class HAPManagerDomainEntity {
 		this.m_entityDefinitionPlugin = new LinkedHashMap<String, HAPPluginEntityDefinitionInDomain>();
 	}
 	
-	public HAPIdEntityInDomain parseDefinition(String entityType, JSONObject jsonObj, HAPContextParser parseContext) {
-		if(jsonObj==null)  return null;
-		return this.m_entityDefinitionPlugin.get(entityType).parseDefinition(jsonObj, parseContext);
+	public HAPIdEntityInDomain parseDefinition(String entityType, Object obj, HAPContextParser parseContext) {
+		if(obj==null)  return null;
+		return this.m_entityDefinitionPlugin.get(entityType).parseDefinition(obj, parseContext);
 	}
 	
 	public void registerEntityDefinitionPlugin(HAPPluginEntityDefinitionInDomain plugin) {

@@ -17,7 +17,7 @@ public class HAPPluginEntityDefinitionInDomainExpression extends HAPPluginEntity
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
 			HAPDomainDefinitionEntity definitionDomain) {
-		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)definitionDomain.getComplexEntityInfo(entityId).getComplexEntity();
+		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)definitionDomain.getEntityInfo(entityId).getEntity();
 		
 		//parse expression items
 		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj);

@@ -3,11 +3,13 @@ package com.nosliw.data.core.domain.entity.attachment;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
-public class HAPReferenceAttachment extends HAPSerializableImp{
+public class HAPReferenceAttachment extends HAPSerializableImp implements HAPEntityOrReference{
 
 	@HAPAttribute
 	public static String DATATYPE = "dataType";
@@ -19,6 +21,9 @@ public class HAPReferenceAttachment extends HAPSerializableImp{
 	
 	private String m_name;
 	
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstantShared.REFERENCE;    }
+
 	public String getDataType() {   return this.m_dataType;  }
 	
 	public String getName() {   return this.m_name;  }
@@ -30,15 +35,20 @@ public class HAPReferenceAttachment extends HAPSerializableImp{
 		return out;
 	}
 
-	public static HAPReferenceAttachment newInstance(JSONObject jsonObj, String type) {
+	public static HAPReferenceAttachment newInstance(Object obj, String type) {
 		HAPReferenceAttachment out = new HAPReferenceAttachment();
 		out.m_dataType = type;
-		out.buildObjectByJson(jsonObj);
+		if(obj instanceof JSONObject) {
+			out.buildObjectByJson(obj);
+		}
+		else if(obj instanceof String) {
+			out.buildObjectByLiterate((String)obj);
+		}
 		return out;
 	}
 
-	public static HAPReferenceAttachment newInstance(JSONObject jsonObj) {
-		return newInstance(jsonObj, null);
+	public static HAPReferenceAttachment newInstance(Object obj) {
+		return newInstance(obj, null);
 	}
 
 	private HAPReferenceAttachment() {}

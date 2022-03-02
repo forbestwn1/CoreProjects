@@ -48,6 +48,10 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return this.m_attributeContainer.get(attributeName).getElement(eleInfo);
 	}
 	
+	public HAPIdEntityInDomain getConatinerAttributeElementByName(String attributeName, String eleName) {
+		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getElementEntityId();
+	}
+	
 	public void addContainerElementAttribute(String attributeName, HAPInfoContainerElement eleInfo) {
 		HAPContainerEntity container = this.m_attributeContainer.get(attributeName);
 		if(container==null) {

@@ -2,12 +2,20 @@ package com.nosliw.data.core.domain;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.component.HAPPathLocationBase;
+import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 
 	//entity definition
 	public static final String ENTITY = "entity";
 	
+	//resource id
+	public static final String RESOURCEID = "resourceId";
+
+	//reference to attachment
+	public static final String REFERENCE = "reference";
+
 	//extra info definition
 	public static final String EXTRA = "extra";
 	
@@ -19,6 +27,10 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 
 	//entity object
 	private HAPDefinitionEntityInDomain m_entity;
+	
+	private HAPReferenceAttachment m_reference;
+	
+	private HAPResourceId m_resourceId;
 	
 	//entity id
 	private HAPIdEntityInDomain m_entityId;
@@ -32,6 +44,12 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	
 	public HAPDefinitionEntityInDomain getEntity() {     return this.m_entity;     }
 	public void setEntity(HAPDefinitionEntityInDomain entityDef) {   this.m_entity = entityDef;    }
+	
+	public HAPReferenceAttachment getAttachmentReference() {   return this.m_reference;    }
+	public void setAttachmentReference(HAPReferenceAttachment attachmentRef) {    this.m_reference = attachmentRef;    }
+	
+	public HAPResourceId getResourceId() {    return this.m_resourceId;    }
+	public void setResourceId(HAPResourceId resourceId) {   this.m_resourceId = resourceId;    }
 	
 	public HAPPathLocationBase getBaseLocationPath() {     return this.m_baseLocationPath;     }
 	public void setBaseLocationPath(HAPPathLocationBase baseLocationPath) {     this.m_baseLocationPath = baseLocationPath;    }

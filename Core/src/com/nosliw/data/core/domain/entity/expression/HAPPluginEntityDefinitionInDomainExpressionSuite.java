@@ -1,12 +1,14 @@
 package com.nosliw.data.core.domain.entity.expression;
 
-import org.json.JSONArray;
+import java.util.List;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPConfigureEntityInDomainComplex;
+import com.nosliw.data.core.domain.HAPInfoContainerElement;
+import com.nosliw.data.core.domain.HAPInfoContainerElementSet;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainComplex;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
@@ -21,28 +23,21 @@ public class HAPPluginEntityDefinitionInDomainExpressionSuite extends HAPPluginE
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
 			HAPDomainDefinitionEntity definitionDomain) {
-		HAPDefinitionEntityExpressionSuite suiteEntity = (HAPDefinitionEntityExpressionSuite)definitionDomain.getComplexEntityInfo(entityId).getComplexEntity();
+		HAPDefinitionEntityExpressionSuite suiteEntity = (HAPDefinitionEntityExpressionSuite)definitionDomain.getEntityInfo(entityId).getEntity();
 		
 		//parse element
+		JSONObject groupObj = jsonObj.getJSONObject(HAPDefinitionEntityExpressionSuite.GROUP);
+		List<HAPInfoContainerElement> eles = HAPUtilityParserEntity.parseComplexContainer(
+				groupObj, 
+				HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, 
+				HAPConstantShared.ENTITYCONTAINER_TYPE_SET, 
+				entityId,
+				HAPUtilityDomain.createDefaultParentRelationConfigure(),
+				HAPUtilityDomain.getContextParse(entityId, definitionDomain),
+				this.getRuntimeEnvironment().getDomainEntityManager());
 		
-		Object groupObj = jsonObj.get(HAPDefinitionEntityExpressionSuite.GROUP);
-		HAPConfigureEntityInDomainComplex groupEntityInfo = null; 
-		if(groupObj instanceof JSONObject) {
-			
-		}
-		
-		JSONArray eleArray = jsonObj.getJSONArray(HAPDefinitionEntityExpressionSuite.GROUP);
-		for(int i=0; i<eleArray.length(); i++){
-			//new element entity
-			JSONObject eleObjJson = eleArray.getJSONObject(i);
-			
-			HAPIdEntityInDomain eleEntityId = HAPUtilityParserEntity.parseEntity(eleObjJson, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, HAPUtilityDomain.getContextParse(entityId, definitionDomain), this.getRuntimeEnvironment().getDomainEntityManager());
-			suiteEntity.addExpressionGroup(HAPUtilityDomain.newInfoContainerElementSet(eleEntityId, eleObjJson));
-			
-			//build parent relation for complex child
-			HAPConfigureEntityInDomainComplex entityInfo = definitionDomain.getComplexEntityInfo(eleEntityId);
-			entityInfo.setParentId(entityId);
-			entityInfo.setParentRelationConfigure(HAPUtilityDomain.createDefaultParentRelationConfigure());
+		for(HAPInfoContainerElement groupInfo : eles) {
+			suiteEntity.addExpressionGroup((HAPInfoContainerElementSet)groupInfo);
 		}
 	}
 

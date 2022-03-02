@@ -32,9 +32,9 @@ public class HAPContextProcessor {
 	private HAPProcessTracker m_processTracker;
 	
 	public HAPContextProcessor(HAPContextDomain domainContext, HAPPathLocationBase localRefBase, HAPRuntimeEnvironment runtimeEnv) {
+		this.m_domainContext = domainContext;
+		this.m_localRefBase = localRefBase;
 		this.m_runtimeEnv = runtimeEnv;
-		this.m_complexEntity = complexEntity;
-		this.m_valueStructurePool = valueStructurePool;
 	}
 	
 	public HAPResultProcessAttachmentReference processAttachmentReference(String attachmentValueType, String attachmentName) {
