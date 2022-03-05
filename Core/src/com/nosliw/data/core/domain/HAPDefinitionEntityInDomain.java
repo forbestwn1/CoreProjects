@@ -4,11 +4,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
+	public final static String SIMPLEATTRIBUTE = "simpleAttributes"; 
+	
+	public final static String CONTAINERATTRIBUTE = "containerAttributes"; 
+	
 	//simple attribute by name
 	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
 	
@@ -68,6 +74,23 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		container.addEntityElement(eleInfo);
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		
+		Map<String, String> simpleAttrJsonMap = new LinkedHashMap<String, String>();
+		for(String attrName : this.m_attributesSimple.keySet()) {
+			simpleAttrJsonMap.put(attrName, this.m_attributesSimple.get(attrName).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(SIMPLEATTRIBUTE, HAPJsonUtility.buildMapJson(simpleAttrJsonMap));
+		
+		Map<String, String> containerAttrJsonMap = new LinkedHashMap<String, String>();
+		for(String attrName : this.m_attributeContainer.keySet()) {
+			simpleAttrJsonMap.put(attrName, this.m_attributeContainer.get(attrName).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(SIMPLEATTRIBUTE, HAPJsonUtility.buildMapJson(simpleAttrJsonMap));
+	}
+	
 	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomain) {
 		entityDefinitionInDomain.m_entityType = this.m_entityType;
 		for(String attrName : this.m_attributesSimple.keySet()) {

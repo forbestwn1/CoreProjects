@@ -1,55 +1,37 @@
 package com.nosliw.data.core.domain;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPContainerEntityList extends HashSet<HAPInfoContainerElementList> implements HAPContainerEntity<HAPInfoContainerElementList>{
+public class HAPContainerEntityList extends HAPContainerEntityImp<HAPInfoContainerElementList>{
 
-	@Override
-	public boolean add(HAPInfoContainerElementList arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	private ArrayList<HAPInfoContainerElementList> m_eleArray;
+	
 	@Override
 	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_LIST; }
 
 	@Override
 	public void addEntityElement(HAPInfoContainerElementList eleInfo) {
-		// TODO Auto-generated method stub
-		
+		super.addEntityElement(eleInfo);
+		int index = eleInfo.getIndex();
+		if(index==-1) {
+			eleInfo.setIndex(this.m_eleArray.size());
+			this.m_eleArray.add(eleInfo);
+		}
+		else {
+			this.m_eleArray.add(eleInfo.getIndex(), eleInfo);
+		}
 	}
 
 	@Override
-	public HAPInfoContainerElementList getElementInfoByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPInfoContainerElementList getElementInfoById(HAPIdEntityInDomain id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPIdEntityInDomain getElement(HAPInfoContainerElement eleInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<HAPInfoContainerElementList> getAllElementsInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<HAPInfoContainerElementList> getAllElementsInfo() {  return this.m_eleArray;  }
 
 	@Override
 	public HAPContainerEntity<HAPInfoContainerElementList> cloneContainerEntity() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPContainerEntityList out = new HAPContainerEntityList();
+		this.cloneToContainer(out);
+		return out;
 	}
-
 }

@@ -10,6 +10,17 @@ import org.json.JSONObject;
 
 public class HAPSerializeUtility {
 
+	public static HAPSerializable buildObject(Class cls, Object value) {
+		HAPSerializable out = null;
+		if(value instanceof JSONObject) {
+			out = buildObject(cls, value, HAPSerializationFormat.JSON);
+		}
+		else if(value instanceof String) {
+			out = buildObject(cls, value, HAPSerializationFormat.LITERATE);
+		}
+		return out;
+	}	
+	
 	public static HAPSerializable buildObject(Class cls, Object value, HAPSerializationFormat format) {
 		HAPSerializable out = null;
 		try {

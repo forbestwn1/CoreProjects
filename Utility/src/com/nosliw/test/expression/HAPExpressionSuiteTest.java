@@ -5,10 +5,12 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.value.HAPJsonValueUtility;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPInfoEntityComplex;
 import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
@@ -17,6 +19,7 @@ import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGrou
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
@@ -37,6 +40,11 @@ public class HAPExpressionSuiteTest {
 			
 			for(String id : ids) {
 				HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
+				
+				HAPDomainDefinitionEntity defDomain = new HAPDomainDefinitionEntity(new HAPGeneratorId());
+				HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, defDomain);
+				
+				
 				
 				//process resource
 				HAPResultExecutableEntityInDomain expressionInDomain = runtimeEnvironment.getExpressionManager().getExecutableComplexEntity(resourceId);

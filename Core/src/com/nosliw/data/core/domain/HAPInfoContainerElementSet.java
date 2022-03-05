@@ -5,12 +5,12 @@ import com.nosliw.common.utils.HAPConstantShared;
 public class HAPInfoContainerElementSet extends HAPInfoContainerElement{
 
 	public HAPInfoContainerElementSet(HAPIdEntityInDomain entityId) {
-		super(HAPConstantShared.ENTITYCONTAINER_TYPE_SET, entityId);
+		super(entityId);
 	}
 
-	public HAPInfoContainerElementSet() {
-		super(HAPConstantShared.ENTITYCONTAINER_TYPE_SET);
-	}
+	public HAPInfoContainerElementSet() {	}
+
+	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_SET;    }
 
 	@Override
 	public HAPInfoContainerElement cloneContainerElementInfo() {
@@ -19,4 +19,12 @@ public class HAPInfoContainerElementSet extends HAPInfoContainerElement{
 		return out;
 	}
 
+	public HAPInfoContainerElementSet cloneContainerElementInfoSet() {
+		return (HAPInfoContainerElementSet)this.cloneContainerElementInfo();
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		return super.buildObjectByJson(json);
+	}
 }

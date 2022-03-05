@@ -54,18 +54,17 @@ public class HAPUtilityParserEntity {
 	
 	private static HAPInfoContainerElement buildContainerElementInfo(JSONObject eleObj, HAPIdEntityInDomain eleEntityId, String containerType, HAPDomainDefinitionEntity definitionDomain) {
 		HAPInfoContainerElement out = null;
-		JSONObject eleInfoObj = eleObj.optJSONObject(HAPInfoContainerElement.ELEMENT_INFO);
+		JSONObject eleInfoObj = eleObj.optJSONObject(HAPContainerEntity.ELEMENT_INFO);
 		if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_SET)) {
-			HAPInfoContainerElementSet eleInfo = new HAPInfoContainerElementSet(eleEntityId);
-			eleInfo.buildObject(eleInfoObj, HAPSerializationFormat.JSON);
-			eleInfo.setName(definitionDomain.getEntityInfo(eleEntityId).getExtraInfo().getName());
-			out = eleInfo;
+			out = new HAPInfoContainerElementSet(eleEntityId);
 		}
 		else if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST)) {
-			HAPInfoContainerElementList eleInfo = new HAPInfoContainerElementList(eleEntityId);
-			eleInfo.buildObject(eleInfoObj, HAPSerializationFormat.JSON);
-			eleInfo.setName(definitionDomain.getEntityInfo(eleEntityId).getExtraInfo().getName());
-			out = eleInfo;
+			out = new HAPInfoContainerElementList(eleEntityId);
+		}
+		out.buildObject(eleInfoObj, HAPSerializationFormat.JSON);
+		if(out.getElementName()==null) {
+			//if no name for element, use name from entity definition
+			out.setElementName(definitionDomain.getEntityInfo(eleEntityId).getExtraInfo().getName());
 		}
 		return out;
 	}
