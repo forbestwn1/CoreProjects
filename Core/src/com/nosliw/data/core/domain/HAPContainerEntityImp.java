@@ -48,4 +48,14 @@ public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  
 		}
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(eleArray.toArray(new String[0])));
 	}
+	
+	@Override
+	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+		List<String> eleArray = new ArrayList<String>();
+		for(T ele : this.getAllElementsInfo()) {
+			eleArray.add(ele.toExpandedJsonString(entityDefDomain));
+		}
+		return HAPJsonUtility.buildArrayJson(eleArray.toArray(new String[0]));
+	}
+
 }

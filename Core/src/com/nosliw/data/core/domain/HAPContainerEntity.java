@@ -29,4 +29,6 @@ public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends H
 	
 	HAPContainerEntity<T> cloneContainerEntity();
 
+	String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain);
+
 }

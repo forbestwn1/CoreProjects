@@ -20,6 +20,7 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 		this.m_index = -1;
 	}
 
+	@Override
 	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_LIST;    }
 	
 	public int getIndex() {   return this.m_index;    }
@@ -50,5 +51,12 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 			jsonMap.put(INDEX, this.m_index+"");
 			typeJsonMap.put(INDEX, Integer.class);
 		}
+	}
+	
+	@Override
+	protected void toExpanedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain) {
+		super.toExpanedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
+		jsonMap.put(INDEX, this.m_index+"");
+		typeJsonMap.put(INDEX, Integer.class);
 	}
 }

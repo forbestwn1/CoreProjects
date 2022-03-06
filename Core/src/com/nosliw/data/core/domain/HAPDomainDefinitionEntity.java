@@ -1,11 +1,16 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
@@ -26,7 +31,9 @@ import com.nosliw.data.core.structure.HAPProcessorStructure;
  * domain represent a collection of value structure, complex entity and their relationship
  * different domains does not share 
  */
-public class HAPDomainDefinitionEntity{
+public class HAPDomainDefinitionEntity extends HAPSerializableImp{
+	public static String ENTITY = "entity";
+	
 	//all other simple resource entity
 	private Map<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomain> m_entity;
 	
@@ -116,15 +123,24 @@ public class HAPDomainDefinitionEntity{
 		entityInfo.setBaseLocationPath(basePath);
 	}
 	
-	public void buildComplexParentRelation(HAPIdEntityInDomain entityId, HAPInfoParentComplex parentInfo) {
-		this.m_parentComplexInfo.put(entityId, parentInfo);
-	}
+	public void buildComplexParentRelation(HAPIdEntityInDomain entityId, HAPInfoParentComplex parentInfo) {		this.m_parentComplexInfo.put(entityId, parentInfo); 	}
+	public HAPInfoParentComplex getParentInfo(HAPIdEntityInDomain entityId) {    return this.m_parentComplexInfo.get(entityId);     }
 	
 	public HAPInfoDefinitionEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {		return this.m_entity.get(entityId); 	}
 	
 
-	
 	private String generateId() {    return this.m_idGenerator.generateId();    } 
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		List<String> entityArray = new ArrayList<String>(); 
+		for(HAPInfoDefinitionEntityInDomain entity : this.m_entity.values()) {
+			entityArray.add(entity.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ENTITY, HAPJsonUtility.buildArrayJson(entityArray.toArray(new String[0])));
+	}
+
+	
 	
 	
 	

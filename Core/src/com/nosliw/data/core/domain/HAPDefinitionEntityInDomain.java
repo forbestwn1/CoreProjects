@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.map.LinkedMap;
+
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -50,10 +52,6 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	
 	public Map<String, HAPContainerEntity> getContainerAttributes(){    return this.m_attributeContainer;     }
 	
-	public HAPIdEntityInDomain getContainerAttributeElement(String attributeName, HAPInfoContainerElement eleInfo) {
-		return this.m_attributeContainer.get(attributeName).getElement(eleInfo);
-	}
-	
 	public HAPIdEntityInDomain getConatinerAttributeElementByName(String attributeName, String eleName) {
 		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getElementEntityId();
 	}
@@ -74,21 +72,37 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		container.addEntityElement(eleInfo);
 	}
 
+	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
+		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
+		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
+	}
+	
+	//normal json
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		
-		Map<String, String> simpleAttrJsonMap = new LinkedHashMap<String, String>();
 		for(String attrName : this.m_attributesSimple.keySet()) {
-			simpleAttrJsonMap.put(attrName, this.m_attributesSimple.get(attrName).toStringValue(HAPSerializationFormat.JSON));
+			jsonMap.put(attrName, this.m_attributesSimple.get(attrName).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(SIMPLEATTRIBUTE, HAPJsonUtility.buildMapJson(simpleAttrJsonMap));
 		
-		Map<String, String> containerAttrJsonMap = new LinkedHashMap<String, String>();
 		for(String attrName : this.m_attributeContainer.keySet()) {
-			simpleAttrJsonMap.put(attrName, this.m_attributeContainer.get(attrName).toStringValue(HAPSerializationFormat.JSON));
+			jsonMap.put(attrName, this.m_attributeContainer.get(attrName).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(SIMPLEATTRIBUTE, HAPJsonUtility.buildMapJson(simpleAttrJsonMap));
+	}
+
+	//expanded json. expand all referenced 
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
+		for(String attrName : this.m_attributesSimple.keySet()) {
+			HAPIdEntityInDomain entityId = this.m_attributesSimple.get(attrName);
+			jsonMap.put(attrName, entityDefDomain.getEntityInfo(entityId).toExpandedJsonString(entityDefDomain));
+		}
+		
+		for(String attrName : this.m_attributeContainer.keySet()) {
+			jsonMap.put(attrName, this.m_attributeContainer.get(attrName).toExpandedJsonString(entityDefDomain));
+		}
 	}
 	
 	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomain) {

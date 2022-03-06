@@ -1,8 +1,14 @@
 package com.nosliw.data.core.domain;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 
-public class HAPInfoParentComplex {
+public class HAPInfoParentComplex extends HAPSerializableImp{
+
+	public static final String PARENTID = "parentId";
 
 	//parent complex entity
 	private HAPIdEntityInDomain m_parentId;
@@ -26,6 +32,12 @@ public class HAPInfoParentComplex {
 	public void hardMerge(HAPInfoParentComplex parentInfo) {
 		
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(PARENTID, this.m_parentId.toStringValue(HAPSerializationFormat.JSON));
+	}
+
 	
 	@Override
 	public HAPInfoDefinitionEntityInDomain cloneEntityDefinitionInfo() {

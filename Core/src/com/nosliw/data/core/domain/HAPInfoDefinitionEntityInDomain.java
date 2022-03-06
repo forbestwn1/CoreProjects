@@ -1,12 +1,20 @@
 package com.nosliw.data.core.domain;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 
+	//entity definition
+	public static final String ENTITYID = "entityId";
+	
 	//entity definition
 	public static final String ENTITY = "entity";
 	
@@ -71,5 +79,23 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain();
 		this.cloneToInfoDefinitionEntityInDomain(out);
 		return out;
+	}
+	
+	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
+		HAPInfoParentComplex parentInfo = entityDefDomain.getParentInfo(this.m_entityId);
+		if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
+		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		if(this.m_entityId!=null)   jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_resourceId!=null)  jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_reference!=null)   jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_extraInfo!=null)   jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

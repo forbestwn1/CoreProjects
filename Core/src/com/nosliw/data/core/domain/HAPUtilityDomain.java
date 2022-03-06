@@ -74,4 +74,8 @@ public class HAPUtilityDomain {
 	public static HAPConfigureComplexRelationInfo createDefaultInfoRelationConfigure() {
 		return new HAPConfigureComplexRelationInfo();
 	}
+	
+	public static String getEntityExpandedJsonString(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
+		return definitionDomain.getEntityInfo(entityId).toExpandedJsonString(definitionDomain);
+	}
 }
