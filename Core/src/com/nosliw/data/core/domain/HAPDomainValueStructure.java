@@ -9,7 +9,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComp
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 //all value structure infor in domain
@@ -21,7 +21,7 @@ public class HAPDomainValueStructure {
 	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
 	
 	//value structure definitions by id
-	private Map<String, HAPWrapperValueStructure> m_valueStructure;
+	private Map<String, HAPValueStructureGrouped> m_valueStructure;
 	
 	//value structure definition id by value structure runtime id 
 	private Map<String, String> m_definitionIdByRuntimeId;
@@ -31,7 +31,7 @@ public class HAPDomainValueStructure {
 
 	public HAPDomainValueStructure(HAPGeneratorId idGenerator) {
 		this.m_idGenerator = idGenerator;
-		this.m_valueStructure = new LinkedHashMap<String, HAPWrapperValueStructure>();
+		this.m_valueStructure = new LinkedHashMap<String, HAPValueStructureGrouped>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_valueStructureComplex = new LinkedHashMap<String, HAPDefinitionEntityComplexValueStructure>();
 	}
@@ -55,7 +55,7 @@ public class HAPDomainValueStructure {
 	
 	public HAPValueStructure getValueStructureByRuntimeId(String runtimeId) {	return this.getValueStructureWrapperByRuntimeId(runtimeId).getValueStructure();	}
 	
-	public HAPWrapperValueStructure getValueStructureWrapperByRuntimeId(String runtimeId) {	return this.m_valueStructure.get(this.m_definitionIdByRuntimeId.get(runtimeId));}
+	public HAPValueStructureGrouped getValueStructureWrapperByRuntimeId(String runtimeId) {	return this.m_valueStructure.get(this.m_definitionIdByRuntimeId.get(runtimeId));}
 	
 	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
 	
@@ -75,7 +75,7 @@ public class HAPDomainValueStructure {
 	
 	private String addValueStructureDefinition(HAPValueStructure valueStructure) {
 		String id = this.m_idGenerator.generateId();
-		HAPWrapperValueStructure wrapper = new HAPWrapperValueStructure(valueStructure);
+		HAPValueStructureGrouped wrapper = new HAPValueStructureGrouped(valueStructure);
 		wrapper.setId(id);
 		this.m_valueStructure.put(id, wrapper);
 		return id;

@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.operand.HAPOperandUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
@@ -17,7 +17,7 @@ import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPUtilityExpression {
 
-	public static HAPWrapperValueStructure getValueStructure(Object expressionGroupDef, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureGrouped getValueStructure(Object expressionGroupDef, HAPRuntimeEnvironment runtimeEnv) {
 		return HAPUtilityComponent.getValueStructure(expressionGroupDef, runtimeEnv);
 	}
 	

@@ -66,7 +66,7 @@ public abstract class HAPInfoContainerElement extends HAPSerializableImp{
 	protected void toExpanedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain) {
 		jsonMap.put(ELEMENTNAME, this.getElementName());
 		jsonMap.put(ENTITY, HAPUtilityDomain.getEntityExpandedJsonString(this.getElementEntityId(), entityDefDomain));
-		jsonMap.put(ENTITYID, this.getElementEntityId().toStringValue(HAPSerializationFormat.JSON));
+//		jsonMap.put(ENTITYID, this.getElementEntityId().toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 }

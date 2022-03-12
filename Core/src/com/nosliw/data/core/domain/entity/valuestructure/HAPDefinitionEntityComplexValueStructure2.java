@@ -2,29 +2,24 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
-public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityComplexValueStructure2 extends HAPDefinitionEntityInDomainSimple{
 
 	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
 
-	public static final String PART = "part";
-	
 	private int m_idIndex;
 	
 	private List<HAPPartComplexValueStructure> m_parts;
 	
 	private HAPGeneratorId m_idGenerator;
 	 
-	public HAPDefinitionEntityComplexValueStructure() {
+	public HAPDefinitionEntityComplexValueStructure2() {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
 	}
 	
@@ -63,8 +58,8 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 		HAPUtilityComplexValueStructure.sortParts(m_parts);
 	}
 	
-	public HAPDefinitionEntityComplexValueStructure cloneValueStructureComplex() {
-		HAPDefinitionEntityComplexValueStructure out = new HAPDefinitionEntityComplexValueStructure();
+	public HAPDefinitionEntityComplexValueStructure2 cloneValueStructureComplex() {
+		HAPDefinitionEntityComplexValueStructure2 out = new HAPDefinitionEntityComplexValueStructure2();
 		for(HAPPartComplexValueStructure part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}
@@ -84,16 +79,6 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 	
 	private String generateId(HAPInfoPartValueStructure partInfo) {
 		return partInfo.getName() + "_" + this.m_idIndex++;
-	}
-
-	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		List<String> partJsonArray = new ArrayList<String>();
-		for(HAPPartComplexValueStructure part : this.m_parts) {
-			partJsonArray.add(part.toExpandedJsonString(entityDefDomain));
-		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partJsonArray.toArray(new String[0])));
 	}
 
 }

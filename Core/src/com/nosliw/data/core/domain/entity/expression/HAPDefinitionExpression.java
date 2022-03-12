@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain.entity.expression;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -26,6 +28,12 @@ public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
 		HAPDefinitionExpression out = new HAPDefinitionExpression(this.m_expression);
 		this.cloneToEntityInfo(out);
 		return out;
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(EXPRESSION, this.m_expression);
 	}
 	
 	@Override

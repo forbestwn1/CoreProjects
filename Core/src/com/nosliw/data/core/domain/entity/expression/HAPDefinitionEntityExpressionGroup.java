@@ -1,15 +1,20 @@
 package com.nosliw.data.core.domain.entity.expression;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
@@ -42,7 +47,19 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityCompl
 		this.m_elements.put(expression.getId(), expression);  
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		List<String> expressionJsonArray = new ArrayList<String>();
+		for(HAPDefinitionExpression expression : this.m_elements.values()) {
+			expressionJsonArray.add(expression.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(expressionJsonArray.toArray(new String[0])));
+	}
 	
+	@Override
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
 	
 	
 	@Override

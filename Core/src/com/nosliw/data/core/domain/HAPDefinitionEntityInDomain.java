@@ -25,12 +25,14 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	
 	private String m_entityType;
 	
-	protected HAPDefinitionEntityInDomain() {}
-	
-	public HAPDefinitionEntityInDomain (String entityType) {
-		this.m_entityType = entityType;
+	protected HAPDefinitionEntityInDomain() {
 		this.m_attributesSimple = new LinkedHashMap<String, HAPIdEntityInDomain>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
+	}
+	
+	public HAPDefinitionEntityInDomain (String entityType) {
+		this();
+		this.m_entityType = entityType;
 	}
 
 	public abstract boolean isComplexEntity();
@@ -46,7 +48,14 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public HAPIdEntityInDomain getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
 
-	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain entityId) {		this.m_attributesSimple.put(attributeName, entityId);	}
+	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain entityId) {
+		if(entityId==null) {
+			this.m_attributesSimple.remove(attributeName);
+		}
+		else {
+			this.m_attributesSimple.put(attributeName, entityId);	
+		}
+	}
 	
 	public Map<String, HAPIdEntityInDomain> getSimpleAttributes(){    return this.m_attributesSimple;     }
 	

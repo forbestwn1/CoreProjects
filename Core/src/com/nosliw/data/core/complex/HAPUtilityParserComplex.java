@@ -10,7 +10,6 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPConfigureEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPManagerDomainEntity;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 

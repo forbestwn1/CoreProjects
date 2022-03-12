@@ -1,46 +1,68 @@
 package com.nosliw.data.core.domain.entity.valuestructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStructure{
 
+	public static final String VALUESTRUCTURE = "valueStructure";
+	
 	//id for runtime, if two part have the same 
 	private String m_runtimeId;
 
-	private HAPValueStructure m_valueStructure;
+	private List<HAPValueStructureGrouped> m_valueStructures;
 	
-	public HAPPartComplexValueStructureSimple(HAPValueStructure valueStructure, HAPInfoPartValueStructure partInfo) {
+	public HAPPartComplexValueStructureSimple(HAPValueStructureGrouped valueStructure, HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
-		this.m_valueStructure = valueStructure;
+		this.m_valueStructures = new ArrayList<HAPValueStructureGrouped>();
+		this.addValueStructure(valueStructure);
 	}
 	
-	public HAPPartComplexValueStructureSimple() {}
+	public HAPPartComplexValueStructureSimple() {
+		this.m_valueStructures = new ArrayList<HAPValueStructureGrouped>();
+	}
 	
 	@Override
 	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE;    }
 
+	public void addValueStructure(HAPValueStructureGrouped valueStructure) {   this.m_valueStructures.add(valueStructure);   }
+	
+	
 	public String getRuntimeId() {     return this.m_runtimeId;     }
 	
-	public HAPValueStructure getValueStructure() {    return this.m_valueStructure;    }
+	public HAPValueStructure getValueStructure() {    return this.m_valueStructures;    }
 	
 	public String getValueStructureDefinitionId() {   return this.m_valueStructureDefinitionId;    }
 	public HAPValueStructure setValueStructureDefinitionId(String id) {     
 		this.m_valueStructureDefinitionId = id;
-		HAPValueStructure out = this.m_valueStructure;
-		this.m_valueStructure = null;
+		HAPValueStructure out = this.m_valueStructures;
+		this.m_valueStructures = null;
 		return out;
 	}
 
 	public HAPPartComplexValueStructureSimple cloneValueStructureComplexPartSimple() {
 		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
 		this.cloneToEntityInfo(out);
-		out.m_valueStructure = this.m_valueStructure.cloneValueStructure();
+		out.m_valueStructures = this.m_valueStructures.cloneValueStructure();
 		return out;
 	}
 
 	@Override
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart() { return this.cloneValueStructureComplexPartSimple();  }
-	
+
+	@Override
+	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+		List<String> valueStructureJsonArray = new ArrayList<String>();
+		for(HAPValueStructureGrouped valueStructure : this.m_valueStructures) {
+			valueStructureJsonArray.add(valueStructure.toExpandedJsonString(entityDefDomain));
+		}
+		return HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0]));
+	}
+
 }

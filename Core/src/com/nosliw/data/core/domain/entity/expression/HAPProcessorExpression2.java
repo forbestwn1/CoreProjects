@@ -18,7 +18,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandTask;
@@ -223,7 +223,7 @@ public class HAPProcessorExpression2 {
 		HAPExecutableExpressionGroup out = new HAPExecutableExpressionGroup(id);
 		
 		//structure
-		HAPWrapperValueStructure valueStructureWrapper =  expressionGroupDef.getValueStructureWrapper();
+		HAPValueStructureGrouped valueStructureWrapper =  expressionGroupDef.getValueStructureWrapper();
 		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//constant

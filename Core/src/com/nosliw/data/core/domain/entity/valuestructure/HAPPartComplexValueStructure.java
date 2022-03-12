@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.valuestructure;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
 public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
@@ -20,10 +21,11 @@ public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
 	
 	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart();
 	
+	abstract public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain);
+	
 	private HAPInfoPartValueStructure processPartInfo(HAPInfoPartValueStructure partInfo) {
 		HAPInfoPartValueStructure out = partInfo;
 		if(out==null)  out = HAPUtilityComplexValueStructure.createPartInfoDefault();  
 		return out;
 	}
-
 }

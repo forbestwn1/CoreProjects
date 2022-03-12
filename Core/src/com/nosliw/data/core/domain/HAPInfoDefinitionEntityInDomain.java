@@ -84,6 +84,7 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		this.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
 		HAPInfoParentComplex parentInfo = entityDefDomain.getParentInfo(this.m_entityId);
 		if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));

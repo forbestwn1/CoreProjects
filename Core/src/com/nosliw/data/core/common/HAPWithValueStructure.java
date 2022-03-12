@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 public interface HAPWithValueStructure {
 
 	@HAPAttribute
-	public static String VALUESTRUCTURE = "valuestructure";
+	public static String VALUESTRUCTURE = "valueStructure";
 	
 	HAPIdEntityInDomain getValueStructureComplexId();
 
