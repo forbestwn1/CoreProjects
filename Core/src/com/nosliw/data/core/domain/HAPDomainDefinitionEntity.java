@@ -42,7 +42,9 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 	private HAPGeneratorId m_idGenerator;
 	
 	//entity that don't have parent
-	private HAPIdEntityInDomain m_rootEntity;
+	private HAPIdEntityInDomain m_mainComplexEntityId;
+	
+	private HAPIdEntityInDomain m_rootComplexEntityId;
 	
 	//parent info for entity id
 	private Map<HAPIdEntityInDomain, HAPInfoParentComplex> m_parentComplexInfo;
@@ -53,19 +55,12 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 
 	private HAPManagerDomainEntityDefinition m_entityDefMan;
 	
-	//all complex entity by id
-//	private Map<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomainComplex> m_complexEntity;
-	
-	//complex entity tree 
-//	private Map<HAPIdEntityInDomain, Set<HAPIdEntityInDomain>> m_childrensByParent;
-//	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_parentByChild;
-
-
 	public HAPDomainDefinitionEntity(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
 		this.m_idGenerator = idGenerator;
 		this.m_entityDefMan = entityDefMan;
 		this.m_entity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoDefinitionEntityInDomain>();
 		this.m_parentComplexInfo = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoParentComplex>();
+		this.m_complexEntityIdByResourceId = new LinkedHashMap<HAPResourceId, HAPResourceDefinition>();
 	}
 
 	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, HAPInfoDefinitionEntityInDomain entityInfo) {
@@ -125,6 +120,9 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 		entityInfo.setBaseLocationPath(basePath);
 	}
 	
+	public void setMainComplexEntityId(HAPIdEntityInDomain mainEntityId) {    this.m_mainComplexEntityId = mainEntityId;     }
+	public HAPIdEntityInDomain getMainComplexEntityId() {    return this.m_mainComplexEntityId;    }
+	
 	public void buildComplexParentRelation(HAPIdEntityInDomain entityId, HAPInfoParentComplex parentInfo) {		this.m_parentComplexInfo.put(entityId, parentInfo); 	}
 	public HAPInfoParentComplex getParentInfo(HAPIdEntityInDomain entityId) {    return this.m_parentComplexInfo.get(entityId);     }
 	
@@ -145,18 +143,24 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 	}
 
 	//complex entity tree root
-	public Set<HAPIdEntityInDomain> getRootComplexEntity(){     
-		if(m_rootEntity==null) {
-			this.m_rootEntity = new HashSet<HAPIdEntityInDomain>();
-			for(HAPInfoDefinitionEntityInDomain entityDefInfo : this.m_entity.values()) {
+	public HAPIdEntityInDomain getRootComplexEntity(){
+		HAPIdEntityInDomain out = null;
+		if(m_rootComplexEntityId==null) {
+			HAPIdEntityInDomain entityId = this.m_mainComplexEntityId;
+			do {
+				HAPInfoDefinitionEntityInDomain entityDefInfo = this.getEntityInfo(entityId);
 				if(entityDefInfo.isComplexEntity()) {
-					if(this.m_parentComplexInfo.get(entityDefInfo.getEntityId())==null) {
-						this.m_rootEntity.add(entityDefInfo.getEntityId());
+					HAPInfoParentComplex parentInfo = this.m_parentComplexInfo.get(entityDefInfo.getEntityId());
+					if(parentInfo==null) {
+						m_rootComplexEntityId = entityId;
+					}
+					else {
+						entityId = parentInfo.getParentId();
 					}
 				}
-			}
+			}while(m_rootComplexEntityId==null);
 		}
-		return this.m_rootEntity;
+		return this.m_rootComplexEntityId;
 	}
 	
 	
@@ -261,7 +265,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 			}
 			else {
 				//no parent, root entity
-				this.m_rootEntity.add(entityId);
+				this.m_rootComplexEntityId.add(entityId);
 			}
 		}
 	}
@@ -280,7 +284,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 	}
 	
 	private void traverseAllEntity(HAPHandlerComplexEntity handler) {
-		for(HAPIdEntityInDomain entityId : this.m_rootEntity) {
+		for(HAPIdEntityInDomain entityId : this.m_rootComplexEntityId) {
 			traverseEntity(entityId, handler);
 		}
 	}

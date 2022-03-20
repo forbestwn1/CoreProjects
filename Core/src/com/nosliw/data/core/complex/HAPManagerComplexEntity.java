@@ -3,7 +3,6 @@ package com.nosliw.data.core.complex;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContainerEntity;
@@ -68,27 +67,19 @@ public class HAPManagerComplexEntity {
 		
 		
 		//build executable complexe entity
-		Set<HAPIdEntityInDomain> rootIds = defDomain.getRootComplexEntity();
-		for(HAPIdEntityInDomain rootId : rootIds) {
-			buildExecutableTree(rootId, processContext);
-		}
+		HAPIdEntityInDomain rootId = defDomain.getRootComplexEntity();
+		buildExecutableTree(rootId, processContext);
 		
 		//process attachment
-		for(HAPIdEntityInDomain rootId : rootIds) {
-			processAttachmentTree(rootId, processContext);
-		}
+		processAttachmentTree(rootId, processContext);
 
 		//expand attachment reference
 		
 		//expand reference in value strucutre
-		for(HAPIdEntityInDomain rootId : rootIds) {
-			expandValueStructure(rootId, processContext);
-		}
+		expandValueStructure(rootId, processContext);
 
 		//process value structure
-		for(HAPIdEntityInDomain rootId : rootIds) {
-			processValueStructureTree(rootId, processContext);
-		}
+		processValueStructureTree(rootId, processContext);
 		
 		HAPPluginComplexEntityProcessor processPlugin = this.m_processorPlugins.get(complexEntityDefinitionId.getEntityType());
 		processPlugin.process(complexEntityDefinitionId, processContext);

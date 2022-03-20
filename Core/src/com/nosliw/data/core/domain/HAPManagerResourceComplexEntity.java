@@ -19,6 +19,7 @@ public class HAPManagerResourceComplexEntity {
 		HAPContextDomain domainContext = new HAPContextDomain(this.m_runtimeEnv.getDomainEntityManager());
 		//build definition domain
 		HAPResourceDefinition resourceDefinition = m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
+		domainContext.getDefinitionDomain().setMainComplexEntityId(resourceDefinition.getEntityId());
 		
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, resourceDefinition.getEntityId(), m_runtimeEnv); 

@@ -33,7 +33,7 @@ public class HAPManagerResourceDefinition {
 		HAPResourceDefinition out = null;
 		out = entityDomain.getResourceDefinition(resourceId);
 		if(out==null) {
-			new HAPResourceDefinition(resourceId);
+			out = new HAPResourceDefinition(resourceId);
 			String resourceType = resourceId.getResourceType();
 			String resourceStructure = resourceId.getStructure();
 			if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
