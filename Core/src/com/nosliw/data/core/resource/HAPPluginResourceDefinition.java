@@ -1,6 +1,5 @@
 package com.nosliw.data.core.resource;
 
-import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
@@ -25,6 +24,6 @@ public interface HAPPluginResourceDefinition {
 	 * domain : domain that entity for resource add to
 	 * return : id for the entity
 	 */
-	HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPPathLocationBase localRefBase, HAPDomainDefinitionEntity entityDomain);
+	HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPDomainDefinitionEntity entityDomain);
 
 }

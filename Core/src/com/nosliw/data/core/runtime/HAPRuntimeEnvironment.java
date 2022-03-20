@@ -6,7 +6,7 @@ import com.nosliw.data.core.complex.HAPManagerComplexEntity;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.process1.HAPManagerProcess;
@@ -57,7 +57,7 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
-	HAPManagerDomainEntity getDomainEntityManager();
+	HAPManagerDomainEntityDefinition getDomainEntityManager();
 	
 	HAPManagerComplexEntity getComplexEntityManager();
 	

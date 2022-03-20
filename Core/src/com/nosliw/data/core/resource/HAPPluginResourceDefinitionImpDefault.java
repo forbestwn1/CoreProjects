@@ -7,7 +7,7 @@ import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -15,11 +15,11 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 
 	private String m_resourceType;
 	
-	private HAPManagerDomainEntity m_domainEntityManager;
+	private HAPManagerDomainEntityDefinition m_domainEntityManager;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPPluginResourceDefinitionImpDefault(String resourceType, HAPManagerDomainEntity domainEntityManager) {
+	public HAPPluginResourceDefinitionImpDefault(String resourceType, HAPManagerDomainEntityDefinition domainEntityManager) {
 		this.m_resourceType = resourceType;
 		this.m_domainEntityManager = domainEntityManager;
 	}
@@ -38,7 +38,8 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	}
 
 	@Override
-	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPPathLocationBase localRefBase, HAPDomainDefinitionEntity definitionDomain) {
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPDomainDefinitionEntity definitionDomain) {
+		HAPPathLocationBase localRefBase = localResourceId.getBasePath();
 		String path = localRefBase.getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
 		HAPIdEntityInDomain out = this.parseEntity(HAPFileUtility.readFile(path), definitionDomain, localRefBase);
 		return out;

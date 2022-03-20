@@ -28,6 +28,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	protected HAPDefinitionEntityInDomain() {
 		this.m_attributesSimple = new LinkedHashMap<String, HAPIdEntityInDomain>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
+		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(this.getClass());
 	}
 	
 	public HAPDefinitionEntityInDomain (String entityType) {
@@ -35,8 +36,6 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		this.m_entityType = entityType;
 	}
 
-	public abstract boolean isComplexEntity();
-	
 	public abstract HAPEntityOrReference getChild(String childName);
 
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();

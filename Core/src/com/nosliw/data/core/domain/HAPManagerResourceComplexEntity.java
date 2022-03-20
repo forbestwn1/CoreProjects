@@ -16,13 +16,13 @@ public class HAPManagerResourceComplexEntity {
 	}
 
 	public HAPResultExecutableEntityInDomain getExecutableComplexEntity(HAPResourceId resourceId) {
-		HAPContextDomain domainContext = new HAPContextDomain();
+		HAPContextDomain domainContext = new HAPContextDomain(this.m_runtimeEnv.getDomainEntityManager());
 		//build definition domain
-		HAPResourceDefinition resourceDefinition = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
+		HAPResourceDefinition resourceDefinition = m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
 		
 		//process definition
-		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, resourceDefinition.getEntityId(), this.m_runtimeEnv); 
-		HAPIdEntityInDomain exeEntityId = this.m_runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
+		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, resourceDefinition.getEntityId(), m_runtimeEnv); 
+		HAPIdEntityInDomain exeEntityId = m_runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 

@@ -1,7 +1,5 @@
 package com.nosliw.data.core.domain;
 
-import java.lang.reflect.Field;
-
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -17,12 +15,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		this.m_entityClass = entityClass;
 		
 		//get entity type from class
-		try {
-			Field f = this.m_entityClass.getField("ENTITY_TYPE");
-			this.m_entityType = (String)f.get(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(entityClass);
 	}
 	
 	@Override

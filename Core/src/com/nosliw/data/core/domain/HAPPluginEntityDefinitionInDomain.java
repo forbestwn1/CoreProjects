@@ -11,4 +11,6 @@ public interface HAPPluginEntityDefinitionInDomain {
 
 	//parse json to entity, and set entity to existing entity in domain
 	void parseDefinition(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
+
+	boolean isComplexEntity();
 }

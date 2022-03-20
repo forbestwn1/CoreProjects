@@ -17,10 +17,12 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionInDomainAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpression;
+import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPProcessorAttachmentEntityExpression;
@@ -104,7 +106,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
-	private HAPManagerDomainEntity m_domainEntityManager;
+	private HAPManagerDomainEntityDefinition m_domainEntityManager;
 	
 	private HAPManagerComplexEntity m_complexEntityManager;
  	
@@ -133,7 +135,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerService serviceManager,
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
-		    HAPManagerDomainEntity domainEntityManager,
+		    HAPManagerDomainEntityDefinition domainEntityManager,
 			HAPManagerComplexEntity complexEntityManager,
 			HAPManagerAttachment attachmentManager,
 		    HAPManagerCronJob cronJobManager,
@@ -158,7 +160,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerService serviceManager,
 			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
-			    HAPManagerDomainEntity domainEntityManager,
+			    HAPManagerDomainEntityDefinition domainEntityManager,
 				HAPManagerComplexEntity complexEntityManager,
 				HAPManagerAttachment attachmentManager,
 			    HAPManagerCronJob cronJobManager,
@@ -237,12 +239,16 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPParserResourceDefinitionStructure()));
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
+		//domain entity
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainAttachment(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructureComplex(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructure(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionSuite(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpression(this));
-		
+
+		//complex entity
+		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
+		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
 		
 		//runtime
 		this.m_runtime = runtime;
@@ -286,7 +292,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerResourceDefinition getResourceDefinitionManager() {  return this.m_resourceDefinitionManager;  }
 
 	@Override
-	public HAPManagerDomainEntity getDomainEntityManager() {  return this.m_domainEntityManager;  }
+	public HAPManagerDomainEntityDefinition getDomainEntityManager() {  return this.m_domainEntityManager;  }
 
 	@Override
 	public HAPManagerComplexEntity getComplexEntityManager() {   return this.m_complexEntityManager;   }

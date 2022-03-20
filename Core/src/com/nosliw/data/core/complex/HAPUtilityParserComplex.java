@@ -10,13 +10,13 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 
 public class HAPUtilityParserComplex {
 
 	//parse value structure in complex
-	public static void parseValueStructureInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntity domainEntityManager) {
+	public static void parseValueStructureInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntityDefinition domainEntityManager) {
 		HAPInfoDefinitionEntityInDomain complexEntityInfo = definitionDomain.getEntityInfo(complexEntityId);
 		
 		//parse value structure
@@ -27,7 +27,7 @@ public class HAPUtilityParserComplex {
 	}
 	
 	//parse attachment in complex
-	public static void parseAttachmentInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntity domainEntityManager) {
+	public static void parseAttachmentInComplex(HAPIdEntityInDomain complexEntityId, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain, HAPManagerDomainEntityDefinition domainEntityManager) {
 		HAPInfoDefinitionEntityInDomain complexEntityInfo = definitionDomain.getEntityInfo(complexEntityId);
 		
 		//parse attachment
@@ -41,7 +41,7 @@ public class HAPUtilityParserComplex {
 	public static void parseContentInComplexContainerEntity(HAPIdEntityInDomain entityId, JSONObject jsonObj, String elementEntityType, HAPConfigureParentRelationComplex parentRelation, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexContainer containerEntity  = (HAPDefinitionEntityComplexContainer)parserContext.getDefinitionDomain().getComplexEntityInfo(entityId).getComplexEntity();
 		
-		HAPManagerDomainEntity domainEntityMan = parserContext.getRuntimeEnvironment().getDomainEntityManager();
+		HAPManagerDomainEntityDefinition domainEntityMan = parserContext.getRuntimeEnvironment().getDomainEntityManager();
 		
 		//parse complex part
 		parseContentInComplexEntity(entityId, jsonObj, parserContext);

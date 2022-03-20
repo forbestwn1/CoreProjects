@@ -5,6 +5,8 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPPluginComplexEntityProcessor {
 
+	String getEntityType();
+	
 	//process definition
 	void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext);
 

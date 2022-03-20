@@ -30,33 +30,39 @@ public class HAPManagerResourceDefinition {
 	}
 
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainDefinitionEntity entityDomain, HAPPathLocationBase localRefBase) {
-		HAPResourceDefinition out = new HAPResourceDefinition(resourceId);
-		String resourceType = resourceId.getResourceType();
-		String resourceStructure = resourceId.getStructure();
-		if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
-			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
-			HAPIdEntityInDomain resourceEntityId = this.m_plugins.get(resourceType).getResourceEntityBySimpleResourceId(simpleId, entityDomain);
-			out.setEntityId(resourceEntityId);
+		HAPResourceDefinition out = null;
+		out = entityDomain.getResourceDefinition(resourceId);
+		if(out==null) {
+			new HAPResourceDefinition(resourceId);
+			String resourceType = resourceId.getResourceType();
+			String resourceStructure = resourceId.getStructure();
+			if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+				HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
+				HAPIdEntityInDomain resourceEntityId = this.m_plugins.get(resourceType).getResourceEntityBySimpleResourceId(simpleId, entityDomain);
+				out.setEntityId(resourceEntityId);
+			}
+			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
+				localResourceId.setBasePath(localRefBase);
+				HAPIdEntityInDomain entityId =  this.m_plugins.get(resourceType).getResourceEntityByLocalResourceId(localResourceId, entityDomain);
+				out.setEntityId(entityId);
+			}
+			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+				HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
+				//get parent resource def first
+				HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), entityDomain, localRefBase);
+				HAPInfoDefinitionEntityInDomain parentEntityInfo = entityDomain.getEntityInfo(parentResourceDef.getEntityId());
+				HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
+				//get child resource by path
+				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
+				out.setEntityId(entityId);
+			}
+			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
+//				HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
+//				out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
+			}
+			entityDomain.addResourceInfo(out);
 		}
-		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
-			HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
-			HAPIdEntityInDomain entityId =  this.m_plugins.get(resourceType).getResourceEntityByLocalResourceId(localResourceId, localRefBase, entityDomain);
-			out.setEntityId(entityId);
-		}
-		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
-			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
-			//get parent resource def first
-			HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), entityDomain, localRefBase);
-			HAPInfoDefinitionEntityInDomain parentEntityInfo = entityDomain.getEntityInfo(parentResourceDef.getEntityId());
-			HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
-			//get child resource by path
-			HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
-			out.setEntityId(entityId);
-		}
-		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
-//			HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
-//			out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
-		} 
 		
 //		if(out instanceof HAPWithAttachment) {
 //			//merge attachment with supplment in resource id

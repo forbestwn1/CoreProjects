@@ -11,8 +11,10 @@ import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
+	
+	public static final String ENTITYTYPE = "entityType";
 
-	//entity definition
+	//entity id
 	public static final String ENTITYID = "entityId";
 	
 	//entity definition
@@ -30,6 +32,8 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	//parent info definition
 	public static final String PARENT = "parent";
 	
+	private String m_entityType;
+	
 	//location path base info
 	private HAPPathLocationBase m_baseLocationPath;
 
@@ -45,10 +49,21 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 
 	//extra info provided by user (name, description, alias, global id, info, ...)
 	private HAPInfoDefinitionEntityInDomainExtra m_extraInfo;
+
+	//calculated value from entity type
+	private boolean m_isComplex;
 	
 	public HAPInfoDefinitionEntityInDomain() {
 		this.m_extraInfo = new HAPInfoDefinitionEntityInDomainExtra();
+		this.m_isComplex = false;
 	}
+
+	public HAPInfoDefinitionEntityInDomain(String entityType) {
+		this();
+		this.m_entityType = entityType;
+	}
+	
+	public String getEntityType() {    return this.m_entityType;    }
 	
 	public HAPDefinitionEntityInDomain getEntity() {     return this.m_entity;     }
 	public void setEntity(HAPDefinitionEntityInDomain entityDef) {   this.m_entity = entityDef;    }
@@ -67,9 +82,11 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 
 	public HAPInfoDefinitionEntityInDomainExtra getExtraInfo() {   return this.m_extraInfo;      }
 	
-	public boolean isComplexEntity() {   return false;   }
+	public boolean isComplexEntity() {   return this.m_isComplex;   }
+	public void setIsComplexEntity(boolean isComplex) {    this.m_isComplex = isComplex;     }
 	
 	public void cloneToInfoDefinitionEntityInDomain(HAPInfoDefinitionEntityInDomain out) {
+		out.m_isComplex = this.m_isComplex;
 		if(this.m_baseLocationPath!=null)  out.m_baseLocationPath = this.m_baseLocationPath.cloneLocalReferenceBase();
 		if(this.m_entity!=null)  out.m_entity = this.m_entity.cloneEntityDefinitionInDomain();
 		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneIdEntityInDomain();
@@ -93,6 +110,7 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		if(this.m_entityId!=null)   jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_resourceId!=null)  jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_reference!=null)   jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));

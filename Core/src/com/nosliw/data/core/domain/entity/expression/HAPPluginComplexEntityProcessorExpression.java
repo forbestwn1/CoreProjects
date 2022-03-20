@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessor;
+import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.complex.HAPResultSolveReference;
 import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
@@ -40,10 +40,11 @@ import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementRefere
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
-public class HAPPluginComplexEntityProcessorExpression implements HAPPluginComplexEntityProcessor{
+public class HAPPluginComplexEntityProcessorExpression extends HAPPluginComplexEntityProcessorImp{
 
-	@Override
-	public HAPExecutableEntityComplex newExecutable() {  return new HAPExecutableExpressionGroup(); }
+	public HAPPluginComplexEntityProcessorExpression() {
+		super(HAPExecutableExpressionGroup.class);
+	}
 
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {

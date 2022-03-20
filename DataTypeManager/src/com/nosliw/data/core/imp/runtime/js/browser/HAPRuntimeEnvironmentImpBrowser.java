@@ -10,7 +10,7 @@ import com.nosliw.data.core.complex.HAPManagerComplexEntity;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.HAPManagerDomainEntity;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
@@ -85,7 +85,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerComplexEntity complexEntityManager = new HAPManagerComplexEntity();
-		HAPManagerDomainEntity domainEntityManager = new HAPManagerDomainEntity();
+		HAPManagerDomainEntityDefinition domainEntityManager = new HAPManagerDomainEntityDefinition();
 		
 		init(
 			dataTypeManager,

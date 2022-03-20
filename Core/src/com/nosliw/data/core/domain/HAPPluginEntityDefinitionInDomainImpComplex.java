@@ -5,12 +5,15 @@ import org.json.JSONObject;
 import com.nosliw.data.core.complex.HAPUtilityParserComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public abstract class HAPPluginEntityDefinitionInDomainComplex extends HAPPluginEntityDefinitionInDomainImp{
+public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPluginEntityDefinitionInDomainImp{
 
-	public HAPPluginEntityDefinitionInDomainComplex(Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginEntityDefinitionInDomainImpComplex(Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
 		super(entityClass, runtimeEnv);
 	}
 
+	@Override
+	public boolean isComplexEntity() {    return true;   }
+	
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainDefinitionEntity definitionDomain) {
 		JSONObject jsonObj = (JSONObject)obj;

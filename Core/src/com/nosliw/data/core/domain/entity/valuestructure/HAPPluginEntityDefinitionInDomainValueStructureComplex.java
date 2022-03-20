@@ -7,12 +7,12 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	public HAPPluginEntityDefinitionInDomainValueStructureComplex(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPDefinitionEntityComplexValueStructure.class, runtimeEnv);

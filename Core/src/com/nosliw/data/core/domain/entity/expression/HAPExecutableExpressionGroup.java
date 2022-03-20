@@ -29,6 +29,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 @HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
 public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 
+	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;
+
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 

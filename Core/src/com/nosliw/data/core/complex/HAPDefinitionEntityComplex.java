@@ -18,9 +18,6 @@ public class HAPDefinitionEntityComplex extends HAPDefinitionEntityInDomain impl
 	}
 	
 	@Override
-	public boolean isComplexEntity() {    return true;   }
-
-	@Override
 	public HAPEntityOrReference getChild(String childName) {  return null;  }
 
 	@Override

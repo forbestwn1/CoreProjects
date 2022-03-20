@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -76,6 +77,20 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getResourceType());
 		out.m_path = this.m_path;
 		out.m_parentId = this.m_parentId.clone();
+		return out;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		boolean out = false;
+		if(super.equals(o)) {
+			if(o instanceof HAPResourceIdEmbeded){
+				HAPResourceIdEmbeded resourceId = (HAPResourceIdEmbeded)o;
+				if(HAPBasicUtility.isEquals(this.getParentResourceId(), resourceId.getParentResourceId())) {
+					return HAPBasicUtility.isEquals(this.getPath(), resourceId.getPath());
+				}
+			}
+		}
 		return out;
 	}
 }

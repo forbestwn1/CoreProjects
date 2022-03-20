@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain;
 
+import java.lang.reflect.Field;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
@@ -78,4 +80,23 @@ public class HAPUtilityDomain {
 	public static String getEntityExpandedJsonString(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
 		return definitionDomain.getEntityInfo(entityId).toExpandedJsonString(definitionDomain);
 	}
+	
+	public static HAPInfoDefinitionEntityInDomain newEntityDefinitionInfoInDomain(String entityType, HAPManagerDomainEntityDefinition entityDefMan) {
+		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain(entityType);
+		out.setIsComplexEntity(entityDefMan.isComplexEntity(entityType));
+		return out;
+	}
+	
+	//get entity type from class
+	public static String getEntityTypeFromEntityClass(Class<? extends HAPDefinitionEntityInDomain> entityClass) {
+		String out = null;
+		try {
+			Field f = entityClass.getField("ENTITY_TYPE");
+			out = (String)f.get(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+	
 }

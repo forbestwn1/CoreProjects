@@ -3,11 +3,11 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HAPManagerDomainEntity {
+public class HAPManagerDomainEntityDefinition {
 
 	private Map<String, HAPPluginEntityDefinitionInDomain> m_entityDefinitionPlugin;
 	
-	public HAPManagerDomainEntity() {
+	public HAPManagerDomainEntityDefinition() {
 		this.m_entityDefinitionPlugin = new LinkedHashMap<String, HAPPluginEntityDefinitionInDomain>();
 	}
 	
@@ -19,5 +19,6 @@ public class HAPManagerDomainEntity {
 	public void registerEntityDefinitionPlugin(HAPPluginEntityDefinitionInDomain plugin) {
 		this.m_entityDefinitionPlugin.put(plugin.getEntityType(), plugin);
 	}
-	
+
+	public boolean isComplexEntity(String entityType) {     return this.m_entityDefinitionPlugin.get(entityType).isComplexEntity();   }
 }

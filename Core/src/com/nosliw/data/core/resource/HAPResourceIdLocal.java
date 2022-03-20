@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPPathLocationBase;
@@ -21,7 +22,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@HAPAttribute
 	public static String NAME = "name";
 
-//	private HAPLocalReferenceBase m_basePath;
+	private HAPPathLocationBase m_basePath;
 	
 	private String m_name;
 
@@ -32,8 +33,8 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_LOCAL;  }
 
-//	public HAPLocalReferenceBase getBasePath() {   return this.m_basePath;   }
-//	public void setBasePath(HAPLocalReferenceBase base) {   this.m_basePath = base;   }
+	public HAPPathLocationBase getBasePath() {   return this.m_basePath;   }
+	public void setBasePath(HAPPathLocationBase base) {   this.m_basePath = base;   }
 	
 	public String getName() {   return this.m_name;   }
 	public void setName(String name) {    this.m_name = name;    }
@@ -74,6 +75,18 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 		return out;
 	}
 	
+	@Override
+	public boolean equals(Object o){
+		boolean out = false;
+		if(super.equals(o)) {
+			if(o instanceof HAPResourceIdLocal){
+				HAPResourceIdLocal resourceId = (HAPResourceIdLocal)o;
+				return HAPBasicUtility.isEquals(this.getBasePath(), resourceId.getBasePath());
+			}
+		}
+		return out;
+	}
+
 	protected void cloneFrom(HAPResourceIdLocal resourceId){
 		super.cloneFrom(resourceId);
 		this.m_basePath = resourceId.m_basePath;

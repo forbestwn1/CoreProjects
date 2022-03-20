@@ -5,9 +5,6 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 public class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomain{
 
 	@Override
-	public boolean isComplexEntity() {  return false;   }
-
-	@Override
 	public HAPEntityOrReference getChild(String path) {  return null;  }
 
 	@Override

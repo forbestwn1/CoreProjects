@@ -15,7 +15,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPUtilityParserEntity {
 
-	public static List<HAPInfoContainerElement> parseContainer(JSONObject containerObj, String eleEntityType, String containerType, HAPContextParser parserContext, HAPManagerDomainEntity domainEntityManager) {
+	public static List<HAPInfoContainerElement> parseContainer(JSONObject containerObj, String eleEntityType, String containerType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager) {
 		List<HAPInfoContainerElement> out = new ArrayList<HAPInfoContainerElement>();
 		JSONArray eleArrayObj = containerObj.getJSONArray(HAPContainerEntity.ELEMENT);
 		for(int i=0; i<eleArrayObj.length(); i++) {
@@ -30,7 +30,7 @@ public class HAPUtilityParserEntity {
 		return out;
 	}
 	
-	public static List<HAPInfoContainerElement> parseComplexContainer(JSONObject containerObj, String eleEntityType, String containerType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntity domainEntityManager) {
+	public static List<HAPInfoContainerElement> parseComplexContainer(JSONObject containerObj, String eleEntityType, String containerType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager) {
 		JSONObject parentRelationConfigureObjCustomer = containerObj.optJSONObject(HAPInfoDefinitionEntityInDomain.PARENT);
 		HAPConfigureParentRelationComplex parentRelationConfigureCustomer = null;
 		if(parentRelationConfigureObjCustomer!=null) {
@@ -70,7 +70,7 @@ public class HAPUtilityParserEntity {
 	}
 	
 	//parse entity into domain
-	public static HAPIdEntityInDomain parseEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntity domainEntityManager) {
+	public static HAPIdEntityInDomain parseEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager) {
 		HAPIdEntityInDomain out = null;
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
@@ -80,7 +80,7 @@ public class HAPUtilityParserEntity {
 				Object resourceObj = jsonObj.opt(HAPInfoDefinitionEntityInDomain.RESOURCEID);
 				if(resourceObj!=null) {
 					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(entityType, resourceObj);
-					out = parserContext.getDefinitionDomain().addEntityOrReference(resourceId);
+					out = parserContext.getDefinitionDomain().addEntityOrReference(resourceId, entityType);
 				}
 			}
 			//reference
@@ -88,7 +88,7 @@ public class HAPUtilityParserEntity {
 				Object referenceObj = jsonObj.opt(HAPInfoDefinitionEntityInDomain.REFERENCE);
 				if(referenceObj!=null) {
 					HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityType);
-					out = parserContext.getDefinitionDomain().addEntityOrReference(reference);
+					out = parserContext.getDefinitionDomain().addEntityOrReference(reference, entityType);
 				}
 			}
 			//entity
@@ -108,7 +108,7 @@ public class HAPUtilityParserEntity {
 		return out;
 	}
 	
-	public static HAPIdEntityInDomain parseComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntity domainEntityManager) {
+	public static HAPIdEntityInDomain parseComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager) {
 		//entity itself
 		HAPIdEntityInDomain out = parseEntity(obj, entityType, parserContext, domainEntityManager);
 
