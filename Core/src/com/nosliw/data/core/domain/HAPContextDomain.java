@@ -21,6 +21,7 @@ public class HAPContextDomain {
 	
 	//connection between executable entity to definition entity
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionIdByExecutableId;
+	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableIdByDefinitionId;
 
 	private HAPGeneratorId m_idGenerator;
 	
@@ -29,6 +30,7 @@ public class HAPContextDomain {
 		this.m_definitionDomain = new HAPDomainDefinitionEntity(this.m_idGenerator, domainEntityDefMan);
 		this.m_executableDomain = new HAPDomainExecutableEntity(this.m_idGenerator);
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
+		this.m_executableIdByDefinitionId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
@@ -38,13 +40,11 @@ public class HAPContextDomain {
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPIdEntityInDomain definitionId) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity);
 		this.m_definitionIdByExecutableId.put(out, definitionId);
+		this.m_executableIdByDefinitionId.put(definitionId, out);
 		return out;
 	}
 
-	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain definitionEntityId) {
-		
-		
-	}
+	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain definitionEntityId) {	return this.m_executableIdByDefinitionId.get(definitionEntityId);	}
 	
 	public HAPExecutableEntityComplex getExecutableEntityByExecutableId(HAPIdEntityInDomain executableId) {
 		

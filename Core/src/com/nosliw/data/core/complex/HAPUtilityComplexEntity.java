@@ -15,7 +15,6 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPConfigureEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
@@ -32,17 +31,17 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPUtilityComplexEntity {
 
 	public static void traversComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
-		traversComplexEntityDefinitionTree(processContext.getDomainContext().getDefinitionDomain().getComplexEntityInfo(entityId), null, processor, processContext);
+		traversComplexEntityDefinitionTree(processContext.getDomainContext().getDefinitionDomain().getEntityInfo(entityId), null, processor, processContext);
 	}
 
-	private static void traversComplexEntityDefinitionTree(HAPConfigureEntityInDomainComplex complexEntityInfo, HAPConfigureEntityInDomainComplex parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
+	private static void traversComplexEntityDefinitionTree(HAPInfoDefinitionEntityInDomain complexEntityInfo, HAPInfoDefinitionEntityInDomain parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
 		//process current entity
 		processor.process(complexEntityInfo, parentComplexEntityInfo, processContext);
 		
 		HAPContextDomain domainContext = processContext.getDomainContext();
 		HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
 
-		HAPDefinitionEntityComplex complexEntityDef = complexEntityInfo.getComplexEntity();
+		HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)complexEntityInfo.getEntity();
 				
 		//process attribute entity
 		Map<String, HAPIdEntityInDomain> simpleAttributes = complexEntityDef.getSimpleAttributes();
@@ -50,7 +49,7 @@ public class HAPUtilityComplexEntity {
 			HAPIdEntityInDomain attrEntityDefId = simpleAttributes.get(attrName);
 			HAPInfoDefinitionEntityInDomain attrEntityInfo = defDomain.getEntityInfo(attrEntityDefId);
 			if(attrEntityInfo.isComplexEntity()) {
-				traversComplexEntityDefinitionTree((HAPConfigureEntityInDomainComplex)attrEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
+				traversComplexEntityDefinitionTree(attrEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 			}
 		}
 
@@ -58,12 +57,12 @@ public class HAPUtilityComplexEntity {
 		Map<String, HAPContainerEntity> containerAttributes = complexEntityDef.getContainerAttributes();
 		for(String attrName : containerAttributes.keySet()) {
 			HAPContainerEntity container = containerAttributes.get(attrName);
-			List<HAPInfoContainerElement> eleInfos = container.getElements();
+			List<HAPInfoContainerElement> eleInfos = container.getAllElementsInfo();
 			for(HAPInfoContainerElement eleInfo : eleInfos) {
 				HAPIdEntityInDomain eleId = eleInfo.getElementEntityId();
 				HAPInfoDefinitionEntityInDomain eleEntityInfo = defDomain.getEntityInfo(eleId);
 				if(eleEntityInfo.isComplexEntity()) {
-					traversComplexEntityDefinitionTree((HAPConfigureEntityInDomainComplex)eleEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
+					traversComplexEntityDefinitionTree(eleEntityInfo, complexEntityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 				}
 			}
 		}
