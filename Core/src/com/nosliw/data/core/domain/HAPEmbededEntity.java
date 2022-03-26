@@ -1,6 +1,25 @@
 package com.nosliw.data.core.domain;
 
-public class HAPEmbededEntity {
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.collections4.map.LinkedMap;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
+public class HAPEmbededEntity extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String ENTITYID = "entityId";
+
+	@HAPAttribute
+	public static String EMBEDED = "embeded";
+
+	@HAPAttribute
+	public static String ADAPTER = "adapter";
 
 	private HAPIdEntityInDomain m_entityId;
 	
@@ -26,6 +45,20 @@ public class HAPEmbededEntity {
 		this.m_entityId = entityId;
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
+		if(this.m_adapter!=null) {
+			jsonMap.put(ADAPTER, this.m_adapter.toString());
+		}
+	}
 	
-	
+	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>();
+		this.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(EMBEDED, HAPUtilityDomain.getEntityExpandedJsonString(this.m_entityId, entityDefDomain));
+		return HAPJsonUtility.buildMapJson(jsonMap);
+
+	}
 }

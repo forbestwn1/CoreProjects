@@ -18,7 +18,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public final static String CONTAINERATTRIBUTE = "containerAttributes"; 
 	
 	//simple attribute by name
-	private Map<String, HAPIdEntityInDomain> m_attributesSimple;
+	private Map<String, HAPEmbededEntity> m_attributesSimple;
 	
 	//container attribute by name
 	private Map<String, HAPContainerEntity> m_attributeContainer;
@@ -26,7 +26,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	private String m_entityType;
 	
 	protected HAPDefinitionEntityInDomain() {
-		this.m_attributesSimple = new LinkedHashMap<String, HAPIdEntityInDomain>();
+		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededEntity>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
 		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(this.getClass());
 	}
@@ -45,9 +45,9 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public String getEntityType() {  return this.m_entityType;	}
 
-	public HAPIdEntityInDomain getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
+	public HAPEmbededEntity getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
 
-	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain entityId) {
+	public void setSimpleAttribute(String attributeName, HAPEmbededEntity entityId) {
 		if(entityId==null) {
 			this.m_attributesSimple.remove(attributeName);
 		}
@@ -56,12 +56,12 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 	}
 	
-	public Map<String, HAPIdEntityInDomain> getSimpleAttributes(){    return this.m_attributesSimple;     }
+	public Map<String, HAPEmbededEntity> getSimpleAttributes(){    return this.m_attributesSimple;     }
 	
 	public Map<String, HAPContainerEntity> getContainerAttributes(){    return this.m_attributeContainer;     }
 	
-	public HAPIdEntityInDomain getConatinerAttributeElementByName(String attributeName, String eleName) {
-		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getElementEntityId();
+	public HAPEmbededEntity getConatinerAttributeElementByName(String attributeName, String eleName) {
+		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getEmbededElementEntity();
 	}
 	
 	public void addContainerElementAttribute(String attributeName, HAPInfoContainerElement eleInfo) {
@@ -104,8 +104,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	//expanded json. expand all referenced 
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
 		for(String attrName : this.m_attributesSimple.keySet()) {
-			HAPIdEntityInDomain entityId = this.m_attributesSimple.get(attrName);
-			jsonMap.put(attrName, entityDefDomain.getEntityInfo(entityId).toExpandedJsonString(entityDefDomain));
+			HAPSerializableImp entityId = this.m_attributesSimple.get(attrName);
+			jsonMap.put(attrName, this.m_attributesSimple.get(attrName).toExpandedJsonString(entityDefDomain));
 		}
 		
 		for(String attrName : this.m_attributeContainer.keySet()) {

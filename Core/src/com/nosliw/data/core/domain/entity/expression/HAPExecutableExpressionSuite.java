@@ -12,14 +12,9 @@ public class HAPExecutableExpressionSuite extends HAPExecutableEntityComplex{
 
 	
 	public HAPExecutableExpressionSuite() {
+		super(ENTITY_TYPE);
 	}
 	
-	@Override
-	public String getEntityType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public String toString(HAPDomainExecutableEntity domain) {
 		// TODO Auto-generated method stub

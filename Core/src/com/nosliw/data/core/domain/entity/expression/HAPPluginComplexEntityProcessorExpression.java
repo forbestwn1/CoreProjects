@@ -186,7 +186,7 @@ public class HAPPluginComplexEntityProcessorExpression extends HAPPluginComplexE
 						//replace referenced variable name mapping
 						
 //						Triple<HAPDefinitionExpressionGroup1, HAPExecutableExpressionGroup, HAPComplexValueStructure> refEntityInfo = getComplexEntityByExecutableId(referenceOperand.getReferedExpression(), processContext);
-						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(refEntityInfo.getMiddle().getValueStructureComplexId(), processContext.getDomainContext().getValueStructureDomain());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(refEntityInfo.getMiddle().getValueStructureComplexEntity(), processContext.getDomainContext().getValueStructureDomain());
 
 						Map<String, HAPOperandWrapper> mapping = referenceOperand.getMapping();
 						Map<String, HAPOperandWrapper> newMapping = new LinkedHashMap<String, HAPOperandWrapper>();
@@ -233,7 +233,7 @@ public class HAPPluginComplexEntityProcessorExpression extends HAPPluginComplexE
 
 		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = new HAPContainerVariableCriteriaInfo();
 		
-		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionGroupDef.getValueStructureComplexId(), processContext.getDomainContext().getValueStructureDomain());
+		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionGroupDef.getValueStructureComplexEntity(), processContext.getDomainContext().getValueStructureDomain());
 		for(String varId : HAPUtilityExpression.discoverDataVariablesIdInExpression(expressionGroupExe)) {
 			varCrteriaInfoInExpression.addVariable(varId, varCrteriaInfoInStructure.getVariableCriteriaInfo(varId));
 		}

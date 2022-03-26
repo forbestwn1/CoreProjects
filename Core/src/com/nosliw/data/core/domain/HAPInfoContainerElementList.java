@@ -12,8 +12,8 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 
 	private int m_index;
 	
-	public HAPInfoContainerElementList(HAPIdEntityInDomain entityId) {
-		super(entityId);
+	public HAPInfoContainerElementList(HAPEmbededEntity embededEntity) {
+		super(embededEntity);
 	}
 
 	public HAPInfoContainerElementList() {
@@ -47,6 +47,7 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_index!=-1) {
 			jsonMap.put(INDEX, this.m_index+"");
 			typeJsonMap.put(INDEX, Integer.class);

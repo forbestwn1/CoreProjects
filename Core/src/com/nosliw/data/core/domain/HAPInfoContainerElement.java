@@ -18,24 +18,24 @@ public abstract class HAPInfoContainerElement extends HAPSerializableImp{
 
 	public static final String ENTITY = "entity";
 
-	private HAPIdEntityInDomain m_entityId;
+	private HAPEmbededEntity m_embededEntity;
 
 	private String m_elementName;
 	
-	public HAPInfoContainerElement(HAPIdEntityInDomain entityId) {
-		this.m_entityId = entityId;
+	public HAPInfoContainerElement(HAPEmbededEntity entityId) {
+		this.m_embededEntity = entityId;
 	}
 	
 	public HAPInfoContainerElement() {	}
 	
-	public HAPIdEntityInDomain getElementEntityId() {   return this.m_entityId;   }
-	public void setElementEntityId(HAPIdEntityInDomain entityId) {    this.m_entityId = entityId;   }
+	public HAPEmbededEntity getEmbededElementEntity() {   return this.m_embededEntity;   }
+	public void setEmbededElementEntity(HAPEmbededEntity entity) {    this.m_embededEntity = entity;   }
 
 	public String getElementName() {    return this.m_elementName;    }
 	public void setElementName(String elementName) {    this.m_elementName = elementName;    }
 	
 	public void cloneToInfoContainerElement(HAPInfoContainerElement containerEleInfo) {
-		containerEleInfo.m_entityId = this.m_entityId;
+		containerEleInfo.m_embededEntity = this.m_embededEntity;
 		containerEleInfo.m_elementName = this.m_elementName;
 	}
 	
@@ -46,14 +46,14 @@ public abstract class HAPInfoContainerElement extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){  
 		JSONObject jsonObj = (JSONObject)json;
 		this.m_elementName = (String)jsonObj.opt(ELEMENTNAME);
-		this.m_entityId = HAPIdEntityInDomain.newInstance(jsonObj.opt(ENTITYID));
+		this.m_embededEntity = HAPIdEntityInDomain.newInstance(jsonObj.opt(ENTITYID));
 		return true;
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
-		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ENTITY, this.m_embededEntity.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 	
 	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
@@ -64,9 +64,8 @@ public abstract class HAPInfoContainerElement extends HAPSerializableImp{
 	}
 
 	protected void toExpanedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain) {
-		jsonMap.put(ELEMENTNAME, this.getElementName());
-		jsonMap.put(ENTITY, HAPUtilityDomain.getEntityExpandedJsonString(this.getElementEntityId(), entityDefDomain));
-//		jsonMap.put(ENTITYID, this.getElementEntityId().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTNAME, this.m_elementName);
+		jsonMap.put(ENTITY, this.m_embededEntity.toExpandedJsonString(entityDefDomain));
 	}
 	
 }

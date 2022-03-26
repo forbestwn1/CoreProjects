@@ -46,8 +46,8 @@ public class HAPContextDomain {
 
 	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain definitionEntityId) {	return this.m_executableIdByDefinitionId.get(definitionEntityId);	}
 	
-	public HAPExecutableEntityComplex getExecutableEntityByExecutableId(HAPIdEntityInDomain executableId) {
-		
+	public HAPExecutableEntityComplex getExecutableEntityByDefinitionId(HAPIdEntityInDomain definitionId) {
+		return this.m_executableDomain.getExecutableEntity(this.m_executableIdByDefinitionId.get(definitionId));
 	}
 	
 	public HAPDefinitionEntityComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {

@@ -179,7 +179,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 		
 		//value structure
 		String valueStructureComplexId = this.m_valueStructureDomain.addValueStructureComplex(valueStructureComplex);
-		complexEntity.setValueStructureComplexId(valueStructureComplexId);
+		complexEntity.setValueStructureComplexEntity(valueStructureComplexId);
 		
 		//add entity
 		complexEntity.setId(out.getEntityId());

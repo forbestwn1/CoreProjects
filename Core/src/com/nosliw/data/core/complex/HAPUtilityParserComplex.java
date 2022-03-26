@@ -8,6 +8,7 @@ import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
@@ -21,9 +22,9 @@ public class HAPUtilityParserComplex {
 		
 		//parse value structure
 		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
-		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
+		HAPEmbededEntity valueStructureEntity = HAPUtilityParserEntity.parseEmbededEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 		
-		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setValueStructureComplexId(valueStructureEntityId);
+		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setValueStructureComplexEntity(valueStructureEntity);
 	}
 	
 	//parse attachment in complex
@@ -32,9 +33,9 @@ public class HAPUtilityParserComplex {
 		
 		//parse attachment
 		JSONObject attachmentJsonObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-		HAPIdEntityInDomain attachmentEntityId = HAPUtilityParserEntity.parseEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
+		HAPEmbededEntity attachmentEntity = HAPUtilityParserEntity.parseEmbededEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 
-		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setAttachmentContainerId(attachmentEntityId);
+		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setAttachmentContainerEntity(attachmentEntity);
 	}
 
 	//parse content in container entity

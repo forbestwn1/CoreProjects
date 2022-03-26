@@ -17,7 +17,13 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImpEntityI
 	//container attribute by name
 	private Map<String, HAPContainerEntity> m_attributeContainer;
 	
-	public abstract String getEntityType();
+	private String m_entityType;
+	
+	public HAPExecutableEntityComplex(String entityType) {
+		this.m_entityType = entityType;
+	}
+	
+	public String getEntityType() {    return this.m_entityType;   }
 	
 	public void setValueStructureComplexId(String id) {     this.m_valueStructureComplexId = id;      }
 	public String getValueStructureComplexId() {    return this.m_valueStructureComplexId;    }

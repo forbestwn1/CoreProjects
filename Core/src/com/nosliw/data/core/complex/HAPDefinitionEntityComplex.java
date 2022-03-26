@@ -4,7 +4,7 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPEmbededEntity;
 
 //entity that have data value structure and attachment
 public class HAPDefinitionEntityComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
@@ -21,19 +21,19 @@ public class HAPDefinitionEntityComplex extends HAPDefinitionEntityInDomain impl
 	public HAPEntityOrReference getChild(String childName) {  return null;  }
 
 	@Override
-	public HAPIdEntityInDomain getValueStructureComplexId() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE);  }
+	public HAPEmbededEntity getValueStructureComplexEntity() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE);  }
 
 	@Override
-	public void setValueStructureComplexId(HAPIdEntityInDomain valueStructureComplexId) {    this.setSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexId);      }
+	public void setValueStructureComplexEntity(HAPEmbededEntity valueStructureComplexEntity) {    this.setSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return null;  }
 
 	@Override
-	public HAPIdEntityInDomain getAttachmentContainerId() {   return this.getSimpleAttribute(HAPWithAttachment.ATTACHMENT);  }
+	public HAPEmbededEntity getAttachmentContainerEntity() {   return this.getSimpleAttribute(HAPWithAttachment.ATTACHMENT);  }
 
 	@Override
-	public void setAttachmentContainerId(HAPIdEntityInDomain attachmentId) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentId);   }
+	public void setAttachmentContainerEntity(HAPEmbededEntity attachmentEntity) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
 
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

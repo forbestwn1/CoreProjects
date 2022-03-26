@@ -22,7 +22,7 @@ public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  
 	@Override
 	public void addEntityElement(T eleInfo) {
 		this.m_eleByName.put(eleInfo.getElementName(), eleInfo);
-		this.m_eleById.put(eleInfo.getElementEntityId(), eleInfo);
+		this.m_eleById.put(eleInfo.getEmbededElementEntity().getEntityId(), eleInfo);
 	}
 
 	@Override

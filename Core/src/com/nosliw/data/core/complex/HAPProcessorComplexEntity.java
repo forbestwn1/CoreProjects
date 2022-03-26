@@ -5,6 +5,6 @@ import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
 
 public interface HAPProcessorComplexEntity {
 
-	void process(HAPInfoDefinitionEntityInDomain complexEntityInfo, HAPInfoDefinitionEntityInDomain parentComplexEntityInfo, HAPContextProcessor processContext);
+	void process(HAPInfoDefinitionEntityInDomain complexEntityInfo, Object adapter, HAPInfoDefinitionEntityInDomain parentComplexEntityInfo, HAPContextProcessor processContext);
 	
 }

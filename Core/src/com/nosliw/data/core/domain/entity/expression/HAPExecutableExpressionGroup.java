@@ -51,6 +51,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 	
 	
 	public HAPExecutableExpressionGroup() {
+		super(ENTITY_TYPE);
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 	}
 	
