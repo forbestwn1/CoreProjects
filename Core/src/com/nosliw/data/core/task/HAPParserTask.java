@@ -1,9 +1,9 @@
 package com.nosliw.data.core.task;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 
 public interface HAPParserTask {
 
-	HAPDefinitionTask parseTaskDefinition(Object obj, HAPDefinitionEntityComplex complexEntity);
+	HAPDefinitionTask parseTaskDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity);
 	
 }

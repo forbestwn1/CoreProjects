@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPWithComplexEntity;
@@ -101,7 +101,7 @@ public class HAPProcessorValueStructureInComponent {
 			//resource
 			HAPResourceId resourceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, ref);
 			HAPResourceDefinition1 relatedResource = null;
-			HAPDefinitionEntityComplex contextComplexEntity = null;
+			HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
 			if(processContext.getComplexEntity() instanceof HAPResourceDefinition1) relatedResource = (HAPResourceDefinition1)processContext.getComplexEntity();
 			HAPResourceDefinitionValueStructure resourceDefiniton = (HAPResourceDefinitionValueStructure)processContext.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
 			out.addAll(resourceDefiniton.getRoots());

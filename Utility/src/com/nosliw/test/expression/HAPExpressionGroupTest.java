@@ -8,7 +8,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.value.HAPJsonValueUtility;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
@@ -55,7 +55,7 @@ public class HAPExpressionGroupTest {
 				//
 				HAPInfoEntityComplex entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
 				HAPExecutableExpressionGroup expresionExecutable = (HAPExecutableExpressionGroup)entityInfo.getExecutable();
-				HAPDefinitionEntityComplex expressionDef = entityInfo.getDefinition();
+				HAPDefinitionEntityInDomainComplex expressionDef = entityInfo.getDefinition();
 				HAPDefinitionEntityComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
 				HAPDefinitionEntityContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();
 

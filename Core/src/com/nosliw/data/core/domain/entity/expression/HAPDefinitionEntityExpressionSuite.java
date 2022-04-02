@@ -8,12 +8,12 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElementSet;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 
-public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityComplex{
+public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDomainComplex{
 
 	@HAPAttribute
 	public static String GROUP = "group";

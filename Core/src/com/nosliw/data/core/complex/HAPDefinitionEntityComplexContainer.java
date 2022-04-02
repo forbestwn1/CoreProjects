@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 //complex entity that is also a container for other entity
-public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityComplex{
+public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDomainComplex{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";

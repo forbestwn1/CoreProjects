@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPParserTask;
 
@@ -15,7 +15,7 @@ public class HAPTaskInfoParserActivity implements HAPParserTask{
 	}
 
 	@Override
-	public HAPDefinitionTask parseTaskDefinition(Object obj, HAPDefinitionEntityComplex complexEntity) {
+	public HAPDefinitionTask parseTaskDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity) {
 		return HAPParserActivity.parseActivityDefinition((JSONObject)obj, complexEntity, m_activityPluginMan);	
 	}
 

@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPInfoUtility;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
@@ -18,7 +18,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComp
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //component that defined as element of another container component
-public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSerializableImp implements HAPDefinitionEntityComplex{
+public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSerializableImp implements HAPDefinitionEntityInDomainComplex{
 
 	@HAPAttribute
 	public static String CONTAINER = "container";

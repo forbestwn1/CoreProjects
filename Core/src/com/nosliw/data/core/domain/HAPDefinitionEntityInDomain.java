@@ -47,12 +47,12 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public HAPEmbededEntity getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
 
-	public void setSimpleAttribute(String attributeName, HAPEmbededEntity entityId) {
-		if(entityId==null) {
+	public void setSimpleAttribute(String attributeName, HAPEmbededEntity attrEntity) {
+		if(attrEntity==null) {
 			this.m_attributesSimple.remove(attributeName);
 		}
 		else {
-			this.m_attributesSimple.put(attributeName, entityId);	
+			this.m_attributesSimple.put(attributeName, attrEntity);	
 		}
 	}
 	

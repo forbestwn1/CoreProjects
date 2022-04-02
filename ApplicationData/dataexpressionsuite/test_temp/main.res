@@ -38,6 +38,18 @@
 								}
 							}
 						}
+					},
+					{
+						"groupName": "public",
+						"valueStructure" : {
+							"resourceId" : "test1"
+						}
+					},
+					{
+						"groupName": "public",
+						"valueStructure" : {
+							"resourceId" : "#test1"
+						}
 					}
 				]
 			]

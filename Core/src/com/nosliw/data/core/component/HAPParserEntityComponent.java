@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplexImp;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
@@ -57,7 +57,7 @@ public class HAPParserEntityComponent {
 		HAPUtilityComplexValueStructure.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	
-	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityComplex complexEntity, HAPManagerTask taskMan) {
+	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityInDomainComplex complexEntity, HAPManagerTask taskMan) {
 		JSONArray tasksArray = jsonObj.optJSONArray(HAPWithTask.TASK);
 		if(tasksArray!=null) {
 			for(int i=0; i<tasksArray.length(); i++) {

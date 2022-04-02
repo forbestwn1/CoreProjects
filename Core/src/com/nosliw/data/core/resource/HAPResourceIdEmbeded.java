@@ -52,7 +52,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 
 	@Override
 	protected void buildCoreIdByLiterate(String idLiterate) {
-		String[] idSegs = HAPUtilityNamingConversion.parseLevel3(idLiterate);
+		String[] idSegs = HAPUtilityNamingConversion.parseTwoPartLevel3(idLiterate);
 		this.m_path = idSegs[0];
 		this.m_parentId = HAPFactoryResourceId.newInstance(idSegs[1]);
 		
@@ -63,7 +63,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@Override
 	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(PATH, this.m_path);
-		jsonMap.put(PARENT, this.m_parentId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(PARENT, this.m_parentId.toStringValue(HAPSerializationFormat.JSON_FULL));
 	}
 
 	@Override

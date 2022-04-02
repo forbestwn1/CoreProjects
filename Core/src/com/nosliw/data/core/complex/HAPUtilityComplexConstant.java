@@ -21,7 +21,7 @@ import com.nosliw.data.core.value.HAPValue;
 
 public class HAPUtilityComplexConstant {
 
-	public static Map<String, HAPData> getConstantsData(HAPDefinitionEntityComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
+	public static Map<String, HAPData> getConstantsData(HAPDefinitionEntityInDomainComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
 	
 	}
 	

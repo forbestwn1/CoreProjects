@@ -53,6 +53,19 @@ public class HAPUtilityNamingConversion {
 	public static String cascadeElements(String part1, String part2, String seperator){
 		return cascadeElements(new String[]{part1, part2}, seperator);
 	}
+
+	public static String[] splitTextByTwoPart(String text, String token){
+		List<String> texts = new ArrayList<String>();
+		int index = text.indexOf(token);
+		if(index==-1) {
+			texts.add(text);
+		}
+		else {
+			texts.add(text.substring(0, index));
+			texts.add(text.substring(index+token.length()));
+		}
+		return texts.toArray(new String[0]);
+	}
 	
 	public static String[] splitTextByComponents(String text, String token){
 		return text.split(token);
@@ -81,10 +94,12 @@ public class HAPUtilityNamingConversion {
 	public static String cascadeLevel2(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_LEVEL2);	}
 	public static String cascadeLevel2(String[] segs){	return cascadeComponents(segs, HAPConstantShared.SEPERATOR_LEVEL2);	}
 	public static String[] parseLevel2(String eles){		return splitTextByComponents(eles, "\\"+HAPConstantShared.SEPERATOR_LEVEL2);	}
+	public static String[] parseTwoPartLevel2(String eles){		return splitTextByTwoPart(eles, HAPConstantShared.SEPERATOR_LEVEL2);	}
 
 	public static String cascadeLevel3(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_LEVEL3);	}
 	public static String cascadeLevel3(String[] segs){	return cascadeComponents(segs, HAPConstantShared.SEPERATOR_LEVEL3);	}
 	public static String[] parseLevel3(String eles){		return splitTextByComponents(eles, "\\"+HAPConstantShared.SEPERATOR_LEVEL3);	}
+	public static String[] parseTwoPartLevel3(String eles){		return splitTextByTwoPart(eles, HAPConstantShared.SEPERATOR_LEVEL3);	}
 
 	public static String cascadeSegments1(String seg1, String seg2){		return cascadeComponents(seg1, seg2, HAPConstantShared.SEPERATOR_SEGMENT);	}
 	public static String[] parseSegments1(String eles){		return splitTextByComponents(eles, HAPConstantShared.SEPERATOR_SEGMENT);	}

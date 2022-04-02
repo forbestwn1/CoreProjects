@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.complex.HAPResultSolveReference;
@@ -243,7 +243,7 @@ public class HAPPluginComplexEntityProcessorExpression extends HAPPluginComplexE
 
 	
 	private static Triple<HAPDefinitionEntityExpressionGroup, HAPExecutableExpressionGroup, HAPDefinitionEntityComplexValueStructure> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
-		Triple<HAPDefinitionEntityComplex, HAPExecutableEntityComplex, HAPDefinitionEntityComplexValueStructure> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
+		Triple<HAPDefinitionEntityInDomainComplex, HAPExecutableEntityComplex, HAPDefinitionEntityComplexValueStructure> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)triple.getMiddle();
 		HAPDefinitionExpressionGroup1 expressionGroupDef = (HAPDefinitionExpressionGroup1)triple.getLeft();
 		return Triple.of(expressionGroupDef, expressionGroupExe, triple.getRight());

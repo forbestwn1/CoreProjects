@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 
 //context related with domain
@@ -50,12 +50,12 @@ public class HAPContextDomain {
 		return this.m_executableDomain.getExecutableEntity(this.m_executableIdByDefinitionId.get(definitionId));
 	}
 	
-	public HAPDefinitionEntityComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {
+	public HAPDefinitionEntityInDomainComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {
 		
 	}
 
 
-	public HAPDefinitionEntityComplex getDefinitionComplexEntity(HAPIdEntityInDomain entityId) {
+	public HAPDefinitionEntityInDomainComplex getDefinitionComplexEntity(HAPIdEntityInDomain entityId) {
 		
 	}
 	

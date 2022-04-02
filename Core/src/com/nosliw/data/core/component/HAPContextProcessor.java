@@ -2,7 +2,7 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPContextDomain;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
@@ -41,20 +41,20 @@ public class HAPContextProcessor {
 		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();
 		Object entity = null;
-		HAPDefinitionEntityComplex contextComplexEntity = null;
+		HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
 			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentEntity)attachment).getEntity()), this.m_complexEntity);
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId());
-			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
+			if(entity instanceof HAPDefinitionEntityInDomainComplex)  contextComplexEntity = (HAPDefinitionEntityInDomainComplex)entity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceDefinition1 relatedResource = null;
 			if(m_complexEntity instanceof HAPResourceDefinition1)   relatedResource = (HAPResourceDefinition1)m_complexEntity;
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId(), relatedResource);
-			if(entity instanceof HAPDefinitionEntityComplex)  contextComplexEntity = (HAPDefinitionEntityComplex)entity;
+			if(entity instanceof HAPDefinitionEntityInDomainComplex)  contextComplexEntity = (HAPDefinitionEntityInDomainComplex)entity;
 		}
 		
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);
@@ -66,7 +66,7 @@ public class HAPContextProcessor {
 	public HAPDomainDefinitionEntity getComplexDefinitionDomain() {   return this.definitionDomain;   }
 	public HAPPathLocationBase getLocalReferenceBase() {   return this.m_localRefBase;    }
 	
-	public HAPDefinitionEntityComplex getComplexEntity() {    return this.m_complexEntity;    }
+	public HAPDefinitionEntityInDomainComplex getComplexEntity() {    return this.m_complexEntity;    }
 	
 	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureComplex();     }
 	

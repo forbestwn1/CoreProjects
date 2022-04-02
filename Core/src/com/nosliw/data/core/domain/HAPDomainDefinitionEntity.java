@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
 import com.nosliw.data.core.component.HAPHandlerComplexEntity;
 import com.nosliw.data.core.component.HAPPathLocationBase;
@@ -173,7 +173,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 	
 	//add complex entity to domain, also add value structure
 	public HAPIdEntityInDomain addComplexEntity(HAPInfoComplexEntityDefinition complexEntityInfo, HAPDefinitionEntityComplexValueStructure valueStructureComplex) {
-		HAPDefinitionEntityComplex complexEntity = complexEntityInfo.getComplexEntity().cloneComplexEntityDefinition();
+		HAPDefinitionEntityInDomainComplex complexEntity = complexEntityInfo.getComplexEntity().cloneComplexEntityDefinition();
 		
 		HAPIdEntityInDomain out = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), complexEntity.getEntityType());
 		
@@ -201,7 +201,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 		//process info in child
 		this.traverseAllEntity(new HAPHandlerComplexEntity() {
 			@Override
-			public void process(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity,
+			public void process(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity,
 					HAPConfigureParentRelationComplex parentInfo) {
 				HAPUtilityComplexEntity.processInfo(complexEntity, parentEntity, parentInfo.getInfoRelationMode());
 			}
@@ -210,7 +210,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 		//process attachment in child
 		this.traverseAllEntity(new HAPHandlerComplexEntity() {
 			@Override
-			public void process(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity,
+			public void process(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity,
 					HAPConfigureParentRelationComplex parentInfo) {
 				HAPUtilityComplexEntity.processAttachment(complexEntity, parentEntity, parentInfo.getAttachmentRelationMode());
 			}
@@ -234,7 +234,7 @@ public class HAPDomainDefinitionEntity extends HAPSerializableImp{
 		//process structure inheritance
 		this.traverseAllEntity(new HAPHandlerComplexEntity() {
 			@Override
-			public void process(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity,
+			public void process(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity,
 					HAPConfigureParentRelationComplex parentInfo) {
 				HAPUtilityComplexEntity.processValueStructureInheritance(complexEntity, parentEntity, parentInfo.getValueStructureRelationMode());
 			}

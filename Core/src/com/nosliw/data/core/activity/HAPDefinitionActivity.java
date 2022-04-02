@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.task.HAPDefinitionTaskImp;
 
 @HAPEntityWithAttribute
@@ -54,7 +54,7 @@ public abstract class HAPDefinitionActivity extends HAPDefinitionTaskImp{
 	
 	public abstract HAPDefinitionActivity cloneActivityDefinition();
 	
-	public abstract void parseActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity, HAPSerializationFormat format);
+	public abstract void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity, HAPSerializationFormat format);
 	
 	protected JSONObject getConfigurationObject(JSONObject jsonObj) {
 		JSONObject out = jsonObj.optJSONObject(COFIGURATION);

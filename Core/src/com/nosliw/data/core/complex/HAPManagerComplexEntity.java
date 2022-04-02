@@ -40,7 +40,7 @@ public class HAPManagerComplexEntity {
 		
 		//create executable and add to domain
 		HAPInfoDefinitionEntityInDomain entityDefInfo = defDomain.getEntityInfo(complexEntityDefinitionId);
-		HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)entityDefInfo.getEntity();
+		HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
 		String entityType = complexEntityDef.getEntityType();
 		HAPExecutableEntityComplex exeEntity = this.m_processorPlugins.get(entityType).newExecutable();
 		HAPIdEntityInDomain complexeEntityExeId = domainContext.addExecutableEntity(exeEntity, complexEntityDefinitionId);
@@ -97,7 +97,7 @@ public class HAPManagerComplexEntity {
 		
 		//create executable and add to domain
 		HAPInfoDefinitionEntityInDomain entityDefInfo = defDomain.getEntityInfo(complexEntityDefinitionId);
-		HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)entityDefInfo.getEntity();
+		HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
 		String entityType = complexEntityDef.getEntityType();
 		HAPExecutableEntityComplex exeEntity = this.m_processorPlugins.get(entityType).newExecutable();
 		HAPIdEntityInDomain complexeEntityExeId = domainContext.addExecutableEntity(exeEntity, complexEntityDefinitionId);
@@ -153,7 +153,7 @@ public class HAPManagerComplexEntity {
 					HAPDomainAttachment attachmentDomain = exeDomain.getAttachmentDomain();
 
 					HAPInfoDefinitionEntityInDomain entityDefInfo = defDomain.getEntityInfo(complexEntityDefinitionId);
-					HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)entityDefInfo.getEntity();
+					HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
 
 					HAPIdEntityInDomain childComplexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefInfo.getEntityId());
 					
@@ -174,7 +174,7 @@ public class HAPManagerComplexEntity {
 					HAPDomainAttachment attachmentDomain = exeDomain.getAttachmentDomain();
 
 					HAPInfoDefinitionEntityInDomain entityDefInfo = defDomain.getEntityInfo(complexEntityDefinitionId);
-					HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)entityDefInfo.getEntity();
+					HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
 					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
 					HAPDefinitionEntityContainerAttachment parentAttachmentContainer =  attachmentDomain.getAttachmentContainer(complexEntityExeId);
 
@@ -198,7 +198,7 @@ public class HAPManagerComplexEntity {
 					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
 
 					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
-					HAPExecutableEntityComplex complexEntityExe = domainContext.getExecutableEntityByDefinitionId(complexEntityExeId);
+					HAPExecutableEntityComplex complexEntityExe = domainContext.getExecutableEntityByDefinitionId(complexEntityDefinitionId);
 
 					//expand reference
 					HAPDefinitionEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(complexEntityExe.getValueStructureComplexId());

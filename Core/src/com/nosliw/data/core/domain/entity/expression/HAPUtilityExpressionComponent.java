@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
@@ -18,7 +18,7 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityExpressionComponent {
 
-	public static HAPDefinitionEntityExpressionSuite buildExpressiionSuiteFromComponent(HAPDefinitionEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionEntityExpressionSuite buildExpressiionSuiteFromComponent(HAPDefinitionEntityInDomainComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionEntityExpressionSuite out = new HAPDefinitionEntityExpressionSuite();
 		
 		//build value structure

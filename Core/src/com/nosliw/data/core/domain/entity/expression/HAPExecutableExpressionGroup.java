@@ -55,12 +55,6 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 	}
 	
-	@Override
-	public String getEntityType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void addExpression(String name, HAPOperandWrapper operand) {
 		if(name==null)   name = HAPConstantShared.NAME_DEFAULT;
 		this.m_expressionItem.put(name, new HAPExecutableExpression(operand.cloneWrapper()));

@@ -42,7 +42,7 @@ public class HAPUtilityComplexEntity {
 		HAPContextDomain domainContext = processContext.getDomainContext();
 		HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
 
-		HAPDefinitionEntityComplex complexEntityDef = (HAPDefinitionEntityComplex)complexEntityInfo.getEntity();
+		HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity();
 				
 		//process attribute entity
 		Map<String, HAPEmbededEntity> simpleAttributes = complexEntityDef.getSimpleAttributes();
@@ -98,7 +98,7 @@ public class HAPUtilityComplexEntity {
 		
 		Object entity = null;
 		HAPContextProcessor contextResult = null;
-		HAPDefinitionEntityComplex contextComplexEntity = null;
+		HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
 		
 		if(resourceId!=null) {
 			//is resource id
@@ -131,7 +131,7 @@ public class HAPUtilityComplexEntity {
 	}
 	
 	//merge attachment from parent to child
-	public static void processAttachment(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity, HAPConfigureComplexRelationAttachment attachmentRelation) {
+	public static void processAttachment(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity, HAPConfigureComplexRelationAttachment attachmentRelation) {
 		HAPUtilityComponent.mergeWithParentAttachment(complexEntity, parentEntity.getAttachmentContainer());    //build attachment
 	}
 	
@@ -140,7 +140,7 @@ public class HAPUtilityComplexEntity {
 	}
 
 
-	public static void processValueStructureInheritance(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity, HAPConfigureComplexRelationValueStructure valueStructureRelation) {
+	public static void processValueStructureInheritance(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity, HAPConfigureComplexRelationValueStructure valueStructureRelation) {
 		//expand reference
 		
 		 //inheritance
@@ -169,7 +169,7 @@ public class HAPUtilityComplexEntity {
 		
 	}
 	
-	public static void processInfo(HAPDefinitionEntityComplex complexEntity, HAPDefinitionEntityComplex parentEntity, HAPConfigureComplexRelationInfo infoRelation) {
+	public static void processInfo(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity, HAPConfigureComplexRelationInfo infoRelation) {
 		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 
 	}

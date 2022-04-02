@@ -7,13 +7,13 @@ import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 
 //entity that have data value structure and attachment
-public class HAPDefinitionEntityComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
+public class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
 
 	public static final String COMPLEX = "complex";
 	
-	protected HAPDefinitionEntityComplex() {}
+	protected HAPDefinitionEntityInDomainComplex() {}
 	
-	public HAPDefinitionEntityComplex (String entityType) {
+	public HAPDefinitionEntityInDomainComplex (String entityType) {
 		super(entityType);
 	}
 	
@@ -37,7 +37,7 @@ public class HAPDefinitionEntityComplex extends HAPDefinitionEntityInDomain impl
 
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityComplex out = new HAPDefinitionEntityComplex();
+		HAPDefinitionEntityInDomainComplex out = new HAPDefinitionEntityInDomainComplex();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}

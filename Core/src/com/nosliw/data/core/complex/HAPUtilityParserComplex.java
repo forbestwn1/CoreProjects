@@ -24,7 +24,7 @@ public class HAPUtilityParserComplex {
 		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
 		HAPEmbededEntity valueStructureEntity = HAPUtilityParserEntity.parseEmbededEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 		
-		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setValueStructureComplexEntity(valueStructureEntity);
+		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setValueStructureComplexEntity(valueStructureEntity);
 	}
 	
 	//parse attachment in complex
@@ -35,7 +35,7 @@ public class HAPUtilityParserComplex {
 		JSONObject attachmentJsonObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
 		HAPEmbededEntity attachmentEntity = HAPUtilityParserEntity.parseEmbededEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 
-		((HAPDefinitionEntityComplex)complexEntityInfo.getEntity()).setAttachmentContainerEntity(attachmentEntity);
+		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setAttachmentContainerEntity(attachmentEntity);
 	}
 
 	//parse content in container entity

@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -64,7 +64,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	}
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity,
+	public void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity,
 			HAPSerializationFormat format) {
 		this.buildObject(obj, format);
 		this.m_valueStructure = complexEntity.getValueStructureWrapper();

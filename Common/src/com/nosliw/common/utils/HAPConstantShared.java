@@ -484,6 +484,8 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE = "valuestructure";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX = "valuestructurecomplex";
 		public static final String RUNTIME_RESOURCE_TYPE_ATTACHMENT = "attachment";
+		public static final String RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1 = "testsimple1";
+		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1 = "testcomplex1";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATION = "dataAssociation";
 		public static final String RUNTIME_RESOURCE_TYPE_UI = "ui";
 		public static final String RUNTIME_RESOURCE_TYPE_PAGE = "page";
@@ -741,7 +743,7 @@ public class HAPConstantShared {
 
 		public static final String REFERENCE = "reference";
 		public static final String ENTITY = "entity";
-		public static final String RESOURCEID = "resourceId";
+		public static final String RESOURCEID = "resourceid";
 
 
 

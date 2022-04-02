@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression.resource;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite1;
@@ -59,7 +59,7 @@ public class HAPResourceEntityExpressionSuite
 	}
 
 	@Override
-	public HAPDefinitionEntityComplex cloneComplexEntityDefinition() {
+	public HAPDefinitionEntityInDomainComplex cloneComplexEntityDefinition() {
 		// TODO Auto-generated method stub
 		return null;
 	}

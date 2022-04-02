@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity.attachment;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 
 public class HAPResultProcessAttachmentReference {
 
@@ -11,9 +11,9 @@ public class HAPResultProcessAttachmentReference {
 	private Object m_adaptor;
 
 	//context complex entity for solving attachment reference in entity 
-	private HAPDefinitionEntityComplex m_contextComplexEntity;
+	private HAPDefinitionEntityInDomainComplex m_contextComplexEntity;
 	
-	public HAPResultProcessAttachmentReference(Object entity, Object adaptor, HAPDefinitionEntityComplex contextComplexEntity) {
+	public HAPResultProcessAttachmentReference(Object entity, Object adaptor, HAPDefinitionEntityInDomainComplex contextComplexEntity) {
 		this.m_entity = entity;
 		this.m_adaptor = adaptor;
 		this.m_contextComplexEntity = contextComplexEntity;
@@ -23,5 +23,5 @@ public class HAPResultProcessAttachmentReference {
 	
 	public Object getAdaptor() {   return this.m_adaptor;     }
 
-	public HAPDefinitionEntityComplex getContextComplexEntity() {    return this.m_contextComplexEntity;   }
+	public HAPDefinitionEntityInDomainComplex getContextComplexEntity() {    return this.m_contextComplexEntity;   }
 }

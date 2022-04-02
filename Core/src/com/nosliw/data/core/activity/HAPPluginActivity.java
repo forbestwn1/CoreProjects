@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -35,7 +35,7 @@ public interface HAPPluginActivity {
 			HAPConfigureProcessorStructure configure, 
 			HAPProcessTracker processTracker);
 	
-	HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityComplex complexEntity);
+	HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity);
 	
 	HAPExecutableActivity buildActivityExecutable(Object obj);
 	

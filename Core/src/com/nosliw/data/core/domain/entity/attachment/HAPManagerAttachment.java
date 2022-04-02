@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.attachment;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplex;
+import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 
 public class HAPManagerAttachment {
 
@@ -19,7 +19,7 @@ public class HAPManagerAttachment {
 	
 	public HAPProcessorAttachmentEntity getProcessor(String attachmentType) {    return this.m_processors.get(attachmentType);     }
 
-	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPDefinitionEntityComplex complexEntity) {
+	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPDefinitionEntityInDomainComplex complexEntity) {
 		return this.getProcessor(attachmentInfo.getValueType()).parseEntityAttachment(attachmentInfo, complexEntity);
 	}
 
