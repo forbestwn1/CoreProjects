@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
@@ -36,7 +37,18 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		this.m_entityType = entityType;
 	}
 
-	public abstract HAPEntityOrReference getChild(String childName);
+	public HAPIdEntityInDomain getChild(String childName) {		
+		HAPEmbededEntity childEntity = this.m_attributesSimple.get(childName);
+		if(childEntity!=null)  return childEntity.getEntityId();
+
+		String[] containerSegs = HAPUtilityNamingConversion.parseLevel1(childName);
+		HAPContainerEntity childContainer = this.m_attributeContainer.get(containerSegs[0]);
+		if(childContainer!=null) {
+			return childContainer.getElementInfoByName(containerSegs[1]).getEmbededElementEntity().getEntityId();
+		}
+		
+		return null;
+	}
 
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();
 

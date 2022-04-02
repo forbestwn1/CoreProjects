@@ -30,6 +30,9 @@ import com.nosliw.data.core.domain.entity.expression.resource.HAPPluginResourceD
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructureComplex;
+import com.nosliw.data.core.domain.testing.HAPDefinitionEntityTestComplex1;
+import com.nosliw.data.core.domain.testing.HAPDefinitionEntityTestSimple1;
+import com.nosliw.data.core.domain.testing.HAPPluginEntityDefinitionInDomainDynamic;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
@@ -240,6 +243,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
 		//domain entity
+		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDynamic(HAPDefinitionEntityTestComplex1.class, true, this));
+		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDynamic(HAPDefinitionEntityTestSimple1.class, false, this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainAttachment(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructureComplex(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructure(this));
