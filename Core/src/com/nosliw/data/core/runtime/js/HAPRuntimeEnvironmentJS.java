@@ -32,6 +32,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefiniti
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructureComplex;
 import com.nosliw.data.core.domain.testing.HAPDefinitionEntityTestComplex1;
 import com.nosliw.data.core.domain.testing.HAPDefinitionEntityTestSimple1;
+import com.nosliw.data.core.domain.testing.HAPPluginComplexEntityProcessorTestComplex1;
 import com.nosliw.data.core.domain.testing.HAPPluginEntityDefinitionInDomainDynamic;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.process1.HAPManagerProcess;
@@ -221,11 +222,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		
 		//component
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, this.getDomainEntityManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, this));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, this));
 		
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, this.getDomainEntityManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
 
@@ -242,7 +244,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginStory());
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, this.getDomainEntityManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpDefault(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, this));
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, new HAPParserServiceInterfaceResource()));
 
 		//domain entity
@@ -255,6 +257,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpression(this));
 
 		//complex entity
+		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplex1());
 		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
 		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
 		

@@ -7,7 +7,11 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPContainerEntityList extends HAPContainerEntityImp<HAPInfoContainerElementList>{
 
-	private ArrayList<HAPInfoContainerElementList> m_eleArray;
+	private List<HAPInfoContainerElementList> m_eleArray;
+	
+	public HAPContainerEntityList() {
+		this.m_eleArray = new ArrayList<HAPInfoContainerElementList>();
+	}
 	
 	@Override
 	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_LIST; }

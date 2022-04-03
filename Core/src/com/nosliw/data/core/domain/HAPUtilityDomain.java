@@ -12,11 +12,25 @@ import com.nosliw.data.core.complex.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationValueStructure;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static HAPResultExecutableEntityInDomain getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
+		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityManager());
+		//build definition domain
+		HAPResourceDefinition resourceDefinition = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
+		domainContext.getDefinitionDomain().setMainComplexEntityId(resourceDefinition.getEntityId());
+		
+		//process definition
+		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, resourceDefinition.getEntityId(), runtimeEnv); 
+		HAPIdEntityInDomain exeEntityId = runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
+		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
+	}
+
+	
 	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainDefinitionEntity definitionDomain) {
 		HAPPath p = new HAPPath(path);
 		HAPIdEntityInDomain currentEntityId = entityId;

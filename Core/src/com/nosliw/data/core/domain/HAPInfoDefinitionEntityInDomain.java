@@ -23,6 +23,9 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	//resource id
 	public static final String RESOURCEID = "resourceId";
 
+	//resource id
+	public static final String RESOURCE = "resource";
+
 	//reference to attachment
 	public static final String REFERENCE = "reference";
 
@@ -103,6 +106,11 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
+		
+		if(this.m_resourceId!=null) {
+			jsonMap.put(ENTITY, entityDefDomain.getEntityInfo(entityDefDomain.getResourceDefinition(m_resourceId).getEntityId()).getEntity().toExpandedJsonString(entityDefDomain));
+		}
+		
 		HAPInfoParentComplex parentInfo = entityDefDomain.getParentInfo(this.m_entityId);
 		if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);

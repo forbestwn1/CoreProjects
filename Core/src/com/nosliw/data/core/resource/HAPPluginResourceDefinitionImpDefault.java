@@ -7,7 +7,6 @@ import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -15,13 +14,11 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 
 	private String m_resourceType;
 	
-	private HAPManagerDomainEntityDefinition m_domainEntityManager;
-	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPPluginResourceDefinitionImpDefault(String resourceType, HAPManagerDomainEntityDefinition domainEntityManager) {
+	public HAPPluginResourceDefinitionImpDefault(String resourceType, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_resourceType = resourceType;
-		this.m_domainEntityManager = domainEntityManager;
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
@@ -49,10 +46,11 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
 		else if(content instanceof String)  jsonObj = new JSONObject(content);
-		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), new HAPContextParser(definitionDomain, localRefBase), this.m_domainEntityManager); 
+		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), new HAPContextParser(definitionDomain, localRefBase), this.m_runtimeEnv.getDomainEntityManager(), this.m_runtimeEnv.getResourceDefinitionManager()); 
 		return entityId;
 	}
 
+	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
 	
 //	@Override
 //	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {

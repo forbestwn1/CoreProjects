@@ -1,12 +1,13 @@
 package com.nosliw.data.core.domain;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
-
 public class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomain{
 
-	@Override
-	public HAPEntityOrReference getChild(String path) {  return null;  }
-
+	public HAPDefinitionEntityInDomainSimple() {}
+	
+	public HAPDefinitionEntityInDomainSimple (String entityType) {
+		super(entityType);
+	}
+	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityInDomainSimple out = new HAPDefinitionEntityInDomainSimple();

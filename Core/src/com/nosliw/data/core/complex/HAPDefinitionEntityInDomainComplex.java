@@ -1,6 +1,5 @@
 package com.nosliw.data.core.complex;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
@@ -17,9 +16,6 @@ public class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDom
 		super(entityType);
 	}
 	
-	@Override
-	public HAPEntityOrReference getChild(String childName) {  return null;  }
-
 	@Override
 	public HAPEmbededEntity getValueStructureComplexEntity() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE);  }
 
