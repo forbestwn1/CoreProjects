@@ -149,7 +149,7 @@ public class HAPUtilityParserEntity {
 			if(out==null) {
 				Object resourceObj = jsonObj.opt(HAPInfoDefinitionEntityInDomain.RESOURCEID);
 				if(resourceObj!=null) {
-					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(entityType, resourceObj);
+					HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityType, resourceObj);
 					out = parserContext.getDefinitionDomain().addEntityOrReference(resourceId, entityType);
 				}
 			}

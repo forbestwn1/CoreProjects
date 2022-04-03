@@ -1,4 +1,4 @@
-package com.nosliw.test.resource;
+package com.nosliw.test.domain;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -10,14 +10,14 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPTestResource {
+public class HAPTestDomain {
 
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		HAPDomainDefinitionEntity defDomain = new HAPDomainDefinitionEntity(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager());
 
 		
-		HAPResourceId valueStructureResourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, "test1"); 
+		HAPResourceId valueStructureResourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, "test1"); 
 
 		HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(valueStructureResourceId, defDomain);
 		String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), defDomain);

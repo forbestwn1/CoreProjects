@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain.entity.attachment;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -37,13 +39,14 @@ public class HAPReferenceAttachment extends HAPSerializableImp implements HAPEnt
 
 	public static HAPReferenceAttachment newInstance(Object obj, String type) {
 		HAPReferenceAttachment out = new HAPReferenceAttachment();
-		out.m_dataType = type;
 		if(obj instanceof JSONObject) {
 			out.buildObjectByJson(obj);
 		}
 		else if(obj instanceof String) {
 			out.buildObjectByLiterate((String)obj);
 		}
+		if(out.m_dataType==null)	out.m_dataType = type;
+		else if(!out.m_dataType.equals(type))  throw new RuntimeException();
 		return out;
 	}
 
@@ -56,6 +59,12 @@ public class HAPReferenceAttachment extends HAPSerializableImp implements HAPEnt
 	@Override
 	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(m_name, m_dataType); }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(NAME, m_name);
+		jsonMap.put(DATATYPE, this.m_dataType);
+	}
+
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
 		String[] segs = HAPUtilityNamingConversion.parseLevel1(literateValue);

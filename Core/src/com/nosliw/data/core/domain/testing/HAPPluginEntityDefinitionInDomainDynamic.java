@@ -78,7 +78,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				Pair<String, String> pair = this.parseString(str);
 				String container = pair.getLeft();
 				if(container.equals("none"))  out.isContainer = false;
-				if(container.equals("container"))  out.isContainer = true;
+				else if(container.equals("container"))  out.isContainer = true;
 				else {
 					out.isContainer = true;
 					out.containerType = container;

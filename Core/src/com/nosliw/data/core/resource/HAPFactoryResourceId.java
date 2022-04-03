@@ -8,6 +8,15 @@ import org.json.JSONObject;
 
 public class HAPFactoryResourceId {
 
+	//newInstance when not sure obj including resource type or not.
+	public static HAPResourceId tryNewInstance(String resourceType, Object obj) {
+		HAPResourceId out = null;
+		out = newInstance(obj);
+		if(out==null) out = newInstance(resourceType, obj);
+		if(!out.getResourceType().equals(resourceType))  throw new RuntimeException();
+		return out;
+	}
+	
 	public static HAPResourceId newInstance(String resourceType, Object obj) {
 		HAPResourceId out = null;
 		if(obj instanceof String)  out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj, false);
@@ -54,12 +63,14 @@ public class HAPFactoryResourceId {
 		if(content instanceof String) {
 			String literate = (String)content;
 			String[] idSegs = HAPUtilityResourceId.parseResourceIdLiterate(literate);
-			if(idSegs.length==1)   out = newInstance(null, idSegs[0]);
+			if(idSegs.length==1)   out = null;
 			else if(idSegs.length==2)   out = newInstance(idSegs[0], idSegs[1]);
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;
-			out = newInstance(jsonObj.getString(HAPResourceId.RESOURCETYPE), jsonObj.get(HAPResourceId.ID));
+			Object resourceType = jsonObj.opt(HAPResourceId.RESOURCETYPE);
+			if(resourceType==null) out = null;
+			out = newInstance((String)resourceType, jsonObj.get(HAPResourceId.ID));
 		}
 		return out;
 	}
