@@ -55,8 +55,8 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 	}
 	
 	@Override
-	protected void toExpanedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain) {
-		super.toExpanedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
+	protected void toExpanedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {
+		super.toExpanedJsonMap(jsonMap, typeJsonMap, entityDomain);
 		jsonMap.put(INDEX, this.m_index+"");
 		typeJsonMap.put(INDEX, Integer.class);
 	}

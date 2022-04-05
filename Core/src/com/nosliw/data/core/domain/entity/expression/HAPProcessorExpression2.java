@@ -16,7 +16,7 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
@@ -46,7 +46,7 @@ public class HAPProcessorExpression2 {
 	 */
 	public static HAPExecutableExpressionGroup process(
 			String id, 
-			HAPDomainDefinitionEntity domainPool,
+			HAPDomainEntityDefinition domainPool,
 			HAPIdEntityInDomain entityId
 			) {
 		

@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 
 //entity that have data value structure and attachment
-public class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
+public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
 
 	public static final String COMPLEX = "complex";
 	
@@ -30,12 +30,5 @@ public class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDom
 
 	@Override
 	public void setAttachmentContainerEntity(HAPEmbededEntity attachmentEntity) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
-
-	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityInDomainComplex out = new HAPDefinitionEntityInDomainComplex();
-		this.cloneToDefinitionEntityInDomain(out);
-		return out;
-	}
 
 }

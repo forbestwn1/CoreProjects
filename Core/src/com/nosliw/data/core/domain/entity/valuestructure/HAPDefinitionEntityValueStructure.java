@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple{
@@ -43,7 +43,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	}
 	
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinition entityDefDomain){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	

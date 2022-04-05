@@ -22,5 +22,11 @@ public class HAPInfoDefinitionEntityInDomainExtra extends HAPEntityInfoImp{
 	
 	public Set<String> getAlias(){    return this.m_alias;    }
 	
-	
+	public HAPInfoDefinitionEntityInDomainExtra cloneExtraInfo() {
+		HAPInfoDefinitionEntityInDomainExtra out = new HAPInfoDefinitionEntityInDomainExtra();
+		this.cloneToEntityInfo(out);
+		out.m_globalId = this.m_globalId;
+		out.m_alias.addAll(this.m_alias);
+		return out;
+	}
 }

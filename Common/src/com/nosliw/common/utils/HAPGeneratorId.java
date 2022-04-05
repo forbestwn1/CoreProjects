@@ -11,6 +11,9 @@ public class HAPGeneratorId {
 	public HAPGeneratorId(){
 	}
 
-	public String generateId(){		return String.valueOf(++this.m_idIndex);	}
+	public String generateId(){		
+		String out = String.valueOf(++this.m_idIndex);
+		return out;
+	}
 
 }

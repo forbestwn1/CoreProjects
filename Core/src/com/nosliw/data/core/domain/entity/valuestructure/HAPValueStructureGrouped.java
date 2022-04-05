@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 
@@ -29,7 +29,7 @@ public class HAPValueStructureGrouped{
 	public String getGroupName() {   return this.m_groupName;   }
 	public void setGroupName(String groupName) {   this.m_groupName = groupName;    }
 
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(GROUPNAME, this.m_groupName);
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityDomain.getEntityExpandedJsonString(this.m_valueStructureId, entityDefDomain));

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
@@ -19,7 +19,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainDefinitionEntity definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinition definitionDomain) {
 		HAPDefinitionEntityComplexValueStructure valueStructureComplex = (HAPDefinitionEntityComplexValueStructure)this.getEntity(entityId, definitionDomain);
 
 		if(obj instanceof JSONArray) {
@@ -37,7 +37,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 		}
 	}
 
-	private HAPPartComplexValueStructureSimple parseSimpleValueStructurePart(Object partObj, HAPDomainDefinitionEntity definitionDomain, HAPContextParser parserContext) {
+	private HAPPartComplexValueStructureSimple parseSimpleValueStructurePart(Object partObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
 		
 		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
 		
@@ -56,7 +56,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 		return out;
 	}
 	
-	private HAPValueStructureGrouped parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainDefinitionEntity definitionDomain, HAPContextParser parserContext) {
+	private HAPValueStructureGrouped parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
 		String groupName = (String)wrapperObj.opt(HAPValueStructureGrouped.GROUPNAME);
 		if(groupName==null)  groupName = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		

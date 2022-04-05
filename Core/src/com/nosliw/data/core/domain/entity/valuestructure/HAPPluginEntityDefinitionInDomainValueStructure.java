@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -18,7 +18,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEn
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainDefinitionEntity definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinition definitionDomain) {
 		JSONObject structureJson = (JSONObject)obj;
 		if(structureJson!=null) {
 			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)this.getEntity(entityId, definitionDomain);

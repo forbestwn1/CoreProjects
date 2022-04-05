@@ -76,23 +76,27 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getEmbededElementEntity();
 	}
 	
-	public void addContainerElementAttribute(String attributeName, HAPInfoContainerElement eleInfo) {
-		HAPContainerEntity container = this.m_attributeContainer.get(attributeName);
-		if(container==null) {
-			String eleInfoType = eleInfo.getInfoType();
-			if(HAPConstantShared.ENTITYCONTAINER_TYPE_SET.equals(eleInfoType)) {
-				container = new HAPContainerEntitySet();
-			}
-			else if(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST.equals(eleInfoType)) {
-				container = new HAPContainerEntityList();
-				
-			}
-			this.m_attributeContainer.put(attributeName, container);
-		}
-		container.addEntityElement(eleInfo);
+	public void setContainerAttribute(String attributeName, HAPContainerEntity container) {
+		this.m_attributeContainer.put(attributeName, container);
 	}
+	
+//	public void addContainerElementAttribute(String attributeName, HAPInfoContainerElement eleInfo) {
+//		HAPContainerEntity container = this.m_attributeContainer.get(attributeName);
+//		if(container==null) {
+//			String eleInfoType = eleInfo.getInfoType();
+//			if(HAPConstantShared.ENTITYCONTAINER_TYPE_SET.equals(eleInfoType)) {
+//				container = new HAPContainerEntitySet();
+//			}
+//			else if(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST.equals(eleInfoType)) {
+//				container = new HAPContainerEntityList();
+//				
+//			}
+//			this.m_attributeContainer.put(attributeName, container);
+//		}
+//		container.addEntityElement(eleInfo);
+//	}
 
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
@@ -114,7 +118,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	}
 
 	//expanded json. expand all referenced 
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinition entityDefDomain){
 		for(String attrName : this.m_attributesSimple.keySet()) {
 			HAPSerializableImp entityId = this.m_attributesSimple.get(attrName);
 			jsonMap.put(attrName, this.m_attributesSimple.get(attrName).toExpandedJsonString(entityDefDomain));

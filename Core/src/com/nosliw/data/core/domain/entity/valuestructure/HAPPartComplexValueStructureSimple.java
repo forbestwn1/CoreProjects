@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
@@ -57,7 +57,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart() { return this.cloneValueStructureComplexPartSimple();  }
 
 	@Override
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
 		List<String> valueStructureJsonArray = new ArrayList<String>();
 		for(HAPValueStructureGrouped valueStructure : this.m_valueStructures) {
 			valueStructureJsonArray.add(valueStructure.toExpandedJsonString(entityDefDomain));

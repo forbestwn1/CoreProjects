@@ -2,10 +2,11 @@ package com.nosliw.data.core.resource;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -25,7 +26,7 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	public String getResourceType() {		return this.m_resourceType;	}
 
 	@Override
-	public HAPIdEntityInDomain getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainDefinitionEntity entityDomain) {
+	public HAPIdEntityInDomain getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainEntityDefinition entityDomain) {
 		//get location information
 		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(resourceId);
 		//read content
@@ -35,17 +36,17 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	}
 
 	@Override
-	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPDomainDefinitionEntity definitionDomain) {
+	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPDomainEntityDefinition definitionDomain) {
 		HAPPathLocationBase localRefBase = localResourceId.getBasePath();
 		String path = localRefBase.getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
 		HAPIdEntityInDomain out = this.parseEntity(HAPFileUtility.readFile(path), definitionDomain, localRefBase);
 		return out;
 	}
 
-	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainDefinitionEntity definitionDomain, HAPPathLocationBase localRefBase) {
+	private HAPIdEntityInDomain parseEntity(Object content, HAPDomainEntityDefinition definitionDomain, HAPPathLocationBase localRefBase) {
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
-		else if(content instanceof String)  jsonObj = new JSONObject(content);
+		else if(content instanceof String)  jsonObj = new JSONObject(HAPJsonUtility.formatJson((String)content));
 		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), new HAPContextParser(definitionDomain, localRefBase), this.m_runtimeEnv.getDomainEntityManager(), this.m_runtimeEnv.getResourceDefinitionManager()); 
 		return entityId;
 	}

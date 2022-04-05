@@ -3,6 +3,7 @@ package com.nosliw.data.core.domain;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
 
 //container for entity
@@ -11,9 +12,13 @@ public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends H
 	@HAPAttribute
 	public static String ELEMENT = "element";
 
+	public static String EXTRA = "extra";
+
 	public static final String ELEMENT_INFO = "eleInfo";
 
 	String getContainerType();
+	
+	HAPEntityInfo getExtraInfo();
 
 	void addEntityElement(T eleInfo);
 
@@ -29,6 +34,6 @@ public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends H
 	
 	HAPContainerEntity<T> cloneContainerEntity();
 
-	String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain);
+	String toExpandedJsonString(HAPDomainEntity entityDomain);
 
 }

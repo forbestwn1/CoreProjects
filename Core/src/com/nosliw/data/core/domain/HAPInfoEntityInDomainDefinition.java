@@ -10,7 +10,7 @@ import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
+public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implements HAPInfoEntityInDomain{
 	
 	public static final String ENTITYTYPE = "entityType";
 
@@ -56,12 +56,12 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	//calculated value from entity type
 	private boolean m_isComplex;
 	
-	public HAPInfoDefinitionEntityInDomain() {
+	public HAPInfoEntityInDomainDefinition() {
 		this.m_extraInfo = new HAPInfoDefinitionEntityInDomainExtra();
 		this.m_isComplex = false;
 	}
 
-	public HAPInfoDefinitionEntityInDomain(String entityType) {
+	public HAPInfoEntityInDomainDefinition(String entityType) {
 		this();
 		this.m_entityType = entityType;
 	}
@@ -88,27 +88,33 @@ public class HAPInfoDefinitionEntityInDomain extends HAPSerializableImp{
 	public boolean isComplexEntity() {   return this.m_isComplex;   }
 	public void setIsComplexEntity(boolean isComplex) {    this.m_isComplex = isComplex;     }
 	
-	public void cloneToInfoDefinitionEntityInDomain(HAPInfoDefinitionEntityInDomain out) {
+	public void cloneToInfoDefinitionEntityInDomain(HAPInfoEntityInDomainDefinition out) {
 		out.m_isComplex = this.m_isComplex;
+		out.m_entityType = this.m_entityType;
 		if(this.m_baseLocationPath!=null)  out.m_baseLocationPath = this.m_baseLocationPath.cloneLocalReferenceBase();
 		if(this.m_entity!=null)  out.m_entity = this.m_entity.cloneEntityDefinitionInDomain();
 		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneIdEntityInDomain();
+		if(this.m_resourceId!=null)  out.m_resourceId = this.m_resourceId.clone();
+		if(this.m_reference!=null)   out.m_reference = this.m_reference.cloneAttachmentReference();
+		if(this.m_extraInfo!=null)  out.m_extraInfo = this.m_extraInfo.cloneExtraInfo();
 	}
 	
-	public HAPInfoDefinitionEntityInDomain cloneEntityDefinitionInfo() {
-		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain();
+	public HAPInfoEntityInDomainDefinition cloneEntityDefinitionInfo() {
+		HAPInfoEntityInDomainDefinition out = new HAPInfoEntityInDomainDefinition();
 		this.cloneToInfoDefinitionEntityInDomain(out);
 		return out;
 	}
 	
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	@Override
+	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
+		HAPDomainEntityDefinition entityDefDomain = (HAPDomainEntityDefinition)entityDomain;
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
 		
 		if(this.m_resourceId!=null) {
-			jsonMap.put(ENTITY, entityDefDomain.getEntityInfo(entityDefDomain.getResourceDefinition(m_resourceId).getEntityId()).getEntity().toExpandedJsonString(entityDefDomain));
+			jsonMap.put(ENTITY, entityDefDomain.getEntityInfoDefinition(entityDefDomain.getResourceDefinition(m_resourceId).getEntityId()).getEntity().toExpandedJsonString(entityDefDomain));
 		}
 		
 		HAPInfoParentComplex parentInfo = entityDefDomain.getParentInfo(this.m_entityId);

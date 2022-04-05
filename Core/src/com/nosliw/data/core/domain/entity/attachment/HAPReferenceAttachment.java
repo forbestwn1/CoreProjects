@@ -55,6 +55,13 @@ public class HAPReferenceAttachment extends HAPSerializableImp implements HAPEnt
 	}
 
 	private HAPReferenceAttachment() {}
+
+	public HAPReferenceAttachment cloneAttachmentReference() {
+		HAPReferenceAttachment out = new HAPReferenceAttachment();
+		out.m_dataType = this.m_dataType;
+		out.m_name = this.m_name;
+		return out;
+	}
 	
 	@Override
 	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(m_name, m_dataType); }

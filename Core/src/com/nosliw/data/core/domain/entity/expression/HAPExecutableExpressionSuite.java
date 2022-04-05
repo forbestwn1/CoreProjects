@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.HAPDomainExecutableEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
 
 @HAPEntityWithAttribute(baseName="EXPRESSIONSUITE")
 public class HAPExecutableExpressionSuite extends HAPExecutableEntityComplex{
@@ -16,7 +16,7 @@ public class HAPExecutableExpressionSuite extends HAPExecutableEntityComplex{
 	}
 	
 	@Override
-	public String toString(HAPDomainExecutableEntity domain) {
+	public String toString(HAPDomainEntityExecutable domain) {
 		// TODO Auto-generated method stub
 		return null;
 	}

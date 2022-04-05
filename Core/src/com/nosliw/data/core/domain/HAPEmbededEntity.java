@@ -29,14 +29,14 @@ public class HAPEmbededEntity extends HAPSerializableImp{
 		return m_adapter;
 	}
 
-	public void setAdapter(Object adapter) {
-		this.m_adapter = adapter;
-	}
-
 	public HAPEmbededEntity(HAPIdEntityInDomain entityId) {
 		this.m_entityId = entityId;
 	}
 	
+	public void setAdapter(Object adapter) {
+		this.m_adapter = adapter;
+	}
+
 	public HAPIdEntityInDomain getEntityId() {
 		return this.m_entityId;
 	}
@@ -53,11 +53,11 @@ public class HAPEmbededEntity extends HAPSerializableImp{
 		}
 	}
 	
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EMBEDED, HAPUtilityDomain.getEntityExpandedJsonString(this.m_entityId, entityDefDomain));
+		jsonMap.put(EMBEDED, HAPUtilityDomain.getEntityExpandedJsonString(this.m_entityId, entityDomain));
 		return HAPJsonUtility.buildMapJson(jsonMap);
 
 	}

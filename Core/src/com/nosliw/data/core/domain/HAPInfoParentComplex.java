@@ -40,14 +40,14 @@ public class HAPInfoParentComplex extends HAPSerializableImp{
 
 	
 	@Override
-	public HAPInfoDefinitionEntityInDomain cloneEntityDefinitionInfo() {
+	public HAPInfoEntityInDomainDefinition cloneEntityDefinitionInfo() {
 		HAPConfigureEntityInDomainComplex out = new HAPConfigureEntityInDomainComplex();
 		this.cloneToInfoDefinitionEntityInDomain(out);
 		return out;
 	}
 	
 	@Override
-	public void cloneToInfoDefinitionEntityInDomain(HAPInfoDefinitionEntityInDomain out) {
+	public void cloneToInfoDefinitionEntityInDomain(HAPInfoEntityInDomainDefinition out) {
 		super.cloneToInfoDefinitionEntityInDomain(out);
 		if(out instanceof HAPConfigureEntityInDomainComplex) {
 			this.m_parentId = ((HAPConfigureEntityInDomainComplex)out).getParentId();

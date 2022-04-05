@@ -10,8 +10,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
+import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
@@ -95,6 +96,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	
 	public HAPDefinitionEntityContainerAttachment cloneAttachmentContainer() {
 		HAPDefinitionEntityContainerAttachment out = new HAPDefinitionEntityContainerAttachment();
+		super.cloneToDefinitionEntityInDomain(out);
 		for(String type : this.m_element.keySet()) {
 			Map<String, HAPAttachment> byName = this.m_element.get(type);
 			for(String name : byName.keySet()) {
@@ -105,13 +107,19 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	}
 	
 	@Override
+	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+		return this.cloneAttachmentContainer();
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_element, HAPSerializationFormat.JSON));
 	}
 
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainDefinitionEntity entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinition entityDefDomain){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
+
 }

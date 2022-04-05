@@ -11,13 +11,10 @@ import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 public class HAPContextDomain {
 
 	//definition domain
-	private HAPDomainDefinitionEntity m_definitionDomain;
+	private HAPDomainEntityDefinition m_definitionDomain;
 
 	//executable domain
-	private HAPDomainExecutableEntity m_executableDomain;
-	
-	//value structure domain (value structure definition, runtime id)
-	private HAPDomainValueStructure m_valueStructureDomain;
+	private HAPDomainEntityExecutable m_executableDomain;
 	
 	//connection between executable entity to definition entity
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionIdByExecutableId;
@@ -27,15 +24,15 @@ public class HAPContextDomain {
 	
 	public HAPContextDomain(HAPManagerDomainEntityDefinition domainEntityDefMan) {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_definitionDomain = new HAPDomainDefinitionEntity(this.m_idGenerator, domainEntityDefMan);
-		this.m_executableDomain = new HAPDomainExecutableEntity(this.m_idGenerator);
+		this.m_definitionDomain = new HAPDomainEntityDefinition(this.m_idGenerator, domainEntityDefMan);
+		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 		this.m_executableIdByDefinitionId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
-	public HAPDomainDefinitionEntity getDefinitionDomain() {   return this.m_definitionDomain;    }
-	public HAPDomainExecutableEntity getExecutableDomain() {    return this.m_executableDomain;    }
+	public HAPDomainEntityDefinition getDefinitionDomain() {   return this.m_definitionDomain;    }
+	public HAPDomainEntityExecutable getExecutableDomain() {    return this.m_executableDomain;    }
 
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPIdEntityInDomain definitionId) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity);

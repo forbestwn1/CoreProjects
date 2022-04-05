@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -13,11 +14,17 @@ public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  
 
 	private Map<String, T> m_eleByName;
 	private Map<HAPIdEntityInDomain, T> m_eleById;
-
+	private HAPEntityInfo m_extraInfo;
+	
 	public HAPContainerEntityImp() {
 		this.m_eleByName = new LinkedHashMap<String, T>();
 		this.m_eleById = new LinkedHashMap<HAPIdEntityInDomain, T>();
 	}
+
+	@Override
+	public HAPEntityInfo getExtraInfo() {    return this.m_extraInfo;     }
+
+	public void setExtraInfo(HAPEntityInfo extraInfo) {    this.m_extraInfo = extraInfo;     }
 	
 	@Override
 	public void addEntityElement(T eleInfo) {
@@ -50,7 +57,7 @@ public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  
 	}
 	
 	@Override
-	public String toExpandedJsonString(HAPDomainDefinitionEntity entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntity entityDefDomain) {
 		List<String> eleArray = new ArrayList<String>();
 		for(T ele : this.getAllElementsInfo()) {
 			eleArray.add(ele.toExpandedJsonString(entityDefDomain));

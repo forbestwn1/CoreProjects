@@ -1,10 +1,10 @@
 package com.nosliw.data.core.complex;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 
 public interface HAPProcessorComplexEntity {
 
-	void process(HAPInfoDefinitionEntityInDomain complexEntityInfo, Object adapter, HAPInfoDefinitionEntityInDomain parentComplexEntityInfo, HAPContextProcessor processContext);
+	void process(HAPInfoEntityInDomainDefinition complexEntityInfo, Object adapter, HAPInfoEntityInDomainDefinition parentComplexEntityInfo, HAPContextProcessor processContext);
 	
 }

@@ -69,6 +69,11 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	}
 
 	@Override
+	public int hashCode() {
+		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
+	}
+
+	@Override
 	public HAPResourceId clone() {
 		HAPResourceIdLocal out = new HAPResourceIdLocal(this.getResourceType());
 		out.cloneFrom(this);
@@ -81,7 +86,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 		if(super.equals(o)) {
 			if(o instanceof HAPResourceIdLocal){
 				HAPResourceIdLocal resourceId = (HAPResourceIdLocal)o;
-				return HAPBasicUtility.isEquals(this.getBasePath(), resourceId.getBasePath());
+				return HAPBasicUtility.isEquals(this.getBasePath(), resourceId.getBasePath())||HAPBasicUtility.isEquals(this.getName(), resourceId.getName());
 			}
 		}
 		return out;

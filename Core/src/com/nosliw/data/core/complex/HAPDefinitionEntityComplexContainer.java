@@ -23,5 +23,4 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 	
 	public void addEntityElement(HAPIdEntityInDomain entityId) {  this.m_elements.add(entityId);  }
 
-
 }

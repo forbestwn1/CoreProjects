@@ -10,12 +10,12 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPContextDomain;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
-import com.nosliw.data.core.domain.HAPInfoDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
@@ -32,15 +32,15 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPUtilityComplexEntity {
 
 	public static void traversComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
-		traversComplexEntityDefinitionTree(processContext.getDomainContext().getDefinitionDomain().getEntityInfo(entityId), null, null, processor, processContext);
+		traversComplexEntityDefinitionTree(processContext.getDomainContext().getDefinitionDomain().getEntityInfoDefinition(entityId), null, null, processor, processContext);
 	}
 
-	private static void traversComplexEntityDefinitionTree(HAPInfoDefinitionEntityInDomain complexEntityInfo, Object adapter, HAPInfoDefinitionEntityInDomain parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
+	private static void traversComplexEntityDefinitionTree(HAPInfoEntityInDomainDefinition complexEntityInfo, Object adapter, HAPInfoEntityInDomainDefinition parentComplexEntityInfo, HAPProcessorComplexEntity processor, HAPContextProcessor processContext) {
 		//process current entity
 		processor.process(complexEntityInfo, adapter, parentComplexEntityInfo, processContext);
 		
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainDefinitionEntity defDomain = domainContext.getDefinitionDomain();
+		HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
 
 		HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity();
 				
@@ -48,7 +48,7 @@ public class HAPUtilityComplexEntity {
 		Map<String, HAPEmbededEntity> simpleAttributes = complexEntityDef.getSimpleAttributes();
 		for(String attrName : simpleAttributes.keySet()) {
 			HAPEmbededEntity attributeEntity = simpleAttributes.get(attrName);
-			HAPInfoDefinitionEntityInDomain attrEntityInfo = defDomain.getEntityInfo(attributeEntity.getEntityId());
+			HAPInfoEntityInDomainDefinition attrEntityInfo = defDomain.getSolidEntityInfoDefinition(attributeEntity.getEntityId());
 			if(attrEntityInfo.isComplexEntity()) {
 				traversComplexEntityDefinitionTree(attrEntityInfo, attributeEntity.getAdapter(), complexEntityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 			}
@@ -62,7 +62,7 @@ public class HAPUtilityComplexEntity {
 			for(HAPInfoContainerElement eleInfo : eleInfos) {
 				HAPEmbededEntity eleEntity = eleInfo.getEmbededElementEntity();
 				HAPIdEntityInDomain eleId = eleEntity.getEntityId();
-				HAPInfoDefinitionEntityInDomain eleEntityInfo = defDomain.getEntityInfo(eleId);
+				HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getSolidEntityInfoDefinition(eleId);
 				if(eleEntityInfo.isComplexEntity()) {
 					traversComplexEntityDefinitionTree(eleEntityInfo, eleEntity.getAdapter(), complexEntityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
 				}

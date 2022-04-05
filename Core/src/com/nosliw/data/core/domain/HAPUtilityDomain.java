@@ -27,14 +27,15 @@ public class HAPUtilityDomain {
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, resourceDefinition.getEntityId(), runtimeEnv); 
 		HAPIdEntityInDomain exeEntityId = runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
+		domainContext.getExecutableDomain().setMainEntityId(exeEntityId);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 
 	
-	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainDefinitionEntity definitionDomain) {
+	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainEntityDefinition definitionDomain) {
 		HAPPath p = new HAPPath(path);
 		HAPIdEntityInDomain currentEntityId = entityId;
-		HAPInfoDefinitionEntityInDomain currentEntityInfo = definitionDomain.getEntityInfo(currentEntityId);
+		HAPInfoEntityInDomainDefinition currentEntityInfo = definitionDomain.getEntityInfoDefinition(currentEntityId);
 		HAPDefinitionEntityInDomain currentEntityDef = currentEntityInfo.getEntity();
 		for(String seg : p.getPathSegments()) {
 			HAPEntityOrReference child = currentEntityDef.getChild(seg);
@@ -51,12 +52,12 @@ public class HAPUtilityDomain {
 		}
 	}
 	
-	public static HAPContextParser getContextParse(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
-		return new HAPContextParser(definitionDomain, definitionDomain.getEntityInfo(entityId).getBaseLocationPath());
+	public static HAPContextParser getContextParse(HAPIdEntityInDomain entityId, HAPDomainEntityDefinition definitionDomain) {
+		return new HAPContextParser(definitionDomain, definitionDomain.getEntityInfoDefinition(entityId).getBaseLocationPath());
 	}
 	
 	public static HAPContextProcessor createProcessContext(HAPContextDomain domainContext, HAPIdEntityInDomain entityId, HAPRuntimeEnvironment runtimeEnv) {
-		HAPInfoDefinitionEntityInDomain entityInfo = domainContext.getDefinitionDomain().getEntityInfo(entityId);
+		HAPInfoEntityInDomainDefinition entityInfo = domainContext.getDefinitionDomain().getEntityInfoDefinition(entityId);
 		HAPContextProcessor out = new HAPContextProcessor(domainContext, entityInfo.getBaseLocationPath(), runtimeEnv);
 		return out;
 	}
@@ -91,12 +92,12 @@ public class HAPUtilityDomain {
 		return new HAPConfigureComplexRelationInfo();
 	}
 	
-	public static String getEntityExpandedJsonString(HAPIdEntityInDomain entityId, HAPDomainDefinitionEntity definitionDomain) {
-		return definitionDomain.getEntityInfo(entityId).toExpandedJsonString(definitionDomain);
+	public static String getEntityExpandedJsonString(HAPIdEntityInDomain entityId, HAPDomainEntity entityDomain) {
+		return entityDomain.getEntityInfo(entityId).toExpandedJsonString(entityDomain);
 	}
 	
-	public static HAPInfoDefinitionEntityInDomain newEntityDefinitionInfoInDomain(String entityType, HAPManagerDomainEntityDefinition entityDefMan) {
-		HAPInfoDefinitionEntityInDomain out = new HAPInfoDefinitionEntityInDomain(entityType);
+	public static HAPInfoEntityInDomainDefinition newEntityDefinitionInfoInDomain(String entityType, HAPManagerDomainEntityDefinition entityDefMan) {
+		HAPInfoEntityInDomainDefinition out = new HAPInfoEntityInDomainDefinition(entityType);
 		out.setIsComplexEntity(entityDefMan.isComplexEntity(entityType));
 		return out;
 	}
@@ -113,4 +114,14 @@ public class HAPUtilityDomain {
 		return out;
 	}
 	
+	public static HAPContainerEntityImp buildContainer(String containerType) {
+		HAPContainerEntityImp out = null;
+		if(HAPConstantShared.ENTITYCONTAINER_TYPE_SET.equals(containerType)) {
+			out = new HAPContainerEntitySet();
+		}
+		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST.equals(containerType)) {
+			out = new HAPContainerEntityList();
+		}
+		return out;
+	}
 }

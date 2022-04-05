@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain;
 
-public class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomain{
+public abstract class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomain{
 
 	public HAPDefinitionEntityInDomainSimple() {}
 	
@@ -8,11 +8,5 @@ public class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDoma
 		super(entityType);
 	}
 	
-	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityInDomainSimple out = new HAPDefinitionEntityInDomainSimple();
-		this.cloneToDefinitionEntityInDomain(out);
-		return out;
-	}
 
 }

@@ -2,7 +2,7 @@ package com.nosliw.test.expression;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.domain.HAPDomainDefinitionEntity;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceIdExpressionSuite;
@@ -18,7 +18,7 @@ public class HAPExpressionSuiteTest {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
 		HAPResourceId resourceId = new HAPResourceIdExpressionSuite(suite);
-		HAPDomainDefinitionEntity defDomain = new HAPDomainDefinitionEntity(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager());
+		HAPDomainEntityDefinition defDomain = new HAPDomainEntityDefinition(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager());
 		HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, defDomain);
 		String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), defDomain);
 		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
