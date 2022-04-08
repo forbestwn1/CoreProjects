@@ -1,7 +1,9 @@
 package com.nosliw.data.core.domain;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
@@ -28,14 +30,19 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutable)entityDomain));
+		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 
 }

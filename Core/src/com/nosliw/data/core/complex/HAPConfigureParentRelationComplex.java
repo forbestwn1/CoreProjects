@@ -1,21 +1,24 @@
 package com.nosliw.data.core.complex;
 
-import java.util.Set;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPConfigureParentRelationComplex extends HAPSerializableImp{
 
+	public static final String VALUESTRUCTURE = "valuestructure";
+	public static final String ATTACHMENT = "attachment";
+	
 	private HAPConfigureComplexRelationValueStructure m_valueStructureConfigure;
 	private HAPConfigureComplexRelationAttachment m_attachmentMode;
 	private HAPConfigureComplexRelationInfo m_infoMode;
 	
-	public void replaceAliasWithId(Set<String> alias, HAPIdEntityInDomain parentId) {
-		if(this.m_parentId==null&&alias.contains(m_parentAlias)) {
-			this.m_parentAlias = null;
-			this.m_parentId = parentId;
-		}
+	public HAPConfigureParentRelationComplex(){
+		this.m_attachmentMode = new HAPConfigureComplexRelationAttachment();
+		this.m_valueStructureConfigure = new HAPConfigureComplexRelationValueStructure();
 	}
 	
 	//attachment merge
@@ -30,7 +33,24 @@ public class HAPConfigureParentRelationComplex extends HAPSerializableImp{
 	public void setValueStructureRelationMode(HAPConfigureComplexRelationValueStructure valueStructureConfigure) {    this.m_valueStructureConfigure = valueStructureConfigure;    }
 	
 	public void mergeHard(HAPConfigureParentRelationComplex configure) {
-		
+		if(configure!=null) {
+			this.m_attachmentMode.mergeHard(configure.getAttachmentRelationMode());
+			this.m_valueStructureConfigure.mergeHard(configure.getValueStructureRelationMode());
+		}
 	}
-	
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ATTACHMENT, this.m_attachmentMode.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureConfigure.toStringValue(HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_attachmentMode.buildObject(jsonObj.opt(ATTACHMENT), HAPSerializationFormat.JSON);
+		this.m_valueStructureConfigure.buildObject(jsonObj.opt(VALUESTRUCTURE), HAPSerializationFormat.JSON);
+		return true;  
+	}
+
 }

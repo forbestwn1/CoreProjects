@@ -9,6 +9,7 @@ import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 public class HAPInfoParentComplex extends HAPSerializableImp{
 
 	public static final String PARENTID = "parentId";
+	public static final String RELATION = "relation";
 
 	//parent complex entity
 	private HAPIdEntityInDomain m_parentId;
@@ -27,31 +28,10 @@ public class HAPInfoParentComplex extends HAPSerializableImp{
 	
 	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return this.m_parentRelation;    }
 	
-	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelation) {    this.m_parentRelation = parentRelation;    }
-	
-	public void hardMerge(HAPInfoParentComplex parentInfo) {
-		
-	}
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(PARENTID, this.m_parentId.toStringValue(HAPSerializationFormat.JSON));
-	}
-
-	
-	@Override
-	public HAPInfoEntityInDomainDefinition cloneEntityDefinitionInfo() {
-		HAPConfigureEntityInDomainComplex out = new HAPConfigureEntityInDomainComplex();
-		this.cloneToInfoDefinitionEntityInDomain(out);
-		return out;
-	}
-	
-	@Override
-	public void cloneToInfoDefinitionEntityInDomain(HAPInfoEntityInDomainDefinition out) {
-		super.cloneToInfoDefinitionEntityInDomain(out);
-		if(out instanceof HAPConfigureEntityInDomainComplex) {
-			this.m_parentId = ((HAPConfigureEntityInDomainComplex)out).getParentId();
-		}
+		jsonMap.put(RELATION, this.m_parentRelation.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 }

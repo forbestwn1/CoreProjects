@@ -1,6 +1,6 @@
 {
 	"extra": {
-		"name": "childcomplex",
+		"name": "child complex entity",
 		"description": "childcomplex"
 	},
 	"entity": {
@@ -11,12 +11,25 @@
 			}
 		},
 		"attachment": {
+			"extra": {
+				"status": "disabled1",
+				"name": "child complex entity" 
+			},
 			"entity": {
 				"valuestructure": [
 				],
 				"testsimple1": [
 					{
 						"name": "samename",
+						"entity": {
+							"child_none_testsimple1": {
+								"entity": {
+								}
+							}
+						}
+					},
+					{
+						"name": "inchildonly",
 						"entity": {
 							"child_none_testsimple1": {
 								"entity": {

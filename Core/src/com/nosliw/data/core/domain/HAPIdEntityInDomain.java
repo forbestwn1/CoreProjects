@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -41,6 +42,11 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 
 	public HAPIdEntityInDomain cloneIdEntityInDomain() {
 		return new HAPIdEntityInDomain(this.m_entityId, this.m_entityType);
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
 	}
 	
 	@Override

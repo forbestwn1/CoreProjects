@@ -17,6 +17,8 @@ public class HAPConfigureComplexRelationValueStructure extends HAPSerializableIm
 	
 	//
 	
+	public void mergeHard(HAPConfigureComplexRelationValueStructure configure) {
+	}
 	
 
 }

@@ -29,6 +29,6 @@ public class HAPTestDomain {
 		System.out.println();
 		System.out.println();
 		HAPResultExecutableEntityInDomain executableResult = HAPUtilityDomain.getResourceExecutableComplexEntity(valueStructureResourceId, runtimeEnvironment);
-		System.out.println(executableResult.getDomainContext().getExecutableDomain().toString());
+		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getExecutableDomain().toString()));
 	}
 }

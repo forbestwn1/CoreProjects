@@ -1,12 +1,11 @@
 package com.nosliw.data.core.domain;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 
@@ -61,12 +60,8 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toString());
 		jsonMap.put(ATTACHMENTDOMAIN, this.m_attachmentDomain.toString());
-		
-		List<String> entityJsonList = new ArrayList<String>();
-		for(HAPInfoEntityInDomainExecutable entityInfo : this.m_executableEntity.values()) {
-			entityJsonList.add(entityInfo.toExpandedJsonString(this));
-		}
-		jsonMap.put(COMPLEXENTITY, HAPJsonUtility.buildArrayJson(entityJsonList.toArray(new String[0])));
+		jsonMap.put(MAINENTITYID, this.m_mainComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(COMPLEXENTITY, this.getEntityInfoExecutable(m_mainComplexEntityId).toExpandedJsonString(this));
 		
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}

@@ -1,7 +1,7 @@
 {
 	"extra": {
-		"name": "complextest1",
-		"description": "test1"
+		"name": "parent complex entity",
+		"description": "parent complex entity"
 	},
 	"entity": {
 		"entity_none_testsimple1": {
@@ -45,7 +45,12 @@
 			"extra": {
 				"status": "disabled1"
 			},
-			"resourceId": "testcomplex1|*child"
+			"resourceId": "testcomplex1|*child",
+			"parent": {
+				"attachment": {
+					"mode": "none"
+				}
+			}
 		},
 		"reference_none_testcomplex1": { 
 			"extra": {
@@ -91,7 +96,8 @@
 		},
 		"attachment": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled1",
+				"name": "parent complex entity" 
 			},
 			"entity": {
 				"valuestructure" : [
@@ -100,6 +106,15 @@
 				"testsimple1": [
 					{
 						"name": "samename",
+						"entity": {
+							"parent_none_testsimple1": {
+								"entity":{
+								}
+							}
+						}
+					},
+					{
+						"name": "inparentonly",
 						"entity": {
 							"parent_none_testsimple1": {
 								"entity":{

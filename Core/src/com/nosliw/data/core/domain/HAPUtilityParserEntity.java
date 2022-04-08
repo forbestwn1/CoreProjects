@@ -207,7 +207,7 @@ public class HAPUtilityParserEntity {
 					customerConfigure = new HAPConfigureParentRelationComplex();
 					customerConfigure.buildObject(parentRelationConfigureObjCustomer, HAPSerializationFormat.JSON);
 				}
-				if(parentRelationConfigureDefault!=null)	parentRelationConfigureDefault.mergeHard(customerConfigure);
+				parentRelationConfigure.mergeHard(customerConfigure);
 			}
 			
 			parserContext.getDefinitionDomain().buildComplexParentRelation(out, parentInfo);

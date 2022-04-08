@@ -51,7 +51,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	}
 
 	public void merge(HAPDefinitionEntityContainerAttachment parent, HAPConfigureComplexRelationAttachment mode) {
-		this.merge(parent, mode==null?null:mode.getMergeMode());
+		this.merge(parent, mode==null?null:mode.getMode());
 	}
 	
 	//merge with parent
