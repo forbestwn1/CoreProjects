@@ -19,9 +19,6 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 
-	//processed attachment
-	private HAPDomainAttachment m_attachmentDomain;
-	
 	//all entity 
 	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
 	
@@ -34,14 +31,11 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 	public HAPDomainEntityExecutable(HAPGeneratorId idGenerator) {
 		this.m_idGenerator = idGenerator;
 		this.m_valueStructureDomain = new HAPDomainValueStructure(this.m_idGenerator);
-		this.m_attachmentDomain = new HAPDomainAttachment();
 		this.m_executableEntity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable>();
 	}
 
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
 	
-	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;     }
-
 	public void setMainEntityId(HAPIdEntityInDomain mainEntityId) {    this.m_mainComplexEntityId = mainEntityId;      }
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity) {

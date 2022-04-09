@@ -16,6 +16,9 @@ public class HAPContextDomain {
 	//executable domain
 	private HAPDomainEntityExecutable m_executableDomain;
 	
+	//attachment domain
+	private HAPDomainAttachment m_attachmentDomain;
+	
 	//connection between executable entity to definition entity
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionIdByExecutableId;
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableIdByDefinitionId;
@@ -26,6 +29,7 @@ public class HAPContextDomain {
 		this.m_idGenerator = new HAPGeneratorId();
 		this.m_definitionDomain = new HAPDomainEntityDefinition(this.m_idGenerator, domainEntityDefMan);
 		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
+		this.m_attachmentDomain = new HAPDomainAttachment();
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 		this.m_executableIdByDefinitionId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
@@ -33,6 +37,7 @@ public class HAPContextDomain {
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
 	public HAPDomainEntityDefinition getDefinitionDomain() {   return this.m_definitionDomain;    }
 	public HAPDomainEntityExecutable getExecutableDomain() {    return this.m_executableDomain;    }
+	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;     }
 
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPIdEntityInDomain definitionId) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity);
