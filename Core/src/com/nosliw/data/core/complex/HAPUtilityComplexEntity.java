@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPInfoUtility;
+import com.nosliw.common.info.HAPUtilityInfo;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -137,7 +137,7 @@ public class HAPUtilityComplexEntity {
 	}
 	
 	public static void processInfo(HAPDefinitionEntityInDomainComplex complexEntity, HAPDefinitionEntityInDomainComplex parentEntity, HAPConfigureComplexRelationInfo infoRelation) {
-		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
+		HAPUtilityInfo.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 
 	}
 	

@@ -24,6 +24,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static HAPExtraInfoEntityInDomainExecutable buildExecutableExtraInfo(HAPInfoEntityInDomainDefinition defEntityInfo) {
+		HAPExtraInfoEntityInDomainExecutable out = new HAPExtraInfoEntityInDomainExecutable(defEntityInfo.getEntityId());
+		defEntityInfo.getExtraInfo().cloneToEntityInfo(out);
+		return out;
+	}
+	
 	public static void traverseExecutableEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityExecutable processor, HAPContextProcessor processContext) {
 		traverseExecutableEntityTree(processContext.getDomainContext().getExecutableDomain().getEntityInfoExecutable(entityId), null, null, processor, processContext);
 	}
@@ -101,7 +107,6 @@ public class HAPUtilityDomain {
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, runtimeEnv); 
 		HAPIdEntityInDomain exeEntityId = runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
-		domainContext.getExecutableDomain().setMainEntityId(exeEntityId);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 

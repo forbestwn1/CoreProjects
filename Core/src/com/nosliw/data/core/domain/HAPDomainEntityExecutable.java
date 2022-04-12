@@ -12,7 +12,6 @@ import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAPDomainEntity{
 
 	private static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
-	private static String ATTACHMENTDOMAIN = "attachmentDomain";
 	private static String COMPLEXENTITY = "complexEntity";
 	private static String MAINENTITYID = "mainEntityId";
 	
@@ -45,9 +44,9 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 	public HAPIdEntityInDomain getRootEntityId() {   return this.m_rootComplexEntityId;   }
 	public void setRootEntityId(HAPIdEntityInDomain rootEntityId) {    this.m_rootComplexEntityId = rootEntityId;      }
 	
-	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity) {
+	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), executableEntity.getEntityType());
-		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(executableEntity, entityId);
+		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(executableEntity, entityId, extraInfo);
 		this.m_executableEntity.put(entityId, entityInfo);
 		return entityId;
 	}
@@ -60,7 +59,6 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 	public String toString() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toString());
-		jsonMap.put(ATTACHMENTDOMAIN, this.m_attachmentDomain.toString());
 		jsonMap.put(MAINENTITYID, this.m_mainComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(COMPLEXENTITY, this.getEntityInfoExecutable(m_mainComplexEntityId).toExpandedJsonString(this));
 		

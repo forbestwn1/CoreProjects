@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.info.HAPInfoUtility;
+import com.nosliw.common.info.HAPUtilityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
@@ -49,7 +49,7 @@ public abstract class HAPDefinitionEntityElementInContainerComponent extends HAP
 		//build value structure
 //		HAPUtilityComplexValueStructure.setParentPart(m_componentEntity, componentContainer);
 		
-		HAPInfoUtility.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
+		HAPUtilityInfo.softMerge(this.m_componentEntity.getInfo(), this.m_componentContainer.getInfo());
 	}
 
 	@Override

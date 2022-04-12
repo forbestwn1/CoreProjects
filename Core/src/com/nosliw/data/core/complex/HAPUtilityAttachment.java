@@ -40,7 +40,7 @@ public class HAPUtilityAttachment {
 
 				HAPIdEntityInDomain entityIdExe = entityInfo.getEntityId();
 				HAPIdEntityInDomain entityIdDef = domainContext.getDefinitionEntityIdByExecutableId(entityIdExe);
-				HAPInfoEntityInDomainDefinition complexEntityDefInfo = defDomain.getEntityInfoDefinition(entityIdDef);
+				HAPInfoEntityInDomainDefinition complexEntityDefInfo = defDomain.getSolidEntityInfoDefinition(entityIdDef);
 				
 				HAPDefinitionEntityContainerAttachment attachmentContainerEntity = null;
 				HAPEmbededEntity attachmentContainerAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();

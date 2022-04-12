@@ -7,6 +7,4 @@ public abstract class HAPProcessorEntityExecutable {
 	
 	public abstract void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext);
 
-	protected 
-	
 }

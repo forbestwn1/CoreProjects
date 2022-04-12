@@ -172,7 +172,7 @@ public class HAPUtilityParserEntity {
 				
 				//entity info (name, description, ...)
 				HAPInfoEntityInDomainDefinition entityInfo = parserContext.getDefinitionDomain().getEntityInfoDefinition(out);
-				HAPInfoDefinitionEntityInDomainExtra entityInfoDef = entityInfo.getExtraInfo();
+				HAPExtraInfoEntityInDomainDefinition entityInfoDef = entityInfo.getExtraInfo();
 				entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
 			}
 		}

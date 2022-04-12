@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 
-public class HAPInfoDefinitionEntityInDomainExtra extends HAPEntityInfoImp{
+public class HAPExtraInfoEntityInDomainDefinition extends HAPEntityInfoImp{
 
 	//alias for this entity
 	private Set<String> m_alias;
@@ -13,7 +13,7 @@ public class HAPInfoDefinitionEntityInDomainExtra extends HAPEntityInfoImp{
 	//for id from external system
 	private String m_globalId;
 	
-	public HAPInfoDefinitionEntityInDomainExtra() {
+	public HAPExtraInfoEntityInDomainDefinition() {
 		this.m_alias = new HashSet<String>();
 	}
 
@@ -22,8 +22,8 @@ public class HAPInfoDefinitionEntityInDomainExtra extends HAPEntityInfoImp{
 	
 	public Set<String> getAlias(){    return this.m_alias;    }
 	
-	public HAPInfoDefinitionEntityInDomainExtra cloneExtraInfo() {
-		HAPInfoDefinitionEntityInDomainExtra out = new HAPInfoDefinitionEntityInDomainExtra();
+	public HAPExtraInfoEntityInDomainDefinition cloneExtraInfo() {
+		HAPExtraInfoEntityInDomainDefinition out = new HAPExtraInfoEntityInDomainDefinition();
 		this.cloneToEntityInfo(out);
 		out.m_globalId = this.m_globalId;
 		out.m_alias.addAll(this.m_alias);

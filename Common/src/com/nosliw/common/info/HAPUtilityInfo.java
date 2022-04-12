@@ -1,6 +1,6 @@
 package com.nosliw.common.info;
 
-public class HAPInfoUtility {
+public class HAPUtilityInfo {
 
 	public static HAPInfo merge(HAPInfo source, HAPInfo hard){
 		HAPInfoImpSimple out = new HAPInfoImpSimple();

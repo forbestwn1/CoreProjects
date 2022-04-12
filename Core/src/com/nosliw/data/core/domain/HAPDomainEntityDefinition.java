@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -135,6 +136,7 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 		if(out.getResourceId()!=null) {
 			HAPResourceDefinition resourceDef = this.getResourceDefinition(out.getResourceId());
 			HAPInfoEntityInDomainDefinition entityInfo = this.getSolidEntityInfoDefinition(resourceDef.getEntityId());
+			HAPUtilityEntityInfo.softMerge(out.getExtraInfo(), entityInfo.getExtraInfo());
 			out.setEntity(entityInfo.getEntity());
 		}
 		return out;

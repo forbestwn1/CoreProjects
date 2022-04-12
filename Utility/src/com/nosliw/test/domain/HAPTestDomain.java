@@ -17,18 +17,28 @@ public class HAPTestDomain {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 		HAPDomainEntityDefinition defDomain = new HAPDomainEntityDefinition(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager());
 
-		HAPResourceId valueStructureResourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, "parent"); 
-
+		HAPResourceId valueStructureResourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, "parent");
+		
+		//definition
 		HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(valueStructureResourceId, defDomain);
 		String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), defDomain);
 		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
+
+		//process
+		HAPResultExecutableEntityInDomain executableResult = HAPUtilityDomain.getResourceExecutableComplexEntity(valueStructureResourceId, runtimeEnvironment);
 
 		System.out.println();
 		System.out.println();
 		System.out.println("*******************************************************************************");
 		System.out.println();
 		System.out.println();
-		HAPResultExecutableEntityInDomain executableResult = HAPUtilityDomain.getResourceExecutableComplexEntity(valueStructureResourceId, runtimeEnvironment);
+		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getAttachmentDomain().toString()));
+
+		System.out.println();
+		System.out.println();
+		System.out.println("*******************************************************************************");
+		System.out.println();
+		System.out.println();
 		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getExecutableDomain().toString()));
 	}
 }

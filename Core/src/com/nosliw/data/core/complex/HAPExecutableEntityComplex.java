@@ -11,9 +11,9 @@ import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 
-public abstract class HAPExecutableEntityComplex extends HAPExecutableImpEntityInfo{
+public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 
 	public static final String VALUESTRUCTURECOMPLEXID = "valueStructureComplexId";
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";

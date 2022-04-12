@@ -51,13 +51,13 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	private HAPIdEntityInDomain m_entityId;
 
 	//extra info provided by user (name, description, alias, global id, info, ...)
-	private HAPInfoDefinitionEntityInDomainExtra m_extraInfo;
+	private HAPExtraInfoEntityInDomainDefinition m_extraInfo;
 
 	//calculated value from entity type
 	private boolean m_isComplex;
 	
 	public HAPInfoEntityInDomainDefinition() {
-		this.m_extraInfo = new HAPInfoDefinitionEntityInDomainExtra();
+		this.m_extraInfo = new HAPExtraInfoEntityInDomainDefinition();
 		this.m_isComplex = false;
 	}
 
@@ -83,7 +83,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
 	public void setEntityId(HAPIdEntityInDomain entityId) {    this.m_entityId = entityId;    }
 
-	public HAPInfoDefinitionEntityInDomainExtra getExtraInfo() {   return this.m_extraInfo;      }
+	public HAPExtraInfoEntityInDomainDefinition getExtraInfo() {   return this.m_extraInfo;      }
 	
 	public boolean isComplexEntity() {   return this.m_isComplex;   }
 	public void setIsComplexEntity(boolean isComplex) {    this.m_isComplex = isComplex;     }

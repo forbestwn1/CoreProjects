@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 
 //context related with domain
@@ -39,22 +38,9 @@ public class HAPContextDomain {
 
 	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableId(HAPIdEntityInDomain executableId) {  return this.m_definitionIdByExecutableId.get(executableId); 	}
 	
-	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPIdEntityInDomain definitionId) {
-		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity);
-		this.m_definitionIdByExecutableId.put(out, definitionId);
+	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity, extraInfo);
+		this.m_definitionIdByExecutableId.put(out, extraInfo.getEntityDefinitionId());
 		return out;
-	}
-
-	public HAPDefinitionEntityInDomainComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {
-		
-	}
-
-
-	public HAPDefinitionEntityInDomainComplex getDefinitionComplexEntity(HAPIdEntityInDomain entityId) {
-		
-	}
-	
-	public HAPInfoEntityComplex getComplexEntityInfoByExecutableId(HAPIdEntityInDomain executableId){
-		
 	}
 }
