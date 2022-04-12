@@ -25,6 +25,9 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 	//main entity
 	private HAPIdEntityInDomain m_mainComplexEntityId;
 
+	//main entity
+	private HAPIdEntityInDomain m_rootComplexEntityId;
+
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 	
@@ -36,7 +39,11 @@ public class HAPDomainEntityExecutable extends HAPSerializableImp implements HAP
 
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
 	
+	public HAPIdEntityInDomain getMainEntityId() {   return this.m_mainComplexEntityId;   }
 	public void setMainEntityId(HAPIdEntityInDomain mainEntityId) {    this.m_mainComplexEntityId = mainEntityId;      }
+	
+	public HAPIdEntityInDomain getRootEntityId() {   return this.m_rootComplexEntityId;   }
+	public void setRootEntityId(HAPIdEntityInDomain rootEntityId) {    this.m_rootComplexEntityId = rootEntityId;      }
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity) {
 		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), executableEntity.getEntityType());

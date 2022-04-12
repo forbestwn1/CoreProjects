@@ -45,13 +45,11 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImpEntityI
 	public void setAttachmentContainerId(String id) {    this.m_attachmentContainerId = id;    }
 	public String getAttachmentContainerId() {    return this.m_attachmentContainerId;    }
 	
-	public void setSimpleComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {
-		this.m_attributesNormal.put(attrName, new HAPEmbededEntity(complexEntityExeId));
-	}
+	public Map<String, HAPEmbededEntity> getNormalAttributes(){    return this.m_attributesNormal;    }
+	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_attributesNormal.put(attrName, new HAPEmbededEntity(complexEntityExeId));	}
 	
-	public void setContainerAttributeElementComplex(String attribute, HAPContainerEntity entityContainer) {
-		this.m_attributeContainer.put(attribute, entityContainer);
-	}
+	public void setContainerAttributeElementComplex(String attribute, HAPContainerEntity entityContainer) {		this.m_attributeContainer.put(attribute, entityContainer);	}
+	public Map<String, HAPContainerEntity> getContainerAttributes(){   return this.m_attributeContainer;   }
 	
 	public String toExpandedJsonString(HAPDomainEntityExecutable entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

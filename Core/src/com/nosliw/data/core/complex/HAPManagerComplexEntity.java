@@ -36,15 +36,13 @@ public class HAPManagerComplexEntity {
 		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
 		
 		//build executable complexe entity
-		HAPIdEntityInDomain rootId = defDomain.getRootComplexEntity();
-		buildExecutableTree(rootId, processContext);
+		HAPIdEntityInDomain rootIdDef = defDomain.getRootComplexEntity();
+		HAPIdEntityInDomain rootIdExe = buildExecutableTree(rootIdDef, processContext);
+		exeDomain.setRootEntityId(rootIdExe);
 		
 		//process attachment
-		processAttachment(rootId, processContext);
+		HAPUtilityAttachment.buildAttachmentDomain(rootIdDef, processContext);
 
-		//expand attachment reference
-		
-		
 		//expand reference in value strucutre
 //		expandValueStructure(rootId, processContext);
 
@@ -76,7 +74,7 @@ public class HAPManagerComplexEntity {
 			HAPInfoEntityInDomainDefinition entityInfo = defDomain.getEntityInfoDefinition(attrEntityDefId);
 			if(entityInfo.isComplexEntity()) {
 				HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-				complexEntityExe.setSimpleComplexAttribute(attrName, attrEntityExeId);
+				complexEntityExe.setNormalComplexAttribute(attrName, attrEntityExeId);
 			}
 		}
 		
@@ -103,7 +101,7 @@ public class HAPManagerComplexEntity {
 	}
 	
 	private void expandValueStructure(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorEntity() {
+		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorEntityDefinition() {
 			@Override
 			public void process(HAPInfoEntityInDomainDefinition complexEntityInfo, Object adapter, HAPInfoEntityInDomainDefinition parentComplexEntityInfo,
 					HAPContextProcessor processContext) {
@@ -127,7 +125,7 @@ public class HAPManagerComplexEntity {
 	}
 	
 	private void processValueStructureTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorEntity() {
+		HAPUtilityComplexEntity.traversComplexEntityTree(complexEntityDefinitionId, new HAPProcessorEntityDefinition() {
 			@Override
 			public void process(HAPInfoEntityInDomainDefinition complexEntityInfo, Object adapter, HAPInfoEntityInDomainDefinition parentComplexEntityInfo,
 					HAPContextProcessor processContext) {

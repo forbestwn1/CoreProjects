@@ -27,16 +27,21 @@ public class HAPContextProcessor {
 //	private HAPIdEntityInDomain m_complexEntityId;
 	
 	//local ref base for 
-	private HAPPathLocationBase m_localRefBase;
+//	private HAPPathLocationBase m_localRefBase;
 	
 	private HAPProcessTracker m_processTracker;
 	
-	public HAPContextProcessor(HAPContextDomain domainContext, HAPPathLocationBase localRefBase, HAPRuntimeEnvironment runtimeEnv) {
+//	public HAPContextProcessor(HAPContextDomain domainContext, HAPPathLocationBase localRefBase, HAPRuntimeEnvironment runtimeEnv) {
+//		this.m_domainContext = domainContext;
+//		this.m_localRefBase = localRefBase;
+//		this.m_runtimeEnv = runtimeEnv;
+//	}
+
+	public HAPContextProcessor(HAPContextDomain domainContext, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_domainContext = domainContext;
-		this.m_localRefBase = localRefBase;
 		this.m_runtimeEnv = runtimeEnv;
 	}
-	
+
 	public HAPResultProcessAttachmentReference processAttachmentReference(String attachmentValueType, String attachmentName) {
 		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();

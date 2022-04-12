@@ -21,7 +21,6 @@ public class HAPContextDomain {
 	
 	//connection between executable entity to definition entity
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionIdByExecutableId;
-	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableIdByDefinitionId;
 
 	private HAPGeneratorId m_idGenerator;
 	
@@ -31,7 +30,6 @@ public class HAPContextDomain {
 		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
 		this.m_attachmentDomain = new HAPDomainAttachment();
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
-		this.m_executableIdByDefinitionId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
@@ -39,19 +37,14 @@ public class HAPContextDomain {
 	public HAPDomainEntityExecutable getExecutableDomain() {    return this.m_executableDomain;    }
 	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;     }
 
+	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableId(HAPIdEntityInDomain executableId) {  return this.m_definitionIdByExecutableId.get(executableId); 	}
+	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPIdEntityInDomain definitionId) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity);
 		this.m_definitionIdByExecutableId.put(out, definitionId);
-		this.m_executableIdByDefinitionId.put(definitionId, out);
 		return out;
 	}
 
-	public HAPIdEntityInDomain getExecutableIdByDefinitionId(HAPIdEntityInDomain definitionEntityId) {	return this.m_executableIdByDefinitionId.get(definitionEntityId);	}
-	
-	public HAPExecutableEntityComplex getExecutableEntityByDefinitionId(HAPIdEntityInDomain definitionId) {
-		return this.m_executableDomain.getExecutableEntity(this.m_executableIdByDefinitionId.get(definitionId));
-	}
-	
 	public HAPDefinitionEntityInDomainComplex getDefinitionEntityByExecutableId(HAPIdEntityInDomain executableId) {
 		
 	}

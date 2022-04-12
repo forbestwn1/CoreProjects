@@ -47,12 +47,12 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 	//entity that don't have parent
 	private HAPIdEntityInDomain m_rootComplexEntityId;
 	
-	//parent info for entity id
-	private Map<HAPIdEntityInDomain, HAPInfoParentComplex> m_parentComplexInfo;
-
 	//domain entity by resource id so that domain entity can be reused for same resource id 
 	private Map<HAPResourceId, HAPResourceDefinition> m_complexEntityIdByResourceId;
 	
+	//parent info for entity id
+	private Map<HAPIdEntityInDomain, HAPInfoParentComplex> m_parentComplexInfo;
+
 
 	private HAPManagerDomainEntityDefinition m_entityDefMan;
 	

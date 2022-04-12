@@ -26,8 +26,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityComplexEntity {
 
-	public static void traversComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntity processor, HAPContextProcessor processContext) {
-		HAPUtilityDomain.traversEntityTree(entityId, new HAPProcessorEntity() {
+	public static void traversComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPContextProcessor processContext) {
+		HAPUtilityDomain.traversDefinitionEntityTree(entityId, new HAPProcessorEntityDefinition() {
 			@Override
 			public void process(HAPInfoEntityInDomainDefinition entityInfo, Object adapter,	HAPInfoEntityInDomainDefinition parentEntityInfo, HAPContextProcessor processContext) {
 				if(entityInfo.isComplexEntity()) {
