@@ -9,7 +9,7 @@ import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -109,8 +109,8 @@ public class HAPUtilityComponent {
 		return null;
 	}
 	
-	public static HAPValueStructureGrouped getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureGrouped out = null;
+	public static HAPValueStructureWrapper getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureWrapper out = null;
 		if(def instanceof HAPDefinitionEntityElementInContainerComponent) {
 			out = ((HAPDefinitionEntityElementInContainerComponent)def).getValueStructureWrapper();
 		}

@@ -25,48 +25,31 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 		if(obj instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)obj;
 			for(int i=0; i<partJsonArray.length(); i++) {
-				Object partObj = partJsonArray.get(i);
-				
-				HAPPartComplexValueStructureSimple simplePart = parseSimpleValueStructurePart(partObj, definitionDomain, HAPUtilityDomain.getContextParse(entityId, definitionDomain));
-				valueStructureComplex.addPart(simplePart);
+				JSONObject partObj = partJsonArray.getJSONObject(i);
+				HAPValueStructureWrapper valueStructureWrapper = parseValueStructureWrapper(partObj, definitionDomain, HAPUtilityDomain.getContextParse(entityId, definitionDomain));
+				valueStructureComplex.addPart(valueStructureWrapper);
 			}
 		}
 		else if(obj instanceof JSONObject) {
-			HAPPartComplexValueStructureSimple simplePart = parseSimpleValueStructurePart(obj, definitionDomain, HAPUtilityDomain.getContextParse(entityId, definitionDomain));
-			valueStructureComplex.addPart(simplePart);
+			HAPValueStructureWrapper valueStructureWrapper = parseValueStructureWrapper((JSONObject)obj, definitionDomain, HAPUtilityDomain.getContextParse(entityId, definitionDomain));
+			valueStructureComplex.addPart(valueStructureWrapper);
 		}
 	}
 
-	private HAPPartComplexValueStructureSimple parseSimpleValueStructurePart(Object partObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
-		
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
-		
-		if(partObj instanceof JSONArray) {
-			JSONArray wrapperArrayObj = (JSONArray)partObj;
-			for(int i=0; i<wrapperArrayObj.length(); i++) {
-				HAPValueStructureGrouped wrapper = parseValueStructureWrapper(wrapperArrayObj.getJSONObject(i), definitionDomain, parserContext);
-				out.addValueStructure(wrapper);
-			}
-		}
-		else if(partObj instanceof JSONObject) {
-			HAPValueStructureGrouped wrapper = parseValueStructureWrapper((JSONObject)partObj, definitionDomain, parserContext);
-			out.addValueStructure(wrapper);
-		}
-		
-		return out;
-	}
-	
-	private HAPValueStructureGrouped parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
-		String groupName = (String)wrapperObj.opt(HAPValueStructureGrouped.GROUPNAME);
-		if(groupName==null)  groupName = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
-		
-		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPValueStructureGrouped.VALUESTRUCTURE);
+	private HAPValueStructureWrapper parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
+		String groupType = (String)wrapperObj.opt(HAPValueStructureWrapper.GROUPTYPE);
+		if(groupType==null)  groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+
+		String groupName = (String)wrapperObj.opt(HAPValueStructureWrapper.GROUPNAME);
+
+		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPValueStructureWrapper.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null)   valueStructureJsonObj = wrapperObj;
 		
-		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext, this.getRuntimeEnvironment().getDomainEntityManager());
+		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 
-		HAPValueStructureGrouped out = new HAPValueStructureGrouped(valueStructureEntityId);
+		HAPValueStructureWrapper out = new HAPValueStructureWrapper(valueStructureEntityId);
 		out.setGroupName(groupName);
+		out.setGroupType(groupType);
 		return out;
 	}
 	

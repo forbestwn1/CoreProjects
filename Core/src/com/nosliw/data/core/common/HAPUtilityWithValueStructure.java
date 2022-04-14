@@ -2,7 +2,7 @@ package com.nosliw.data.core.common;
 
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityWithValueStructure {
@@ -12,7 +12,7 @@ public class HAPUtilityWithValueStructure {
 		valueStructureComplex.addPart(new HAPPartComplexValueStructureSimple(valueStructure, null));
 	}
 	
-	public static void setValueStructure(HAPWithValueStructure withValueStructure, HAPValueStructureGrouped valueStructure) {
+	public static void setValueStructure(HAPWithValueStructure withValueStructure, HAPValueStructureWrapper valueStructure) {
 		HAPDefinitionEntityComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
 		valueStructureComplex.addPart(new HAPPartComplexValueStructureSimple(valueStructure, null));
 	}

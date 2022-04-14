@@ -11,7 +11,7 @@ import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
@@ -24,7 +24,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	
 	private HAPDefinitionScriptEntity m_script;
 	
-	private HAPValueStructureGrouped m_valueStructure;
+	private HAPValueStructureWrapper m_valueStructure;
 	
 	public HAPExpressionActivityDefinition(String type) {
 		super(type);
@@ -33,7 +33,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	public HAPDefinitionScriptEntity getScript(){  return this.m_script;    }
 
 	@Override
-	public HAPValueStructureGrouped getInputValueStructureWrapper() {  return this.m_valueStructure;   }
+	public HAPValueStructureWrapper getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
 	protected void buildConfigureByJson(JSONObject configurJsonObj) {

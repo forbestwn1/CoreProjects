@@ -13,9 +13,7 @@ import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationValueStructure;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.complex.HAPProcessorEntityDefinition;
 import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -63,41 +61,6 @@ public class HAPUtilityDomain {
 		}
 	}
 	
-	public static void traversDefinitionEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPContextProcessor processContext) {
-		traversDefinitionEntityTree(processContext.getDomainContext().getDefinitionDomain().getEntityInfoDefinition(entityId), null, null, processor, processContext);
-	}
-
-	private static void traversDefinitionEntityTree(HAPInfoEntityInDomainDefinition entityInfo, Object adapter, HAPInfoEntityInDomainDefinition parentEntityInfo, HAPProcessorEntityDefinition processor, HAPContextProcessor processContext) {
-		//process current entity
-		processor.process(entityInfo, adapter, parentEntityInfo, processContext);
-		
-		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
-
-		HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityInfo.getEntity();
-				
-		//process attribute entity
-		Map<String, HAPEmbededEntity> simpleAttributes = complexEntityDef.getSimpleAttributes();
-		for(String attrName : simpleAttributes.keySet()) {
-			HAPEmbededEntity attributeEntity = simpleAttributes.get(attrName);
-			HAPInfoEntityInDomainDefinition attrEntityInfo = defDomain.getSolidEntityInfoDefinition(attributeEntity.getEntityId());
-			traversDefinitionEntityTree(attrEntityInfo, attributeEntity.getAdapter(), entityInfo, processor, new HAPContextProcessor(domainContext, attrEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
-		}
-
-		//process container attribute entity
-		Map<String, HAPContainerEntity> containerAttributes = complexEntityDef.getContainerAttributes();
-		for(String attrName : containerAttributes.keySet()) {
-			HAPContainerEntity container = containerAttributes.get(attrName);
-			List<HAPInfoContainerElement> eleInfos = container.getAllElementsInfo();
-			for(HAPInfoContainerElement eleInfo : eleInfos) {
-				HAPEmbededEntity eleEntity = eleInfo.getEmbededElementEntity();
-				HAPIdEntityInDomain eleId = eleEntity.getEntityId();
-				HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getSolidEntityInfoDefinition(eleId);
-				traversDefinitionEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, new HAPContextProcessor(domainContext, eleEntityInfo.getBaseLocationPath(), processContext.getRuntimeEnvironment()));
-			}
-		}
-	}
-
 	public static HAPResultExecutableEntityInDomain getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityManager());
 		//build definition domain

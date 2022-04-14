@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -30,7 +30,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private HAPValueStructureGrouped m_valueStructureWrapper;
+	private HAPValueStructureWrapper m_valueStructureWrapper;
 	
 	private HAPExecutableExpressionGroup m_expressionExe;
 	
@@ -43,9 +43,9 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setValueStructureDefinitionWrapper(HAPValueStructureGrouped valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructureDefinitionWrapper(HAPValueStructureWrapper valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPValueStructureGrouped getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
+	public HAPValueStructureWrapper getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 	
 	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }

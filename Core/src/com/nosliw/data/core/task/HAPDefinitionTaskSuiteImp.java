@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 
 public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDefinitionTaskSuite{
 
@@ -30,10 +30,10 @@ public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDe
 	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_tasks.put(entityElement.getId(), entityElement); }
 
 	@Override
-	public HAPValueStructureGrouped getValueStructureWrapper() {    return this.m_withValueStructure.getValueStructureWrapper();   }
+	public HAPValueStructureWrapper getValueStructureWrapper() {    return this.m_withValueStructure.getValueStructureWrapper();   }
 
 	@Override
-	public void setValueStructureWrapper(HAPValueStructureGrouped valueStructureWrapper) {    throw new RuntimeException();  }
+	public void setValueStructureWrapper(HAPValueStructureWrapper valueStructureWrapper) {    throw new RuntimeException();  }
 
 	@Override
 	public HAPDefinitionTaskSuite cloneTaskSuiteDefinition() {

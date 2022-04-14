@@ -43,7 +43,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
 				}
 				else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
-					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, definitionDomain);
+					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, definitionDomain);
 				}
 				else {
 					Object entityObj = jsonObj.opt(attrName);

@@ -127,6 +127,70 @@
 				
 				]
 			}
+		},
+		"valueStructure": {
+			"entity": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"testVar3": {
+							"definition":{
+								"criteria": "test.string"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string",
+								"value": "9876543210"
+							}
+						},
+						"testVar4" : {
+							"definition": {
+								"criteria" : "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						},
+						"testVar5" : {
+							"definition": {
+								"criteria": "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
+							}
+						}
+					}
+				},
+				{
+					"groupType": "public",
+					"valueStructure" : {
+						"testVar5" : {
+							"definition": {
+								"criteria": "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
+							}
+						}
+					}
+				},
+				{
+					"groupType": "public",
+					"valueStructure" : {
+						"testVar5" : {
+							"definition": {
+								"criteria": "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
+							}
+						}
+					}
+				}
+			]
 		}
 	}
 }

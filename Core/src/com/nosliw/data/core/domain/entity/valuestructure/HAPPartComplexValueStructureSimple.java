@@ -16,22 +16,22 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	//id for runtime, if two part have the same 
 	private String m_runtimeId;
 
-	private List<HAPValueStructureGrouped> m_valueStructures;
+	private List<HAPValueStructureWrapper> m_valueStructures;
 	
-	public HAPPartComplexValueStructureSimple(HAPValueStructureGrouped valueStructure, HAPInfoPartValueStructure partInfo) {
+	public HAPPartComplexValueStructureSimple(HAPValueStructureWrapper valueStructure, HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
-		this.m_valueStructures = new ArrayList<HAPValueStructureGrouped>();
+		this.m_valueStructures = new ArrayList<HAPValueStructureWrapper>();
 		this.addValueStructure(valueStructure);
 	}
 	
 	public HAPPartComplexValueStructureSimple() {
-		this.m_valueStructures = new ArrayList<HAPValueStructureGrouped>();
+		this.m_valueStructures = new ArrayList<HAPValueStructureWrapper>();
 	}
 	
 	@Override
 	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE;    }
 
-	public void addValueStructure(HAPValueStructureGrouped valueStructure) {   this.m_valueStructures.add(valueStructure);   }
+	public void addValueStructure(HAPValueStructureWrapper valueStructure) {   this.m_valueStructures.add(valueStructure);   }
 	
 	
 	public String getRuntimeId() {     return this.m_runtimeId;     }
@@ -59,7 +59,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	@Override
 	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
 		List<String> valueStructureJsonArray = new ArrayList<String>();
-		for(HAPValueStructureGrouped valueStructure : this.m_valueStructures) {
+		for(HAPValueStructureWrapper valueStructure : this.m_valueStructures) {
 			valueStructureJsonArray.add(valueStructure.toExpandedJsonString(entityDefDomain));
 		}
 		return HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0]));

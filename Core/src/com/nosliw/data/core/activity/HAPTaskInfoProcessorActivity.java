@@ -3,7 +3,7 @@ package com.nosliw.data.core.activity;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
@@ -22,7 +22,7 @@ public class HAPTaskInfoProcessorActivity implements HAPProcessorTask{
 			HAPDefinitionTask taskDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPValueStructureGrouped valueStructureWrapper,
+			HAPValueStructureWrapper valueStructureWrapper,
 			HAPProcessTracker processTracker) {
 		if(!HAPUtilityEntityInfo.isEnabled(taskDefinition))  return null;
 

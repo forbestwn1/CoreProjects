@@ -9,7 +9,7 @@ import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -23,7 +23,7 @@ public class HAPProcessorComponent {
 	//normalize definition
 	public static HAPDefinitionEntityComponent normalize(HAPDefinitionEntityComponent definition, HAPContextProcessor processContext) {
 		
-		HAPValueStructureGrouped valueStructureWrapper = definition.getValueStructureWrapper();
+		HAPValueStructureWrapper valueStructureWrapper = definition.getValueStructureWrapper();
 		
 		//expand reference in value structure
 		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)valueStructureWrapper.getValueStructure(), processContext));

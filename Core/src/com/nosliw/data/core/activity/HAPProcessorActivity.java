@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureGrouped;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
@@ -14,7 +14,7 @@ public interface HAPProcessorActivity {
 			HAPDefinitionActivity activityDefinition,
 			String id,
 			HAPContextProcessor processContext,
-			HAPValueStructureGrouped valueStructureWrapper,
+			HAPValueStructureWrapper valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorStructure configure, 
 			HAPProcessTracker processTracker
