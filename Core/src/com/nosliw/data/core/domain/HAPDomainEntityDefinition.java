@@ -19,6 +19,8 @@ import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPUtilityComplexEntity;
 import com.nosliw.data.core.component.HAPHandlerComplexEntity;
 import com.nosliw.data.core.component.HAPPathLocationBase;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
@@ -131,13 +133,18 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 	@Override
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return this.getEntityInfoDefinition(entityId);     }
 	public HAPInfoEntityInDomainDefinition getEntityInfoDefinition(HAPIdEntityInDomain entityId) {		return this.m_entity.get(entityId); 	}
-	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId) {
+	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId).cloneEntityDefinitionInfo();
 		if(out.getResourceId()!=null) {
 			HAPResourceDefinition resourceDef = this.getResourceDefinition(out.getResourceId());
-			HAPInfoEntityInDomainDefinition entityInfo = this.getSolidEntityInfoDefinition(resourceDef.getEntityId());
+			HAPInfoEntityInDomainDefinition entityInfo = this.getEntityInfoDefinition(resourceDef.getEntityId());
 			HAPUtilityEntityInfo.softMerge(out.getExtraInfo(), entityInfo.getExtraInfo());
 			out.setEntity(entityInfo.getEntity());
+		}
+		else if(out.getAttachmentReference()!=null) {
+			HAPAttachmentEntity attachment = (HAPAttachmentEntity)attachmentContainer.getElement(out.getAttachmentReference());
+			Object entityObj = attachment.getEntity();
+			HAPUtilityParserEntity.parseEntity(entityObj, attachment.getValueType(), new HAPContextParser(this, null), this.m_entityDefMan, null);
 		}
 		return out;
 	}

@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -38,7 +38,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 
 	private Map<String, HAPExecutableTask> m_tasks;
 
-	private HAPValueStructureWrapper m_valueStructureWrapper;
+	private HAPWrapperValueStructureDefinition m_valueStructureWrapper;
 
 	public HAPExecutableTaskSuite(String id) {
 		this.m_tasks = new LinkedHashMap<String, HAPExecutableTask>();
@@ -54,9 +54,9 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	@Override
 	public void addEntityElement(HAPExecutableTask entityElement) {   this.m_tasks.put(entityElement.getId(), entityElement);  }
 
-	public void setValueStructureDefinitionWrapper(HAPValueStructureWrapper valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructureDefinitionWrapper(HAPWrapperValueStructureDefinition valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPValueStructureWrapper getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
+	public HAPWrapperValueStructureDefinition getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 
 	public HAPExecutableValueStructure getValueStructureExe() {
 		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionWrapper().getValueStructure());

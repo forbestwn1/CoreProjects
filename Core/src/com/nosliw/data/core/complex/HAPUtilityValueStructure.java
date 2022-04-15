@@ -32,20 +32,24 @@ public class HAPUtilityValueStructure {
 				
 				HAPContextDomain domainContext = processContext.getDomainContext();
 				HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
-				HAPDomainAttachment attachmentDomain = domainContext.getAttachmentDomain();
 				HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
 				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
 
 				HAPIdEntityInDomain entityIdExe = entityInfo.getEntityId();
 				HAPIdEntityInDomain entityIdDef = domainContext.getDefinitionEntityIdByExecutableId(entityIdExe);
-				HAPInfoEntityInDomainDefinition complexEntityDefInfo = defDomain.getSolidEntityInfoDefinition(entityIdDef);
+				HAPDefinitionEntityContainerAttachment attachmentContainer = HAPUtilityAttachment.getAttachmentContainerByComplexExeId(entityIdExe, processContext);
+
+				HAPInfoEntityInDomainDefinition complexEntityInfoDef = defDomain.getSolidEntityInfoDefinition(entityIdDef, attachmentContainer);
 				
-				HAPDefinitionEntityComplexValueStructure valueStructureEntity = null;
-				HAPEmbededEntity valueStructureComplexAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityDefInfo.getEntity()).getValueStructureComplexEntity();
+				HAPDefinitionEntityComplexValueStructure valueStructureComplexEntity = null;
+				HAPEmbededEntity valueStructureComplexAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityInfoDef.getEntity()).getValueStructureComplexEntity();
 				if(valueStructureComplexAttribute!=null) {
-					valueStructureEntity = (HAPDefinitionEntityComplexValueStructure)defDomain.getEntityInfoDefinition(valueStructureComplexAttribute.getEntityId()).getEntity();
+					valueStructureComplexEntity = (HAPDefinitionEntityComplexValueStructure)defDomain.getEntityInfoDefinition(valueStructureComplexAttribute.getEntityId()).getEntity();
 				}
-				valueStructureDomain.addValueStructureComplex(valueStructureEntity);
+
+				String valueStructureId =  valueStructureDomain.addValueStructureComplex(valueStructureComplexEntity, defDomain, attachmentContainer);
+				exeDomain.getEntityInfoExecutable(entityIdExe).getEntity().setValueStructureComplexId(valueStructureId);
+				
 			}}, processContext);
 	}
 

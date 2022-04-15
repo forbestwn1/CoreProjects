@@ -2,7 +2,7 @@ package com.nosliw.data.core.task;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 
 public interface HAPProcessorTask {
 
@@ -12,7 +12,7 @@ public interface HAPProcessorTask {
 			HAPDefinitionTask taskDefinition,
 			String id,
 			HAPContextProcessor processContext,
-			HAPValueStructureWrapper valueStructureWrapper,
+			HAPWrapperValueStructureDefinition valueStructureWrapper,
 			HAPProcessTracker processTracker
 	);
 

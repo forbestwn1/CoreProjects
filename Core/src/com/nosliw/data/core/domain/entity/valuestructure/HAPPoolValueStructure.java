@@ -12,7 +12,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 public class HAPPoolValueStructure {
 	
 	//value structure definitions by id
-	private Map<String, HAPValueStructureWrapper> m_valueStructure;
+	private Map<String, HAPWrapperValueStructureDefinition> m_valueStructure;
 	
 	//all value structure complex by id
 	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
@@ -24,7 +24,7 @@ public class HAPPoolValueStructure {
 	private int m_idIndex;
 	
 	public HAPPoolValueStructure() {
-		this.m_valueStructure = new LinkedHashMap<String, HAPValueStructureWrapper>();
+		this.m_valueStructure = new LinkedHashMap<String, HAPWrapperValueStructureDefinition>();
 		this.m_idIndex = 0;
 	}
 	
@@ -53,7 +53,7 @@ public class HAPPoolValueStructure {
 	public HAPValueStructure getValueStructure(String id) {   return this.m_valueStructure.get(id).getValueStructure();    }
 	
 	public void setValueStructure(String id, HAPValueStructure valueStructure) {   
-		HAPValueStructureWrapper wrapper = this.getValueStructureWrapper(id);
+		HAPWrapperValueStructureDefinition wrapper = this.getValueStructureWrapper(id);
 		if(wrapper==null) {
 			this.addValueStructure(id, valueStructure);
 		}
@@ -69,12 +69,12 @@ public class HAPPoolValueStructure {
 	}
 	
 	private void addValueStructure(String id, HAPValueStructure valueStructure) {
-		HAPValueStructureWrapper wrapper = new HAPValueStructureWrapper(valueStructure);
+		HAPWrapperValueStructureDefinition wrapper = new HAPWrapperValueStructureDefinition(valueStructure);
 		wrapper.setId(id);
 		this.m_valueStructure.put(wrapper.getId(), wrapper);
 	}
 	
-	private HAPValueStructureWrapper getValueStructureWrapper(String id) {
+	private HAPWrapperValueStructureDefinition getValueStructureWrapper(String id) {
 		return this.m_valueStructure.get(id);
 	}
 	

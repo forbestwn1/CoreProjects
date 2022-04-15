@@ -4,13 +4,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPValueStructureWrapper{
+public class HAPWrapperValueStructureDefinition extends HAPSerializableImp{
 
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
@@ -23,9 +25,9 @@ public class HAPValueStructureWrapper{
 	
 	private HAPIdEntityInDomain m_valueStructureId;
 	
-	public HAPValueStructureWrapper() {}
+	public HAPWrapperValueStructureDefinition() {}
 
-	public HAPValueStructureWrapper(HAPIdEntityInDomain valueStructureId) {
+	public HAPWrapperValueStructureDefinition(HAPIdEntityInDomain valueStructureId) {
 		this.m_valueStructureId = valueStructureId;
 	}
 	
@@ -37,6 +39,13 @@ public class HAPValueStructureWrapper{
 	public String getGroupType() {   return this.m_groupType;    }
 	public void setGroupType(String groupType) {    this.m_groupType = groupType;     }
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(GROUPTYPE, this.m_groupType);
+		jsonMap.put(GROUPNAME, this.m_groupName);
+		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureId.toStringValue(HAPSerializationFormat.JSON));
+	}
+
 	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(GROUPTYPE, this.m_groupType);
@@ -45,11 +54,11 @@ public class HAPValueStructureWrapper{
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
-	public HAPValueStructureWrapper cloneValueStructureWrapper() {
-		HAPValueStructureWrapper out = new HAPValueStructureWrapper();
-		out.m_valueStructureId = this.m_valueStructureId.cloneIdEntityInDomain();
+	public HAPWrapperValueStructureDefinition cloneValueStructureWrapper() {
+		HAPWrapperValueStructureDefinition out = new HAPWrapperValueStructureDefinition();
 		out.m_groupName = this.m_groupName;
 		out.m_groupType = this.m_groupType;
+		out.m_valueStructureId = this.m_valueStructureId.cloneIdEntityInDomain();
 		return out;
 	}
 }

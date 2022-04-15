@@ -6,32 +6,38 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 public class HAPDomainAttachment extends HAPSerializableImp{
 
 	public static final String ATTACHMENT = "attachment";
 	
-	private Map<HAPIdEntityInDomain, HAPDefinitionEntityContainerAttachment> m_attachmentContainerByComplexeExeId;
+	private Map<String, HAPDefinitionEntityContainerAttachment> m_attachmentContainerByComplexeExeId;
 	
-	public HAPDomainAttachment() {
-		this.m_attachmentContainerByComplexeExeId = new LinkedHashMap<HAPIdEntityInDomain, HAPDefinitionEntityContainerAttachment>();
+	private HAPGeneratorId m_idGenerator;
+	
+	public HAPDomainAttachment(HAPGeneratorId idGenerator) {
+		this.m_idGenerator = idGenerator;
+		this.m_attachmentContainerByComplexeExeId = new LinkedHashMap<String, HAPDefinitionEntityContainerAttachment>();
 	}
 	
-	public void addAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer, HAPIdEntityInDomain complexIdExe) {
-		if(attachmentContainer!=null)		this.m_attachmentContainerByComplexeExeId.put(complexIdExe, attachmentContainer.cloneAttachmentContainer());
-		else this.m_attachmentContainerByComplexeExeId.put(complexIdExe, new HAPDefinitionEntityContainerAttachment());
+	public String addAttachmentContainer(HAPDefinitionEntityContainerAttachment attachmentContainer) {
+		String out = this.m_idGenerator.generateId();
+		if(attachmentContainer!=null)		this.m_attachmentContainerByComplexeExeId.put(out, attachmentContainer.cloneAttachmentContainer());
+		else this.m_attachmentContainerByComplexeExeId.put(out, new HAPDefinitionEntityContainerAttachment());
+		return out;
 	}
 	
-	public HAPDefinitionEntityContainerAttachment getAttachmentContainer(HAPIdEntityInDomain complexeId) {
-		return this.m_attachmentContainerByComplexeExeId.get(complexeId);
+	public HAPDefinitionEntityContainerAttachment getAttachmentContainer(String attachmentId) {
+		return this.m_attachmentContainerByComplexeExeId.get(attachmentId);
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> attachmentJsonMap = new LinkedHashMap<String, String>();
-		for(HAPIdEntityInDomain entityId : this.m_attachmentContainerByComplexeExeId.keySet()) {
-			attachmentJsonMap.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_attachmentContainerByComplexeExeId.get(entityId).toStringValue(HAPSerializationFormat.JSON));
+		for(String id : this.m_attachmentContainerByComplexeExeId.keySet()) {
+			attachmentJsonMap.put(id, this.m_attachmentContainerByComplexeExeId.get(id).toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ATTACHMENT, HAPJsonUtility.buildMapJson(attachmentJsonMap));
 	}

@@ -7,6 +7,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -64,4 +65,16 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 		return out;
 	}
 
+	@Override
+	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+		HAPDefinitionEntityValueStructure out = new HAPDefinitionEntityValueStructure();
+		this.cloneToDefinitionEntityInDomain(out);
+		for(HAPRootStructure root : this.m_rootByName.values()) {
+			out.addRoot(root.cloneRoot());
+		}
+		return out;
+	}
+
+	public HAPDefinitionEntityValueStructure cloneValueStructure(){  return (HAPDefinitionEntityValueStructure)this.cloneEntityDefinitionInDomain();	}
+	
 }

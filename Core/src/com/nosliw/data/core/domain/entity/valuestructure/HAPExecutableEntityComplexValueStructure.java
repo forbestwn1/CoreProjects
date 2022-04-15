@@ -2,24 +2,25 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
-public class HAPDefinitionEntityComplexValueStructure2 extends HAPDefinitionEntityInDomainSimple{
+public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp{
 
 	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
+
+	public static String PART = "part";
 
 	private int m_idIndex;
 	
 	private List<HAPPartComplexValueStructure> m_parts;
 	
-	private HAPGeneratorId m_idGenerator;
-	 
-	public HAPDefinitionEntityComplexValueStructure2() {
+	public HAPExecutableEntityComplexValueStructure() {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
 	}
 	
@@ -33,14 +34,12 @@ public class HAPDefinitionEntityComplexValueStructure2 extends HAPDefinitionEnti
 		return out;
 	}
 
-	public void addPartSimple(HAPValueStructure valueStructure, HAPInfoPartValueStructure partInfo) {
-		partInfo.setId(this.generateId(partInfo));
-		HAPPartComplexValueStructureSimple part = new HAPPartComplexValueStructureSimple(valueStructure.cloneValueStructure(), partInfo);
+	public void addPartSimple(HAPWrapperValueStructureExecutable valueStructureExeWrapper, HAPInfoPartValueStructure partInfo) {
+		HAPPartComplexValueStructureSimple part = new HAPPartComplexValueStructureSimple(valueStructureExeWrapper, partInfo);
 		this.addPart(part);
 	}
 	
 	public void addPartGroup(List<HAPPartComplexValueStructure> children, HAPInfoPartValueStructure partInfo) {
-		partInfo.setId(this.generateId(partInfo));
 		HAPPartComplexValueStructureGroupWithEntity part = new HAPPartComplexValueStructureGroupWithEntity(partInfo);
 		for(HAPPartComplexValueStructure child : children) {
 			part.addChild(child.cloneComplexValueStructurePart());
@@ -58,8 +57,8 @@ public class HAPDefinitionEntityComplexValueStructure2 extends HAPDefinitionEnti
 		HAPUtilityComplexValueStructure.sortParts(m_parts);
 	}
 	
-	public HAPDefinitionEntityComplexValueStructure2 cloneValueStructureComplex() {
-		HAPDefinitionEntityComplexValueStructure2 out = new HAPDefinitionEntityComplexValueStructure2();
+	public HAPExecutableEntityComplexValueStructure cloneValueStructureComplex() {
+		HAPExecutableEntityComplexValueStructure out = new HAPExecutableEntityComplexValueStructure();
 		for(HAPPartComplexValueStructure part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}
@@ -79,6 +78,15 @@ public class HAPDefinitionEntityComplexValueStructure2 extends HAPDefinitionEnti
 	
 	private String generateId(HAPInfoPartValueStructure partInfo) {
 		return partInfo.getName() + "_" + this.m_idIndex++;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		List<String> partArrayJson = new ArrayList<String>();
+		for(HAPPartComplexValueStructure part : this.m_parts) {
+			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partArrayJson.toArray(new String[0])));
 	}
 
 }

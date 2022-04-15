@@ -27,7 +27,7 @@ public class HAPContextDomain {
 		this.m_idGenerator = new HAPGeneratorId();
 		this.m_definitionDomain = new HAPDomainEntityDefinition(this.m_idGenerator, domainEntityDefMan);
 		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
-		this.m_attachmentDomain = new HAPDomainAttachment();
+		this.m_attachmentDomain = new HAPDomainAttachment(this.m_idGenerator);
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	

@@ -10,7 +10,7 @@ import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityActivityComponent {
@@ -19,7 +19,7 @@ public class HAPUtilityActivityComponent {
 		HAPDefinitionActivitySuiteImp out = new HAPDefinitionActivitySuiteImp();
 		
 		//build context
-		HAPValueStructureWrapper valueStructureWrapper = HAPUtilityComponent.getValueStructure(complexEntity, runtimeEnv);
+		HAPWrapperValueStructureDefinition valueStructureWrapper = HAPUtilityComponent.getValueStructure(complexEntity, runtimeEnv);
 		out.setValueStructureWrapper(valueStructureWrapper);
 		
 //		//build constant from attachment

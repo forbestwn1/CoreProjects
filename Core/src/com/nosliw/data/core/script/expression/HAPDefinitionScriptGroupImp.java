@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 
 public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implements HAPDefinitionScriptGroup{
 
@@ -16,7 +16,7 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	
 	private Map<String, HAPDefinitionConstant> m_constantDef;
 	
-	private HAPValueStructureWrapper m_valueStructureWrapper;
+	private HAPWrapperValueStructureDefinition m_valueStructureWrapper;
 	
 	public HAPDefinitionScriptGroupImp() {
 		this.m_scriptDefs = new LinkedHashMap<String, HAPDefinitionScriptEntity>();
@@ -36,10 +36,10 @@ public class HAPDefinitionScriptGroupImp extends HAPEntityInfoWritableImp implem
 	}
 
 	@Override
-	public HAPValueStructureWrapper getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
+	public HAPWrapperValueStructureDefinition getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
 
 	@Override
-	public void setValueStructureWrapper(HAPValueStructureWrapper valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
+	public void setValueStructureWrapper(HAPWrapperValueStructureDefinition valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
 
 	@Override
 	public Set<HAPDefinitionConstant> getConstantDefinitions() {  return new HashSet<HAPDefinitionConstant>(this.m_constantDef.values());  }

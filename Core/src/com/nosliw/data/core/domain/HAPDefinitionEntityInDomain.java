@@ -1,7 +1,9 @@
 package com.nosliw.data.core.domain;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections4.map.LinkedMap;
 
@@ -37,6 +39,12 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		this.m_entityType = entityType;
 	}
 
+	public Set<HAPIdEntityInDomain> getChildrenEntity(){
+		Set<HAPIdEntityInDomain> out = new HashSet<HAPIdEntityInDomain>();
+		getStandardChildrenEntity(out);
+		return out;
+	}
+	
 	public HAPIdEntityInDomain getChild(String childName) {		
 		HAPEmbededEntity childEntity = this.m_attributesSimple.get(childName);
 		if(childEntity!=null)  return childEntity.getEntityId();
@@ -52,6 +60,18 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();
 
+	protected void getStandardChildrenEntity(Set<HAPIdEntityInDomain> out){
+		for(HAPEmbededEntity simpleAttr : this.m_attributesSimple.values()) {
+			out.add(simpleAttr.getEntityId());
+		}
+		
+		for(HAPContainerEntity<HAPInfoContainerElement> containerAttr : this.m_attributeContainer.values()) {
+			for(HAPInfoContainerElement eleInfo : containerAttr.getAllElementsInfo()) {
+				out.add(eleInfo.getEmbededElementEntity().getEntityId());
+			}
+		}
+	}
+	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 

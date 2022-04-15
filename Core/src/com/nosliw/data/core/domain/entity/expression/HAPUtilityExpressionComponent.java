@@ -12,7 +12,7 @@ import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureWrapper;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 
@@ -22,7 +22,7 @@ public class HAPUtilityExpressionComponent {
 		HAPDefinitionEntityExpressionSuite out = new HAPDefinitionEntityExpressionSuite();
 		
 		//build value structure
-		HAPValueStructureWrapper valueStructureWrapper = HAPUtilityExpression.getValueStructure(complexEntity, runtimeEnv);
+		HAPWrapperValueStructureDefinition valueStructureWrapper = HAPUtilityExpression.getValueStructure(complexEntity, runtimeEnv);
 		HAPUtilityWithValueStructure.setValueStructure(out, valueStructureWrapper);
 		
 		//build constant from attachment
