@@ -50,7 +50,7 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexValueStructure out = new HAPDefinitionEntityComplexValueStructure();
 		for(HAPWrapperValueStructureDefinition part : this.m_parts) {
-			this.m_parts.add(part.cloneValueStructureWrapper());
+			out.m_parts.add(part.cloneValueStructureWrapper());
 		}
 		return out;
 	}

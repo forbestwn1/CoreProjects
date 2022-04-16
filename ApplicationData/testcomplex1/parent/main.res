@@ -101,7 +101,25 @@
 			},
 			"entity": {
 				"valuestructure" : [
-				
+					{
+						"name" : "valuestructure1",
+						"entity": {
+							"fromAttachment1": {
+								"definition": {
+									"criteria": "test.string;1.0.0"
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "Default value for forlistservice_1_ex_parm1"
+								}
+							},
+							"fromAttachment2": {
+								"definition": {
+									"criteria": "test.float;1.0.0"
+								}
+							}
+						}
+					}
 				],
 				"testsimple1": [
 					{
@@ -131,9 +149,14 @@
 		"valueStructure": {
 			"entity": [
 				{
+					"groupType": "public",
+					"groupName" : "fromAttachment",
+					"reference": "valuestructure1;valuestructure"
+				},
+				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"testVar3": {
+						"parent1": {
 							"definition":{
 								"criteria": "test.string"
 							},
@@ -142,7 +165,7 @@
 								"value": "9876543210"
 							}
 						},
-						"testVar4" : {
+						"parent2" : {
 							"definition": {
 								"criteria" : "test.integer"
 							},
@@ -151,7 +174,7 @@
 								"value": 5
 							}
 						},
-						"testVar5" : {
+						"parent3" : {
 							"definition": {
 								"criteria": "test.integer"
 							},
@@ -164,32 +187,11 @@
 				},
 				{
 					"groupType": "public",
+					"groupName" : "fromResource",
 					"valueStructure" : {
-						"testVar5" : {
-							"definition": {
-								"criteria": "test.integer"
-							},
-							"defaultValue": {
-								"dataTypeId": "test.integer;1.0.0",
-								"value": 7
-							}
-						}
+						"resourceId" : "valuestructure|*test1"
 					}
 				},
-				{
-					"groupType": "public",
-					"valueStructure" : {
-						"testVar5" : {
-							"definition": {
-								"criteria": "test.integer"
-							},
-							"defaultValue": {
-								"dataTypeId": "test.integer;1.0.0",
-								"value": 7
-							}
-						}
-					}
-				}
 			]
 		}
 	}

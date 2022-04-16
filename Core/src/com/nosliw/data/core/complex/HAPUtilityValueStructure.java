@@ -44,7 +44,7 @@ public class HAPUtilityValueStructure {
 				HAPDefinitionEntityComplexValueStructure valueStructureComplexEntity = null;
 				HAPEmbededEntity valueStructureComplexAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityInfoDef.getEntity()).getValueStructureComplexEntity();
 				if(valueStructureComplexAttribute!=null) {
-					valueStructureComplexEntity = (HAPDefinitionEntityComplexValueStructure)defDomain.getEntityInfoDefinition(valueStructureComplexAttribute.getEntityId()).getEntity();
+					valueStructureComplexEntity = (HAPDefinitionEntityComplexValueStructure)defDomain.getSolidEntityInfoDefinition(valueStructureComplexAttribute.getEntityId(), attachmentContainer).getEntity();
 				}
 
 				String valueStructureId =  valueStructureDomain.addValueStructureComplex(valueStructureComplexEntity, defDomain, attachmentContainer);

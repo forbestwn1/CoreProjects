@@ -59,6 +59,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 				HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)entityDefDomain.getSolidEntityInfoDefinition(part.getValueStructureId(), attachmentContainer).getEntity();
 				String valueStructureExeId = this.newValueStructure(valueStructure);
 				HAPWrapperValueStructureExecutable valueStructureWrapperExe = new HAPWrapperValueStructureExecutable(valueStructureExeId);
+				valueStructureWrapperExe.cloneFromDefinition(part);
 				valueStructureComplexExe.addPartSimple(valueStructureWrapperExe, HAPUtilityComplexValueStructure.createPartInfoDefault());
 			}
 		}
