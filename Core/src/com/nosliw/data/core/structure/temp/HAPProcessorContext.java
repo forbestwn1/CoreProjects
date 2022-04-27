@@ -17,6 +17,25 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContext {
 
+	public static HAPValueStructureDefinitionGroup processStatic(HAPValueStructureDefinitionGroup contextGroup, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		if(configure==null)  configure = new HAPConfigureProcessorStructure();
+		
+		//figure out all constant values in context
+		contextGroup = HAPProcessorElementConstant.process(contextGroup, attachmentContainer, configure, runtimeEnv);
+
+		//solidate name in context  
+		contextGroup = HAPProcessorContextSolidate.process(contextGroup, runtimeEnv);
+		
+		//process data rule
+		HAPProcessorContextRule.process(contextGroup, runtimeEnv);
+		
+		//process inheritance
+		contextGroup = HAPProcessorContextVariableInheritance.process(contextGroup, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);
+		
+		return contextGroup;
+	}
+
+
 	public static HAPValueStructure process(HAPValueStructure valueStructure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructure out = null;
 		if(valueStructure!=null) {
@@ -69,7 +88,7 @@ public class HAPProcessorContext {
 		
 		return contextGroup;
 	}
-	
+
 	public static HAPValueStructureDefinitionGroup processRelative(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(configure==null)  configure = new HAPConfigureProcessorStructure();
 		

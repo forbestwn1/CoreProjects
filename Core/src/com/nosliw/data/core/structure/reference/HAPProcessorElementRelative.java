@@ -109,14 +109,14 @@ public class HAPProcessorElementRelative {
 			}
 			default:
 			{
-				HAPElementStructure solvedElement = resolveInfo.resolvedElement; 
+				HAPElementStructure solvedElement = resolveInfo.finalElement; 
 				if(solvedElement!=null){
 					relativeElement.setResolvedIdPath(resolveInfo.path);
 					//refer to solid
 					if(configure.relativeTrackingToSolid) {
 						String refRootId = null;
 						HAPPath refPath = new HAPPath();
-						HAPElementStructure parentContextEle = resolveInfo.realSolved.resolvedElement; 
+						HAPElementStructure parentContextEle = resolveInfo.realSolved.finalElement; 
 						if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementStructureLeafRelative)parentContextEle).getSolidNodeReference();
 							refRootId = parentSolidNodeRef.getRootNodeId();

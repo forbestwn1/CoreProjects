@@ -16,6 +16,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 
+//a element refer to another element (on another tree or same tree)
+//it can be use in define value structure by reference to another element
+//or data association between two element
 public class HAPElementStructureLeafRelative extends HAPElementStructureLeafVariable{
 
 	@HAPAttribute

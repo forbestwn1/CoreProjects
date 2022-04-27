@@ -134,7 +134,7 @@ public class HAPProcessorContextRelative {
 				else path.getRootReference().setCategary(resolveInfo.path.getRootReference().getCategary());
 				defContextElementRelative.setPath(path);
 				
-				HAPElementStructure solvedContextEle = resolveInfo.resolvedElement; 
+				HAPElementStructure solvedContextEle = resolveInfo.finalElement; 
 				if(solvedContextEle!=null){
 					//refer to solid
 					if(configure.relativeTrackingToSolid) {

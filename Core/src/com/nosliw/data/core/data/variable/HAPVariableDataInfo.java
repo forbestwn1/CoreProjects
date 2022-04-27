@@ -14,9 +14,9 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.matcher.HAPMatchersCombo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -44,6 +44,7 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	
 	//matchers that apply to rule
 	private HAPMatchersCombo m_ruleMatchers;
+
 	
 	private HAPDataTypeCriteria m_ruleCriteria;
 	

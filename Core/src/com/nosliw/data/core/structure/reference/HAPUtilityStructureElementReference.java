@@ -14,10 +14,13 @@ import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.HAPInfoValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
@@ -30,6 +33,52 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityStructureElementReference {
 
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPCandidatesValueStructureComplex valueStructureComplexs, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+		HAPExecutableEntityComplexValueStructure targetStructures
+	}
+	
+	//find all value structure which meet criteria from value structure complex
+	private static List<HAPWrapperValueStructureExecutable> discoverCandidateValueStructure(String valueStructureComplexId, HAPCriteriaValueStructure valueStructureCriteria, HAPDomainValueStructure valueStructureDomain){
+		List<HAPWrapperValueStructureExecutable> out = new ArrayList<HAPWrapperValueStructureExecutable>();
+		
+		HAPExecutableEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+		List<HAPInfoPartSimple> allSimpleParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+		for(HAPInfoPartSimple simplePart : allSimpleParts) {
+			for(HAPWrapperValueStructureExecutable wraper : simplePart.getSimpleValueStructurePart().getValueStructures()) {
+				boolean isValid = true;
+
+				HAPInfoValueStructure valueStructureDefInfo = valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
+
+				//check group type
+				Set<String> groupTypes = valueStructureCriteria.getGroupTypes();
+				if(groupTypes!=null&&!groupTypes.isEmpty()) {
+					if(groupTypes.contains(wraper.getGroupType())) {
+						isValid = false;
+					}
+				}
+
+				//check definition name
+				String valueStructueDefId = valueStructureCriteria.getDefinitionId();
+				if(valueStructueDefId!=null) {
+					if(!valueStructueDefId.equals(valueStructureDomain.getValueStructureDefinitionIdByRuntimeId(wraper.getValueStructureRuntimeId()))){
+						isValid = false;
+					}
+				}
+				
+				//check name
+				String valueStructureName = valueStructureCriteria.getName();
+				if(valueStructureName!=null) {
+					if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
+						isValid = false;
+					}
+				}
+				
+				if(isValid)  out.add(wraper);
+			}
+		}
+		return out;
+	}
+	
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
 		return resolveElementReference(reference.getReferencePath(), parentStructures.getStructure(reference.getParent()), mode, relativeInheritRule, elementTypes);
 	}

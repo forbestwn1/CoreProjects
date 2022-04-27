@@ -5,23 +5,40 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
-//store result for resolve reference path
+//store result for resolve structure element reference path
+//this can be used:
+//    variable using
+//    variable definition
+//    data association
 public class HAPInfoReferenceResolve{
-	public String structureId;
 	
-	//parent root node
-	public HAPRootStructure referredRoot;
-	//unique reference to root
-	public HAPReferenceRootInStrucutre rootReference;
-	//path (root id + path)
+	//resolved structure runtime id  resultStructureId
+	public String structureId;
+
+	//resolved root name in structure
+	public String rootName;
+	
+	//solving result through original structure 
+	public HAPInfoDesendantResolve elementInfoOriginal;
+	
+	//solving result through solid structure
+	public HAPInfoDesendantResolve elementInfoSolid;
+	
+	//final element, solid (maybe logic element which embeded in real element)
+	public HAPElementStructure finalElement;
+	
+	
+/////////// below part may not need	
+	//path to element (root id + path)
 	public HAPComplexPath path;
 
-	//real solved
-	public HAPInfoDesendantResolve realSolved;
+	//resolved root node
+	public HAPRootStructure referredRoot;
 	
-	//sold solved
-	public HAPInfoDesendantResolve realSolidSolved;
+	//unique reference to root
+	public HAPReferenceRootInStrucutre rootReference;
+
 	
-	//final referred element (maybe logic element which embeded in real element)
-	public HAPElementStructure resolvedElement;
+	
+	
 }

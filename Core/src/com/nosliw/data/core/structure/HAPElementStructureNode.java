@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
+//branch in value structure tree
 public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 
 	@HAPAttribute

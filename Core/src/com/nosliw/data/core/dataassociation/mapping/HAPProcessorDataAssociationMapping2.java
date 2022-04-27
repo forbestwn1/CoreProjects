@@ -107,7 +107,7 @@ public class HAPProcessorDataAssociationMapping2 {
 								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getParent());
 								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
 								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
-									HAPElementStructure sourceEle = sourceResolvedInfo.resolvedElement;
+									HAPElementStructure sourceEle = sourceResolvedInfo.finalElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 										HAPUtilityContext.setDescendant(outputStructure, eleInfo.getElementPath(), sourceEle.getSolidStructureElement());
 									}

@@ -34,6 +34,24 @@ public class HAPProcessorElementConstant {
 
 	static public HAPStructure process(
 			HAPStructure structure,
+			HAPDefinitionEntityContainerAttachment attachmentContainer,
+			HAPConfigureProcessorStructure configure,
+			HAPRuntimeEnvironment runtimeEnv){
+
+		//process constant ref in context
+		HAPStructure out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
+
+		//figure out constant value (some constant may use another constant)
+		out =  solidateConstantElements(out, configure, runtimeEnv);
+		
+		//figure out root that ture out to be constant value, then convert to constant root
+		out = discoverConstantContextRoot(out);
+		
+		return out;
+	}
+
+	static public HAPStructure process(
+			HAPStructure structure,
 			HAPContainerStructure parent,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPConfigureProcessorStructure configure,
@@ -57,6 +75,7 @@ public class HAPProcessorElementConstant {
 		return out;
 	}
 
+	
 	//merge constant with parent
 	//child constant has higher priority than parent
 	private static HAPStructure mergeWithParent(
@@ -263,7 +282,7 @@ public class HAPProcessorElementConstant {
 			Set<String> types = new HashSet<String>();
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
 			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
-			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.resolvedElement, structure, configure, runtimeEnv);
+			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.finalElement, structure, configure, runtimeEnv);
 			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructureElementReference.resolveElement(resolveInfo.realSolved, configure.relativeInheritRule)).getValue());
 		}
 

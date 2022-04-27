@@ -121,7 +121,7 @@ public class HAPUtilityInteractive {
 	private static HAPDataTypeCriteria getDataTypeCriteriaFromReference(HAPReferenceElementInStructureComplex referenceInfo, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
 		HAPDataTypeCriteria dataTypeCriteria = null;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(referenceInfo, parentStructures, mode, relativeInheritRule, elementTypes);
-		HAPElementStructure resolvedEle = resolveInfo.resolvedElement;
+		HAPElementStructure resolvedEle = resolveInfo.finalElement;
 		String resolveEleType = resolvedEle.getType();
 		if(resolveEleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 			HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)resolvedEle;

@@ -59,7 +59,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		//find container data criteria 
 		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
-		HAPDataTypeCriteria containerCriteria = ((HAPElementStructureLeafData)containerResolve.resolvedElement.getSolidStructureElement()).getCriteria();
+		HAPDataTypeCriteria containerCriteria = ((HAPElementStructureLeafData)containerResolve.finalElement.getSolidStructureElement()).getCriteria();
 		//find element data criteria from coontainer data criteria
 		HAPDataTypeCriteria elementCriteria = HAPUtilityCriteria.getChildCriteriaByPath(containerCriteria, "element");
 		//build element data context 

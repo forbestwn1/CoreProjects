@@ -18,7 +18,6 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStru
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -35,7 +34,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	private Map<String, HAPExecutableEntityComplexValueStructure> m_valueStructureComplex;
 	
 	//value structure definitions by id
-	private Map<String, HAPDefinitionEntityValueStructure> m_valueStructure;
+	private Map<String, HAPInfoValueStructure> m_valueStructure;
 	
 	//value structure definition id by value structure runtime id 
 	private Map<String, String> m_definitionIdByRuntimeId;
@@ -45,7 +44,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	public HAPDomainValueStructure(HAPGeneratorId idGenerator) {
 		this.m_idGenerator = idGenerator;
-		this.m_valueStructure = new LinkedHashMap<String, HAPDefinitionEntityValueStructure>();
+		this.m_valueStructure = new LinkedHashMap<String, HAPInfoValueStructure>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_valueStructureComplex = new LinkedHashMap<String, HAPExecutableEntityComplexValueStructure>();
 	}
@@ -56,8 +55,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		//extra value structure
 		if(valueStructureComplexDef!=null) {
 			for(HAPWrapperValueStructureDefinition part : valueStructureComplexDef.getParts()) {
-				HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)entityDefDomain.getSolidEntityInfoDefinition(part.getValueStructureId(), attachmentContainer).getEntity();
-				String valueStructureExeId = this.newValueStructure(valueStructure);
+				HAPInfoEntityInDomainDefinition valueStructureDefInfo = entityDefDomain.getSolidEntityInfoDefinition(part.getValueStructureId(), attachmentContainer);
+				String valueStructureExeId = this.newValueStructure(valueStructureDefInfo, part.getValueStructureId().getEntityId());
 				HAPWrapperValueStructureExecutable valueStructureWrapperExe = new HAPWrapperValueStructureExecutable(valueStructureExeId);
 				valueStructureWrapperExe.cloneFromDefinition(part);
 				valueStructureComplexExe.addPartSimple(valueStructureWrapperExe, HAPUtilityComplexValueStructure.createPartInfoDefault());
@@ -69,11 +68,14 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		return out;
 	}
 	
-	public HAPValueStructure getValueStructureByRuntimeId(String runtimeId) {	return this.getValueStructureWrapperByRuntimeId(runtimeId).getValueStructure();	}
 	
-	public HAPWrapperValueStructureDefinition getValueStructureWrapperByRuntimeId(String runtimeId) {	return this.m_valueStructure.get(this.m_definitionIdByRuntimeId.get(runtimeId));}
+	public HAPInfoValueStructure getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
+	public HAPDefinitionEntityValueStructure getValueStructureByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
+	public HAPDefinitionEntityValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
+	public HAPInfoValueStructure getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructure.get(valueStructureDefId);     }
+	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
 	
-	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
+	public HAPExecutableEntityComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
 	
 	//create another runtime that has common definition
 	//return new runtime id
@@ -102,9 +104,10 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	//add definition and create runtime id
 	//return runtime id
-	private String newValueStructure(HAPDefinitionEntityValueStructure valueStructure) {
-		String defId = this.m_idGenerator.generateId();
-		this.m_valueStructure.put(defId, valueStructure.cloneValueStructure());
+	private String newValueStructure(HAPInfoEntityInDomainDefinition valueStructureDefInfo, String valueStructureDefId) {
+		String defId = valueStructureDefId;
+		if(defId==null)	this.m_idGenerator.generateId();
+		this.m_valueStructure.put(defId, new HAPInfoValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity().cloneEntityDefinitionInDomain(), valueStructureDefInfo.getExtraInfo().cloneExtraInfo()));
 		return this.newRuntime(defId);
 	}
 	

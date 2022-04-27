@@ -21,8 +21,11 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String PARENT = "parent";
 
-	//parent name for referred context, for instance, self, external context
+	//parent name for referred complex, for instance, self, external context
 	private String m_parent;
+	
+	//criteria for value structure candidate
+	private HAPCriteriaValueStructure m_valueStructureCriteria;
 	
 	//definition of the path (reference + path)
 	private String m_referencePath;

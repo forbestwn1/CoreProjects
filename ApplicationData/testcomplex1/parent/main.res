@@ -149,11 +149,6 @@
 		"valueStructure": {
 			"entity": [
 				{
-					"groupType": "public",
-					"groupName" : "fromAttachment",
-					"reference": "valuestructure1;valuestructure"
-				},
-				{
 					"groupType" : "public",
 					"valueStructure" : {
 						"parent1": {
@@ -191,6 +186,11 @@
 					"valueStructure" : {
 						"resourceId" : "valuestructure|*test1"
 					}
+				},
+				{
+					"groupType": "public",
+					"groupName" : "fromAttachment",
+					"reference": "valuestructure1;valuestructure"
 				},
 			]
 		}

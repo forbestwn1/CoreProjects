@@ -15,12 +15,11 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	
 	private List<HAPWrapperValueStructureExecutable> m_valueStructures;
 	
-	public HAPPartComplexValueStructureSimple(HAPWrapperValueStructureExecutable valueStructure, HAPInfoPartValueStructure partInfo) {
+	public HAPPartComplexValueStructureSimple(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
 		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureExecutable>();
-		this.addValueStructure(valueStructure);
 	}
-	
+
 	public HAPPartComplexValueStructureSimple() {
 		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureExecutable>();
 	}
@@ -28,6 +27,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	@Override
 	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE;    }
 
+	public List<HAPWrapperValueStructureExecutable> getValueStructures(){    return this.m_valueStructures;    }
 	public void addValueStructure(HAPWrapperValueStructureExecutable valueStructure) {   this.m_valueStructures.add(valueStructure);   }
 	
 	public HAPPartComplexValueStructureSimple cloneValueStructureComplexPartSimple() {

@@ -1,9 +1,12 @@
 package com.nosliw.data.core.domain.entity.valuestructure;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -36,6 +39,21 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	
 	public HAPRootStructure getRootByName(String rootName) {   return this.m_rootByName.get(rootName);  }
 	
+	public Set<HAPRootStructure> getAllRoots(){   return new HashSet<HAPRootStructure>(this.m_rootByName.values());      }
+
+	public List<HAPRootStructure> resolveRoot(String rootName, boolean createIfNotExist) {
+		HAPRootStructure root = this.getRootByName(rootName);
+		if(createIfNotExist && root==null) 	root = this.newRoot(rootName);
+		if(root!=null) return Lists.newArrayList(root);
+		else return Lists.newArrayList();
+	}
+
+	public HAPRootStructure newRoot(String name) {  
+		HAPRootStructure root = new HAPRootStructure();
+		root.setName(name);
+		return this.addRoot(root);  
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(String rootName : this.m_rootByName.keySet()) {
