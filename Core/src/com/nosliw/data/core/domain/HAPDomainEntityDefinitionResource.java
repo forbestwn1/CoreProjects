@@ -32,11 +32,20 @@ import com.nosliw.data.core.structure.HAPProcessorElementSolidateConstantScript;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
 
 /*
- * domain represent a collection of value structure, complex entity and their relationship
+ * domain resource represent a collection of value structure, complex entity and their relationship under a resource
  * different domains does not share 
  */
-public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAPDomainEntity{
+public class HAPDomainEntityDefinitionResource extends HAPSerializableImp implements HAPDomainEntity{
 	public static String ENTITY = "entity";
+	
+	//domain id for this domain
+	private String m_domainId;
+	
+	//resource id for this domain
+	private HAPResourceId m_resourceId;
+	
+	//location base infor for resource
+	private HAPPathLocationBase m_localRefBase;
 	
 	//all other simple resource entity
 	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainDefinition> m_entity;
@@ -50,6 +59,9 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 	//entity that don't have parent
 	private HAPIdEntityInDomain m_rootComplexEntityId;
 	
+
+	
+	
 	//domain entity by resource id so that domain entity can be reused for same resource id 
 	private Map<HAPResourceId, HAPResourceDefinition> m_complexEntityIdByResourceId;
 	
@@ -59,7 +71,7 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 
 	private HAPManagerDomainEntityDefinition m_entityDefMan;
 	
-	public HAPDomainEntityDefinition(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
+	public HAPDomainEntityDefinitionResource(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
 		this.m_idGenerator = idGenerator;
 		this.m_entityDefMan = entityDefMan;
 		this.m_entity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoEntityInDomainDefinition>();
@@ -67,6 +79,11 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 		this.m_complexEntityIdByResourceId = new LinkedHashMap<HAPResourceId, HAPResourceDefinition>();
 	}
 
+	public String getDomainId() {    return this.m_domainId;     }
+	
+	public HAPPathLocationBase getLocationBase() {    return this.m_localRefBase;    }
+	public void setLocationBase(HAPPathLocationBase locationBase) {     this.m_localRefBase = locationBase;     }
+	
 	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, HAPInfoEntityInDomainDefinition entityInfo) {
 		HAPInfoEntityInDomainDefinition out = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entityInfo.getEntityType(), this.m_entityDefMan); 
 		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
@@ -87,14 +104,13 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 			out.setAttachmentReference(attachmentRef);
 			entityType = attachmentRef.getDataType();
 		}
-		out.setEntityId(new HAPIdEntityInDomain(this.generateId(), entityType));
+		out.setEntityId(newEntityId(entityType));
 		this.m_entity.put(out.getEntityId(), out);
 		return out.getEntityId();
 	}
 	
 	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, String entityType, HAPPathLocationBase basePath) {
 		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entityType, this.m_entityDefMan); 
-		entityInfo.setBaseLocationPath(basePath);
 		return this.addEntityOrReference(entityOrRef, entityInfo);
 	}
 
@@ -107,21 +123,19 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 		HAPInfoEntityInDomainDefinition out = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan);
 		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
 		out.setEntity(entity);
-		out.setEntityId(new HAPIdEntityInDomain(this.generateId(), entity.getEntityType()));
+		out.setEntityId(this.newEntityId(entity.getEntityType()));
 		this.m_entity.put(out.getEntityId(), out);
 		return out.getEntityId();
 	}
 
-	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPPathLocationBase basePath) {
+	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity) {
 		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan); 
-		entityInfo.setBaseLocationPath(basePath);
 		return this.addEntity(entity, entityInfo);
 	}
 
-	public void setEntity(HAPIdEntityInDomain entityId, HAPDefinitionEntityInDomain entity, HAPPathLocationBase basePath) {
+	public void setEntity(HAPIdEntityInDomain entityId, HAPDefinitionEntityInDomain entity) {
 		HAPInfoEntityInDomainDefinition entityInfo = this.getEntityInfoDefinition(entityId);
 		entityInfo.setEntity(entity);
-		entityInfo.setBaseLocationPath(basePath);
 	}
 	
 	public void setMainComplexEntityId(HAPIdEntityInDomain mainEntityId) {    this.m_mainComplexEntityId = mainEntityId;     }
@@ -157,6 +171,10 @@ public class HAPDomainEntityDefinition extends HAPSerializableImp implements HAP
 	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId) {    return this.m_complexEntityIdByResourceId.get(resourceId);     }
 	
 	private String generateId() {    return this.m_idGenerator.generateId();    } 
+
+	private HAPIdEntityInDomain newEntityId(String entityType) {
+		return new HAPIdEntityInDomain(this.generateId(), entityType, this.m_domainId);
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

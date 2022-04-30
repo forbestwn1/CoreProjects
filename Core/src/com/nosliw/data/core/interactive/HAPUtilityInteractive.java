@@ -63,8 +63,8 @@ public class HAPUtilityInteractive {
 		HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
 			HAPReferenceElementInStructureComplex reference = parm.getReferenceInfo();
-			HAPValueMapping mapping = inputMapping.getMapping(reference.getParent(), true);
-			mapping.addMapping(reference.getReferencePath(), new HAPElementStructureLeafRelative(parm.getName()));
+			HAPValueMapping mapping = inputMapping.getMapping(reference.getParentComplexName(), true);
+			mapping.addMapping(reference.getElementPath(), new HAPElementStructureLeafRelative(parm.getName()));
 		}
 		out.setInDataAssociation(inputMapping);
 		
@@ -82,7 +82,7 @@ public class HAPUtilityInteractive {
 			HAPValueMapping mapping = out.getMapping(null, true);
 			HAPReferenceElementInStructureComplex reference = output.getReferenceInfo();
 			HAPData constantData = output.getConstantData();
-			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getReferencePath()));
+			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getElementPath()));
 			else if(constantData!=null)    mapping.addMapping(output.getName(), new HAPElementStructureLeafConstant(constantData));
 		}
 		return out;

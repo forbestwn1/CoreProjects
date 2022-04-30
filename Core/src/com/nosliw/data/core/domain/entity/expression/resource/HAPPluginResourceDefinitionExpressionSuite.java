@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpressionDefinition;
@@ -23,7 +23,7 @@ public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourc
 	}
 	
 	@Override
-	public HAPIdEntityInDomain parseJson(JSONObject jsonObj, HAPDomainEntityDefinition entityDomain, HAPPathLocationBase localRefBase) {
+	public HAPIdEntityInDomain parseJson(JSONObject jsonObj, HAPDomainEntityDefinitionResource entityDomain, HAPPathLocationBase localRefBase) {
 		
 		
 		

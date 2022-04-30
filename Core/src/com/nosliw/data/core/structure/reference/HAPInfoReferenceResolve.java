@@ -2,7 +2,6 @@ package com.nosliw.data.core.structure.reference;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 //store result for resolve structure element reference path
@@ -12,7 +11,7 @@ import com.nosliw.data.core.structure.HAPRootStructure;
 //    data association
 public class HAPInfoReferenceResolve{
 	
-	//resolved structure runtime id  resultStructureId
+	//resolved structure runtime id
 	public String structureId;
 
 	//resolved root name in structure
@@ -36,7 +35,7 @@ public class HAPInfoReferenceResolve{
 	public HAPRootStructure referredRoot;
 	
 	//unique reference to root
-	public HAPReferenceRootInStrucutre rootReference;
+//	public HAPReferenceRootInStrucutre rootReference;
 
 	
 	

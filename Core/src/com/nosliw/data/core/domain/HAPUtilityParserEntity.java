@@ -151,8 +151,8 @@ public class HAPUtilityParserEntity {
 					Object resourceObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.RESOURCEID);
 					if(resourceObj!=null) {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityType, resourceObj);
-						out = parserContext.getDefinitionDomain().addEntityOrReference(resourceId, entityType);
-						resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getDefinitionDomain(), parserContext.getLocalReferenceBase());
+						out = parserContext.getCurrentDomain().addEntityOrReference(resourceId, entityType);
+						resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getGlobalDomain(), parserContext.getCurrentDomainId());
 					}
 				}
 				//reference
@@ -160,7 +160,7 @@ public class HAPUtilityParserEntity {
 					Object referenceObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.REFERENCE);
 					if(referenceObj!=null) {
 						HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityType);
-						out = parserContext.getDefinitionDomain().addEntityOrReference(reference, entityType);
+						out = parserContext.getCurrentDomain().addEntityOrReference(reference, entityType);
 					}
 				}
 				//entity
@@ -171,7 +171,7 @@ public class HAPUtilityParserEntity {
 				}
 				
 				//entity info (name, description, ...)
-				HAPInfoEntityInDomainDefinition entityInfo = parserContext.getDefinitionDomain().getEntityInfoDefinition(out);
+				HAPInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(out);
 				HAPExtraInfoEntityInDomainDefinition entityInfoDef = entityInfo.getExtraInfo();
 				entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
 			}
@@ -210,7 +210,7 @@ public class HAPUtilityParserEntity {
 				parentRelationConfigure.mergeHard(customerConfigure);
 			}
 			
-			parserContext.getDefinitionDomain().buildComplexParentRelation(out, parentInfo);
+			parserContext.getCurrentDomain().buildComplexParentRelation(out, parentInfo);
 		}
 		
 		return out;

@@ -31,7 +31,7 @@ public class HAPUtilityDataAssociation {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 					HAPComplexPath contextPath = relativeEle.getResolvedIdPath();
-					String parent = relativeEle.getPath().getParent();
+					String parent = relativeEle.getPath().getParentComplexName();
 					String sourcePath = HAPUtilityNamingConversion.cascadePath(parent, contextPath.getFullName());
 					out.put(eleInfo.getElementPath().getFullName(), sourcePath);
 					return Pair.of(false, null);

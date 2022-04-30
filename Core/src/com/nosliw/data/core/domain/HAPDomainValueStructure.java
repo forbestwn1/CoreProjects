@@ -49,7 +49,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		this.m_valueStructureComplex = new LinkedHashMap<String, HAPExecutableEntityComplexValueStructure>();
 	}
 
-	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinition entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
+	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionResource entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPExecutableEntityComplexValueStructure valueStructureComplexExe = new HAPExecutableEntityComplexValueStructure();
 		
 		//extra value structure
@@ -70,7 +70,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	
 	public HAPInfoValueStructure getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
-	public HAPDefinitionEntityValueStructure getValueStructureByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
+	public HAPDefinitionEntityValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
 	public HAPDefinitionEntityValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
 	public HAPInfoValueStructure getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructure.get(valueStructureDefId);     }
 	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
@@ -85,7 +85,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	//extract value structure from complex and add to pool
-	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinition entityDefDomain) {
+	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinitionResource entityDefDomain) {
 		//part id
 		part.setId(this.m_idGenerator.generateId());
 		String partType = part.getPartType();

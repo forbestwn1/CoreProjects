@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
@@ -19,7 +19,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinition definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinitionResource definitionDomain) {
 		HAPDefinitionEntityComplexValueStructure valueStructureComplex = (HAPDefinitionEntityComplexValueStructure)this.getEntity(entityId, definitionDomain);
 
 		if(obj instanceof JSONArray) {
@@ -36,7 +36,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 		}
 	}
 
-	private HAPWrapperValueStructureDefinition parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainEntityDefinition definitionDomain, HAPContextParser parserContext) {
+	private HAPWrapperValueStructureDefinition parseValueStructureWrapper(JSONObject wrapperObj, HAPDomainEntityDefinitionResource definitionDomain, HAPContextParser parserContext) {
 		String groupType = (String)wrapperObj.opt(HAPWrapperValueStructureDefinition.GROUPTYPE);
 		if(groupType==null)  groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 

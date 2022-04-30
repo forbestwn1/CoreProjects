@@ -1,21 +1,19 @@
 package com.nosliw.data.core.domain;
 
-import com.nosliw.data.core.component.HAPPathLocationBase;
-
 public class HAPContextParser {
 
-	//local ref base for 
-	private HAPPathLocationBase m_localRefBase;
+	//global domain
+	private HAPDomainEntityDefinitionGlobal m_globalDomain;
+	
+	private String m_currentDomainId;
 
-	//definition domain
-	private HAPDomainEntityDefinition m_definitionDomain;
-
-	public HAPContextParser(HAPDomainEntityDefinition definitionDomain, HAPPathLocationBase localRefBase) {
-		this.m_definitionDomain = definitionDomain;
-		this.m_localRefBase = localRefBase;
+	public HAPContextParser(HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {
+		this.m_globalDomain = globalDomain;
+		this.m_currentDomainId = currentDomainId;
 	}
 	
-	public HAPDomainEntityDefinition getDefinitionDomain() {    return this.m_definitionDomain;      }
-	
-	public HAPPathLocationBase getLocalReferenceBase() {    return this.m_localRefBase;    }
+	public HAPDomainEntityDefinitionGlobal getGlobalDomain() {    return this.m_globalDomain;      }
+
+	public HAPDomainEntityDefinitionResource getCurrentDomain() {    return this.m_globalDomain.getResourceDomainById(m_currentDomainId);     }
+	public String getCurrentDomainId() {    return this.m_currentDomainId;    }
 }

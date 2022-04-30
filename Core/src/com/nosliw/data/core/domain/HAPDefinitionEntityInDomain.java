@@ -116,7 +116,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 //		container.addEntityElement(eleInfo);
 //	}
 
-	public String toExpandedJsonString(HAPDomainEntityDefinition entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntityDefinitionResource entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
@@ -138,7 +138,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	}
 
 	//expanded json. expand all referenced 
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinition entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionResource entityDefDomain){
 		for(String attrName : this.m_attributesSimple.keySet()) {
 			HAPSerializableImp entityId = this.m_attributesSimple.get(attrName);
 			jsonMap.put(attrName, this.m_attributesSimple.get(attrName).toExpandedJsonString(entityDefDomain));

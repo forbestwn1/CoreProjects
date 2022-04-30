@@ -6,7 +6,6 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -37,9 +36,6 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	
 	private String m_entityType;
 	
-	//location path base info
-	private HAPPathLocationBase m_baseLocationPath;
-
 	//entity object
 	private HAPDefinitionEntityInDomain m_entity;
 	
@@ -77,9 +73,6 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public HAPResourceId getResourceId() {    return this.m_resourceId;    }
 	public void setResourceId(HAPResourceId resourceId) {   this.m_resourceId = resourceId;    }
 	
-	public HAPPathLocationBase getBaseLocationPath() {     return this.m_baseLocationPath;     }
-	public void setBaseLocationPath(HAPPathLocationBase baseLocationPath) {     this.m_baseLocationPath = baseLocationPath;    }
-
 	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
 	public void setEntityId(HAPIdEntityInDomain entityId) {    this.m_entityId = entityId;    }
 
@@ -91,7 +84,6 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public void cloneToInfoDefinitionEntityInDomain(HAPInfoEntityInDomainDefinition out) {
 		out.m_isComplex = this.m_isComplex;
 		out.m_entityType = this.m_entityType;
-		if(this.m_baseLocationPath!=null)  out.m_baseLocationPath = this.m_baseLocationPath.cloneLocalReferenceBase();
 		if(this.m_entity!=null)  out.m_entity = this.m_entity.cloneEntityDefinitionInDomain();
 		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneIdEntityInDomain();
 		if(this.m_resourceId!=null)  out.m_resourceId = this.m_resourceId.clone();
@@ -107,7 +99,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
-		HAPDomainEntityDefinition entityDefDomain = (HAPDomainEntityDefinition)entityDomain;
+		HAPDomainEntityDefinitionResource entityDefDomain = (HAPDomainEntityDefinitionResource)entityDomain;
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);

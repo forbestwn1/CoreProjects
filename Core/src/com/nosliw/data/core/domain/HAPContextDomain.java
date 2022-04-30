@@ -10,7 +10,7 @@ import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 public class HAPContextDomain {
 
 	//definition domain
-	private HAPDomainEntityDefinition m_definitionDomain;
+	private HAPDomainEntityDefinitionResource m_definitionDomain;
 
 	//executable domain
 	private HAPDomainEntityExecutable m_executableDomain;
@@ -25,14 +25,14 @@ public class HAPContextDomain {
 	
 	public HAPContextDomain(HAPManagerDomainEntityDefinition domainEntityDefMan) {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_definitionDomain = new HAPDomainEntityDefinition(this.m_idGenerator, domainEntityDefMan);
+		this.m_definitionDomain = new HAPDomainEntityDefinitionResource(this.m_idGenerator, domainEntityDefMan);
 		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
 		this.m_attachmentDomain = new HAPDomainAttachment(this.m_idGenerator);
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
-	public HAPDomainEntityDefinition getDefinitionDomain() {   return this.m_definitionDomain;    }
+	public HAPDomainEntityDefinitionResource getDefinitionDomain() {   return this.m_definitionDomain;    }
 	public HAPDomainEntityExecutable getExecutableDomain() {    return this.m_executableDomain;    }
 	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;     }
 

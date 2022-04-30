@@ -22,7 +22,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@HAPAttribute
 	public static String NAME = "name";
 
-	private HAPPathLocationBase m_basePath;
+//	private HAPPathLocationBase m_basePath;
 	
 	private String m_name;
 
@@ -33,8 +33,8 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_LOCAL;  }
 
-	public HAPPathLocationBase getBasePath() {   return this.m_basePath;   }
-	public void setBasePath(HAPPathLocationBase base) {   this.m_basePath = base;   }
+//	public HAPPathLocationBase getBasePath() {   return this.m_basePath;   }
+//	public void setBasePath(HAPPathLocationBase base) {   this.m_basePath = base;   }
 	
 	public String getName() {   return this.m_name;   }
 	public void setName(String name) {    this.m_name = name;    }

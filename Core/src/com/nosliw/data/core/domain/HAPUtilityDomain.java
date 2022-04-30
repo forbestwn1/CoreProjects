@@ -74,7 +74,7 @@ public class HAPUtilityDomain {
 	}
 
 	
-	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainEntityDefinition definitionDomain) {
+	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainEntityDefinitionResource definitionDomain) {
 		HAPPath p = new HAPPath(path);
 		HAPIdEntityInDomain currentEntityId = entityId;
 		HAPInfoEntityInDomainDefinition currentEntityInfo = definitionDomain.getEntityInfoDefinition(currentEntityId);
@@ -94,8 +94,8 @@ public class HAPUtilityDomain {
 		}
 	}
 	
-	public static HAPContextParser getContextParse(HAPIdEntityInDomain entityId, HAPDomainEntityDefinition definitionDomain) {
-		return new HAPContextParser(definitionDomain, definitionDomain.getEntityInfoDefinition(entityId).getBaseLocationPath());
+	public static HAPContextParser getContextParse(HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {
+		return new HAPContextParser(globalDomain, currentDomainId);
 	}
 	
 	public static HAPContextProcessor createProcessContext(HAPContextDomain domainContext, HAPRuntimeEnvironment runtimeEnv) {

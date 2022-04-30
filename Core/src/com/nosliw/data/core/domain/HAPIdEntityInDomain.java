@@ -17,15 +17,18 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 
 	public static final String ENTITYID = "entityId";
 
+	private String m_domainId;
+	
+	//entity type
+	private String m_entityType;
+
 	//entity id
 	private String m_entityId;
 
-	//entity type
-	private String m_entityType;
-	
-	public HAPIdEntityInDomain(String entityId, String entityType) {
+	public HAPIdEntityInDomain(String entityId, String entityType, String domainId) {
 		this.m_entityId = entityId;
 		this.m_entityType = entityType;
+		this.m_domainId = domainId;
 	}
 	
 	public HAPIdEntityInDomain() {}
@@ -40,6 +43,8 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	
 	public String getEntityType() {     return this.m_entityType;      }
 
+	public String getDomainId() {    return this.m_domainId;   }
+	
 	public HAPIdEntityInDomain cloneIdEntityInDomain() {
 		return new HAPIdEntityInDomain(this.m_entityId, this.m_entityType);
 	}

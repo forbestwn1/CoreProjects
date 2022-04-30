@@ -20,7 +20,7 @@ public class HAPProcessorContextSolidate {
 	private static Map<String, Object> buildConstants(List<HAPWrapperValueStructureExecutable> valueStructureGroup, HAPDomainValueStructure valueStructureDomain){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
 		for(HAPWrapperValueStructureExecutable valueStructureWrapper : valueStructureGroup) {
-			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
+			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 			for(String rootName : valueStructure.getRootNames()) {
 				HAPRootStructure rootNode = valueStructure.getRootByName(rootName);
 				if(rootNode.isConstant()){

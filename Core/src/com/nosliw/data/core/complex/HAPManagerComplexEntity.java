@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPContextDomain;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
@@ -35,7 +35,7 @@ public class HAPManagerComplexEntity {
 		HAPIdEntityInDomain mainExeEntityId = null;
 		
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
+		HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
 		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
 		
 		//build executable complexe entity
@@ -61,7 +61,7 @@ public class HAPManagerComplexEntity {
 
 	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPIdEntityInDomain mainComplexEntityDefinitionId, HAPContextProcessor processContext) {
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
+		HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
 		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
 		
 		//create executable and add to domain

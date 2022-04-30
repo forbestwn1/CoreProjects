@@ -8,7 +8,8 @@ import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
@@ -25,43 +26,43 @@ public class HAPManagerResourceDefinition {
 		this.m_dynamicResourceManager = dynamicResourceMan;
 	}
 
-	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainEntityDefinition entityDomain) {
-		return getResourceDefinition(resourceId, entityDomain, null);
+	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainEntityDefinitionGlobal globalDomain) {
+		return getResourceDefinition(resourceId, globalDomain, null);
 	}
 
-	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainEntityDefinition entityDomain, HAPPathLocationBase localRefBase) {
+	public HAPResourceDefinition getResourceDefinition(HAPResourceId resourceId, HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainResourceId) {
 		HAPResourceDefinition out = null;
-		out = entityDomain.getResourceDefinition(resourceId);
+		out = globalDomain.getResourceDefinitionByResourceId(resourceId);
 		if(out==null) {
 			out = new HAPResourceDefinition(resourceId);
 			String resourceType = resourceId.getResourceType();
 			String resourceStructure = resourceId.getStructure();
 			if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 				HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
-				HAPIdEntityInDomain resourceEntityId = this.m_plugins.get(resourceType).getResourceEntityBySimpleResourceId(simpleId, entityDomain);
+				HAPIdEntityInDomain resourceEntityId = this.m_plugins.get(resourceType).getResourceEntityBySimpleResourceId(simpleId, globalDomain);
 				out.setEntityId(resourceEntityId);
+				globalDomain.setResourceDefinition(out, resourceId);
 			}
 			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
-				localResourceId.setBasePath(localRefBase);
-				HAPIdEntityInDomain entityId =  this.m_plugins.get(resourceType).getResourceEntityByLocalResourceId(localResourceId, entityDomain);
+				HAPIdEntityInDomain entityId =  this.m_plugins.get(resourceType).getResourceEntityByLocalResourceId(localResourceId, globalDomain, currentDomainResourceId);
 				out.setEntityId(entityId);
 			}
 			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 				HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
 				//get parent resource def first
-				HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), entityDomain, localRefBase);
-				HAPInfoEntityInDomainDefinition parentEntityInfo = entityDomain.getEntityInfoDefinition(parentResourceDef.getEntityId());
+				HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), globalDomain, currentDomainResourceId);
+				HAPInfoEntityInDomainDefinition parentEntityInfo = globalDomain.getEntityInfoDefinition(parentResourceDef.getEntityId());
 				HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
 				//get child resource by path
 				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
 				out.setEntityId(entityId);
+				globalDomain.setResourceDefinition(out, resourceId);
 			}
 			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
 //				HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;
 //				out = this.m_dynamicResourceManager.buildResource(dynamicResourceId.getBuilderId(), dynamicResourceId.getParms());
 			}
-			entityDomain.addResourceInfo(out);
 		}
 		
 //		if(out instanceof HAPWithAttachment) {
@@ -72,7 +73,7 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 	
-	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainEntityDefinition entityDomain, HAPPathLocationBase localRefBase) {
+	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainEntityDefinitionResource entityDomain, HAPPathLocationBase localRefBase) {
 		return this.m_plugins.get(entityType).parseResourceEntity(obj, entityDomain, localRefBase);
 	}
 	

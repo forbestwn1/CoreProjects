@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPContextDomain;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
@@ -68,7 +68,7 @@ public class HAPContextProcessor {
 	public HAPProcessTracker getProcessTracker() {    return this.m_processTracker;    }
 	
 	public HAPContextDomain getDomainContext() {    return this.m_domainContext;    }
-	public HAPDomainEntityDefinition getComplexDefinitionDomain() {   return this.definitionDomain;   }
+	public HAPDomainEntityDefinitionResource getComplexDefinitionDomain() {   return this.definitionDomain;   }
 	public HAPPathLocationBase getLocalReferenceBase() {   return this.m_localRefBase;    }
 	
 	public HAPDefinitionEntityInDomainComplex getComplexEntity() {    return this.m_complexEntity;    }

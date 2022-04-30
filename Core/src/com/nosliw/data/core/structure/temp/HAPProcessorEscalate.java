@@ -37,7 +37,7 @@ public class HAPProcessorEscalate {
 		HAPRootStructure sourceRootNode = sourceContextGroup.getElement(sourceCategaryType, contextEleName);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
-			Pair<Boolean, HAPRootStructure> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParent(), complexPath, inheritanceExcludedInfo);
+			Pair<Boolean, HAPRootStructure> a = escalate(sourceRootNode, sourceCategaryType, sourceContextGroup.getParentComplexName(), complexPath, inheritanceExcludedInfo);
 			
 			HAPRootStructure b = getEscalateStepRootNode(a, sourceCategaryType, complexPath, inheritanceExcludedInfo);
 			sourceContextGroup.addRoot(contextEleName, b, sourceCategaryType);
@@ -55,7 +55,7 @@ public class HAPProcessorEscalate {
 		}
 		else {
 			//not find
-			HAPValueStructureDefinitionGroup grandParent = parentContextGroup.getParent();
+			HAPValueStructureDefinitionGroup grandParent = parentContextGroup.getParentComplexName();
 			boolean isEnd = false;
 			if(grandParent==null)   isEnd = true;
 			else  isEnd = !HAPUtilityContext.getContextGroupPopupMode(parentContextGroup.getInfo());

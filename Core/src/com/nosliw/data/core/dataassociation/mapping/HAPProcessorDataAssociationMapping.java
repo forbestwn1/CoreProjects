@@ -83,7 +83,7 @@ public class HAPProcessorDataAssociationMapping {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 					HAPElementStructure solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
 					if(solidateSourceContextEle==null)    throw new RuntimeException();
-					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getPath().getParent()), new HAPComplexPath(relativeEle.getPath().getReferencePath()), solidateSourceContextEle.cloneStructureElement());
+					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getPath().getParentComplexName()), new HAPComplexPath(relativeEle.getPath().getElementPath()), solidateSourceContextEle.cloneStructureElement());
 				}
 				else  throw new RuntimeException();
 			}
@@ -105,8 +105,8 @@ public class HAPProcessorDataAssociationMapping {
 							if(!HAPUtilityStructureElementReference.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
-								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getPath().getParent());
-								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeEle.getPath().getReferencePath(), sourceContextStructure, processConfigure.elementReferenceResolveMode, processConfigure.relativeInheritRule, null);
+								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getPath().getParentComplexName());
+								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeEle.getPath().getElementPath(), sourceContextStructure, processConfigure.elementReferenceResolveMode, processConfigure.relativeInheritRule, null);
 								if(HAPUtilityStructureElementReference.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.finalElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

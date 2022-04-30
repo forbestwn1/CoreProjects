@@ -4,7 +4,7 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContextDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -45,7 +45,7 @@ public class HAPUtilityAttachment {
 					HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
 				HAPContextDomain domainContext = processContext.getDomainContext();
-				HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
+				HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
 				HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
 				HAPDomainAttachment attachmentDomain = domainContext.getAttachmentDomain();
 
@@ -71,7 +71,7 @@ public class HAPUtilityAttachment {
 					HAPContextProcessor processContext) {
 				if(parentComplexEntityExeInfo!=null) {
 					HAPContextDomain domainContext = processContext.getDomainContext();
-					HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
+					HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
 					HAPDomainAttachment attachmentDomain = domainContext.getAttachmentDomain();
 
 					HAPIdEntityInDomain entityIdExe = entityExeInfo.getEntityId();

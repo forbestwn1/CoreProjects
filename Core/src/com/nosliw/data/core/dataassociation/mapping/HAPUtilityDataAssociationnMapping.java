@@ -34,10 +34,10 @@ public class HAPUtilityDataAssociationnMapping {
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-							String parent = relativeEle.getParent();
+							String parent = relativeEle.getParentComplexName();
 							
 							HAPElementStructureLeafRelative reverseEle = new HAPElementStructureLeafRelative(eleInfo.getElementPath().getFullName());
-							reverseEle.setParent(targetName);
+							reverseEle.setParentComplexName(targetName);
 							HAPValueMapping reverseValueMapping = out.getMapping(parent, true);
 							reverseValueMapping.addMapping(eleInfo.getElementPath().getFullName(), reverseEle);
 						}
@@ -102,7 +102,7 @@ public class HAPUtilityDataAssociationnMapping {
 				}
 				else if(varSubPath.startsWith(mappingRelativeSubPath)) {
 					//match only part of variable path, extend relative path to full path
-					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getReferencePath(), varSubPath.substring(mappingRelativeSubPath.length()));
+					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getElementPath(), varSubPath.substring(mappingRelativeSubPath.length()));
 					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementStructureLeafRelative(relativePath));
 					found = true;
 					break;
