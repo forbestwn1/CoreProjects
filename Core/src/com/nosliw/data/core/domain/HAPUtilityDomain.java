@@ -22,6 +22,18 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static HAPInfoEntityInDomainDefinition getEntityInfoByResourceId(HAPResourceId resourceId, String currentDomainId, HAPDomainEntityDefinitionGlobal globalDomain) {
+		HAPIdEntityInDomain entityId;
+		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+			//local
+			entityId = globalDomain.getResourceDomainById(currentDomainId).getResourceDefinition(resourceId).getEntityId();
+		}
+		else {
+			entityId = globalDomain.getResourceDefinitionByResourceId(resourceId).getEntityId();
+		}
+		return globalDomain.getEntityInfoDefinition(entityId);
+	}
+	
 	public static HAPExtraInfoEntityInDomainExecutable buildExecutableExtraInfo(HAPInfoEntityInDomainDefinition defEntityInfo) {
 		HAPExtraInfoEntityInDomainExecutable out = new HAPExtraInfoEntityInDomainExecutable(defEntityInfo.getEntityId());
 		defEntityInfo.getExtraInfo().cloneToEntityInfo(out);

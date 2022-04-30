@@ -12,7 +12,6 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
@@ -55,9 +54,9 @@ public class HAPManagerResourceDefinition {
 				HAPInfoEntityInDomainDefinition parentEntityInfo = globalDomain.getEntityInfoDefinition(parentResourceDef.getEntityId());
 				HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
 				//get child resource by path
-				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
-				out.setEntityId(entityId);
-				globalDomain.setResourceDefinition(out, resourceId);
+//				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
+//				out.setEntityId(entityId);
+//				globalDomain.setResourceDefinition(out, resourceId);
 			}
 			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
 //				HAPResourceIdDynamic dynamicResourceId = (HAPResourceIdDynamic)resourceId;

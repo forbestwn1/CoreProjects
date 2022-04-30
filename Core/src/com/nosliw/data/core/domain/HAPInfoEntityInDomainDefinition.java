@@ -99,17 +99,18 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
-		HAPDomainEntityDefinitionResource entityDefDomain = (HAPDomainEntityDefinitionResource)entityDomain;
+		HAPDomainEntityDefinitionGlobal entityDefDomain = (HAPDomainEntityDefinitionGlobal)entityDomain;
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
 		
 		if(this.m_resourceId!=null) {
-			jsonMap.put(ENTITY, entityDefDomain.getEntityInfoDefinition(entityDefDomain.getResourceDefinition(m_resourceId).getEntityId()).getEntity().toExpandedJsonString(entityDefDomain));
+			HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.getEntityInfoByResourceId(m_resourceId, this.getEntityId().getDomainId(), entityDefDomain);
+			jsonMap.put(ENTITY, entityInfo.toExpandedJsonString(entityDefDomain));
 		}
 		
-		HAPInfoParentComplex parentInfo = entityDefDomain.getParentInfo(this.m_entityId);
+		HAPInfoParentComplex parentInfo = entityDefDomain.getResourceDomainById(this.m_entityId.getDomainId()).getParentInfo(this.m_entityId);
 		if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}

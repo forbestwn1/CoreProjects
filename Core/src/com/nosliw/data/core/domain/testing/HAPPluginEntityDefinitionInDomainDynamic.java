@@ -7,8 +7,8 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -31,37 +31,35 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 	public boolean isComplexEntity() {	return this.m_isComplex;	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,
-			HAPDomainEntityDefinitionResource definitionDomain) {
-		HAPDefinitionEntityInDomain entity = definitionDomain.getEntityInfoDefinition(entityId).getEntity();
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 			for(Object key : jsonObj.keySet()) {
 				String attrName = (String)key;
 				if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
+					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 				}
 				else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
-					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, definitionDomain);
+					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, parserContext);
 				}
 				else {
 					Object entityObj = jsonObj.opt(attrName);
 					HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
 					if(entityInfo.isContainer) {
 						if(entityInfo.isComplex) {
-							parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, definitionDomain);
+							parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
 						}
 						else {
-							parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, definitionDomain);
+							parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
 						}
 					}
 					else {
 						if(entityInfo.isComplex) {
-							this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, definitionDomain);
+							this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
 						}
 						else {
-							this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, definitionDomain);
+							this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
 						}
 					}
 				}

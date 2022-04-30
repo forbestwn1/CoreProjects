@@ -73,9 +73,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
 	
 
-	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPDomainEntityDefinitionResource definitionDomain) {
-		HAPDefinitionEntityInDomain entity = definitionDomain.getEntityInfoDefinition(entityId).getEntity();
-		return entity;
+	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		return parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
 	}
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }

@@ -31,10 +31,9 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 
 	public HAPDomainEntityDefinitionResource newResourceDomain(HAPResourceIdSimple resourceId) {
 		if(this.getResourceDomainByResourceId(resourceId)!=null)   throw new RuntimeException();
-		HAPDomainEntityDefinitionResource out = new HAPDomainEntityDefinitionResource(m_idGenerator, m_entityDefManager);
-		String domainId = this.m_idGenerator.generateId();
-		this.m_resourceDomainById.put(domainId, out);
-		this.m_resourceDomainIdByResourceId.put(resourceId, domainId);
+		HAPDomainEntityDefinitionResource out = new HAPDomainEntityDefinitionResource(this.m_idGenerator.generateId(), m_idGenerator, m_entityDefManager);
+		this.m_resourceDomainById.put(out.getDomainId(), out);
+		this.m_resourceDomainIdByResourceId.put(resourceId, out.getDomainId());
 		return out;
 	}
 	

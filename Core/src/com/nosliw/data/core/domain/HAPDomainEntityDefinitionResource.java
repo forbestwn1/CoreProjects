@@ -71,7 +71,8 @@ public class HAPDomainEntityDefinitionResource extends HAPSerializableImp implem
 
 	private HAPManagerDomainEntityDefinition m_entityDefMan;
 	
-	public HAPDomainEntityDefinitionResource(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
+	public HAPDomainEntityDefinitionResource(String domainId, HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
+		this.m_domainId = domainId;
 		this.m_idGenerator = idGenerator;
 		this.m_entityDefMan = entityDefMan;
 		this.m_entity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoEntityInDomainDefinition>();
