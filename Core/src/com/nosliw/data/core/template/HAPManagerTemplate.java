@@ -11,7 +11,7 @@ public class HAPManagerTemplate {
 	}
 
 	public HAPResourceDefinitionTemplate getTemplate(String id) {
-		return (HAPResourceDefinitionTemplate)this.m_resourceDefManager.getResourceDefinition(new HAPResourceIdTemplate(new HAPTemplateId(id)));
+		return (HAPResourceDefinitionTemplate)this.m_resourceDefManager.getLocalResourceDefinition(new HAPResourceIdTemplate(new HAPTemplateId(id)));
 	}
 	
 }

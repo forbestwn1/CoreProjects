@@ -122,7 +122,7 @@ public class HAPUtilityAttachment {
 		HAPResourceDefinition1 out = null;
 		if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)||attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceId resourceId = ((HAPAttachmentReference)attachment).getReferenceId();
-			out = resourceDefMan.getResourceDefinition(resourceId);
+			out = resourceDefMan.getLocalResourceDefinition(resourceId);
 		}
 		else if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)){
 			out = resourceDefMan.parseResourceDefinition(attachment.getValueType(), ((HAPAttachmentEntity)attachment).getEntityJsonObj());

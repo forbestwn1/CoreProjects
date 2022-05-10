@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implements HAPInfoEntityInDomain{
 
@@ -21,6 +22,8 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 
 	private HAPExecutableEntityComplex m_entity;
 
+	private HAPInfoResourceIdNormalize m_externalComplexResourceInfo;
+	
 	private HAPExtraInfoEntityInDomainExecutable m_extraInfo;
 	
 	public HAPInfoEntityInDomainExecutable(HAPExecutableEntityComplex entity, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
@@ -29,9 +32,17 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		this.m_extraInfo = extraInfo;
 	}
 	
+	public HAPInfoEntityInDomainExecutable(HAPInfoResourceIdNormalize externalComplexResourceInfo, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+		this.m_entityId = entityId;
+		this.m_externalComplexResourceInfo = externalComplexResourceInfo;
+		this.m_extraInfo = extraInfo;
+	}
+	
 	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;    }
 	
 	public HAPExecutableEntityComplex getEntity() {   return this.m_entity;     }
+	
+	public HAPInfoResourceIdNormalize getExternalComplexResourceInfo() {     return this.m_externalComplexResourceInfo;       }
 	
 	public HAPExtraInfoEntityInDomainExecutable getExtraInfo() {    return this.m_extraInfo;    }
 	
@@ -50,7 +61,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutable)entityDomain));
+		jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 

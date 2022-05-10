@@ -152,7 +152,8 @@ public class HAPUtilityParserEntity {
 					if(resourceObj!=null) {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityType, resourceObj);
 						out = parserContext.getCurrentDomain().addEntityOrReference(resourceId, entityType);
-						resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getGlobalDomain(), parserContext.getCurrentDomainId());
+						
+//						resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getGlobalDomain(), parserContext.getCurrentDomainId());
 					}
 				}
 				//reference

@@ -46,7 +46,7 @@ public class HAPGatewayResourceDefinition extends HAPGatewayImp{
 	private HAPServiceData requestLoadResourceDefinition(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		Object idObj = parms.get(COMMAND_LOADRESOURCEDEFINITION_ID);
 		HAPResourceId resourceId = HAPFactoryResourceId.newInstance(idObj);
-		HAPResourceDefinition1 resourceDefinition = this.m_runtimeEnviroment.getResourceDefinitionManager().getResourceDefinition(resourceId);
+		HAPResourceDefinition1 resourceDefinition = this.m_runtimeEnviroment.getResourceDefinitionManager().getLocalResourceDefinition(resourceId);
 		return this.createSuccessWithObject(resourceDefinition);
 	}
 }

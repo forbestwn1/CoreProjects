@@ -22,7 +22,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 	public HAPResourceDefinition1 getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId) {
 		HAPResourceIdProcess processResourceId = new HAPResourceIdProcess(resourceId);
 		HAPResourceIdSimple processSuiteResourceId = processResourceId.getProcessSuiteResourceId();
-		HAPResourceDefinitionProcessSuite processSuiteDef = (HAPResourceDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(processSuiteResourceId);
+		HAPResourceDefinitionProcessSuite processSuiteDef = (HAPResourceDefinitionProcessSuite)this.m_resourceDefMan.getLocalResourceDefinition(processSuiteResourceId);
 		return new HAPResourceDefinitionProcess(processSuiteDef, processResourceId.getProcessId().getProcessId());
 	}
 
@@ -35,7 +35,7 @@ public class HAPPluginResourceDefinitionProcess implements HAPPluginResourceDefi
 		suiteResourceId.setBasePath(resourceId.getBasePath());
 		suiteResourceId.setSupplement(resourceId.getSupplement());
 		
-		HAPResourceDefinitionProcessSuite processSuiteDef = (HAPResourceDefinitionProcessSuite)this.m_resourceDefMan.getResourceDefinition(suiteResourceId);
+		HAPResourceDefinitionProcessSuite processSuiteDef = (HAPResourceDefinitionProcessSuite)this.m_resourceDefMan.getLocalResourceDefinition(suiteResourceId);
 		return new HAPResourceDefinitionProcess(processSuiteDef, processId.getProcessId());
 	}
 

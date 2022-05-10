@@ -26,7 +26,7 @@ public class HAPManagerScript {
 	}
 
 	public HAPExecutableScriptGroup getScript(HAPResourceId resourceId, Map<String, String> configure) {
-		HAPResourceDefinitionScriptGroup scriptGroupResourceDef = (HAPResourceDefinitionScriptGroup)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId);
+		HAPResourceDefinitionScriptGroup scriptGroupResourceDef = (HAPResourceDefinitionScriptGroup)this.m_runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition(resourceId);
 		HAPContextProcessor contextProcess = new HAPContextProcessor(scriptGroupResourceDef, this.m_runtimeEnv);
 
 		if(configure==null) {

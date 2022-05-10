@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
@@ -118,7 +118,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	}
 
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionResource entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionSimpleResource entityDefDomain){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 

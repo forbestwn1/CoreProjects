@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -17,6 +17,6 @@ public interface HAPExecutable extends HAPSerializable{
 	List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager);
 
 	//conver to string
-	String toString(HAPDomainEntityExecutable domain);
+	String toString(HAPDomainEntityExecutableResourceComplex domain);
 	
 }

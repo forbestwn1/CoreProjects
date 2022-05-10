@@ -11,7 +11,7 @@ public class HAPManagerResourceStory {
 	}
 
 	public HAPResourceDefinitionStory getStory(String id) {
-		return (HAPResourceDefinitionStory)this.m_resourceDefManager.getResourceDefinition(new HAPResourceIdStory(new HAPStoryId(id)));
+		return (HAPResourceDefinitionStory)this.m_resourceDefManager.getLocalResourceDefinition(new HAPResourceIdStory(new HAPStoryId(id)));
 	}
 	
 }

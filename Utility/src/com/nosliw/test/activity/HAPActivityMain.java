@@ -27,7 +27,7 @@ public class HAPActivityMain {
 		HAPResourceId resourceId = HAPUtilityResourceTask.buildResourceId(suite);
 		HAPExecutableTaskSuite taskSuiteExe = runtimeEnvironment.getTaskManager().getTaskSuite(resourceId);
 		
-		HAPResourceDefinitionTaskSuite activitySuiteDefinition = (HAPResourceDefinitionTaskSuite)runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId);
+		HAPResourceDefinitionTaskSuite activitySuiteDefinition = (HAPResourceDefinitionTaskSuite)runtimeEnvironment.getResourceDefinitionManager().getLocalResourceDefinition(resourceId);
 		
 		Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(activitySuiteDefinition, testData);
 		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(taskSuiteExe.getValueStructureDefinitionWrapper().getValueStructure(), input);

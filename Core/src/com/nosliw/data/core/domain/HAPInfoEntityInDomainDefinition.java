@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -80,6 +81,17 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	
 	public boolean isComplexEntity() {   return this.m_isComplex;   }
 	public void setIsComplexEntity(boolean isComplex) {    this.m_isComplex = isComplex;     }
+	
+	public boolean isSolid() {   return this.m_entity!=null;   }
+	public boolean isAttachmentReference() {   return this.m_reference!=null;    }
+	public boolean isLocalResourceReference() {    
+		if(this.m_resourceId==null)  return false;
+		if(this.m_resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) return true;
+		return false;
+	}
+	public boolean isGlobalResourceReference() {	return !this.isLocalResourceReference();	}
+	public boolean isGlobalSimpleResourceReference() {     return !this.isLocalResourceReference() && !this.isComplexEntity();        }
+	public boolean isGlobalComplexResourceReference() {     return !this.isLocalResourceReference() && this.isComplexEntity();        }
 	
 	public void cloneToInfoDefinitionEntityInDomain(HAPInfoEntityInDomainDefinition out) {
 		out.m_isComplex = this.m_isComplex;

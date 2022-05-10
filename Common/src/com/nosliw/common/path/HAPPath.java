@@ -1,5 +1,6 @@
 package com.nosliw.common.path;
 
+import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPPath {
@@ -11,8 +12,10 @@ public class HAPPath {
 	public HAPPath(){}
 
 	public HAPPath(String path){
-		this.m_path = path;
-		this.m_pathSegs = HAPUtilityNamingConversion.parsePaths(this.m_path);
+		if(HAPBasicUtility.isStringNotEmpty(path)) {
+			this.m_path = path;
+			this.m_pathSegs = HAPUtilityNamingConversion.parsePaths(this.m_path);
+		}
 	}
 	
 	public boolean isEmpty() {  return this.m_pathSegs.length==0;    }

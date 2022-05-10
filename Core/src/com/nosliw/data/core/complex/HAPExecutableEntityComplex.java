@@ -8,7 +8,7 @@ import org.apache.commons.collections4.map.LinkedMap;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.domain.HAPContainerEntity;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -51,14 +51,14 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public void setContainerAttributeElementComplex(String attribute, HAPContainerEntity entityContainer) {		this.m_attributeContainer.put(attribute, entityContainer);	}
 	public Map<String, HAPContainerEntity> getContainerAttributes(){   return this.m_attributeContainer;   }
 	
-	public String toExpandedJsonString(HAPDomainEntityExecutable entityDomainExe) {
+	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomainExe);
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityExecutable entityDomainExe){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityExecutableResourceComplex entityDomainExe){
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
 		jsonMap.put(VALUESTRUCTURECOMPLEXID, this.m_valueStructureComplexId);
 		

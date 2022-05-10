@@ -4,39 +4,76 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPContextDomain;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableGlobal;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
+import com.nosliw.data.core.domain.HAPPackageComplexResource;
+import com.nosliw.data.core.domain.HAPPackageExecutable;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPManagerComplexEntity {
 
+	private HAPManagerResourceDefinition m_resourceDefinitionManager;
+	
+	private HAPManagerDomainEntityDefinition m_entityDefManager;
+
+	private HAPGeneratorId m_idGenerator;
+
+	//pulug in for processing complex entity
 	private Map<String, HAPPluginComplexEntityProcessor> m_processorPlugins;
 
+	private Map<HAPResourceIdSimple, HAPPackageComplexResource> m_complexResources;
+	
 	public HAPManagerComplexEntity() {
 		this.m_processorPlugins = new LinkedHashMap<String, HAPPluginComplexEntityProcessor>();
 	}
 
+	private HAPPackageComplexResource getComplexEntityResourceInfo(HAPResourceIdSimple complexEntityResourceId) {
+		HAPPackageComplexResource out = this.m_complexResources.get(complexEntityResourceId);
+		if(out==null) {
+			HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.m_entityDefManager);
+			HAPResourceDefinition resourceDefinition = this.m_resourceDefinitionManager.getResourceDefinition(complexEntityResourceId, globalDefDomain);
+			globalDefDomain.setRootComplexEntityId(resourceDefinition.getEntityId());
+			out = new HAPPackageComplexResource(complexEntityResourceId, globalDefDomain);
+			this.process(out);
+		}
+		return out;
+	}
+	
+	
+	private void process(HAPPackageComplexResource complexResourceInfo) {
+		
+		//build complex entity tree
+		
+	}
 	
 	public HAPIdEntityInDomain process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
 		HAPIdEntityInDomain mainExeEntityId = null;
 		
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
-		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
+		HAPDomainEntityDefinitionGlobal defDomain = domainContext.getDefinitionDomain();
+		HAPDomainEntityExecutableGlobal exeDomain = domainContext.getExecutableDomain();
 		
 		//build executable complexe entity
 		HAPIdEntityInDomain rootIdDef = defDomain.getRootComplexEntity();
@@ -59,10 +96,70 @@ public class HAPManagerComplexEntity {
 		return mainExeEntityId;
 	}
 
+	private HAPPackageComplexResource buildExecutableDomain(HAPResourceId resourceId, HAPPackageExecutable runnablePackage) {
+		//
+	}
+
+	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPPackageComplexResource complexResourcePackage, HAPPackageExecutable runnablePackage) {
+		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
+		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
+		
+		//create executable and add to domain
+		HAPIdEntityInDomain out = null;
+		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getSolidEntityInfoDefinition(complexEntityDefinitionId, null);
+		if(entityDefInfo.isSolid()) {
+			HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
+			String entityType = complexEntityDef.getEntityType();
+			HAPExecutableEntityComplex exeEntity = this.m_processorPlugins.get(entityType).newExecutable();
+			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
+			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, exeEntity, exeExtraInfo);
+			HAPExecutableEntityComplex complexEntityExe = exeDomain.getEntityInfoExecutable(out).getEntity();
+			
+			//build executable for simple complex attribute
+			Map<String, HAPEmbededEntity> simpleAttributes = complexEntityDef.getSimpleAttributes();
+			for(String attrName : simpleAttributes.keySet()) {
+				HAPIdEntityInDomain attrEntityDefId = simpleAttributes.get(attrName).getEntityId();
+				HAPInfoEntityInDomainDefinition entityInfo = defDomain.getEntityInfoDefinition(attrEntityDefId);
+				if(entityInfo.isComplexEntity()) {
+					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, complexResourcePackage, runnablePackage);
+					complexEntityExe.setNormalComplexAttribute(attrName, attrEntityExeId);
+				}
+			}
+			
+			//build executable for container complex attribute
+			Map<String, HAPContainerEntity> containerAttributes = complexEntityDef.getContainerAttributes();
+			for(String attrName : containerAttributes.keySet()) {
+				HAPContainerEntity defContainer = containerAttributes.get(attrName);
+				HAPContainerEntity exeContainer = HAPUtilityDomain.buildContainer(defContainer.getContainerType());
+				List<HAPInfoContainerElement> defEleInfos = defContainer.getAllElementsInfo();
+				for(HAPInfoContainerElement defEleInfo : defEleInfos) {
+					HAPIdEntityInDomain defEleId = defEleInfo.getEmbededElementEntity().getEntityId();
+					HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
+					if(eleEntityInfo.isComplexEntity()) {
+						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, complexResourcePackage, runnablePackage);
+						HAPInfoContainerElement exeEleInfo = defEleInfo.cloneContainerElementInfo();
+						exeEleInfo.setEmbededElementEntity(new HAPEmbededEntity(eleEntityExeId));
+						exeContainer.addEntityElement(exeEleInfo);
+					}
+				}
+				complexEntityExe.setContainerAttributeElementComplex(attrName, exeContainer);
+			}
+		}
+		else {
+			HAPInfoResourceIdNormalize normalizedResourceId = this.m_resourceDefinitionManager.normalizeResourceId(entityDefInfo.getResourceId());
+			HAPPackageComplexResource externalComplexResourcePackage = buildExecutableDomain(normalizedResourceId.getRootResourceId(), runnablePackage);
+			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
+			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, normalizedResourceId, exeExtraInfo);
+		}
+		
+		return out;
+	}
+
+	
 	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPIdEntityInDomain mainComplexEntityDefinitionId, HAPContextProcessor processContext) {
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityDefinitionResource defDomain = domainContext.getDefinitionDomain();
-		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
+		HAPDomainEntityDefinitionGlobal defDomain = domainContext.getDefinitionDomain();
+		HAPDomainEntityExecutableGlobal exeDomain = domainContext.getExecutableDomain();
 		
 		//create executable and add to domain
 		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getSolidEntityInfoDefinition(complexEntityDefinitionId, null);
@@ -118,7 +215,7 @@ public class HAPManagerComplexEntity {
 					HAPContextProcessor processContext) {
 				if(parentComplexEntityInfo!=null) {
 					HAPContextDomain domainContext = processContext.getDomainContext();
-					HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
+					HAPDomainEntityExecutableResource exeDomain = domainContext.getExecutableDomain();
 					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
 
 					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
@@ -142,7 +239,7 @@ public class HAPManagerComplexEntity {
 					HAPContextProcessor processContext) {
 				if(parentComplexEntityInfo!=null) {
 					HAPContextDomain domainContext = processContext.getDomainContext();
-					HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
+					HAPDomainEntityExecutableResource exeDomain = domainContext.getExecutableDomain();
 
 					HAPIdEntityInDomain complexEntityExeId = domainContext.getExecutableIdByDefinitionId(complexEntityDefinitionId);
 					HAPExecutableEntityComplex complexEntityExe = domainContext.getExecutableEntityByDefinitionId(complexEntityExeId);

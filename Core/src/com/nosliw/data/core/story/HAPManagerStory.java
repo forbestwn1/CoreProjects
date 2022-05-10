@@ -78,7 +78,7 @@ public class HAPManagerStory {
 	
 	//get story by id
 	public HAPResourceDefinitionStory getStoryResource(String id) {
-		return (HAPResourceDefinitionStory)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdStory(new HAPStoryId(id)));
+		return (HAPResourceDefinitionStory)this.m_runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition(new HAPResourceIdStory(new HAPStoryId(id)));
 	}
 
 	//convert story to particular resouce

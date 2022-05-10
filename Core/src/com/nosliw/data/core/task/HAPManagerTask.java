@@ -25,7 +25,7 @@ public class HAPManagerTask {
 	public void registerTaskInfo(String taskType, HAPInfoTask taskInfo) {    this.m_taskInfo.put(taskType, taskInfo);   	}
 	
 	public HAPExecutableTaskSuite getTaskSuite(HAPResourceId activitySuiteId) {
-		HAPResourceDefinitionTaskSuite activitySuiteResourceDef = (HAPResourceDefinitionTaskSuite)this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(activitySuiteId);
+		HAPResourceDefinitionTaskSuite activitySuiteResourceDef = (HAPResourceDefinitionTaskSuite)this.m_runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition(activitySuiteId);
 		HAPContextProcessor contextProcess = new HAPContextProcessor(activitySuiteResourceDef, this.m_runtimeEnv);
 		
 		HAPExecutableTaskSuite out = HAPProcessorTaskSuite.process(

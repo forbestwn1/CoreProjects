@@ -13,6 +13,8 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 //id for entity in domain
 public class HAPIdEntityInDomain extends HAPSerializableImp{
 
+	public static final String DOMAINID = "domainId";
+
 	public static final String ENTITYTYPE = "entityType";
 
 	public static final String ENTITYID = "entityId";
@@ -30,7 +32,12 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 		this.m_entityType = entityType;
 		this.m_domainId = domainId;
 	}
-	
+
+	public HAPIdEntityInDomain(String entityId, String entityType) {
+		this.m_entityId = entityId;
+		this.m_entityType = entityType;
+	}
+
 	public HAPIdEntityInDomain() {}
 	
 	public static HAPIdEntityInDomain newInstance(Object obj) {
@@ -46,7 +53,7 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	public String getDomainId() {    return this.m_domainId;   }
 	
 	public HAPIdEntityInDomain cloneIdEntityInDomain() {
-		return new HAPIdEntityInDomain(this.m_entityId, this.m_entityType);
+		return new HAPIdEntityInDomain(this.m_domainId, this.m_entityId, this.m_entityType);
 	}
 	
 	@Override
@@ -65,10 +72,11 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	}
 	
 	@Override
-	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(this.m_entityId, this.m_entityType); }
+	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(new String[] {this.m_entityId, this.m_entityType, this.m_domainId}); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(DOMAINID, this.m_domainId);
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		jsonMap.put(ENTITYID, this.m_entityId);
 	}
@@ -78,6 +86,7 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 		String[] segs = HAPUtilityNamingConversion.parseLevel1(literateValue);
 		this.m_entityId = segs[0];
 		if(segs.length>1)  this.m_entityType = segs[1];
+		if(segs.length>2)  this.m_domainId = segs[2];
 		return true;  
 	}
 
@@ -87,6 +96,7 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 		Object typeObj = jsonObj.opt(ENTITYTYPE);
 		if(typeObj!=null)		this.m_entityType = (String)typeObj;
 		this.m_entityId = jsonObj.getString(ENTITYID);
+		this.m_domainId = (String)jsonObj.opt(DOMAINID);
 		return true;  
 	}
 

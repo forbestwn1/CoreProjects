@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDomainComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
@@ -57,7 +57,7 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDom
 	}
 	
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionResource entityDefDomain){
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionSimpleResource entityDefDomain){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	

@@ -16,7 +16,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutable;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -121,7 +121,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 		}
 	}
 	@Override
-	public String toString(HAPDomainEntityExecutable domain) {
+	public String toString(HAPDomainEntityExecutableResourceComplex domain) {
 		// TODO Auto-generated method stub
 		return null;
 	}

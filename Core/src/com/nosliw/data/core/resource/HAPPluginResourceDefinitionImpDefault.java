@@ -7,8 +7,9 @@ import com.nosliw.common.utils.HAPFileUtility;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -27,23 +28,70 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	public String getResourceType() {		return this.m_resourceType;	}
 
 	@Override
+	public HAPInfoResourceIdNormalize normalizeSimpleResourceId(HAPResourceIdSimple resourceId) {
+		return new HAPInfoResourceIdNormalize(resourceId, null, resourceId.getResourceType());
+	}
+	
+	@Override
+	public HAPInfoResourceIdNormalize normalizeLocalResourceId(HAPResourceIdLocal resourceId) {
+		return new HAPInfoResourceIdNormalize(resourceId, null, resourceId.getResourceType());
+	}
+	
+	@Override
 	public HAPIdEntityInDomain getResourceEntityBySimpleResourceId(HAPResourceIdSimple resourceId, HAPDomainEntityDefinitionGlobal globalDomain) {
-		HAPDomainEntityDefinitionResource resourceDomain = globalDomain.newResourceDomain(resourceId);
+		//normalize resource id by root resource
+		HAPInfoResourceIdNormalize normalizedResourceId = this.normalizeSimpleResourceId(resourceId);
+		HAPResourceIdSimple rootResourceId = (HAPResourceIdSimple)normalizedResourceId.getRootResourceId();
 		
-		//get location information
-		HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(resourceId);
-		resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
-		//read content
-		JSONObject entityJsonObj = new JSONObject(HAPFileUtility.readFile(resourceLocInfo.getFiile()));
-		//parse json object
-		return parseEntity(entityJsonObj, new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
+		//get root entity id
+		HAPIdEntityInDomain rootEntityId = null;
+		HAPResourceDefinition rootResourceDef = globalDomain.getResourceDefinitionByResourceId(rootResourceId);
+		if(rootResourceDef==null) {
+			//if root resource not loaded in domain, load it
+			HAPDomainEntityDefinitionSimpleResource resourceDomain = globalDomain.newResourceDomain(rootResourceId);
+			
+			//get location information
+			HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(rootResourceId);
+			resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
+			//read content
+			JSONObject entityJsonObj = new JSONObject(HAPFileUtility.readFile(resourceLocInfo.getFiile()));
+			//parse json object
+			rootEntityId = parseEntity(entityJsonObj, new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
+			resourceDomain.setRootEntityId(rootEntityId);
+		}
+		else {
+			//if root resource already loaded
+			rootEntityId = rootResourceDef.getEntityId();
+		}
+		
+		//get resource entity id by path
+		HAPIdEntityInDomain out = HAPUtilityDomain.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
+		return out;
 	}
 
 	@Override
 	public HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {
-		HAPPathLocationBase localRefBase = globalDomain.getResourceDomainById(currentDomainId).getLocationBase();
-		String path = localRefBase.getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
-		HAPIdEntityInDomain out = this.parseEntity(HAPFileUtility.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
+		//normalize resource id by root resource
+		HAPInfoResourceIdNormalize normalizedResourceId = this.normalizeLocalResourceId(localResourceId);
+		HAPResourceIdLocal rootResourceId = (HAPResourceIdLocal)normalizedResourceId.getRootResourceId();
+		
+		//get root entity id
+		HAPDomainEntityDefinitionSimpleResource currentDomain = globalDomain.getResourceDomainById(currentDomainId);
+		HAPIdEntityInDomain rootEntityId = null;
+		HAPResourceDefinition rootResourceDef = currentDomain.getLocalResourceDefinition(rootResourceId);
+		if(rootResourceDef==null) {
+			//if root resource not loaded in domain, load it
+			HAPPathLocationBase localRefBase = currentDomain.getLocationBase();
+			String path = localRefBase.getPath() + rootResourceId.getResourceType() + "/" + rootResourceId.getName() + ".res";
+			rootEntityId = this.parseEntity(HAPFileUtility.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
+		}
+		else {
+			//if root resource already loaded
+			rootEntityId = rootResourceDef.getEntityId();
+		}
+		
+		//get resource entity id by path
+		HAPIdEntityInDomain out = HAPUtilityDomain.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
 		return out;
 	}
 
@@ -56,36 +104,5 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 	}
 
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
-	
-//	@Override
-//	public HAPIdEntityInDomain parseResourceEntity(Object content, HAPDomainDefinitionEntity entityDomain, HAPLocalReferenceBase localRefBase) {
-//		JSONObject jsonObj = null;
-//		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
-//		else if(content instanceof String)  jsonObj = new JSONObject(content);
-//		
-//		return this.parseJson(jsonObj, entityDomain, localRefBase);
-//	}
-//
-//	protected HAPIdEntityInDomain addComplexEntity(HAPInfoComplexEntityDefinition complexEntityInfo, JSONObject entityJsonObj, HAPDomainDefinitionEntity definitionDomain) {
-//	
-//		HAPDefinitionEntityComplex complexResourceDef = complexEntityInfo.getComplexEntity();
-//		
-//		//entity info
-//		complexResourceDef.buildEntityInfoByJson(entityJsonObj);
-//		
-//		//parse attachment
-//		JSONObject pageInfoObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-//		if(pageInfoObj!=null) {
-//			HAPUtilityAttachment.parseDefinition(pageInfoObj, complexResourceDef.getAttachmentContainer());
-//		}
-//		
-//		//value structure
-//		HAPComplexValueStructure valueStructureComplex = new HAPComplexValueStructure();
-//		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
-//		HAPUtilityComplexValueStructure.setValueStructureDefault(valueStructureComplex, HAParserComponentValueStructure.parseComponentValueStructure(valueStructureJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
-//		
-//		return definitionDomain.addComplexEntity(complexEntityInfo, valueStructureComplex);
-//	}
-	
 	
 }

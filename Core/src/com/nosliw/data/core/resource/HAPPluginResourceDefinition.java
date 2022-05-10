@@ -26,4 +26,8 @@ public interface HAPPluginResourceDefinition {
 	 */
 	HAPIdEntityInDomain getResourceEntityByLocalResourceId(HAPResourceIdLocal resourceId, HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId);
 
+	HAPInfoResourceIdNormalize normalizeSimpleResourceId(HAPResourceIdSimple resourceId);
+	
+	HAPInfoResourceIdNormalize normalizeLocalResourceId(HAPResourceIdLocal resourceId);
+
 }

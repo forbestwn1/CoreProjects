@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -20,7 +20,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex2 extends HAP
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinitionResource definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinitionSimpleResource definitionDomain) {
 		HAPDefinitionEntityComplexValueStructure valueStructureComplex = (HAPDefinitionEntityComplexValueStructure)this.getEntity(entityId, definitionDomain);
 
 		HAPValueStructureInComplex valueStructureInComplex = new HAPValueStructureInComplexEmpty();

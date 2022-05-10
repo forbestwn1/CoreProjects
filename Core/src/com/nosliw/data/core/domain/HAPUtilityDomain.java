@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
@@ -26,7 +25,7 @@ public class HAPUtilityDomain {
 		HAPIdEntityInDomain entityId;
 		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 			//local
-			entityId = globalDomain.getResourceDomainById(currentDomainId).getResourceDefinition(resourceId).getEntityId();
+			entityId = globalDomain.getResourceDomainById(currentDomainId).getLocalResourceDefinition(resourceId).getEntityId();
 		}
 		else {
 			entityId = globalDomain.getResourceDefinitionByResourceId(resourceId).getEntityId();
@@ -49,7 +48,7 @@ public class HAPUtilityDomain {
 		processor.process(entityInfo, adapter, parentEntityInfo, processContext);
 		
 		HAPContextDomain domainContext = processContext.getDomainContext();
-		HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
+		HAPDomainEntityExecutableResourceComplex exeDomain = domainContext.getExecutableDomain();
 
 		HAPExecutableEntityComplex complexEntity = entityInfo.getEntity();
 				
@@ -77,7 +76,7 @@ public class HAPUtilityDomain {
 		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityManager());
 		//build definition domain
 		HAPResourceDefinition resourceDefinition = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
-		domainContext.getDefinitionDomain().setMainComplexEntityId(resourceDefinition.getEntityId());
+		domainContext.getDefinitionDomain().setRootComplexEntityId(resourceDefinition.getEntityId());
 		
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, runtimeEnv); 
@@ -86,24 +85,26 @@ public class HAPUtilityDomain {
 	}
 
 	
-	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, String path, HAPDomainEntityDefinitionResource definitionDomain) {
-		HAPPath p = new HAPPath(path);
-		HAPIdEntityInDomain currentEntityId = entityId;
-		HAPInfoEntityInDomainDefinition currentEntityInfo = definitionDomain.getEntityInfoDefinition(currentEntityId);
-		HAPDefinitionEntityInDomain currentEntityDef = currentEntityInfo.getEntity();
-		for(String seg : p.getPathSegments()) {
-			HAPEntityOrReference child = currentEntityDef.getChild(seg);
-			if(HAPConstantShared.REFERENCE.equals(child.getEntityOrReferenceType())) {
-				//resource id
-				out = this.getResourceDefinition((HAPResourceId)defOrId, entityDomain, parentResourceDef.getLocalReferenceBase());
-			}
-			else {
-				//resource def
-				currentEntityDef = (HAPDefinitionEntityInDomain)child;
-				out.setLocalReferenceBase(parentResourceDef.getLocalReferenceBase());
-			}
-
-		}
+	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, HAPPath p, HAPDomainEntityDefinitionGlobal globalDomain) {
+		if(p.isEmpty())  return entityId;
+		else return null;
+//		HAPPath p = new HAPPath(path);
+//		HAPIdEntityInDomain currentEntityId = entityId;
+//		HAPInfoEntityInDomainDefinition currentEntityInfo = definitionDomain.getEntityInfoDefinition(currentEntityId);
+//		HAPDefinitionEntityInDomain currentEntityDef = currentEntityInfo.getEntity();
+//		for(String seg : p.getPathSegments()) {
+//			HAPEntityOrReference child = currentEntityDef.getChild(seg);
+//			if(HAPConstantShared.REFERENCE.equals(child.getEntityOrReferenceType())) {
+//				//resource id
+//				out = this.getResourceDefinition((HAPResourceId)defOrId, entityDomain, parentResourceDef.getLocalReferenceBase());
+//			}
+//			else {
+//				//resource def
+//				currentEntityDef = (HAPDefinitionEntityInDomain)child;
+//				out.setLocalReferenceBase(parentResourceDef.getLocalReferenceBase());
+//			}
+//
+//		}
 	}
 	
 	public static HAPContextParser getContextParse(HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {

@@ -10,13 +10,12 @@ import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 public class HAPContextDomain {
 
 	//definition domain
-	private HAPDomainEntityDefinitionResource m_definitionDomain;
+	private HAPDomainEntityDefinitionGlobal m_definitionDomain;
 
 	//executable domain
-	private HAPDomainEntityExecutable m_executableDomain;
-	
-	//attachment domain
-	private HAPDomainAttachment m_attachmentDomain;
+	private HAPDomainEntityExecutableGlobal m_executableDomain;
+
+	private Map<String, String> m_exeDomainIdByDefDomainId;
 	
 	//connection between executable entity to definition entity
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionIdByExecutableId;
@@ -25,20 +24,17 @@ public class HAPContextDomain {
 	
 	public HAPContextDomain(HAPManagerDomainEntityDefinition domainEntityDefMan) {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_definitionDomain = new HAPDomainEntityDefinitionResource(this.m_idGenerator, domainEntityDefMan);
-		this.m_executableDomain = new HAPDomainEntityExecutable(this.m_idGenerator);
-		this.m_attachmentDomain = new HAPDomainAttachment(this.m_idGenerator);
+		this.m_definitionDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, domainEntityDefMan);
+		this.m_executableDomain = new HAPDomainEntityExecutableGlobal(this.m_idGenerator);
 		this.m_definitionIdByExecutableId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>(); 
 	}
 	
-	public HAPDomainValueStructure getValueStructureDomain() {   return null;    }
-	public HAPDomainEntityDefinitionResource getDefinitionDomain() {   return this.m_definitionDomain;    }
-	public HAPDomainEntityExecutable getExecutableDomain() {    return this.m_executableDomain;    }
-	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;     }
+	public HAPDomainEntityDefinitionGlobal getDefinitionDomain() {   return this.m_definitionDomain;    }
+	public HAPDomainEntityExecutableGlobal getExecutableDomain() {    return this.m_executableDomain;    }
 
-	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableId(HAPIdEntityInDomain executableId) {  return this.m_definitionIdByExecutableId.get(executableId); 	}
+//	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableId(HAPIdEntityInDomain executableId) {  return this.m_definitionIdByExecutableId.get(executableId); 	}
 	
-	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity, extraInfo);
 		this.m_definitionIdByExecutableId.put(out, extraInfo.getEntityDefinitionId());
 		return out;

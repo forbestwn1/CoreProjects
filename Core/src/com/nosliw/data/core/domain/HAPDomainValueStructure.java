@@ -49,7 +49,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		this.m_valueStructureComplex = new LinkedHashMap<String, HAPExecutableEntityComplexValueStructure>();
 	}
 
-	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionResource entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
+	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionSimpleResource entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPExecutableEntityComplexValueStructure valueStructureComplexExe = new HAPExecutableEntityComplexValueStructure();
 		
 		//extra value structure
@@ -85,7 +85,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	//extract value structure from complex and add to pool
-	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinitionResource entityDefDomain) {
+	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinitionSimpleResource entityDefDomain) {
 		//part id
 		part.setId(this.m_idGenerator.generateId());
 		String partType = part.getPartType();

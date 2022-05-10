@@ -40,7 +40,7 @@ public class HAPUtilityResource {
 	public static HAPResourceDefinition1 solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
 		HAPResourceDefinition1 out = null;
 		if(entityOrReference.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
-			out = runtimeEnv.getResourceDefinitionManager().getResourceDefinition((HAPResourceId)entityOrReference);
+			out = runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition((HAPResourceId)entityOrReference);
 		}
 		else {
 			out = (HAPResourceDefinition1)entityOrReference;
@@ -64,7 +64,7 @@ public class HAPUtilityResource {
 			}
 		}
 		else {
-			out = resourceDefMan.getResourceDefinition(resourceId);
+			out = resourceDefMan.getLocalResourceDefinition(resourceId);
 		}
 		return out;
 	}	
@@ -76,7 +76,7 @@ public class HAPUtilityResource {
 			resourceDef = container.getElementResourceDefinition(((HAPResourceIdSimple)resourceId).getId());
 		}
 		else {
-			resourceDef = resourceDefMan.getResourceDefinition(resourceId);
+			resourceDef = resourceDefMan.getLocalResourceDefinition(resourceId);
 		}
 		return resourceDef;
 	}	
