@@ -22,6 +22,8 @@ public class HAPPackageComplexResource {
 		
 	}
 	
+	public HAPResourceIdSimple getRootResourceId() {    return this.m_definitionDomain.getRootResourceId();     }
+	
 	public HAPDomainEntityDefinitionGlobal getDefinitionDomain() {		return this.m_definitionDomain; 	}
 	
 	public HAPDomainEntityExecutableResourceComplex getExecutableDomain() {    return this.m_executableDomain;     }

@@ -28,8 +28,6 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueS
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPManagerComplexEntity {
@@ -43,28 +41,63 @@ public class HAPManagerComplexEntity {
 	//pulug in for processing complex entity
 	private Map<String, HAPPluginComplexEntityProcessor> m_processorPlugins;
 
-	private Map<HAPResourceIdSimple, HAPPackageComplexResource> m_complexResources;
+	private Map<HAPResourceIdSimple, HAPPackageComplexResource> m_complexResourcePackages;
 	
-	public HAPManagerComplexEntity() {
+	public HAPManagerComplexEntity(HAPManagerResourceDefinition resourceDefinitionManager) {
+		this.m_resourceDefinitionManager = resourceDefinitionManager;
 		this.m_processorPlugins = new LinkedHashMap<String, HAPPluginComplexEntityProcessor>();
+		this.m_complexResourcePackages = new LinkedHashMap<HAPResourceIdSimple, HAPPackageComplexResource>();
 	}
 
-	private HAPPackageComplexResource getComplexEntityResourceInfo(HAPResourceIdSimple complexEntityResourceId) {
-		HAPPackageComplexResource out = this.m_complexResources.get(complexEntityResourceId);
+	public HAPPackageExecutable process(HAPResourceIdSimple resourceId) {
+		HAPPackageExecutable out = new HAPPackageExecutable();
+
+		HAPInfoResourceIdNormalize normalizedResourceInfo = this.m_resourceDefinitionManager.normalizeResourceId(resourceId);
+		buildComplexEntityResourcePackage((HAPResourceIdSimple)normalizedResourceInfo.getRootResourceId(), out);
+		
+//		HAPResourceIdSimple mainResourceId = (HAPResourceIdSimple)normalizedResourceInfo.getRootResourceId();
+//		HAPPackageComplexResource mainComplexResourcePackage = out.getComplexResourcePackage(mainResourceId);
+//		mainComplexResourcePackage.getDefinitionDomain().getResourceDefinitionByResourceId(resourc);
+//		
+//		HAPUtilityDomain.getEntityDescent(entityId, p, globalDomain)
+		
+		return out;
+	}
+	
+	//build complex resource package within executable package
+	private HAPPackageComplexResource buildComplexEntityResourcePackage(HAPResourceIdSimple complexEntityResourceId, HAPPackageExecutable executablePackage) {
+		HAPPackageComplexResource out = executablePackage.getComplexResourcePackage(complexEntityResourceId);
 		if(out==null) {
-			HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.m_entityDefManager);
-			HAPResourceDefinition resourceDefinition = this.m_resourceDefinitionManager.getResourceDefinition(complexEntityResourceId, globalDefDomain);
-			globalDefDomain.setRootComplexEntityId(resourceDefinition.getEntityId());
-			out = new HAPPackageComplexResource(complexEntityResourceId, globalDefDomain);
-			this.process(out);
+			//if not load in package
+			out = this.m_complexResourcePackages.get(complexEntityResourceId);
+			if(out==null) {
+				//build definition
+				HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.m_entityDefManager);
+				globalDefDomain.setRootResourceId(complexEntityResourceId);
+				this.m_resourceDefinitionManager.getResourceDefinition(complexEntityResourceId, globalDefDomain);
+				out = new HAPPackageComplexResource(complexEntityResourceId, globalDefDomain);
+				executablePackage.addComplexResourcePackage(out);
+				//build executable
+				this.process(complexEntityResourceId, executablePackage);
+			}
+			else {
+				//if already generated
+				executablePackage.addComplexResourcePackage(out);
+			}
 		}
 		return out;
 	}
 	
-	
-	private void process(HAPPackageComplexResource complexResourceInfo) {
+	private void process(HAPResourceIdSimple complexEntityResourceId, HAPPackageExecutable executablePackage) {
+		HAPPackageComplexResource complexResourcePackage = executablePackage.getComplexResourcePackage(complexEntityResourceId);
+		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
+		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		
 		//build complex entity tree
+		buildExecutableTree(defDomain.getRootEntityId(), complexResourcePackage, executablePackage);
+		
+		//build attachment domain(build attachment tree, merge attachment value)
+//		HAPUtilityAttachment.buildAttachmentDomain(rootIdExe, processContext);
 		
 	}
 	
@@ -96,11 +129,7 @@ public class HAPManagerComplexEntity {
 		return mainExeEntityId;
 	}
 
-	private HAPPackageComplexResource buildExecutableDomain(HAPResourceId resourceId, HAPPackageExecutable runnablePackage) {
-		//
-	}
-
-	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPPackageComplexResource complexResourcePackage, HAPPackageExecutable runnablePackage) {
+	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPPackageComplexResource complexResourcePackage, HAPPackageExecutable executablePackage) {
 		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
 		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		
@@ -121,7 +150,7 @@ public class HAPManagerComplexEntity {
 				HAPIdEntityInDomain attrEntityDefId = simpleAttributes.get(attrName).getEntityId();
 				HAPInfoEntityInDomainDefinition entityInfo = defDomain.getEntityInfoDefinition(attrEntityDefId);
 				if(entityInfo.isComplexEntity()) {
-					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, complexResourcePackage, runnablePackage);
+					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, complexResourcePackage, executablePackage);
 					complexEntityExe.setNormalComplexAttribute(attrName, attrEntityExeId);
 				}
 			}
@@ -136,7 +165,7 @@ public class HAPManagerComplexEntity {
 					HAPIdEntityInDomain defEleId = defEleInfo.getEmbededElementEntity().getEntityId();
 					HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
 					if(eleEntityInfo.isComplexEntity()) {
-						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, complexResourcePackage, runnablePackage);
+						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, complexResourcePackage, executablePackage);
 						HAPInfoContainerElement exeEleInfo = defEleInfo.cloneContainerElementInfo();
 						exeEleInfo.setEmbededElementEntity(new HAPEmbededEntity(eleEntityExeId));
 						exeContainer.addEntityElement(exeEleInfo);
@@ -147,7 +176,7 @@ public class HAPManagerComplexEntity {
 		}
 		else {
 			HAPInfoResourceIdNormalize normalizedResourceId = this.m_resourceDefinitionManager.normalizeResourceId(entityDefInfo.getResourceId());
-			HAPPackageComplexResource externalComplexResourcePackage = buildExecutableDomain(normalizedResourceId.getRootResourceId(), runnablePackage);
+			buildComplexEntityResourcePackage((HAPResourceIdSimple)normalizedResourceId.getRootResourceId(), executablePackage);
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
 			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, normalizedResourceId, exeExtraInfo);
 		}

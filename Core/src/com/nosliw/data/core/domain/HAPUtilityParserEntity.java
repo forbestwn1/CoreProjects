@@ -152,8 +152,11 @@ public class HAPUtilityParserEntity {
 					if(resourceObj!=null) {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityType, resourceObj);
 						out = parserContext.getCurrentDomain().addEntityOrReference(resourceId, entityType);
-						
-//						resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getGlobalDomain(), parserContext.getCurrentDomainId());
+						HAPInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(out);
+						if(!entityInfo.isGlobalComplexResourceReference()) {
+							//expand resource except for global complex entity resource
+							resourceDefinitionManager.getResourceDefinition(resourceId, parserContext.getGlobalDomain(), parserContext.getCurrentDomainId());
+						}
 					}
 				}
 				//reference
@@ -211,7 +214,7 @@ public class HAPUtilityParserEntity {
 				parentRelationConfigure.mergeHard(customerConfigure);
 			}
 			
-			parserContext.getCurrentDomain().buildComplexParentRelation(out, parentInfo);
+			((HAPDomainEntityDefinitionSimpleResourceComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(out, parentInfo);
 		}
 		
 		return out;

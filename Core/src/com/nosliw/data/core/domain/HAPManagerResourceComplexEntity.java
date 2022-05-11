@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain;
 
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerResourceComplexEntity {
@@ -13,8 +13,8 @@ public class HAPManagerResourceComplexEntity {
 		this.m_runtimeEnv = runtimeEnv;
 	}
 
-	public HAPResultExecutableEntityInDomain getExecutableComplexEntity(HAPResourceId resourceId) {
-		return HAPUtilityDomain.getResourceExecutableComplexEntity(resourceId, m_runtimeEnv);
+	public HAPPackageExecutable getExecutableComplexEntity(HAPResourceIdSimple resourceId) {
+		return this.m_runtimeEnv.getComplexEntityManager().process(resourceId);
 	}
 
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {  return this.m_runtimeEnv;   }

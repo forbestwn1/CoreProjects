@@ -63,7 +63,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
-		HAPManagerComplexEntity complexEntityManager = new HAPManagerComplexEntity();
+		HAPManagerComplexEntity complexEntityManager = new HAPManagerComplexEntity(resourceDefManager);
 		HAPManagerDomainEntityDefinition domainEntityManager = new HAPManagerDomainEntityDefinition();
 		
 		init(

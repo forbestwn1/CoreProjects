@@ -68,6 +68,8 @@ public class HAPDomainEntityDefinitionSimpleResource extends HAPSerializableImp 
 		this.m_entityIdByLocalResourceId = new LinkedHashMap<HAPResourceIdLocal, HAPResourceDefinition>();
 	}
 
+	public boolean isForComplexEntity() {  return false;    }
+	
 	public String getDomainId() {    return this.m_domainId;     }
 	
 	public HAPPathLocationBase getLocationBase() {    return this.m_localRefBase;    }

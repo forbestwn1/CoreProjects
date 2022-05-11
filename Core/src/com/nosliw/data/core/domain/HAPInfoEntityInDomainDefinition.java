@@ -119,11 +119,14 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 		
 		if(this.m_resourceId!=null) {
 			HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.getEntityInfoByResourceId(m_resourceId, this.getEntityId().getDomainId(), entityDefDomain);
-			jsonMap.put(ENTITY, entityInfo.toExpandedJsonString(entityDefDomain));
+			if(entityInfo!=null)	jsonMap.put(ENTITY, entityInfo.toExpandedJsonString(entityDefDomain));
 		}
 		
-		HAPInfoParentComplex parentInfo = entityDefDomain.getResourceDomainById(this.m_entityId.getDomainId()).getParentInfo(this.m_entityId);
-		if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
+		HAPDomainEntityDefinitionSimpleResource resourceDomain = entityDefDomain.getResourceDomainById(this.m_entityId.getDomainId());
+		if(resourceDomain.isForComplexEntity()) {
+			HAPInfoParentComplex parentInfo = ((HAPDomainEntityDefinitionSimpleResourceComplex)resourceDomain).getParentInfo(this.m_entityId);
+			if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
+		}
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 	

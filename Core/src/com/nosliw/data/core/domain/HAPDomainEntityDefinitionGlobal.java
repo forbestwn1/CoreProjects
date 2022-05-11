@@ -46,6 +46,8 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	public void setRootResourceId(HAPResourceIdSimple rootResourceId) {    this.m_rootResourceId = rootResourceId;     }
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
+	public HAPIdEntityInDomain getRootEntityId() {   return this.getResourceDomainByResourceId(this.getRootResourceId()).getRootEntityId();     }
+	
 	public HAPDomainEntityDefinitionSimpleResource newResourceDomain(HAPResourceIdSimple resourceId) {
 		if(this.getResourceDomainByResourceId(resourceId)!=null)   throw new RuntimeException();
 		HAPDomainEntityDefinitionSimpleResource out = null;
