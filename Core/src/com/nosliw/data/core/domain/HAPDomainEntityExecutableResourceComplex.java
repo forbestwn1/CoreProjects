@@ -18,8 +18,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 
-	private HAPDomainAttachment m_attachmentDomain;
-	
 	//all executable entity 
 	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
 	

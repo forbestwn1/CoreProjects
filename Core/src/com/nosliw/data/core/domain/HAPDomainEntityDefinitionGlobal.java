@@ -35,9 +35,10 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	//root entity
 	private HAPResourceIdSimple m_rootResourceId;
 	
-	public HAPDomainEntityDefinitionGlobal(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan) {
+	public HAPDomainEntityDefinitionGlobal(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefinitionManager) {
 		this.m_idGenerator = idGenerator;
 		this.m_entityDefManager = entityDefMan;
+		this.m_resourceDefinitionManager = resourceDefinitionManager;
 		this.m_resourceDomainById = new LinkedHashMap<String, HAPDomainEntityDefinitionSimpleResource>();
 		this.m_resourceDomainIdByResourceId = new LinkedHashMap<HAPResourceIdSimple, String>();
 		this.m_resourceDefByResourceId = new LinkedHashMap<HAPResourceId, HAPResourceDefinition>();
@@ -95,17 +96,12 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		return out;
 	}
 	
-	public HAPResourceDefinition getResourceDefinitionByResourceId(HAPResourceId resourceId) {
-		return this.m_resourceDefByResourceId.get(resourceId);
-	}
+	public HAPInfoParentComplex getComplexEntityParentInfo(HAPIdEntityInDomain entityId) {    return ((HAPDomainEntityDefinitionSimpleResourceComplex)this.getResourceDomainById(entityId.getDomainId())).getParentInfo(entityId);     }
+
+	public HAPResourceDefinition getResourceDefinitionByResourceId(HAPResourceId resourceId) {		return this.m_resourceDefByResourceId.get(resourceId);	}
 	
-	public void addResourceDefinition(HAPResourceDefinition resourceDef) {
-		this.m_resourceDefByResourceId.put(resourceDef.getResourceId(), resourceDef);
-	}
+	public void addResourceDefinition(HAPResourceDefinition resourceDef) {		this.m_resourceDefByResourceId.put(resourceDef.getResourceId(), resourceDef);	}
 
 	@Override
-	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {
-		return this.getEntityInfoDefinition(entityId);
-	}
-	
+	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {		return this.getEntityInfoDefinition(entityId);	}
 }
