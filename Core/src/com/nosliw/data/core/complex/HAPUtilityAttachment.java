@@ -30,7 +30,7 @@ public class HAPUtilityAttachment {
 
 	//add attachment container to attachment domain
 	private static void buildAttachmentTree(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityDomain.traverseExecutableComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
@@ -55,7 +55,7 @@ public class HAPUtilityAttachment {
 
 	//merge attachment between paren and child
 	private static void mergeAttachment(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityDomain.traverseExecutableComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityExeInfo, Object adapter, HAPInfoEntityInDomainExecutable parentComplexEntityExeInfo, HAPContextProcessor processContext) {
 				if(parentComplexEntityExeInfo!=null) {

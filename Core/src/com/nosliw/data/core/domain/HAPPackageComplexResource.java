@@ -41,6 +41,8 @@ public class HAPPackageComplexResource {
 	
 	public HAPDomainEntityExecutableResourceComplex getExecutableDomain() {    return this.m_executableDomain;     }
 	
+	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_executableDomain.getValueStructureDomain();    }
+	
 	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;    }
 	
 	public HAPIdEntityInDomain getExecutableEntityIdByDefinitionEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_executableComplexEntityIdByDefinitionComplexEntityId.get(defEntityId);  	}

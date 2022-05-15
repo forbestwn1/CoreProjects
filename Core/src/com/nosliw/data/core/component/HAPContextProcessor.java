@@ -6,6 +6,7 @@ import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPPackageComplexResource;
 import com.nosliw.data.core.domain.HAPPackageGroupComplexResource;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
@@ -49,6 +50,7 @@ public class HAPContextProcessor {
 	public HAPDomainEntityExecutableResourceComplex getCurrentExecutableDomain() {     return this.getCurrentComplexResourcePackage().getExecutableDomain();       }
 	
 	public HAPDomainAttachment getCurrentAttachmentDomain() {    return this.getCurrentComplexResourcePackage().getAttachmentDomain();     }
+	public HAPDomainValueStructure getCurrentValueStructureDomain() {    return this.getCurrentComplexResourcePackage().getValueStructureDomain();     }
 	
 	public void addComplexResourcePackage(HAPPackageComplexResource complexResourcePackage) {     this.m_complexResourcePackageGroup.addComplexResourcePackage(complexResourcePackage);     }
 	public HAPPackageGroupComplexResource getComplexResourcePackageGroup() {     return this.m_complexResourcePackageGroup;      }

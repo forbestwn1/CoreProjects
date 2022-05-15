@@ -81,7 +81,7 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 			else if(out.getAttachmentReference()!=null) {
 				HAPAttachmentEntity attachment = (HAPAttachmentEntity)attachmentContainer.getElement(out.getAttachmentReference());
 				Object entityObj = attachment.getEntity();
-				out.setEntity(this.getEntityInfoDefinition(HAPUtilityParserEntity.parseEntity(entityObj, attachment.getValueType(), new HAPContextParser(this, null), this.m_entityDefManager, null)).getEntity());
+				out.setEntity(this.getEntityInfoDefinition(HAPUtilityParserEntity.parseEntity(entityObj, attachment.getValueType(), new HAPContextParser(this, entityId.getDomainId()), this.m_entityDefManager, null)).getEntity());
 			}
 		}
 		return out;

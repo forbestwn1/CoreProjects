@@ -49,7 +49,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		this.m_valueStructureComplex = new LinkedHashMap<String, HAPExecutableEntityComplexValueStructure>();
 	}
 
-	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionSimpleResource entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
+	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionGlobal entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPExecutableEntityComplexValueStructure valueStructureComplexExe = new HAPExecutableEntityComplexValueStructure();
 		
 		//extra value structure

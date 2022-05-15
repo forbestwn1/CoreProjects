@@ -20,10 +20,13 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	//entity id
 	private HAPIdEntityInDomain m_entityId;
 
+	//entity
 	private HAPExecutableEntityComplex m_entity;
 
+	//when refer to external complex entity
 	private HAPInfoResourceIdNormalize m_externalComplexResourceInfo;
 	
+	//extra info for this entity
 	private HAPExtraInfoEntityInDomainExecutable m_extraInfo;
 	
 	public HAPInfoEntityInDomainExecutable(HAPExecutableEntityComplex entity, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {

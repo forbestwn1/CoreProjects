@@ -103,7 +103,7 @@ public class HAPManagerComplexEntity {
 		HAPUtilityAttachment.buildAttachmentDomain(rootEntityIdExe, processContext);
 		
 		//process value structure
-//		HAPUtilityValueStructure.buildValueStructureDomain(rootIdExe, processContext);
+		HAPUtilityValueStructure.buildValueStructureDomain(rootEntityIdExe, processContext);
 //		processValueStructureTree(rootId, processContext);
 	}
 	
