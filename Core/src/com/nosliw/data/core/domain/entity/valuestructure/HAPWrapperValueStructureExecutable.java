@@ -26,6 +26,7 @@ public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
 	}
 	
 	public String getValueStructureRuntimeId() {	return this.m_valueStructureRuntimeId;	}
+	public void setValueStructureRuntimeId(String valueStructureRuntimeId) {	this.m_valueStructureRuntimeId = valueStructureRuntimeId;	}
 	
 	public String getGroupName() {   return this.m_groupName;   }
 	public void setGroupName(String groupName) {   this.m_groupName = groupName;    }

@@ -1,14 +1,18 @@
 package com.nosliw.data.core.structure.reference;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
@@ -22,14 +26,24 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
+import com.nosliw.data.core.matcher.HAPMatcherUtility;
+import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureNode;
+import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityStructureElementReference {
 
@@ -108,17 +122,17 @@ public class HAPUtilityStructureElementReference {
 				HAPInfoValueStructure valueStructureDefInfo = valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
 
 				//check group type
-				if(!isValid) {
+				if(isValid) {
 					Set<String> groupTypes = resolveConfigure.getValueStructureGroupTypes();
 					if(groupTypes!=null&&!groupTypes.isEmpty()) {
-						if(groupTypes.contains(wraper.getGroupType())) {
+						if(!groupTypes.contains(wraper.getGroupType())) {
 							isValid = false;
 						}
 					}
 				}
 
-				//check definition name
-				if(!isValid) {
+				//check definition id
+				if(isValid) {
 					String valueStructueDefId = valueStructureCriteria.getDefinitionId();
 					if(valueStructueDefId!=null) {
 						if(!valueStructueDefId.equals(valueStructureDomain.getValueStructureDefinitionIdByRuntimeId(wraper.getValueStructureRuntimeId()))){
@@ -128,7 +142,7 @@ public class HAPUtilityStructureElementReference {
 				}
 				
 				//check name
-				if(!isValid) {
+				if(isValid) {
 					String valueStructureName = valueStructureCriteria.getName();
 					if(valueStructureName!=null) {
 						if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
@@ -143,36 +157,6 @@ public class HAPUtilityStructureElementReference {
 		return out;
 	}
 	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
-		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentComplexName()), mode, relativeInheritRule, elementTypes);
-	}
-	
-	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
-		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
-		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveElement(resolveInfo.realSolidSolved, relativeInheritRule);
-		return resolveInfo;
-	}
-	
-	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
-		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
-		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
-	}
-
-	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
-	}
-	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
-		for(HAPInfoPartSimple candidate : candidates) {
-			HAPPartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
-			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
-			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getElementPath()), valueStructure, mode, elementTypes);
-			resolve.structureId = simplePart.getRuntimeId();
-			if(isLogicallySolved(resolve))  return resolve;
-		}
-		return null;
-	}
 	
 	//resolve the remain path part
 	public static HAPElementStructure resolveElement(HAPInfoDesendantResolve resolveInfo, Boolean relativeInheritRule) {
@@ -227,6 +211,39 @@ public class HAPUtilityStructureElementReference {
 		return out;
 	}
 	
+
+	
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentComplexName()), mode, relativeInheritRule, elementTypes);
+	}
+	
+	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
+		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveElement(resolveInfo.realSolidSolved, relativeInheritRule);
+		return resolveInfo;
+	}
+	
+	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
+		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
+	}
+
+	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
+	}
+	
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
+		for(HAPInfoPartSimple candidate : candidates) {
+			HAPPartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
+			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
+			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getElementPath()), valueStructure, mode, elementTypes);
+			resolve.structureId = simplePart.getRuntimeId();
+			if(isLogicallySolved(resolve))  return resolve;
+		}
+		return null;
+	}
+	
 	//find exact physical node
 	public static boolean isPhysicallySolved(HAPInfoReferenceResolve solve) {
 		return solve!=null && (solve.elementInfoOriginal!=null && solve.elementInfoSolid.remainPath.isEmpty());
@@ -240,6 +257,129 @@ public class HAPUtilityStructureElementReference {
 	public static HAPStructure getReferedStructure(String name, HAPContainerStructure parents, HAPStructure self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parents.getStructure(name);
+	}
+
+	private static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, String parentName, HAPValueStructureDefinitionGroup parentContextGroup, Set<String> dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
+		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()){
+			Map<String, HAPRootStructure> eles = out.getRootsByCategary(categary);
+			for(String eleName : eles.keySet()) {
+				HAPRootStructure contextRoot = eles.get(eleName);
+				contextRoot.setDefinition(processRelativeInContextDefinitionElement(new HAPInfoElement(contextRoot.getDefinition(), new HAPReferenceElementInStructure(categary, eleName)), parentName, parentContextGroup, dependency, errors, isParentFlat, configure, runtimeEnv));
+			}
+		}
+		return out;
+	}
+
+	private static HAPElementStructure processRelativeInContextDefinitionElement(HAPInfoElement contextEleInfo, String parentName, HAPCandidatesValueStructureComplex parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure, HAPConfigureProcessorStructure configure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
+		HAPElementStructure defContextElement = contextEleInfo.getElement();
+		HAPElementStructure out = defContextElement;
+		switch(defContextElement.getType()) {
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE:
+			HAPElementStructureLeafRelative relativeContextElement = (HAPElementStructureLeafRelative)defContextElement;
+			if(parentName.equals(relativeContextElement.getPath().getParentComplexName())) {
+				if(dependency!=null)  dependency.add(parentName);
+				if(!relativeContextElement.isProcessed()){
+					out = processRelativeContextDefinitionElement(contextEleInfo, parentValueStructureComplex, valueStructureDomain, resolveConfigure, configure, errors, runtimeEnv);
+				}
+			}
+			break;
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
+			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
+			HAPElementStructureNode nodeContextElement = (HAPElementStructureNode)defContextElement;
+			for(String childName : nodeContextElement.getChildren().keySet()) { 	
+				processedChildren.put(childName, processRelativeInContextDefinitionElement(new HAPInfoElement(nodeContextElement.getChild(childName), contextEleInfo.getElementPath().appendSegment(childName)), parentName, parentValueStructureComplex, valueStructureDomain, resolveConfigure, configure, dependency, errors, runtimeEnv));
+			}
+			break;
+		}
+		return out;
+	}
+	
+	private static HAPElementStructure processRelativeContextDefinitionElement(HAPInfoElement contextEleInfo, HAPCandidatesValueStructureComplex parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure, HAPConfigureProcessorStructure configure, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv){
+		HAPElementStructureLeafRelative defContextElementRelative = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
+		HAPElementStructure out = defContextElementRelative;
+		
+		HAPReferenceElementInStructureComplex pathReference = defContextElementRelative.getPath();
+		HAPInfoReferenceResolve resolveInfo = resolveElementReference(pathReference, parentValueStructureComplex, resolveConfigure, valueStructureDomain);
+
+		if(resolveInfo==null || resolveInfo.referredRoot==null) {
+			errors.add(HAPServiceData.createFailureData(contextEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
+			if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
+		}
+		else {
+			switch(resolveInfo.referredRoot.getDefinition().getType()) {
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
+			{
+				//if refer to a constant element
+				out = new HAPElementStructureLeafConstant();
+				Object constantValue = ((HAPElementStructureLeafConstant)resolveInfo.referredRoot.getDefinition()).getValue();
+				((HAPElementStructureLeafConstant)out).setValue(constantValue);
+				break;
+			}
+			default:
+			{
+				HAPElementStructure solvedContextEle = resolveInfo.finalElement; 
+				if(solvedContextEle!=null){
+					//refer to solid
+					if(configure.relativeTrackingToSolid) {
+						String refRootId = null;
+						String refPath = null;
+						HAPElementStructure parentContextEle = resolveInfo.elementInfoOriginal.resolvedElement; 
+						if(parentContextEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
+							HAPInfoPathToSolidRoot parentSolidNodeRef = ((HAPElementStructureLeafRelative)parentContextEle).getSolidNodeReference();
+							refRootId = parentSolidNodeRef.getRootNodeId();
+							refPath = HAPUtilityNamingConversion.cascadePath(parentSolidNodeRef.getPath().getPath(), resolveInfo.elementInfoSolid.remainPath.getPath());
+						}
+						else {
+							refRootId = resolveInfo.referredRoot.getId();
+							refPath = HAPUtilityNamingConversion.cascadePath(resolveInfo.elementInfoSolid.solvedPath.getPath(), resolveInfo.elementInfoSolid.remainPath.getPath());
+						}
+						defContextElementRelative.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, new HAPPath(refPath)));
+					}
+					
+					HAPElementStructure relativeContextEle = defContextElementRelative.getDefinition();
+					if(relativeContextEle==null) {
+						defContextElementRelative.setDefinition(solvedContextEle.cloneStructureElement());
+					}
+					else {
+						//figure out matchers
+						Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
+						HAPUtilityStructure.mergeElement(solvedContextEle, relativeContextEle, false, matchers, null, runtimeEnv);
+						//remove all the void matchers
+						Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
+						for(String p : matchers.keySet()){
+							HAPMatchers match = matchers.get(p);
+							if(!match.isVoid()){
+								noVoidMatchers.put(p, match);
+							}
+						}
+						defContextElementRelative.setMatchers(noVoidMatchers);
+						
+						//inherit rule from parent
+						if(configure.relativeInheritRule) {
+							HAPElementStructure solidParent = solvedContextEle.getSolidStructureElement();
+							if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+								HAPVariableDataInfo solidParentDataInfo = ((HAPElementStructureLeafData)solidParent).getDataInfo();
+								HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
+								for(HAPDataRule rule : solidParentDataInfo.getRules()) {
+									HAPVariableDataInfo relativeDataInfo = ((HAPElementStructureLeafData)relativeContextEle).getDataInfo();
+									relativeDataInfo.addRule(rule);
+									relativeDataInfo.setRuleMatchers(ruleMatchers, solidParentDataInfo.getRuleCriteria());
+								}
+							}
+						}
+					}
+				}
+				else{
+					//not find parent node, throw exception
+					errors.add(HAPServiceData.createFailureData(contextEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
+					if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
+				}
+			}
+			}			
+		}
+
+		return out;
 	}
 
 

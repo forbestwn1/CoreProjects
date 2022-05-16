@@ -1,12 +1,11 @@
 package com.nosliw.data.core.complex;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPContextDomain;
-import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -19,13 +18,12 @@ import com.nosliw.data.core.domain.HAPPackageComplexResource;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.structure.HAPProcessorElementConstant;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextRule;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextSolidate;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextVariableInheritance;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityValueStructure {
@@ -67,42 +65,47 @@ public class HAPUtilityValueStructure {
 
 	//merge attachment between paren and child
 	private static void mergeAttachment(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityDomain.traverseExecutableComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityExeInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityExeInfo,
 					HAPContextProcessor processContext) {
 				if(parentEntityExeInfo!=null) {
-					HAPContextDomain domainContext = processContext.getDomainContext();
-					HAPDomainEntityDefinition defDomain = domainContext.getDefinitionDomain();
-					HAPDomainEntityExecutable exeDomain = domainContext.getExecutableDomain();
-					HAPDomainAttachment attachmentDomain = domainContext.getAttachmentDomain();
+
+					HAPPackageComplexResource complexEntityPackage = processContext.getCurrentComplexResourcePackage();
+					HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
+					HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
 
 					HAPIdEntityInDomain entityIdExe = entityExeInfo.getEntityId();
-					HAPIdEntityInDomain entityIdDef = domainContext.getDefinitionEntityIdByExecutableId(entityIdExe);
+					HAPIdEntityInDomain entityIdDef = complexEntityPackage.getDefinitionEntityIdByExecutableEntityId(entityIdExe);
+					HAPDefinitionEntityContainerAttachment attachmentContainer = HAPUtilityAttachment.getAttachmentContainerByComplexExeId(entityIdExe, processContext);
 
 					HAPExecutableEntityComplex entityExe = exeDomain.getEntityInfoExecutable(entityIdExe).getEntity();
 					String attachmentContainerId = entityExe.getAttachmentContainerId();
 					String valueStructureComplexId = entityExe.getValueStructureComplexId();
-					HAPDefinitionEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+					HAPExecutableEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 
 					HAPIdEntityInDomain parentEntityIdExe = parentEntityExeInfo.getEntityId();
-					HAPIdEntityInDomain parentEntityIdDef = domainContext.getDefinitionEntityIdByExecutableId(parentEntityIdExe);
+					HAPIdEntityInDomain parentEntityIdDef = complexEntityPackage.getDefinitionEntityIdByExecutableEntityId(parentEntityIdExe);
 
 					HAPExecutableEntityComplex parentEntityExe = exeDomain.getEntityInfoExecutable(parentEntityIdExe).getEntity();
 					String parentAttachmentContainerId = parentEntityExe.getAttachmentContainerId();
 					String parentValueStructureComplexId = parentEntityExe.getValueStructureComplexId();
-					HAPDefinitionEntityComplexValueStructure parentValueStructureComplex = valueStructureDomain.getValueStructureComplex(parentValueStructureComplexId);
+					HAPExecutableEntityComplexValueStructure parentValueStructureComplex = valueStructureDomain.getValueStructureComplex(parentValueStructureComplexId);
 					
-					HAPConfigureComplexRelationValueStructure valueStructureConfig = defDomain.getParentInfo(entityIdDef).getParentRelationConfigure().getValueStructureRelationMode();
-					valueStructureConfig.getInheritanceMode()
+					HAPConfigureComplexRelationValueStructure valueStructureConfig = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef).getParentRelationConfigure().getValueStructureRelationMode();
+					valueStructureConfig.getInheritanceMode();
 					
 					//process static
-					
+
 					//process relative
+
 					
 					
 					//inheritance
+					processInteritance(valueStructureComplex, parentValueStructureComplex, valueStructureConfig, valueStructureDomain);
+					
+					
 					
 
 					
@@ -123,6 +126,14 @@ public class HAPUtilityValueStructure {
 			}}, processContext);
 	}
 
+	private static void processInteritance(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPExecutableEntityComplexValueStructure parentValueStructureComplex, HAPConfigureComplexRelationValueStructure valueStructureConfig, HAPDomainValueStructure valueStructureDomain) {
+		List<HAPPartComplexValueStructure> newParts = new ArrayList<HAPPartComplexValueStructure>();
+		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
+			newParts.add(part.cloneComplexValueStructurePart(valueStructureDomain, valueStructureConfig.getInheritanceMode()));
+		}
+		parentValueStructureComplex.addPartGroup(newParts, HAPUtilityComplexValueStructure.createPartInfoFromParent());
+	}
+	
 	public static HAPValueStructureDefinitionGroup processRelative(HAPDefinitionEntityValueStructure contextGroup, HAPDefinitionEntityComplexValueStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 	
 	

@@ -84,6 +84,9 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		return this.newRuntime(definitionId);
 	}
 
+	public String createRuntimeByRelativeRef(String runtimeId) {
+	}
+
 	//extract value structure from complex and add to pool
 	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinitionSimpleResource entityDefDomain) {
 		//part id

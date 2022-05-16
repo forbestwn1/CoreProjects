@@ -4,7 +4,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 
 public class HAPConfigureComplexRelationValueStructure extends HAPSerializableImp{
 
-	//value structure inheritance
+	//value structure inheritance, definition
 	public String getInheritanceMode() {   return null;    }
 	public boolean isInheritable() {   return true;   }
 	
