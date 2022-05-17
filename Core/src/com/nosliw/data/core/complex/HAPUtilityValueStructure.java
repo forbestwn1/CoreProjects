@@ -1,6 +1,7 @@
 package com.nosliw.data.core.complex;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,25 +14,27 @@ import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
-import com.nosliw.data.core.domain.HAPInfoParentComplex;
 import com.nosliw.data.core.domain.HAPPackageComplexResource;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
 import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPUtilityValueStructure {
 
 	public static void buildValueStructureDomain(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
 		buildValueStructureComplexTree(rootComplexEntityExecutableId, processContext);
 		
-//		mergeAttachment(rootComplexEntityExecutableId, processContext);
+		mergeValueStructure(rootComplexEntityExecutableId, processContext);
 	}
 
 	//add attachment container to attachment domain
@@ -64,7 +67,7 @@ public class HAPUtilityValueStructure {
 	}
 
 	//merge attachment between paren and child
-	private static void mergeAttachment(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
+	private static void mergeValueStructure(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityExeInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityExeInfo,
@@ -99,28 +102,23 @@ public class HAPUtilityValueStructure {
 					//process static
 
 					//process relative
-
+					List<HAPInfoPartSimple> simpleValueStructureParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+					for(HAPInfoPartSimple simplePart : simpleValueStructureParts) {
+						for(HAPWrapperValueStructureExecutable valueStructureWrapper : simplePart.getSimpleValueStructurePart().getValueStructures()) {
+							HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
+							List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
+							HAPConfigureResolveStructureElementReference resolveConfigure = new HAPConfigureResolveStructureElementReference();
+							HAPConfigureProcessorStructure processConfigure = new HAPConfigureProcessorStructure();
+							Set<String> dependency = new HashSet<String>();
+							HAPCandidatesValueStructureComplex valueStructureComplexGroup = new HAPCandidatesValueStructureComplex(valueStructureComplexId, parentValueStructureComplexId);
+							HAPUtilityStructureElementReference.processRelativeInStructure(valueStructure, valueStructureComplexGroup, valueStructureDomain, resolveConfigure, processConfigure, dependency, errors, null);
+						}
+					}
 					
 					
 					//inheritance
 					processInteritance(valueStructureComplex, parentValueStructureComplex, valueStructureConfig, valueStructureDomain);
 					
-					
-					
-
-					
-					HAPDefinitionEntityContainerAttachment childAttachmentContainer =  attachmentDomain.getAttachmentContainer(attachmentContainerId);
-					
-					
-					
-					HAPConfigureComplexRelationAttachment attachmentParentRelation = null;
-					HAPInfoParentComplex parentInfo = defDomain.getParentInfo(entityIdDef);
-					if(parentInfo!=null) {
-						HAPConfigureParentRelationComplex parentRelation = parentInfo.getParentRelationConfigure();
-						attachmentParentRelation = parentRelation.getAttachmentRelationMode();
-					}
-					HAPDefinitionEntityContainerAttachment parentAttachmentContainer =  attachmentDomain.getAttachmentContainer(parentEntityExeInfo.getEntityId());
-					childAttachmentContainer.merge(parentAttachmentContainer, attachmentParentRelation);
 				}
 
 			}}, processContext);
@@ -132,11 +130,6 @@ public class HAPUtilityValueStructure {
 			newParts.add(part.cloneComplexValueStructurePart(valueStructureDomain, valueStructureConfig.getInheritanceMode()));
 		}
 		parentValueStructureComplex.addPartGroup(newParts, HAPUtilityComplexValueStructure.createPartInfoFromParent());
-	}
-	
-	public static HAPValueStructureDefinitionGroup processRelative(HAPDefinitionEntityValueStructure contextGroup, HAPDefinitionEntityComplexValueStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-	
-	
 	}
 	
 }

@@ -27,6 +27,7 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE;	}
 
 	public Map<String, HAPElementStructure> getChildren(){	return this.m_children;	}
+	public void setChildren(Map<String, HAPElementStructure> children) {    this.m_children = children;    }
 	
 	public void addChild(String name, HAPElementStructure nodeBranch){		this.m_children.put(name, nodeBranch);	}
 
