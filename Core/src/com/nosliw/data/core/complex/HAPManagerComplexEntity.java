@@ -79,9 +79,9 @@ public class HAPManagerComplexEntity {
 			if(out==null) {
 				//build definition
 				HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.m_entityDefManager, this.m_resourceDefinitionManager);
-				globalDefDomain.setRootResourceId(complexEntityResourceId);
 				this.m_resourceDefinitionManager.getResourceDefinition(complexEntityResourceId, globalDefDomain);
 				out = new HAPPackageComplexResource(globalDefDomain, this.m_idGenerator);
+				out.setRootResourceId(complexEntityResourceId);
 				processContext.addComplexResourcePackage(out);
 				//build executable
 				this.process(processContext);
@@ -100,7 +100,7 @@ public class HAPManagerComplexEntity {
 		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		
 		//build complex entity tree
-		HAPIdEntityInDomain rootEntityIdExe = buildExecutableTree(defDomain.getRootEntityId(), processContext);
+		HAPIdEntityInDomain rootEntityIdExe = buildExecutableTree(complexResourcePackage.getDefinitionRootEntityId(), processContext);
 		
 		//build attachment domain(build attachment tree, merge attachment value)
 		HAPUtilityAttachment.buildAttachmentDomain(rootEntityIdExe, processContext);

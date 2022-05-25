@@ -14,7 +14,9 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	public static final String ENTITYID = "entityId";
 	
 	public static final String ENTITY = "entity";
-	
+
+	public static final String EXTERNALRESOURCE = "externalResource";
+
 	public static final String EXTRA = "extra";
 	
 	//entity id
@@ -54,7 +56,8 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_externalComplexResourceInfo!=null)  jsonMap.put(EXTERNALRESOURCE, this.m_externalComplexResourceInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -64,7 +67,8 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
+		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
+		if(this.m_externalComplexResourceInfo!=null)  jsonMap.put(EXTERNALRESOURCE, this.m_externalComplexResourceInfo.toStringValue(HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 

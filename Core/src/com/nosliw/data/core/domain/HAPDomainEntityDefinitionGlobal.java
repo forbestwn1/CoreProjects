@@ -33,9 +33,6 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	//resource definition by resource id
 	private Map<HAPResourceId, HAPResourceDefinition> m_resourceDefByResourceId;
 
-	//root entity
-	private HAPResourceIdSimple m_rootResourceId;
-	
 	public HAPDomainEntityDefinitionGlobal(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefinitionManager) {
 		this.m_idGenerator = idGenerator;
 		this.m_entityDefManager = entityDefMan;
@@ -52,11 +49,6 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	public HAPDomainEntityDefinitionSimpleResource getResourceDomainBySimpleResourceId(HAPResourceIdSimple resourceId) {		return this.getResourceDomainById(this.getDomainIdBySimpleResourceId(resourceId));	}
 	
 	public HAPResourceDefinition getResourceDefinitionByResourceId(HAPResourceId resourceId) {		return this.m_resourceDefByResourceId.get(resourceId);	}
-	
-	public void setRootResourceId(HAPResourceIdSimple rootResourceId) {    this.m_rootResourceId = rootResourceId;     }
-	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
-	
-	public HAPIdEntityInDomain getRootEntityId() {   return this.getResourceDomainByResourceId(this.getRootResourceId()).getRootEntityId();     }
 	
 	public HAPDomainEntityDefinitionSimpleResource newResourceDomain(HAPResourceIdSimple resourceId) {
 		if(this.getResourceDomainByResourceId(resourceId)!=null)   throw new RuntimeException();
@@ -107,8 +99,4 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	@Override
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {		return this.getEntityInfoDefinition(entityId);	}
 	
-	public String toExpandedJsonString() {
-		HAPDomainEntityDefinitionSimpleResource resourceDomain = this.getResourceDomainByResourceId(this.m_rootResourceId);
-		return this.getEntityInfoDefinition(resourceDomain.getRootEntityId()).toExpandedJsonString(this);
-	}
 }

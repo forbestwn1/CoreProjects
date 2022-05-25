@@ -35,12 +35,10 @@ public class HAPUtilityExport {
 			HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 
 			//write package definition
-			HAPDomainEntityDefinitionGlobal definitionDomainGlobal = resourcePackage.getDefinitionDomain();
-			HAPUtilityFile.writeJsonFile(packageFolder, "entity.json", definitionDomainGlobal.toExpandedJsonString());
+			HAPUtilityFile.writeJsonFile(packageFolder, "entity.json", toExpandedJsonStringDefintionDomain(resourcePackage));
 			
 			//write package executable
-			HAPDomainEntityExecutableResourceComplex executableDomain = resourcePackage.getExecutableDomain();
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", executableDomain.toExpandedJsonString());
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toExpandedJsonStringExecutableDomain(resourcePackage));
 			
 		}
 	}
@@ -53,5 +51,13 @@ public class HAPUtilityExport {
 		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, resourceId.toStringValue(HAPSerializationFormat.LITERATE)));  
 	}
 	
-	
+	private static String toExpandedJsonStringDefintionDomain(HAPPackageComplexResource resourcePackage) {
+		HAPDomainEntityDefinitionGlobal definitionDomainGlobal = resourcePackage.getDefinitionDomain();
+		return definitionDomainGlobal.getEntityInfoDefinition(resourcePackage.getDefinitionRootEntityId()).toExpandedJsonString(definitionDomainGlobal);
+	}
+
+	private static String toExpandedJsonStringExecutableDomain(HAPPackageComplexResource resourcePackage) {
+		HAPDomainEntityExecutableResourceComplex executableDomain = resourcePackage.getExecutableDomain();
+		return executableDomain.getEntityInfoExecutable(resourcePackage.getExecutableRootEntityId()).toExpandedJsonString(executableDomain);
+	}
 }

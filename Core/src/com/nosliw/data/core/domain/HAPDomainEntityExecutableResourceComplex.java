@@ -21,9 +21,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 	//all executable entity 
 	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
 	
-	//main entity
-	private HAPIdEntityInDomain m_rootComplexEntityId;
-
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 	
@@ -34,9 +31,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 	}
 
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
-	
-	public HAPIdEntityInDomain getRootEntityId() {   return this.m_rootComplexEntityId;   }
-	public void setRootEntityId(HAPIdEntityInDomain rootEntityId) {    this.m_rootComplexEntityId = rootEntityId;      }
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), executableEntity.getEntityType());
