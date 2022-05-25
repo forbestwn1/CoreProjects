@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
@@ -14,7 +14,7 @@ public class HAPParserServiceInterfaceResource implements HAPParserResourceEntit
 
 	@Override
 	public HAPResourceDefinition1 parseFile(File file) {
-		return this.parseContent(HAPFileUtility.readFile(file));
+		return this.parseContent(HAPUtilityFile.readFile(file));
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 /**
  * Store information related with script  
@@ -44,7 +44,7 @@ public class HAPJSScriptInfo extends HAPSerializableImp{
 	
 	public String getScript(){
 		if(this.m_file!=null){
-			this.m_script = new StringBuffer().append(HAPFileUtility.readFile(m_file));
+			this.m_script = new StringBuffer().append(HAPUtilityFile.readFile(m_file));
 		}
 		return this.m_script.toString();
 	}

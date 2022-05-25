@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.story.element.connection.HAPConnectionContain;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -44,8 +44,8 @@ public class HAPUtilityStory {
 	    String fileFullName = directory.getAbsolutePath()+"/"+fileName;
 	    String tempFileName = HAPSystemFolderUtility.getDynamicResourceExportFolder() + "/" + "temp.res";
 	    String resourceDefStr = resourceDef.toStringValue(HAPSerializationFormat.LITERATE);
-	    HAPFileUtility.writeFile(fileFullName, resourceDefStr);
-	    HAPFileUtility.writeFile(tempFileName, resourceDefStr);
+	    HAPUtilityFile.writeFile(fileFullName, resourceDefStr);
+	    HAPUtilityFile.writeFile(tempFileName, resourceDefStr);
 	    return fileFullName;
 	}
 

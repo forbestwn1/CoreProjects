@@ -8,7 +8,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -35,7 +35,7 @@ public class HAPUtilityRuntimeJSScript {
 		templateParms.put("taskId", task.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 		
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteExpressionScript.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteExpressionScript.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;

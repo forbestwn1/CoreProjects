@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
@@ -27,7 +27,7 @@ public class HAPUtilityContextScript {
 		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(valueStructure);
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityContextScript.class, "ContextInitFunction.temp");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityContextScript.class, "ContextInitFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
 		return new HAPJsonTypeScript(script);
 	}

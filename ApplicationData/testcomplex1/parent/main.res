@@ -4,7 +4,12 @@
 		"description": "parent complex entity"
 	},
 	"entity": {
-		"entity_none_testsimple1": {
+		"simplized1_none_testsimple1": {
+			"attribute2_none_testsimple1": {
+			
+			}
+		},
+		"entity1_none_testsimple1": {
 			"extra": {
 				"status": "disabled"
 			},
@@ -14,24 +19,7 @@
 				}
 			}
 		},
-		"simplized1_none_testsimple1": {
-			"attribute2_none_testsimple1": {
-			
-			}
-		},
-		"resource1_none_testsimple1": {
-			"extra": {
-				"status": "disabled"
-			},
-			"resourceId": "testsimple1|*test1"
-		},
-		"reference1_none_testsimple1": { 
-			"extra": {
-				"status": "disabled"
-			},
-			"reference": "samename"
-		},
-		"entity1_none_testcomplex1": {
+		"entity2_none_testcomplex1": {
 			"extra": {
 				"status": "disabled"
 			},
@@ -41,7 +29,13 @@
 				}
 			}
 		},
-		"globalresource_none_testcomplex1": {
+		"globalresource1_none_testsimple1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"resourceId": "testsimple1|*test1"
+		},
+		"globalresource2_none_testcomplex1": {
 			"extra": {
 				"status": "disabled1"
 			},
@@ -52,7 +46,13 @@
 				}
 			}
 		},
-		"reference_none_testcomplex1": { 
+		"reference1_none_testsimple1": { 
+			"extra": {
+				"status": "disabled"
+			},
+			"reference": "samename"
+		},
+		"reference2_none_testcomplex1": { 
 			"extra": {
 				"status": "disabled"
 			},
@@ -97,7 +97,7 @@
 		"attachment": {
 			"extra": {
 				"status": "disabled1",
-				"name": "parent complex entity" 
+				"name": "parent attachment" 
 			},
 			"entity": {
 				"valuestructure" : [
@@ -190,8 +190,10 @@
 				{
 					"groupType": "public",
 					"groupName" : "fromAttachment",
-					"reference": "valuestructure1;valuestructure"
-				},
+					"valueStructure" : {
+						"reference": "valuestructure1;valuestructure"
+					}
+				}
 			]
 		}
 	}

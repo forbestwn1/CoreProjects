@@ -22,7 +22,9 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
-public class HAPFileUtility {
+import com.nosliw.common.serialization.HAPJsonUtility;
+
+public class HAPUtilityFile {
 	
 	public static List<File> sortFiles(Set<File> files){
 		List<File> sortedList = new ArrayList<File>(files);
@@ -48,7 +50,7 @@ public class HAPFileUtility {
         for (int i = 0; i < fa.length; i++) {
             File fs = fa[i];
             if (fs.isDirectory()) {
-            	out.addAll(HAPFileUtility.getAllFiles(fs.getAbsolutePath()));
+            	out.addAll(HAPUtilityFile.getAllFiles(fs.getAbsolutePath()));
             } else {
             	out.add(fs);
             }
@@ -57,7 +59,7 @@ public class HAPFileUtility {
     }
 	
     public static String readFile(File file){
-    	return HAPFileUtility.readFile(file.getAbsolutePath());
+    	return HAPUtilityFile.readFile(file.getAbsolutePath());
     }
     
 	public static String readFile(String filePath){
@@ -76,7 +78,11 @@ public class HAPFileUtility {
 	public static String readFile(InputStream stream){
 		return readFile(stream, "\n");
 	}
+
+	public static String writeJsonFile(String folder, String fileName, String content) {    return writeFile(folder, fileName, HAPJsonUtility.formatJson(content));     }
+	public static String writeJsonFile(String fileName, String content){    return writeFile(fileName, HAPJsonUtility.formatJson(content));     }
 	
+	public static String writeFile(String folder, String fileName, String content){		return writeFile(buildFullFileName(folder, fileName), content); 	}
 	public static String writeFile(String fileName, String content){
 		try {
 			fileName = getValidFileName(fileName);
@@ -116,17 +122,23 @@ public class HAPFileUtility {
 			path = fileFullName.substring(0, index+1);
 		}
 		
-		
-//		char[] invalidChars = {'|', '[', ']', ';', ':'};
-		char[] invalidChars = {'|', ':', '*'};
-		for(char invalidChar : invalidChars){
-			fileName = fileName.replace(invalidChar, '_');
-		}
+		fileName = encodeName(fileName);
+
 		String out = "";
 		if(path!=null)  out = out + path;
 		out = out + fileName;
 		return out;
 	}
+
+	private static String encodeName(String name) {
+		String out = name;
+		char[] invalidChars = {'|', ':', '*'};
+		for(char invalidChar : invalidChars){
+			out = out.replace(invalidChar, '_');
+		}
+		return out;
+	}
+	
 	
 	public static String getFileName(File file){
 		String name = file.getName();
@@ -245,13 +257,23 @@ public class HAPFileUtility {
 		return fileFolder;
 	}
 	
+	public static String buildFullFileName(String location, String fileName, String type){	return normalizeFolderPath(location)+encodeName(fileName)+"."+type;	}
 
-	
-	public static String buildFullFileName(String location, String fileName, String type){
-		return location+"/"+fileName+"."+type; 
+	public static String buildFullFileName(String location, String fileName){		return normalizeFolderPath(location)+encodeName(fileName);  	}
+
+	public static String buildFullFolderPath(String base, String path){		return normalizeFolderPath(base)+encodeName(path)+"/";  	}
+
+	public static String getValidFolder(String folderPath){
+		File directory = new File(folderPath);
+	    if (! directory.exists()){
+	    	directory.mkdir();
+	    }
+	    return directory.getAbsolutePath();
 	}
 
-	public static String buildFullFileName(String location, String fileName){
-		return location+"/"+fileName; 
+	
+	private static String normalizeFolderPath(String folder) {
+		if(folder.endsWith("/")||folder.endsWith("\\")) 	return folder;
+		else 	return folder + "/";
 	}
 }

@@ -23,7 +23,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 
@@ -31,7 +31,7 @@ public class HAPImporterProcessSuiteDefinition {
 
 	static public List<HAPResourceDefinitionProcessSuite> readProcessDefinitionSuiteFromFolder(String folder, HAPManagerActivityPlugin activityPluginMan){
 		List<HAPResourceDefinitionProcessSuite> out = new ArrayList<HAPResourceDefinitionProcessSuite>();
-		Set<File> files = HAPFileUtility.getAllFiles(folder);
+		Set<File> files = HAPUtilityFile.getAllFiles(folder);
 		for(File file : files){
 			if(file.getName().endsWith(".process")){
 				try {
@@ -73,7 +73,7 @@ public class HAPImporterProcessSuiteDefinition {
 	public static HAPResourceDefinitionProcessSuite readProcessSuiteDefinitionFromFile(InputStream inputStream, HAPManagerActivityPlugin activityPluginMan){
 		HAPResourceDefinitionProcessSuite suite = null;
 		try{
-			String content = HAPFileUtility.readFile(inputStream);
+			String content = HAPUtilityFile.readFile(inputStream);
 			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
 			suite = HAPParserProcessDefinition.parsePocessSuite(contentJson, activityPluginMan);
 		}

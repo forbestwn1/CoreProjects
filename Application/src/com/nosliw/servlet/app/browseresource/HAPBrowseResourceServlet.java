@@ -12,7 +12,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
@@ -71,9 +71,9 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 	
 	private HAPResourceNodeContainerByType buildAllApp(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getMiniAppFolder());
+		Set<File> files = HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getMiniAppFolder());
 		for(File file : files) {
-			HAPResourceNode node = createResourceNodeApp(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP, HAPFileUtility.getFileName(file)));
+			HAPResourceNode node = createResourceNodeApp(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPP, HAPUtilityFile.getFileName(file)));
 			out.addElement(node);
 		}
 		return out;
@@ -81,9 +81,9 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPResourceNodeContainerByType buildAllModule(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getUIModuleFolder());
+		Set<File> files = HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getUIModuleFolder());
 		for(File file : files) {
-			String resourceId = HAPFileUtility.getFileName(file);
+			String resourceId = HAPUtilityFile.getFileName(file);
 			HAPResourceNode node = createResourceNodeModule(resourceId, new HAPResourceIdUIModule(resourceId), null);
 			out.addElement(node);
 		}
@@ -92,9 +92,9 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPResourceNodeContainerByType buildAllPage(){
 		HAPResourceNodeContainerByType out = new HAPResourceNodeContainerByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE);
-		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getUIPageFolder());
+		Set<File> files = HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getUIPageFolder());
 		for(File file : files) {
-			String resourceId = HAPFileUtility.getFileName(file);
+			String resourceId = HAPUtilityFile.getFileName(file);
 			HAPResourceNode node = createResourceNodePage(resourceId, new HAPResourceIdUIResource(resourceId), null);
 			out.addElement(node);
 		}

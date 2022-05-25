@@ -14,7 +14,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -95,7 +95,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		String script = this.buildScript();
 		templateParms.put("script", script);
 		
-		InputStream pageTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPBuilderPageSimple.class, "page_framework.temp");
+		InputStream pageTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPBuilderPageSimple.class, "page_framework.temp");
 		String pageContent = HAPStringTemplateUtil.getStringValue(pageTemplateStream, templateParms);
 
 		HAPDefinitionUIUnitPage pageDef = null;

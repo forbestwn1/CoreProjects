@@ -1,8 +1,16 @@
 package com.nosliw.data.core.domain;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 
-public class HAPInfoValueStructure {
+public class HAPInfoValueStructure extends HAPSerializableImp{
+
+	public static final String VALUESTRUCTURE = "valueStructure";
+
+	public static final String EXTRAINFO = "extraInfo";
 
 	private HAPDefinitionEntityValueStructure m_valueStructure;
 	
@@ -17,4 +25,10 @@ public class HAPInfoValueStructure {
 	
 	public HAPExtraInfoEntityInDomainDefinition getExtraInfo() {     return this.m_extraInfo;      }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(VALUESTRUCTURE, this.m_valueStructure.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EXTRAINFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
+	}
+
 }

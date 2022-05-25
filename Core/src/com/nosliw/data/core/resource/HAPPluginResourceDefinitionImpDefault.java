@@ -3,7 +3,7 @@ package com.nosliw.data.core.resource;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -54,7 +54,7 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 			HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(rootResourceId);
 			resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
 			//read content
-			JSONObject entityJsonObj = new JSONObject(HAPFileUtility.readFile(resourceLocInfo.getFiile()));
+			JSONObject entityJsonObj = new JSONObject(HAPUtilityFile.readFile(resourceLocInfo.getFiile()));
 			//parse json object
 			rootEntityId = parseEntity(entityJsonObj, new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
 			resourceDomain.setRootEntityId(rootEntityId);
@@ -83,7 +83,7 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 			//if root resource not loaded in domain, load it
 			HAPPathLocationBase localRefBase = currentDomain.getLocationBase();
 			String path = localRefBase.getPath() + rootResourceId.getResourceType() + "/" + rootResourceId.getName() + ".res";
-			rootEntityId = this.parseEntity(HAPFileUtility.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
+			rootEntityId = this.parseEntity(HAPUtilityFile.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
 		}
 		else {
 			//if root resource already loaded

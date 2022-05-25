@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
@@ -58,9 +58,9 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 						if(i!=-1) {
 							file1 = fileName.substring(0, i);
 						}
-						libraryContent.append(HAPFileUtility.readFile(HAPSystemFolderUtility.getJSFolder()+file1));
+						libraryContent.append(HAPUtilityFile.readFile(HAPSystemFolderUtility.getJSFolder()+file1));
 					}
-					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
+					HAPUtilityFile.writeFile(HAPSystemUtility.getJSTempFolder()+"libs/"+m_libraryTempFile, libraryContent.toString());
 				}
 				List<String> tempNames = new ArrayList<String>();
 				String libUrl = "temp/libs/"+this.m_libraryTempFile;

@@ -21,7 +21,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperationParm;
@@ -299,7 +299,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	}
 	
 	public void loadScriptFromFile(String fileName, Class cs, Scriptable scope){
-		HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(HAPFileUtility.getFileNameOnClassPath(cs, fileName), "File__" + fileName);
+		HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(HAPUtilityFile.getFileNameOnClassPath(cs, fileName), "File__" + fileName);
 		this.loadScript(scriptInfo, scope==null?this.m_scope:scope);
 	}
 

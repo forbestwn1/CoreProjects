@@ -1,7 +1,7 @@
 package com.nosliw.data.core.imp;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 
 //runtime module for DataType

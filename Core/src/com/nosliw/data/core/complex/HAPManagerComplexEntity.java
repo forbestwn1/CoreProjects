@@ -21,6 +21,7 @@ import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPPackageComplexResource;
 import com.nosliw.data.core.domain.HAPPackageExecutable;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
+import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPProcessorValueStructureInComponent;
@@ -63,6 +64,8 @@ public class HAPManagerComplexEntity {
 //		
 //		HAPUtilityDomain.getEntityDescent(entityId, p, globalDomain)
 		
+		HAPUtilityExport.exportExecutablePackage(out);
+		
 		return out;
 	}
 	
@@ -104,7 +107,6 @@ public class HAPManagerComplexEntity {
 		
 		//process value structure
 		HAPUtilityValueStructure.buildValueStructureDomain(rootEntityIdExe, processContext);
-//		processValueStructureTree(rootId, processContext);
 	}
 	
 	public HAPIdEntityInDomain process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
@@ -185,6 +187,7 @@ public class HAPManagerComplexEntity {
 			HAPInfoResourceIdNormalize normalizedResourceId = this.m_resourceDefinitionManager.normalizeResourceId(entityDefInfo.getResourceId());
 			buildComplexEntityResourcePackage(new HAPContextProcessor(processContext.getComplexResourcePackageGroup(), (HAPResourceIdSimple)normalizedResourceId.getRootResourceId()));
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
+			buildComplexEntityResourcePackage(HAPUtilityDomain.buildNewProcessorContext(processContext, normalizedResourceId.getRootResourceIdSimple()));
 			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, normalizedResourceId, exeExtraInfo);
 		}
 		

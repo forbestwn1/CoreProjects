@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 
 public class HAPParserStoryDesign {
@@ -14,7 +14,7 @@ public class HAPParserStoryDesign {
 		HAPDesignStory out = null;
 		try{
 			File input = new File(fileName);
-			String source = HAPFileUtility.readFile(input);
+			String source = HAPUtilityFile.readFile(input);
 			out = parseContent(source, changeMan);
 		}
 		catch(Exception e){

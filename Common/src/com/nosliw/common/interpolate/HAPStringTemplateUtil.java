@@ -4,16 +4,16 @@ import java.io.InputStream;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPStringTemplateUtil {
 
 	public static String getTemplateFromFile(InputStream file){
-		return HAPFileUtility.readFile(file);
+		return HAPUtilityFile.readFile(file);
 	}
 	
 	public static String getStringValue(InputStream templateStream, Map<String, String> parms){
-		String template = HAPFileUtility.readFile(templateStream);
+		String template = HAPUtilityFile.readFile(templateStream);
 		return getStringValue(template, parms);
 	}
 	

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPUtilityValueStructureScript {
@@ -20,7 +20,7 @@ public class HAPUtilityValueStructureScript {
 		JSONObject output = buildDefaultJsonObject(valueStructure);
 		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
 
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityValueStructureScript.class, "ValueStructureInitFunction.temp");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityValueStructureScript.class, "ValueStructureInitFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
 		return new HAPJsonTypeScript(script);
 	}

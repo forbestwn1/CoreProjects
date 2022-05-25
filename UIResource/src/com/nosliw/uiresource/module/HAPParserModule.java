@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
@@ -29,8 +29,8 @@ public class HAPParserModule implements HAPParserResourceEntity{
 		HAPDefinitionModule out = null;
 		try{
 			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(file);
-			String source = HAPFileUtility.readFile(file);
+			String resourceId = HAPUtilityFile.getFileName(file);
+			String source = HAPUtilityFile.readFile(file);
 			out = this.parseContent(source, resourceId);
 		}
 		catch(Exception e){

@@ -13,18 +13,18 @@ import com.nosliw.common.test.HAPResultTestSuite;
 import com.nosliw.common.test.HAPTestDescription;
 import com.nosliw.common.test.HAPResultTestItem;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPTestResultExporter {
 	public static void export(HAPResult result, String file){
 		String resultStr = export(result);
 
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestResult.txt");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestResult.txt");
 		Map<String, String> parms = new LinkedHashMap<String, String>();
 		parms.put("result", resultStr);
 		String outStr = HAPStringTemplateUtil.getStringValue(templateStream, parms);
 		
-		HAPFileUtility.writeFile(file, outStr);
+		HAPUtilityFile.writeFile(file, outStr);
 	}
 	
 	private static String export(HAPResult result){
@@ -41,7 +41,7 @@ public class HAPTestResultExporter {
 	}
 	
 	private static String exportTestCaseResult(HAPResultTestCase testCaseResult){
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestCaseResult.txt");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestCaseResult.txt");
 		Map<String, String> parms = new LinkedHashMap<String, String>();
 		parms.put("testName", testCaseResult.getName());
 		parms.put("testDescription", testCaseResult.getTestDescription().getDescription());
@@ -52,7 +52,7 @@ public class HAPTestResultExporter {
 		else{
 			StringBuffer exceptionsStr = new StringBuffer();
 			for(Exception e : testCaseResult.getExceptions()){
-				InputStream exceptionStream = HAPFileUtility.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestException.txt");
+				InputStream exceptionStream = HAPUtilityFile.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestException.txt");
 				Map<String, String> exceptionParms = new LinkedHashMap<String, String>();
 				exceptionParms.put("testException", HAPErrorUtility.log(e));
 				exceptionsStr.append(HAPStringTemplateUtil.getStringValue(exceptionStream, exceptionParms));
@@ -65,7 +65,7 @@ public class HAPTestResultExporter {
 		else{
 			StringBuffer itemsStr = new StringBuffer();
 			for(HAPResultTestItem testItem : testCaseResult.getTestItems()){
-				InputStream itemStream = HAPFileUtility.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestItem.txt");
+				InputStream itemStream = HAPUtilityFile.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestItem.txt");
 				Map<String, String> testItemParms = new LinkedHashMap<String, String>();
 				testItemParms.put("testItemResult", String.valueOf(testItem.isSuccess()));
 				testItemParms.put("testItemDescription", testItem.getTestDescription().getDescription());
@@ -78,7 +78,7 @@ public class HAPTestResultExporter {
 	}
 	
 	private static String exportTestSuiteResult(HAPResultTestSuite testSuiteResult){
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestSuiteResult.txt");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPTestResultExporter.class, "TestSuiteResult.txt");
 		Map<String, String> parms = new LinkedHashMap<String, String>();
 		parms.put("testName", testSuiteResult.getName());
 		parms.put("testDescription", testSuiteResult.getTestDescription().getDescription());

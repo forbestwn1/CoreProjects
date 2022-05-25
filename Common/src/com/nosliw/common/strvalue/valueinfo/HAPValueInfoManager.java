@@ -27,7 +27,7 @@ import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.strvalue.mode.HAPValueInfoModeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPValueInfoManager {
@@ -127,7 +127,7 @@ public class HAPValueInfoManager {
 	public void importFromXML(Class<?> cs, String[] files){
 		List<InputStream> inputStreams = new ArrayList<InputStream>();
 		for(String file: files){
-			InputStream xmlStream = HAPFileUtility.getInputStreamOnClassPath(cs, file);
+			InputStream xmlStream = HAPUtilityFile.getInputStreamOnClassPath(cs, file);
 			inputStreams.add(xmlStream);
 		}
 		this.importFromXML(inputStreams);

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPScriptTracker {
 
@@ -48,9 +48,9 @@ public class HAPScriptTracker {
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("script", scriptContent.toString());
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		
-		HAPFileUtility.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/1.html", out);
+		HAPUtilityFile.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/1.html", out);
 	}
 }

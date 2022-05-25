@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -44,6 +45,14 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		this.m_resourceDefByResourceId = new LinkedHashMap<HAPResourceId, HAPResourceDefinition>();
 	}
 
+	public Set<HAPResourceIdSimple> getAllSimpleResourceIds(){    return this.m_resourceDomainIdByResourceId.keySet();     }
+	public HAPInfoEntityInDomainDefinition getEntityInfoDefinition(HAPIdEntityInDomain entityId) {		return this.getResourceDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);	}
+	public HAPDomainEntityDefinitionSimpleResource getResourceDomainById(String id) {		return this.m_resourceDomainById.get(id);	}
+	public String getDomainIdBySimpleResourceId(HAPResourceIdSimple resourceId) {   return this.m_resourceDomainIdByResourceId.get(resourceId);      }
+	public HAPDomainEntityDefinitionSimpleResource getResourceDomainBySimpleResourceId(HAPResourceIdSimple resourceId) {		return this.getResourceDomainById(this.getDomainIdBySimpleResourceId(resourceId));	}
+	
+	public HAPResourceDefinition getResourceDefinitionByResourceId(HAPResourceId resourceId) {		return this.m_resourceDefByResourceId.get(resourceId);	}
+	
 	public void setRootResourceId(HAPResourceIdSimple rootResourceId) {    this.m_rootResourceId = rootResourceId;     }
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
@@ -63,10 +72,6 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		return out;
 	}
 	
-	public HAPInfoEntityInDomainDefinition getEntityInfoDefinition(HAPIdEntityInDomain entityId) {
-		return this.getResourceDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);
-	}
-
 	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId);
 		if(out.getEntity()==null){
@@ -87,8 +92,6 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		return out;
 	}
 	
-	public HAPDomainEntityDefinitionSimpleResource getResourceDomainById(String id) {		return this.m_resourceDomainById.get(id);	}
-	
 	private HAPDomainEntityDefinitionSimpleResource getResourceDomainByResourceId(HAPResourceIdSimple resourceId) {
 		HAPDomainEntityDefinitionSimpleResource out = null;
 		String domainId = this.m_resourceDomainIdByResourceId.get(resourceId);
@@ -98,10 +101,14 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	
 	public HAPInfoParentComplex getComplexEntityParentInfo(HAPIdEntityInDomain entityId) {    return ((HAPDomainEntityDefinitionSimpleResourceComplex)this.getResourceDomainById(entityId.getDomainId())).getParentInfo(entityId);     }
 
-	public HAPResourceDefinition getResourceDefinitionByResourceId(HAPResourceId resourceId) {		return this.m_resourceDefByResourceId.get(resourceId);	}
 	
 	public void addResourceDefinition(HAPResourceDefinition resourceDef) {		this.m_resourceDefByResourceId.put(resourceDef.getResourceId(), resourceDef);	}
 
 	@Override
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {		return this.getEntityInfoDefinition(entityId);	}
+	
+	public String toExpandedJsonString() {
+		HAPDomainEntityDefinitionSimpleResource resourceDomain = this.getResourceDomainByResourceId(this.m_rootResourceId);
+		return this.getEntityInfoDefinition(resourceDomain.getRootEntityId()).toExpandedJsonString(this);
+	}
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPManagerChange;
@@ -35,7 +35,7 @@ public class HAPUtilityDesign {
 	
 	public static void saveStoryDesign(HAPDesignStory storyDesign) {
 		//read content
-		HAPFileUtility.writeFile(getStoryDesignFile(storyDesign.getId()), HAPJsonUtility.formatJson(storyDesign.toStringValue(HAPSerializationFormat.JSON)));
+		HAPUtilityFile.writeFile(getStoryDesignFile(storyDesign.getId()), HAPJsonUtility.formatJson(storyDesign.toStringValue(HAPSerializationFormat.JSON)));
 	}
 	
 	private static String getStoryDesignFile(String id) {

@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
@@ -19,7 +19,7 @@ public class HAPUtility {
 	    if (! directory.exists()){
 	    	directory.mkdir();
 	    }
-	    HAPFileUtility.writeFile(directory.getAbsolutePath()+"/"+fileName, resourceDef.toStringValue(HAPSerializationFormat.LITERATE));
+	    HAPUtilityFile.writeFile(directory.getAbsolutePath()+"/"+fileName, resourceDef.toStringValue(HAPSerializationFormat.LITERATE));
 	}
 
 }

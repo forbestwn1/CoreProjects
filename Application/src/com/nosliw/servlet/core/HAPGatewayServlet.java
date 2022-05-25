@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -48,7 +48,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 					if(HAPUtilityResource.LOADRESOURCEBYFILE_MODE_ALWAYS.equals(HAPSystemUtility.getLoadResourceByFileMode())){
 						String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
 						String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
-						resourceFile = HAPFileUtility.writeFile(resourceFile, scriptInfo.getScript());
+						resourceFile = HAPUtilityFile.writeFile(resourceFile, scriptInfo.getScript());
 						scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(resourceFile));
 						scriptInfo.setScript(null);
 					}

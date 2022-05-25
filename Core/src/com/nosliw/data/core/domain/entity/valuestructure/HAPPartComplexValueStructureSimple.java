@@ -56,6 +56,15 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode) {
 		return this.cloneValueStructureComplexPartSimple(valueStructureDomain, mode);  
 	}
+	
+	@Override
+	public HAPPartComplexValueStructure cloneComplexValueStructurePart() {
+		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
+		for(HAPWrapperValueStructureExecutable valueStructureWrapper : this.m_valueStructures) {
+			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
+		}
+		return out;
+	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

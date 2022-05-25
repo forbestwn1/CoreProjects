@@ -3,7 +3,7 @@ package com.nosliw.service.pearsonflight;
 import java.io.InputStream;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPResultService;
@@ -17,7 +17,7 @@ public class HAPServiceImp implements HAPExecutableService{
 		String flight = "matchName";
 		HAPData flightData = parms.get("flight");
 		if(flightData!=null)	flight = (String)flightData.getValue();
-		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(this.getClass(), "mockdata.js");
+		InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(this.getClass(), "mockdata.js");
 		return HAPUtilityService.readServiceResult(inputStream, flight);
 	}
 }

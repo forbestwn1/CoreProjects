@@ -6,7 +6,6 @@ import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
 public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
 	
-
 	private HAPInfoPartValueStructure m_partInfo;
 	
 	public HAPPartComplexValueStructure() {}
@@ -20,6 +19,7 @@ public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
 	abstract public String getPartType();
 	
 	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode);
+	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart();
 	
 	private HAPInfoPartValueStructure processPartInfo(HAPInfoPartValueStructure partInfo) {
 		HAPInfoPartValueStructure out = partInfo;

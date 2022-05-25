@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.codetable.HAPCodeTable;
 import com.nosliw.data.core.codetable.HAPCodeTableId;
 import com.nosliw.data.core.data.HAPData;
@@ -25,7 +25,7 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 		//read content
 		String file = HAPSystemFolderUtility.getCodeTableFolder()+"currencytype.res";
 		//parse content
-		HAPCodeTable codeTable = parseCodeTable(new JSONObject(HAPFileUtility.readFile(HAPSystemFolderUtility.getCodeTableFolder()+"currencytype.res")));
+		HAPCodeTable codeTable = parseCodeTable(new JSONObject(HAPUtilityFile.readFile(HAPSystemFolderUtility.getCodeTableFolder()+"currencytype.res")));
 		
 		HAPData fromMoneyData = parms.get("fromMoney");
 		HAPData toCurrencyData = parms.get("toCurrency");
@@ -62,7 +62,7 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 		//read content
 		String file = HAPSystemFolderUtility.getCodeTableFolder()+codeId.getId()+".res";
 		//parse content
-		return parseCodeTable(new JSONObject(HAPFileUtility.readFile(file)));
+		return parseCodeTable(new JSONObject(HAPUtilityFile.readFile(file)));
 	}
 	
 	private HAPCodeTable parseCodeTable(JSONObject codeTableJson){

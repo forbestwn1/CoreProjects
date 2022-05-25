@@ -9,7 +9,7 @@ import com.nosliw.common.displayresource.HAPDisplayValueInfo;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -301,7 +301,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPUITree uiTree = HAPUtility.buildUITree(story, this.m_runtimeEnv, this.m_uiTagManager, this.m_runtimeEnv.getStoryManager().getChangeManager());
 
 				//page layout node
-				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), ALIAS_LAYOUTNODE, null, uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);
+				HAPUINode pageLayoutUINode = uiTree.newChildNode(new HAPStoryNodeUIHtml(HAPUtilityFile.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), ALIAS_LAYOUTNODE, null, uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);
 			
 				//input parm ui
 				for(HAPParmBranchInfo parmBranchInfo : parmBranchInfos) {
@@ -405,7 +405,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) layoutTemplate = "uiDataWithTitle.tmp";
 		else layoutTemplate = "uiDataWithoutTitle.tmp";
 		
-		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), null, childId, changeRequest, this.m_runtimeEnv, m_uiTagManager);
+		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPUtilityFile.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), null, childId, changeRequest, this.m_runtimeEnv, m_uiTagManager);
 		changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(layoutUINode.getStoryNodeRef()));
 		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) {
 			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(this.wrappWithContainer(out.displayLabel, "span")), null, "label", changeRequest, this.m_runtimeEnv, m_uiTagManager);
@@ -522,13 +522,13 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 			}
 			if(hasOutUI==true) {
 				//submit
-				changeRequest.addNewChange(new HAPStoryNodeScript(HAPFileUtility.readFile(this.getClass(), "submit.script")));
+				changeRequest.addNewChange(new HAPStoryNodeScript(HAPUtilityFile.readFile(this.getClass(), "submit.script")));
 				HAPUINode pageLayoutUINode = uiTree.getUINodeByStoryElementId(story.getElement(ALIAS_LAYOUTNODE).getElementId().getId());
-				pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPFileUtility.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), null, "submit", changeRequest, this.m_runtimeEnv, m_uiTagManager);
+				pageLayoutUINode.newChildNode(new HAPStoryNodeUIHtml(HAPUtilityFile.readFile(HAPStoryBuilderPageSimple.class, "submit.tmp")), null, "submit", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 			}
 			else {
 				//without submit, throught page init
-				changeRequest.addNewChange(new HAPStoryNodeScript(HAPFileUtility.readFile(this.getClass(), "pageinit.script")));
+				changeRequest.addNewChange(new HAPStoryNodeScript(HAPUtilityFile.readFile(this.getClass(), "pageinit.script")));
 			}
 			
 			changeRequest.close();

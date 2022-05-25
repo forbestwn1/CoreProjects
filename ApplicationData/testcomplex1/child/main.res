@@ -41,6 +41,24 @@
 				"testcomplex1": [
 				]
 			}
+		},
+		"valueStructure": {
+			"entity": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"parent1": {
+							"definition": {
+								"path" : "parent1",
+								"definition" : {
+									"criteria" : "test.string;1.0.0"
+								}
+							}
+						}
+					}
+				}
+			]
 		}
+		
 	}
 }

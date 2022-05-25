@@ -15,7 +15,7 @@ import com.nosliw.common.strvalue.HAPStringableValueMap;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPXMLUtility;
 
@@ -24,7 +24,7 @@ public class HAPValueInfoImporterXML {
 	public static HAPValueInfo importFromXml(String fileName, Class resourceClass){
 		HAPValueInfo out = null;
 		try{
-			InputStream xmlStream = HAPFileUtility.getInputStreamOnClassPath(resourceClass, fileName);
+			InputStream xmlStream = HAPUtilityFile.getInputStreamOnClassPath(resourceClass, fileName);
 			out = importFromXML(xmlStream);
 		}
 		catch(Exception e){

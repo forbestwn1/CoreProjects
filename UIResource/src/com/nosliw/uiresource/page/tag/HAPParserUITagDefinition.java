@@ -12,7 +12,7 @@ import org.mozilla.javascript.Scriptable;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.value.HAPRhinoValueUtility;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -32,7 +32,7 @@ public class HAPParserUITagDefinition {
 			Context cx = Context.enter();
 	        Scriptable scope = cx.initStandardObjects(null);
 
-			String content = "var out="+HAPFileUtility.readFile(file) + "; out;";
+			String content = "var out="+HAPUtilityFile.readFile(file) + "; out;";
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
 			String type = (String)defObjJS.get(HAPUITagDefinition.TYPE);

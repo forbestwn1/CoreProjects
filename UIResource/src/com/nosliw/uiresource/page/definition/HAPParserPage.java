@@ -18,7 +18,7 @@ import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
@@ -53,8 +53,8 @@ public class HAPParserPage implements HAPParserResourceEntity{
 	@Override
 	public HAPDefinitionUIUnitPage parseFile(File file) {
 		//use file name as ui resource id
-		String resourceId = HAPFileUtility.getFileName(file);
-		String source = HAPFileUtility.readFile(file);
+		String resourceId = HAPUtilityFile.getFileName(file);
+		String source = HAPUtilityFile.readFile(file);
 		return this.parseUIDefinition(resourceId, source);
 	}
 

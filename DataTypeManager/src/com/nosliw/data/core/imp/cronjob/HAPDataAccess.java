@@ -13,7 +13,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
@@ -56,16 +56,16 @@ public class HAPDataAccess {
 			cronJobInstance.setId(this.generateId());
 		}
 		String content = this.m_cronJobInstanceSerializer.toString(cronJobInstance);
-		HAPFileUtility.writeFile(this.getCronJobInstanceFile(cronJobInstance.getId()), content);
+		HAPUtilityFile.writeFile(this.getCronJobInstanceFile(cronJobInstance.getId()), content);
 		return cronJobInstance;
 	}
 	
 	public HAPInstanceCronJob getCronJob(String id) {
-		return this.m_cronJobInstanceSerializer.parse(HAPFileUtility.readFile(this.getCronJobInstanceFile(id)));
+		return this.m_cronJobInstanceSerializer.parse(HAPUtilityFile.readFile(this.getCronJobInstanceFile(id)));
 	}
 	
 	public void deleteCronJob(String instanceId) {
-		HAPFileUtility.deleteFolder(this.getCronJobInstanceFolder(instanceId));
+		HAPUtilityFile.deleteFolder(this.getCronJobInstanceFolder(instanceId));
 	}
 	
 	private String getCronJobInstanceFile(String instanceId) {

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
 
@@ -64,7 +64,7 @@ public class HAPPlayerManager {
 
 	private void savePlayerInfos() {
 		String content = HAPJsonUtility.buildJson(this.getPlayerInfos(), HAPSerializationFormat.JSON);
-		HAPFileUtility.writeFile(HAPUtility.getPlayerInfoFile(), HAPJsonUtility.formatJson(content));
+		HAPUtilityFile.writeFile(HAPUtility.getPlayerInfoFile(), HAPJsonUtility.formatJson(content));
 	}
 
 	private HAPOwnerInfo getOwnerInfo(String userId) {
@@ -81,7 +81,7 @@ public class HAPPlayerManager {
 	private Map<String, Set<String>> readPlayerInfos(){
 		Map<String, Set<String>> out = new LinkedHashMap<String, Set<String>>();
 		if(!new File(HAPUtility.getPlayerInfoFile()).exists()) return out;
-		JSONObject playInfoJson = new JSONObject(HAPFileUtility.readFile(HAPUtility.getPlayerInfoFile()));
+		JSONObject playInfoJson = new JSONObject(HAPUtilityFile.readFile(HAPUtility.getPlayerInfoFile()));
 		for(Object key : playInfoJson.keySet()) {
 			Set<String> ids = new HashSet<String>();
 			String playerName = (String)key;

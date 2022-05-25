@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPStringTemplate {
 
@@ -16,11 +16,11 @@ public class HAPStringTemplate {
 	}
 
 	public HAPStringTemplate(InputStream stream){
-		this.m_template = HAPFileUtility.readFile(stream);
+		this.m_template = HAPUtilityFile.readFile(stream);
 	}
 	
 	public HAPStringTemplate(File file){
-		this.m_template = HAPFileUtility.readFile(file);
+		this.m_template = HAPUtilityFile.readFile(file);
 	}
 	
 	public String getContent(Map<String, String> parms){

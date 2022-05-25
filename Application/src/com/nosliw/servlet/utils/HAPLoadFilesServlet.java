@@ -17,7 +17,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.HAPRequestInfo;
@@ -39,7 +39,7 @@ public class HAPLoadFilesServlet extends HAPBaseServlet{
 			JSONArray fileFoldersArray = parmsObj.optJSONArray("fileFolders");
 			for(int i=0; i<fileFoldersArray.length(); i++) {
 				String folder = fileFoldersArray.optString(i);
-				List<File> files = new ArrayList(HAPFileUtility.getAllFiles(folder));
+				List<File> files = new ArrayList(HAPUtilityFile.getAllFiles(folder));
 				Collections.sort(files, new Comparator() {
 					@Override
 					public int compare(Object arg0, Object arg1) {
@@ -52,7 +52,7 @@ public class HAPLoadFilesServlet extends HAPBaseServlet{
 					String fileName = file.getName();
 					fileName = fileName.replace(";", "_");
 					fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString());
-					HAPFileUtility.writeFile(HAPSystemUtility.getJSTempFolder()+"files/"+fileName, HAPFileUtility.readFile(file));
+					HAPUtilityFile.writeFile(HAPSystemUtility.getJSTempFolder()+"files/"+fileName, HAPUtilityFile.readFile(file));
 					tempNames.add("temp/files/"+fileName);
 				}
 			}

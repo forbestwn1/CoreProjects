@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -30,7 +30,7 @@ public class HAPManagerUITag {
 	private void readAllTags() {
 		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
 		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
-		Set<File> files = HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
+		Set<File> files = HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
 		for(File file : files) {
 			HAPUITagDefinition uiTagDef = HAPParserUITagDefinition.parseFromFile(file);
 			uiTagDef.setSourceFile(file);

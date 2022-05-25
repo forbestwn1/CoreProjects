@@ -100,7 +100,8 @@ public class HAPUtilityValueStructure {
 					valueStructureConfig.getInheritanceMode();
 					
 					//process static
-
+					
+					
 					//process relative
 					List<HAPInfoPartSimple> simpleValueStructureParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 					for(HAPInfoPartSimple simplePart : simpleValueStructureParts) {

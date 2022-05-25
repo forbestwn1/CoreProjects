@@ -20,7 +20,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.value.HAPRhinoValueUtility;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -278,7 +278,7 @@ public class HAPJSImporter {
 	}
 	
 	private String getOperationDefinition(InputStream inputStream){
-        String content = HAPFileUtility.readFile(inputStream);
+        String content = HAPUtilityFile.readFile(inputStream);
         
         Map<String, String> parms = new LinkedHashMap<String, String>();
         parms.put("operations", content);
@@ -289,8 +289,8 @@ public class HAPJSImporter {
 	
 	private String getOperationTemplate(){
 		if(this.m_operationTemplate==null){
-			InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(HAPJSImporter.class, "operationtemplate.js");
-			this.m_operationTemplate = HAPFileUtility.readFile(inputStream);
+			InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(HAPJSImporter.class, "operationtemplate.js");
+			this.m_operationTemplate = HAPUtilityFile.readFile(inputStream);
 		}
 		return this.m_operationTemplate;
 	}

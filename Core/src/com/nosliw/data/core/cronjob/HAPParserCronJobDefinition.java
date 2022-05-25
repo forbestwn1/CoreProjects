@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPParserCronJobDefinition {
 
@@ -23,8 +23,8 @@ public class HAPParserCronJobDefinition {
 		try{
 			File input = new File(fileName);
 			//use file name as ui resource id
-			String resourceId = HAPFileUtility.getFileName(input);
-			String source = HAPFileUtility.readFile(input);
+			String resourceId = HAPUtilityFile.getFileName(input);
+			String source = HAPUtilityFile.readFile(input);
 			out = this.parseCronJob(source, resourceId);
 		}
 		catch(Exception e){

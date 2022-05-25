@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 
 public class HAPPluginResourceDefinitionImp1 implements HAPPluginResourceDefinition{
@@ -36,7 +36,7 @@ public class HAPPluginResourceDefinitionImp1 implements HAPPluginResourceDefinit
 	public HAPEntityResourceDefinition getResourceEntityByLocalResourceId(HAPResourceIdLocal localResourceId, HAPResourceDefinition1 relatedResource) {
 		HAPResourceDefinition1 out = null;
 		String path = relatedResource.getLocalReferenceBase().getPath() + localResourceId.getResourceType() + "/" + localResourceId.getName() + ".res";
-		out = this.parseResourceEntity(HAPFileUtility.readFile(path));
+		out = this.parseResourceEntity(HAPUtilityFile.readFile(path));
 		out.setLocalReferenceBase(relatedResource.getLocalReferenceBase());
 //		if(out instanceof HAPWithAttachment) {
 //			((HAPWithAttachment)out).setLocalReferenceBase(localResourceId.getBasePath());

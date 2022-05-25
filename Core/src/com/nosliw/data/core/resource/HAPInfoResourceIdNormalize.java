@@ -20,6 +20,8 @@ public class HAPInfoResourceIdNormalize {
 	}
 	
 	public HAPResourceId getRootResourceId() {    return this.m_rootResourceId;    }
+	public HAPResourceIdSimple getRootResourceIdSimple() {    return (HAPResourceIdSimple)this.m_rootResourceId;    }
+	public HAPResourceIdLocal getRootResourceIdLocal() {    return (HAPResourceIdLocal)this.m_rootResourceId;    }
 	
 	public HAPPath getPath() {   return this.m_path;    }
 	

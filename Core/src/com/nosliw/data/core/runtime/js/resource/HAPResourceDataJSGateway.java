@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 
 public class HAPResourceDataJSGateway extends HAPResourceDataJSValueImp{
@@ -25,7 +25,7 @@ public class HAPResourceDataJSGateway extends HAPResourceDataJSValueImp{
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("gatewayId", this.m_name);
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPResourceDataJSGateway.class, "GatewayResource.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPResourceDataJSGateway.class, "GatewayResource.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		return script;
 	}

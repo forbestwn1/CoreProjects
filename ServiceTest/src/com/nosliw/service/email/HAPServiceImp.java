@@ -3,7 +3,7 @@ package com.nosliw.service.email;
 import java.io.InputStream;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPResultService;
@@ -15,7 +15,7 @@ public class HAPServiceImp implements HAPExecutableService{
 
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms) {
-		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(this.getClass(), "mockdata.js");
+		InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(this.getClass(), "mockdata.js");
 		return HAPUtilityService.readServiceResult(inputStream, "success");
 	}
 }

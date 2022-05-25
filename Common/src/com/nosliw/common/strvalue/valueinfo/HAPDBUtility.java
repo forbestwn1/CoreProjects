@@ -22,7 +22,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPDBUtility {
 
@@ -90,7 +90,7 @@ public class HAPDBUtility {
 			sqlColumns.append(columnSql);
 		}
 
-		InputStream createTableTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPDBTableInfo.class, "CreateTable.temp");
+		InputStream createTableTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPDBTableInfo.class, "CreateTable.temp");
 		Map<String, String> createTableTemplateMap = new LinkedHashMap<String, String>();
 		createTableTemplateMap.put("tableName", tableInfo.getTableName());
 		createTableTemplateMap.put("columns", sqlColumns.toString());

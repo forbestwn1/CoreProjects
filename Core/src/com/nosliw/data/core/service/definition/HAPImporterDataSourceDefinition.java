@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPImporterDataSourceDefinition {
 
@@ -59,7 +59,7 @@ public class HAPImporterDataSourceDefinition {
 		try{
 			InputStream inputStream = cls.getResourceAsStream("service.ds");
 			if(inputStream!=null) {
-				String content = HAPFileUtility.readFile(inputStream);
+				String content = HAPUtilityFile.readFile(inputStream);
 				JSONArray serviceDefArray = new JSONArray(content);
 				for(int i=0; i<serviceDefArray.length(); i++) {
 					JSONObject serviceDefJson = serviceDefArray.getJSONObject(i);

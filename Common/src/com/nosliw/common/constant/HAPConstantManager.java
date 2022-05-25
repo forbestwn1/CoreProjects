@@ -18,7 +18,7 @@ import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPConstantManager  extends HAPConfigurableImp{
@@ -142,11 +142,11 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		}
 		attrJavaTemplateParms.put("attrdef", attrDefs.toString());
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantManager.class, "ConstantJava.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPConstantManager.class, "ConstantJava.temp");
 		String attrJavaContent = HAPStringTemplateUtil.getStringValue(javaTemplateStream, attrJavaTemplateParms);
 		
 		String outputFilePath = group.getFilePath()+"/"+group.getClassName()+".java";
-		HAPFileUtility.writeFile(outputFilePath, attrJavaContent);
+		HAPUtilityFile.writeFile(outputFilePath, attrJavaContent);
 		
 		return attrJavaContent;
 	}
@@ -158,9 +158,9 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 		templateParms.put("moduleName", moduleName);
 		templateParms.put("content", jsonContent);
 		
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantManager.class, "ConstantJS.temp");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPConstantManager.class, "ConstantJS.temp");
 		String content = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
-		HAPFileUtility.writeFile(m_jsPath.getStringValue()+"/"+moduleName+".js", content);
+		HAPUtilityFile.writeFile(m_jsPath.getStringValue()+"/"+moduleName+".js", content);
 	}
 
 	/*

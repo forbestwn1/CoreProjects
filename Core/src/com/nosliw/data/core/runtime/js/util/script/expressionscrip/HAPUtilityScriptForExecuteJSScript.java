@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -90,7 +90,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScriptForExecuteJSScript.class, "ExecuteScriptRequest.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityScriptForExecuteJSScript.class, "ExecuteScriptRequest.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
 		return out;
@@ -103,7 +103,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 			String constantsDataParmName,
 			String variablesDataParmName
 	) {
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScriptForExecuteJSScript.class, "ScriptFunction.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityScriptForExecuteJSScript.class, "ScriptFunction.temp");
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("functionScript", content);
 		templateParms.put("functions", functionsParmName);

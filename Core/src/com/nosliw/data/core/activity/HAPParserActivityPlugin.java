@@ -6,7 +6,7 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPParserActivityPlugin {
 
@@ -17,7 +17,7 @@ public class HAPParserActivityPlugin {
 			Context cx = Context.enter();
 	        Scriptable scope = cx.initStandardObjects(null);
 
-			String content = "var out="+HAPFileUtility.readFile(file) + "; out;";
+			String content = "var out="+HAPUtilityFile.readFile(file) + "; out;";
 			NativeObject defObjJS = (NativeObject)cx.evaluateString(scope, content, file.getName(), 1, null);
 
 			String type = (String)defObjJS.get(HAPPluginActivity.TYPE);

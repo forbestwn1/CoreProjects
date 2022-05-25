@@ -25,7 +25,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPStringableEntityImporterJSON {
 	
@@ -39,7 +39,7 @@ public class HAPStringableEntityImporterJSON {
 	public static HAPStringableValueEntity parseJsonEntity(InputStream inputStream, String entityType, HAPValueInfoManager valueInfoMan){
 		HAPStringableValueEntity out = null;		
 		try {
-			String content = HAPFileUtility.readFile(inputStream);
+			String content = HAPUtilityFile.readFile(inputStream);
 			JSONObject jsonObjEntity = new JSONObject(content);
 			 out = parseJsonEntity(jsonObjEntity, entityType, valueInfoMan);
 		} catch (JSONException e) {

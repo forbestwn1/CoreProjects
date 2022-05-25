@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
@@ -25,7 +25,7 @@ public class HAPUtilityService {
 
 	public static Map<String, HAPResultService> readServiceResult(InputStream inputStream) {
 		Map<String, HAPResultService> out = new LinkedHashMap<String, HAPResultService>();
-		String content = HAPFileUtility.readFile(inputStream);
+		String content = HAPUtilityFile.readFile(inputStream);
 		JSONArray resultArray = new JSONArray(content);
 		for(int i=0; i<resultArray.length(); i++) {
 			JSONObject resultJsonObj = resultArray.getJSONObject(i);

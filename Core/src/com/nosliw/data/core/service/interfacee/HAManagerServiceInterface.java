@@ -5,14 +5,14 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAManagerServiceInterface {
 
 	public HAPInfoServiceInterface getServiceInterface(HAPIdServcieInterface id) {
 		String fileName = HAPSystemFolderUtility.getServiceInterfaceFolder() + id.getId() + ".res";
-		String content = HAPFileUtility.readFile(new File(fileName));
+		String content = HAPUtilityFile.readFile(new File(fileName));
 		
 		HAPInfoServiceInterface out = new HAPInfoServiceInterface();
 		out.buildObject(new JSONObject(content), HAPSerializationFormat.JSON);

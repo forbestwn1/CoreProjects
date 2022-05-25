@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -32,7 +32,7 @@ public class HAPUtilityScript2 {
 		}
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("buildAssociations", assocationScripts.toString());
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript2.class, "DataAssociationFunction.temp");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityScript2.class, "DataAssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
 		return new HAPJsonTypeScript(script);
 	}
@@ -74,7 +74,7 @@ public class HAPUtilityScript2 {
 		templateParms.put("outputConstantValueBuild", constantAssignmentScript.toString());
 		
 		
-		InputStream templateStream = HAPFileUtility.getInputStreamOnClassPath(HAPUtilityScript2.class, "AssociationFunction.temp");
+		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityScript2.class, "AssociationFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
 		return new HAPJsonTypeScript(script);
 	}

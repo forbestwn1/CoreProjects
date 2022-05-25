@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
@@ -33,8 +33,8 @@ public class HAPServiceImp implements HAPExecutableService{
 		HAPData outData = null;
 		try{
 			if(true) {
-				InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "homesArray.js");
-				String content =  HAPFileUtility.readFile(inputStream);
+				InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(getClass(), "homesArray.js");
+				String content =  HAPUtilityFile.readFile(inputStream);
 				this.m_data = new JSONArray(content);
 			}
 			outData = querydData(this.m_data, parms);

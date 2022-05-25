@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.resource;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -20,7 +20,7 @@ public class HAPResourceManagerUIAppConfigure extends HAPResourceManagerImp{
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPResourceIdUIAppConfigure id = new HAPResourceIdUIAppConfigure((HAPResourceIdSimple)resourceId);
 		String file = HAPSystemFolderUtility.getUIAppConfigureFolder()+id.getCoreIdLiterate()+".js";
-		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPFileUtility.readFile(file)), null);
+		return new HAPResource(resourceId, HAPResourceDataFactory.createJSValueResourceData(HAPUtilityFile.readFile(file)), null);
 	}
 
 }

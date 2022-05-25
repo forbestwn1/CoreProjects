@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
@@ -38,10 +38,10 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 	@Override
 	public HAPResultService execute(Map<String, HAPData> parms){
 
-		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
+		InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
 		
 //		InputStream inputStream = HAPFileUtility.getInputStreamOnClassPath(getClass(), "elementSchoolArray_simple.js");
-		String content =  HAPFileUtility.readFile(inputStream);
+		String content =  HAPUtilityFile.readFile(inputStream);
 		
 		JSONArray schoolArrayData = new JSONArray();
 		try{

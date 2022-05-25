@@ -22,7 +22,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.steadystate.css.parser.CSSOMParser;
 
 @HAPEntityWithAttribute
@@ -136,7 +136,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 
 	public static void main(String[] args) throws IOException {
 		
-		 InputSource source = new InputSource(new InputStreamReader(HAPFileUtility.getInputStreamOnClassPath(HAPExecutableStyle.class, "style.css"), "UTF-8"));
+		 InputSource source = new InputSource(new InputStreamReader(HAPUtilityFile.getInputStreamOnClassPath(HAPExecutableStyle.class, "style.css"), "UTF-8"));
          CSSOMParser parser = new CSSOMParser();
          // parse and create a stylesheet composition
          CSSStyleSheet stylesheet = parser.parseStyleSheet(source, null, null);

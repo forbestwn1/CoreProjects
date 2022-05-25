@@ -18,10 +18,15 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static HAPContextProcessor buildNewProcessorContext(HAPContextProcessor currentProcessContext, HAPResourceIdSimple newResourceId) {
+		return new HAPContextProcessor(currentProcessContext.getComplexResourcePackageGroup(), newResourceId, currentProcessContext.getRuntimeEnvironment());
+	}
+	
 	public static HAPInfoEntityInDomainDefinition getEntityInfoByResourceId(HAPResourceId resourceId, String currentDomainId, HAPDomainEntityDefinitionGlobal globalDomain) {
 		HAPIdEntityInDomain entityId = null;
 		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {

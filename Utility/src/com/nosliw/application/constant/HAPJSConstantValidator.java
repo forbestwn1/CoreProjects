@@ -14,7 +14,7 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPJSConstantValidator {
 
@@ -63,8 +63,8 @@ public class HAPJSConstantValidator {
 	
 	private static void readConstantValues(String file, Map<String, String> output) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("buildConstants", HAPFileUtility.readFile(file));
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPJSConstantValidator.class, "ConstantJsValidate.temp");
+		templateParms.put("buildConstants", HAPUtilityFile.readFile(file));
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPJSConstantValidator.class, "ConstantJsValidate.temp");
 		String content = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
         
 		Context cx = Context.enter();

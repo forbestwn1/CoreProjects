@@ -14,7 +14,7 @@ import com.nosliw.common.constant.HAPConstantGroup;
 import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPXMLUtility;
 
 public class HAPConstantApp extends HAPConfigurableImp{
@@ -32,7 +32,7 @@ public class HAPConstantApp extends HAPConfigurableImp{
 		HAPConstantManager constantMan = new HAPConstantManager(null);
 		
 		try{
-			InputStream configureStream = HAPFileUtility.getInputStreamOnClassPath(HAPConstantApp.class, "constant.xml");
+			InputStream configureStream = HAPUtilityFile.getInputStreamOnClassPath(HAPConstantApp.class, "constant.xml");
 			DocumentBuilderFactory DOMfactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder DOMbuilder = DOMfactory.newDocumentBuilder();
 			Document doc = DOMbuilder.parse(configureStream);

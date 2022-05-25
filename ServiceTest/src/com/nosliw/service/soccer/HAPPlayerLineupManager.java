@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPPlayerLineupManager {
 
@@ -25,7 +25,7 @@ public class HAPPlayerLineupManager {
 	
 	public List<String> getInitialLineupPlayers(){
 		List<String> players = new ArrayList<String>();
-		String lineUpContent = HAPFileUtility.readFile(HAPUtility.getOriginalLineupFile());
+		String lineUpContent = HAPUtilityFile.readFile(HAPUtility.getOriginalLineupFile());
 		JSONArray lineUpArray = new JSONArray(lineUpContent);
 		for(int i=0; i<lineUpArray.length(); i++) players.add(lineUpArray.getString(i));
 		return players;
@@ -63,13 +63,13 @@ public class HAPPlayerLineupManager {
 		if(!new File(HAPUtility.getLineupFile()).exists()) return null;
 		
 		HAPPlayerLineup out = new HAPPlayerLineup(HAPPlayerManager.getInstance());
-		JSONObject lineUpJson = new JSONObject(HAPFileUtility.readFile(HAPUtility.getLineupFile()));
+		JSONObject lineUpJson = new JSONObject(HAPUtilityFile.readFile(HAPUtility.getLineupFile()));
 		out.buildObject(lineUpJson, HAPSerializationFormat.JSON);
 		return out;
 	}
 	
 	private void writeLineUp(HAPPlayerLineup lineup) {
-		HAPFileUtility.writeFile(HAPUtility.getLineupFile(), HAPJsonUtility.formatJson(lineup.toStringValue(HAPSerializationFormat.JSON)));
+		HAPUtilityFile.writeFile(HAPUtility.getLineupFile(), HAPJsonUtility.formatJson(lineup.toStringValue(HAPSerializationFormat.JSON)));
 	}
 	
 }

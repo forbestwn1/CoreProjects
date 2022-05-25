@@ -17,7 +17,7 @@ import org.mozilla.javascript.Scriptable;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPFileUtility;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.value.HAPRhinoValueUtility;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -93,7 +93,7 @@ public class HAPRhinoRuntimeUtility {
 				//ppppp			
 				String folder = getScriptTempFolder();
 				String scriptTempFile = folder + "/" + String.format("%03d", index++) + "_" + name;  //+".js";
-				HAPFileUtility.writeFile(scriptTempFile, script);
+				HAPUtilityFile.writeFile(scriptTempFile, script);
 			}
 			context.evaluateString(scope, script, name, 1, null);
 		}
@@ -114,7 +114,7 @@ public class HAPRhinoRuntimeUtility {
 	}
 	
 	public static void exportToHtml() {
-		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(getScriptTempFolder()));
+		List<File> files = HAPUtilityFile.sortFiles(HAPUtilityFile.getAllFiles(getScriptTempFolder()));
 		
 		StringBuffer scriptContent = new StringBuffer();
 		for(File file : files){
@@ -137,10 +137,10 @@ public class HAPRhinoRuntimeUtility {
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("script", scriptContent.toString());
-		InputStream javaTemplateStream = HAPFileUtility.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPScriptTracker.class, "scriptTracker.temp");
 		String out = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		
-		HAPFileUtility.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/main.html", out);
+		HAPUtilityFile.writeFile(HAPRhinoRuntimeUtility.getScriptTempFolder()+"/main.html", out);
 
 	}
 	
@@ -153,7 +153,7 @@ public class HAPRhinoRuntimeUtility {
 	}
 
 	private static void appendLibraryToScript(StringBuffer scriptContent, String libDir) {
-		List<File> files = HAPFileUtility.sortFiles(HAPFileUtility.getAllFiles(HAPSystemFolderUtility.getNosliwJSFolder(libDir)));
+		List<File> files = HAPUtilityFile.sortFiles(HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getNosliwJSFolder(libDir)));
 		for(File file : files) {
 			appendFileToScript(scriptContent, file.getAbsolutePath());
 		}
