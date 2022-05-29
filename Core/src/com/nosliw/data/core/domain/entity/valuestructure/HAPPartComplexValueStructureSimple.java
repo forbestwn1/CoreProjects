@@ -74,4 +74,12 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 		}
 		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
+	
+	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
+		List<String> arrayJson = new ArrayList<String>();
+		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
+			arrayJson.add(valueStructure.toExpandedString(valueStructureDomain));
+		}
+		return HAPJsonUtility.buildArrayJson(arrayJson.toArray(new String[0]));
+	}
 }

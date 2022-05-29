@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
 public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp{
@@ -88,6 +89,14 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partArrayJson.toArray(new String[0])));
+	}
+	
+	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
+		List<String> jsonArray = new ArrayList<String>();
+		for(HAPInfoPartSimple partInfo : HAPUtilityComplexValueStructure.getAllSimpleParts(this)) {
+			jsonArray.add(partInfo.toExpandedString(valueStructureDomain));
+		}
+		return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]));
 	}
 
 }
