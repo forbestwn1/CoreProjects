@@ -50,7 +50,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplexDef, HAPDomainEntityDefinitionGlobal entityDefDomain, HAPDefinitionEntityContainerAttachment attachmentContainer) {
-		HAPExecutableEntityComplexValueStructure valueStructureComplexExe = new HAPExecutableEntityComplexValueStructure();
+		HAPExecutableEntityComplexValueStructure valueStructureComplexExe = new HAPExecutableEntityComplexValueStructure(this.m_idGenerator.generateId());
 		
 		//extra value structure
 		if(valueStructureComplexDef!=null) {
@@ -63,11 +63,9 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 			}
 		}
 
-		String out = this.m_idGenerator.generateId();
-		this.m_valueStructureComplex.put(out, valueStructureComplexExe);
-		return out;
+		this.m_valueStructureComplex.put(valueStructureComplexExe.getId(), valueStructureComplexExe);
+		return valueStructureComplexExe.getId();
 	}
-	
 	
 	public HAPInfoValueStructure getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
 	public HAPDefinitionEntityValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
@@ -135,8 +133,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		jsonMap.put(DEFINITIONBYRUNTIME, HAPJsonUtility.buildMapJson(this.m_definitionIdByRuntimeId));
 	}
 	
-	public String toExpandedString() {
-		
+	//
+	public String toExpandedJsonString(String valueStructureComplexId) {
+		return this.getValueStructureComplex(valueStructureComplexId).toExpandedString(this);
 	}
-
 }

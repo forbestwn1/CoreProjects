@@ -30,7 +30,7 @@ public class HAPUtilityComplexValueStructure {
 		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
 			getAllChildren(null, part, out);
 		}
-		sortParts((List)out);
+		sortSimplePartInfos(out);
 		return out;
 	}
 

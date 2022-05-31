@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.valuestructure;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,13 +18,18 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 
 	public static String PART = "part";
 
-	private int m_idIndex;
+	public static String ID = "id";
+
+	private String m_id;
 	
 	private List<HAPPartComplexValueStructure> m_parts;
 	
-	public HAPExecutableEntityComplexValueStructure() {
+	public HAPExecutableEntityComplexValueStructure(String id) {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
+		this.m_id = id;
 	}
+	
+	public String getId() {    return this.m_id;    }
 	
 	public List<HAPPartComplexValueStructure> getParts(){   return this.m_parts;  }
 	
@@ -60,7 +66,7 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 	}
 	
 	public HAPExecutableEntityComplexValueStructure cloneValueStructureComplex() {
-		HAPExecutableEntityComplexValueStructure out = new HAPExecutableEntityComplexValueStructure();
+		HAPExecutableEntityComplexValueStructure out = new HAPExecutableEntityComplexValueStructure(this.getId());
 		for(HAPPartComplexValueStructure part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}
@@ -78,10 +84,6 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 		return out;
 	}
 	
-	private String generateId(HAPInfoPartValueStructure partInfo) {
-		return partInfo.getName() + "_" + this.m_idIndex++;
-	}
-
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		List<String> partArrayJson = new ArrayList<String>();
@@ -89,14 +91,20 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partArrayJson.toArray(new String[0])));
+		jsonMap.put(ID, this.getId());
 	}
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		
 		List<String> jsonArray = new ArrayList<String>();
 		for(HAPInfoPartSimple partInfo : HAPUtilityComplexValueStructure.getAllSimpleParts(this)) {
 			jsonArray.add(partInfo.toExpandedString(valueStructureDomain));
 		}
-		return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]));
+		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0])));
+		
+		jsonMap.put(ID, this.getId());
+		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 }

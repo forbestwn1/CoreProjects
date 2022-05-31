@@ -35,7 +35,7 @@ public class HAPUtilityExport {
 			HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 
 			//write package definition
-			HAPUtilityFile.writeJsonFile(packageFolder, "entity.json", toExpandedJsonStringDefintionDomain(resourcePackage));
+			HAPUtilityFile.writeJsonFile(packageFolder, "definition.json", toExpandedJsonStringDefintionDomain(resourcePackage));
 			
 			//write package executable
 			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toExpandedJsonStringExecutableDomain(resourcePackage));

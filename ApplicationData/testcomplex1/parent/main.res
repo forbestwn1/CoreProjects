@@ -29,6 +29,12 @@
 				}
 			}
 		},
+		"localresource1_none_testcomplex1": {
+			"resourceId": "testcomplex1|#localchild",
+			"extra": {
+				"status": "disabled1"
+			}
+		},
 		"globalresource1_none_testsimple1": {
 			"extra": {
 				"status": "disabled"

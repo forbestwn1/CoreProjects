@@ -1,44 +1,39 @@
 {
 	"extra": {
-		"name": "child complex entity",
-		"description": "childcomplex"
+		"name": "localchild complex entity",
+		"description": "localchild complex entity"
 	},
 	"entity": {
-		"localresource_none_testcomplex1": {
-			"resourceId": "testcomplex1|#localchild",
-			"extra": {
-				"status": "disabled1"
-			}
-		},
 		"attachment": {
 			"extra": {
-				"status": "disabled1",
-				"name": "child complex entity" 
+				"status": "localchild complex entity",
+				"name": "localchild complex entity" 
 			},
 			"entity": {
-				"valuestructure": [
+				"valuestructure" : [
 				],
 				"testsimple1": [
 					{
 						"name": "samename",
 						"entity": {
-							"child_none_testsimple1": {
-								"entity": {
+							"localchild_none_testsimple1": {
+								"entity":{
 								}
 							}
 						}
 					},
 					{
-						"name": "inchildonly",
+						"name": "inlocalchildonly",
 						"entity": {
-							"child_none_testsimple1": {
-								"entity": {
+							"localchild_none_testsimple1": {
+								"entity":{
 								}
 							}
 						}
 					}
 				],
 				"testcomplex1": [
+				
 				]
 			}
 		},

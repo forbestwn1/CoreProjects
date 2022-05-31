@@ -3,6 +3,8 @@ package com.nosliw.data.core.structure.reference;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.utils.HAPConstantShared;
+
 //a group of value structure complex for element reference
 public class HAPCandidatesValueStructureComplex {
 
@@ -18,9 +20,9 @@ public class HAPCandidatesValueStructureComplex {
 		this.addDefault(defaultId);
 	}
 	
-	public void addSelf(String valueStructureComplexId) {}
+	public void addSelf(String valueStructureComplexId) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF, valueStructureComplexId);    }
 
-	public void addDefault(String valueStructureComplexId) {}
+	public void addDefault(String valueStructureComplexId) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, valueStructureComplexId);    }
 
 	public void addValueStructureComplex(String valueStructureComplexName, String valueStructureComplexId) {    this.m_valueStructureComplexByName.put(valueStructureComplexName, valueStructureComplexId);     }
 

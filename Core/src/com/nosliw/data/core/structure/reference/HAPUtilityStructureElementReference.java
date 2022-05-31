@@ -132,7 +132,7 @@ public class HAPUtilityStructureElementReference {
 
 				//check definition id
 				if(isValid) {
-					String valueStructueDefId = valueStructureCriteria.getDefinitionId();
+					String valueStructueDefId = valueStructureCriteria==null? null : valueStructureCriteria.getDefinitionId();
 					if(valueStructueDefId!=null) {
 						if(!valueStructueDefId.equals(valueStructureDomain.getValueStructureDefinitionIdByRuntimeId(wraper.getValueStructureRuntimeId()))){
 							isValid = false;
@@ -142,7 +142,7 @@ public class HAPUtilityStructureElementReference {
 				
 				//check name
 				if(isValid) {
-					String valueStructureName = valueStructureCriteria.getName();
+					String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
 					if(valueStructureName!=null) {
 						if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
 							isValid = false;

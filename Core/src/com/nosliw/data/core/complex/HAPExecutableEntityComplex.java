@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.commons.collections4.map.LinkedMap;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbededEntity;
@@ -18,6 +17,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public static final String VALUESTRUCTURECOMPLEXID = "valueStructureComplexId";
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
 	public static final String ATTRIBUTE = "attribute";
+	public static final String VALUESTRUCTURECOMPLEX = "valueStructureComplex";
 	
 	private String m_valueStructureComplexId;
 
@@ -55,6 +55,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomainExe);
+		if(this.m_valueStructureComplexId!=null)  jsonMap.put(VALUESTRUCTURECOMPLEX, entityDomainExe.getValueStructureDomain().toExpandedJsonString(this.m_valueStructureComplexId));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 
@@ -63,7 +64,6 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 		jsonMap.put(VALUESTRUCTURECOMPLEXID, this.m_valueStructureComplexId);
 		
 		for(String attrName : this.m_attributesNormal.keySet()) {
-			HAPSerializableImp entityId = this.m_attributesNormal.get(attrName);
 			jsonMap.put(attrName, this.m_attributesNormal.get(attrName).toExpandedJsonString(entityDomainExe));
 		}
 		

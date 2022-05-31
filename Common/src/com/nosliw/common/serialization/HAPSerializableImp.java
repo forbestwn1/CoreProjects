@@ -93,7 +93,10 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 	
 	@Override
 	public int hashCode() {
-		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
+		String literateStr = this.toStringValue(HAPSerializationFormat.LITERATE);
+		if(literateStr==null)   literateStr = this.toStringValue(HAPSerializationFormat.JSON);
+		if(literateStr==null)   return super.hashCode();
+		return literateStr.hashCode();
 	}
 
 }
