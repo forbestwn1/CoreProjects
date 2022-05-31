@@ -25,7 +25,7 @@ public class HAPInfoPartValueStructure {
 
 	public List<Integer> getPriority() {   return this.m_priority;    }
 	
-	public void appendParentInfo(String rootId, List<Integer> rootPriority) {
+	public void appendParentInfo(List<Integer> rootPriority) {
 		List<Integer> priority = new ArrayList<Integer>();
 		priority.addAll(rootPriority);
 		priority.addAll(this.m_priority);

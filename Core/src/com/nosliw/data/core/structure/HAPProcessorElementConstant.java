@@ -283,7 +283,7 @@ public class HAPProcessorElementConstant {
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
 			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
 			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.finalElement, structure, configure, runtimeEnv);
-			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructureElementReference.resolveElement(resolveInfo.realSolved, configure.relativeInheritRule)).getValue());
+			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructureElementReference.resolveFinalElement(resolveInfo.realSolved, configure.relativeInheritRule)).getValue());
 		}
 
 		//process script again with constant and discovery

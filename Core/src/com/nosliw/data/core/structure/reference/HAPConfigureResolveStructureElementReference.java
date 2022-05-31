@@ -9,7 +9,7 @@ public class HAPConfigureResolveStructureElementReference {
 	
 	private String m_searchMode;
 	
-	private Boolean m_relativeInheritRule; 
+	private boolean m_relativeInheritRule; 
 	
 	private Set<String> m_candidateElementTypes;
 
@@ -19,5 +19,7 @@ public class HAPConfigureResolveStructureElementReference {
 	public Set<String> getValueStructureGroupTypes(){   return this.m_valueStructureroupTypes;    }
 
 	public Set<String> getCandidateElementTypes(){    return this.m_candidateElementTypes;    }
+	
+	public boolean getRelativeInheritRule() {   return this.m_relativeInheritRule;    }
 	
 }

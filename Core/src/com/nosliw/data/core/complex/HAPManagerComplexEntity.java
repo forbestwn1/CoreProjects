@@ -30,13 +30,16 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComp
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerComplexEntity {
 
-	private HAPManagerResourceDefinition m_resourceDefinitionManager;
+//	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
-	private HAPManagerDomainEntityDefinition m_entityDefManager;
+//	private HAPManagerDomainEntityDefinition m_entityDefManager;
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
 	private HAPGeneratorId m_idGenerator;
 
 	//pulug in for processing complex entity
@@ -44,9 +47,8 @@ public class HAPManagerComplexEntity {
 
 	private Map<HAPResourceIdSimple, HAPPackageComplexResource> m_complexResourcePackages;
 	
-	public HAPManagerComplexEntity(HAPManagerDomainEntityDefinition entityDefManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		this.m_entityDefManager = entityDefManager;
-		this.m_resourceDefinitionManager = resourceDefinitionManager;
+	public HAPManagerComplexEntity(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_processorPlugins = new LinkedHashMap<String, HAPPluginComplexEntityProcessor>();
 		this.m_complexResourcePackages = new LinkedHashMap<HAPResourceIdSimple, HAPPackageComplexResource>();
 		this.m_idGenerator = new HAPGeneratorId();
@@ -55,8 +57,8 @@ public class HAPManagerComplexEntity {
 	public HAPPackageExecutable process(HAPResourceIdSimple resourceId) {
 		HAPPackageExecutable out = new HAPPackageExecutable();
 
-		HAPInfoResourceIdNormalize normalizedResourceInfo = this.m_resourceDefinitionManager.normalizeResourceId(resourceId);
-		buildComplexEntityResourcePackage(new HAPContextProcessor(out.getComplexResourcePackageGroup(), (HAPResourceIdSimple)normalizedResourceInfo.getRootResourceId()));
+		HAPInfoResourceIdNormalize normalizedResourceInfo = this.getResourceDefinitionManager().normalizeResourceId(resourceId);
+		buildComplexEntityResourcePackage(new HAPContextProcessor(out.getComplexResourcePackageGroup(), (HAPResourceIdSimple)normalizedResourceInfo.getRootResourceId(), this.m_runtimeEnv));
 		
 //		HAPResourceIdSimple mainResourceId = (HAPResourceIdSimple)normalizedResourceInfo.getRootResourceId();
 //		HAPPackageComplexResource mainComplexResourcePackage = out.getComplexResourcePackage(mainResourceId);
@@ -78,8 +80,8 @@ public class HAPManagerComplexEntity {
 			out = this.m_complexResourcePackages.get(complexEntityResourceId);
 			if(out==null) {
 				//build definition
-				HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.m_entityDefManager, this.m_resourceDefinitionManager);
-				this.m_resourceDefinitionManager.getResourceDefinition(complexEntityResourceId, globalDefDomain);
+				HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.m_idGenerator, this.getDomainEntityDefinitionManager(), this.getResourceDefinitionManager());
+				this.getResourceDefinitionManager().getResourceDefinition(complexEntityResourceId, globalDefDomain);
 				out = new HAPPackageComplexResource(globalDefDomain, this.m_idGenerator);
 				out.setRootResourceId(complexEntityResourceId);
 				processContext.addComplexResourcePackage(out);
@@ -108,6 +110,9 @@ public class HAPManagerComplexEntity {
 		//process value structure
 		HAPUtilityValueStructure.buildValueStructureDomain(rootEntityIdExe, processContext);
 	}
+
+	private HAPManagerResourceDefinition getResourceDefinitionManager() {    return this.m_runtimeEnv.getResourceDefinitionManager();      }
+	private HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager() {     return this.m_runtimeEnv.getDomainEntityManager();      }
 	
 	public HAPIdEntityInDomain process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
 		HAPIdEntityInDomain mainExeEntityId = null;
@@ -184,7 +189,7 @@ public class HAPManagerComplexEntity {
 			}
 		}
 		else {
-			HAPInfoResourceIdNormalize normalizedResourceId = this.m_resourceDefinitionManager.normalizeResourceId(entityDefInfo.getResourceId());
+			HAPInfoResourceIdNormalize normalizedResourceId = this.getResourceDefinitionManager().normalizeResourceId(entityDefInfo.getResourceId());
 			buildComplexEntityResourcePackage(new HAPContextProcessor(processContext.getComplexResourcePackageGroup(), (HAPResourceIdSimple)normalizedResourceId.getRootResourceId()));
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
 			buildComplexEntityResourcePackage(HAPUtilityDomain.buildNewProcessorContext(processContext, normalizedResourceId.getRootResourceIdSimple()));

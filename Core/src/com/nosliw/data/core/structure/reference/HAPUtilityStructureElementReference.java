@@ -52,6 +52,9 @@ public class HAPUtilityStructureElementReference {
 		
 		//
 		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), targetStructures, resolveConfigure, valueStructureDomain);
+		
+		out.finalElement = resolveFinalElement(out.elementInfoSolid, resolveConfigure.getRelativeInheritRule());
+		
 		return out;
 	}
 	
@@ -158,7 +161,7 @@ public class HAPUtilityStructureElementReference {
 	
 	
 	//resolve the remain path part
-	public static HAPElementStructure resolveElement(HAPInfoDesendantResolve resolveInfo, Boolean relativeInheritRule) {
+	public static HAPElementStructure resolveFinalElement(HAPInfoDesendantResolve resolveInfo, Boolean relativeInheritRule) {
 		HAPElementStructure out = null;
 		if(relativeInheritRule==null)   relativeInheritRule = true;
 		
@@ -208,39 +211,6 @@ public class HAPUtilityStructureElementReference {
 			}
 		}
 		return out;
-	}
-	
-
-	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
-		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentComplexName()), mode, relativeInheritRule, elementTypes);
-	}
-	
-	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
-		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
-		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveElement(resolveInfo.realSolidSolved, relativeInheritRule);
-		return resolveInfo;
-	}
-	
-	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
-		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
-		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
-	}
-
-	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
-	}
-	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
-		for(HAPInfoPartSimple candidate : candidates) {
-			HAPPartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
-			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
-			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getElementPath()), valueStructure, mode, elementTypes);
-			resolve.structureId = simplePart.getRuntimeId();
-			if(isLogicallySolved(resolve))  return resolve;
-		}
-		return null;
 	}
 	
 	//find exact physical node
@@ -375,5 +345,34 @@ public class HAPUtilityStructureElementReference {
 		return out;
 	}
 
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentComplexName()), mode, relativeInheritRule, elementTypes);
+	}
+	
+	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
+		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveFinalElement(resolveInfo.realSolidSolved, relativeInheritRule);
+		return resolveInfo;
+	}
+	
+	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
+		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
+	}
 
+	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
+	}
+	
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
+		for(HAPInfoPartSimple candidate : candidates) {
+			HAPPartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
+			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
+			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getElementPath()), valueStructure, mode, elementTypes);
+			resolve.structureId = simplePart.getRuntimeId();
+			if(isLogicallySolved(resolve))  return resolve;
+		}
+		return null;
+	}
 }

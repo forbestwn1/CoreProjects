@@ -32,10 +32,11 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	public void addValueStructure(HAPWrapperValueStructureExecutable valueStructure) {   this.m_valueStructures.add(valueStructure);   }
 	
 	public HAPPartComplexValueStructureSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode) {
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
+		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple(this.getPartInfo());
 		this.cloneToEntityInfo(out);
 		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
 			HAPWrapperValueStructureExecutable cloned = null;
+			if(mode==null)  mode = "definition";
 			if(mode.equals("runtime")) {
 				cloned = valueStructure.cloneValueStructureWrapper();
 			}
@@ -59,7 +60,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	
 	@Override
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart() {
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
+		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		for(HAPWrapperValueStructureExecutable valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
 		}

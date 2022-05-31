@@ -75,6 +75,10 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPExecutableEntityComplexValueStructure getValueStructureComplex(String valueStructureComplexId) {	return this.m_valueStructureComplex.get(valueStructureComplexId);	}
 	
+	public String createRuntimeByRelativeRef(String runtimeId) {
+		
+	}
+	
 	//create another runtime that has common definition
 	//return new runtime id
 	public String cloneRuntime(String runtimeId) {

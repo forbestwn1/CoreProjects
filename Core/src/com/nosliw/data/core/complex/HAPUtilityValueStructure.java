@@ -112,7 +112,7 @@ public class HAPUtilityValueStructure {
 							HAPConfigureProcessorStructure processConfigure = new HAPConfigureProcessorStructure();
 							Set<String> dependency = new HashSet<String>();
 							HAPCandidatesValueStructureComplex valueStructureComplexGroup = new HAPCandidatesValueStructureComplex(valueStructureComplexId, parentValueStructureComplexId);
-							HAPUtilityStructureElementReference.processRelativeInStructure(valueStructure, valueStructureComplexGroup, valueStructureDomain, resolveConfigure, processConfigure, dependency, errors, null);
+							HAPUtilityStructureElementReference.processRelativeInStructure(valueStructure, valueStructureComplexGroup, valueStructureDomain, resolveConfigure, processConfigure, dependency, errors, processContext.getRuntimeEnvironment());
 						}
 					}
 					

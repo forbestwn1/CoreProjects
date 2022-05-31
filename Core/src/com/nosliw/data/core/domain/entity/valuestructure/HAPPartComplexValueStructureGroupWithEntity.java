@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
 public class HAPPartComplexValueStructureGroupWithEntity extends HAPPartComplexValueStructure{
@@ -23,18 +24,30 @@ public class HAPPartComplexValueStructureGroupWithEntity extends HAPPartComplexV
 	public List<HAPPartComplexValueStructure> getChildren(){   return this.m_children;   }
 	
 	public String addChild(HAPPartComplexValueStructure child) {
-		child.getPartInfo().appendParentInfo(this.getPartInfo().getId(), this.getPartInfo().getPriority());
+		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());
 		this.m_children.add(child);
-		return child.getPartInfo().getId();
+		return child.getPartInfo().getName();
 	}
 	
 	public HAPPartComplexValueStructureGroupWithEntity cloneValueStructureComplexPartGroup() {
 		HAPPartComplexValueStructureGroupWithEntity out = new HAPPartComplexValueStructureGroupWithEntity();
 		this.cloneToEntityInfo(out);
-		out.m_children.addAll(this.m_children);
+		for(HAPPartComplexValueStructure child : this.m_children) {
+			this.m_children.add(child.cloneComplexValueStructurePart());
+		}
 		return out;
 	}
 
 	@Override
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart() {   return this.cloneValueStructureComplexPartGroup();  }
+
+	@Override
+	public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode) {
+		HAPPartComplexValueStructureGroupWithEntity out = new HAPPartComplexValueStructureGroupWithEntity();
+		this.cloneToEntityInfo(out);
+		for(HAPPartComplexValueStructure child : this.m_children) {
+			this.m_children.add(child.cloneComplexValueStructurePart(valueStructureDomain, mode));
+		}
+		return out;
+	}
 }
