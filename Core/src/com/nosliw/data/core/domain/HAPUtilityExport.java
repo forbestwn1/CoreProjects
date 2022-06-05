@@ -13,6 +13,7 @@ public class HAPUtilityExport {
 
 	public static void exportExecutablePackage(HAPPackageExecutable executablePackage) {
 		String mainFolder = getRootFolder();
+		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
@@ -43,7 +44,10 @@ public class HAPUtilityExport {
 		}
 	}
 	
-	private static String getRootFolder(){  return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), System.currentTimeMillis()+""));  }
+	private static String getRootFolder(){  
+//		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), System.currentTimeMillis()+""));  
+		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), "temp"));  
+	}
 
 	private static String getExecutablePackageGroupFolder(String parentFolder){   return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, "resourcepackages"));  }
 

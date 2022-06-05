@@ -54,14 +54,19 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
-		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomainExe);
+		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
+		jsonMap.put(VALUESTRUCTURECOMPLEXID, this.m_valueStructureComplexId);
 		if(this.m_valueStructureComplexId!=null)  jsonMap.put(VALUESTRUCTURECOMPLEX, entityDomainExe.getValueStructureDomain().toExpandedJsonString(this.m_valueStructureComplexId));
+
+		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> attrTypeJsonMap = new LinkedMap<String, Class<?>>(); 
+		this.buildExpandedJsonMap(attrJsonMap, attrTypeJsonMap, entityDomainExe);
+		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
+
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityExecutableResourceComplex entityDomainExe){
-		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
-		jsonMap.put(VALUESTRUCTURECOMPLEXID, this.m_valueStructureComplexId);
 		
 		for(String attrName : this.m_attributesNormal.keySet()) {
 			jsonMap.put(attrName, this.m_attributesNormal.get(attrName).toExpandedJsonString(entityDomainExe));

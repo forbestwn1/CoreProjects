@@ -32,10 +32,10 @@
 		"localresource1_none_testcomplex1": {
 			"resourceId": "testcomplex1|#localchild",
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			}
 		},
-		"valueStructureInheritDefinition_none_testcomplex1": {
+		"valueStructureInheritModeDefinition_none_testcomplex1": {
 			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
 			"extra": {
 				"status": "disabled1"
@@ -43,16 +43,28 @@
 			"parent": {
 				"valuestructure": {
 					"inherit": {
-						"mode" : "definition",
-						"excludedInfo" : ["excluded1", "excluded2"]
+						"mode" : "definition"
 					}
 				}
 			}
 		},
-		"valueStructureInheritRuntime_none_testcomplex1": {
+		"valueStructureInheritModeRuntime_none_testcomplex1": {
 			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "runtime"
+					}
+				}
+			}
+		},
+		"valueStructureInheritInfoExclude_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
+			"extra": {
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure": {
@@ -71,7 +83,7 @@
 		},
 		"globalresource2_none_testcomplex1": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"resourceId": "testcomplex1|*child",
 			"parent": {

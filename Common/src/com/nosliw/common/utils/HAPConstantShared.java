@@ -784,8 +784,8 @@ public class HAPConstantShared {
 
 
 
-		public static final String INHERITMODE_DEFINITION = "parent";
-		public static final String INHERITMODE_RUNTIME = "child";
+		public static final String INHERITMODE_DEFINITION = "definition";
+		public static final String INHERITMODE_RUNTIME = "runtime";
 		public static final String INHERITMODE_REFER = "reference";
 		public static final String INHERITMODE_NONE = "none";
 

@@ -17,27 +17,21 @@ public class HAPConfigureProcessorRelative extends HAPInfoImpSimple{
 	//whether throw error when cannot find proper parent context item for relative item
 	private static final String TOLERATENOPARENT = "tolerateNoParent";
 	
-	
-	//how to resolve reference
-	private HAPConfigureResolveStructureElementReference m_resolveStructureElementReferenceConfigure;
-
-	//how to handle rule defined in parent node
-	private boolean m_inheritRule = false;
-	
-	//relative can track to sold parent
-	public boolean m_trackingToSolid = false;
-	
-	//whether throw error when cannot find proper parent context item for relative item
-	public boolean m_tolerantNoParentForRelative = false;
-
+	public HAPConfigureProcessorRelative() {
+		//init default value
+		this.setValue(RESOLVEREFERENCE_CONFIGURE, new HAPConfigureResolveStructureElementReference());
+		this.setValue(TRACKTOSOLID, false);
+		this.setValue(INHERITRULE, true);
+		this.setValue(TOLERATENOPARENT, false);
+	}
 	
 	public HAPConfigureResolveStructureElementReference getResolveStructureElementReferenceConfigure() {   return (HAPConfigureResolveStructureElementReference)this.getValue(RESOLVEREFERENCE_CONFIGURE) ;      }
 	
-	public boolean isInheritRule() {    return this.m_inheritRule;	}
+	public boolean isInheritRule() {    return (Boolean)this.getValue(INHERITRULE);	}
 	
-	public boolean isTrackingToSolid() {   return this.m_trackingToSolid;    }
+	public boolean isTrackingToSolid() {   return (Boolean)this.getValue(TRACKTOSOLID);    }
 	
-	public boolean isTolerantNoParentForRelative() {   return this.m_tolerantNoParentForRelative;   }
+	public boolean isTolerantNoParentForRelative() {   return (Boolean)this.getValue(TOLERATENOPARENT);   }
 	
 	public void mergeHard(HAPConfigureProcessorRelative configure) {
 		
