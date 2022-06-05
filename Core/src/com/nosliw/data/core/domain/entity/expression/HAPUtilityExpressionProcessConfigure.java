@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 
 /**
  * Utility to build expression process configure
@@ -45,8 +45,8 @@ public class HAPUtilityExpressionProcessConfigure {
 		return out;
 	}
 	
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForExpression() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForExpression() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		return out;
 	}
 }

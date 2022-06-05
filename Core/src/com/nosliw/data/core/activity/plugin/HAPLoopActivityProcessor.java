@@ -11,6 +11,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPBuilderResultContext;
 import com.nosliw.data.core.process1.HAPContextProcessor;
 import com.nosliw.data.core.process1.HAPExecutableActivity;
@@ -21,7 +22,6 @@ import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -44,7 +44,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		 
 		HAPLoopActivityDefinition loopActivityDef = (HAPLoopActivityDefinition)activityDefinition;

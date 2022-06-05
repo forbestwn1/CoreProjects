@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
 import com.nosliw.data.core.structure.HAPProcessorEscalate;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
@@ -62,9 +62,9 @@ public class HAPProcessorUIValueStructure {
 	
 	public static void process(HAPExecutableUIUnitPage uiPageExe, HAPValueStructureDefinitionGroup parentValueStructure, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableUIUnit body = uiPageExe.getBody();
-		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiPageExe.getResourceType()); 
+		HAPConfigureProcessorValueStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(uiPageExe.getResourceType()); 
 
-		HAPConfigureProcessorStructure privateConfigure = contextProcessorConfig.cloneConfigure();
+		HAPConfigureProcessorValueStructure privateConfigure = contextProcessorConfig.cloneConfigure();
 		privateConfigure.parentCategary = HAPValueStructureDefinitionGroup.getAllCategaries();
 
 		//build value structure tree
@@ -112,7 +112,7 @@ public class HAPProcessorUIValueStructure {
 	}
 	
 	//process static in value structure
-	private static void processStatic(HAPExecutableUIUnit1 unitExe, HAPValueStructure parentStructure, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processStatic(HAPExecutableUIUnit1 unitExe, HAPValueStructure parentStructure, HAPConfigureProcessorValueStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		if(unitExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUITag uiTagExe = (HAPExecutableUITag)unitExe;
 			HAPTreeNodeValueStructure nodeInTag = uiTagExe.getTagValueStructureDefinitionNode();
@@ -146,7 +146,7 @@ public class HAPProcessorUIValueStructure {
 		}
 	}
 	
-	private static void processRelativeElement(HAPExecutableUIUnit1 uiExe, HAPValueStructure parentStructure, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processRelativeElement(HAPExecutableUIUnit1 uiExe, HAPValueStructure parentStructure, HAPConfigureProcessorValueStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		if(uiExe.getType().equals(HAPConstantShared.UIRESOURCE_TYPE_TAG)) {
 			HAPExecutableUITag uiTagExe = (HAPExecutableUITag)uiExe;
 			HAPTreeNodeValueStructure nodeInTag = uiTagExe.getTagValueStructureDefinitionNode();

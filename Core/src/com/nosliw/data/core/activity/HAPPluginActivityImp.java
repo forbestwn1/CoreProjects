@@ -9,9 +9,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 public class HAPPluginActivityImp implements HAPPluginActivity{
 
@@ -64,7 +64,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 			HAPContextProcessor processContext, 
 			HAPWrapperValueStructureDefinition valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		return this.m_processor.process(activityDefinition, id, processContext, valueStructureWrapper, runtimeEnv, configure, processTracker);
 	}

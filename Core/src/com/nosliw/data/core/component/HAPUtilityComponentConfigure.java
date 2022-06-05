@@ -1,11 +1,11 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 
 public class HAPUtilityComponentConfigure {
 
-	public static HAPConfigureProcessorStructure getContextProcessConfiguration() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfiguration() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		return out;
 	}
 

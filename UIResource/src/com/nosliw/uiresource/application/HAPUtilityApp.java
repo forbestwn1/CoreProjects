@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.application;
 
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 
 public class HAPUtilityApp {
@@ -13,8 +13,8 @@ public class HAPUtilityApp {
 //		return miniAppDef;
 //	}
 	
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForApp() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForApp() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		out.inheritanceExcludedInfo = HAPUtilityCommon.getDefaultInheritanceExcludedInfo();
 		return out;
 	}

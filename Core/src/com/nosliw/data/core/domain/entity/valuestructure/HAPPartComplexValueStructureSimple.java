@@ -36,15 +36,14 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 		this.cloneToEntityInfo(out);
 		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
 			HAPWrapperValueStructureExecutable cloned = null;
-			if(mode==null)  mode = "definition";
-			if(mode.equals("runtime")) {
+			if(mode.equals(HAPConstantShared.INHERITMODE_RUNTIME)) {
 				cloned = valueStructure.cloneValueStructureWrapper();
 			}
-			else if(mode.equals("definition")) {
+			else if(mode.equals(HAPConstantShared.INHERITMODE_DEFINITION)) {
 				cloned = valueStructure.cloneValueStructureWrapper();
 				cloned.setValueStructureRuntimeId(valueStructureDomain.cloneRuntime(valueStructure.getValueStructureRuntimeId()));
 			}
-			else if(mode.equals("refer")) {
+			else if(mode.equals(HAPConstantShared.INHERITMODE_REFER)) {
 				cloned = valueStructure.cloneValueStructureWrapper();
 				cloned.setValueStructureRuntimeId(valueStructureDomain.createRuntimeByRelativeRef(valueStructure.getValueStructureRuntimeId()));
 			}

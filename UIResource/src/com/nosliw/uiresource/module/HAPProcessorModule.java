@@ -8,8 +8,8 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPProcessorComponent;
 import com.nosliw.data.core.component.HAPProcessorEmbededComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -43,7 +43,7 @@ public class HAPProcessorModule {
 		HAPExecutableModule out = new HAPExecutableModule(moduleDefinition, id);
 
 		HAPRequirementContextProcessor contextProcessRequirement1 = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
-		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
+		HAPConfigureProcessorValueStructure contextProcessConfg = HAPUtilityConfiguration.getContextProcessConfigurationForModule();
 
 		HAPProcessorComponent.normalize(moduleDefinition, new HAPContextProcessor(moduleDefinition, runtimeEnv));
 		

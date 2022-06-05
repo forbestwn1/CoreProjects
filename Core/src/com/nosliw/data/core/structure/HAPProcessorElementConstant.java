@@ -18,6 +18,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPInfoRuntimeTaskScript;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteScript;
@@ -35,7 +36,7 @@ public class HAPProcessorElementConstant {
 	static public HAPStructure process(
 			HAPStructure structure,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 
 		//process constant ref in context
@@ -54,7 +55,7 @@ public class HAPProcessorElementConstant {
 			HAPStructure structure,
 			HAPContainerStructure parent,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 
 		//merge with parent
@@ -160,7 +161,7 @@ public class HAPProcessorElementConstant {
 
 	static private HAPStructure solidateConstantElements(
 			HAPStructure structure,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 		HAPStructure out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
@@ -185,7 +186,7 @@ public class HAPProcessorElementConstant {
 	static private void solidateConstantDefEle(
 			HAPElementStructureLeafConstant contextElement, 
 			HAPStructure structure,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 
 		if(!contextElement.isProcessed()) {
@@ -209,7 +210,7 @@ public class HAPProcessorElementConstant {
 	static private Object processConstantDefJsonNode(
 			Object nodeValue,
 			HAPStructure structure,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 		Object out = null;
 		try{
@@ -262,7 +263,7 @@ public class HAPProcessorElementConstant {
 	static private Object processConstantDefLeaf(
 			Object leafData,
 			HAPStructure structure,
-			HAPConfigureProcessorStructure configure,
+			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 
 		//simply process script

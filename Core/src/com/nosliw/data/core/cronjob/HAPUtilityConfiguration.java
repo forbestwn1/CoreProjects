@@ -1,11 +1,11 @@
 package com.nosliw.data.core.cronjob;
 
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 
 public class HAPUtilityConfiguration {
 
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForCronJob() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForCronJob() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		return out;
 	}
 

@@ -1,12 +1,14 @@
 package com.nosliw.common.info;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -70,6 +72,21 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		return true;
 	}
 	
+	protected void buildStringSetValue(JSONObject jsonObj, String name) {
+		Set<String> strSet = new HashSet<String>();
+		JSONArray jsonArray = jsonObj.optJSONArray(name);
+		if(jsonArray!=null) {
+			for(int i=0; i<jsonArray.length(); i++) {
+				strSet.add(jsonArray.getString(i));
+			}
+		}
+		this.setValue(name, strSet);
+	}
+
+	protected void buildStringValue(JSONObject jsonObj, String name) {
+		this.setValue(name, jsonObj.opt(name));
+	}
+
 	@Override
 	public HAPInfoImpSimple cloneInfo() {
 		HAPInfoImpSimple out = new HAPInfoImpSimple();
@@ -124,5 +141,23 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 		}
 		return false;
 	}
+	
+	protected void mergeHardString(String name, HAPInfo info) {
+		if(info.getValue(name)!=null)   this.setValue(name, info.getValue(name));
+	}
 
+	protected void mergeSoftString(String name, HAPInfo info) {
+		if(info.getValue(name)!=null) {
+			if(this.getValue(name)!=null) {
+				this.setValue(name, info.getValue(name));
+			}
+		}
+	}
+
+	protected void mergeHardSet(String name, HAPInfo info) {
+		if(info.getValue(name)!=null) {
+			if(this.getValue(name)==null)		this.setValue(name, info.getValue(name));
+			else  ((Set)this.getValue(name)).addAll((Set)info.getValue(name));
+		}
+	}
 }

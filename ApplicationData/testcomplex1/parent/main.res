@@ -35,6 +35,34 @@
 				"status": "disabled1"
 			}
 		},
+		"valueStructureInheritDefinition_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
+			"extra": {
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "definition",
+						"excludedInfo" : ["excluded1", "excluded2"]
+					}
+				}
+			}
+		},
+		"valueStructureInheritRuntime_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
+			"extra": {
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "runtime",
+						"excludedInfo" : ["excluded1", "excluded2"]
+					}
+				}
+			}
+		},
 		"globalresource1_none_testsimple1": {
 			"extra": {
 				"status": "disabled"

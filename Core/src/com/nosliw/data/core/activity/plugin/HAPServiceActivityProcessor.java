@@ -10,13 +10,13 @@ import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -29,7 +29,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPContextProcessor processContext, 
 			HAPWrapperValueStructureDefinition valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		HAPServiceActivityDefinition serviceActDef = (HAPServiceActivityDefinition)activityDefinition;
 		HAPServiceActivityExecutable out = new HAPServiceActivityExecutable(id, serviceActDef);

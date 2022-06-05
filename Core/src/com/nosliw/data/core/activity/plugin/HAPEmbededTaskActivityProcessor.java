@@ -7,6 +7,7 @@ import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPBuilderResultContext;
 import com.nosliw.data.core.process1.HAPContextProcessor;
 import com.nosliw.data.core.process1.HAPExecutableActivity;
@@ -17,7 +18,6 @@ import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
@@ -35,7 +35,7 @@ public class HAPEmbededTaskActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		 
 		HAPEmbededTaskActivityDefinition processActivityDef = (HAPEmbededTaskActivityDefinition)activityDefinition;

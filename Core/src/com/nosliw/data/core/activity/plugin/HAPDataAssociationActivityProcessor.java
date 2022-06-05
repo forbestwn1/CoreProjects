@@ -7,9 +7,9 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 public class HAPDataAssociationActivityProcessor implements HAPProcessorActivity{
 
@@ -20,7 +20,7 @@ public class HAPDataAssociationActivityProcessor implements HAPProcessorActivity
 			HAPContextProcessor processContext, 
 			HAPWrapperValueStructureDefinition valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		 
 		HAPDataAssociationActivityDefinition definition = (HAPDataAssociationActivityDefinition)activityDefinition;

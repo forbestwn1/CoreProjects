@@ -3,8 +3,8 @@ package com.nosliw.uiresource.page.processor;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -17,7 +17,7 @@ import com.nosliw.uiresource.page.tag.HAPUtilityUITag;
 public class HAPUtilityProcess {
 
 	//build context for ui Tag
-	public static HAPValueStructureDefinitionGroup buildUITagValueStructure(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentValueStructure, Map<String, String> attributes, HAPConfigureProcessorStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
+	public static HAPValueStructureDefinitionGroup buildUITagValueStructure(HAPUITagDefinition tagDef, HAPValueStructureDefinitionGroup parentValueStructure, Map<String, String> attributes, HAPConfigureProcessorValueStructure contextProcessorConfig, HAPRuntimeEnvironment runtimeEnv){
 		//get contextDef 
 		HAPValueStructure tagValueStructure = tagDef.getValueStructureDefinition();
 

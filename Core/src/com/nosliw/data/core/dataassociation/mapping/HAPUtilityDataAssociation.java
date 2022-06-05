@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
@@ -63,8 +63,8 @@ public class HAPUtilityDataAssociation {
 		return out;
 	}
 	
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForDataAssociation(HAPInfo daProcessConfigure) {
-		HAPConfigureProcessorStructure configure = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForDataAssociation(HAPInfo daProcessConfigure) {
+		HAPConfigureProcessorValueStructure configure = new HAPConfigureProcessorValueStructure();
 		configure.inheritMode = HAPConstant.INHERITMODE_NONE;
 		if(HAPUtilityDAProcess.ifModifyInputStructure(daProcessConfigure))  configure.tolerantNoParentForRelative = true;
 		return configure;

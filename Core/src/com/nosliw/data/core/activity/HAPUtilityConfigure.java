@@ -1,16 +1,16 @@
 package com.nosliw.data.core.activity;
 
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 
 public class HAPUtilityConfigure {
 
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForProcess() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForProcess() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		return out;
 	}
 
-	public static HAPConfigureProcessorStructure getContextProcessConfigurationForActivity() {
-		HAPConfigureProcessorStructure out = new HAPConfigureProcessorStructure();
+	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForActivity() {
+		HAPConfigureProcessorValueStructure out = new HAPConfigureProcessorValueStructure();
 		return out;
 	}
 

@@ -13,7 +13,8 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		out = newInstance(obj);
 		if(out==null) out = newInstance(resourceType, obj);
-		if(!out.getResourceType().equals(resourceType))  throw new RuntimeException();
+		if(!out.getResourceType().equals(resourceType))  
+			throw new RuntimeException();
 		return out;
 	}
 	

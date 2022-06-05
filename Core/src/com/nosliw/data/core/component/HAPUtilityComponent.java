@@ -9,6 +9,7 @@ import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
@@ -21,7 +22,6 @@ import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
@@ -37,7 +37,7 @@ public class HAPUtilityComponent {
 			HAPExecutableImpComponent componentExe,
 			HAPValueStructureDefinitionGroup parentContext,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure contextProcessConfg,
+			HAPConfigureProcessorValueStructure contextProcessConfg,
 			HAPManagerActivityPlugin activityPluginMan
 			) {
 		HAPDefinitionEntityComponent component = componentExe.getDefinition();

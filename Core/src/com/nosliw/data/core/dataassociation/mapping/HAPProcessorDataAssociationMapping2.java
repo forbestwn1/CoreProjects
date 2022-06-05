@@ -14,9 +14,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
@@ -61,7 +61,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
 		HAPInfo info = HAPUtilityDAProcess.withModifyInputStructureConfigure(null, inputEnhance);
 		info = HAPUtilityDAProcess.withModifyOutputStructureConfigure(info, outputEnhance);
-		HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(info);
+		HAPConfigureProcessorValueStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(info);
 		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 
 		//process data association definition in order to find missing context data definition from input
@@ -157,7 +157,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		
 		//process mapping
 		List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-		HAPConfigureProcessorStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(daProcessConfigure);
+		HAPConfigureProcessorValueStructure processConfigure = HAPUtilityDataAssociation.getContextProcessConfigurationForDataAssociation(daProcessConfigure);
 		HAPValueStructureDefinitionFlat daContextProcessed = HAPProcessorContext.process(valueMapping, input, attachmentContainer, parentDependency, errors, processConfigure, runtimeEnv);
 		out.setMapping(daContextProcessed);
 		buildRelativePathMappingInDataAssociation(out);

@@ -825,8 +825,14 @@
 			<definition name="HANDLERSTEP_TYPE_ACTIVITY" value="activity"/>
 			
 			<definition type="space"/>
-			<definition name="INHERITMODE_PARENT" value="parent" description="when child define the same context node name as parent inheritable, but parent override child for same name"/>
-			<definition name="INHERITMODE_CHILD" value="child" description="inheritable, but child unaffected for same name"/>
+			<!-- definition name="INHERITMODE_PARENT" value="parent" description="when child define the same context node name as parent inheritable, but parent override child for same name"/-->
+			<!-- definition name="INHERITMODE_CHILD" value="child" description="inheritable, but child unaffected for same name"/-->
+			<!-- definition name="INHERITMODE_NONE" value="none" description="UNheritable"/-->
+
+			<definition type="space"/>
+			<definition name="INHERITMODE_DEFINITION" value="parent" description="inherit definition"/>
+			<definition name="INHERITMODE_RUNTIME" value="child" description="share same runtime"/>
+			<definition name="INHERITMODE_REFER" value="reference" description="inherit by reference to parent"/>
 			<definition name="INHERITMODE_NONE" value="none" description="UNheritable"/>
 
 			<definition type="space"/>

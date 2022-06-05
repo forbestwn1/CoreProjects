@@ -14,10 +14,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -35,23 +35,23 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorContextRelative {
 
-	public static HAPValueStructureDefinitionFlat process(HAPValueStructureDefinitionFlat context, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinitionFlat process(HAPValueStructureDefinitionFlat context, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return process(context, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 
-	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return process(contextGroup, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 	
 	//dependency: 
-	public static HAPValueStructureDefinitionFlat process(HAPValueStructureDefinitionFlat context, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinitionFlat process(HAPValueStructureDefinitionFlat context, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinitionGroup contextGroup = new HAPValueStructureDefinitionGroup();
 		contextGroup.setFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, context);
 		contextGroup = process(contextGroup, parent, dependency, errors, configure, runtimeEnv);
 		return contextGroup.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 	}
 	
-	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String parentName : allParentName(parent)) {
 			HAPValueStructure context = HAPUtilityContext.getReferedStructure(parentName, parent, contextGroup);
@@ -67,7 +67,7 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, String parentName, HAPValueStructureDefinitionGroup parentContextGroup, Set<String> dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, String parentName, HAPValueStructureDefinitionGroup parentContextGroup, Set<String> dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String categary : HAPValueStructureDefinitionGroup.getAllCategaries()){
 			Map<String, HAPRootStructure> eles = out.getRootsByCategary(categary);
@@ -79,7 +79,7 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 
-	private static HAPElementStructure processRelativeInContextDefinitionElement(HAPInfoElement contextEleInfo, String parentName, HAPValueStructureDefinitionGroup parentContext, Set<String>  dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPElementStructure processRelativeInContextDefinitionElement(HAPInfoElement contextEleInfo, String parentName, HAPValueStructureDefinitionGroup parentContext, Set<String>  dependency, List<HAPServiceData> errors, boolean isParentFlat, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure defContextElement = contextEleInfo.getElement();
 		HAPElementStructure out = defContextElement;
 		switch(defContextElement.getType()) {
@@ -107,7 +107,7 @@ public class HAPProcessorContextRelative {
 		return out;
 	}
 	
-	private static HAPElementStructure processRelativeContextDefinitionElement(HAPInfoElement contextEleInfo, HAPValueStructureDefinitionGroup parentContext, List<HAPServiceData> errors, boolean isParentFlat, String[] categaryes, HAPConfigureProcessorStructure configure, HAPRuntimeEnvironment runtimeEnv){
+	private static HAPElementStructure processRelativeContextDefinitionElement(HAPInfoElement contextEleInfo, HAPValueStructureDefinitionGroup parentContext, List<HAPServiceData> errors, boolean isParentFlat, String[] categaryes, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv){
 		HAPElementStructureLeafRelative defContextElementRelative = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 		HAPElementStructure out = defContextElementRelative;
 		

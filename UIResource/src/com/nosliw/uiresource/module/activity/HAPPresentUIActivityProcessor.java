@@ -5,9 +5,9 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 
 public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 
@@ -15,7 +15,7 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 	public com.nosliw.data.core.activity.HAPExecutableActivity process(HAPDefinitionActivity activityDefinition,
 			String id, com.nosliw.data.core.component.HAPContextProcessor processContext,
 			HAPWrapperValueStructureDefinition valueStructureWrapper, HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, HAPProcessTracker processTracker) {
+			HAPConfigureProcessorValueStructure configure, HAPProcessTracker processTracker) {
 		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)activityDefinition;
 		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, activity);
 		//process success result

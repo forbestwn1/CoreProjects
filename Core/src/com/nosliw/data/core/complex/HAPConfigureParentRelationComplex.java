@@ -6,19 +6,20 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 
 public class HAPConfigureParentRelationComplex extends HAPSerializableImp{
 
 	public static final String VALUESTRUCTURE = "valuestructure";
 	public static final String ATTACHMENT = "attachment";
 	
-	private HAPConfigureComplexRelationValueStructure m_valueStructureConfigure;
+	private HAPConfigureProcessorValueStructure m_valueStructureConfigure;
 	private HAPConfigureComplexRelationAttachment m_attachmentMode;
 	private HAPConfigureComplexRelationInfo m_infoMode;
 	
 	public HAPConfigureParentRelationComplex(){
 		this.m_attachmentMode = new HAPConfigureComplexRelationAttachment();
-		this.m_valueStructureConfigure = new HAPConfigureComplexRelationValueStructure();
+		this.m_valueStructureConfigure = new HAPConfigureProcessorValueStructure();
 	}
 	
 	//attachment merge
@@ -29,8 +30,8 @@ public class HAPConfigureParentRelationComplex extends HAPSerializableImp{
 	public HAPConfigureComplexRelationInfo getInfoRelationMode() {    return this.m_infoMode;    }
 	public void setInfoRelationMode(HAPConfigureComplexRelationInfo infoRelationConfigure) {    this.m_infoMode = infoRelationConfigure;     }
 	
-	public HAPConfigureComplexRelationValueStructure getValueStructureRelationMode() {   return this.m_valueStructureConfigure;    }
-	public void setValueStructureRelationMode(HAPConfigureComplexRelationValueStructure valueStructureConfigure) {    this.m_valueStructureConfigure = valueStructureConfigure;    }
+	public HAPConfigureProcessorValueStructure getValueStructureRelationMode() {   return this.m_valueStructureConfigure;    }
+	public void setValueStructureRelationMode(HAPConfigureProcessorValueStructure valueStructureConfigure) {    this.m_valueStructureConfigure = valueStructureConfigure;    }
 	
 	public void mergeHard(HAPConfigureParentRelationComplex configure) {
 		if(configure!=null) {

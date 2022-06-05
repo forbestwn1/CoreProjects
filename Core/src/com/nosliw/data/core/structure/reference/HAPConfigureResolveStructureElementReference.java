@@ -2,24 +2,23 @@ package com.nosliw.data.core.structure.reference;
 
 import java.util.Set;
 
-public class HAPConfigureResolveStructureElementReference {
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPConstant;
+
+//configure for resolve 
+public class HAPConfigureResolveStructureElementReference extends HAPSerializableImp{
 
 	//only within these group types, if empty or null, then all of group type is valid
-	private Set<String> m_valueStructureroupTypes;
+	public Set<String> valueStructureGroupTypes;
 	
-	private String m_searchMode;
+	//different strategy (first or best match)
+	public String searchMode = HAPConstant.RESOLVEPARENTMODE_BEST;
 	
-	private boolean m_relativeInheritRule; 
-	
-	private Set<String> m_candidateElementTypes;
+	//candidate element type (constant, value, data, node)
+	public Set<String> candidateElementTypes;
 
-	public String getSearchMode() {    return this.m_searchMode;   }
-	public void setSearchMode(String searchMode) {    this.m_searchMode = searchMode;    }
-
-	public Set<String> getValueStructureGroupTypes(){   return this.m_valueStructureroupTypes;    }
-
-	public Set<String> getCandidateElementTypes(){    return this.m_candidateElementTypes;    }
 	
-	public boolean getRelativeInheritRule() {   return this.m_relativeInheritRule;    }
-	
+	public void mergeHard(HAPConfigureResolveStructureElementReference configure) {
+		
+	}
 }

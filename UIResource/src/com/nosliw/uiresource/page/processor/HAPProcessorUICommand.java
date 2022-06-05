@@ -6,9 +6,9 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextRelative;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -51,7 +51,7 @@ public class HAPProcessorUICommand {
 	}
 
 	
-	private static void processInteractionElement(HAPExecutableUIUnit1 uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
+	private static void processInteractionElement(HAPExecutableUIUnit1 uiExe, HAPValueStructureDefinitionGroup parentContext, Map<String, HAPDefinitionServiceProvider> serviceProviders, HAPConfigureProcessorValueStructure contextProcessorConfig, HAPManagerUITag uiTagMan, HAPRuntimeEnvironment runtimeEnv){
 		HAPDefinitionUIUnit uiUnitDef = uiExe.getUIUnitDefinition();
 		//process relative element in event defined in resource
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();

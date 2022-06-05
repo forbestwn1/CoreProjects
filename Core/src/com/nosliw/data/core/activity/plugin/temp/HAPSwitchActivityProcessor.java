@@ -10,6 +10,7 @@ import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPContextProcessor;
 import com.nosliw.data.core.process1.HAPExecutableActivity;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
@@ -18,7 +19,6 @@ import com.nosliw.data.core.process1.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPProcessorScript;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
@@ -35,7 +35,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 			Map<String, HAPDefinitionServiceProvider> serviceProviders,
 			HAPManagerProcess processManager,
 			HAPRuntimeEnvironment runtimeEnv,
-			HAPConfigureProcessorStructure configure, 
+			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {
 		
 		HAPSwitchActivityDefinition switchActDef = (HAPSwitchActivityDefinition)activityDefinition;

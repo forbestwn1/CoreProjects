@@ -34,10 +34,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerComplexEntity {
 
-//	private HAPManagerResourceDefinition m_resourceDefinitionManager;
-	
-//	private HAPManagerDomainEntityDefinition m_entityDefManager;
-
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	private HAPGeneratorId m_idGenerator;

@@ -17,27 +17,28 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPPackageComplexResource;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorInherit;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityProcessRelativeElement;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
-import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
-import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPUtilityValueStructure {
 
 	public static void buildValueStructureDomain(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
+		
 		buildValueStructureComplexTree(rootComplexEntityExecutableId, processContext);
 		
 		mergeValueStructure(rootComplexEntityExecutableId, processContext);
 	}
 
-	//add attachment container to attachment domain
+	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
@@ -66,7 +67,7 @@ public class HAPUtilityValueStructure {
 			}}, processContext);
 	}
 
-	//merge attachment between paren and child
+	//merge value structure between paren and child
 	private static void mergeValueStructure(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityDomain.traverseExecutableComplexEntityTreeSolidOnly(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
 			@Override
@@ -96,8 +97,7 @@ public class HAPUtilityValueStructure {
 					String parentValueStructureComplexId = parentEntityExe.getValueStructureComplexId();
 					HAPExecutableEntityComplexValueStructure parentValueStructureComplex = valueStructureDomain.getValueStructureComplex(parentValueStructureComplexId);
 					
-					HAPConfigureComplexRelationValueStructure valueStructureConfig = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef).getParentRelationConfigure().getValueStructureRelationMode();
-					valueStructureConfig.getInheritanceMode();
+					HAPConfigureProcessorValueStructure valueStructureConfig = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef).getParentRelationConfigure().getValueStructureRelationMode();
 					
 					//process static
 					
@@ -108,29 +108,25 @@ public class HAPUtilityValueStructure {
 						for(HAPWrapperValueStructureExecutable valueStructureWrapper : simplePart.getSimpleValueStructurePart().getValueStructures()) {
 							HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 							List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-							HAPConfigureResolveStructureElementReference resolveConfigure = new HAPConfigureResolveStructureElementReference();
-							HAPConfigureProcessorStructure processConfigure = new HAPConfigureProcessorStructure();
 							Set<String> dependency = new HashSet<String>();
 							HAPCandidatesValueStructureComplex valueStructureComplexGroup = new HAPCandidatesValueStructureComplex(valueStructureComplexId, parentValueStructureComplexId);
-							HAPUtilityStructureElementReference.processRelativeInStructure(valueStructure, valueStructureComplexGroup, valueStructureDomain, resolveConfigure, processConfigure, dependency, errors, processContext.getRuntimeEnvironment());
+							HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureComplexGroup, valueStructureDomain, valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext.getRuntimeEnvironment());
 						}
 					}
 					
-					
 					//inheritance
-					processInteritance(valueStructureComplex, parentValueStructureComplex, valueStructureConfig, valueStructureDomain);
+					processInteritance(valueStructureComplex, parentValueStructureComplex, valueStructureConfig.getInheritProcessorConfigure(), valueStructureDomain);
 					
 				}
 
 			}}, processContext);
 	}
 
-	private static void processInteritance(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPExecutableEntityComplexValueStructure parentValueStructureComplex, HAPConfigureComplexRelationValueStructure valueStructureConfig, HAPDomainValueStructure valueStructureDomain) {
+	private static void processInteritance(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPExecutableEntityComplexValueStructure parentValueStructureComplex, HAPConfigureProcessorInherit valueStructureInheritConfig, HAPDomainValueStructure valueStructureDomain) {
 		List<HAPPartComplexValueStructure> newParts = new ArrayList<HAPPartComplexValueStructure>();
 		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
-			newParts.add(part.cloneComplexValueStructurePart(valueStructureDomain, valueStructureConfig.getInheritanceMode()));
+			newParts.add(part.cloneComplexValueStructurePart(valueStructureDomain, valueStructureInheritConfig.getMode()));
 		}
 		parentValueStructureComplex.addPartGroup(newParts, HAPUtilityComplexValueStructure.createPartInfoFromParent());
 	}
-	
 }

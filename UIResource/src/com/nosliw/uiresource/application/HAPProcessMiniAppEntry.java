@@ -17,6 +17,7 @@ import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.HAPProcessorProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
@@ -25,7 +26,6 @@ import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -52,7 +52,7 @@ public class HAPProcessMiniAppEntry {
 		HAPDefinitionAppElementUI entryDefinition = minAppEntryDef.getEntry();
 		
 		HAPRequirementContextProcessor contextProcessRequirement = HAPUtilityCommon.getDefaultContextProcessorRequirement(runtimeEnv.getResourceDefinitionManager(), runtimeEnv.getDataTypeHelper(), runtimeEnv.getRuntime(), runtimeEnv.getExpressionManager(), runtimeEnv.getServiceManager().getServiceDefinitionManager());
-		HAPConfigureProcessorStructure contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
+		HAPConfigureProcessorValueStructure contextProcessConfg = HAPUtilityApp.getContextProcessConfigurationForApp();
 		
 		//service providers
 		Map<String, HAPDefinitionServiceProvider> entryServiceProviders = HAPUtilityServiceUse.buildServiceProvider(entryDefinition.getAttachmentContainer(), null, contextProcessRequirement.serviceDefinitionManager); 

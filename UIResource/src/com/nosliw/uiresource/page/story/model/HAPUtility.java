@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPInfoNodeChild;
 import com.nosliw.data.core.story.HAPStory;
@@ -11,7 +12,6 @@ import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.data.core.structure.HAPConfigureProcessorStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -33,7 +33,7 @@ public class HAPUtility {
 		HAPUIDataStructureInfo out = new HAPUIDataStructureInfo();
 
 		String nodeType = uiStoryNode.getType();
-		HAPConfigureProcessorStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
+		HAPConfigureProcessorValueStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
 		HAPValueStructureDefinitionGroup childContext = null;
 		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
 			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;

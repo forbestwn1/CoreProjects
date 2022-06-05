@@ -16,7 +16,7 @@ public class HAPConfigureComplexRelationAttachment extends HAPSerializableImp{
 	public String getMode() {   return this.m_mode;    }
 
 	public void mergeHard(HAPConfigureComplexRelationAttachment configure) {
-		this.m_mode = configure.m_mode;
+		if(configure.m_mode!=null)   this.m_mode = configure.m_mode;
 	}
 	
 	@Override
