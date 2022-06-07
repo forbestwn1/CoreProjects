@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 
@@ -46,7 +46,7 @@ public class HAPWrapperValueStructureDefinition extends HAPSerializableImp{
 		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
-	public String toExpandedJsonString(HAPDomainEntityDefinitionSimpleResource entityDefDomain) {
+	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(GROUPTYPE, this.m_groupType);
 		jsonMap.put(GROUPNAME, this.m_groupName);

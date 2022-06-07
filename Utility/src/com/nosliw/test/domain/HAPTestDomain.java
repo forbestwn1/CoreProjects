@@ -26,18 +26,18 @@ public class HAPTestDomain {
 		//process
 		HAPPackageExecutable executablePackage = runtimeEnvironment.getComplexEntityManager().process(resourceId);
 		
-		System.out.println();
-		System.out.println();
-		System.out.println("*******************************************************************************");
-		System.out.println();
-		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println("*******************************************************************************");
+//		System.out.println();
+//		System.out.println();
 //		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getAttachmentDomain().toString()));
 
-		System.out.println();
-		System.out.println();
-		System.out.println("*******************************************************************************");
-		System.out.println();
-		System.out.println();
+//		System.out.println();
+//		System.out.println();
+//		System.out.println("*******************************************************************************");
+//		System.out.println();
+//		System.out.println();
 //		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getExecutableDomain().toString()));
 	}
 }

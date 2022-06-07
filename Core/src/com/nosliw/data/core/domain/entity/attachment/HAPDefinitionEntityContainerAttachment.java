@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
@@ -114,12 +114,16 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_element, HAPSerializationFormat.JSON));
+		this.buildCommonJsonMap(jsonMap, typeJsonMap);
 	}
 
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionSimpleResource entityDefDomain){
-		this.buildJsonMap(jsonMap, typeJsonMap);
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
+		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
+		this.buildCommonJsonMap(jsonMap, typeJsonMap);
 	}
 
+	private void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_element, HAPSerializationFormat.JSON));
+	}
 }

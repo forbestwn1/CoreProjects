@@ -1,6 +1,8 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -54,13 +56,15 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		
 		//extra value structure
 		if(valueStructureComplexDef!=null) {
+			List<HAPWrapperValueStructureExecutable> wrappers = new ArrayList<HAPWrapperValueStructureExecutable>();
 			for(HAPWrapperValueStructureDefinition part : valueStructureComplexDef.getParts()) {
 				HAPInfoEntityInDomainDefinition valueStructureDefInfo = entityDefDomain.getSolidEntityInfoDefinition(part.getValueStructureId(), attachmentContainer);
 				String valueStructureExeId = this.newValueStructure(valueStructureDefInfo, part.getValueStructureId().getEntityId());
 				HAPWrapperValueStructureExecutable valueStructureWrapperExe = new HAPWrapperValueStructureExecutable(valueStructureExeId);
 				valueStructureWrapperExe.cloneFromDefinition(part);
-				valueStructureComplexExe.addPartSimple(valueStructureWrapperExe, HAPUtilityComplexValueStructure.createPartInfoDefault());
+				wrappers.add(valueStructureWrapperExe);
 			}
+			valueStructureComplexExe.addPartSimple(wrappers, HAPUtilityComplexValueStructure.createPartInfoDefault());
 		}
 
 		this.m_valueStructureComplex.put(valueStructureComplexExe.getId(), valueStructureComplexExe);

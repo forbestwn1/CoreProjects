@@ -15,6 +15,7 @@ public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
 	public static final String RUNTIMEID = "runtimeId";
+	public static final String DEFINITIONID = "definitionId";
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
 	private String m_groupName;
@@ -62,6 +63,7 @@ public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		this.buildFullJsonMap(jsonMap, null);
+		jsonMap.put(DEFINITIONID, valueStructureDomain.getValueStructureDefinitionIdByRuntimeId(m_valueStructureRuntimeId));
 		jsonMap.put(VALUESTRUCTURE, valueStructureDomain.getValueStructureDefInfoByRuntimeId(m_valueStructureRuntimeId).toStringValue(HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}

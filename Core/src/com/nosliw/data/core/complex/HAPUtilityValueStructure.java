@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -123,10 +124,54 @@ public class HAPUtilityValueStructure {
 	}
 
 	private static void processInteritance(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPExecutableEntityComplexValueStructure parentValueStructureComplex, HAPConfigureProcessorInherit valueStructureInheritConfig, HAPDomainValueStructure valueStructureDomain) {
-		List<HAPPartComplexValueStructure> newParts = new ArrayList<HAPPartComplexValueStructure>();
-		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
-			newParts.add(part.cloneComplexValueStructurePart(valueStructureDomain, valueStructureInheritConfig.getMode()));
+		String inheritMode = valueStructureInheritConfig.getMode();
+		if(!inheritMode.equals(HAPConstantShared.INHERITMODE_NONE)) {
+			List<HAPPartComplexValueStructure> newParts = new ArrayList<HAPPartComplexValueStructure>();
+			for(HAPPartComplexValueStructure part : parentValueStructureComplex.getParts()) {
+				HAPPartComplexValueStructure newPart = part.cloneComplexValueStructurePart(valueStructureDomain, inheritMode, valueStructureInheritConfig.getGroupTypes());
+				if(!newPart.isEmpty()) newParts.add(newPart);
+			}
+			valueStructureComplex.addPartGroup(newParts, HAPUtilityComplexValueStructure.createPartInfoFromParent());
 		}
-		parentValueStructureComplex.addPartGroup(newParts, HAPUtilityComplexValueStructure.createPartInfoFromParent());
 	}
+	
+	public static String[] getAllCategaries(){
+		String[] contextTypes = {
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+		};
+		return contextTypes;
+	}
+
+	public static String[] getAllCategariesWithPriority(){
+		String[] contextTypes = {
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+		};
+		return contextTypes;
+	}
+
+	//context type that can be inherited by child
+	public static String[] getInheritableCategaries(){
+		String[] contextTypes = {
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+		};
+		return contextTypes;
+	}
+
+	//visible to child
+	public static String[] getVisibleCategaries(){
+		String[] contextTypes = {
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+		};
+		return contextTypes;
+	}
+
 }

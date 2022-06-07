@@ -8,5 +8,4 @@ public abstract class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEnt
 		super(entityType);
 	}
 	
-
 }

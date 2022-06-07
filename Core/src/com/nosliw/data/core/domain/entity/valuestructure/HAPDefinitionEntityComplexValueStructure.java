@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 
 public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
 
@@ -37,8 +37,8 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 	}
 	
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionSimpleResource entityDefDomain){
-		super.buildJsonMap(jsonMap, typeJsonMap);
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
+		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
 		List<String> partJsonArray = new ArrayList<String>();
 		for(HAPWrapperValueStructureDefinition part : this.m_parts) {
 			partJsonArray.add(part.toExpandedJsonString(entityDefDomain));

@@ -35,10 +35,23 @@
 				"status": "disabled"
 			}
 		},
+		"valueStructureInheritModeNone_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
+			"extra": {
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "none"
+					}
+				}
+			}
+		},
 		"valueStructureInheritModeDefinition_none_testcomplex1": {
 			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure": {
@@ -51,7 +64,7 @@
 		"valueStructureInheritModeRuntime_none_testcomplex1": {
 			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"parent": {
 				"valuestructure": {
@@ -197,7 +210,7 @@
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"parent1": {
+						"parent_public": {
 							"definition":{
 								"criteria": "test.string"
 							},
@@ -205,23 +218,47 @@
 								"dataTypeId": "test.string",
 								"value": "9876543210"
 							}
-						},
-						"parent2" : {
-							"definition": {
-								"criteria" : "test.integer"
+						}
+					}
+				},
+				{
+					"groupType" : "protected",
+					"valueStructure" : {
+						"parent_protected": {
+							"definition":{
+								"criteria": "test.string"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.integer;1.0.0",
-								"value": 5
+								"dataTypeId": "test.string",
+								"value": "9876543210"
 							}
-						},
-						"parent3" : {
-							"definition": {
-								"criteria": "test.integer"
+						}
+					}
+				},
+				{
+					"groupType" : "internal",
+					"valueStructure" : {
+						"parent_internal": {
+							"definition":{
+								"criteria": "test.string"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.integer;1.0.0",
-								"value": 7
+								"dataTypeId": "test.string",
+								"value": "9876543210"
+							}
+						}
+					}
+				},
+				{
+					"groupType" : "private",
+					"valueStructure" : {
+						"parent_private": {
+							"definition":{
+								"criteria": "test.string"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string",
+								"value": "9876543210"
 							}
 						}
 					}

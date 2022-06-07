@@ -41,9 +41,11 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 		return out;
 	}
 
-	public void addPartSimple(HAPWrapperValueStructureExecutable valueStructureExeWrapper, HAPInfoPartValueStructure partInfo) {
+	public void addPartSimple(List<HAPWrapperValueStructureExecutable> valueStructureExeWrappers, HAPInfoPartValueStructure partInfo) {
 		HAPPartComplexValueStructureSimple part = new HAPPartComplexValueStructureSimple(partInfo);
-		part.addValueStructure(valueStructureExeWrapper);
+		for(HAPWrapperValueStructureExecutable wrapper : valueStructureExeWrappers) {
+			part.addValueStructure(wrapper);
+		}
 		this.addPart(part);
 	}
 	

@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple{
@@ -56,14 +56,20 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String rootName : this.m_rootByName.keySet()) {
-			jsonMap.put(rootName, this.m_rootByName.get(rootName).toStringValue(HAPSerializationFormat.JSON));
-		}
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		this.buildCommonJsonMap(jsonMap, typeJsonMap);
 	}
 	
 	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionSimpleResource entityDefDomain){
-		this.buildJsonMap(jsonMap, typeJsonMap);
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
+		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
+		this.buildCommonJsonMap(jsonMap, typeJsonMap);
+	}
+
+	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		for(String rootName : this.m_rootByName.keySet()) {
+			jsonMap.put(rootName, this.m_rootByName.get(rootName).toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override

@@ -12,7 +12,14 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 public class HAPUtilityExport {
 
 	public static void exportExecutablePackage(HAPPackageExecutable executablePackage) {
-		String mainFolder = getRootFolder();
+		String mainFolderUnique = getRootFolderUnique();
+		exportExecutablePackage(executablePackage, mainFolderUnique);
+
+		String mainFolderTemp = getRootFolderTemp();
+		exportExecutablePackage(executablePackage, mainFolderTemp);
+	}
+
+	private static void exportExecutablePackage(HAPPackageExecutable executablePackage, String mainFolder) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info
@@ -44,8 +51,11 @@ public class HAPUtilityExport {
 		}
 	}
 	
-	private static String getRootFolder(){  
-//		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), System.currentTimeMillis()+""));  
+	private static String getRootFolderUnique(){  
+		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), System.currentTimeMillis()+""));  
+	}
+
+	private static String getRootFolderTemp(){  
 		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(HAPSystemFolderUtility.getExecutablePackageExportFolder(), "temp"));  
 	}
 
