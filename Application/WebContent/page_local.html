@@ -28,7 +28,7 @@
 <script>
 
 $(document).on("nosliwActive", function(){
-
+ 
 	var currentSearchString = window.location.search;
 	var page = currentSearchString.substring(currentSearchString.indexOf("=")+1);
 	nosliw.runtime.getUIPageService().executeCreateUIPageRequest(page, undefined, 

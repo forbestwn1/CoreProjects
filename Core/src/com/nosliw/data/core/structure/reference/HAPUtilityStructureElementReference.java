@@ -89,10 +89,9 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	//find all value structure which meet criteria from value structure complex
-	private static List<HAPWrapperValueStructureExecutable> discoverCandidateValueStructure(String valueStructureComplexId, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+	private static List<HAPWrapperValueStructureExecutable> discoverCandidateValueStructure(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		List<HAPWrapperValueStructureExecutable> out = new ArrayList<HAPWrapperValueStructureExecutable>();
 		
-		HAPExecutableEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		List<HAPInfoPartSimple> allSimpleParts = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple simplePart : allSimpleParts) {
 			for(HAPWrapperValueStructureExecutable wraper : simplePart.getSimpleValueStructurePart().getValueStructures()) {

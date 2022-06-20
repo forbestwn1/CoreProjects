@@ -18,7 +18,7 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 	
 	public HAPDefinitionGroupDataAssociationForComponent() {
 		this.m_dataAssociations = new ArrayList<HAPDefinitionDataAssociation>();
-	} 
+	}
 	
 	public List<HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
 	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) 

@@ -4,6 +4,7 @@
 		"description": "parent complex entity"
 	},
 	"entity": {
+		"ignore_variable" : "parent_public",
 		"simplized1_none_testsimple1": {
 			"attribute2_none_testsimple1": {
 			
@@ -64,12 +65,25 @@
 		"valueStructureInheritModeRuntime_none_testcomplex1": {
 			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure": {
 					"inherit": {
 						"mode" : "runtime"
+					}
+				}
+			}
+		},
+		"valueStructureInheritModeReference_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
+			"extra": {
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "reference"
 					}
 				}
 			}
@@ -84,6 +98,19 @@
 					"inherit": {
 						"mode" : "runtime",
 						"excludedInfo" : ["excluded1", "excluded2"]
+					}
+				}
+			}
+		},
+		"valueStructureRelative_none_testcomplex1": {
+			"resourceId": "testcomplex1|#valuestructure_relative",
+			"extra": {
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure": {
+					"inherit": {
+						"mode" : "none"
 					}
 				}
 			}

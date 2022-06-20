@@ -24,9 +24,8 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 	
 	private List<HAPPartComplexValueStructure> m_parts;
 	
-	public HAPExecutableEntityComplexValueStructure(String id) {
+	public HAPExecutableEntityComplexValueStructure() {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
-		this.m_id = id;
 	}
 	
 	public String getId() {    return this.m_id;    }

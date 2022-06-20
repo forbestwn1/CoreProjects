@@ -1,7 +1,9 @@
 package com.nosliw.data.core.domain;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
@@ -9,9 +11,9 @@ import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 //all information for complex resource 
-public class HAPPackageComplexResource {
+public class HAPBundleComplexResource {
 
-	//root entity
+	//root resource
 	private HAPResourceIdSimple m_rootResourceId;
 	
 	//entity domain definition
@@ -24,18 +26,22 @@ public class HAPPackageComplexResource {
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableComplexEntityIdByDefinitionComplexEntityId;
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionComplexEntityIdByExecutableComplexEntityId;
 	
+	//all other complex resource this resource depend on
+	private Set<HAPResourceIdSimple> m_complexResourceDependency;
+	
 	private HAPDomainAttachment m_attachmentDomain;
 	
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 
-	public HAPPackageComplexResource(HAPDomainEntityDefinitionGlobal definitionDomain, HAPGeneratorId idGenerator) {
+	public HAPBundleComplexResource(HAPDomainEntityDefinitionGlobal definitionDomain, HAPGeneratorId idGenerator) {
 		this.m_definitionDomain = definitionDomain;
 		this.m_idGenerator = idGenerator;
 		this.m_executableDomain = new HAPDomainEntityExecutableResourceComplex(this.m_idGenerator);
 		this.m_attachmentDomain = new HAPDomainAttachment(this.m_idGenerator);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
 		this.m_definitionComplexEntityIdByExecutableComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
+		this.m_complexResourceDependency = new HashSet<HAPResourceIdSimple>();
 	}
 	
 	public void setRootResourceId(HAPResourceIdSimple rootResourceId) {    this.m_rootResourceId = rootResourceId;     }
@@ -55,6 +61,7 @@ public class HAPPackageComplexResource {
 	public HAPIdEntityInDomain getExecutableEntityIdByDefinitionEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_executableComplexEntityIdByDefinitionComplexEntityId.get(defEntityId);  	}
 	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_definitionComplexEntityIdByExecutableComplexEntityId.get(defEntityId);  	}
 	
+	public void addComplexResourceDependency(HAPResourceIdSimple resourceId) {   this.m_complexResourceDependency.add(resourceId);    }
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity, extraInfo);

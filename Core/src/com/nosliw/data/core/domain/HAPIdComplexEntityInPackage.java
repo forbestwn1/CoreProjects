@@ -10,7 +10,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 //id for entity globally (accross different complex resource)
 @HAPEntityWithAttribute
-public class HAPIdComplexEntityInGlobal extends HAPSerializableImp{
+public class HAPIdComplexEntityInPackage extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ROOTRESOURCEID = "rootResourceId";
@@ -24,7 +24,7 @@ public class HAPIdComplexEntityInGlobal extends HAPSerializableImp{
 	//entity id within resource domain
 	private HAPIdEntityInDomain m_entityIdInDomain;
 	
-	public HAPIdComplexEntityInGlobal() {
+	public HAPIdComplexEntityInPackage() {
 		
 	}
 	

@@ -8,7 +8,7 @@ public interface HAPPluginComplexEntityProcessor {
 	String getEntityType();
 	
 	//process definition
-	void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext);
+	void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 
 	//new executable
 	HAPExecutableEntityComplex newExecutable();

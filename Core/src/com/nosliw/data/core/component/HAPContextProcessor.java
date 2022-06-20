@@ -3,12 +3,13 @@ package com.nosliw.data.core.component;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.complex.HAPManagerComplexEntity;
+import com.nosliw.data.core.domain.HAPBundleComplexResource;
+import com.nosliw.data.core.domain.HAPBundleGroupComplexResource;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPPackageComplexResource;
-import com.nosliw.data.core.domain.HAPPackageGroupComplexResource;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
@@ -22,29 +23,32 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPContextProcessor {
 
-	private HAPPackageGroupComplexResource m_complexResourcePackageGroup;
+	private HAPManagerComplexEntity m_complexEntityManager;
+	
+	private HAPBundleGroupComplexResource m_complexResourcePackageGroup;
 	
 	private HAPResourceIdSimple m_currentComplexResourceId;
+	private HAPBundleComplexResource m_complexResourceBundle;
 	
 	//runtime
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	private HAPProcessTracker m_processTracker;
 	
-	public HAPContextProcessor(HAPPackageGroupComplexResource complexResourcePackageGroup, HAPResourceIdSimple currentResourceId, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPContextProcessor(HAPBundleGroupComplexResource complexResourcePackageGroup, HAPResourceIdSimple currentResourceId, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_complexResourcePackageGroup = complexResourcePackageGroup;
 		this.m_currentComplexResourceId = currentResourceId;
 		this.m_runtimeEnv = runtimeEnv;
 	}
 
-	public HAPContextProcessor(HAPPackageGroupComplexResource complexResourcePackageGroup, HAPResourceIdSimple currentResourceId) {
+	public HAPContextProcessor(HAPBundleGroupComplexResource complexResourcePackageGroup, HAPResourceIdSimple currentResourceId) {
 		this.m_complexResourcePackageGroup = complexResourcePackageGroup;
 		this.m_currentComplexResourceId = currentResourceId;
 	}
 
 	public HAPResourceIdSimple getCurrentComplexResourceId() {     return this.m_currentComplexResourceId;     }
 	
-	public HAPPackageComplexResource getCurrentComplexResourcePackage() {     return this.m_complexResourcePackageGroup.getComplexResourcePackage(m_currentComplexResourceId);      }
+	public HAPBundleComplexResource getCurrentComplexResourcePackage() {     return this.m_complexResourcePackageGroup.getBundle(m_currentComplexResourceId);      }
 	
 	public HAPDomainEntityDefinitionGlobal getCurrentDefinitionDomain() {    return this.getCurrentComplexResourcePackage().getDefinitionDomain();     }
 	public HAPDomainEntityExecutableResourceComplex getCurrentExecutableDomain() {     return this.getCurrentComplexResourcePackage().getExecutableDomain();       }
@@ -52,8 +56,8 @@ public class HAPContextProcessor {
 	public HAPDomainAttachment getCurrentAttachmentDomain() {    return this.getCurrentComplexResourcePackage().getAttachmentDomain();     }
 	public HAPDomainValueStructure getCurrentValueStructureDomain() {    return this.getCurrentComplexResourcePackage().getValueStructureDomain();     }
 	
-	public void addComplexResourcePackage(HAPPackageComplexResource complexResourcePackage) {     this.m_complexResourcePackageGroup.addComplexResourcePackage(complexResourcePackage);     }
-	public HAPPackageGroupComplexResource getComplexResourcePackageGroup() {     return this.m_complexResourcePackageGroup;      }
+	public void addComplexResourcePackage(HAPBundleComplexResource complexResourcePackage) {     this.m_complexResourcePackageGroup.addBundle(complexResourcePackage);     }
+	public HAPBundleGroupComplexResource getComplexResourcePackageGroup() {     return this.m_complexResourcePackageGroup;      }
 	
 	
 	public HAPResultProcessAttachmentReference processAttachmentReference(String attachmentValueType, String attachmentName) {

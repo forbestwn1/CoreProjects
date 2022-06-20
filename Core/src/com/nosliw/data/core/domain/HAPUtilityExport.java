@@ -30,8 +30,8 @@ public class HAPUtilityExport {
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
-		for(HAPResourceIdSimple resourceId : executablePackage.getComplexResourcePackageGroup().getComplexResourceIds()) {
-			HAPPackageComplexResource resourcePackage = executablePackage.getComplexResourcePackageGroup().getComplexResourcePackage(resourceId);
+		for(HAPResourceIdSimple resourceId : executablePackage.getComplexResourcePackageGroup().getBundleResourceIds()) {
+			HAPBundleComplexResource resourcePackage = executablePackage.getComplexResourcePackageGroup().getBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
 			//write attachment domain
@@ -65,12 +65,12 @@ public class HAPUtilityExport {
 		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, resourceId.toStringValue(HAPSerializationFormat.LITERATE)));  
 	}
 	
-	private static String toExpandedJsonStringDefintionDomain(HAPPackageComplexResource resourcePackage) {
+	private static String toExpandedJsonStringDefintionDomain(HAPBundleComplexResource resourcePackage) {
 		HAPDomainEntityDefinitionGlobal definitionDomainGlobal = resourcePackage.getDefinitionDomain();
 		return definitionDomainGlobal.getEntityInfoDefinition(resourcePackage.getDefinitionRootEntityId()).toExpandedJsonString(definitionDomainGlobal);
 	}
 
-	private static String toExpandedJsonStringExecutableDomain(HAPPackageComplexResource resourcePackage) {
+	private static String toExpandedJsonStringExecutableDomain(HAPBundleComplexResource resourcePackage) {
 		HAPDomainEntityExecutableResourceComplex executableDomain = resourcePackage.getExecutableDomain();
 		return executableDomain.getEntityInfoExecutable(resourcePackage.getExecutableRootEntityId()).toExpandedJsonString(executableDomain);
 	}

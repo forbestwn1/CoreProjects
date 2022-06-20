@@ -1,6 +1,5 @@
 package com.nosliw.test.domain;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -21,10 +20,10 @@ public class HAPTestDomain {
 		//definition
 		HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, globalDomain);
 		String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), globalDomain);
-		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
+//		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPPackageExecutable executablePackage = runtimeEnvironment.getComplexEntityManager().process(resourceId);
+		HAPPackageExecutable executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
 		
 //		System.out.println();
 //		System.out.println();
