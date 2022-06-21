@@ -7,7 +7,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implements HAPInfoEntityInDomain{
 
@@ -15,7 +14,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	
 	public static final String ENTITY = "entity";
 
-	public static final String EXTERNALRESOURCE = "externalResource";
+	public static final String EXTERNALCOMPLEXENTITYID = "externalComplexEntityId";
 
 	public static final String EXTRA = "extra";
 	
@@ -26,7 +25,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	private HAPExecutableEntityComplex m_entity;
 
 	//when refer to external complex entity
-	private HAPInfoResourceIdNormalize m_externalComplexResourceInfo;
+	private HAPIdComplexEntityInGlobal m_externalComplexEntityId;
 	
 	//extra info for this entity
 	private HAPExtraInfoEntityInDomainExecutable m_extraInfo;
@@ -37,9 +36,9 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		this.m_extraInfo = extraInfo;
 	}
 	
-	public HAPInfoEntityInDomainExecutable(HAPInfoResourceIdNormalize externalComplexResourceInfo, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+	public HAPInfoEntityInDomainExecutable(HAPIdComplexEntityInGlobal externalComplexEntityId, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		this.m_entityId = entityId;
-		this.m_externalComplexResourceInfo = externalComplexResourceInfo;
+		this.m_externalComplexEntityId = externalComplexEntityId;
 		this.m_extraInfo = extraInfo;
 	}
 	
@@ -47,7 +46,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 	
 	public HAPExecutableEntityComplex getEntity() {   return this.m_entity;     }
 	
-	public HAPInfoResourceIdNormalize getExternalComplexResourceInfo() {     return this.m_externalComplexResourceInfo;       }
+	public HAPIdComplexEntityInGlobal getExternalComplexEntityId() {     return this.m_externalComplexEntityId;       }
 	
 	public HAPExtraInfoEntityInDomainExecutable getExtraInfo() {    return this.m_extraInfo;    }
 	
@@ -57,7 +56,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_externalComplexResourceInfo!=null)  jsonMap.put(EXTERNALRESOURCE, this.m_externalComplexResourceInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_externalComplexEntityId!=null)  jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -68,7 +67,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPSerializableImp implemen
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
-		if(this.m_externalComplexResourceInfo!=null)  jsonMap.put(EXTERNALRESOURCE, this.m_externalComplexResourceInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_externalComplexEntityId!=null)  jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 

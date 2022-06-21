@@ -4,9 +4,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
+import com.nosliw.data.core.domain.HAPBundleComplexResource;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPBundleComplexResource;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
@@ -23,7 +23,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
-		HAPBundleComplexResource currentPackage = processContext.getCurrentComplexResourcePackage();
+		HAPBundleComplexResource currentPackage = processContext.getCurrentComplexResourceBundle();
 		HAPDomainValueStructure valueStructureDomain = currentPackage.getValueStructureDomain();
 		
 		HAPExecutableTestComplex1 executableEntity = (HAPExecutableTestComplex1)currentPackage.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();

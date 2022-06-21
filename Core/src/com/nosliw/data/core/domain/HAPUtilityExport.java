@@ -1,53 +1,61 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.data.core.complex.HAPManagerComplexEntity;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
 
-	public static void exportExecutablePackage(HAPPackageExecutable executablePackage) {
+	public static void exportExecutablePackage(HAPPackageExecutable executablePackage, HAPManagerComplexEntity complexEntityManager) {
 		String mainFolderUnique = getRootFolderUnique();
-		exportExecutablePackage(executablePackage, mainFolderUnique);
+		exportExecutablePackage(executablePackage, mainFolderUnique, complexEntityManager);
 
 		String mainFolderTemp = getRootFolderTemp();
-		exportExecutablePackage(executablePackage, mainFolderTemp);
+		exportExecutablePackage(executablePackage, mainFolderTemp, complexEntityManager);
 	}
 
-	private static void exportExecutablePackage(HAPPackageExecutable executablePackage, String mainFolder) {
+	private static void exportExecutablePackage(HAPPackageExecutable executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
-//		mainInfoJson.put(HAPPackageExecutable.MAINRESOURCEID, executablePackage.getMainResourceId().toStringValue(HAPSerializationFormat.JSON));
-//		mainInfoJson.put(HAPPackageExecutable.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
+		mainInfoJson.put(HAPPackageExecutable.MAINENTITYID, executablePackage.getRootEntityId().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPJsonUtility.buildMapJson(mainInfoJson));
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
-		for(HAPResourceIdSimple resourceId : executablePackage.getComplexResourcePackageGroup().getBundleResourceIds()) {
-			HAPBundleComplexResource resourcePackage = executablePackage.getComplexResourcePackageGroup().getBundle(resourceId);
+		for(HAPResourceIdSimple resourceId : executablePackage.getComplexResourceBundleGroup()) {
+			HAPBundleComplexResource bundle = complexEntityManager.getComplexEntityResourceBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
 			//write attachment domain
-			HAPDomainAttachment attachmentDomain = resourcePackage.getAttachmentDomain();
+			HAPDomainAttachment attachmentDomain = bundle.getAttachmentDomain();
 			HAPUtilityFile.writeJsonFile(packageFolder, "attachment.json", attachmentDomain.toStringValue(HAPSerializationFormat.JSON));
 			
 			//write value structure domain
-			HAPDomainValueStructure valueStructureDomain = resourcePackage.getValueStructureDomain();
+			HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 			HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 
 			//write package definition
-			HAPUtilityFile.writeJsonFile(packageFolder, "definition.json", toExpandedJsonStringDefintionDomain(resourcePackage));
+			HAPUtilityFile.writeJsonFile(packageFolder, "definition.json", toExpandedJsonStringDefintionDomain(bundle));
 			
 			//write package executable
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toExpandedJsonStringExecutableDomain(resourcePackage));
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toExpandedJsonStringExecutableDomain(bundle));
 			
+			//external complex entity dependency
+			Set<HAPResourceIdSimple> dependency = bundle.getComplexResourceDependency();
+			List<String> dependencyArray = new ArrayList<String>();
+			for(HAPResourceIdSimple dependencyId : dependency)  dependencyArray.add(dependencyId.toStringValue(HAPSerializationFormat.LITERATE));
+			HAPUtilityFile.writeJsonFile(packageFolder, "dependency.json", HAPJsonUtility.buildArrayJson(dependencyArray.toArray(new String[0])));
 		}
 	}
 	

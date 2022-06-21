@@ -7,7 +7,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp implements HAPDomainEntity{
 
@@ -39,9 +38,9 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 		return entityId;
 	}
 
-	public HAPIdEntityInDomain addExecutableEntity(HAPInfoResourceIdNormalize normalizedResourceId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), normalizedResourceId.getResourceEntityType());
-		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(normalizedResourceId, entityId, extraInfo);
+	public HAPIdEntityInDomain addExecutableEntity(HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), complexEntityIdInGloabal.getRootResourceId().getResourceType());
+		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(complexEntityIdInGloabal, entityId, extraInfo);
 		this.m_executableEntity.put(entityId, entityInfo);
 		return entityId;
 	}

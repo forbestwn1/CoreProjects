@@ -46,7 +46,7 @@ public class HAPUtilityValueStructure {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
-				HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourcePackage();
+				HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
@@ -90,7 +90,7 @@ public class HAPUtilityValueStructure {
 					HAPContextProcessor processContext) {
 				if(parentEntityExeInfo!=null) {
 
-					HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourcePackage();
+					HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 					HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 					HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();

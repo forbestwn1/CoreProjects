@@ -104,25 +104,15 @@ public class HAPUtilityDomain {
 
 	
 	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, HAPPath p, HAPDomainEntityDefinitionGlobal globalDomain) {
-		if(p.isEmpty())  return entityId;
-		else return null;
-//		HAPPath p = new HAPPath(path);
-//		HAPIdEntityInDomain currentEntityId = entityId;
-//		HAPInfoEntityInDomainDefinition currentEntityInfo = definitionDomain.getEntityInfoDefinition(currentEntityId);
-//		HAPDefinitionEntityInDomain currentEntityDef = currentEntityInfo.getEntity();
-//		for(String seg : p.getPathSegments()) {
-//			HAPEntityOrReference child = currentEntityDef.getChild(seg);
-//			if(HAPConstantShared.REFERENCE.equals(child.getEntityOrReferenceType())) {
-//				//resource id
-//				out = this.getResourceDefinition((HAPResourceId)defOrId, entityDomain, parentResourceDef.getLocalReferenceBase());
-//			}
-//			else {
-//				//resource def
-//				currentEntityDef = (HAPDefinitionEntityInDomain)child;
-//				out.setLocalReferenceBase(parentResourceDef.getLocalReferenceBase());
-//			}
-//
-//		}
+		if(p==null || p.isEmpty())  return entityId;
+		HAPIdEntityInDomain currentEntityId = entityId;
+		HAPInfoEntityInDomainDefinition currentEntityInfo = globalDomain.getEntityInfoDefinition(currentEntityId);
+		HAPDefinitionEntityInDomain currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
+		for(String seg : p.getPathSegments()) {
+			currentEntityId = currentEntityDef.getChild(seg);
+			currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
+		}
+		return currentEntityId;
 	}
 	
 	public static HAPContextParser getContextParse(HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {

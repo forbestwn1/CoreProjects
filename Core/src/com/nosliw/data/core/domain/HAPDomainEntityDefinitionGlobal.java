@@ -33,8 +33,8 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	//resource definition by resource id
 	private Map<HAPResourceId, HAPResourceDefinition> m_resourceDefByResourceId;
 
-	public HAPDomainEntityDefinitionGlobal(HAPGeneratorId idGenerator, HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefinitionManager) {
-		this.m_idGenerator = idGenerator;
+	public HAPDomainEntityDefinitionGlobal(HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefinitionManager) {
+		this.m_idGenerator = new HAPGeneratorId();
 		this.m_entityDefManager = entityDefMan;
 		this.m_resourceDefinitionManager = resourceDefinitionManager;
 		this.m_resourceDomainById = new LinkedHashMap<String, HAPDomainEntityDefinitionSimpleResource>();

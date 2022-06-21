@@ -34,9 +34,10 @@ public class HAPBundleComplexResource {
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 
-	public HAPBundleComplexResource(HAPDomainEntityDefinitionGlobal definitionDomain, HAPGeneratorId idGenerator) {
+	public HAPBundleComplexResource(HAPResourceIdSimple rootResourceId, HAPDomainEntityDefinitionGlobal definitionDomain) {
+		this.m_rootResourceId = rootResourceId;
 		this.m_definitionDomain = definitionDomain;
-		this.m_idGenerator = idGenerator;
+		this.m_idGenerator = new HAPGeneratorId();
 		this.m_executableDomain = new HAPDomainEntityExecutableResourceComplex(this.m_idGenerator);
 		this.m_attachmentDomain = new HAPDomainAttachment(this.m_idGenerator);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
@@ -44,7 +45,6 @@ public class HAPBundleComplexResource {
 		this.m_complexResourceDependency = new HashSet<HAPResourceIdSimple>();
 	}
 	
-	public void setRootResourceId(HAPResourceIdSimple rootResourceId) {    this.m_rootResourceId = rootResourceId;     }
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
 	public HAPIdEntityInDomain getDefinitionRootEntityId() {	return this.m_definitionDomain.getResourceDefinitionByResourceId(this.m_rootResourceId).getEntityId();  }
@@ -62,7 +62,15 @@ public class HAPBundleComplexResource {
 	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_definitionComplexEntityIdByExecutableComplexEntityId.get(defEntityId);  	}
 	
 	public void addComplexResourceDependency(HAPResourceIdSimple resourceId) {   this.m_complexResourceDependency.add(resourceId);    }
+	public Set<HAPResourceIdSimple> getComplexResourceDependency(){    return this.m_complexResourceDependency;     }
 	
+	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPInfoResourceIdNormalize normalizedResourceInfo) {
+		HAPIdEntityInDomain entityId = this.m_definitionDomain.getResourceDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
+		HAPIdEntityInDomain outEntityDefId = HAPUtilityDomain.getEntityDescent(entityId, normalizedResourceInfo.getPath(), this.m_definitionDomain);
+		HAPIdEntityInDomain outEntityExeId = this.getExecutableEntityIdByDefinitionEntityId(outEntityDefId);
+		return this.m_executableDomain.getEntityInfoExecutable(outEntityExeId);
+	}
+
 	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(executableEntity, extraInfo);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
@@ -70,8 +78,8 @@ public class HAPBundleComplexResource {
 		return out;
 	}
 
-	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPInfoResourceIdNormalize normalizedResourceId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(normalizedResourceId, extraInfo);
+	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+		HAPIdEntityInDomain out = this.m_executableDomain.addExecutableEntity(complexEntityIdInGloabal, extraInfo);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
 		this.m_definitionComplexEntityIdByExecutableComplexEntityId.put(out, extraInfo.getEntityDefinitionId());
 		return out;
