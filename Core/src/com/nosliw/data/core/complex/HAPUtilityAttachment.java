@@ -9,7 +9,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPInfoParentComplex;
-import com.nosliw.data.core.domain.HAPBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
@@ -34,7 +34,7 @@ public class HAPUtilityAttachment {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
-				HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+				HAPExecutableBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 				HAPDomainAttachment attachmentDomain = processContext.getCurrentAttachmentDomain();
@@ -59,7 +59,7 @@ public class HAPUtilityAttachment {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityExeInfo, Object adapter, HAPInfoEntityInDomainExecutable parentComplexEntityExeInfo, HAPContextProcessor processContext) {
 				if(parentComplexEntityExeInfo!=null) {
-					HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+					HAPExecutableBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 					HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 
 					HAPIdEntityInDomain entityIdExe = entityExeInfo.getEntityId();

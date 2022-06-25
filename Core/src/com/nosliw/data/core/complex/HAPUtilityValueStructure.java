@@ -15,7 +15,7 @@ import com.nosliw.data.core.domain.HAPEmbededEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
-import com.nosliw.data.core.domain.HAPBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorInherit;
@@ -46,7 +46,7 @@ public class HAPUtilityValueStructure {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
-				HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+				HAPExecutableBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
@@ -90,7 +90,7 @@ public class HAPUtilityValueStructure {
 					HAPContextProcessor processContext) {
 				if(parentEntityExeInfo!=null) {
 
-					HAPBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+					HAPExecutableBundleComplexResource complexEntityPackage = processContext.getCurrentComplexResourceBundle();
 					HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 					HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 					HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();

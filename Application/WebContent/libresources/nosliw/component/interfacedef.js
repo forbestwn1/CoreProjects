@@ -54,7 +54,7 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	
-	var loc_componentEnv;
+	var loc_runtimeEnv;
 	
 	var interfaceDef = {
 		//execute command
@@ -69,8 +69,8 @@ var node_buildComponentCore = function(rawComponentCore){
 		setState : function(state){   },
 
 		//component runtime env
-		getComponentEnv : function(){   return loc_componentEnv;    },
-		setComponentEnv : function(componentEnv){   loc_componentEnv = componentEnv;     },
+		getRuntimeEnv : function(){   return loc_runtimeEnv;    },
+		setRuntimeEnv : function(runtimeEnv){   loc_runtimeEnv = runtimeEnv;     },
 		
 		//value by name
 		getValue : function(name){},

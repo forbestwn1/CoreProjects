@@ -39,7 +39,7 @@ var node_createComponentRuntime = function(componentCore, configure, componentDe
 	var loc_eventListener = node_createEventObject();
 
 	var loc_init = function(componentCore, configure, componentDecorationInfos, rootView, backupState, request){
-		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_componentEnv);
+		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_runtimeEnv);
 		loc_componentCoreComplex.setCore(componentCore);
 		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
 		
@@ -187,8 +187,8 @@ var node_createComponentRuntime = function(componentCore, configure, componentDe
 	var loc_getContextIODataSet = function(){  return loc_getComponentCore().getContextIODataSet();   };
 
 
-	//environment for component complex
-	var loc_componentEnv = {
+	//runtime environment provided for component complex
+	var loc_runtimeEnv = {
 		//process request
 		processRequest : function(request){  node_requestServiceProcessor.processRequest(request); },
 
@@ -197,6 +197,8 @@ var node_createComponentRuntime = function(componentCore, configure, componentDe
 		getTaskEnv : function(){    return loc_getTaskEnv();    },
 		
 		getContextIODataSet : function(){   return loc_getContextIODataSet();   }, 
+		
+		getVariableGroup : function(){}
 	};
 
 	var loc_out = {

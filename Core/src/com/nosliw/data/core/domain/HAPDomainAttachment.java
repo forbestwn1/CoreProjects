@@ -17,8 +17,8 @@ public class HAPDomainAttachment extends HAPSerializableImp{
 	
 	private HAPGeneratorId m_idGenerator;
 	
-	public HAPDomainAttachment(HAPGeneratorId idGenerator) {
-		this.m_idGenerator = idGenerator;
+	public HAPDomainAttachment() {
+		this.m_idGenerator = new HAPGeneratorId();
 		this.m_attachmentContainerByComplexeExeId = new LinkedHashMap<String, HAPDefinitionEntityContainerAttachment>();
 	}
 	

@@ -23,8 +23,7 @@ var packageObj = library;
 var node_loadComponentResourceRequest = function(componentInfo, decorationDef, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteComponentResource"), handlers, request);
 	
-	//build resource id for component
-	//
+	//build resource id to be loaded for component
 	var resourceIds = [];
 	var componentResourceId;
 	var componentResource;

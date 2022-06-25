@@ -1,18 +1,23 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp implements HAPDomainEntity{
+public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp implements HAPDomainEntity{
 
 	private static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
 	private static String COMPLEXENTITY = "complexEntity";
-	private static String ROOTENTITYID = "rootEntityId";
 
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
@@ -23,9 +28,9 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 	
-	public HAPDomainEntityExecutableResourceComplex(HAPGeneratorId idGenerator) {
-		this.m_idGenerator = idGenerator;
-		this.m_valueStructureDomain = new HAPDomainValueStructure(this.m_idGenerator);
+	public HAPDomainEntityExecutableResourceComplex() {
+		this.m_idGenerator = new HAPGeneratorId();
+		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_executableEntity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable>();
 	}
 
@@ -49,12 +54,37 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPSerializableImp
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return this.getEntityInfoExecutable(entityId);     }
 	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPIdEntityInDomain entityId) {	return this.m_executableEntity.get(entityId);	}
 
+	
 	@Override
-	public String toString() {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toString());
-		jsonMap.put(COMPLEXENTITY, this.getEntityInfoExecutable(m_mainComplexEntityId).toExpandedJsonString(this));
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VALUESTRUCTUREDOMAIN, HAPJsonUtility.buildJson(this.m_valueStructureDomain, HAPSerializationFormat.JSON));
 		
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		Map<String, String> entityJsonObj = new LinkedHashMap<String, String>();
+		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
+			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(COMPLEXENTITY, HAPJsonUtility.buildMapJson(entityJsonObj));
+	}
+	
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+
+		Map<String, String> entityJsonObj = new LinkedHashMap<String, String>();
+		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
+			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toResourceData(runtimeInfo).toString());
+		}
+		jsonMap.put(COMPLEXENTITY, HAPJsonUtility.buildMapJson(entityJsonObj));
+	}
+
+	@Override
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
+			this.buildResourceDependencyForExecutable(out, this.m_executableEntity.get(entityId), runtimeInfo, resourceManager);
+		}
+		return out;
 	}
 }

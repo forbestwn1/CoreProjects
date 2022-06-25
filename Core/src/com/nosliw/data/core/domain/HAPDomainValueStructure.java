@@ -6,12 +6,8 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureGroupWithEntity;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPPartComplexValueStructureSimple;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -31,8 +27,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 
-	public HAPDomainValueStructure(HAPGeneratorId idGenerator) {
-		this.m_idGenerator = idGenerator;
+	public HAPDomainValueStructure() {
+		this.m_idGenerator = new HAPGeneratorId();
 		this.m_valueStructure = new LinkedHashMap<String, HAPInfoValueStructure>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 	}
@@ -52,24 +48,6 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public String cloneRuntime(String runtimeId) {
 		String definitionId = this.m_definitionIdByRuntimeId.get(runtimeId);
 		return this.newRuntime(definitionId);
-	}
-
-	//extract value structure from complex and add to pool
-	private void extractValueStructure(HAPPartComplexValueStructure part, HAPDomainEntityDefinitionSimpleResource entityDefDomain) {
-		//part id
-		part.setId(this.m_idGenerator.generateId());
-		String partType = part.getPartType();
-		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
-			HAPPartComplexValueStructureSimple simplePart = (HAPPartComplexValueStructureSimple)part;
-			String valueStructureId = this.newValueStructure(simplePart.getValueStructure());
-			simplePart.setValueStructureDefinitionId(valueStructureId);
-		}
-		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
-			HAPPartComplexValueStructureGroupWithEntity entityGroup = (HAPPartComplexValueStructureGroupWithEntity)part;
-			for(HAPPartComplexValueStructure child : entityGroup.getChildren()) {
-				extractValueStructure(child, entityDefDomain);
-			}
-		}
 	}
 
 	//add definition and create runtime id

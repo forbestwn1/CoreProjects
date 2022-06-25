@@ -9,35 +9,26 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createVariableManager = function(){
-	
-	
-	
-	var loc_out = {
-		
-	};
-	
-	return loc_out;
-	
-};
-
 //variable domain, it response to value structure domain in complex resource
-var nod_createVariableDomain = function(valueDomainDef){
+var nod_createVariableDomain = function(variableDomainDef){
 
 	//value structure definition domain
-	var loc_valueDomainDef = valueDomainDef;
+	var loc_variableDomainDefinition = variableDomainDef;
 	
 	var loc_rootGroupId;
 	
 	var loc_variableGroupById = {};
+
+	var loc_groupIdIndex = 0;
 	
 	var loc_out = {
-		//create variable domain according
-		//value structure complex id
-		//parent domain
-		//return domain id
-		creatVariableGroup : function(valueStructureComplexId, parentDomain){
-			return groupId;
+		//create variable group according to
+		//value structure complex
+		//parent group
+		//return group id
+		creatVariableGroup : function(valueStructureComplex, parentVariableGroup){
+			loc_groupIdIndex++;
+			return nod_createVariableGroup(loc_groupIdIndex+"", valueStructureComplex, loc_variableDomainDefinition, parentVariableGroup);
 		},
 		
 		getVariableValue : function(groupId, variableId){
@@ -47,24 +38,27 @@ var nod_createVariableDomain = function(valueDomainDef){
 		setVariableValue : function(groupId, variableId, value){
 			
 		}
-		
 	};
 	
 	return loc_out;
 };
 
 //variable group responding to value structure complex
-//valueStructureDefs all value structures from complex
+//valueStructureComplex value structure complex definition under complex entity
+//
 //it has parent group, so that some variable is from parent
-var nod_createVariableGroup = function(valueStructureDefs, parentGroup){
+var nod_createVariableGroup = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
+	
+	//var group id
+	var loc_id;
 	
 	//parent domain which some variable can get from
-	var loc_parentGroup = parentGroup;
+	var loc_parentVariableGroup = parentVariableGroup;
 	
 	//variables in this domain
 	var loc_variablesById = {};
 	
-	var loc_init = function(valueStructureDefs){
+	var loc_init = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
 		
 	};
 	
@@ -77,14 +71,14 @@ var nod_createVariableGroup = function(valueStructureDefs, parentGroup){
 		
 	};
 	
-	loc_init(valueStructureDefs);
+	loc_init(id, valueStructureComplex, variableDomainDef, parentVariableGroup);
 	return loc_out;
 };
 
 //variable info
 var node_createVariableInfo = function(variableId){
 	
-	//variable id responding to variable id defined in value structure defintion
+	//variable id responding to variable id defined in value structure definition
 	var loc_variableId = variableId;
 	
 	//current value for variable

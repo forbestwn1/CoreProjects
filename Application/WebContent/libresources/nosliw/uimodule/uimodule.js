@@ -49,7 +49,7 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	var loc_valueChangeEventListener = node_createEventObject();
 	var loc_valueChangeEventSource = node_createEventObject();
 
-	var loc_componentEnv;
+	var loc_runtimeEnv;
 	
 	var loc_getEventSourceInfo = function(){
 		return node_createEventSource(node_CONSTANT.TYPEDOBJECT_TYPE_APPMODULE, loc_out.getId());
@@ -110,13 +110,13 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	};
 	
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){
-		if(node_componentUtility.isActive(loc_componentEnv.getLifecycleStatus())){
+		if(node_componentUtility.isActive(loc_runtimeEnv.getLifecycleStatus())){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_eventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
 		}
 	};
 	var loc_trigueValueChangeEvent = function(eventName, eventData, requestInfo){
-		if(node_componentUtility.isActive(loc_componentEnv.getLifecycleStatus())){
+		if(node_componentUtility.isActive(loc_runtimeEnv.getLifecycleStatus())){
 			//trigue event only in active status
 			node_eventUtility.triggerEventInfo(loc_valueChangeEventSource, eventName, eventData, loc_getEventSourceInfo(), requestInfo);
 		}
@@ -234,12 +234,12 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 	};
 	
 	var loc_getExecuteTaskRequest = function(task, extraInput, handlers, request){
-		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_componentEnv.getTaskEnv()).getExecuteEmbededTaskRequest(task, loc_componentEnv.getContextIODataSet(), handlers, request);
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_runtimeEnv.getTaskEnv()).getExecuteEmbededTaskRequest(task, loc_runtimeEnv.getContextIODataSet(), handlers, request);
 	};
 
 	var loc_getExecuteTaskByNameRequest = function(taskName, extraInput, handlers, request){
 		var taskSuite = loc_out.getTaskSuite();
-		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_componentEnv.getTaskEnv()).getExecuteEmbededTaskInSuiteRequest(taskSuite, taskName, loc_componentEnv.getContextIODataSet(), handlers, request);
+		return nosliw.runtime.getTaskRuntimeFactory().createTaskRuntime(loc_runtimeEnv.getTaskEnv()).getExecuteEmbededTaskInSuiteRequest(taskSuite, taskName, loc_runtimeEnv.getContextIODataSet(), handlers, request);
 	};
 
 	
@@ -304,8 +304,8 @@ var node_createUIModuleComponentCore = function(id, uiModuleDef, uiDecorationInf
 		},
 		
 		//component runtime env
-		getComponentEnv : function(){   return loc_componentEnv;    },
-		setComponentEnv : function(componentEnv){   loc_componentEnv = componentEnv;     },
+		getRuntimeEnv : function(){   return loc_runtimeEnv;    },
+		setRuntimeEnv : function(componentEnv){   loc_runtimeEnv = componentEnv;     },
 
 		getValue : function(name){  return loc_out.prv_componentData.valueByName[name];    },
 		setValue : function(name, value){   loc_out.prv_componentData.valueByName[name] = value;   },
