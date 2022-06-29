@@ -4,8 +4,7 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
-	var node_getComponentLifecycleInterface;
-	var node_basicUtility;
+	var node_makeObjectWithType;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -26,7 +25,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//value structure complex
 		//parent group
 		//return group id
-		creatVariableGroup : function(valueStructureComplex, parentVariableGroup){
+		creatVariableGroup : function(valueStructureComplex, parentVariableGroupId){
 			loc_groupIdIndex++;
 			return nod_createVariableGroup(loc_groupIdIndex+"", valueStructureComplex, loc_variableDomainDefinition, parentVariableGroup);
 		},
@@ -40,6 +39,8 @@ var nod_createVariableDomain = function(variableDomainDef){
 		}
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VAIRABLEDOMAIN);
+
 	return loc_out;
 };
 
@@ -47,7 +48,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 //valueStructureComplex value structure complex definition under complex entity
 //
 //it has parent group, so that some variable is from parent
-var nod_createVariableGroup = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
+var loc_createVariableGroup = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
 	
 	//var group id
 	var loc_id;
@@ -76,7 +77,7 @@ var nod_createVariableGroup = function(id, valueStructureComplex, variableDomain
 };
 
 //variable info
-var node_createVariableInfo = function(variableId){
+var loc_createVariableInfo = function(variableId){
 	
 	//variable id responding to variable id defined in value structure definition
 	var loc_variableId = variableId;
@@ -105,11 +106,9 @@ var node_createVariableInfo = function(variableId){
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("componentUtility", node_componentUtility); 
+packageObj.createChildNode("createVariableDomain", nod_createVariableDomain); 
 
 })(packageObj);

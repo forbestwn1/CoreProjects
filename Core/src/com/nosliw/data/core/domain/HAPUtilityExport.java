@@ -28,12 +28,12 @@ public class HAPUtilityExport {
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
-		mainInfoJson.put(HAPPackageExecutable.MAINENTITYID, executablePackage.getRootEntityId().toStringValue(HAPSerializationFormat.JSON));
+		mainInfoJson.put(HAPPackageExecutable.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPJsonUtility.buildMapJson(mainInfoJson));
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
-		for(HAPResourceIdSimple resourceId : executablePackage.getComplexResourceBundleGroup()) {
+		for(HAPResourceIdSimple resourceId : executablePackage.getDependency()) {
 			HAPExecutableBundleComplexResource bundle = complexEntityManager.getComplexEntityResourceBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			

@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
@@ -13,14 +15,19 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
+@HAPEntityWithAttribute
 public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements HAPInfoEntityInDomain{
 
+	@HAPAttribute
 	public static final String ENTITYID = "entityId";
 	
+	@HAPAttribute
 	public static final String ENTITY = "entity";
 
+	@HAPAttribute
 	public static final String EXTERNALCOMPLEXENTITYID = "externalComplexEntityId";
 
+	@HAPAttribute
 	public static final String EXTRA = "extra";
 	
 	//entity id

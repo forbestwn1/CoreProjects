@@ -3,8 +3,8 @@ package com.nosliw.data.core.complex;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.map.LinkedMap;
-
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -13,10 +13,14 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
+@HAPEntityWithAttribute
 public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 
+	@HAPAttribute
 	public static final String VALUESTRUCTURECOMPLEX = "valueStructureComplex";
+	@HAPAttribute
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
+	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
 	
 	private HAPExecutableEntityComplexValueStructure m_valueStructureComplex;
@@ -53,12 +57,12 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
 		jsonMap.put(VALUESTRUCTURECOMPLEX, this.m_valueStructureComplex.toExpandedString(entityDomainExe.getValueStructureDomain()));
 
 		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> attrTypeJsonMap = new LinkedMap<String, Class<?>>(); 
+		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(attrJsonMap, attrTypeJsonMap, entityDomainExe);
 		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
 

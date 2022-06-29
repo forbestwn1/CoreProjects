@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createRequestServiceProcessor;
 	var node_createSecurityService;
 	var node_createErrorManager;
+	var node_createPackageRuntimeService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -75,6 +76,7 @@ var node_createRuntime = function(name){
 		
 		getErrorManager(){   return loc_errorManager;  },
 		
+		getPackageService(){    return loc_packageService;    }
 	};
 	
 	var lifecycleCallback = {};
@@ -87,6 +89,7 @@ var node_createRuntime = function(name){
 		loc_taskRuntimeFactory = node_createTaskRuntimeFactory();
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
+		loc_packageService = node_createPackageRuntimeService();
 		
 		loc_errorManager = node_createErrorManager();
 
@@ -129,6 +132,7 @@ nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node
 nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", function(){ node_createRequestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
 nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_createErrorManager = this.getData();});
+nosliw.registerSetNodeDataEvent("package.createPackageRuntimeService", function(){ node_createPackageRuntimeService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

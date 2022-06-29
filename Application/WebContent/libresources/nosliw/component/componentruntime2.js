@@ -26,7 +26,7 @@ var packageObj = library;
 //        expose lifecycle and interface inteface
 //        manage backup
 //        manage roll back
-var node_createComponentRuntime = function(componentCore, componentDecorationInfos, variableGroupId, bundleRuntime, configure, request){
+var node_createComponentRuntime = function(componentCore, configure, componentDecorationInfos, rootView, backupState, request){
 	
 	var loc_componentCoreComplex;
 	var loc_rootView = rootView;
@@ -275,6 +275,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentRuntime", node_createComponentRuntime); 
+packageObj.createChildNode("createComponentRuntime1", node_createComponentRuntime); 
 
 })(packageObj);

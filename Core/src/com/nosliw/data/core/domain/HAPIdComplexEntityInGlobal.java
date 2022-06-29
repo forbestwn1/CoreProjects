@@ -17,20 +17,20 @@ public class HAPIdComplexEntityInGlobal extends HAPSerializableImp{
 	public static String ROOTRESOURCEID = "rootResourceId";
 
 	@HAPAttribute
-	public static String ENTITYIDINDOMAIN = "entityIdInDomain";
+	public static String PATH = "path";
 
 	@HAPAttribute
-	public static String PATH = "path";
+	public static String ENTITYIDINDOMAIN = "entityIdInDomain";
 
 	//root resource id
 	private HAPResourceIdSimple m_rootResourceId;
 	
-	//entity id within resource domain
-	private HAPIdEntityInDomain m_entityIdInDomain;
-
 	//path to entity
 	private HAPPath m_path;
 	
+	//entity id within resource domain
+	private HAPIdEntityInDomain m_entityIdInDomain;
+
 	public HAPIdComplexEntityInGlobal(HAPResourceIdSimple rootResourceId, HAPPath path, HAPIdEntityInDomain entityIdInDomain) {
 		this.m_rootResourceId = rootResourceId;
 		this.m_path = path;

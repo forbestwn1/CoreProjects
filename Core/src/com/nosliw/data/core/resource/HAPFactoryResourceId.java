@@ -89,7 +89,7 @@ public class HAPFactoryResourceId {
 	public static List<HAPResourceId> newInstanceList(JSONArray resourceJsonArray){
 		List<HAPResourceId> resourceIds = new ArrayList<>();
 		for(int i=0; i<resourceJsonArray.length(); i++) {
-			resourceIds.add(newInstance(resourceJsonArray.getJSONObject(i)));
+			resourceIds.add(newInstance(resourceJsonArray.get(i)));
 		}
 		return resourceIds;
 	}

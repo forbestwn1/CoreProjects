@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.map.LinkedMap;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -58,7 +57,7 @@ public abstract class HAPInfoContainerElement extends HAPSerializableImp{
 	
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 
 		this.toExpanedJsonMap(jsonMap, typeJsonMap, entityDomain);
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}

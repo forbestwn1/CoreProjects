@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
@@ -14,10 +16,13 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
+@HAPEntityWithAttribute
 public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp implements HAPDomainEntity{
 
-	private static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
-	private static String COMPLEXENTITY = "complexEntity";
+	@HAPAttribute
+	public static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
+	@HAPAttribute
+	public static String COMPLEXENTITY = "complexEntity";
 
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;

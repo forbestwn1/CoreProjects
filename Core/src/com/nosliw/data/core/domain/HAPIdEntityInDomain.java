@@ -4,19 +4,26 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeUtility;
 import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //id for entity in domain
+@HAPEntityWithAttribute
 public class HAPIdEntityInDomain extends HAPSerializableImp{
 
+	@HAPAttribute
 	public static final String DOMAINID = "domainId";
 
+	@HAPAttribute
 	public static final String ENTITYTYPE = "entityType";
 
+	@HAPAttribute
 	public static final String ENTITYID = "entityId";
 
 	private String m_domainId;
@@ -72,7 +79,8 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	}
 	
 	@Override
-	protected String buildLiterate(){  return HAPUtilityNamingConversion.cascadeLevel1(new String[] {this.m_entityId, this.m_entityType, this.m_domainId}); }
+	protected String buildLiterate(){  
+		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_entityId, this.m_entityType, this.m_domainId}, HAPConstantShared.SEPERATOR_LEVEL1); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

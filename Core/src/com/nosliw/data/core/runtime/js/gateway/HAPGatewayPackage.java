@@ -3,6 +3,7 @@ package com.nosliw.data.core.runtime.js.gateway;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.domain.HAPPackageExecutable;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -11,6 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
+@HAPEntityWithAttribute
 public class HAPGatewayPackage extends HAPGatewayImp{
 
 	@HAPAttribute

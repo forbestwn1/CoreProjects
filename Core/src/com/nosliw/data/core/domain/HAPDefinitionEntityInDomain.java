@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.map.LinkedMap;
-
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -118,7 +116,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> typeJsonMap = new LinkedMap<String, Class<?>>(); 
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 
 		this.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}

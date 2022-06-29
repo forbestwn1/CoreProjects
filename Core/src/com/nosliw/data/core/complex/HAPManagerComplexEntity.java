@@ -50,13 +50,13 @@ public class HAPManagerComplexEntity {
 
 		//figure out root entity
 		HAPIdComplexEntityInGlobal gloablId = getComplexEntityGolbalIdResourceId(resourceId);
-		out.setRootEntityId(gloablId);
+		out.setMainEntityId(gloablId);
 		
 		//find all related complex resource
 		Set<HAPResourceIdSimple> dependency = new HashSet<HAPResourceIdSimple>();
 		buildDependencyGroup(gloablId.getRootResourceId(), dependency);
 		for(HAPResourceIdSimple bundleId : dependency) {
-			out.addComplexResourceBundleId(bundleId);
+			out.addDependency(bundleId);
 		}
 		
 		HAPUtilityExport.exportExecutablePackage(out, this);
