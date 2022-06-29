@@ -33,6 +33,7 @@ nosliw.init = function(configure){
 		"nosliw.dataservice",
 		"nosliw.component",
 		"nosliw.package",
+		"nosliw.testcomponent",
 		"nosliw.uimodule",
 		"nosliw.uiapp",
 		"nosliw.iovalue",
