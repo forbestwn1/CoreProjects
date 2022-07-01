@@ -4,6 +4,8 @@ var packageObj = library;
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
 	var node_makeObjectWithType;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -27,8 +29,12 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//return group id
 		creatVariableGroup : function(valueStructureComplex, parentVariableGroupId){
 			loc_groupIdIndex++;
-			return nod_createVariableGroup(loc_groupIdIndex+"", valueStructureComplex, loc_variableDomainDefinition, parentVariableGroup);
+			var varGroup = loc_createVariableGroup(loc_groupIdIndex+"", valueStructureComplex, loc_variableDomainDefinition, parentVariableGroupId, loc_out);
+			loc_variableGroupById[varGroup.getId()] = varGroup;
+			return varGroup;
 		},
+		
+		getVariableGroup : function(variableGroupId){   return loc_variableGroupById[variableGroupId];  },
 		
 		getVariableValue : function(groupId, variableId){
 			
@@ -36,7 +42,9 @@ var nod_createVariableDomain = function(variableDomainDef){
 		
 		setVariableValue : function(groupId, variableId, value){
 			
-		}
+		},
+		
+		getVariableDomainDefinition : function(){   return loc_variableDomainDefinition;	}
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VAIRABLEDOMAIN);
@@ -48,39 +56,62 @@ var nod_createVariableDomain = function(variableDomainDef){
 //valueStructureComplex value structure complex definition under complex entity
 //
 //it has parent group, so that some variable is from parent
-var loc_createVariableGroup = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
+var loc_createVariableGroup = function(id, valueStructureComplex, variableDomainDef, parentVariableGroupId, variableDomain){
+	
+	var loc_variableDomain;
 	
 	//var group id
 	var loc_id;
 	
 	//parent domain which some variable can get from
-	var loc_parentVariableGroup = parentVariableGroup;
+	var loc_parentVariableGroupId;
 	
 	//variables in this domain
-	var loc_variablesById = {};
+	var loc_variablesByValueStructure = {};
 	
-	var loc_init = function(id, valueStructureComplex, variableDomainDef, parentVariableGroup){
-		
+	var loc_init = function(id, valueStructureComplex, variableDomainDef, parentVariableGroupId, variableDomain){
+		loc_id = id;
+		loc_parentVariableGroupId = parentVariableGroupId;
+		loc_variableDomain = variableDomain;
+
+		var parentVariableGroup = parentVariableGroupId==undefined ? undefined : variableDomain.getVariableGroup();
+		var valueStructureIds = valueStructureComplex[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
+		_.each(valueStructureIds, function(valueStructureId){
+			var variableDomainDef = variableDomain.getVariableDomainDefinition();
+			var valueStructureRuntimeId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureId];
+			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURE][valueStructureRuntimeId];
+			if(parentVariableGroup==undefined || parentVariableGroup.getVariableInfosByValueStructure(valueStructureRuntimeId)==undefined){
+				//value structure not found in parent, then build in current group
+				var variables = {};
+				loc_variablesByValueStructure[valueStructureRuntimeId] = variables;
+				
+				_.each(valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURE_VALUESTRUCTURE], function(rootDef, rootName){
+					variables[rootName] = loc_createVariableInfo(rootDef);
+				});
+			}
+		});
 	};
 	
 	var loc_out = {
+			
+		getId : function(){  return loc_id;   },
+		
+		getVariableInfosByValueStructure : function(valueStructureId){   return loc_variablesByValueStructure[valueStructureId];  },
 		
 		getVariableInfo : function(variableId){
 			
 		},
-		
-		
 	};
 	
-	loc_init(id, valueStructureComplex, variableDomainDef, parentVariableGroup);
+	loc_init(id, valueStructureComplex, variableDomainDef, parentVariableGroupId, variableDomain);
 	return loc_out;
 };
 
 //variable info
-var loc_createVariableInfo = function(variableId){
+var loc_createVariableInfo = function(variableInfo){
 	
-	//variable id responding to variable id defined in value structure definition
-	var loc_variableId = variableId;
+	//variable info
+	var loc_variableInfo = variableInfo;
 	
 	//current value for variable
 	var loc_value;
@@ -89,7 +120,7 @@ var loc_createVariableInfo = function(variableId){
 	
 	var loc_out = {
 		
-		getVariableId : function(){   return loc_variableId;    },
+		getVariableInfo : function(){   return loc_variableInfo;    },
 	
 		getValue : function(){   return loc_value;    },
 		
@@ -106,6 +137,8 @@ var loc_createVariableInfo = function(variableId){
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name

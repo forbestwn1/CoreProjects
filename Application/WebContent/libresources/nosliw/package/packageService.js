@@ -14,7 +14,9 @@ var packageObj = library;
 	var node_createCreateBundleRuntime;
 	var node_EntityIdInDomain;
 	var node_buildComplexEntityPlugInObject;
-
+	var node_createComponentRuntime;
+	var node_createPackageRuntime;
+	
 	var node_createTestComplex1Plugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -38,7 +40,7 @@ var node_createPackageRuntimeService = function() {
 			//
 			//new complexCore through complex plugin
 			var complexEntityPlugin = loc_complexEntityPlugins[complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]];
-			var componentCore = complexEntityPlugin.createComplexCore(complexEntity, configure);
+			var componentCore = complexEntityPlugin.createComponentCore(complexEntity, configure);
 			
 			//build variableGroup
 			var variableGroupId = null;
@@ -170,6 +172,9 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("package.entity.createCreateBundleRuntime", function(){node_createCreateBundleRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("package.entity.EntityIdInDomain", function(){node_EntityIdInDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("package.buildComplexEntityPlugInObject", function(){node_buildComplexEntityPlugInObject = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
+nosliw.registerSetNodeDataEvent("package.entity.createPackageRuntime", function(){node_createPackageRuntime = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 

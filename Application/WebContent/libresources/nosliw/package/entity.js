@@ -57,7 +57,7 @@ var node_createCreateBundleRuntime = function(mainEntityId, bundleDef, configure
 	var loc_bundleDefinition = bundleDef;
 	
 	//variable domain for this bundle
-	var loc_variableDomain = nod_createVariableDomain(loc_bundleDefinition.valueStructureDomain);
+	var loc_variableDomain = nod_createVariableDomain(loc_bundleDefinition[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
 	
 	//root component runtime
 	var loc_mainComponent = null;

@@ -5,30 +5,32 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
-public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp{
+@HAPEntityWithAttribute
+public class HAPExecutableEntityComplexValueStructure extends HAPExecutableImp{
 
 	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
 
+	@HAPAttribute
 	public static String PART = "part";
 
-	public static String ID = "id";
+	@HAPAttribute
+	public static String VALUESTRUCTURE = "valueStructure";
 
-	private String m_id;
-	
 	private List<HAPPartComplexValueStructure> m_parts;
 	
 	public HAPExecutableEntityComplexValueStructure() {
 		this.m_parts = new ArrayList<HAPPartComplexValueStructure>();
 	}
-	
-	public String getId() {    return this.m_id;    }
 	
 	public List<HAPPartComplexValueStructure> getParts(){   return this.m_parts;  }
 	
@@ -67,7 +69,7 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 	}
 	
 	public HAPExecutableEntityComplexValueStructure cloneValueStructureComplex() {
-		HAPExecutableEntityComplexValueStructure out = new HAPExecutableEntityComplexValueStructure(this.getId());
+		HAPExecutableEntityComplexValueStructure out = new HAPExecutableEntityComplexValueStructure();
 		for(HAPPartComplexValueStructure part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}
@@ -92,7 +94,6 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partArrayJson.toArray(new String[0])));
-		jsonMap.put(ID, this.getId());
 	}
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
@@ -104,8 +105,19 @@ public class HAPExecutableEntityComplexValueStructure extends HAPSerializableImp
 		}
 		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0])));
 		
-		jsonMap.put(ID, this.getId());
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		List<String> valueStructureIds = new ArrayList<String>();
+		List<HAPInfoPartSimple> simpleParts = HAPUtilityComplexValueStructure.getAllSimpleParts(this);
+		for(HAPInfoPartSimple simplePart : simpleParts) {
+			List<HAPWrapperValueStructureExecutable> valueStructures = simplePart.getSimpleValueStructurePart().getValueStructures();
+			for(HAPWrapperValueStructureExecutable valueStructure : valueStructures) {
+				valueStructureIds.add(valueStructure.getValueStructureRuntimeId());
+			}
+		}
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureIds.toArray(new String[0])));
+	}
 }

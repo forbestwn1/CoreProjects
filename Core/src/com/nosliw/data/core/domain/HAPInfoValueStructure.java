@@ -2,14 +2,19 @@ package com.nosliw.data.core.domain;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 
+@HAPEntityWithAttribute
 public class HAPInfoValueStructure extends HAPSerializableImp{
 
+	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
 
+	@HAPAttribute
 	public static final String EXTRAINFO = "extraInfo";
 
 	private HAPDefinitionEntityValueStructure m_valueStructure;

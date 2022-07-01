@@ -2,34 +2,41 @@ package com.nosliw.data.core.data.variable;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
+@HAPEntityWithAttribute
 public class HAPIdVariable extends HAPSerializableImp{
 
-	public static final String VALUESTRUCTUREID = "valueStructureId";
+	@HAPAttribute
+	public static final String ROOTELEMENTID = "rootElementId";
 	
+	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
 	
-	private String m_valueStructureId;
+	private HAPIdRootElement m_rootElementId;
 	
-	private HAPComplexPath m_elementPath;
+	private HAPPath m_elementPath;
 	
 	public HAPIdVariable(String valueStructureId, String variableName) {
-		this.m_valueStructureId = valueStructureId;
-		this.m_elementPath = new HAPComplexPath(variableName);
+		HAPComplexPath complexPath = new HAPComplexPath(variableName);
+		this.m_rootElementId = new HAPIdRootElement(valueStructureId, complexPath.getRoot());
+		this.m_elementPath = complexPath.getPath();
 	}
 	
-	public String getValueStructureId() {    return this.m_valueStructureId;     }
+	public HAPIdRootElement getRootElementId() {    return this.m_rootElementId;     }
 	
-	public HAPComplexPath getElementPath() {    return this.m_elementPath;   }
+	public HAPPath getElementPath() {    return this.m_elementPath;   }
 	
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
-		jsonMap.put(ELEMENTPATH, this.m_elementPath.getFullName());
+		jsonMap.put(ROOTELEMENTID, this.m_rootElementId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTPATH, this.m_elementPath.getPath());
 	}
-	
 }

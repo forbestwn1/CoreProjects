@@ -29,10 +29,10 @@ var packageObj = library;
 var node_createComponentRuntime = function(componentCore, componentDecorationInfos, variableGroupId, bundleRuntime, configure, request){
 	
 	var loc_componentCoreComplex;
-	var loc_rootView = rootView;
+//	var loc_rootView = rootView;
 	
-	var loc_backupState = backupState;
-	var loc_componentStates = [];
+//	var loc_backupState = backupState;
+//	var loc_componentStates = [];
 
 	var loc_lifeCycleStatus;
 	
@@ -205,16 +205,16 @@ var node_createComponentRuntime = function(componentCore, componentDecorationInf
 		
 		getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_rootView, {
-				success : function(request, view){
-					loc_getComponentCore().setRootView(view);
-				}
-			}));
-			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
-
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
-			}));
+//			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_rootView, {
+//				success : function(request, view){
+//					loc_getComponentCore().setRootView(view);
+//				}
+//			}));
+//			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
+//
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
+//			}));
 			
 			return out;
 		},
@@ -238,7 +238,7 @@ var node_createComponentRuntime = function(componentCore, componentDecorationInf
 		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
-	loc_init(componentCore, configure, componentDecorationInfos, rootView, backupState, request);
+//	loc_init(componentCore, configure, componentDecorationInfos, rootView, backupState, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status

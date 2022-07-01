@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -12,10 +14,13 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 //all value structure infor in domain
 //  all value structure definition
 //  all value structure runtime
+@HAPEntityWithAttribute
 public class HAPDomainValueStructure extends HAPSerializableImp{
 
+	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
 
+	@HAPAttribute
 	public static final String DEFINITIONBYRUNTIME = "definitionByRuntime";
 
 	//value structure definitions by id
