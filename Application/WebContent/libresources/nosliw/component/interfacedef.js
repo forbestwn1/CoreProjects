@@ -14,6 +14,35 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  ************************************** 	
+	
+var node_buildRuntimeObject = function(rawRuntimeObject){
+	
+	var interfaceDef = {
+		getInitRequest : function(handlers, request){	},
+
+		getUpdateViewRequest : function(view, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
+		},
+
+		
+		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
+			return loc_getComponentCore().getUpdateSystemDataRequest(domain, systemData, handlers, request);
+		},
+		
+		//component management interface 
+		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
+		getExecuteCommandRequest : function(command, parms, handlers, request){		},
+
+		registerEventListener : function(listener, handler, thisContext){     },
+		unregisterEventListener : function(listener){     },
+		registerValueChangeEventListener : function(listener, handler, thisContext){      },
+		unregisterValueChangeEventListener : function(listener){      }
+	};
+	
+	return _.extend({}, interfaceDef, rawRuntimeObject);
+};
+	
+	
 //interface for decoration plug in
 var node_buildDecorationPlugInObject = function(rawPluginObj){
 	var loc_rawPluginObj = rawPluginObj;
@@ -60,8 +89,10 @@ var node_buildComponentCore = function(rawComponentCore){
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
+
 		//get part by id
 		getPart : function(partId){ },
+		
 		//get interface exposed
 		getInterface : function(){ return {}; },
 
@@ -80,6 +111,10 @@ var node_buildComponentCore = function(rawComponentCore){
 		getLifeCycleRequest : function(transitName, handlers, request){},
 		setLifeCycleStatus : function(status){},
 		
+		//call back when core embeded into runtime during init phase
+		getUpdateRuntimeRequest : function(runtimeEnv, handlers, request){},
+		
+		//call back to provide view (during init phase)
 		getUpdateViewRequest : function(view, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
 		},

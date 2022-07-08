@@ -111,12 +111,17 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 var loc_createVariableInfo = function(variableInfo){
 	
 	//variable info
-	var loc_variableInfo = variableInfo;
+	var loc_variableInfo;
 	
 	//current value for variable
 	var loc_value;
 	
 	var loc_usedCount = 1;
+	
+	var loc_init = function(variableInfo){
+		loc_variableInfo = variableInfo;
+		loc_value = loc_variableInfo[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
+	};
 	
 	var loc_out = {
 		
@@ -130,6 +135,8 @@ var loc_createVariableInfo = function(variableInfo){
 		
 		unUse : function(){  loc_usedCount--;  }
 	};
+	
+	loc_init(variableInfo);
 	return loc_out;
 };
 

@@ -30,7 +30,7 @@ var node_EntityIdInDomain = function(parm1, parm2){
 	}
 };	
 
-var node_createPackageRuntime = function(packageDef, configure){
+var node_createPackageCore = function(packageDef, configure){
 
 	var loc_packageDef = packageDef;
 	
@@ -49,12 +49,15 @@ var node_createPackageRuntime = function(packageDef, configure){
 };
 
 //bundle object
-var node_createCreateBundleRuntime = function(mainEntityId, bundleDef, configure){
-	
+var node_createBundleCore = function(mainEntityId, bundleDef, configure){
+
+	//main entity id for bundle
 	var loc_mainEntityId = mainEntityId;
 	
 	//bundle definition
 	var loc_bundleDefinition = bundleDef;
+	
+	var loc_backupStateService = backupStateService;
 	
 	//variable domain for this bundle
 	var loc_variableDomain = nod_createVariableDomain(loc_bundleDefinition[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
@@ -93,8 +96,8 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createPackageRuntime", node_createPackageRuntime); 
-packageObj.createChildNode("createCreateBundleRuntime", node_createCreateBundleRuntime); 
+packageObj.createChildNode("createPackageCore", node_createPackageCore); 
+packageObj.createChildNode("createBundleCore", node_createBundleCore); 
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 
 })(packageObj);

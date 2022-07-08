@@ -14,7 +14,7 @@ var node_buildComplexEntityPlugInObject = function(rawPluginObj){
 
 	var interfaceDef = {
 			//create component core object
-		createComponentCore : function(complexDef, configure){
+		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleRuntime, configure){
 			return {};
 		}
 	};

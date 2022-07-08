@@ -16,12 +16,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(configure, runtimeEnv){
+var node_createComponentCoreComplex = function(runtimeEnv){
 	//external env
 	loc_runtimeEnv = runtimeEnv;
-	
-	//configuration for component core complex
-	var loc_configure = node_createConfigure(configure);
 	
 	//component core and decoration layers
 	var loc_layers = [];

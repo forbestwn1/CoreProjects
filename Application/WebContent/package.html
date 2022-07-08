@@ -26,7 +26,7 @@
          	</div>
     	</div>
 
-		<div id="moduleDiv"></div>
+		<div id="mainDiv"></div>
 	
 		<div class="panel panel-right panel-cover">
       		<div class="block" id="debugDiv2">
@@ -45,8 +45,12 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 
-	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest("testcomplex1|parent", undefined, {
-		success : function(request, pckageRuntime){
+	var runtimeContext = {
+		view : $('#mainDiv').get()
+	};
+	
+	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest("testcomplex1|parent", undefined, runtimeContext, {
+		success : function(request, packageRuntime){
 			var kkkk = 5;
 			kkkk++;
 		}

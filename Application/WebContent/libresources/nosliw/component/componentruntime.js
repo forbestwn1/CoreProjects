@@ -26,22 +26,29 @@ var packageObj = library;
 //        expose lifecycle and interface inteface
 //        manage backup
 //        manage roll back
-var node_createComponentRuntime = function(componentCore, componentDecorationInfos, variableGroupId, bundleRuntime, configure, request){
+//parms:
+//    componentCore core object
+//    decoration
+//    runtimeContext : other infor related with runtime obj, rootView, backupState
+var node_createComponentRuntime = function(componentCore, decorationInfos, runtimeContext, request){
+	
+	var loc_runtimeContext = runtimeContext;
 	
 	var loc_componentCoreComplex;
-//	var loc_rootView = rootView;
-	
-//	var loc_backupState = backupState;
-//	var loc_componentStates = [];
+
+	var loc_componentStates = [];
 
 	var loc_lifeCycleStatus;
 	
 	var loc_eventListener = node_createEventObject();
 
-	var loc_init = function(componentCore, configure, componentDecorationInfos, rootView, backupState, request){
-		loc_componentCoreComplex = node_createComponentCoreComplex(configure, loc_runtimeEnv);
+	var loc_backupState = runtimeContext.backupState;
+
+	var loc_init = function(componentCore, decorationInfos, runtimeContext, request){
+		//build core complex using core and decoration
+		loc_componentCoreComplex = node_createComponentCoreComplex(loc_runtimeEnv);
 		loc_componentCoreComplex.setCore(componentCore);
-		loc_componentCoreComplex.addDecorations(componentDecorationInfos);
+		loc_componentCoreComplex.addDecorations(decorationInfos);
 		
 		loc_componentStates.push(loc_createComplexLayerState(loc_componentCoreComplex.getCore(), "core"));
 
@@ -205,16 +212,23 @@ var node_createComponentRuntime = function(componentCore, componentDecorationInf
 		
 		getInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
-//			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_rootView, {
-//				success : function(request, view){
-//					loc_getComponentCore().setRootView(view);
-//				}
-//			}));
-//			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
-//
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
-//			}));
+
+			//provide view to core
+			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_runtimeContext.view, {
+				success : function(request, view){
+					loc_getComponentCore().setRootView(view);
+				}
+			}));
+			
+			//provide runtime env to core
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeRequest(loc_runtimeEnv));
+			
+			//init core
+			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
+
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
+			}));
 			
 			return out;
 		},
@@ -238,7 +252,7 @@ var node_createComponentRuntime = function(componentCore, componentDecorationInf
 		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
-//	loc_init(componentCore, configure, componentDecorationInfos, rootView, backupState, request);
+	loc_init(componentCore, decorationInfos, runtimeContext, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status
