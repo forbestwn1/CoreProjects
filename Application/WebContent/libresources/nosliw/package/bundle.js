@@ -6,14 +6,20 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_ServiceInfo;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
 	var node_makeObjectWithType;
 	var nod_createVariableDomain;
+	var node_resourceUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createBundleCore = function(globalComplexEntitId, configure){
 
 	var loc_globalComplexEntitId = globalComplexEntitId;
+	
+	var loc_runtimeContext;
 	
 	var loc_runtimeEnv;
 
@@ -37,10 +43,9 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 				loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
 				loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
 				
-				return nosliw.runtime.getPackageService().getCreateComponentRuntimeRequest(globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, bundleCore, configure, runtimeContext, {
+				return nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, loc_runtimeContext, {
 					success : function(request, mainComplexEntity){
 						loc_mainComplexEntity = mainComplexEntity;
-						return bundleRuntime;
 					}
 				});
  			}
@@ -56,6 +61,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_runtimeContext = runtimeContext;
 				loc_parentView = runtimeContext.view;
 			}, handlers, request);
 		},
@@ -92,8 +98,12 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 

@@ -72,6 +72,16 @@ var loc_createTestComplex1ComponentCore = function(complexDef, variableGroupId, 
 			}, handlers, request);
 		},
 
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			loc_parentView = $(runtimeContext.view);
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_mainView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
+				loc_loggingView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
+				loc_mainView.append(loc_loggingView);
+				loc_parentView.append(loc_mainView);
+			}, handlers, request);
+		},
+
 		registerEventListener : function(listener, handler, thisContext){  },
 		unregisterEventListener : function(listener){ },
 

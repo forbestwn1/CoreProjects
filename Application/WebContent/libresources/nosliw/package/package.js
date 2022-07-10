@@ -6,6 +6,9 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_ServiceInfo;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSequence;
 	var node_makeObjectWithType;
 	var nod_createVariableDomain;
 	
@@ -14,6 +17,8 @@ var packageObj = library;
 var node_createPackageCore = function(resourceId, configure){
 
 	var loc_resourceId = resourceId;
+	
+	var loc_runtimeContext;
 	
 	var loc_runtimeEnv;
 
@@ -24,7 +29,7 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_mainBundle;
 	
 	var loc_getInitPackageRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitCorePackage", {"resourceId":loc_resourceId}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitCorePackage", {}), handlers, request);
 		var gatewayParm = {};
 		gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = resourceId;
 		out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
@@ -34,22 +39,22 @@ var node_createPackageCore = function(resourceId, configure){
 				{
 					success : function(requestInfo, packageDef){
 						loc_packageDef = packageDef;
-						var packageRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createPackageRuntime"));
+						var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
 						
 						//load all related resources first
-						packageRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
+						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
 								var kkkk = 5555;
 								kkkk++;
 							}
 						}));
 						
-						packageRuntimeRequest.addRequest(nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], configure, runtimeContext, {
+						bundleRuntimeRequest.addRequest(nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], configure, loc_runtimeContext, {
 							success : function(request, bundleRuntime){
 								loc_mainBundle = bundleRuntime;
 							}
 						}));
-						return packageRuntimeRequest;
+						return bundleRuntimeRequest;
 					}
 				}
 		));
@@ -60,6 +65,7 @@ var node_createPackageCore = function(resourceId, configure){
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_runtimeContext = runtimeContext;
 				loc_parentView = runtimeContext.view;
 			}, handlers, request);
 		},
@@ -96,6 +102,9 @@ var node_createPackageCore = function(resourceId, configure){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
 

@@ -115,8 +115,12 @@ var node_buildComponentCore = function(rawComponentCore){
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
 		
 		//call back to provide view (during init phase)
-		getUpdateViewRequest : function(view, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
+//		getUpdateViewRequest : function(view, handlers, request){
+//			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
+//		},
+
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}, handlers, request);
 		},
 
 		registerEventListener : function(listener, handler, thisContext){  },

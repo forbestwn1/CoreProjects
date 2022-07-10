@@ -32,7 +32,7 @@ var packageObj = library;
 //    runtimeContext : other infor related with runtime obj, rootView, backupState
 var node_createComponentRuntime = function(componentCore, decorationInfos, request){
 	
-	var loc_runtimeContext = runtimeContext;
+	var loc_runtimeContext;
 	
 	var loc_componentCoreComplex;
 
@@ -42,21 +42,24 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	var loc_eventListener = node_createEventObject();
 
-	var loc_backupState = runtimeContext.backupState;
+	var loc_backupState;
 
-	var loc_init = function(componentCore, decorationInfos, runtimeContext, request){
+	var loc_init = function(componentCore, decorationInfos, request){
 		//build core complex using core and decoration
 		loc_componentCoreComplex = node_createComponentCoreComplex();
 		loc_componentCoreComplex.setCore(componentCore);
 		loc_componentCoreComplex.addDecorations(decorationInfos);
-		
+	};
+
+	var loc_initBackState = function(backupState){
+		loc_backupState = backupState;
 		loc_componentStates.push(loc_createComplexLayerState(loc_componentCoreComplex.getCore(), "core"));
 
 		_.each(loc_componentCoreComplex.getDecorations(), function(decoration, i){
 			loc_componentStates.push(loc_createComplexLayerState(decoration, "dec_"+decoration.getId()));
 		});
-	};
-
+	}
+	
 	var loc_createComplexLayerState = function(layer, id){
 		return node_createComponentState(loc_backupState.createChildState(id), 
 			function(handlers, request){  
@@ -213,6 +216,10 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		getInitRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
+			loc_runtimeContext = runtimeContext;
+
+			loc_initBackState(loc_runtimeContext.backupState);
+			
 			//provide runtime env to core
 			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv));
 			
@@ -248,7 +255,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		unregisterValueChangeEventListener : function(listener){   return loc_componentCoreComplex.unregisterValueChangeEventListener(listener);    }
 	};
 	
-	loc_init(componentCore, decorationInfos, runtimeContext, request);
+	loc_init(componentCore, decorationInfos, request);
 	
 	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status

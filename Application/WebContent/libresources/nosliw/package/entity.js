@@ -7,7 +7,6 @@ var packageObj = library.getChildPackage("entity");
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_makeObjectWithType;
-	var nod_createVariableDomain;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -30,70 +29,6 @@ var node_EntityIdInDomain = function(parm1, parm2){
 	}
 };	
 
-var node_createPackageCore = function(packageDef, configure){
-
-	var loc_packageDef = packageDef;
-	
-	var loc_mainBundle = null;
-	
-	var loc_out = {
-			
-		setMainBundleRuntime : function(bundleRuntime){
-			loc_mainBundle = bundleRuntime;
-		},
-		
-		getUpdateViewRequest : function(view, handlers, request){
-			return loc_mainBundle.getUpdateViewRequest(view, handlers, request);
-		},
-		
-	};
-	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
-
-	return loc_out;
-};
-
-//bundle object
-var node_createBundleCore = function(mainEntityId, bundleDef, configure){
-
-	//main entity id for bundle
-	var loc_mainEntityId = mainEntityId;
-	
-	//bundle definition
-	var loc_bundleDefinition = bundleDef;
-	
-	//variable domain for this bundle
-	var loc_variableDomain = nod_createVariableDomain(loc_bundleDefinition[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
-	
-	//root component runtime
-	var loc_mainComponent = null;
-	
-	var loc_out = {
-		
-		getBundleDefinition : function(){
-			return loc_bundleDefinition;
-		},
-		
-		getVariableDomain : function(){
-			return loc_variableDomain;
-		},
-		
-		setMainComponent : function(component){
-			loc_mainComponent = component;
-		},
-		
-		getUpdateViewRequest : function(view, handlers, request){
-			return loc_mainComponent.getUpdateViewRequest(view, handlers, request);
-		},
-		
-	};
-
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
-	
-	return loc_out;
-	
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -101,11 +36,8 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createPackageCore", node_createPackageCore); 
-packageObj.createChildNode("createBundleCore", node_createBundleCore); 
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 
 })(packageObj);

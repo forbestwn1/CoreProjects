@@ -45,26 +45,49 @@ var node_createComponentCoreComplex = function(){
 		return out;
 	};
 
-	//process view from top layer to bottom layer
-	//any layer can modify view and return new view and pass the new view to next layer
-	var loc_getUpdateViewRequest = function(view, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateView", {}), handlers, request);
-		out.addRequest(loc_getUpdateLayerViewRequest(loc_layers.length-1, view));
+//	//process view from top layer to bottom layer
+//	//any layer can modify view and return new view and pass the new view to next layer
+//	var loc_getUpdateViewRequest = function(view, handlers, request){
+//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateView", {}), handlers, request);
+//		out.addRequest(loc_getUpdateLayerViewRequest(loc_layers.length-1, view));
+//		return out;
+//	};
+//	
+//	var loc_getUpdateLayerViewRequest = function(index, view, handlers, request){
+//		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerView", {}), handlers, request);
+//		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
+//			success : function(request, newView){
+//				if(newView==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return view;});
+//				else if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newView;});
+//				else return loc_getUpdateLayerViewRequest(index-1, newView);
+//			}
+//		}));
+//		return out;
+//	};
+
+
+	//process runtime context from top layer to bottom layer
+	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
+	var loc_getUpdateRuntimeContextRequest = function(runtimeContext, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContext", {}), handlers, request);
+		out.addRequest(loc_getUpdateLayerRuntimeContextRequest(loc_layers.length-1, runtimeContext));
 		return out;
 	};
 	
-	var loc_getUpdateLayerViewRequest = function(index, view, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerView", {}), handlers, request);
-		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
-			success : function(request, newView){
-				if(newView==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return view;});
-				else if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newView;});
-				else return loc_getUpdateLayerViewRequest(index-1, newView);
+	var loc_getUpdateLayerRuntimeContextRequest = function(index, runtimeContext, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContext", {}), handlers, request);
+		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
+			success : function(request, newRuntimeContext){
+				if(newRuntimeContext==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext;});
+				else if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
+				else return loc_getUpdateLayerRuntimeRequest(index-1, newRuntimeContext);
 			}
 		}));
 		return out;
 	};
 
+
+	
 	var loc_getUpdateRuntimeEnvRequest = function(runtimeEnv, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnv", {}), handlers, request);
 		_.each(loc_layers, function(layer){
@@ -175,8 +198,12 @@ var node_createComponentCoreComplex = function(){
 			return out;
 		},
 		
-		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
-		
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){     
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContext", {}), handlers, request);
+			out.addRequest(loc_getUpdateRuntimeContextRequest(runtimeContext));
+			return out;
+		},
+
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){   return loc_getUpdateRuntimeEnvRequest(runtimeEnv);    },
 
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
