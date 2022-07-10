@@ -36,25 +36,25 @@ var node_createPackageRuntimeService = function() {
 		var entityDefDomain = bundleCore.getBundleDefinition()[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN];
 		var complexEntityInfo = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_COMPLEXENTITY][complexEntityId.literateStr];
 
-		var complexEntity = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_ENTITY];
-		if(complexEntity!=undefined){
+		var complexEntityDef = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_ENTITY];
+		if(complexEntityDef!=undefined){
 			//internal entity
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//build variableGroup
 				var variableGroupId = null;
 				var variableDomain = bundleCore.getVariableDomain();
-				var valueStructureComplex = complexEntity[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUESTRUCTURECOMPLEX];
-				variableGroupId = variableDomain.creatVariableGroup(valueStructureComplex, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
+				var valueStructureComplexDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUESTRUCTURECOMPLEX];
+				variableGroupId = variableDomain.creatVariableGroup(valueStructureComplexDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
 				
 				//new complexCore through complex plugin
 				var complexEntityPlugin = loc_complexEntityPlugins[complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]];
-				var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntity, variableGroupId, bundleCore, configure);
+				var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
 				
 				//build decorationInfos
 				var decorationInfos = null;
 				
 				//create runtime
-				var complexEntityRuntime = node_createComponentRuntime(componentCore, decorationInfos, runtimeContext, request);
+				var complexEntityRuntime = node_createComponentRuntime(componentCore, decorationInfos, request);
 
 				//runtime init
 				return complexEntityRuntime.getInitRequest(runtimeContext, {
@@ -115,15 +115,7 @@ var node_createPackageRuntimeService = function() {
 		
 		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);
-			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext, {
-				success : function(request, complexEntityRuntime){
-					return complexEntityRuntime.getInitRequest(runtimeContext, {
-						success : function(request){
-							return complexEntityRuntime;
-						}
-					});
-				}
-			}));
+			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext));
 			return out;
 		},
 		
