@@ -44,15 +44,18 @@ $(document).on("nosliwActive", function(){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	
 	var runtimeContext = {
 		view : $('#mainDiv').get()
 	};
 	
-	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest("testcomplex1|parent", undefined, runtimeContext, {
+	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), undefined, runtimeContext, {
 		success : function(request, packageRuntime){
-			var kkkk = 5;
-			kkkk++;
+			return packageRuntime.getInitRequest({
+				success : function(request){
+				}
+			});
 		}
 	});
 });

@@ -112,7 +112,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		setLifeCycleStatus : function(status){},
 		
 		//call back when core embeded into runtime during init phase
-		getUpdateRuntimeRequest : function(runtimeEnv, handlers, request){},
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
 		
 		//call back to provide view (during init phase)
 		getUpdateViewRequest : function(view, handlers, request){

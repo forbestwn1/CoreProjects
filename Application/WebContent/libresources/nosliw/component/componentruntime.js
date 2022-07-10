@@ -30,7 +30,7 @@ var packageObj = library;
 //    componentCore core object
 //    decoration
 //    runtimeContext : other infor related with runtime obj, rootView, backupState
-var node_createComponentRuntime = function(componentCore, decorationInfos, runtimeContext, request){
+var node_createComponentRuntime = function(componentCore, decorationInfos, request){
 	
 	var loc_runtimeContext = runtimeContext;
 	
@@ -46,7 +46,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, runti
 
 	var loc_init = function(componentCore, decorationInfos, runtimeContext, request){
 		//build core complex using core and decoration
-		loc_componentCoreComplex = node_createComponentCoreComplex(loc_runtimeEnv);
+		loc_componentCoreComplex = node_createComponentCoreComplex();
 		loc_componentCoreComplex.setCore(componentCore);
 		loc_componentCoreComplex.addDecorations(decorationInfos);
 		
@@ -210,18 +210,14 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, runti
 
 	var loc_out = {
 		
-		getInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitUIModuleRuntime", {}), handlers, request);
+		getInitRequest : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
-			//provide view to core
-			out.addRequest(loc_componentCoreComplex.getUpdateViewRequest(loc_runtimeContext.view, {
-				success : function(request, view){
-					loc_getComponentCore().setRootView(view);
-				}
-			}));
-			
 			//provide runtime env to core
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeRequest(loc_runtimeEnv));
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv));
+			
+			//provide runtime context to core
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(loc_runtimeContext));
 			
 			//init core
 			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));

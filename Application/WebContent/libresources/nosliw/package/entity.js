@@ -40,7 +40,12 @@ var node_createPackageCore = function(packageDef, configure){
 			
 		setMainBundleRuntime : function(bundleRuntime){
 			loc_mainBundle = bundleRuntime;
-		}
+		},
+		
+		getUpdateViewRequest : function(view, handlers, request){
+			return loc_mainBundle.getUpdateViewRequest(view, handlers, request);
+		},
+		
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
@@ -56,8 +61,6 @@ var node_createBundleCore = function(mainEntityId, bundleDef, configure){
 	
 	//bundle definition
 	var loc_bundleDefinition = bundleDef;
-	
-	var loc_backupStateService = backupStateService;
 	
 	//variable domain for this bundle
 	var loc_variableDomain = nod_createVariableDomain(loc_bundleDefinition[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
@@ -77,7 +80,12 @@ var node_createBundleCore = function(mainEntityId, bundleDef, configure){
 		
 		setMainComponent : function(component){
 			loc_mainComponent = component;
-		}
+		},
+		
+		getUpdateViewRequest : function(view, handlers, request){
+			return loc_mainComponent.getUpdateViewRequest(view, handlers, request);
+		},
+		
 	};
 
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);

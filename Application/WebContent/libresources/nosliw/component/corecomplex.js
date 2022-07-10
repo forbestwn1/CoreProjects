@@ -16,9 +16,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(runtimeEnv){
-	//external env
-	loc_runtimeEnv = runtimeEnv;
+var node_createComponentCoreComplex = function(){
 	
 	//component core and decoration layers
 	var loc_layers = [];
@@ -56,7 +54,7 @@ var node_createComponentCoreComplex = function(runtimeEnv){
 	};
 	
 	var loc_getUpdateLayerViewRequest = function(index, view, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayer", {}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerView", {}), handlers, request);
 		out.addRequest(loc_layers[index].getUpdateViewRequest(view, {
 			success : function(request, newView){
 				if(newView==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return view;});
@@ -64,6 +62,14 @@ var node_createComponentCoreComplex = function(runtimeEnv){
 				else return loc_getUpdateLayerViewRequest(index-1, newView);
 			}
 		}));
+		return out;
+	};
+
+	var loc_getUpdateRuntimeEnvRequest = function(runtimeEnv, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnv", {}), handlers, request);
+		_.each(loc_layers, function(layer){
+			out.addRequest(layer.getUpdateRuntimeEnvRequest(runtimeEnv));
+		});
 		return out;
 	};
 
@@ -123,7 +129,7 @@ var node_createComponentCoreComplex = function(runtimeEnv){
 			
 		setCore : function(core){
 			var coreLayer = node_buildComponentCore(core);
-			coreLayer.setRuntimeEnv(loc_runtimeEnv);
+//			coreLayer.setRuntimeEnv(loc_runtimeEnv);
 			loc_addLayer(coreLayer);	
 		},
 		
@@ -171,6 +177,8 @@ var node_createComponentCoreComplex = function(runtimeEnv){
 		
 		getUpdateViewRequest : function(view, handlers, request){  return loc_getUpdateViewRequest(view, handlers, request); 	},
 		
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){   return loc_getUpdateRuntimeEnvRequest(runtimeEnv);    },
+
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 		setLifeCycleStatus : function(status){   
 			loc_lifecycleStatus = status;   

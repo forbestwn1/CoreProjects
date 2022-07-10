@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_basicUtility;
+	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
@@ -26,13 +27,13 @@ var node_createPackageRuntimeService = function() {
 	var loc_complexEntityPlugins = {};
 
 	//create component runtime object
-	var loc_getCreateComponentRuntimeRequest = function(complexEntityId, parentRuntime, bundleRuntime, configure, runtimeContext, handlers, request){
+	var loc_getCreateComponentRuntimeRequest = function(complexEntityId, parentRuntime, bundleCore, configure, runtimeContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexRuntime"), handlers, request);
 
 		complexEntityId = new node_EntityIdInDomain(complexEntityId);
 		
 		//get component definition
-		var entityDefDomain = bundleRuntime.getBundleDefinition()[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN];
+		var entityDefDomain = bundleCore.getBundleDefinition()[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN];
 		var complexEntityInfo = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_COMPLEXENTITY][complexEntityId.literateStr];
 
 		var complexEntity = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_ENTITY];
@@ -41,19 +42,19 @@ var node_createPackageRuntimeService = function() {
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//build variableGroup
 				var variableGroupId = null;
-				var variableDomain = bundleRuntime.getVariableDomain();
+				var variableDomain = bundleCore.getVariableDomain();
 				var valueStructureComplex = complexEntity[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUESTRUCTURECOMPLEX];
 				variableGroupId = variableDomain.creatVariableGroup(valueStructureComplex, parentRuntime==undefined?undefined : parentRuntime.getVariableGroupId());
 				
 				//new complexCore through complex plugin
 				var complexEntityPlugin = loc_complexEntityPlugins[complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]];
-				var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntity, variableGroupId, bundleRuntime, configure);
+				var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntity, variableGroupId, bundleCore, configure);
 				
 				//build decorationInfos
 				var decorationInfos = null;
 				
 				//create runtime
-				var runtime = node_createComponentRuntime(componentCore, decorationInfos, configure, runtimeContext, request);
+				var runtime = node_createComponentRuntime(componentCore, decorationInfos, runtimeContext, request);
 				return runtime;
 			}));
 		}
@@ -63,14 +64,7 @@ var node_createPackageRuntimeService = function() {
 			//create bundle runtime
 			out.addRequest(loc_getCreateBundleRuntimeRequest(externalEntityId, configure, runtimeContext));
 		}
-		
-		//runtime init
-		out.addRequest(runtime.getInitRequest({
-			success : function(request, runtime){
-				return runtime;
-			}
-		}));
-
+		return out;
 	};
 
 	var loc_getCreateBundleRuntimeRequest = function(globalComplexEntitId, configure, runtimeContext, handlers, request){
@@ -83,11 +77,12 @@ var node_createPackageRuntimeService = function() {
 				//get bundle definition
 				var bundleDefinition = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
 				//create bundle runtime
-				var bundleRuntime = node_createBundleCore(globalComplexEntitId, bundleDefinition, backupStateService, configure);
+				var bundleCore = node_createBundleCore(globalComplexEntitId, bundleDefinition, configure);
+				var bundleRuntime = node_createComponentRuntime(bundleCore, undefined, runtimeContext, request);
 				//create component runtime
-				return loc_getCreateComponentRuntimeRequest(globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, configure, runtimeContext, {
+				return loc_getCreateComponentRuntimeRequest(globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, bundleCore, configure, runtimeContext, {
 					success : function(request, componetRuntime){
-						bundleRuntime.setMainComponent(componetRuntime);
+						bundleCore.setMainComponent(componetRuntime);
 						return bundleRuntime;
 					}
 				});
@@ -100,9 +95,7 @@ var node_createPackageRuntimeService = function() {
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExectuePackage", {"resourceId":resourceId}), handlers, request);
 
 		//state backup service for this package
-		if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceType, resourctId, "1.0.0", nosliw.runtime.getStoreService());
-
-		var packageRuntime = node_createPackageCore(packageDef, configure);
+		if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
 
 		var gatewayParm = {};
 		gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = resourceId;
@@ -112,10 +105,13 @@ var node_createPackageRuntimeService = function() {
 				gatewayParm,
 				{
 					success : function(requestInfo, packageDef){
-						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createPackageRuntime"), handlers, request);
+						var packageRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createPackageRuntime"));
 						
+						var packageCore = node_createPackageCore(packageDef, configure);
+						var packageRuntime = node_createComponentRuntime(packageCore, undefined, runtimeContext, request);
+
 						//load all related resources first
-						out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
+						packageRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
 								var kkkk = 5555;
 								kkkk++;
@@ -123,11 +119,13 @@ var node_createPackageRuntimeService = function() {
 						}));
 						
 						//create bundle runtime
-						out.addRequest(loc_getCreateBundleRuntimeRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], configure, runtimeContext, {
+						packageRuntimeRequest.addRequest(loc_getCreateBundleRuntimeRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], configure, runtimeContext, {
 							success : function(request, bundleRuntime){
-								packageRuntime.setMainBundleRuntime(bundleRuntime);
+								packageCore.setMainBundleRuntime(bundleRuntime);
+								return packageRuntime;
 							}
 						}));
+						return packageRuntimeRequest;
 					}
 				}
 		));
@@ -141,7 +139,17 @@ var node_createPackageRuntimeService = function() {
 	var loc_out = {
 
 		getCreatePackageRuntimeRequest : function(resourceId, configure, runtimeContext, handlers, request){
-			return loc_getCreatePackageRuntimeRequest(resourceId, configure, runtimeContext, handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":resourceId}), handlers, request);
+			out.addRequest(node_createComponentRuntime(node_createPackageCore(resourceId, configure), undefined, {
+				success : function(request, packageRuntime){
+					return packageRuntime.getInitRequest(runtimeContext, {
+						success : function(request){
+							return packageRuntime;
+						}
+					});
+				}
+			}));
+			return out;
 		},
 		
 		executeCreatePackageRuntimeRequest : function(resourceId, configure, runtimeContext, handlers, request){
@@ -149,8 +157,37 @@ var node_createPackageRuntimeService = function() {
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		getCreateComponentRuntimeRequest : function(complexEntityId, parentRuntime, bundleRuntime, configure, runtimeContext, handlers, request){
-			return loc_getCreateComponentRuntimeRequest(complexEntityId, parentRuntime, bundleRuntime, configure, runtimeContext, handlers, request);
+		getCreateBundleRuntimeRequest : function(globalComplexEntitId, configure, runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateBundleRuntime", {"globalComplexEntitId":globalComplexEntitId}), handlers, request);
+			out.addRequest(node_createComponentRuntime(node_createBundleCore(globalComplexEntitId, configure), undefined, {
+				success : function(request, bundleRuntime){
+					return bundleRuntime.getInitRequest(runtimeContext, {
+						success : function(request){
+							return bundleRuntime;
+						}
+					});
+				}
+			}));
+			return out;
+		},
+		
+		executeCreateBundleRuntimeRequest : function(globalComplexEntitId, configure, runtimeContext, handlers, request){
+			var requestInfo = getCreateBundleRuntimeRequest(globalComplexEntitId, configure, runtimeContext, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},		
+		
+		getCreateComponentRuntimeRequest : function(complexEntityId, parentRuntime, bundleCore, configure, runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);
+			out.addRequest(node_createComponentRuntime(loc_createComplexEntityCore(complexEntityId, parentRuntime, bundleCore, configure), undefined, {
+				success : function(request, complexEntityRuntime){
+					return complexEntityRuntime.getInitRequest(runtimeContext, {
+						success : function(request){
+							return complexEntityRuntime;
+						}
+					});
+				}
+			}));
+			return out;
 		},
 		
 		executeCreateComponentRuntimeRequest : function(complexEntityId, parentRuntime, bundleRuntime, configure, runtimeContext, handlers, request){
@@ -174,6 +211,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
