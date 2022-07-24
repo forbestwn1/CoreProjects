@@ -486,6 +486,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_ATTACHMENT = "attachment";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1 = "testsimple1";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1 = "testcomplex1";
+		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION1 = "testdecoration1";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATION = "dataAssociation";
 		public static final String RUNTIME_RESOURCE_TYPE_UI = "ui";
 		public static final String RUNTIME_RESOURCE_TYPE_PAGE = "page";

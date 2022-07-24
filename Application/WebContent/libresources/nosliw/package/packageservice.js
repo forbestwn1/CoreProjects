@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createPackageCore;
 	
 	var node_createTestComplex1Plugin;
+	var node_createTestDecoration1Plugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -75,28 +76,51 @@ var node_createPackageRuntimeService = function() {
 
 	var loc_init = function(){
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, node_createTestComplex1Plugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_DECORATION1, node_createTestDecoration1Plugin());
+	};
+
+	//general mathod to create runtime
+	var loc_createPackageRuntime = function(packageResourceId, packageConfigure, decorationInfos, request){
+		var packageRuntime = node_createComponentRuntime(node_createPackageCore(packageResourceId, packageConfigure), decorationInfos, request);
+		return packageRuntime;
 	};
 	
+
 	var loc_out = {
 
-		getCreatePackageRuntimeRequest : function(resourceId, configure, runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":resourceId}), handlers, request);
+		//create package runtime object
+		createPackageRuntime : function(packageResourceId, configure, request){
+			//get runtime configure & decoration info from configure
+			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
+			//create runtime object
+			var packageRuntime = loc_createPackageRuntime(packageResourceId, runtimeConfigureInfo.coreConfigure, runtimeConfigureInfo.decorations, request);
+			return packageRuntime;
+		},
+				
+		//create package runtime object and init request
+		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+			var packageRuntime = this.createPackageRuntime(packageResourceId, configure, request);
+			
+			//build backup state if not provided
+			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(packageResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], packageResourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
 
-			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
-			var packageRuntime = node_createComponentRuntime(node_createPackageCore(resourceId, configure), undefined, out);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
+			//init package runtime
 			out.addRequest(packageRuntime.getInitRequest(runtimeContext, {
 				success : function(request){
 					return packageRuntime;
 				}
 			}));
+
 			return out;
 		},
 		
-		executeCreatePackageRuntimeRequest : function(resourceId, configure, runtimeContext, handlers, request){
-			var requestInfo = this.getCreatePackageRuntimeRequest(resourceId, configure, runtimeContext, handlers, request);
+		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
-		},
-		
+		},		
+			
+
 		getCreateBundleRuntimeRequest : function(globalComplexEntitId, configure, runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateBundleRuntime", {"globalComplexEntitId":globalComplexEntitId}), handlers, request);
 			var bundleRuntime = node_createComponentRuntime(node_createBundleCore(globalComplexEntitId, configure), undefined, out);
@@ -112,6 +136,28 @@ var node_createPackageRuntimeService = function() {
 			var requestInfo = getCreateBundleRuntimeRequest(globalComplexEntitId, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
+		
+		
+		
+		
+		
+		
+		
+		
+		getCreatePackageRuntimeRequest1 : function(packageResourceId, packageConfigure, decorationInfos, runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
+			out.addRequest(packageRuntime.getInitRequest(runtimeContext, {
+				success : function(request){
+					return packageRuntime;
+				}
+			}));
+			return out;
+		},			
+			
+		executeCreatePackageRuntimeRequest : function(resourceId, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreatePackageRuntimeRequest(resourceId, configure, runtimeContext, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
 		
 		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);
@@ -151,8 +197,8 @@ nosliw.registerSetNodeDataEvent("package.buildComplexEntityPlugInObject", functi
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createPackageCore", function(){node_createPackageCore = this.getData();});
 
-
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
+nosliw.registerSetNodeDataEvent("testcomponent.createTestDecoration1Plugin", function(){node_createTestDecoration1Plugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createPackageRuntimeService", node_createPackageRuntimeService); 

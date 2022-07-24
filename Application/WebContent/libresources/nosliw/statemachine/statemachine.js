@@ -365,7 +365,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("request.entity.RequestResult", function(){node_RequestResult = this.getData();});
 
 nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.CommandInfo", function(){node_CommandInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("statemachine.SMCommandInfo", function(){node_SMCommandInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.NextStateInfo", function(){node_NextStateInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.StateInfo", function(){node_StateInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();}); 

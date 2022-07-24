@@ -279,6 +279,11 @@ var node_CONSTANT=
 	  "HANDLER_TYPE_SCRIPT" : "script",
 	  "HANDLER_TYPE_TASK" : "task",
 	  
+	  "CONFIGURE_DECORATION" : "decoration",
+	  "CONFIGURE_DECORATION_INFO" : "info",
+	  "CONFIGURE_DECORATION_CORE" : "core",
+	  "CONFIGURE_CORE" : "core",
+	  
 };
 
 //*******************************************   End Node Definition  ************************************** 	

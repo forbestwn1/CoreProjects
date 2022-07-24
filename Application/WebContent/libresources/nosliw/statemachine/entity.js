@@ -34,7 +34,7 @@ var node_NextStateInfo = function(name, callBack, reverseCallBack){
 };	
 		
 //
-var node_CommandInfo = function(name, from, nexts){
+var node_SMCommandInfo = function(name, from, nexts){
 	this.name = name;		//name of command
 	this.from = from;		//start state
 	this.nexts = nexts;		//state transit path
@@ -177,7 +177,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 
 //Register Node by Name
 packageObj.createChildNode("TransitInfo", node_TransitInfo); 
-packageObj.createChildNode("CommandInfo", node_CommandInfo); 
+packageObj.createChildNode("SMCommandInfo", node_SMCommandInfo); 
 packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 
 packageObj.createChildNode("StateInfo", node_StateInfo);
 packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef);

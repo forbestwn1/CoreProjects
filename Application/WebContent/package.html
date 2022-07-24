@@ -46,15 +46,49 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
 	
+	var configure = {
+		"parts" : {
+			"nosliw_decoration" :{
+				"parts" : [
+					{
+						"parts" : {
+							"nosliw_info" : {
+								"parts" : {
+									"name" : "firstDec",
+									"type" : "testdecoration1",
+									"id": 'test_decoration1',
+									"description": "this is for testing decoration"
+								}
+							},
+							"nosliw_core" : {
+								"parts" : {
+									"configureDec1" : "configureDec1Value",
+									"configureDec2" : ["configureDec21Value", "configureDec22Value", "configureDec23Value"],
+								}							
+							}
+						}
+					}
+				],
+			},
+			"nosliw_core" : {
+				"parts" : {
+					"configure1" : "configure1Value",
+					"configure2" : ["configure21Value", "configure22Value", "configure23Value"],
+				}
+			}
+		},
+	};
+	
 	var runtimeContext = {
 		view : $('#mainDiv').get()
 	};
-	
-	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), undefined, runtimeContext, {
-		success : function(request, packageRuntime){
-			var kkkk = 5555;
+
+	var packageRuntimeObj = nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), configure, runtimeContext, {
+		success : function(request, pageRuntime){
+			
 		}
 	});
+	
 });
 
 </script>

@@ -18,6 +18,8 @@ var node_createPackageCore = function(resourceId, configure){
 
 	var loc_resourceId = resourceId;
 	
+	var loc_configue = configure;
+	
 	var loc_runtimeContext;
 	
 	var loc_runtimeEnv;
@@ -27,6 +29,35 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_packageDef;
 	
 	var loc_mainBundle;
+
+	var loc_getPreInitPackageRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
+		//load resource first
+		var gatewayParm = {};
+		gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = resourceId;
+		out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
+				node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_PACKAGE, 
+				node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE, 
+				gatewayParm,
+				{
+					success : function(requestInfo, packageDef){
+						loc_packageDef = packageDef;
+						var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
+						
+						//load all related resources first
+						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
+							success : function(requestInfo, resourceTree){
+								var kkkk = 5555;
+								kkkk++;
+							}
+						}));
+						
+						return bundleRuntimeRequest;
+					}
+				}
+		));
+		return out;
+	};
 	
 	var loc_getInitPackageRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitCorePackage", {}), handlers, request);
@@ -63,17 +94,15 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_out = {
 
+		getPreInitRequest : function(handlers, request){   return loc_getPreInitPackageRequest(handlers, request);	},
+			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_runtimeContext = runtimeContext;
-				loc_parentView = runtimeContext.view;
-			}, handlers, request);
+			loc_runtimeContext = runtimeContext;
+			loc_parentView = runtimeContext.view;
 		},
 			
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_runtimeEnv = runtimeEnv;
-			}, handlers, request);
+			loc_runtimeEnv = runtimeEnv;
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){

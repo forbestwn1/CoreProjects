@@ -69,7 +69,7 @@ var node_createConfigure = function(definition, global, parms){
 		
 		//build configure data
 		if(configure!=undefined)	loc_configure = loc_applyGlobalConfigure(configure); 
-	}
+	};
 	
 	var loc_getChildConfigureValue = function(path, childId){
 	    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configure, path);
@@ -82,6 +82,11 @@ var node_createConfigure = function(definition, global, parms){
 	}; 
 	
 	var loc_out = {
+		
+		isChildExist : function(childId){
+			return loc_configure.parts[childId]!=null;
+		},
+		
 		getConfigureValue : function(){		return loc_configure;	},
 		
 		//get children configure value

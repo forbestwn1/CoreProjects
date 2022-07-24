@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing;
+package com.nosliw.data.core.domain.testing.testsimple1;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;

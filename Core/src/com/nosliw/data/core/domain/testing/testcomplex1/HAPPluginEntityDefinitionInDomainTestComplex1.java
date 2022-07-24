@@ -1,9 +1,10 @@
-package com.nosliw.data.core.domain.testing;
+package com.nosliw.data.core.domain.testing.testcomplex1;
 
 import org.json.JSONObject;
 
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.testing.HAPPluginEntityDefinitionInDomainDynamic;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainTestComplex1 extends HAPPluginEntityDefinitionInDomainDynamic{

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing;
+package com.nosliw.data.core.domain.testing.testcomplex1;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;

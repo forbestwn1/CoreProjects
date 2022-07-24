@@ -30,6 +30,29 @@ var node_DecorationInfo = function(type, id, name, resource, configure){
 	if(this.name==undefined)   this.name = this.id;   
 };
 
+var node_DecorationInfo = function(name, type, id, configure){
+	this.name = name;
+	this.type = type;
+	this.id = id;
+	this.configure = configure;
+};
+
+//interface exposed by entity for either internal or external
+var node_InterfaceInfo = function(name, description, visibility, isasync){
+	this.name = name;
+	this.description = description;
+	this.visibility = visibility;
+	this.isAsync = isasync;
+};
+
+var node_interfaceExecutable = function(){
+//	execute : function(args){
+//		
+//	}
+};
+
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -42,5 +65,6 @@ nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", functio
 //Register Node by Name
 packageObj.createChildNode("CommandResult", node_CommandResult); 
 packageObj.createChildNode("DecorationInfo", node_DecorationInfo); 
+packageObj.createChildNode("InterfaceInfo", node_InterfaceInfo); 
 
 })(packageObj);

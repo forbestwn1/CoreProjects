@@ -32,17 +32,16 @@ var packageObj = library;
 //    runtimeContext : other infor related with runtime obj, rootView, backupState
 var node_createComponentRuntime = function(componentCore, decorationInfos, request){
 	
+	//interface env for access to external env
+	var loc_interfaceEnv;
+	
 	var loc_runtimeContext;
 	
 	var loc_componentCoreComplex;
 
-	var loc_componentStates = [];
-
 	var loc_lifeCycleStatus;
 	
 	var loc_eventListener = node_createEventObject();
-
-	var loc_backupState;
 
 	var loc_init = function(componentCore, decorationInfos, request){
 		//build core complex using core and decoration
@@ -51,25 +50,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		loc_componentCoreComplex.addDecorations(decorationInfos);
 	};
 
-	var loc_initBackState = function(backupState){
-		loc_backupState = backupState;
-		loc_componentStates.push(loc_createComplexLayerState(loc_componentCoreComplex.getCore(), "core"));
-
-		_.each(loc_componentCoreComplex.getDecorations(), function(decoration, i){
-			loc_componentStates.push(loc_createComplexLayerState(decoration, "dec_"+decoration.getId()));
-		});
-	}
-	
-	var loc_createComplexLayerState = function(layer, id){
-		return node_createComponentState(loc_backupState.createChildState(id), 
-			function(handlers, request){  
-				return layer.getGetStateDataRequest(handlers, request);
-			}, 
-			function(stateData, handlers, request){
-				return layer.getRestoreStateDataRequest(stateData, handlers, request);
-			});
-	};
-	
 	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getSaveStateDataForRollBack", {}), handlers, request);
 		_.each(loc_componentStates, function(componentState, i){
@@ -204,6 +184,11 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 		getLifecycleStatus : function(){   return loc_lifeCycleStatus;     },
 		
+		//env interfact to access external env
+		getEnvInterface : function(){     },
+		
+		
+		
 		getTaskEnv : function(){    return loc_getTaskEnv();    },
 		
 		getContextIODataSet : function(){   return loc_getContextIODataSet();   }, 
@@ -212,30 +197,48 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	};
 
 	var loc_out = {
-		
+
+		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
+			
 		getInitRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
 			loc_runtimeContext = runtimeContext;
 
-			loc_initBackState(loc_runtimeContext.backupState);
+			//init backup state
+//			loc_initBackState(loc_runtimeContext.backupState);
+			
+			//pre init request
+			out.addRequest(this.getPreInitRequest());
 			
 			//provide runtime env to core
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv));
+			out.addRequest(this.getUpdateRuntimeEnvRequest());
 			
 			//provide runtime context to core
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(loc_runtimeContext));
+			out.addRequest(this.getUpdateRuntimeContextRequest(loc_runtimeContext));
 			
 			//init core
-			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
+			out.addRequest(this.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
 
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
-			}));
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
+//			}));
 			
 			return out;
 		},
 
+		getPreInitRequest : function(handlers, request){	return loc_componentCoreComplex.getPreInitRequest(handlers, request);	},
+		
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);	
+		},
+
+		getUpdateRuntimeEnvRequest : function(handlers, request){   return loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, handlers, request);    },
+		
+		getLifeCycleRequest : function(transitName, handlers, request){   return loc_componentCoreComplex.getLifeCycleRequest(transitName, handlers, request);      },
+		
+		
+		
 		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
 			return loc_getComponentCore().getUpdateSystemDataRequest(domain, systemData, handlers, request);
 		},

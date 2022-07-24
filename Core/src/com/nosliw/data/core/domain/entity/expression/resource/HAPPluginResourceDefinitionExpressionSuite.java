@@ -11,10 +11,10 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpressionDefinition;
-import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImpDefault;
+import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourceDefinitionImpDefault{
+public class HAPPluginResourceDefinitionExpressionSuite extends HAPPluginResourceDefinitionImp{
 
 	private HAPManagerTask m_taskMan;
 

@@ -1,0 +1,27 @@
+package com.nosliw.data.core.domain.testing.testdecoration1;
+
+import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
+import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+
+public class HAPPluginComplexEntityProcessorTestDecoration1 extends HAPPluginComplexEntityProcessorImp{
+
+	public HAPPluginComplexEntityProcessorTestDecoration1() {
+		super(HAPExecutableTestDecoration1.class);
+	}
+
+	@Override
+	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		
+		HAPExecutableBundleComplexResource currentPackage = processContext.getCurrentComplexResourceBundle();
+		
+		HAPExecutableTestDecoration1 executableEntity = (HAPExecutableTestDecoration1)currentPackage.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		
+		HAPIdEntityInDomain complexEntityDefinitionId = currentPackage.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPDefinitionEntityTestDecoration1 definitionEntity = (HAPDefinitionEntityTestDecoration1)currentPackage.getDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		
+		executableEntity.setScript(definitionEntity.getScript());	
+	}
+
+}

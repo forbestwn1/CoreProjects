@@ -18,6 +18,34 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var loc_createDecoration = function(decorationInfo){
+	
+	var loc_decorationInfo = decorationInfo;
+	
+	var loc_runtimeObject;
+	
+	var loc_out = {
+
+		getPreInitRequest : function(handlers, request){
+			loc_runtimeObject = nosliw.runtime.getPackageService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
+			return loc_runtimeObject.getPreInitRequest(handlers, request);
+		},
+			
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
+			
+		},
+		
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			
+		},
+		
+		
+	};
+	
+	return loc_out;
+	
+};
+	
 //component decoration
 // id : decoration id
 // baseLayer : layer underneath this decoration, it maybe component or another decoration

@@ -1,8 +1,5 @@
 package com.nosliw.data.core.resource;
 
-import org.json.JSONObject;
-
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -10,16 +7,15 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
-import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceDefinition{
+public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{
 
 	private String m_resourceType;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPPluginResourceDefinitionImpDefault(String resourceType, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginResourceDefinitionImp(String resourceType, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_resourceType = resourceType;
 		this.m_runtimeEnv = runtimeEnv;
 	}
@@ -53,10 +49,8 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 			//get location information
 			HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(rootResourceId);
 			resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
-			//read content
-			JSONObject entityJsonObj = new JSONObject(HAPUtilityFile.readFile(resourceLocInfo.getFiile()));
-			//parse json object
-			rootEntityId = parseEntity(entityJsonObj, new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
+			//read content and parse it
+			rootEntityId = parseEntity(HAPUtilityFile.readFile(resourceLocInfo.getFiile()), new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
 			resourceDomain.setRootEntityId(rootEntityId);
 		}
 		else {
@@ -95,14 +89,9 @@ public class HAPPluginResourceDefinitionImpDefault implements HAPPluginResourceD
 		return out;
 	}
 
-	private HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext) {
-		JSONObject jsonObj = null;
-		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
-		else if(content instanceof String)  jsonObj = new JSONObject(HAPJsonUtility.formatJson((String)content));
-		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), parserContext, this.m_runtimeEnv.getDomainEntityManager(), this.m_runtimeEnv.getResourceDefinitionManager()); 
-		return entityId;
-	}
+	abstract protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext);
 
+	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
 	
 }

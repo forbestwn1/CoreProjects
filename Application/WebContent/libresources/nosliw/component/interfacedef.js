@@ -80,12 +80,22 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 	return loc_out;
 };
 
+//interface for external interface env for current entity
+var node_buildInterfaceEnv = function(rawInterfaceEnv){
+
+	var interfaceDef = {
+		getInterfaceExecutable : function(targetInfo, interfaceName){  },
+	};
+
+	return _.extend({}, interfaceDef, rawInterfaceEnv);
+};
+
+
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	
-	var loc_runtimeEnv;
-	
 	var interfaceDef = {
+
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
@@ -96,38 +106,42 @@ var node_buildComponentCore = function(rawComponentCore){
 		//get interface exposed
 		getInterface : function(){ return {}; },
 
-		//set state for the component core
-		setState : function(state){   },
-
-		//component runtime env
-		getRuntimeEnv : function(){   return loc_runtimeEnv;    },
-		setRuntimeEnv : function(runtimeEnv){   loc_runtimeEnv = runtimeEnv;     },
-		
 		//value by name
 		getValue : function(name){},
 		setValue : function(name, value){},
 		
-		//lifecycle handler
-		getLifeCycleRequest : function(transitName, handlers, request){},
-		setLifeCycleStatus : function(status){},
 		
-		//call back when core embeded into runtime during init phase
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
 		
-		//call back to provide view (during init phase)
-//		getUpdateViewRequest : function(view, handlers, request){
-//			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
-//		},
+		//************************* interface exposed by the core internal or external
+		getAllInterfaceInfo : function(){  return [];	},
+		getInterfaceExecutable : function(interfaceName){  },
+		
+		//*************************state
+		//set state for the component core
+		setState : function(state){   },
 
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}, handlers, request);
-		},
+		getGetStateDataRequest : function(handlers, request){   },
+		getRestoreStateDataRequest : function(stateData, handlers, request){   },
 
+		//*************************event
 		registerEventListener : function(listener, handler, thisContext){  },
 		unregisterEventListener : function(listener){ },
 
 		registerValueChangeEventListener : function(listener, handler, thisContext){   },
 		unregisterValueChangeEventListener : function(listener){ },
+		
+		//***********************lifecycle
+		getPreInitRequest : function(handlers, request){},
+		
+		//call back when core embeded into runtime during init phase
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
+		
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}, handlers, request);
+		},
+
+		getLifeCycleRequest : function(transitName, handlers, request){},
+		setLifeCycleStatus : function(status){},
 		
 		startLifecycleTask : function(){},
 		endLifecycleTask : function(){},

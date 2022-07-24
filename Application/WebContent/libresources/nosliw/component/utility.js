@@ -12,9 +12,39 @@ var packageObj = library;
 var node_componentUtility = {
 		
 	isActive : function(status){  return status==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
+
+	//process runtime configure to figure out
+	//    configure for runtime itself
+	//    decoration configure
+	processRuntimeConfigure : function(configure){
+		var packageConfigure;
+		var decorationInfos = [];
+		var decorationConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION);
+		if(configure.isChildExist(decorationConfigureName)){
+			coreConfigure = configure.getChildConfigure(node_CONSTANT.CONFIGURE_CORE);
+
+			var decsConfigure = configure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION));
+			var idSet = decConfigure.getChildrenIdSet();
+			_.each(idSet, function(id, index){
+				var decConfigure = decsConfigure.getChildConfigure(undefined, id);
+				
+				var decInfoConfigureValue = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_INFO)).getConfigureValue();
+				var decCoreConfigure = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_CORE));
+				decorationInfos.push(new node_DecorationInfo(decInfoConfigureValue.name, decInfoConfigureValue.type, decInfoConfigureValue.id, decCoreConfigure));
+			});
+		}
+		else{
+			coreConfigure = configure;
+		}
+		
+		return {
+			coreConfigure : coreConfigure,
+			decorations : decorationInfos
+		};
+	},
 	
 	buildDecorationInfoArrayFromConfigure : function(configure, path, type){
-		var out = [];
+		var out = [ ];
 		var idSet = configure.getChildrenIdSet(path);
 		_.each(idSet, function(id, index){
 			var decConfigure = configure.getChildConfigure(path, id);
@@ -24,6 +54,18 @@ var node_componentUtility = {
 		return out;
 	},
 	
+//	buildDecorationInfoArrayFromConfigure : function(configure, path, type){
+//		var out = [];
+//		var idSet = configure.getChildrenIdSet(path);
+//		_.each(idSet, function(id, index){
+//			var decConfigure = configure.getChildConfigure(path, id);
+//			var decConfigureValue = decConfigure.getConfigureValue();
+//			out.push(new node_DecorationInfo(type, decConfigureValue.id, decConfigureValue.name, decConfigureValue.resource, decConfigure));
+//		});
+//		return out;
+//	},
+	
+
 	cloneDecorationInfoArray : function(decInfoArray){
 		var out = [];
 		_.each(decInfoArray, function(decInfo, index){

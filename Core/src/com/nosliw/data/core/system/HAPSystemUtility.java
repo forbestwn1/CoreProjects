@@ -8,6 +8,8 @@ import java.util.Set;
 
 import org.json.JSONArray;
 
+import com.nosliw.common.utils.HAPConstantShared;
+
 public class HAPSystemUtility {
 	
 	static private Properties prop;
@@ -47,7 +49,7 @@ public class HAPSystemUtility {
 	}
 	
 	public static String buildSystemName(String name) {
-		return "nosliw_" + name;
+		return HAPConstantShared.NOSLIW_NAME_PREFIX + name;
 	}
 
 }
