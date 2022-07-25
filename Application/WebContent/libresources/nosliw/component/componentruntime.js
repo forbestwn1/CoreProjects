@@ -270,6 +270,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
+	loc_out.id = nosliw.generateId();
 	return loc_out;
 };
 

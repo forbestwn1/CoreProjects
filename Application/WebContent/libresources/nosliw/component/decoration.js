@@ -43,7 +43,7 @@ var node_createDecoration = function(decorationInfo){
 		},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			
+			return loc_runtimeObject.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
 		},
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },

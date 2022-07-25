@@ -17,4 +17,4 @@ function(gate){
 
 	};
 	return loc_out;
-};
+}

@@ -91,9 +91,10 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContext", {}), handlers, request);
 		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
 			success : function(request, newRuntimeContext){
-				if(newRuntimeContext==undefined)   return node_createServiceRequestInfoSimple(undefined, function(request){return loc_processRuntimeContext(index, runtimeContext);});
-				else if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
-				else return loc_getUpdateLayerRuntimeRequest(index-1, loc_processRuntimeContext(index, newRuntimeContext));
+				if(newRuntimeContext==undefined) newRuntimeContext = loc_processRuntimeContext(index, runtimeContext);
+//					return node_createServiceRequestInfoSimple(undefined, function(request){return loc_processRuntimeContext(index, runtimeContext);});
+				if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
+				else return loc_getUpdateLayerRuntimeContextRequest(index-1, loc_processRuntimeContext(index, newRuntimeContext));
 			}
 		}));
 		return out;
@@ -245,6 +246,8 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 			});
 		},
 	};
+	
+	loc_out.id = nosliw.generateId();
 	return loc_out;
 };
 	

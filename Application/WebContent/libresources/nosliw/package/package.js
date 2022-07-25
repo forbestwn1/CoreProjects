@@ -121,7 +121,8 @@ var node_createPackageCore = function(resourceId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
-
+	loc_out.id = nosliw.generateId();
+	
 	return loc_out;
 };
 
