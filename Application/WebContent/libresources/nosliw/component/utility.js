@@ -5,6 +5,7 @@ var packageObj = library;
 	//get used node
 	var node_CONSTANT;
 	var node_getComponentLifecycleInterface;
+	var node_createConfigure;
 	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -17,16 +18,17 @@ var node_componentUtility = {
 	//    configure for runtime itself
 	//    decoration configure
 	processRuntimeConfigure : function(configure){
+		configure = node_createConfigure(configure);
 		var packageConfigure;
 		var decorationInfos = [];
 		var decorationConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION);
 		if(configure.isChildExist(decorationConfigureName)){
-			coreConfigure = configure.getChildConfigure(node_CONSTANT.CONFIGURE_CORE);
+			var coreConfigure = configure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_CORE));
 
 			var decsConfigure = configure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION));
-			var idSet = decConfigure.getChildrenIdSet();
+			var idSet = decsConfigure.getChildrenIdSet();
 			_.each(idSet, function(id, index){
-				var decConfigure = decsConfigure.getChildConfigure(undefined, id);
+				var decConfigure = decsConfigure.getChildConfigure(id);
 				
 				var decInfoConfigureValue = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_INFO)).getConfigureValue();
 				var decCoreConfigure = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_CORE));
@@ -90,6 +92,7 @@ var node_componentUtility = {
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 

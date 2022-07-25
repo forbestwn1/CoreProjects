@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createEventObject;
 	var node_buildComponentCore;
+	var node_createDecoration;
 	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -153,7 +154,7 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 	},
 	
 	loc_addDecoration = function(decorationInfo){
-		var decoration = loc_createDecoration(decorationInfo);
+		var decoration = node_createDecoration(decorationInfo);
 //		var decName = decorationInfo.name;
 //		var decoration = node_createComponentCoreDecoration(decName, loc_getCore(), decorationInfo.resource, loc_runtimeEnv, decorationInfo.configure);
 		loc_addLayer(decoration);
@@ -161,7 +162,6 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 	
 	loc_addLayer = function(layer){
 		loc_layers.push(layer);
-		_.extend(loc_interface, layer.getInterface());
 		loc_registerLayerEvent(loc_layers.length-1);
 	};
 	
@@ -259,6 +259,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_createDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 
 //Register Node by Name

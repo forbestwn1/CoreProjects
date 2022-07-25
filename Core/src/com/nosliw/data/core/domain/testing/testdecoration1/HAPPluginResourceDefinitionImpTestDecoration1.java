@@ -7,14 +7,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginResourceDefinitionImpTestDecoration1 extends HAPPluginResourceDefinitionImp{
 
-	public HAPPluginResourceDefinitionImpTestDecoration1(String resourceType, HAPRuntimeEnvironment runtimeEnv) {
-		super(resourceType, runtimeEnv);
+	public HAPPluginResourceDefinitionImpTestDecoration1(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPDefinitionEntityTestDecoration1.ENTITY_TYPE, runtimeEnv);
 	}
 
 	@Override
 	protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext) {
-		HAPDefinitionEntityTestDecoration1 entity = new HAPDefinitionEntityTestDecoration1((String)content);
-		return parserContext.getCurrentDomain().addEntity(entity);
+		HAPIdEntityInDomain out = this.getRuntimeEnvironment().getDomainEntityManager().parseDefinition(getResourceType(), content, parserContext);
+		return out;
 	}
 
 }

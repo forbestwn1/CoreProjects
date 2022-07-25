@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_EntityIdInDomain;
 	var node_buildComplexEntityPlugInObject;
 	var node_createComponentRuntime;
+	var node_componentUtility;
 	var node_createPackageCore;
 	
 	var node_createTestComplex1Plugin;
@@ -195,6 +196,7 @@ nosliw.registerSetNodeDataEvent("package.createBundleCore", function(){node_crea
 nosliw.registerSetNodeDataEvent("package.entity.EntityIdInDomain", function(){node_EntityIdInDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("package.buildComplexEntityPlugInObject", function(){node_buildComplexEntityPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createPackageCore", function(){node_createPackageCore = this.getData();});
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});

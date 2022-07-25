@@ -15,15 +15,22 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_buildDecorationPlugInObject;
 	var node_basicUtility;
+	var node_ResourceId;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_createDecoration = function(decorationInfo){
+var node_createDecoration = function(decorationInfo){
 	
 	var loc_decorationInfo = decorationInfo;
 	
 	var loc_runtimeObject;
 	
+	var loc_eventSource = node_createEventObject();
+	var loc_eventListener = node_createEventObject();
+
+	var loc_valueChangeEventSource = node_createEventObject();
+	var loc_valueChangeEventListener = node_createEventObject();
+
 	var loc_out = {
 
 		getPreInitRequest : function(handlers, request){
@@ -39,6 +46,11 @@ var loc_createDecoration = function(decorationInfo){
 			
 		},
 		
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
+
+		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext); },
+		unregisterValueChangeEventListener : function(listener){	return loc_valueChangeEventSource.unregister(listener); },
 		
 	};
 	
@@ -160,8 +172,10 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();	});
 
 //Register Node by Name
-packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 
+//packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 
+packageObj.createChildNode("createDecoration", node_createDecoration); 
 
 })(packageObj);

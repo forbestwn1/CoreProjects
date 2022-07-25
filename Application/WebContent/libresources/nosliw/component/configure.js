@@ -19,6 +19,7 @@ var packageObj = library;
 //parts is visible to particular part
 //for particular part, the configure is merge between global and share and part, part overwrite share overwrite global
 var node_createConfigure = function(definition, global, parms){
+	
 	//global configure, it will apply to child configure
 	var loc_global;
 	//current configure data, including global value
@@ -84,7 +85,7 @@ var node_createConfigure = function(definition, global, parms){
 	var loc_out = {
 		
 		isChildExist : function(childId){
-			return loc_configure.parts[childId]!=null;
+			return loc_configure.parts!=undefined && loc_configure.parts[childId]!=undefined;
 		},
 		
 		getConfigureValue : function(){		return loc_configure;	},
@@ -99,7 +100,7 @@ var node_createConfigure = function(definition, global, parms){
 		//get children configure options
 		getChildrenIdSet : function(path){
 			var out = [];
-		    var segs = path.split('.');
+		    var segs = path==undefined?[] : path.split('.');
 		    var childBase = node_objectOperationUtility.getObjectAttributeByPathSegs(loc_configure, segs);
 			if(childBase!=undefined){
 				_.each(childBase.parts, function(part, id){
@@ -110,6 +111,10 @@ var node_createConfigure = function(definition, global, parms){
 		},
 		
 		getChildConfigure : function(path, childId){
+			if(childId==undefined){
+				childId = path;
+				path = undefined;
+			}
 			return node_createConfigure(loc_getChildConfigureValue(path, childId), loc_global);
 		}
 	};
