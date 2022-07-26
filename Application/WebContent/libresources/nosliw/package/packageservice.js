@@ -138,6 +138,21 @@ var node_createPackageRuntimeService = function() {
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 		
+		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);
+			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext));
+			return out;
+		},
+		
+		executeCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+
+		
+		
+		
+		
 		
 		
 		
@@ -160,17 +175,6 @@ var node_createPackageRuntimeService = function() {
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);
-			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext));
-			return out;
-		},
-		
-		executeCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
-			var requestInfo = this.getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},
-
 		registerComplexEntityPlugin : function(entityType, complexEntityPlugin){
 			loc_complexEntityPlugins[entityType] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
 		}

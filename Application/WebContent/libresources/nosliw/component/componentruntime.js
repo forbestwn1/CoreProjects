@@ -198,44 +198,69 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
-		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
-			
 		getInitRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
-			loc_runtimeContext = runtimeContext;
-
 			//init backup state
-//			loc_initBackState(loc_runtimeContext.backupState);
+//				loc_initBackState(loc_runtimeContext.backupState);
 			
 			//pre init request
-			out.addRequest(this.getPreInitRequest());
+			out.addRequest(this.getPreInitRequest({
+				success : function(request){
+					//provide runtime env to core
+					return loc_out.getUpdateRuntimeEnvRequest({
+						success : function(request){
+							//provide runtime context to core
+							loc_runtimeContext = runtimeContext;
+							return loc_out.getUpdateRuntimeContextRequest(loc_runtimeContext, {
+								success : function(request){
+									//init core
+									return loc_out.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
+								}
+							})
+						}
+					});
+				}
+			}));
 			
-			//provide runtime env to core
-			out.addRequest(this.getUpdateRuntimeEnvRequest());
-			
-			//provide runtime context to core
-			out.addRequest(this.getUpdateRuntimeContextRequest(loc_runtimeContext));
-			
-			//init core
-			out.addRequest(this.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT));
-
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//				loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
-//			}));
+//				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//					loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
+//				}));
 			
 			return out;
 		},
 
-		getPreInitRequest : function(handlers, request){	return loc_componentCoreComplex.getPreInitRequest(handlers, request);	},
+		getPreInitRequest : function(handlers, request){	
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInit", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getPreInitRequest());
+			return out;
+		},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);	
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContext", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, handlers, request));
+			return out;
 		},
 
-		getUpdateRuntimeEnvRequest : function(handlers, request){   return loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, handlers, request);    },
+			
+
 		
-		getLifeCycleRequest : function(transitName, handlers, request){   return loc_componentCoreComplex.getLifeCycleRequest(transitName, handlers, request);      },
+		
+			
+			
+			
+			
+		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
+			
+		getUpdateRuntimeEnvRequest : function(handlers, request){   
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnv", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, handlers, request));
+			return out;
+		},
+		
+		getLifeCycleRequest : function(transitName, handlers, request){   
+			return loc_componentCoreComplex.getLifeCycleRequest(transitName, handlers, request);      
+		},
 		
 		
 		

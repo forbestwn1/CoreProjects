@@ -30,7 +30,7 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_mainBundle;
 
-	var loc_getPreInitPackageRequest = function(handlers, request){
+	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
 		//load resource first
 		var gatewayParm = {};
@@ -58,49 +58,24 @@ var node_createPackageCore = function(resourceId, configure){
 		));
 		return out;
 	};
-	
+
 	var loc_getInitPackageRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitCorePackage", {}), handlers, request);
-		var gatewayParm = {};
-		gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = resourceId;
-		out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
-				node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_PACKAGE, 
-				node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE, 
-				gatewayParm,
-				{
-					success : function(requestInfo, packageDef){
-						loc_packageDef = packageDef;
-						var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
-						
-						//load all related resources first
-						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
-							success : function(requestInfo, resourceTree){
-								var kkkk = 5555;
-								kkkk++;
-							}
-						}));
-						
-						bundleRuntimeRequest.addRequest(nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], configure, loc_runtimeContext, {
-							success : function(request, bundleRuntime){
-								loc_mainBundle = bundleRuntime;
-							}
-						}));
-						return bundleRuntimeRequest;
-					}
-				}
-		));
-		return out;
+		return nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, loc_runtimeContext, handlers, request);
 	};
-	
+
 	var loc_out = {
 
-		getPreInitRequest : function(handlers, request){   return loc_getPreInitPackageRequest(handlers, request);	},
+		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			loc_runtimeContext = runtimeContext;
 			loc_parentView = runtimeContext.view;
 		},
-			
+
+		
+		
+		
+		
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
 			loc_runtimeEnv = runtimeEnv;
 		},

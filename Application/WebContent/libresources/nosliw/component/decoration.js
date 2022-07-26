@@ -37,13 +37,17 @@ var node_createDecoration = function(decorationInfo){
 			loc_runtimeObject = nosliw.runtime.getPackageService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
 			return loc_runtimeObject.getPreInitRequest(handlers, request);
 		},
-			
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
-			
-		},
-		
+
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			return loc_runtimeObject.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
+		},
+		
+
+		
+		
+		
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
+			
 		},
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
