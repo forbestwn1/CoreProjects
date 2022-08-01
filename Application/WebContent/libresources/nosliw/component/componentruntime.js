@@ -201,31 +201,77 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		getInitRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
-			//init backup state
-//				loc_initBackState(loc_runtimeContext.backupState);
-			
-			//pre init request
-			out.addRequest(this.getPreInitRequest({
+			out.addRequest(loc_componentCoreComplex.getPreInitRequest({
 				success : function(request){
-					//provide runtime env to core
-					return loc_out.getUpdateRuntimeEnvRequest({
+					return loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, {
 						success : function(request){
-							//provide runtime context to core
 							loc_runtimeContext = runtimeContext;
-							return loc_out.getUpdateRuntimeContextRequest(loc_runtimeContext, {
+							return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
-									//init core
-									return loc_out.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
+									return loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);
 								}
-							})
+							});
 						}
 					});
 				}
 			}));
+
+			return out;
+		},
+
 			
+		getInitRequest2 : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
+
+			//init backup state
+//				loc_initBackState(loc_runtimeContext.backupState);
+			//pre init request
+			out.addRequest(this.getPreInitRequest({
+				success : function(request){
+					var that = request.getData();
+					//provide runtime env to core
+					return that.getUpdateRuntimeEnvRequest({
+						success : function(request){
+							var that = request.getData();
+							//provide runtime context to core
+							loc_runtimeContext = runtimeContext;
+							return that.getUpdateRuntimeContextRequest(loc_runtimeContext, {
+								success : function(request){
+									var that = request.getData();
+									//init core
+									return that.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
+								}
+							}, request).withData(that);
+						}
+					}, request).withData(that);
+				}
+			}).withData(this));
+
 //				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 //					loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
 //				}));
+			
+			return out;
+		},
+
+		getInitRequest1 : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
+
+			var that = loc_out;
+			//pre init request
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return that.getPreInitRequest();
+			}));
+			
+			//provide runtime context to core
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return that.getUpdateRuntimeContextRequest(runtimeContext);
+			}));
+
+			//init core
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return that.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
+			}));
 			
 			return out;
 		},
@@ -237,7 +283,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContext", {}), handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInComponentRuntime", {}), handlers, request);
+			loc_runtimeContext = runtimeContext;
 			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, handlers, request));
 			return out;
 		},
@@ -253,8 +300,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
 			
 		getUpdateRuntimeEnvRequest : function(handlers, request){   
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnv", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, handlers, request));
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnvInComponentRuntime", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv));
 			return out;
 		},
 		
@@ -295,6 +342,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
+	loc_out.dataType = loc_componentCoreComplex.getCore().getDataType();
 	loc_out.id = nosliw.generateId();
 	return loc_out;
 };

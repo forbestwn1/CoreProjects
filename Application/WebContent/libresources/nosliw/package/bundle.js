@@ -53,7 +53,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 	var loc_getInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"), handlers, request);
-		out.addRequest(nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, loc_runtimeContext, {
+		out.addRequest(nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, loc_runtimeContext, {
 			success : function(request, mainComplexEntity){
 				loc_mainComplexEntity = mainComplexEntity;
 			}
@@ -62,6 +62,8 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	};
 
 	var loc_out = {
+
+		getDataType: function(){    return  "bundle";   },
 
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
@@ -98,6 +100,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
+	loc_out.id = nosliw.generateId();
 
 	return loc_out;
 };

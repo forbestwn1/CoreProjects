@@ -60,10 +60,12 @@ var node_createPackageCore = function(resourceId, configure){
 	};
 
 	var loc_getInitPackageRequest = function(handlers, request){
-		return nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, loc_runtimeContext, handlers, request);
+		return nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, loc_runtimeContext);
 	};
 
 	var loc_out = {
+
+		getDataType: function(){    return  "package";   },
 
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			

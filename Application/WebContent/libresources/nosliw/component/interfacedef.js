@@ -110,7 +110,8 @@ var node_buildComponentCore = function(rawComponentCore){
 		getValue : function(name){},
 		setValue : function(name, value){},
 		
-		
+		//************************* for debugging
+		getDataType: function(){},
 		
 		//************************* interface exposed by the core internal or external
 		getAllInterfaceInfo : function(){  return [];	},
