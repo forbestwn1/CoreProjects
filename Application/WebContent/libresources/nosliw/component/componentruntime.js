@@ -45,9 +45,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_init = function(componentCore, decorationInfos, request){
 		//build core complex using core and decoration
-		loc_componentCoreComplex = node_createComponentCoreComplex();
-		loc_componentCoreComplex.setCore(componentCore);
-		loc_componentCoreComplex.addDecorations(decorationInfos);
+		loc_componentCoreComplex = node_createComponentCoreComplex(componentCore, decorationInfos);
 	};
 
 	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
@@ -285,7 +283,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInComponentRuntime", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, handlers, request));
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext));
 			return out;
 		},
 

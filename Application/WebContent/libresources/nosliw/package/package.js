@@ -28,7 +28,7 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_packageDef;
 	
-	var loc_mainBundle;
+	var loc_mainBundleRuntime;
 
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
@@ -47,8 +47,8 @@ var node_createPackageCore = function(resourceId, configure){
 						//load all related resources first
 						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
-								var kkkk = 5555;
-								kkkk++;
+								loc_mainBundleRuntime = nosliw.runtime.getPackageService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, requestInfo);
+								return loc_mainBundleRuntime.getPreInitRequest();
 							}
 						}));
 						
@@ -70,8 +70,11 @@ var node_createPackageCore = function(resourceId, configure){
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
 			loc_parentView = runtimeContext.view;
+			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(loc_runtimeContext));
+			return out;
 		},
 
 		
@@ -88,7 +91,7 @@ var node_createPackageCore = function(resourceId, configure){
 			}
 			else{
 				if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-					out.addRequest(loc_getInitPackageRequest());
+					out.addRequest(loc_mainBundleRuntime.getLifeCycleRequest(transitName));
 				}
 				else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				}

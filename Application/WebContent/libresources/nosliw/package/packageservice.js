@@ -75,6 +75,42 @@ var node_createPackageRuntimeService = function() {
 		return out;
 	};
 
+	var loc_createComplexEntityRuntime = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, request){
+		complexEntityId = new node_EntityIdInDomain(complexEntityId);
+		
+		//get component definition
+		var entityDefDomain = bundleCore.getBundleDefinition()[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN];
+		var complexEntityInfo = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_COMPLEXENTITY][complexEntityId.literateStr];
+
+		var complexEntityDef = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_ENTITY];
+		if(complexEntityDef!=undefined){
+			//internal entity
+			//build variableGroup
+			var variableGroupId = null;
+			var variableDomain = bundleCore.getVariableDomain();
+			var valueStructureComplexDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUESTRUCTURECOMPLEX];
+			variableGroupId = variableDomain.creatVariableGroup(valueStructureComplexDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
+			
+			//new complexCore through complex plugin
+			var complexEntityPlugin = loc_complexEntityPlugins[complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]];
+			var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
+			
+			//build decorationInfos
+			var decorationInfos = null;
+			
+			//create runtime
+			return node_createComponentRuntime(componentCore, decorationInfos, request);
+		}
+		else{
+			//refer to external Entity (bundle)
+			var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE.EXTERNALCOMPLEXENTITYID];
+			//create bundle runtime
+			return loc_out.createBundleRuntime(externalEntityId, configure, request);
+		}
+	};
+
+
+	
 	var loc_init = function(){
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, node_createTestComplex1Plugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_DECORATION1, node_createTestDecoration1Plugin());
@@ -94,8 +130,7 @@ var node_createPackageRuntimeService = function() {
 			//get runtime configure & decoration info from configure
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			//create runtime object
-			var packageRuntime = loc_createPackageRuntime(packageResourceId, runtimeConfigureInfo.coreConfigure, runtimeConfigureInfo.decorations, request);
-			return packageRuntime;
+			return node_createComponentRuntime(node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure), runtimeConfigureInfo.decorations, request); 
 		},
 				
 		//create package runtime object and init request
@@ -120,7 +155,14 @@ var node_createPackageRuntimeService = function() {
 			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
-			
+
+		
+		
+		
+		
+		createBundleRuntime : function(globalComplexEntitId, configure, request){
+			return node_createComponentRuntime(node_createBundleCore(globalComplexEntitId, configure), undefined);
+		},
 
 		getCreateBundleRuntimeRequest : function(globalComplexEntitId, configure, runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateBundleRuntime", {"globalComplexEntitId":globalComplexEntitId}), handlers, request);
@@ -137,6 +179,17 @@ var node_createPackageRuntimeService = function() {
 			var requestInfo = getCreateBundleRuntimeRequest(globalComplexEntitId, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
+		
+
+		
+		
+		
+		createComplexEntityRuntime : function(complexEntityId, parentCore, bundleCore, configure, request){
+			return loc_createComplexEntityRuntime(complexEntityId, parentCore, bundleCore, configure, request);
+		},
+		
+		
+		
 		
 		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateComplexEntityRuntime", {}), handlers, request);

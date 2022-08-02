@@ -36,7 +36,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	var loc_parentView;
 	
 	var loc_getPreInitRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("bundleCorePreInit"), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
 		//load related resources
 		var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ROOTRESOURCEID];
@@ -46,6 +46,8 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 				loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
 				//build variable domain in bundle
 				loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLECOMPLEXRESOURCE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
+				//build complex entity runtime
+				loc_mainComplexEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure);
  			}
 		}));
 		return out;
@@ -68,8 +70,12 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreBundle", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
 			loc_parentView = runtimeContext.view;
+			out.addRequest(loc_mainComplexEntity.getUpdateRuntimeContextRequest(loc_runtimeContext));
+			return out;
+
 		},
 			
 		getLifeCycleRequest : function(transitName, handlers, request){
@@ -78,7 +84,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 			}
 			else{
 				if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-					out.addRequest(loc_getInitRequest());
+					out.addRequest(loc_mainComplexEntity.getLifeCycleRequest(transitName));
 				}
 				else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				}

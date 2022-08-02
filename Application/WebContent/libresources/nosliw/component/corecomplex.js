@@ -17,9 +17,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
-var node_createComponentCoreComplex = function(interfaceEnv){
+var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
-	var loc_interfaceEnv = interfaceEnv;
+	var loc_interfaceEnv;
 	
 	//component core and decoration layers
 	var loc_layers = [];
@@ -37,6 +37,14 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 	var loc_valueChangeEventListener = node_createEventObject();
 
 
+	var loc_init = function(componentCore, decorationInfos){
+		var coreLayer = node_buildComponentCore(componentCore);
+		loc_addLayer(coreLayer);	
+
+		for(var i in decorationInfos){  
+			loc_addDecoration(decorationInfos[i]);	
+		}	
+	};
 	
 	
 	var loc_getCurrentFacad = function(){   return loc_layers[loc_layers.length-1];  };
@@ -182,11 +190,6 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 		
 		getCore : function(){   return loc_getCore();    },
 			
-		setCore : function(core){
-			var coreLayer = node_buildComponentCore(core);
-			loc_addLayer(coreLayer);	
-		},
-		
 		getDecorations : function(){  
 			var out = [];
 			_.each(loc_layers, function(layer, i){
@@ -195,12 +198,6 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 			return out;
 		},
 		
-		addDecorations : function(decorationInfos){	
-			for(var i in decorationInfos){  
-				loc_out.addDecoration(decorationInfos[i]);	
-			}	
-		},
-
 		addDecoration : function(decorationInfo){		loc_addDecoration(decorationInfo);		},
 
 		getPreInitRequest : function(handlers, request){	return loc_getPreInitRequest(handlers, request);	},
@@ -260,7 +257,11 @@ var node_createComponentCoreComplex = function(interfaceEnv){
 		},
 	};
 	
+	loc_init(componentCore, decorationInfos);
+
 	loc_out.id = nosliw.generateId();
+	loc_out.dataType = loc_out.getCore().getDataType();
+	
 	return loc_out;
 };
 	

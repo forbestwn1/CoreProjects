@@ -75,7 +75,7 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 		loc_variableDomain = variableDomain;
 
 		var parentVariableGroup = parentVariableGroupId==undefined ? undefined : variableDomain.getVariableGroup();
-		var valueStructureIds = valueStructureComplex[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
+		var valueStructureIds = valueStructureComplex==undefined?[] : valueStructureComplex[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
 		_.each(valueStructureIds, function(valueStructureId){
 			var variableDomainDef = variableDomain.getVariableDomainDefinition();
 			var valueStructureRuntimeId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureId];

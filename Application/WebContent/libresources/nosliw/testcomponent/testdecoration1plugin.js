@@ -23,11 +23,29 @@ var node_createTestDecoration1Plugin = function(){
 	return loc_out;
 };
 
-var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	
+	var loc_parentView;
+	var loc_mainView;
+	var loc_infoView;
 	
 	var loc_out = {
 
+		getDataType: function(){    return  "testDecoration1";   },
 			
+		//call back to provide runtime context : view (during init phase)
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			loc_parentView = $(runtimeContext.view);
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_mainView = $('<div>Decoration1<div class="dock"></div></div>');
+				loc_infoView = loc_mainView.children(".dock");
+				loc_parentView.append(loc_mainView);
+				
+				return _.extend({}, runtimeContext, {
+					view : loc_infoView,
+				});
+			}, handlers, request);
+		},
 	};
 	
 	return loc_out;
