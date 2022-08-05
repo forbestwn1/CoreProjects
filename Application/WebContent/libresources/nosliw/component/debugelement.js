@@ -17,6 +17,39 @@ var packageObj = library.getChildPackage("debug");
 	var node_getComponentManagementInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+	
+var node_createComponentDebugView = function(id){
+	
+	var loc_view = $('<div>Component '+id+': </div>');
+	var loc_outputValueView = $('<textarea rows="5" cols="150" style="resize: none;"></textarea>');
+	var loc_wrapperView = $('<div></div>');
+	loc_view.append(loc_outputValueView);
+	loc_view.append(loc_wrapperView);
+	
+	var loc_content = "";
+
+	var loc_println = function(content){
+		loc_content = loc_content + "\n\n";
+		loc_content = loc_content + content;
+		loc_outputValueView.val(loc_content);
+	};
+	
+	var loc_out = {
+
+		getView : function(){   return loc_view;   },
+			
+		getWrapperView : function(){  return loc_wrapperView;   },
+
+		logMethodCalled : function(functionName, args){
+			loc_println("method called: " + functionName);
+			loc_println("method args: " + JSON.stringify(args, null, 4));
+		},
+
+	};
+	return loc_out;
+};
+	
+	
 //load component and init it with inputValue
 var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue, settingName){
 	var loc_resetCallBack = resetCallBack;
@@ -282,6 +315,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", fun
 
 
 //Register Node by Name
+packageObj.createChildNode("createComponentDebugView", node_createComponentDebugView); 
 packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
 packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
 packageObj.createChildNode("createComponentEventView", node_createComponentEventView); 

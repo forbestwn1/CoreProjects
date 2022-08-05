@@ -26,14 +26,12 @@ var node_createTestComplex1Plugin = function(){
 var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var loc_parentView;
 	var loc_mainView;
-	var loc_loggingView;
-	
-	var loc_logging = function(content){
-		loc_loggingView.val(JSON.stringify(content, null, 4));
-	};
+	var loc_configure = configure;
 	
 	var loc_out = {
 
+		getConfigure : function(){   return loc_configure;    },
+			
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
 		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
@@ -67,8 +65,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			loc_parentView = $(runtimeContext.view);
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_mainView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; border-width:thick; border-style:solid;"></div>');
-				loc_loggingView = $('<textarea rows="50" cols="150" style="resize: none;" data-role="none"></textarea>');
-				loc_mainView.append(loc_loggingView);
 				loc_parentView.append(loc_mainView);
 			}, handlers, request);
 		},

@@ -26,10 +26,9 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 	var loc_mainComplexEntity;
 	
+	var loc_runtimeContext;
 
 	
-	
-	var loc_runtimeContext;
 	
 	var loc_runtimeEnv;
 
@@ -49,16 +48,6 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 				//build complex entity runtime
 				loc_mainComplexEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure);
  			}
-		}));
-		return out;
-	};
-
-	var loc_getInitRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"), handlers, request);
-		out.addRequest(nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, loc_runtimeContext, {
-			success : function(request, mainComplexEntity){
-				loc_mainComplexEntity = mainComplexEntity;
-			}
 		}));
 		return out;
 	};

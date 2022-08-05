@@ -284,6 +284,7 @@ var node_CONSTANT=
 	  "CONFIGURE_DECORATION_CORE" : "core",
 	  "CONFIGURE_CORE" : "core",
 	  
+	  "VALUE_UNKNOW" : "UNKNOW"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -16,6 +16,8 @@ var packageObj = library;
 
 var node_createPackageCore = function(resourceId, configure){
 
+	var loc_id = nosliw.generateId();
+	
 	var loc_resourceId = resourceId;
 	
 	var loc_configue = configure;
@@ -59,13 +61,10 @@ var node_createPackageCore = function(resourceId, configure){
 		return out;
 	};
 
-	var loc_getInitPackageRequest = function(handlers, request){
-		return nosliw.runtime.getPackageService().getCreateBundleRuntimeRequest(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, loc_runtimeContext);
-	};
-
 	var loc_out = {
 
 		getDataType: function(){    return  "package";   },
+		getId : function(){  return loc_id;   },
 
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
@@ -101,7 +100,7 @@ var node_createPackageCore = function(resourceId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
-	loc_out.id = nosliw.generateId();
+	loc_out.id = loc_id;
 	
 	return loc_out;
 };

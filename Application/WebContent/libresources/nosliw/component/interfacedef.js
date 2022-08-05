@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createEventObject;
@@ -12,6 +13,9 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_requestServiceProcessor;
+	var node_createConfigure;
+	var node_basicUtility;
+	var node_createComponentDebugView;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -93,8 +97,26 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
+	var loc_rawComponentCore = rawComponentCore;
+	var loc_debugMode = false;
+	var loc_debugView;
 	
-	var interfaceDef = {
+	var loc_init = function(){
+		var configure = loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined;
+		var configureValue = node_createConfigure(configure).getConfigureValue();
+		var debugConf = configureValue[node_basicUtility.buildNosliwFullName("debug")];
+		if("true"==debugConf){
+			//debug mode
+			loc_debugMode = true;
+			loc_debugView = node_createComponentDebugView(loc_out.getDataType()+"_"+loc_out.getId());
+		}
+	};
+	
+	var loc_isDebugMode = function(){
+		return loc_debugMode == true;
+	};
+	
+	var loc_out = {
 
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
@@ -111,7 +133,8 @@ var node_buildComponentCore = function(rawComponentCore){
 		setValue : function(name, value){},
 		
 		//************************* for debugging
-		getDataType: function(){},
+		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },
+		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId():node_CONSTANT.VALUE_UNKNOW;    },
 		
 		//************************* interface exposed by the core internal or external
 		getAllInterfaceInfo : function(){  return [];	},
@@ -132,13 +155,31 @@ var node_buildComponentCore = function(rawComponentCore){
 		unregisterValueChangeEventListener : function(listener){ },
 		
 		//***********************lifecycle
-		getPreInitRequest : function(handlers, request){},
+		getPreInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
+			if(loc_isDebugMode()){
+				loc_debugView.logMethodCalled("getPreInitRequest");
+			}
+			if(loc_rawComponentCore.getPreInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPreInitRequest());
+			return out;
+		},
 		
 		//call back when core embeded into runtime during init phase
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}, handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperUpdateRuntimeContextRequestCore", {}), handlers, request);
+			if(loc_isDebugMode()){
+				loc_debugView.logMethodCalled("UpdateRuntimeContextRequest",
+						{
+							"runtimeContext" : runtimeContext
+						});
+				runtimeContext.view.append(loc_debugView.getView());
+				runtimeContext.view = loc_debugView.getWrapperView();
+			}
+			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
+			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
+			return out;
 		},
 
 		getLifeCycleRequest : function(transitName, handlers, request){},
@@ -146,9 +187,10 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		startLifecycleTask : function(){},
 		endLifecycleTask : function(){},
+		
 	};
-	
-	return _.extend({}, interfaceDef, rawComponentCore);
+	loc_init();
+	return loc_out;
 };
 
 //interface for component external env
@@ -182,6 +224,7 @@ var node_createComponentManagementInterfaceDelegateObject = function(delegateObj
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
@@ -191,6 +234,9 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", function(){node_createComponentDebugView = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
