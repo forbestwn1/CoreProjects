@@ -11,6 +11,9 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_makeObjectWithType;
 	var nod_createVariableDomain;
+	var node_createPackageDebugView;
+	var node_createConfigure;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -20,7 +23,8 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_resourceId = resourceId;
 	
-	var loc_configue = configure;
+	var loc_configure = configure;
+	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	
 	var loc_runtimeContext;
 	
@@ -31,6 +35,22 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_packageDef;
 	
 	var loc_mainBundleRuntime;
+	
+	var loc_debugMode;
+	var loc_debugView;
+
+	var loc_init = function(){
+		var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug_package")];
+		if("true"==debugConf){
+			//debug mode
+			loc_debugMode = true;
+			loc_debugView = node_createPackageDebugView("Package: "+loc_out.getDataType()+"_"+loc_out.getId(), "blue");
+		}
+	};
+	
+	var loc_isDebugMode = function(){
+		return loc_debugMode == true;
+	};
 
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
@@ -49,7 +69,7 @@ var node_createPackageCore = function(resourceId, configure){
 						//load all related resources first
 						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
-								loc_mainBundleRuntime = nosliw.runtime.getPackageService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configue, requestInfo);
+								loc_mainBundleRuntime = nosliw.runtime.getPackageService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configure, requestInfo);
 								return loc_mainBundleRuntime.getPreInitRequest();
 							}
 						}));
@@ -72,6 +92,11 @@ var node_createPackageCore = function(resourceId, configure){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
 			loc_parentView = runtimeContext.view;
+
+			if(loc_isDebugMode()){
+				loc_runtimeContext = loc_debugView.updateRuntimeContext(loc_runtimeContext);
+			}
+			
 			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(loc_runtimeContext));
 			return out;
 		},
@@ -102,6 +127,7 @@ var node_createPackageCore = function(resourceId, configure){
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
 	loc_out.id = loc_id;
 	
+	loc_init();
 	return loc_out;
 };
 
@@ -116,6 +142,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
+nosliw.registerSetNodeDataEvent("component.debug.createPackageDebugView", function(){node_createPackageDebugView = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createPackageCore", node_createPackageCore); 

@@ -98,17 +98,16 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	var loc_rawComponentCore = rawComponentCore;
+	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
 	var loc_debugView;
 	
 	var loc_init = function(){
-		var configure = loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined;
-		var configureValue = node_createConfigure(configure).getConfigureValue();
-		var debugConf = configureValue[node_basicUtility.buildNosliwFullName("debug")];
+		var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug")];
 		if("true"==debugConf){
 			//debug mode
 			loc_debugMode = true;
-			loc_debugView = node_createComponentDebugView(loc_out.getDataType()+"_"+loc_out.getId());
+			loc_debugView = node_createComponentDebugView("Component: "+loc_out.getDataType()+"_"+loc_out.getId());
 		}
 	};
 	
@@ -158,7 +157,9 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("getPreInitRequest");
+				loc_debugView.logMethodCalled("getPreInitRequest", {
+					"configure" : loc_configureValue
+				});
 			}
 			if(loc_rawComponentCore.getPreInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPreInitRequest());
 			return out;
@@ -174,7 +175,7 @@ var node_buildComponentCore = function(rawComponentCore){
 						{
 							"runtimeContext" : runtimeContext
 						});
-				runtimeContext.view.append(loc_debugView.getView());
+				$(runtimeContext.view).append(loc_debugView.getView());
 				runtimeContext.view = loc_debugView.getWrapperView();
 			}
 			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));

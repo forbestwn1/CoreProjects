@@ -24,12 +24,15 @@ var node_createTestComplex1Plugin = function(){
 };
 
 var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	var loc_id = nosliw.generateId();
 	var loc_parentView;
 	var loc_mainView;
 	var loc_configure = configure;
 	
 	var loc_out = {
 
+		getDataType: function(){    return  "testComplex1";   },
+		getId : function(){  return loc_id;   },
 		getConfigure : function(){   return loc_configure;    },
 			
 		//execute command
@@ -64,7 +67,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			loc_parentView = $(runtimeContext.view);
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_mainView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; border-width:thick; border-style:solid;"></div>');
+				loc_mainView = $('<div class="view view-main" style="height:120px;overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 				loc_parentView.append(loc_mainView);
 			}, handlers, request);
 		},

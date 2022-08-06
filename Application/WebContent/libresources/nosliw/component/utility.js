@@ -22,10 +22,11 @@ var node_componentUtility = {
 		var packageConfigure;
 		var decorationInfos = [];
 		var decorationConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION);
-		if(configure.isChildExist(decorationConfigureName)){
-			var coreConfigure = configure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_CORE));
+		var coreConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_CORE);
+		if(configure.isChildExist(decorationConfigureName) || configure.isChildExist(coreConfigureName)){
+			var coreConfigure = configure.getChildConfigure(coreConfigureName);
+			var decsConfigure = configure.getChildConfigure(decorationConfigureName);
 
-			var decsConfigure = configure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION));
 			var idSet = decsConfigure.getChildrenIdSet();
 			_.each(idSet, function(id, index){
 				var decConfigure = decsConfigure.getChildConfigure(id);

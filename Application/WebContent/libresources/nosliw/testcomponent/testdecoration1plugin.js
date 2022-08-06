@@ -24,25 +24,30 @@ var node_createTestDecoration1Plugin = function(){
 };
 
 var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	var loc_id = nosliw.generateId();
 	
 	var loc_parentView;
 	var loc_mainView;
-	var loc_infoView;
+	var loc_wrapperView;
+	var loc_configure = configure;
 	
 	var loc_out = {
 
 		getDataType: function(){    return  "testDecoration1";   },
+		getId : function(){  return loc_id;   },
+		getConfigure : function(){   return loc_configure;    },
 			
 		//call back to provide runtime context : view (during init phase)
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			loc_parentView = $(runtimeContext.view);
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_mainView = $('<div>Decoration1<div class="dock"></div></div>');
-				loc_infoView = loc_mainView.children(".dock");
+				loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration1</div>');
+				loc_wrapperView = $('<div></div>');
+				loc_mainView.append(loc_wrapperView);
 				loc_parentView.append(loc_mainView);
 				
 				return _.extend({}, runtimeContext, {
-					view : loc_infoView,
+					view : loc_wrapperView.get(),
 				});
 			}, handlers, request);
 		},

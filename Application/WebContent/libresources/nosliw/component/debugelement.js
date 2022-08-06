@@ -17,28 +17,47 @@ var packageObj = library.getChildPackage("debug");
 	var node_getComponentManagementInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+
+var node_createPackageDebugView = function(id, color){
+	
+	var loc_view = $('<div style="border-width:thick; border-style:solid; border-color:'+color+'">'+id+'</div>');
+	var loc_wrapperView = $('<div style="border-style:solid; border-color:red"></div>');
+	loc_view.append(loc_wrapperView);
+	
+	var loc_content = "";
+
+	var loc_out = {
+
+		updateRuntimeContext : function(runtimeContext){   
+			$(runtimeContext.view).append(loc_view);
+			runtimeContext.view = loc_wrapperView.get();
+			return runtimeContext;
+		}
+	};
+	return loc_out;
+};
 	
 var node_createComponentDebugView = function(id){
 	
-	var loc_view = $('<div>Component '+id+': </div>');
+	var loc_view = $('<div style="border-width:thick; border-style:solid; border-color:yellow">'+id+'</div>');
 	var loc_outputValueView = $('<textarea rows="5" cols="150" style="resize: none;"></textarea>');
-	var loc_wrapperView = $('<div></div>');
+	var loc_wrapperView = $('<div style="border-style:solid; border-color:red"></div>');
 	loc_view.append(loc_outputValueView);
 	loc_view.append(loc_wrapperView);
 	
 	var loc_content = "";
 
 	var loc_println = function(content){
-		loc_content = loc_content + "\n\n";
+		loc_content = loc_content + "\n";
 		loc_content = loc_content + content;
 		loc_outputValueView.val(loc_content);
 	};
 	
 	var loc_out = {
 
-		getView : function(){   return loc_view;   },
+		getView : function(){   return loc_view.get();   },
 			
-		getWrapperView : function(){  return loc_wrapperView;   },
+		getWrapperView : function(){  return loc_wrapperView.get();   },
 
 		logMethodCalled : function(functionName, args){
 			loc_println("method called: " + functionName);
@@ -315,6 +334,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", fun
 
 
 //Register Node by Name
+packageObj.createChildNode("createPackageDebugView", node_createPackageDebugView); 
 packageObj.createChildNode("createComponentDebugView", node_createComponentDebugView); 
 packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
 packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
