@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
+	var node_createConfigure;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -30,7 +31,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_variableGroupId = variableGroupId;
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_bundleCore = bundleCore;
-	var loc_configure = configure;
+	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	var loc_parentView;
 	var loc_mainView;
 	var loc_attributes = {};
@@ -40,15 +41,19 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 
 		getDataType: function(){    return  "testComplex1";   },
 		getId : function(){  return loc_id;   },
-		getConfigure : function(){   return loc_configure;    },
+		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
 		
 		getPreInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 			var attrsValue = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_ATTRIBUTE];
 			_.each(attrsValue, function(attrValue, attrName){
 				var complexEntityId = attrValue[node_COMMONATRIBUTECONSTANT.EMBEDEDENTITY_ENTITYID];
-				loc_attributes[attrName] = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore);
+				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
+				loc_attributes[attrName] = attrEntity;
+				out.addRequest(attrEntity.getPreInitRequest());
 			});
+			return out;
 		},		
 		
 		//call back to provide runtime context : view (during init phase)
@@ -69,6 +74,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 				});
 				out.addRequest(attr.getUpdateRuntimeContextRequest(attrRuntimeContext));
 			});
+			return out;
 		},
 
 		
@@ -125,6 +131,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 
