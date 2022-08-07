@@ -46,6 +46,13 @@ $(document).on("nosliwActive", function(){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
 	
+	var node_createDebugTool = nosliw.getNodeData("component.debug.createDebugTool");
+	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+
+	var parms = node_basicUtility.getParmsInUrl();
+
 	var configure = {
 		"parts" : {
 			"nosliw_decoration1" :{
@@ -80,11 +87,32 @@ $(document).on("nosliwActive", function(){
 		view : $('#mainDiv').get()
 	};
 
-	var packageRuntimeObj = nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), configure, runtimeContext, {
+	
+	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), configure, runtimeContext, {
 		success : function(request, pageRuntime){
 			
 		}
 	});
+	
+
+/*
+	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
+
+	var debugTool = node_createDebugTool({
+		lifecycleView : $('#lifecycleDebug').get(),
+		dataView : $('#dataDebug').get(),
+		eventView : $('#eventDebug').get(),
+		resetView : $('#resetDebug').get(), 
+	}, undefined, "testcomplex1", "parent", undefined, parms.setting, {
+		success : function(request, componentObj){
+//			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
+//			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
+		}
+	});
+	
+	//ui indicator
+	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
+*/
 	
 });
 

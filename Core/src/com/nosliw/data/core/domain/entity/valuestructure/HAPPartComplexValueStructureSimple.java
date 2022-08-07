@@ -36,7 +36,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	
 	public HAPPartComplexValueStructureSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple(this.getPartInfo());
-		this.cloneToEntityInfo(out);
+		this.cloneToPartComplexValueStructure(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
 
@@ -67,7 +67,8 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	
 	@Override
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart() {
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple(this.getPartInfo().cloneValueStructurePartInfo());
+		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
+		this.cloneToPartComplexValueStructure(out);
 		for(HAPWrapperValueStructureExecutable valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
 		}

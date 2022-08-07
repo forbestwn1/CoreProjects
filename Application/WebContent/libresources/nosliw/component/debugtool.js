@@ -22,7 +22,7 @@ var packageObj = library.getChildPackage("debug");
 	var node_createComponentResetView;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-node_createDebugTool = function(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request){
+var node_createDebugTool = function(views, configureParms, resourceType, resourceId, inputValue, settingName, handlers, request){
 	
 	//changable
 	var loc_resourceType;
@@ -42,7 +42,8 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 	
 	var loc_getSettingNameRequest = function(resourceType, resourceId, setting, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		if(setting==undefined){
+		if(false){
+//		if(setting==undefined){
 			//get setting value from info in definition
 			out.addRequest(nosliw.runtime.getResourceService().getResourceDefinitionRequest(new node_ResourceId(resourceType, resourceId), {
 				success : function(request, resourceDef){
@@ -85,26 +86,39 @@ node_createDebugTool = function(views, configureParms, resourceType, resourceId,
 		loc_inputValue = inputValue;
 		loc_settingName = settingName;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE){
-			var configure = node_createModuleConfigure(settingName, loc_configureParms);
-			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
-			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
-				success : function(request, componentObj){
-					loc_setComponent(request, componentObj);
-					return componentObj;
-				}
-			}));
-		}
-		else if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY){
-			var configure = node_createAppConfigure(settingName, loc_configureParms);
-			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
-			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
-				success : function(request, componentObj){
-					loc_setComponent(request, componentObj);
-					return componentObj;
-				}
-			}));
-		}
+		
+		
+		var runtimeContext = {
+			view : $('#mainDiv').get()
+		};
+		out.addRequest(nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId(resourceType, resourctId), undefined, runtimeContext, {
+			success : function(request, packageRuntime){
+				loc_setComponent(request, packageRuntime);
+				return packageRuntime;
+			}
+		}));
+
+		
+//		if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIMODULE){
+//			var configure = node_createModuleConfigure(settingName, loc_configureParms);
+//			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
+//			out.addRequest(nosliw.runtime.getUIModuleService().getGetUIModuleRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
+//				success : function(request, componentObj){
+//					loc_setComponent(request, componentObj);
+//					return componentObj;
+//				}
+//			}));
+//		}
+//		else if(resourceType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIAPPENTRY){
+//			var configure = node_createAppConfigure(settingName, loc_configureParms);
+//			var stateBackupService = node_createStateBackupService(resourceType, resourctId, "1.0.0", configure.getConfigureValue().__storeService);
+//			out.addRequest(nosliw.runtime.getUIAppService().getGetUIAppEntryRuntimeRequest(100, resourctId, configure, node_createIODataSet(inputValue), stateBackupService, {
+//				success : function(request, componentObj){
+//					loc_setComponent(request, componentObj);
+//					return componentObj;
+//				}
+//			}));
+//		}
 		return out;
 	};
 	

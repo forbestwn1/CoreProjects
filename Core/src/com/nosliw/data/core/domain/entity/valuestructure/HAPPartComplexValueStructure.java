@@ -22,6 +22,11 @@ public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
 	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart();
 	
 	abstract public boolean isEmpty();
+
+	protected void cloneToPartComplexValueStructure(HAPPartComplexValueStructure part) {
+		this.cloneToEntityInfo(part);
+		part.m_partInfo = this.m_partInfo.cloneValueStructurePartInfo();
+	}
 	
 	private HAPInfoPartValueStructure processPartInfo(HAPInfoPartValueStructure partInfo) {
 		HAPInfoPartValueStructure out = partInfo;

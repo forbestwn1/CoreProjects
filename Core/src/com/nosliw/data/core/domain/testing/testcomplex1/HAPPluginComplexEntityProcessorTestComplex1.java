@@ -1,18 +1,11 @@
 package com.nosliw.data.core.domain.testing.testcomplex1;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.data.variable.HAPIdVariable;
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
-import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
-import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
-import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComplexEntityProcessorImp{
 
@@ -23,20 +16,27 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
-		HAPExecutableBundleComplexResource currentPackage = processContext.getCurrentComplexResourceBundle();
-		HAPDomainValueStructure valueStructureDomain = currentPackage.getValueStructureDomain();
+		HAPExecutableBundleComplexResource currentBundle = processContext.getCurrentComplexResourceBundle();
+		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPExecutableTestComplex1 executableEntity = (HAPExecutableTestComplex1)currentPackage.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableTestComplex1 executableEntity = (HAPExecutableTestComplex1)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		HAPExecutableEntityComplexValueStructure valueStructureComplex = executableEntity.getValueStructureComplex();
 		
-		HAPIdEntityInDomain complexEntityDefinitionId = currentPackage.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
-		HAPDefinitionEntityTestComplex1 definitionEntity = (HAPDefinitionEntityTestComplex1)currentPackage.getDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPDefinitionEntityTestComplex1 definitionEntity = (HAPDefinitionEntityTestComplex1)currentBundle.getDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
-		String variable = definitionEntity.getVariable();
 		
-		HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(new HAPReferenceElementInStructureComplex(variable), new HAPCandidatesValueStructureComplex(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
 		
-		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
+		
+		
+		
+		
+		
+//		String variable = definitionEntity.getVariable();
+//		
+//		HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(new HAPReferenceElementInStructureComplex(variable), new HAPCandidatesValueStructureComplex(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
+//		
+//		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
 		
 	}
 

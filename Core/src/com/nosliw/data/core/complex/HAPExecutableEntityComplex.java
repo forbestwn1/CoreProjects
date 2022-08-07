@@ -88,6 +88,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
 		this.buildResourceAttributeJsonMap(attrJsonMap, attrTypeJsonMap, runtimeInfo);
+		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
 	}
 
 	protected void buildResourceAttributeJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	

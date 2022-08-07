@@ -56,7 +56,7 @@ var node_createPackageRuntimeService = function() {
 		}
 		else{
 			//refer to external Entity (bundle)
-			var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE.EXTERNALCOMPLEXENTITYID];
+			var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_EXTERNALCOMPLEXENTITYID];
 			//create bundle runtime
 			return loc_out.createBundleRuntime(externalEntityId, configure, request);
 		}

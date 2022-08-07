@@ -11,7 +11,9 @@ public class HAPPartComplexValueStructureGroupWithEntity extends HAPPartComplexV
 
 	private List<HAPPartComplexValueStructure> m_children;
 	
-	public HAPPartComplexValueStructureGroupWithEntity() {}
+	public HAPPartComplexValueStructureGroupWithEntity() {
+		this.m_children = new ArrayList<HAPPartComplexValueStructure>();
+	}
 	
 	public HAPPartComplexValueStructureGroupWithEntity(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
@@ -32,9 +34,9 @@ public class HAPPartComplexValueStructureGroupWithEntity extends HAPPartComplexV
 	
 	public HAPPartComplexValueStructureGroupWithEntity cloneValueStructureComplexPartGroup() {
 		HAPPartComplexValueStructureGroupWithEntity out = new HAPPartComplexValueStructureGroupWithEntity();
-		this.cloneToEntityInfo(out);
+		this.cloneToPartComplexValueStructure(out);
 		for(HAPPartComplexValueStructure child : this.m_children) {
-			this.addChild(child.cloneComplexValueStructurePart());
+			out.addChild(child.cloneComplexValueStructurePart());
 		}
 		return out;
 	}
@@ -45,9 +47,9 @@ public class HAPPartComplexValueStructureGroupWithEntity extends HAPPartComplexV
 	@Override
 	public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		HAPPartComplexValueStructureGroupWithEntity out = new HAPPartComplexValueStructureGroupWithEntity();
-		this.cloneToEntityInfo(out);
+		this.cloneToPartComplexValueStructure(out);
 		for(HAPPartComplexValueStructure child : this.m_children) {
-			this.addChild(child.cloneComplexValueStructurePart(valueStructureDomain, mode, groupTypeCandidates));
+			out.addChild(child.cloneComplexValueStructurePart(valueStructureDomain, mode, groupTypeCandidates));
 		}
 		return out;
 	}

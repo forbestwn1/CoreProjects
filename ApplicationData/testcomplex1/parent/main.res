@@ -25,15 +25,16 @@
 				"status": "disabled"
 			},
 			"entity":{
+			}
+		},
+		"entity3_none_testcomplex1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"entity":{
 				"attribute2_none_testcomplex1": {
 				
 				}
-			}
-		},
-		"localresource1_none_testcomplex1": {
-			"resourceId": "testcomplex1|#localchild",
-			"extra": {
-				"status": "disabled"
 			}
 		},
 		"valueStructureInheritModeNone_none_testcomplex1": {
@@ -115,6 +116,12 @@
 				}
 			}
 		},
+		"localresource1_none_testcomplex1": {
+			"resourceId": "testcomplex1|#localchild",
+			"extra": {
+				"status": "disabled"
+			}
+		},
 		"globalresource1_none_testsimple1": {
 			"extra": {
 				"status": "disabled"
@@ -123,7 +130,7 @@
 		},
 		"globalresource2_none_testcomplex1": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"resourceId": "testcomplex1|*child",
 			"parent": {

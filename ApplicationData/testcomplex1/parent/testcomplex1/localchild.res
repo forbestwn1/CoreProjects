@@ -44,7 +44,7 @@
 					"valueStructure" : {
 						"parent1": {
 							"definition": {
-								"path" : "parent1",
+								"path" : "parent_public",
 								"definition" : {
 									"criteria" : "test.string;1.0.0"
 								}

@@ -21,7 +21,7 @@ var packageObj = library.getChildPackage("debug");
 var node_createPackageDebugView = function(id, color){
 	
 	var loc_view = $('<div style="border-width:thick; border-style:solid; border-color:'+color+'">'+id+'</div>');
-	var loc_wrapperView = $('<div style="border-style:solid; border-color:red"></div>');
+	var loc_wrapperView = $('<div style="border-style:dotted; border-color:red"></div>');
 	loc_view.append(loc_wrapperView);
 	
 	var loc_content = "";
@@ -41,7 +41,7 @@ var node_createComponentDebugView = function(id){
 	
 	var loc_view = $('<div style="border-width:thick; border-style:solid; border-color:yellow">'+id+'</div>');
 	var loc_outputValueView = $('<textarea rows="5" cols="150" style="resize: none;"></textarea>');
-	var loc_wrapperView = $('<div style="border-style:solid; border-color:red"></div>');
+	var loc_wrapperView = $('<div style="border-style:dotted; border-color:red"></div>');
 	loc_view.append(loc_outputValueView);
 	loc_view.append(loc_wrapperView);
 	
@@ -149,17 +149,17 @@ var node_createComponentDataView = function(){
 	};
 	
 	var loc_setup = function(component, request){
-		loc_comInterface = node_getComponentManagementInterface(component);
-		loc_comInterface.getContextIODataSet().registerEventListener(undefined, function(eventName, eventData, request){
-			loc_refresh(request);
-		});
+//		loc_comInterface = node_getComponentManagementInterface(component);
+//		loc_comInterface.getContextIODataSet().registerEventListener(undefined, function(eventName, eventData, request){
+//			loc_refresh(request);
+//		});
 
 //		loc_comInterface = node_getComponentManagementInterface(component);
 //		loc_comInterface.registerContextDataChangeEventListener(loc_listener, function(eventName, dataSet){
 //			loc_showDataSet(dataSet);
 //		});
 
-		loc_refresh(request);
+//		loc_refresh(request);
 	};
 	
 	var loc_out = {
