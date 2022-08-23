@@ -129,6 +129,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	loc_out.id = nosliw.generateId();
 
 	loc_init();
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out);
 	return loc_out;
 };
 

@@ -21,15 +21,6 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
-var node_DecorationInfo = function(type, id, name, resource, configure){
-	this.id = id;
-	this.name = name;
-	this.configure = configure;
-	this.resource = resource;        //resource
-	this.decoration = undefined;		//object build from resource
-	if(this.name==undefined)   this.name = this.id;   
-};
-
 var node_DecorationInfo = function(name, type, id, configure){
 	this.name = name;
 	this.type = type;
@@ -38,17 +29,24 @@ var node_DecorationInfo = function(name, type, id, configure){
 };
 
 //interface exposed by entity for either internal or external
-var node_InterfaceInfo = function(name, description, visibility, isasync){
+var node_InterfaceInfo = function(name, description, owner, visibility, isasync){
 	this.name = name;
 	this.description = description;
+	this.owner = owner;
 	this.visibility = visibility;
 	this.isAsync = isasync;
 };
 
-var node_interfaceExecutable = function(){
-//	execute : function(args){
-//		
-//	}
+//executable with source of function
+var node_createInterfaceExecutableFunction = function(fuc){
+	var loc_function = fun;
+	
+	var loc_out = {
+		execute : function(){
+			loc_function.apply(undefined, arguments);
+		}
+	};
+	return loc_out;
 };
 
 

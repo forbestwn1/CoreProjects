@@ -66,15 +66,15 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 	//parent domain which some variable can get from
 	var loc_parentVariableGroupId;
 	
-	//variables in this domain
-	var loc_variablesByValueStructure = {};
+	//valueStructures in the group
+	var loc_valueStructures = {};
 	
 	var loc_init = function(id, valueStructureComplex, variableDomainDef, parentVariableGroupId, variableDomain){
 		loc_id = id;
 		loc_parentVariableGroupId = parentVariableGroupId;
 		loc_variableDomain = variableDomain;
 
-		var parentVariableGroup = parentVariableGroupId==undefined ? undefined : variableDomain.getVariableGroup();
+		var parentVariableGroup = parentVariableGroupId==undefined ? undefined : variableDomain.getVariableGroup(parentVariableGroupId);
 		var valueStructureIds = valueStructureComplex==undefined?[] : valueStructureComplex[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
 		_.each(valueStructureIds, function(valueStructureId){
 			var variableDomainDef = variableDomain.getVariableDomainDefinition();
@@ -82,12 +82,16 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURE][valueStructureRuntimeId];
 			if(parentVariableGroup==undefined || parentVariableGroup.getVariableInfosByValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
-				var variables = {};
-				loc_variablesByValueStructure[valueStructureRuntimeId] = variables;
-				
+				var valueStructure = loc_createValueStructure(valueStructureRuntimeId, true);
 				_.each(valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURE_VALUESTRUCTURE], function(rootDef, rootName){
-					variables[rootName] = loc_createVariableInfo(rootDef);
+					valueStructure.addVariable(loc_createVariableInfo(rootName, rootDef));
 				});
+				loc_valueStructures[valueStructure.getId()] = valueStructure;
+			}
+			else{
+				//value structure from parent
+				var valueStructure = loc_createValueStructure(valueStructureRuntimeId, false);
+				loc_valueStructures[valueStructure.getId()] = valueStructure;
 			}
 		});
 	};
@@ -95,6 +99,8 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 	var loc_out = {
 			
 		getId : function(){  return loc_id;   },
+		
+		getValueStructure : function(valueStructureId){      },
 		
 		getVariableInfosByValueStructure : function(valueStructureId){   return loc_variablesByValueStructure[valueStructureId];  },
 		
@@ -107,16 +113,41 @@ var loc_createVariableGroup = function(id, valueStructureComplex, variableDomain
 	return loc_out;
 };
 
+var loc_createValueStructure = function(id, isSolid){
+	
+	var loc_id = id;
+	
+	var loc_isSolid = isSolid;
+
+	var loc_usedCount = 1;
+	
+	var loc_variables = {};
+	
+	var loc_out = {
+		
+		getId : function(){   return loc_id;    },
+		
+		isSolid : function(){   return loc_isSolid;   },
+
+		addVariable : function(varInfo){   loc_variables[varInfo.getName()] = varInfo;    },
+		
+		use : function(){   loc_usedCount++;   },
+		
+		unUse : function(){  loc_usedCount--;  }
+	};
+	
+	return loc_out;
+};
+
 //variable info
-var loc_createVariableInfo = function(variableInfo){
+var loc_createVariableInfo = function(name, variableInfo){
+	var loc_name = name;
 	
 	//variable info
 	var loc_variableInfo;
 	
 	//current value for variable
 	var loc_value;
-	
-	var loc_usedCount = 1;
 	
 	var loc_init = function(variableInfo){
 		loc_variableInfo = variableInfo;
@@ -125,15 +156,13 @@ var loc_createVariableInfo = function(variableInfo){
 	
 	var loc_out = {
 		
+		getName : function(){   return loc_name;    },
+			
 		getVariableInfo : function(){   return loc_variableInfo;    },
 	
 		getValue : function(){   return loc_value;    },
 		
 		setValue : function(value){  loc_value = value;    },
-		
-		use : function(){   loc_usedCount++;   },
-		
-		unUse : function(){  loc_usedCount--;  }
 	};
 	
 	loc_init(variableInfo);

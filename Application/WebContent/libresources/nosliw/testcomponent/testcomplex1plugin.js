@@ -30,6 +30,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_id = nosliw.generateId();
 	var loc_variableGroupId = variableGroupId;
 	var loc_complexEntityDef = complexEntityDef;
+	var loc_runtimeInterface = runtimeInterface;
 	var loc_bundleCore = bundleCore;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	var loc_parentView;
@@ -77,7 +78,12 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			return out;
 		},
 
-		
+		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){   
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceInComponentRuntime", {}), handlers, request);
+			loc_runtimeInterface = runtimeInterface;
+			return out;
+		},
+
 		
 		
 		//execute command

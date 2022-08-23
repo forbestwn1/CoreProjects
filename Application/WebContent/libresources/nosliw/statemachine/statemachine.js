@@ -17,11 +17,134 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createStateMachineTask = function(nexts, stateMachineWrappers){
+
+	var loc_stateMachineWrappers = stateMachineWrappers;
+
+	var loc_nexts = [];
+	loc_nexts.push(loc_stateMachine.getCurrentState());
+	_.each(nexts, function(next, i){loc_nexts.push(next);});
+	
+	var loc_eventObj = node_createEventObject();
+	
+	var loc_results = [];
+	var loc_failData = [];
+	var loc_finalResult = true;
+	
+	var loc_currentNext = 0;
+
+	var loc_processNext = function(request){
+		loc_currentNext++;
+		if(loc_currentNext>=loc_nexts.length){
+			//finish successfully
+			_.each(loc_stateMachineWrappers, function(wapper, i){
+				wrapper.getStateMachine().prv_finishTask();
+			});
+			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, undefined, request);
+		}
+		else{
+			_.each(loc_stateMachineWrappers, function(wapper, i){
+				var stateMachine = wrapper.getStateMachine();
+				var stateMachineId = wapper.getId();
+				
+				var listener = stateMachine.prv_registerEventListener(undefined, function(eventName, eventData, request){
+					stateMachine.prv_unregisterEventListener(listener);
+					if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+						loc_results.push(true);
+					}
+					else if (eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION || eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
+						loc_results.push(eventData);
+						loc_finalResult = false;
+					}
+					
+					if(loc_results.length()==loc_stateMachineWrappers.length()){
+						//when all statemachine done, 
+						if(loc_finalResult==true){
+							//all success, move to next transit
+							loc_processNext(request);
+						}
+						else{
+							//failure happened, roll back
+							loc_currentNext = loc_currentNext - 2;
+							node_requestServiceProcessor.processRequest(loc_getRollBackRequest({
+								success : function(request){
+									//finish fail
+									_.each(loc_stateMachineWrappers, function(wapper, i){
+										var stateMachine = wrapper.getStateMachine();
+										var stateMachineId = wapper.getId();
+										stateMachine.prv_finishTask();
+									});
+									loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
+								}
+							}, request));
+						}
+					}
+				});
+				stateMachine.prv_startTransit(loc_nexts[loc_currentNext], request);
+			});
+		}
+	};
+
+	var loc_getRollBackRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request); 
+		while(loc_currentNext>=0){
+			_.each(loc_stateMachineWrappers, function(wapper, i){
+				var stateMachine = wrapper.getStateMachine();
+				var stateMachineId = wapper.getId();
+				out.addRequest(stateMachine.prv_getRollBackRequest(loc_nexts[loc_currentNext], request));
+			});
+			loc_currentNext--;
+		};
+		return out;
+	};
+	
+	var loc_trigueEvent = function(eventName, eventData, request){	loc_eventObj.triggerEvent(eventName, eventData, request);	};
+
+	var loc_out = {
+			
+			process : function(request){	
+				var request = loc_out.getRequestInfo(request);
+				loc_processNext(request);
+				return request;
+			},
+			
+			getProcessRequest : function(handlers, request){
+				var request = loc_out.getRequestInfo(request);
+				var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
+				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
+					var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, eventRequest){
+						if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+							out.successFinish();
+						}
+						else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+							if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_ERROR) 	out.errorFinish(eventData.data);
+							else if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION) 	out.exceptionFinish(eventData.data);
+							else out.errorFinish();
+						}
+						loc_out.unregisterEventListener(listener);
+					});
+
+					loc_processNext(request);
+				}));
+				return out;
+			},
+			
+			registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
+			unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
+		};
+		
+		loc_out = node_buildServiceProvider(loc_out, "stateMachineTask");
+
+		return loc_out;
+
+};
+
+
 //task handle transaction ( multiple transition steps )
 //    handle success
 //    handle roll back when fail
 //    trigue event when task finish
-var node_createStateMachineTask = function(nexts, stateMachine){
+var node_createStateMachineTask1 = function(nexts, stateMachine){
 
 	var loc_stateMachine = stateMachine;
 
@@ -115,24 +238,35 @@ var node_createStateMachineTask = function(nexts, stateMachine){
 
 var node_createStateMachine = function(stateDef, initState, taskCallback, thisContext){
 
-	//all the state definition
+	//static infor, all the state definition
 	var loc_stateDef = stateDef;
 	var loc_taskCallback = taskCallback;
 	
+	//transit call back
+	var loc_transitCallBacks = {};
+	
+	//this context
 	var loc_thisContext = thisContext;
 
+	//event object
 	var loc_eventObj = node_createEventObject();
 
+	//current status
+	var loc_currentState = initState;
+
+	//current task are processing
 	var loc_currentTask;
 	
-	var loc_currentState = initState;
 	//if in stranist, it contains from status and to status
 	var loc_inTransit = undefined;
+	
+	//flag whether during transit
 	var loc_finishTransit = true;
 	
 	var loc_trigueEvent = function(eventName, eventData, request){	loc_eventObj.triggerEvent(eventName, eventData, request);	};
 
 	var loc_startTransit = function(next, request){
+		//mark as during transit
 		loc_finishTransit = false;
 		
 		request = node_createServiceRequestInfoCommon(undefined, undefined, request);
@@ -151,8 +285,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		}
 		
 		//find next state info
-		var nextStateInfo = loc_stateDef.getStateInfo(loc_out.getCurrentState()).nextStates[next];
-		if(nextStateInfo==undefined){
+		if(!loc_stateDef.isTransitValid(loc_out.getCurrentState(), next)){
 			//invalid tranist
 			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION, next+"|Notvalidtransit", request);
 			loc_finishTransit = true;
@@ -160,8 +293,10 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		}
 		
 		//do tranist
-		loc_inTransit = new node_TransitInfo(loc_currentState, next); 
-		var callBack = nextStateInfo.callBack;
+		loc_inTransit = new node_SMTransitInfo(loc_currentState, next); 
+		
+		var callBackInfo = loc_getCallBackInfoForTransit(loc_currentState)
+		var callBack = callBackInfo==undefined?undefined:callBackInfo.callBack;
 		var transitResult = true;      
 		if(callBack!=undefined)	transitResult = callBack.call(loc_thisContext, request);
 		
@@ -169,7 +304,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		loc_processStatuesResult(transitResult, request);
 	};
 	
-	
+	//process transit callback result
 	var loc_processStatuesResult = function(result, request){
 
 		if(result==true || result==undefined){
@@ -181,7 +316,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		
 		var entityType = node_getObjectType(result);
 		if(node_CONSTANT.TYPEDOBJECT_TYPE_ERROR==entityType){
-			//failed
+			//if result is error, failed
 			node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit, {
 				success : function(request){
 					loc_failTransit(request);
@@ -192,16 +327,19 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 			return;
 		}
 		else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+			//if result is request, then build wrapper request
 			var transitRequest = node_createServiceRequestInfoSequence(undefined, {
 				success : function(request){			},
 				error : function(request, serviceData){	
+					//call back request in error
 					node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit), {
 						attchedTo : request
 					});
 //					loc_rollBack(loc_inTransit, request);
 //					loc_failTransit(new node_RequestResult(node_CONSTANT.REQUEST_FINISHTYPE_ERROR, serviceData), request);		
 				},
-				exception : function(request, serviceData){	
+				exception : function(request, serviceData){
+					//call back request in exception
 					node_requestServiceProcessor.processRequest(loc_getRollBackRequest(loc_inTransit), {
 						attchedTo : request
 					});
@@ -210,7 +348,6 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 				}
 			});
 
-			//if return request, then build wrapper request
 			transitRequest.addRequest(result);
 
 			transitRequest.registerEventListener(undefined, function(eventName, eventData){
@@ -245,6 +382,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, inTransit, request);
 	};
 
+	//method called when transition is finished failure
 	var loc_failTransit = function(request){
 		var inTransit = loc_inTransit;
 		loc_inTransit = undefined;
@@ -253,9 +391,17 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, inTransit, request);
 	};
 
+	var loc_getCallBackInfoForTransit = function(from, to){
+		var byTo = loc_transitCallBacks[from];
+		if(byTo==undefined)  return;
+		return byTo[to];
+	};
+	
+	//do rollback task
 	var loc_getRollBackRequest = function(transitInfo, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var reverseCallBack = loc_stateDef.getStateInfo(transitInfo.from).nextStates[transitInfo.to].reverseCallBack;
+		var callBackInfo = loc_getCallBackInfoForTransit(transitInfo.from, transitInfo.to);
+		var reverseCallBack = callBackInfo==undefined?undefined:callBackInfo.reverseCallBack;
 		if(reverseCallBack!=undefined){
 			var rollbackResult = reverseCallBack.apply(loc_thisContext, request);
 			var entityType = node_getObjectType(rollbackResult);
@@ -266,21 +412,23 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 		return out;
 	};
 
-	var loc_updateNextSequence = function(transferSequence, next){
+	//build transit sequence from next
+	//next may be command, or a tranist
+	var loc_buildTransitSequence = function(transitSequence, next){
 		if(typeof next === 'string' || next instanceof String){
 			//if nexts parm is command string
 			var commandInfo = loc_stateDef.getCommandInfo(next, loc_currentState);
 			var nexts = [];
 			if(commandInfo==undefined){
 				//nexts parm is target state
-				nexts = loc_stateDef.getNextsByTransitInfo(new node_TransitInfo(loc_currentState, next));
+				nexts = loc_stateDef.getNextsByTransitInfo(new node_SMTransitInfo(loc_currentState, next));
 			}
 			else{
 				//command
 				nexts = commandInfo.nexts;
 			}
 			_.each(nexts, function(next, i){
-				transferSequence.push(next);
+				transitSequence.push(next);
 			});
 		}
 	};
@@ -288,20 +436,36 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 	var loc_out = {
 			
 		prv_startTransit : function(next, request){  loc_startTransit(next, request);    },	
-		prv_getRollBackRequest : function(next, request){  return loc_getRollBackRequest(new node_TransitInfo(next, loc_currentState), request);    },
+		prv_getRollBackRequest : function(next, request){  return loc_getRollBackRequest(new node_SMTransitInfo(next, loc_currentState), request);    },
 
 		prv_transitSuccess : function(request){   loc_successTransit(request);	},
 		prv_transitFail : function(request){	loc_processStatuesResult(node_createErrorData(), request);	},
-
-		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext, true); },
-		prv_unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
 
 		prv_finishTask : function(){  
 			loc_currentTask = undefined;
 			if(loc_taskCallback.endTask!=undefined)    loc_taskCallback.endTask();
 		},
 
+		prv_registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext, true); },
+		prv_unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
+
+		registerTransitCallBack : function(transit, callBack, reverseCallBack){
+			var callbacksByTo = loc_transitCallBacks[transit.from];
+			if(callbacksByTo==undefined){
+				callbacksByTo = {};
+				loc_transitCallBacks[transit.from] = callbacksByTo;
+			}
+			callbacksByTo[transit.to] = {
+				callBack : callBack,
+				reverseCallBack : reverseCallBack
+			};
+		},
+		
 		getCurrentState : function(){	return loc_currentState;	},
+		
+		getStateDefinition : function(){   return loc_stateDef;   },
+		
+		
 		getAllStates : function(){  return loc_stateDef.getAllStates();   },
 		getNextStateCandidates : function(){  return loc_stateDef.getCandidateTransits(loc_out.getCurrentState());   },
 		
@@ -317,7 +481,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 
 			var transferSequence = [];
 			_.each(nexts, function(next, i){
-				loc_updateNextSequence(transferSequence, next);
+				loc_buildTransitSequence(transferSequence, next);
 			});
 
 			loc_currentTask = node_createStateMachineTask(transferSequence, loc_out);
@@ -333,7 +497,7 @@ var node_createStateMachine = function(stateDef, initState, taskCallback, thisCo
 				var commandInfo = loc_stateDef.getCommandInfo(nexts, loc_currentState);
 				if(commandInfo==undefined){
 					//nexts parm is target state
-					nexts = loc_stateDef.getNextsByTransitInfo(new node_TransitInfo(loc_currentState, nexts));
+					nexts = loc_stateDef.getNextsByTransitInfo(new node_SMTransitInfo(loc_currentState, nexts));
 				}
 				else{
 					//command
@@ -364,10 +528,8 @@ nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", func
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("request.entity.RequestResult", function(){node_RequestResult = this.getData();});
 
-nosliw.registerSetNodeDataEvent("statemachine.TransitInfo", function(){node_TransitInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("statemachine.SMTransitInfo", function(){node_SMTransitInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.SMCommandInfo", function(){node_SMCommandInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.NextStateInfo", function(){node_NextStateInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.StateInfo", function(){node_StateInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();}); 
 
 //Register Node by Name

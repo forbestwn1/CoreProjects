@@ -70,38 +70,42 @@ var node_createComponentDebugView = function(id){
 	
 	
 //load component and init it with inputValue
-var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue, settingName){
+var node_createComponentResetView = function(resetCallBack, resourceType, resourceId, inputValue, configureValue, runtimeContext){
 	var loc_resetCallBack = resetCallBack;
+	var loc_configureValue = configureValue;
+	var loc_runtimeContext = runtimeContext;
 	
 	var loc_view = $('<div>Component Input: </div>');
 	var loc_resourceTypeView = $('<textinput></textinput><br>');
 	var loc_resourceIdView = $('<textinput></textinput><br>');
-	var loc_settingNameView = $('<textinput></textinput><br>');
+	var loc_configureValueView = $('<textinput></textinput><br>');
 	var loc_inputValueView = $('<textarea rows="5" cols="150" style="resize: none;" data-role="none"></textarea>');
 	var loc_submitView = $('<button>Reset</button>');
 	loc_view.append(loc_resourceTypeView);
 	loc_view.append(loc_resourceIdView);
-	loc_view.append(loc_settingNameView);
+	loc_view.append(loc_configureValueView);
 	loc_view.append(loc_inputValueView);
 	loc_view.append(loc_submitView);
 
 	var loc_getResourceType = function(){  return loc_resourceTypeView.val();  };
 	var loc_getResourceId = function(){  return loc_resourceIdView.val();  };
-	var loc_getSettingName = function(){  return loc_settingNameView.val();  };
+	var loc_getConfigureValue = function(){  return loc_configureValue;  };
 	var loc_getInputValue = function(){
 		var content = loc_inputValueView.val();
 		if(content=='')  return;
 		return JSON.parse(content); 
 	};
+	var loc_getRuntimeContext = function(){  return loc_runtimeContext;   };
 	
-	var loc_init = function(resourceType, resourceId, inputValue, settingName){
+	var loc_init = function(resourceType, resourceId, inputValue, configureValue, runtimeContext){
 		if(resourceType!=undefined)   	loc_out.setResourceType(resourceType);
 		if(resourceId!=undefined)  		loc_out.setResourceId(resourceId);
 		if(inputValue!=undefined)		loc_out.setInputValue(inputValue);
-		if(settingName!=undefined)		loc_out.setSettingName(settingName);
+		if(configureValue!=undefined)		loc_out.setConfigureValue(configureValue);
+		if(runtimeContext!=undefined)   loc_out.setRuntimeContext(runtimeContext);
 
 		loc_submitView.on('click', function(){
-			var request = loc_resetCallBack(loc_getResourceType(), loc_getResourceId(), loc_getInputValue(), loc_getSettingName());
+			var request = loc_resetCallBack(loc_getResourceType(), loc_getResourceId(), loc_getInputValue(), loc_getConfigureValue(), loc_getRuntimeContext());
 			node_requestServiceProcessor.processRequest(request);
 		});
 	};
@@ -112,11 +116,15 @@ var node_createComponentResetView = function(resetCallBack, resourceType, resour
 		
 		setResourceType : function(type){   loc_resourceTypeView.val(type);   },
 		setResourceId : function(id){  loc_resourceIdView.val(id);   },
-		setSettingName : function(name){  loc_settingNameView.val(name);   },
+		setConfigureValue : function(configureValue){
+			loc_configureValue = configureValue;
+			loc_configureValueView.val(JSON.stringify(loc_configureValue));   
+		},
+		setRuntimeContext : function(runtimeContext){  locruntimeContext = runtimeContext;  },
 		setInputValue : function(inputValue){  loc_inputValueView.val(JSON.stringify(inputValue));  },
 	};
 	
-	loc_init(resourceType, resourceId, inputValue, settingName);
+	loc_init(resourceType, resourceId, inputValue, configureValue, runtimeContext);
 	
 	return loc_out;
 };

@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createConfigure;
@@ -69,6 +70,36 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		return out;
 	};
 	
+	var loc_getUpdateRuntimeInterfaceRequest = function(runtimeInterface, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterface", {}), handlers, request);
+		_.each(loc_layers, function(layer, i){
+			if(i==0){
+				//for core
+				out.addRequest(layer.getUpdateRuntimeInterfaceRequest(runtimeInterface));
+			}
+			else{
+				//for decoration
+				var decorationRuntimeInterface = {
+					//all interface 
+					getAllInterfaceInfos : function(){},
+					
+					//
+					getInterfaceExecutable : function(interfaceName){  
+						var out = undefined;
+						if(interfaceName==node_basicUtility.buildNosliwFullName(node_CONSTANT.INTERFACE_GETCOREINTERFACE)){
+							node_createInterfaceExecutableFunction(function(){
+								return loc_getCore();
+							});
+						}
+						return out;
+					},
+				};
+				out.addRequest(layer.getUpdateRuntimeInterfaceRequest(node_buildInterfaceEnv(decorationRuntimeInterface)));
+			}
+		});
+		return out;
+	};
+
 	var loc_processRuntimeContext = function(index, runtimeContext){
 		var override = {};
 		override.backupState = loc_backupState.createChildState(index+"");
@@ -88,6 +119,14 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		return out;
 	};
 
+	var loc_getPostInitRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
+		_.each(loc_layers, function(layer){
+			out.addRequest(layer.getPostInitRequest());
+		});
+		return out;
+	};
+	
 	
 	
 	
@@ -106,7 +145,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		_.each(loc_componentCoreComplex.getDecorations(), function(decoration, i){
 			loc_componentStates.push(loc_createComplexLayerState(decoration, "dec_"+decoration.getId()));
 		});
-	}
+	};
 	
 	var loc_createComplexLayerState = function(layer, id){
 		return node_createComponentState(loc_backupState.createChildState(id), 
@@ -124,14 +163,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		//start module
 		_.each(loc_layers, function(layer, i){
 			if(layer.getLifeCycleRequest!=undefined) out.addRequest(layer.getLifeCycleRequest(transitName));
-		});
-		return out;
-	};
-
-	var loc_getUpdateRuntimeEnvRequest = function(runtimeEnv, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnv", {}), handlers, request);
-		_.each(loc_layers, function(layer){
-			out.addRequest(layer.getUpdateRuntimeEnvRequest(runtimeEnv));
 		});
 		return out;
 	};
@@ -204,11 +235,17 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		return loc_getUpdateRuntimeContextRequest(runtimeContext, handlers, request);	},
 
+		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){   return loc_getUpdateRuntimeInterfaceRequest(runtimeInterface, handlers, request);    },
+		
+		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 
+		getPostInitRequest : function(handlers, request){	return loc_getPostInitRequest(handlers, request);	},
+		
 
 		
 		
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){   return loc_getUpdateRuntimeEnvRequest(runtimeEnv, handlers, request);    },
+		
+		
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },
@@ -238,7 +275,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			return out;
 		},
 		
-		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 		setLifeCycleStatus : function(status){
 			loc_lifecycleStatus = status;   
 			_.each(loc_layers, function(layer, i){  
@@ -268,6 +304,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});

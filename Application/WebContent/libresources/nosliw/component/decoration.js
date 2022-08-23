@@ -42,13 +42,16 @@ var node_createDecoration = function(decorationInfo){
 			return loc_runtimeObject.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
 		},
 		
+		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
+			return loc_runtimeObject.getUpdateRuntimeInterfaceRequest(runtimeInteface, handlers, request);
+		},
+		
+		getPostInitRequest : function(handlers, request){
+			return loc_runtimeObject.getPostInitRequest(handlers, request);
+		},
 
 		
 		
-		
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
-			
-		},
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },

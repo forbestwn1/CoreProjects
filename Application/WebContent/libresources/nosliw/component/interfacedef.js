@@ -84,11 +84,15 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 	return loc_out;
 };
 
-//interface for external interface env for current entity
+//external interface env for current entity
 var node_buildInterfaceEnv = function(rawInterfaceEnv){
 
 	var interfaceDef = {
-		getInterfaceExecutable : function(targetInfo, interfaceName){  },
+		//all interface 
+		getAllInterfaceInfos : function(){},
+		
+		//
+		getInterfaceExecutable : function(interfaceName){  },
 	};
 
 	return _.extend({}, interfaceDef, rawInterfaceEnv);
@@ -98,6 +102,7 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	var loc_rawComponentCore = rawComponentCore;
+	var loc_lifecycleEntity;
 	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
 	var loc_debugView;
@@ -135,13 +140,14 @@ var node_buildComponentCore = function(rawComponentCore){
 		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },
 		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId():node_CONSTANT.VALUE_UNKNOW;    },
 		
-		//************************* interface exposed by the core internal or external
-		getAllInterfaceInfo : function(){  return [];	},
-		getInterfaceExecutable : function(interfaceName){  },
+		//************************* interface exposed by the core external
+		getAllInterfaceInfo : function(){  return loc_rawComponentCore.getAllInterfaceInfo!=undefined?loc_rawComponentCore.getAllInterfaceInfo():[];	},
+		getInterfaceExecutable : function(interfaceName){   return loc_rawComponentCore.getInterfaceExecutable!=undefined?loc_rawComponentCore.getInterfaceExecutable(interfaceName):undefined;    },
 		
 		//*************************state
 		//set state for the component core
 		setState : function(state){   },
+		getState : function(){    },
 
 		getGetStateDataRequest : function(handlers, request){   },
 		getRestoreStateDataRequest : function(stateData, handlers, request){   },
@@ -165,9 +171,6 @@ var node_buildComponentCore = function(rawComponentCore){
 			return out;
 		},
 		
-		//call back when core embeded into runtime during init phase
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){},
-		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperUpdateRuntimeContextRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
@@ -178,12 +181,52 @@ var node_buildComponentCore = function(rawComponentCore){
 				$(runtimeContext.view).append(loc_debugView.getView());
 				runtimeContext.view = loc_debugView.getWrapperView();
 			}
+			
+			
+			loc_lifecycleEntity = lifecycleEntity;
+			loc_lifecycleEntity.setComponentCore(loc_rawComponentCore);
+			
 			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
 			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
 			return out;
 		},
+		
+		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
+			if(loc_isDebugMode()){
+				loc_debugView.logMethodCalled("getUpdateRuntimeInterfaceRequest");
+			}
+			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest());
+			return out;
+		},
+		
 
-		getLifeCycleRequest : function(transitName, handlers, request){},
+		getPostInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPostInitRequestCore", {}), handlers, request);
+			if(loc_isDebugMode()){
+				loc_debugView.logMethodCalled("getPostInitRequest");
+			}
+			if(loc_rawComponentCore.getPostInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPostInitRequest());
+			return out;
+		},
+		
+		
+		getLifeCycleRequest : function(transitName, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperLifeCycleRequestCore", {}), handlers, request);
+			if(loc_isDebugMode()){
+				loc_debugView.logMethodCalled("getLifeCycleRequest", {
+					"transitName" : transitName
+				});
+			}
+			
+			out.addRequest(loc_lifecycleEntity.getLifeCycleRequest(transitName));
+			return out;
+		},
+
+		
+		
+		
+		
 		setLifeCycleStatus : function(status){},
 		
 		startLifecycleTask : function(){},
@@ -191,6 +234,9 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 	};
 	loc_init();
+	
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out);
+	
 	return loc_out;
 };
 

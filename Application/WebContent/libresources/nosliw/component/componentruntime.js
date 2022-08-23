@@ -48,123 +48,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		loc_componentCoreComplex = node_createComponentCoreComplex(componentCore, decorationInfos);
 	};
 
-	var loc_getSaveStateDataForRollBackRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getSaveStateDataForRollBack", {}), handlers, request);
-		_.each(loc_componentStates, function(componentState, i){
-			out.addRequest(componentState.getSaveStateDataForRollBackRequest());
-		});
-		return out;
-	};
-	
-	var loc_getRestoreStateDataForRollBackRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getRestoreStateDataForRollBack", {}), handlers, request);
-		_.each(loc_componentStates, function(componentState, i){
-			out.addRequest(componentState.getRestoreStateDataForRollBackRequest());
-		});
-		return out;
-	};
-	
-	var loc_getBackupStateRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getBackupStateRequest", {}), handlers, request);
-		_.each(loc_componentStates, function(componentState, i){
-			out.addRequest(componentState.getBackupStateRequest(handlers, request));
-		});
-		return out;
-	};
-
-	var loc_getRestoreStateRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getRestoreStateRequest", {}), handlers, request);
-		_.each(loc_componentStates, function(componentState, i){
-			out.addRequest(componentState.getRestoreStateRequest(handlers, request));
-		});
-		return out;
-	};
-	
-	//call back when start a statemachine task
-	var loc_lifecycleTaskCallback = {
-		startTask : function(){		
-			_.each(loc_componentStates, function(componentState, i){
-				componentState.initDataForRollBack();
-			});
-		},
-		endTask : function(){		
-			_.each(loc_componentStates, function(componentState, i){
-				componentState.clearDataFroRollBack();
-			});
-		}
-	};
-	
-	//call back method for normal lifecycle change
-	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormal"+lifecycleName+"LifeCycleCallBackRequestRequest", {}), handlers, request);
-		//prepare roll back data
-		out.addRequest(loc_getSaveStateDataForRollBackRequest());
-		//clear backup state
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
-		//execute complex lifecycle call back
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
-		return out;
-	};
-	
-	//call back method for normal lifecycle change
-	var loc_getReverseLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getReverse"+lifecycleName+"LifeCycleCallBackRequestRequest", {}), handlers, request);
-		//prepare roll back data
-		out.addRequest(loc_getRestoreStateDataForRollBackRequest());
-		//clear backup state
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
-		//execute complex lifecycle call back
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
-		return out;
-	};
-	
-	var loc_clearBackupState = function(request){
-		loc_backupState.clear(request);
-	};
-	
-	//component lifecycle call back methods
-	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveComponentRuntime", {}), undefined, request);
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			var backupStateData = loc_backupState.getStateValue(request);
-			if(backupStateData!=undefined){
-				//have backup state, then do backup only
-				//only call lifecycle, not process
-				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getActivateLiefCycleCallBackRequestRequest", {}), undefined, request);
-				out.addRequest(loc_getRestoreStateRequest());
-				out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTOREBACKUP));
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request);  }));
-				return out;
-			}
-			else{
-				//no backup state, then 
-				//normal, call both lifecycle and process
-				return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE, undefined, request);
-			}
-		}));
-		return out;
-	};
-
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE]= function(request){	return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE, undefined, request); };
-
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND] = function(request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getSuspendLiefCycleCallBackRequestRequest", {}), undefined, request);
-		//prepare roll back data
-		out.addRequest(loc_getSaveStateDataForRollBackRequest());
-		out.addRequest(loc_getBackupStateRequest());
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
-		return out;
-	};
-	
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME] = function(request){	return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME, undefined, request);	};
-
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY] = function(request){	return loc_getNormalLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY, undefined, request);	};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE_REVERSE, undefined, request);	};	
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE_REVERSE, undefined, request);	};	
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND_REVERSE, undefined, request);	};	
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESUME_REVERSE, undefined, request);	};	
-
 	var loc_getComponentCore = function(){   return loc_componentCoreComplex.getCore();   };
 	var loc_getTaskEnv = function(){   return loc_componentCoreComplex.getInterface();    };
 
@@ -196,17 +79,17 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
-		getInitRequest : function(runtimeContext, handlers, request){
+		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
 			out.addRequest(loc_componentCoreComplex.getPreInitRequest({
 				success : function(request){
-					return loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv, {
+					return loc_componentCoreComplex.getUpdateRuntimeInterfaceRequest(runtimeInterface, {
 						success : function(request){
 							loc_runtimeContext = runtimeContext;
 							return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
-									return loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);
+									return loc_componentCoreComplex.getPostInitRequest();
 								}
 							});
 						}
@@ -214,63 +97,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 				}
 			}));
 
-			return out;
-		},
-
-			
-		getInitRequest2 : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
-
-			//init backup state
-//				loc_initBackState(loc_runtimeContext.backupState);
-			//pre init request
-			out.addRequest(this.getPreInitRequest({
-				success : function(request){
-					var that = request.getData();
-					//provide runtime env to core
-					return that.getUpdateRuntimeEnvRequest({
-						success : function(request){
-							var that = request.getData();
-							//provide runtime context to core
-							loc_runtimeContext = runtimeContext;
-							return that.getUpdateRuntimeContextRequest(loc_runtimeContext, {
-								success : function(request){
-									var that = request.getData();
-									//init core
-									return that.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
-								}
-							}, request).withData(that);
-						}
-					}, request).withData(that);
-				}
-			}).withData(this));
-
-//				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//					loc_lifeCycleStatus = node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT;
-//				}));
-			
-			return out;
-		},
-
-		getInitRequest1 : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
-
-			var that = loc_out;
-			//pre init request
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return that.getPreInitRequest();
-			}));
-			
-			//provide runtime context to core
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return that.getUpdateRuntimeContextRequest(runtimeContext);
-			}));
-
-			//init core
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return that.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT);		
-			}));
-			
 			return out;
 		},
 
@@ -283,10 +109,28 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInComponentRuntime", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext));
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(loc_runtimeContext));
 			return out;
 		},
 
+		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceInComponentRuntime", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeInterfaceRequest(runtimeInterface));
+			return out;
+		},
+		
+		getPostInitRequest : function(handlers, request){	
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
+			out.addRequest(loc_componentCoreComplex.getPostInitRequest());
+			return out;
+		},
+		
+		
+		
+		getLifeCycleRequest : function(transitName, handlers, request){
+			return node_getComponentLifecycleInterface(loc_out).getTransitRequest(transitName, handlers, request);
+		},
+		
 			
 
 		
@@ -297,16 +141,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			
 		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
 			
-		getUpdateRuntimeEnvRequest : function(handlers, request){   
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeEnvInComponentRuntime", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeEnvRequest(loc_runtimeEnv));
-			return out;
-		},
-		
-		getLifeCycleRequest : function(transitName, handlers, request){   
-			return loc_componentCoreComplex.getLifeCycleRequest(transitName, handlers, request);      
-		},
-		
 		
 		
 		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
@@ -330,7 +164,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	loc_init(componentCore, decorationInfos, request);
 	
-	loc_out = node_makeObjectWithComponentLifecycle(loc_out, lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
+	loc_out = node_makeObjectWithComponentLifecycle(loc_out, loc_lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
 	//listen to lifecycle event and update lifecycle status
 	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
 		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){

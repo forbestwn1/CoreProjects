@@ -79,7 +79,7 @@ var node_createPackageRuntimeService = function() {
 		},
 				
 		//create package runtime object and init request
-		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request){
 			var packageRuntime = this.createPackageRuntime(packageResourceId, configure, request);
 			
 			//build backup state if not provided
@@ -87,7 +87,7 @@ var node_createPackageRuntimeService = function() {
 
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
 			//init package runtime
-			out.addRequest(packageRuntime.getInitRequest(runtimeContext, {
+			out.addRequest(packageRuntime.getInitRequest(runtimeContext, runtimeInterface, {
 				success : function(request){
 					return packageRuntime;
 				}
@@ -96,8 +96,8 @@ var node_createPackageRuntimeService = function() {
 			return out;
 		},
 		
-		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
-			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, handlers, request);
+		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request){
+			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 

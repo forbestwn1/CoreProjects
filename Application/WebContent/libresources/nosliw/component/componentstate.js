@@ -27,6 +27,7 @@ var node_createComponentState = function(state, getGetStateDataRequest, getResto
 	//store state data for lifecycle rollback 
 	var loc_stateDataForRollBack = [];
 
+	//path to store state data
 	var loc_STATEDATA_NAME = "STATEDATA_NAME";
 	
 	var loc_out = {

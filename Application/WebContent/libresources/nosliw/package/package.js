@@ -101,14 +101,6 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 
-		
-		
-		
-		
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
-			loc_runtimeEnv = runtimeEnv;
-		},
-		
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){
@@ -122,12 +114,22 @@ var node_createPackageCore = function(resourceId, configure){
 			}
 			return out;
 		},
+		
+		
+		
+		
+		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
+			loc_runtimeEnv = runtimeEnv;
+		},
+		
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
 	loc_out.id = loc_id;
 	
 	loc_init();
+	
+	loc_out = node_makeObjectWithComponentManagementInterface(loc_out);
 	return loc_out;
 };
 

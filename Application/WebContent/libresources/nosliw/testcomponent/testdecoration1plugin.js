@@ -24,6 +24,8 @@ var node_createTestDecoration1Plugin = function(){
 };
 
 var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	var loc_complexEntityDef = complexEntityDef;
+	
 	var loc_id = nosliw.generateId();
 	
 	var loc_parentView;
@@ -36,9 +38,17 @@ var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variable
 		getDataType: function(){    return  "testDecoration1";   },
 		getId : function(){  return loc_id;   },
 		getConfigure : function(){   return loc_configure;    },
-			
+		
+		
+		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
+			return loc_complexEntityDef.getUpdateRuntimeInterfaceRequest(runtimeInteface, handlers, request);
+		},
+		
 		//call back to provide runtime context : view (during init phase)
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			return loc_complexEntityDef.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
+
+/*			
 			loc_parentView = $(runtimeContext.view);
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration1</div>');
@@ -50,6 +60,7 @@ var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variable
 					view : loc_wrapperView.get(),
 				});
 			}, handlers, request);
+*/			
 		},
 	};
 	
