@@ -9,11 +9,12 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_createComponentCoreDecoration;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_createEventObject;
 	var node_buildComponentCore;
 	var node_createDecoration;
-	var node_createServiceRequestInfoSimple;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -28,6 +29,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	var loc_backupState;
 	var loc_componentStates = [];
 
+	var loc_lifecycleEntity;
+	
 	//current lifecycle status
 	var loc_lifecycleStatus;
 
@@ -64,12 +67,32 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext, handlers, request){
 		loc_backupState = runtimeContext.backupState;
+		loc_lifecycleEntity = runtimeContext.lifecycleEntity;
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInCoreComplex", {}), handlers, request);
 		var index = loc_layers.length-1;
-		out.addRequest(loc_getUpdateLayerRuntimeContextRequest(index, loc_processRuntimeContext(index, runtimeContext)));
+		out.addRequest(loc_getUpdateLayerRuntimeContextRequest(index, runtimeContext));
 		return out;
 	};
 	
+	var loc_getUpdateLayerRuntimeContextRequest = function(index, upperRuntimeContext, handlers, request){
+		//id for this layer
+		var layerId = index + "";
+		//runtime context for this layer
+		var runtimeContext = node_componentUtility.makeNewRuntimeContext(upperRuntimeContext, {
+			backupState : loc_backupState.createChildState(layerId),
+			lifecycleEntity : loc_lifecycleEntity.createChild(layerId)
+		}); 
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
+		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
+			success : function(request, newRuntimeContext){
+				if(newRuntimeContext==undefined) newRuntimeContext = runtimeContext;
+				if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
+				else return loc_getUpdateLayerRuntimeContextRequest(index-1, newRuntimeContext);
+			}
+		}));
+		return out;
+	};
+
 	var loc_getUpdateRuntimeInterfaceRequest = function(runtimeInterface, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterface", {}), handlers, request);
 		_.each(loc_layers, function(layer, i){
@@ -97,25 +120,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 				out.addRequest(layer.getUpdateRuntimeInterfaceRequest(node_buildInterfaceEnv(decorationRuntimeInterface)));
 			}
 		});
-		return out;
-	};
-
-	var loc_processRuntimeContext = function(index, runtimeContext){
-		var override = {};
-		override.backupState = loc_backupState.createChildState(index+"");
-		return _.extend({}, runtimeContext, override);
-	};
-	
-	var loc_getUpdateLayerRuntimeContextRequest = function(index, upperRuntimeContext, handlers, request){
-		var runtimeContext = loc_processRuntimeContext(index, upperRuntimeContext);
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
-		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
-			success : function(request, newRuntimeContext){
-				if(newRuntimeContext==undefined) newRuntimeContext = runtimeContext;
-				if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
-				else return loc_getUpdateLayerRuntimeContextRequest(index-1, newRuntimeContext);
-			}
-		}));
 		return out;
 	};
 
@@ -310,11 +314,12 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentCoreDecoration", function(){node_createComponentCoreDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_createDecoration = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

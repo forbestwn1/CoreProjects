@@ -153,6 +153,24 @@ var node_createStateMachineDef = function(transitInfos, commandInfos){
 			if(loc_nextsByTranistInfo==undefined)  loc_buildNextsByTransitInfo();
 			return loc_nextsByTranistInfo[transitInfo.from][transitInfo.to];
 		},
+		
+		processNext : function(currentState, next){
+			var nexts;
+			if(typeof next === 'string' || next instanceof String){
+				//if nexts parm is command string
+				var commandInfo = this.getCommandInfo(next, currentState);
+				if(commandInfo==undefined){
+					//nexts parm is target state
+					nexts = this.getNextsByTransitInfo(new node_SMTransitInfo(currentState, next));
+				}
+				else{
+					//command
+					nexts = commandInfo.nexts;
+				}
+			}
+			
+			return nexts;
+		},
 	};
 	
 	loc_init(transitInfos, commandInfos);
@@ -169,6 +187,5 @@ packageObj.createChildNode("SMTransitInfo", node_SMTransitInfo);
 packageObj.createChildNode("SMCommandInfo", node_SMCommandInfo); 
 packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef);
 packageObj.createChildNode("StateMachineTaskInfo", node_StateMachineTaskInfo);
-
 
 })(packageObj);

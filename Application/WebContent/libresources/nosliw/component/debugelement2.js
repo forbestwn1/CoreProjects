@@ -16,7 +16,6 @@ var packageObj = library.getChildPackage("debug");
 	var node_createEventObject;
 	var node_getComponentManagementInterface;
 	var node_componentUtility;
-	var node_getStateMachineDefinition;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -252,23 +251,17 @@ var node_createComponentLifeCycleDebugView = function(){
 		loc_view.empty();
 		loc_stateView = {};
 		loc_commandView = {};
-
-		
-		loc_comInterface = node_getComponentManagementInterface(component);
-		loc_stateMachineStateDef = node_getStateMachineDefinition();
 		
 		loc_lifecycle = node_getComponentLifecycleInterface(component);
 		loc_stateMachine = loc_lifecycle.getStateMachine();
 		
 		var allStatesView = $('<div>All States : </div>');
-		_.each(loc_stateMachineStateDef.getAllStates(), function(state, i){
+		_.each(loc_stateMachine.getAllStates(), function(state, i){
 			var stateView = $('<a>'+state+'</a>');
 			allStatesView.append(stateView);
 			allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
 			stateView.on('click', function(){
 				event.preventDefault();
-				
-				
 				loc_lifecycle.transit([state]);
 			});
 			loc_stateView[state] = stateView;
@@ -276,7 +269,7 @@ var node_createComponentLifeCycleDebugView = function(){
 		loc_view.append(allStatesView);
 
 		var allCommandsView = $('<div>All Commands : </div>');
-		_.each(loc_stateMachineStateDef.getAllCommands(), function(command, i){
+		_.each(loc_stateMachine.getAllCommands(), function(command, i){
 			var commandView = $('<br><a>'+command+'</a>');
 			allCommandsView.append(commandView);
 			allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
@@ -301,10 +294,10 @@ var node_createComponentLifeCycleDebugView = function(){
 		currentStateBlockView.append(currentStateView);
 		loc_view.append(stateHistoryBlockView);
 		loc_view.append(currentStateBlockView);
-		stateHistoryView.text(loc_stateMachineStateDef.getLifecycleState());
-		currentStateView.text(loc_stateMachineStateDef.getLifecycleState());
-		loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(loc_stateMachineStateDef.getLifecycleState()), loc_stateView);
-		loc_updateCandidateView(getCandidateTransits.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(loc_stateMachineStateDef.getLifecycleState()), loc_commandView);
+		stateHistoryView.text(loc_stateMachine.getCurrentState());
+		currentStateView.text(loc_stateMachine.getCurrentState());
+		loc_updateCandidateView(loc_stateMachine.getAllStates(), loc_stateMachine.getNextStateCandidates(), loc_stateView);
+		loc_updateCandidateView(loc_stateMachine.getAllCommands(), loc_stateMachine.getCommandCandidates(), loc_commandView);
 		loc_lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
 			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
 				stateHistoryView.text(stateHistoryView.text() + " -- " + loc_stateMachine.getCurrentState());
@@ -315,9 +308,9 @@ var node_createComponentLifeCycleDebugView = function(){
 			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
 				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
 			}
-			currentStateView.text(loc_stateMachineStateDef.getLifecycleState());
-			loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(loc_stateMachineStateDef.getLifecycleState()), loc_stateView);
-			loc_updateCandidateView(loc_stateMachineStateDef.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(loc_stateMachineStateDef.getLifecycleState()), loc_commandView);
+			currentStateView.text(loc_stateMachine.getCurrentState());
+			loc_updateCandidateView(loc_stateMachine.getAllStates(), loc_stateMachine.getNextStateCandidates(), loc_stateView);
+			loc_updateCandidateView(loc_stateMachine.getAllCommands(), loc_stateMachine.getCommandCandidates(), loc_commandView);
 		});
 		
 	};
@@ -350,15 +343,14 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", function(){node_getComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createPackageDebugView", node_createPackageDebugView); 
-packageObj.createChildNode("createComponentDebugView", node_createComponentDebugView); 
-packageObj.createChildNode("createComponentLifeCycleDebugView", node_createComponentLifeCycleDebugView); 
-packageObj.createChildNode("createComponentDataView", node_createComponentDataView); 
-packageObj.createChildNode("createComponentEventView", node_createComponentEventView); 
-packageObj.createChildNode("createComponentResetView", node_createComponentResetView); 
+packageObj.createChildNode("createPackageDebugView1", node_createPackageDebugView); 
+packageObj.createChildNode("createComponentDebugView1", node_createComponentDebugView); 
+packageObj.createChildNode("createComponentLifeCycleDebugView1", node_createComponentLifeCycleDebugView); 
+packageObj.createChildNode("createComponentDataView1", node_createComponentDataView); 
+packageObj.createChildNode("createComponentEventView1", node_createComponentEventView); 
+packageObj.createChildNode("createComponentResetView1", node_createComponentResetView); 
 
 })(packageObj);

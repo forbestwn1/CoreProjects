@@ -79,6 +79,10 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
+		prv_getLifecycleEntity : function(){
+			return loc_runtimeContext.lifecycleEntity;
+		},
+			
 		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 
@@ -125,10 +129,9 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return out;
 		},
 		
-		
-		
 		getLifeCycleRequest : function(transitName, handlers, request){
-			return node_getComponentLifecycleInterface(loc_out).getTransitRequest(transitName, handlers, request);
+			var task = node_componentUtility.createLifecycleTask(transitName, loc_runtimeContext.lifecycleEntity);
+			return task.getProcessRequest(handlers, request);
 		},
 		
 			
@@ -164,13 +167,13 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	loc_init(componentCore, decorationInfos, request);
 	
-	loc_out = node_makeObjectWithComponentLifecycle(loc_out, loc_lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
-	//listen to lifecycle event and update lifecycle status
-	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
-		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-			loc_lifeCycleStatus = eventData.to;
-		}
-	});
+//	loc_out = node_makeObjectWithComponentLifecycle(loc_out, loc_lifecycleCallback, loc_lifecycleTaskCallback, loc_out);
+//	//listen to lifecycle event and update lifecycle status
+//	node_getComponentLifecycleInterface(loc_out).registerEventListener(loc_eventListener, function(eventName, eventData, request){
+//		if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+//			loc_lifeCycleStatus = eventData.to;
+//		}
+//	});
 	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 

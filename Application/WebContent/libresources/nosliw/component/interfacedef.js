@@ -102,6 +102,7 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
 	var loc_rawComponentCore = rawComponentCore;
+	var loc_backupState;
 	var loc_lifecycleEntity;
 	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
@@ -129,9 +130,6 @@ var node_buildComponentCore = function(rawComponentCore){
 		//get part by id
 		getPart : function(partId){ },
 		
-		//get interface exposed
-		getInterface : function(){ return {}; },
-
 		//value by name
 		getValue : function(name){},
 		setValue : function(name, value){},
@@ -146,8 +144,8 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		//*************************state
 		//set state for the component core
-		setState : function(state){   },
-		getState : function(){    },
+//		setState : function(state){   },
+		getState : function(){   return loc_backupState;    },
 
 		getGetStateDataRequest : function(handlers, request){   },
 		getRestoreStateDataRequest : function(stateData, handlers, request){   },
@@ -182,9 +180,10 @@ var node_buildComponentCore = function(rawComponentCore){
 				runtimeContext.view = loc_debugView.getWrapperView();
 			}
 			
+			loc_lifecycleEntity = runtimeContext.lifecycleEntity;
+			loc_lifecycleEntity.setComponentCore(this);
 			
-			loc_lifecycleEntity = lifecycleEntity;
-			loc_lifecycleEntity.setComponentCore(loc_rawComponentCore);
+			loc_backupState = runtimeContext.backupState;
 			
 			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
 			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
@@ -219,11 +218,11 @@ var node_buildComponentCore = function(rawComponentCore){
 				});
 			}
 			
-			out.addRequest(loc_lifecycleEntity.getLifeCycleRequest(transitName));
+			out.addRequest(loc_rawComponentCore.getLifeCycleRequest(transitName));
 			return out;
 		},
 
-		
+		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		
 		
@@ -234,8 +233,6 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 	};
 	loc_init();
-	
-	loc_out = node_makeObjectWithComponentManagementInterface(loc_out);
 	
 	return loc_out;
 };

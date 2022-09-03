@@ -196,12 +196,12 @@ var node_createStateMachineDef = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("SMTransitInfo", node_SMTransitInfo); 
-packageObj.createChildNode("SMCommandInfo", node_SMCommandInfo); 
-packageObj.createChildNode("NextStateInfo", node_NextStateInfo); 
-packageObj.createChildNode("StateInfo", node_StateInfo);
-packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef);
-packageObj.createChildNode("StateMachineTaskInfo", node_StateMachineTaskInfo);
+packageObj.createChildNode("SMTransitInfo1", node_SMTransitInfo); 
+packageObj.createChildNode("SMCommandInfo1", node_SMCommandInfo); 
+packageObj.createChildNode("NextStateInfo1", node_NextStateInfo); 
+packageObj.createChildNode("StateInfo1", node_StateInfo);
+packageObj.createChildNode("createStateMachineDef1", node_createStateMachineDef);
+packageObj.createChildNode("StateMachineTaskInfo1", node_StateMachineTaskInfo);
 
 
 })(packageObj);

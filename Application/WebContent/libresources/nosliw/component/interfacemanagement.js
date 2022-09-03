@@ -42,6 +42,12 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 	
 	var loc_out = {
 
+		getLifecycleState : function(){
+			loc_agentObj.prv_getLifecycleEntity().getStateMachine().getCurrentState();
+		},
+		
+		
+			
 		//execute command on component
 		getExecuteCommandRequest : function(command, parms, handlers, request){
 			return loc_agentObj.getExecuteCommandRequest(command, parms, handlers, request);

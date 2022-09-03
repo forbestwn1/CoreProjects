@@ -11,7 +11,17 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_componentUtility = {
+	
+	createLifecycleTask : function(next, lifeCycleRuntimeContext){
+		var descendants = this.getAllDescendants(related);
+		var nextes = node_getStateMachineDefinition().processNext(loc_lifecycleEntity.getComponentStatus(), next);
+		return node_createStateMachineTask(nexts, descendants);
+	},
 		
+	makeNewRuntimeContext : function(oldRuntimeContext, override){
+		return _.extend({}, oldRuntimeContext, override);
+	},
+	
 	isActive : function(status){  return status==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
 
 	//process runtime configure to figure out
@@ -94,6 +104,7 @@ var node_componentUtility = {
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 

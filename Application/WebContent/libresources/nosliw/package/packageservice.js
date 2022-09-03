@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createComponentRuntime;
 	var node_componentUtility;
 	var node_createPackageCore;
+	var node_createLifeCycleRuntimeContext;
 	
 	var node_createTestComplex1Plugin;
 	var node_createTestDecoration1Plugin;
@@ -85,6 +86,9 @@ var node_createPackageRuntimeService = function() {
 			//build backup state if not provided
 			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(packageResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], packageResourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
 
+			//init lifecycle entity
+			if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("package");
+			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
 			//init package runtime
 			out.addRequest(packageRuntime.getInitRequest(runtimeContext, runtimeInterface, {
@@ -136,6 +140,7 @@ nosliw.registerSetNodeDataEvent("package.buildComplexEntityPlugInObject", functi
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createPackageCore", function(){node_createPackageCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestDecoration1Plugin", function(){node_createTestDecoration1Plugin = this.getData();});

@@ -14,9 +14,12 @@ var packageObj = library;
 	var node_createPackageDebugView;
 	var node_createConfigure;
 	var node_basicUtility;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var loc_BUNDLE_NAME = "bundle";	
+	
 var node_createPackageCore = function(resourceId, configure){
 
 	var loc_id = nosliw.generateId();
@@ -27,9 +30,14 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	
 	var loc_runtimeContext;
+	var loc_runtimeContextForBundle;
 	
 	var loc_runtimeEnv;
 
+	var loc_backupState;
+	
+	var loc_lifecycleEntity;
+	
 	var loc_parentView;
 	
 	var loc_packageDef;
@@ -86,18 +94,30 @@ var node_createPackageCore = function(resourceId, configure){
 		getDataType: function(){    return  "package";   },
 		getId : function(){  return loc_id;   },
 
+		getState : function(){   return loc_backupState;    },
+		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
+
+			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
+			loc_lifecycleEntity.setComponentCore(this);
+			
+			loc_backupState = runtimeContext.backupState;
+			
 			loc_parentView = runtimeContext.view;
 
+			loc_runtimeContextForBundle = node_componentUtility.makeNewRuntimeContext(loc_runtimeContext, {
+				lifecycleEntity : loc_lifecycleEntity.createChild(loc_BUNDLE_NAME)
+			});
+			
 			if(loc_isDebugMode()){
-				loc_runtimeContext = loc_debugView.updateRuntimeContext(loc_runtimeContext);
+				loc_runtimeContextForBundle = loc_debugView.updateRuntimeContext(loc_runtimeContextForBundle);
 			}
 			
-			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(loc_runtimeContext));
+			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(loc_runtimeContextForBundle));
 			return out;
 		},
 
@@ -107,7 +127,7 @@ var node_createPackageCore = function(resourceId, configure){
 			}
 			else{
 				if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_INIT){
-					out.addRequest(loc_mainBundleRuntime.getLifeCycleRequest(transitName));
+//					out.addRequest(loc_mainBundleRuntime.getLifeCycleRequest(transitName));
 				}
 				else if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DEACTIVE){
 				}
@@ -115,6 +135,7 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 		
+		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		
 		
@@ -129,7 +150,6 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	loc_init();
 	
-	loc_out = node_makeObjectWithComponentManagementInterface(loc_out);
 	return loc_out;
 };
 
@@ -147,6 +167,7 @@ nosliw.registerSetNodeDataEvent("package.createVariableDomain", function(){nod_c
 nosliw.registerSetNodeDataEvent("component.debug.createPackageDebugView", function(){node_createPackageDebugView = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createPackageCore", node_createPackageCore); 

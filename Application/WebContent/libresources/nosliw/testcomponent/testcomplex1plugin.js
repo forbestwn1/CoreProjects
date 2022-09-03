@@ -30,7 +30,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_id = nosliw.generateId();
 	var loc_variableGroupId = variableGroupId;
 	var loc_complexEntityDef = complexEntityDef;
-	var loc_runtimeInterface = runtimeInterface;
+	var loc_runtimeInterface;
 	var loc_bundleCore = bundleCore;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	var loc_parentView;
