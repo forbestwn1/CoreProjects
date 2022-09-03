@@ -106,14 +106,14 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	var loc_trigueEvent = function(eventName, eventData, request){	loc_eventObj.triggerEvent(eventName, eventData, request);	};
 
 	var loc_startTask = function(){
-		_.each(loc_stateMachineWrappers, function(wapper, i){
+		_.each(loc_stateMachineWrappers, function(wrapper, i){
 			var taskCallBack = wrapper.getTaskCallBack();
 			taskCallBack.startTask();
 		});
 	};
 	
 	var loc_finishTask = function(){
-		_.each(loc_stateMachineWrappers, function(wapper, i){
+		_.each(loc_stateMachineWrappers, function(wrapper){
 			var taskCallBack = wrapper.getTaskCallBack();
 			taskCallBack.finishTask();
 		});
@@ -428,5 +428,6 @@ nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function()
 
 //Register Node by Name
 packageObj.createChildNode("createStateMachine", node_createStateMachine); 
+packageObj.createChildNode("createStateMachineTask", node_createStateMachineTask); 
 
 })(packageObj);

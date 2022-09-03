@@ -227,15 +227,21 @@ var node_createComponentEventView = function(){
 
 //component lifecycle 
 var node_createComponentLifeCycleDebugView = function(){
-
-	var loc_view = $('<div></div>');
+	var loc_stateMachineStateDef;
 	
+	var loc_view = $('<div></div>');
+
+	var loc_stateHistoryView;
+	var loc_currentStateView;
+
 	var loc_stateView = {};
 	var loc_commandView = {};
 	
-	var loc_lifecycle;
-	var loc_stateMachine;
-
+	var loc_component;
+	var loc_historyText;
+	
+	var loc_currentTask;
+	
 	var loc_updateCandidateView = function(all, candidates, views){
 		if(candidates==undefined)  candidates = [];
 		_.each(all, function(ele, i){
@@ -248,17 +254,27 @@ var node_createComponentLifeCycleDebugView = function(){
 		});		
 	};
 
-	var loc_setup = function(component){
-		loc_view.empty();
-		loc_stateView = {};
-		loc_commandView = {};
-
-		
-		loc_comInterface = node_getComponentManagementInterface(component);
+	var loc_processNextRequest = function(next){
+		var comInterface = node_getComponentManagementInterface(loc_component);
+		var loc_currentTask = comInterface.createLifecycleTask(next);
+		loc_currentTask.getProcessRequest({
+			success : function(){
+				var comInterface = node_getComponentManagementInterface(loc_component);
+				loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()
+			},
+			error: function(){
+				var comInterface = node_getComponentManagementInterface(loc_component);
+				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+			},
+			exception : function(){
+				var comInterface = node_getComponentManagementInterface(loc_component);
+				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+			}
+		});
+	};
+	
+	var loc_init = function(){
 		loc_stateMachineStateDef = node_getStateMachineDefinition();
-		
-		loc_lifecycle = node_getComponentLifecycleInterface(component);
-		loc_stateMachine = loc_lifecycle.getStateMachine();
 		
 		var allStatesView = $('<div>All States : </div>');
 		_.each(loc_stateMachineStateDef.getAllStates(), function(state, i){
@@ -267,9 +283,25 @@ var node_createComponentLifeCycleDebugView = function(){
 			allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
 			stateView.on('click', function(){
 				event.preventDefault();
-				
-				
-				loc_lifecycle.transit([state]);
+				var comInterface = node_getComponentManagementInterface(loc_component);
+				var loc_currentTask = comInterface.createLifecycleTask(state, loc_component);
+				loc_currentTask.getProcessRequest({
+					success : function(){
+						var comInterface = node_getComponentManagementInterface(loc_component);
+						loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()
+						loc_updateViewContent();
+					},
+					error: function(){
+						var comInterface = node_getComponentManagementInterface(loc_component);
+						loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+						loc_updateViewContent();
+					},
+					exception : function(){
+						var comInterface = node_getComponentManagementInterface(loc_component);
+						loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+						loc_updateViewContent();
+					}
+				});
 			});
 			loc_stateView[state] = stateView;
 		});
@@ -292,34 +324,48 @@ var node_createComponentLifeCycleDebugView = function(){
 			loc_commandView[command] = commandView;
 		});
 		loc_view.append(allCommandsView);
-		
+
 		var stateHistoryBlockView = $('<div>State History : </div>');
 		var currentStateBlockView = $('<div>Current State : </div>');
-		var stateHistoryView = $('<span></span>');
-		stateHistoryBlockView.append(stateHistoryView);
-		var currentStateView = $('<span></span>');
-		currentStateBlockView.append(currentStateView);
+		loc_stateHistoryView = $('<span></span>');
+		stateHistoryBlockView.append(loc_stateHistoryView);
+		loc_currentStateView = $('<span></span>');
+		currentStateBlockView.append(loc_currentStateView);
 		loc_view.append(stateHistoryBlockView);
 		loc_view.append(currentStateBlockView);
-		stateHistoryView.text(loc_stateMachineStateDef.getLifecycleState());
-		currentStateView.text(loc_stateMachineStateDef.getLifecycleState());
-		loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(loc_stateMachineStateDef.getLifecycleState()), loc_stateView);
-		loc_updateCandidateView(getCandidateTransits.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(loc_stateMachineStateDef.getLifecycleState()), loc_commandView);
-		loc_lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
-			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-				stateHistoryView.text(stateHistoryView.text() + " -- " + loc_stateMachine.getCurrentState());
-			}
-			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
-			}
-			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
-				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
-			}
-			currentStateView.text(loc_stateMachineStateDef.getLifecycleState());
-			loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(loc_stateMachineStateDef.getLifecycleState()), loc_stateView);
-			loc_updateCandidateView(loc_stateMachineStateDef.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(loc_stateMachineStateDef.getLifecycleState()), loc_commandView);
-		});
+
+	};
+	
+	var loc_setup = function(component){
+		loc_component = component;
+		loc_historyText = node_getComponentManagementInterface(loc_component).getLifecycleState();
 		
+		loc_updateViewContent();
+
+//		loc_lifecycle.registerEventListener(undefined, function(eventName, eventData, request){
+//			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+//				stateHistoryView.text(stateHistoryView.text() + " -- " + loc_stateMachine.getCurrentState());
+//			}
+//			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+//				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
+//			}
+//			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
+//				stateHistoryView.text(stateHistoryView.text() + " XX " + loc_stateMachine.getCurrentState());
+//			}
+//			currentStateView.text(loc_comInterface.getLifecycleState());
+//			loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(loc_comInterface.getLifecycleState()), loc_stateView);
+//			loc_updateCandidateView(loc_stateMachineStateDef.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(loc_comInterface.getLifecycleState()), loc_commandView);
+//		});
+		
+	};
+	
+	var loc_updateViewContent = function(){
+		var comInterface = node_getComponentManagementInterface(loc_component);
+		
+		loc_stateHistoryView.text(loc_historyText);
+		loc_currentStateView.text(comInterface.getLifecycleState());
+		loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(comInterface.getLifecycleState()), loc_stateView);
+		loc_updateCandidateView(loc_stateMachineStateDef.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(comInterface.getLifecycleState()), loc_commandView);
 	};
 	
 	var loc_out = {
@@ -331,6 +377,7 @@ var node_createComponentLifeCycleDebugView = function(){
 		}
 	};
 	
+	loc_init();
 	return loc_out;
 };
 	

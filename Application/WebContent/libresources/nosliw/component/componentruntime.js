@@ -79,9 +79,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
-		prv_getLifecycleEntity : function(){
-			return loc_runtimeContext.lifecycleEntity;
-		},
+		prv_getLifecycleEntity : function(){	return loc_runtimeContext.lifecycleEntity;	},
 			
 		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
@@ -130,7 +128,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
-			var task = node_componentUtility.createLifecycleTask(transitName, loc_runtimeContext.lifecycleEntity);
+			var task = node_componentUtility.createLifecycleTask(transitName, this);
 			return task.getProcessRequest(handlers, request);
 		},
 		

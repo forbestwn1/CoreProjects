@@ -107,7 +107,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 		
 		getStateMachine : function(){
 			if(loc_lifecycleEntity!=undefined)		return loc_lifecycleEntity.getStateMachine();
-			else		return loc_getDumyStateMachine;
+			else		return loc_getDumyStateMachine();
 		},
 		
 		getTaskCallBack : function(){  return loc_lifecycleEntity==undefined?undefined:loc_lifecycleEntity.getTaskCallBack();  },
