@@ -136,13 +136,15 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 
 	var loc_stateMachine;
 
+	var loc_backupState = loc_componentCoreComplex.getState();
+	
 	//state
-	var loc_componentState = node_createComponentState(loc_componentCoreComplex.getState(), 
+	var loc_componentState = node_createComponentState(loc_backupState, 
 		function(handlers, request){
-			return loc_componentCoreComplex.getGetStateDataRequest(handlers, request);
+			return loc_componentCoreComplex.getGetStateDataRequest==undefined?undefined:loc_componentCoreComplex.getGetStateDataRequest(handlers, request);
 		},
 		function(stateData, handlers, request){
-			return loc_componentCoreComplex.getRestoreStateDataRequest(stateData, handlers, request);
+			return loc_componentCoreComplex.getRestoreStateDataRequest==undefined?undefined:loc_componentCoreComplex.getRestoreStateDataRequest(stateData, handlers, request);
 		}
 	);
 
@@ -203,12 +205,12 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 			loc_stateMachine.registerTransitCallBack(transit, 
 				function(){
 					var fun = lifecycleCallback[transit.from+"_"+transit.to];
-					if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
+					if(fun!=undefined)   return fun.apply(loc_componentCoreComplex, arguments);
 					else  return true;
 				}, 
 				function(){
 					var fun = lifecycleCallback["_"+transit.from+"_"+transit.to];
-					if(fun!=undefined)   return fun.apply(loc_thisContext, arguments);
+					if(fun!=undefined)   return fun.apply(loc_componentCoreComplex, arguments);
 					else  return true;
 				});
 		});

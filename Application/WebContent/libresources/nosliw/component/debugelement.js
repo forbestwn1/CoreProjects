@@ -284,8 +284,8 @@ var node_createComponentLifeCycleDebugView = function(){
 			stateView.on('click', function(){
 				event.preventDefault();
 				var comInterface = node_getComponentManagementInterface(loc_component);
-				var loc_currentTask = comInterface.createLifecycleTask(state, loc_component);
-				loc_currentTask.getProcessRequest({
+				loc_currentTask = comInterface.createLifecycleTask(state, loc_component);
+				loc_currentTask.executeProcessRequest({
 					success : function(){
 						var comInterface = node_getComponentManagementInterface(loc_component);
 						loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()

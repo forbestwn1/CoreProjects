@@ -14,6 +14,8 @@ var packageObj = library;
 	var node_ServiceRequestExecuteInfo;
 	var node_buildServiceProvider;
 	var node_RequestResult;
+	var node_requestServiceProcessor;
+	var node_SMTransitInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -49,9 +51,9 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 			loc_results = [];
 			loc_failData = [];
 			loc_finalResult = true;
-			_.each(loc_stateMachineWrappers, function(wapper, i){
+			_.each(loc_stateMachineWrappers, function(wrapper, i){
 				var stateMachine = wrapper.getStateMachine();
-				var stateMachineId = wapper.getId();
+				var stateMachineId = wrapper.getId();
 				
 				var listener = stateMachine.registerEventListener(undefined, function(eventName, eventData, request){
 					stateMachine.unregisterEventListener(listener);
@@ -65,7 +67,7 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 						loc_finalResult = false;
 					}
 					
-					if(loc_results.length()==loc_stateMachineWrappers.length()){
+					if(loc_results.length==loc_stateMachineWrappers.length){
 						//when all statemachine done, 
 						if(loc_finalResult==true){
 							//all success, move to next transit
@@ -115,48 +117,52 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	var loc_finishTask = function(){
 		_.each(loc_stateMachineWrappers, function(wrapper){
 			var taskCallBack = wrapper.getTaskCallBack();
-			taskCallBack.finishTask();
+			taskCallBack.endTask();
 		});
 	};
 	
 	var loc_out = {
 			
-			process : function(request){
-				loc_startTask();
-				var request = loc_out.getRequestInfo(request);
-				loc_processNext(request);
-				return request;
-			},
-			
-			getProcessRequest : function(handlers, request){
-				loc_startTask();
-				var request = loc_out.getRequestInfo(request);
-				var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
-				out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
-					var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, eventRequest){
-						if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
-							out.successFinish();
-						}
-						else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
-							if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_ERROR) 	out.errorFinish(eventData.data);
-							else if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION) 	out.exceptionFinish(eventData.data);
-							else out.errorFinish();
-						}
-						loc_out.unregisterEventListener(listener);
-					});
-
-					loc_processNext(request);
-				}));
-				return out;
-			},
-			
-			registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
-			unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
-		};
+		process : function(request){
+			loc_startTask();
+			var request = loc_out.getRequestInfo(request);
+			loc_processNext(request);
+			return request;
+		},
 		
-		loc_out = node_buildServiceProvider(loc_out, "stateMachineTask");
+		getProcessRequest : function(handlers, request){
+			loc_startTask();
+			var request = loc_out.getRequestInfo(request);
+			var out = node_createServiceRequestInfoCommon(undefined, handlers, request);
+			out.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(request){
+				var listener = loc_out.registerEventListener(undefined, function(eventName, eventData, eventRequest){
+					if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+						out.successFinish();
+					}
+					else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+						if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_ERROR) 	out.errorFinish(eventData.data);
+						else if(eventData.type==node_CONSTANT.REQUEST_FINISHTYPE_EXCEPTION) 	out.exceptionFinish(eventData.data);
+						else out.errorFinish();
+					}
+					loc_out.unregisterEventListener(listener);
+				});
 
-		return loc_out;
+				loc_processNext(request);
+			}));
+			return out;
+		},
+		
+		executeProcessRequest : function(handlers, request){
+			node_requestServiceProcessor.processRequest(this.getProcessRequest(handlers, request));
+		},
+		
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventObj.registerListener(undefined, listener, handler, thisContext); },
+		unregisterEventListener : function(listener){	return loc_eventObj.unregister(listener); },
+	};
+	
+	loc_out = node_buildServiceProvider(loc_out, "stateMachineTask");
+
+	return loc_out;
 };
 
 var node_createStateMachine = function(initState, thisContext){
@@ -214,7 +220,7 @@ var node_createStateMachine = function(initState, thisContext){
 		//do tranist
 		loc_inTransit = new node_SMTransitInfo(loc_currentState, next); 
 		
-		var callBackInfo = loc_getCallBackInfoForTransit(loc_currentState)
+		var callBackInfo = loc_getCallBackInfoForTransit(loc_inTransit.from, loc_inTransit.to)
 		var callBack = callBackInfo==undefined?undefined:callBackInfo.callBack;
 		var transitResult = true;      
 		if(callBack!=undefined)	transitResult = callBack.call(loc_thisContext, request);
@@ -421,10 +427,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon"
 nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){	node_ServiceRequestExecuteInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("request.entity.RequestResult", function(){node_RequestResult = this.getData();});
-
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.SMTransitInfo", function(){node_SMTransitInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.SMCommandInfo", function(){node_SMCommandInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();}); 
 
 //Register Node by Name
 packageObj.createChildNode("createStateMachine", node_createStateMachine); 
