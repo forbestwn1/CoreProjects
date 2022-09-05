@@ -20,6 +20,8 @@ var packageObj = library;
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
 var node_createComponentCoreComplex = function(componentCore, decorationInfos){
+
+	var loc_runtimeContext;
 	
 	var loc_interfaceEnv;
 	
@@ -66,6 +68,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	//process runtime context from top layer to bottom layer
 	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext, handlers, request){
+		loc_runtimeContext = runtimeContext;
 		loc_backupState = runtimeContext.backupState;
 		loc_lifecycleEntity = runtimeContext.lifecycleEntity;
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInCoreComplex", {}), handlers, request);
@@ -232,6 +235,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			});
 			return out;
 		},
+		
+		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		addDecoration : function(decorationInfo){		loc_addDecoration(decorationInfo);		},
 

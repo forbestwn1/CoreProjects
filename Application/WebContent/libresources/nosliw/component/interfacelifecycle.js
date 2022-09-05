@@ -87,7 +87,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 	var loc_children = {};
 	
 	var loc_getDumyStateMachine = function(){
-		if(loc_dumyStateMachine==undefined)		loc_dumyStateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT);
+		if(loc_dumyStateMachine==undefined)		loc_dumyStateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, undefined, nosliw.generateId());
 		return loc_dumyStateMachine;
 	};
 	
@@ -95,7 +95,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 		
 		prv_getAllDescendants : function(outArray){ 
 			//only with lifecycle entity
-			if(loc_lifecycleEntity!=undefined)	outArray.push(this);
+			outArray.push(this);
 			_.each(loc_children, function(child){
 				child.prv_getAllDescendants(outArray);
 			});
@@ -136,10 +136,8 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 
 	var loc_stateMachine;
 
-	var loc_backupState = loc_componentCoreComplex.getState();
-	
 	//state
-	var loc_componentState = node_createComponentState(loc_backupState, 
+	var loc_componentState = node_createComponentState(loc_componentCoreComplex.getState(), 
 		function(handlers, request){
 			return loc_componentCoreComplex.getGetStateDataRequest==undefined?undefined:loc_componentCoreComplex.getGetStateDataRequest(handlers, request);
 		},
@@ -156,7 +154,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_ACTIVE] = function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ActiveComponentRuntime", {}), undefined, request);
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				var backupStateData = loc_backupState.getStateValue(request);
+				var backupStateData = loc_componentCoreComplex.getState().getStateValue(request);
 				if(backupStateData!=undefined){
 					//have backup state, then do backup only
 					//only call lifecycle, not process
@@ -196,7 +194,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 		
 		
 		//build statemachine, start with init status
-		loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_componentCoreComplex);
+		loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_componentCoreComplex, nosliw.generateId());
 		//register callback
 		//state transit callback method name follow naming conversion: from_to  or  _from_to for reverse 
 		_.each(node_getStateMachineDefinition().getAllTransits(), function(transit, i){	
@@ -266,7 +264,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 	};
 	
 	var loc_clearBackupState = function(request){
-		loc_backupState.clear(request);
+		loc_componentCoreComplex.getState().clear(request);
 	};
 
 	var loc_out = {

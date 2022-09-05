@@ -44,7 +44,7 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 	var loc_out = {
 
 		getLifecycleState : function(){
-			return loc_agentObj.prv_getLifecycleEntity().getStateMachine().getCurrentState();
+			return loc_agentObj.getLifecycleEntity().getStateMachine().getCurrentState();
 		},
 		
 		createLifecycleTask : function(transit){

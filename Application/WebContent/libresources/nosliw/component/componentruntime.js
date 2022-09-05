@@ -35,8 +35,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	//interface env for access to external env
 	var loc_interfaceEnv;
 	
-	var loc_runtimeContext;
-	
 	var loc_componentCoreComplex;
 
 	var loc_lifeCycleStatus;
@@ -79,7 +77,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
-		prv_getLifecycleEntity : function(){	return loc_runtimeContext.lifecycleEntity;	},
+		getLifecycleEntity : function(){	return loc_componentCoreComplex.getLifecycleEntity();	},
 			
 		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
@@ -88,7 +86,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 				success : function(request){
 					return loc_componentCoreComplex.getUpdateRuntimeInterfaceRequest(runtimeInterface, {
 						success : function(request){
-							loc_runtimeContext = runtimeContext;
 							return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
 									return loc_componentCoreComplex.getPostInitRequest();
@@ -110,8 +107,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInComponentRuntime", {}), handlers, request);
-			loc_runtimeContext = runtimeContext;
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(loc_runtimeContext));
+			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext));
 			return out;
 		},
 

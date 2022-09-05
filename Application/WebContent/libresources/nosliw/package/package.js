@@ -32,12 +32,10 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_runtimeContext;
 	var loc_runtimeContextForBundle;
 	
-	var loc_runtimeEnv;
-
-	var loc_backupState;
-	
 	var loc_lifecycleEntity;
 	
+	var loc_runtimeEnv;
+
 	var loc_parentView;
 	
 	var loc_packageDef;
@@ -101,11 +99,7 @@ var node_createPackageCore = function(resourceId, configure){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
-
 			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
-			loc_lifecycleEntity.setComponentCore(this);
-			
-			loc_backupState = runtimeContext.backupState;
 			
 			loc_parentView = runtimeContext.view;
 
@@ -135,7 +129,6 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 		
-		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		
 		

@@ -14,7 +14,7 @@ var packageObj = library;
 var node_componentUtility = {
 	
 	createLifecycleTask : function(next, component){
-		var lifecycleEntity = component.prv_getLifecycleEntity();
+		var lifecycleEntity = component.getLifecycleEntity();
 		var descendants = lifecycleEntity.getAllDescendants();
 		var nexts = node_getStateMachineDefinition().processNext(lifecycleEntity.getStateMachine().getCurrentState(), next);
 		return node_createStateMachineTask(nexts, descendants);

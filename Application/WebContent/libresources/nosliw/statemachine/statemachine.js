@@ -110,14 +110,14 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	var loc_startTask = function(){
 		_.each(loc_stateMachineWrappers, function(wrapper, i){
 			var taskCallBack = wrapper.getTaskCallBack();
-			taskCallBack.startTask();
+			if(taskCallBack!=undefined)  taskCallBack.startTask();
 		});
 	};
 	
 	var loc_finishTask = function(){
 		_.each(loc_stateMachineWrappers, function(wrapper){
 			var taskCallBack = wrapper.getTaskCallBack();
-			taskCallBack.endTask();
+			if(taskCallBack!=undefined)  taskCallBack.endTask();
 		});
 	};
 	
@@ -165,8 +165,10 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	return loc_out;
 };
 
-var node_createStateMachine = function(initState, thisContext){
+var node_createStateMachine = function(initState, thisContext, id){
 
+	var loc_id = id;
+	
 	//static infor, all the state definition
 //	var loc_stateDef = stateDef;
 	
@@ -338,7 +340,9 @@ var node_createStateMachine = function(initState, thisContext){
 	};
 
 	var loc_out = {
-			
+		
+		getId : function(){   return loc_id;    },
+		
 		startTransit : function(next, request){  loc_startTransit(next, request);    },	
 		prv_getRollBackRequest : function(next, request){  return loc_getRollBackRequest(new node_SMTransitInfo(next, loc_currentState), request);    },
 
@@ -411,6 +415,8 @@ var node_createStateMachine = function(initState, thisContext){
 //		},
 		
 	};
+	
+	loc_out.id = loc_id;
 	return loc_out;
 };	
 	
