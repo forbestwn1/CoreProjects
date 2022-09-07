@@ -226,6 +226,10 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
 	var loc_out = {
 		
+		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
+		
+		getBackupState : function(){   return loc_backupState;   },
+			
 		getCore : function(){   return loc_getCore();    },
 			
 		getDecorations : function(){  
@@ -235,8 +239,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			});
 			return out;
 		},
-		
-		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		addDecoration : function(decorationInfo){		loc_addDecoration(decorationInfo);		},
 

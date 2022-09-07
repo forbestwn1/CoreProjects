@@ -152,6 +152,8 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		
 		//get state value by name
 		getValue : function(path, request){	
+			if(request==undefined)   return loc_state.getValue(path);
+			
 			var rootRequest = request.getRootRequest();
 			var requestId = rootRequest.getId();
 			if(loc_requesters[requestId]==undefined){

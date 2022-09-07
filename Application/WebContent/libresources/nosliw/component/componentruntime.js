@@ -78,7 +78,9 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	var loc_out = {
 
 		getLifecycleEntity : function(){	return loc_componentCoreComplex.getLifecycleEntity();	},
-			
+		
+		getBackupState : function(){  return loc_componentCoreComplex.getBackupState();	},
+		
 		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
 

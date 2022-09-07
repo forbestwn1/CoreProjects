@@ -7,19 +7,11 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createConfigure;
 	var node_basicUtility;
-	var node_createStateMachineTask;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_componentUtility = {
 	
-	createLifecycleTask : function(next, component){
-		var lifecycleEntity = component.getLifecycleEntity();
-		var descendants = lifecycleEntity.getAllDescendants();
-		var nexts = node_getStateMachineDefinition().processNext(lifecycleEntity.getStateMachine().getCurrentState(), next);
-		return node_createStateMachineTask(nexts, descendants);
-	},
-		
 	makeNewRuntimeContext : function(oldRuntimeContext, override){
 		return _.extend({}, oldRuntimeContext, override);
 	},
@@ -108,7 +100,6 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("statemachine.createStateMachineTask", function(){node_createStateMachineTask = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("componentUtility", node_componentUtility); 

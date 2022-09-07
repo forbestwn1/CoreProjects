@@ -89,8 +89,6 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		getDataType: function(){    return  "bundle";   },
 		getId : function(){  return loc_id;   },
 
-		getState : function(){   return loc_backupState;    },
-		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){

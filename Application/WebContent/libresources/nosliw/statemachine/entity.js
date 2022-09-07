@@ -25,6 +25,13 @@ var node_SMTransitInfo = function(from, to){
 	this.to = to;  		//to state
 };
 
+var node_SMTransitDefinition = function(from, to, expose){
+	this.from = from;   //from state
+	this.to = to;  		//to state
+	this.expose = expose==undefined?true:expose;
+};
+
+
 //state machine state definition
 var node_createStateMachineDef = function(transitInfos, commandInfos){
 	var loc_transitInfos = transitInfos;
@@ -49,17 +56,17 @@ var node_createStateMachineDef = function(transitInfos, commandInfos){
 		byName[commandInfo.from] = commandInfo;
 	};
 	
-	var loc_addTransit = function(transitInfo){
-		var byFrom = loc_transits[transitInfo.from];
+	var loc_addTransit = function(transitDef){
+		var byFrom = loc_transits[transitDef.from];
 		if(byFrom==undefined){
-			byFrom = [];
-			loc_transits[transitInfo.from] = byFrom;
+			byFrom = {};
+			loc_transits[transitDef.from] = byFrom;
 		}
-		byFrom.push(transitInfo.to);
+		byFrom[transitDef.to] = transitDef;
 	};
 
-	var loc_getNextCandidateStates = function(state){
-		return loc_transits[state];
+	var loc_getNextCandidateStates = function(from){
+		return loc_transits[from];
 	};
 
 	var loc_getNextCandidateCommands = function(state){
@@ -85,9 +92,9 @@ var node_createStateMachineDef = function(transitInfos, commandInfos){
 		});
 		
 		//by state
-		_.each(loc_transits, function(tos, from){
-			_.each(tos, function(to){
-				loc_addNextsByTransit(from, to, [to]);
+		_.each(loc_transits, function(byTo, from){
+			_.each(byTo, function(transitDef, to){
+				loc_addNextsByTransit(transitDef.from, transitDef.to, [transitDef.to]);
 			});
 		});
 	};
@@ -123,7 +130,7 @@ var node_createStateMachineDef = function(transitInfos, commandInfos){
 		isTransitValid : function(from, to){
 			var byTo = loc_transits[from];
 			if(byTo==undefined)  return false;
-			if(byTo[to==undefined])   return false;
+			if(byTo[to]==undefined)   return false;
 			return true;
 		},
 		
@@ -185,6 +192,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 //Register Node by Name
 packageObj.createChildNode("SMTransitInfo", node_SMTransitInfo); 
 packageObj.createChildNode("SMCommandInfo", node_SMCommandInfo); 
+packageObj.createChildNode("SMTransitDefinition", node_SMTransitDefinition); 
 packageObj.createChildNode("createStateMachineDef", node_createStateMachineDef);
 packageObj.createChildNode("StateMachineTaskInfo", node_StateMachineTaskInfo);
 

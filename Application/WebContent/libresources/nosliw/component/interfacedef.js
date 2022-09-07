@@ -143,9 +143,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getInterfaceExecutable : function(interfaceName){   return loc_rawComponentCore.getInterfaceExecutable!=undefined?loc_rawComponentCore.getInterfaceExecutable(interfaceName):undefined;    },
 		
 		//*************************state
-		//set state for the component core
-//		setState : function(state){   },
-		getState : function(){   return loc_backupState;    },
+		getBackupState : function(){   return loc_backupState;    },
 
 		getGetStateDataRequest : function(handlers, request){   },
 		getRestoreStateDataRequest : function(stateData, handlers, request){   },

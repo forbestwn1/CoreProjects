@@ -27,7 +27,7 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 
 	var loc_stateMachineWrappers = stateMachineWrappers;
 
-	var loc_nexts = nexts;
+	var loc_nexts = [];
 	_.each(nexts, function(next, i){loc_nexts.push(next);});
 	
 	var loc_eventObj = node_createEventObject();
@@ -41,7 +41,6 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 
 	//process one next
 	var loc_processNext = function(request){
-		loc_currentNext++;
 		if(loc_currentNext>=loc_nexts.length){
 			//finish successfully
 			loc_finishTask();
@@ -89,6 +88,7 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 				stateMachine.startTransit(loc_nexts[loc_currentNext], request);
 			});
 		}
+		loc_currentNext++;
 	};
 
 	//roll back task

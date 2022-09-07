@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createComponentManagementInterfaceDelegateObject;
 	var node_componentUtility;
+	var node_createLifecycleTask;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //interface for manage component by debug tool
@@ -47,8 +48,8 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 			return loc_agentObj.getLifecycleEntity().getStateMachine().getCurrentState();
 		},
 		
-		createLifecycleTask : function(transit){
-			return node_componentUtility.createLifecycleTask(transit, loc_agentObj);
+		createLifecycleTask : function(next, request){
+			return node_createLifecycleTask(next, loc_agentObj, request);
 		},
 		
 			
@@ -98,7 +99,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentManagementInterfaceDelegateObject", function(){node_createComponentManagementInterfaceDelegateObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
-
+nosliw.registerSetNodeDataEvent("component.createLifecycleTask", function(){node_createLifecycleTask = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithComponentManagementInterface", node_makeObjectWithComponentManagementInterface); 

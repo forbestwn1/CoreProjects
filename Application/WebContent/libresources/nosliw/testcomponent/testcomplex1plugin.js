@@ -84,6 +84,16 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			return out;
 		},
 
+		getPostInitRequest : function(handlers, request){
+		},
+
+		//lifecycle handler
+		getLifeCycleRequest : function(transitName, handlers, request){
+			if(!transitName.startsWith("_")){
+				var k = aaa.bbb.ccc;
+			}
+		},
+		
 		
 		
 		//execute command
@@ -107,8 +117,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getValue : function(name){},
 		setValue : function(name, value){},
 		
-		//lifecycle handler
-		getLifeCycleRequest : function(transitName, handlers, request){},
 		setLifeCycleStatus : function(status){},
 		
 		//call back when core embeded into runtime during init phase

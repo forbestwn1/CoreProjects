@@ -284,7 +284,7 @@ var node_createComponentLifeCycleDebugView = function(){
 			stateView.on('click', function(){
 				event.preventDefault();
 				var comInterface = node_getComponentManagementInterface(loc_component);
-				loc_currentTask = comInterface.createLifecycleTask(state, loc_component);
+				loc_currentTask = comInterface.createLifecycleTask(state);
 				loc_currentTask.executeProcessRequest({
 					success : function(){
 						var comInterface = node_getComponentManagementInterface(loc_component);
@@ -364,7 +364,16 @@ var node_createComponentLifeCycleDebugView = function(){
 		
 		loc_stateHistoryView.text(loc_historyText);
 		loc_currentStateView.text(comInterface.getLifecycleState());
-		loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), loc_stateMachineStateDef.getCandidateTransits(comInterface.getLifecycleState()), loc_stateView);
+		
+		var byTos = loc_stateMachineStateDef.getCandidateTransits(comInterface.getLifecycleState());
+		var candidates = [];
+		_.each(byTos, function(transitDef, to){
+			if(transitDef.expose==true){
+				candidates.push(to);
+			}
+		});
+		loc_updateCandidateView(loc_stateMachineStateDef.getAllStates(), candidates, loc_stateView);
+
 		loc_updateCandidateView(loc_stateMachineStateDef.getAllCommands(), loc_stateMachineStateDef.getCandidateCommands(comInterface.getLifecycleState()), loc_commandView);
 	};
 	
