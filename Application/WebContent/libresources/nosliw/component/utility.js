@@ -15,7 +15,14 @@ var node_componentUtility = {
 	makeNewRuntimeContext : function(oldRuntimeContext, override){
 		return _.extend({}, oldRuntimeContext, override);
 	},
-	
+
+	makeChildRuntimeContext : function(currentRuntimeContext, childPath, childComponent){
+		return this.makeNewRuntimeContext(currentRuntimeContext, {
+			backupState : currentRuntimeContext.backupState.createChildState(childPath),
+			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childComponent.getId())
+		}); 
+	},
+
 	isActive : function(status){  return status==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },
 
 	//process runtime configure to figure out

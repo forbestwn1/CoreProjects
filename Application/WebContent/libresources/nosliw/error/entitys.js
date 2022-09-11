@@ -35,6 +35,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 
 //Register Node by Name
 packageObj.createChildNode("ServiceData", node_ServiceData); 
+packageObj.createChildNode("createErrorData", node_createErrorData); 
 
 })(packageObj);
 

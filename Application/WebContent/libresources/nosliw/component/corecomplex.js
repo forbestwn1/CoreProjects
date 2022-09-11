@@ -21,6 +21,8 @@ var packageObj = library;
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
 var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
+	var loc_id = nosliw.generateId();
+
 	var loc_runtimeContext;
 	
 	var loc_interfaceEnv;
@@ -45,6 +47,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_init = function(componentCore, decorationInfos){
 		var coreLayer = node_buildComponentCore(componentCore);
+		coreLayer.setId(loc_id + "." + nosliw.generateId());
 		loc_addLayer(coreLayer);	
 
 		for(var i in decorationInfos){  
@@ -81,10 +84,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		//id for this layer
 		var layerId = index + "";
 		//runtime context for this layer
-		var runtimeContext = node_componentUtility.makeNewRuntimeContext(upperRuntimeContext, {
-			backupState : loc_backupState.createChildState(layerId),
-			lifecycleEntity : loc_lifecycleEntity.createChild(layerId)
-		}); 
+		var runtimeContext = node_componentUtility.makeChildRuntimeContext(upperRuntimeContext, layerId, loc_layers[index]); 
+
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
 		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
 			success : function(request, newRuntimeContext){
@@ -226,6 +227,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
 	var loc_out = {
 		
+		getId : function(){  return loc_id;  },
+			
 		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
 		
 		getBackupState : function(){   return loc_backupState;   },

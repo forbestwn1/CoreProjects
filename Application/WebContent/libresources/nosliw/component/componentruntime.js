@@ -77,6 +77,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 	var loc_out = {
 
+		getId : function(){   return loc_componentCoreComplex.getId();  },
+			
 		getLifecycleEntity : function(){	return loc_componentCoreComplex.getLifecycleEntity();	},
 		
 		getBackupState : function(){  return loc_componentCoreComplex.getBackupState();	},

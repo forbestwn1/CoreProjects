@@ -23,7 +23,7 @@ var loc_MAIN_NAME = "main";
 	
 var node_createBundleCore = function(globalComplexEntitId, configure){
 
-	var loc_id = nosliw.generateId();
+	var loc_id;
 	
 	var loc_globalComplexEntitId = globalComplexEntitId;
 	
@@ -57,8 +57,14 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		if("true"==debugConf){
 			//debug mode
 			loc_debugMode = true;
+		}
+	};
+	
+	var loc_getDebugView = function(){
+		if(loc_debugView==undefined){
 			loc_debugView = node_createPackageDebugView("Bundle: "+loc_out.getDataType()+"_"+loc_out.getId(), "purple");
 		}
+		return loc_debugView;
 	};
 	
 	var loc_isDebugMode = function(){
@@ -88,6 +94,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 		getDataType: function(){    return  "bundle";   },
 		getId : function(){  return loc_id;   },
+		setId : function(id){   loc_id = id;    },
 
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
@@ -99,13 +106,10 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 			
 			loc_parentView = runtimeContext.view;
 			
-			loc_runtimeContextForMain = node_componentUtility.makeNewRuntimeContext(loc_runtimeContext, {
-				backupState : loc_backupState.createChildState(loc_MAIN_NAME),
-				lifecycleEntity : loc_lifecycleEntity.createChild(loc_MAIN_NAME)
-			});
-			
+			loc_runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_MAIN_NAME, loc_mainComplexEntity); 
+
 			if(loc_isDebugMode()){
-				loc_runtimeContextForMain = loc_debugView.updateRuntimeContext(loc_runtimeContextForMain);
+				loc_runtimeContextForMain = loc_getDebugView().updateRuntimeContext(loc_runtimeContextForMain);
 			}
 
 			out.addRequest(loc_mainComplexEntity.getUpdateRuntimeContextRequest(loc_runtimeContextForMain));

@@ -28,19 +28,73 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	var loc_stateMachineWrappers = stateMachineWrappers;
 
 	var loc_nexts = [];
+	loc_nexts.push(loc_stateMachineWrappers[0].getStateMachine().getCurrentState());
 	_.each(nexts, function(next, i){loc_nexts.push(next);});
 	
 	var loc_eventObj = node_createEventObject();
 	
-	//next result
-	var loc_results = [];
-	var loc_failData = [];
-	var loc_finalResult = true;
-	
-	var loc_currentNext = 0;
+	var loc_currentNext = 1;
+	var loc_currentStateMachine = 0;
 
-	//process one next
 	var loc_processNext = function(request){
+		if(loc_currentNext>=loc_nexts.length){
+			//finish successfully
+			loc_finishTask();
+			loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, undefined, request);
+		}
+		else{
+			loc_currentStateMachine = 0;
+			loc_processStateMachine(request);
+		}
+	};
+	
+	var loc_processStateMachine = function(request){
+		var wrapper = loc_stateMachineWrappers[loc_currentStateMachine];
+	
+		var stateMachine = wrapper.getStateMachine();
+		var stateMachineId = wrapper.getId();
+		
+		var listener = stateMachine.registerEventListener(undefined, function(eventName, eventData, request){
+			stateMachine.unregisterEventListener(listener);
+			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+				//one state machine transit success 
+				loc_currentStateMachine++;
+				if(loc_currentStateMachine==loc_stateMachineWrappers.length){
+					//when all statemachine done success,
+					loc_currentNext++;
+					loc_processNext(request);
+				}
+				else{
+					//process next state machine
+					loc_processStateMachine(request);
+				}
+			}
+			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION || eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_NOTRANSITION){
+				var rollbackRequest = node_createServiceRequestInfoSequence(undefined, {}, request); 
+				//roll back state machine in current next
+				for(var i=0; i<loc_currentStateMachine; i++){
+					rollbackRequest.addRequest(loc_stateMachineWrappers[i].getStateMachine().prv_getRollBackRequest(loc_nexts[loc_currentNext-1]));
+				}
+				
+				//roll back nexts
+				rollbackRequest.addRequest(loc_getRollBackNextRequest({
+					success : function(request){
+						//finish fail
+						loc_finishTask();
+						loc_trigueEvent(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, eventData, request);
+					}
+				}));
+
+				node_requestServiceProcessor.processRequest(rollbackRequest);
+			}
+			
+		});
+		stateMachine.startTransit(loc_nexts[loc_currentNext], request);
+	};
+	
+	
+	//process one next
+	var loc_processNext1 = function(request){
 		if(loc_currentNext>=loc_nexts.length){
 			//finish successfully
 			loc_finishTask();
@@ -92,9 +146,10 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 	};
 
 	//roll back task
-	var loc_getRollBackRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request); 
-		while(loc_currentNext>=0){
+	var loc_getRollBackNextRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		loc_currentNext--;
+		while(loc_currentNext>=1){
 			_.each(loc_stateMachineWrappers, function(wapper, i){
 				var stateMachine = wrapper.getStateMachine();
 				var stateMachineId = wapper.getId();
@@ -344,7 +399,21 @@ var node_createStateMachine = function(initState, thisContext, id){
 		getId : function(){   return loc_id;    },
 		
 		startTransit : function(next, request){  loc_startTransit(next, request);    },	
-		prv_getRollBackRequest : function(next, request){  return loc_getRollBackRequest(new node_SMTransitInfo(next, loc_currentState), request);    },
+		prv_getRollBackRequest : function(next, handlers, request){  
+			//mark as during transit
+			loc_finishTransit = false;
+			
+			//do tranist
+			loc_inTransit = new node_SMTransitInfo(loc_currentState, next); 
+			
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getRollBackRequest(new node_SMTransitInfo(next, loc_currentState), {
+				success : function(request){
+					loc_successTransit(request);
+				}
+			})); 
+			return out;
+		},
 
 		//method to finish transit
 		prv_transitSuccess : function(request){   loc_successTransit(request);	},
@@ -366,53 +435,6 @@ var node_createStateMachine = function(initState, thisContext, id){
 		},
 		
 		getCurrentState : function(){	return loc_currentState;	},
-		
-		
-		
-		
-//		getAllStates : function(){  return loc_stateDef.getAllStates();   },
-//		getNextStateCandidates : function(){  return loc_stateDef.getCandidateTransits(loc_out.getCurrentState());   },
-//		
-//		getAllCommands : function(){  return loc_stateDef.getAllCommands();  },
-//		getCommandCandidates : function(){   return loc_stateDef.getCandidateCommands(loc_out.getCurrentState());   },
-//
-//		newTask : function(next){
-//			if(loc_currentTask!=undefined)  return undefined;
-//			
-//			var nexts = [];
-//			if(Array.isArray(next))  nexts = next;
-//			else nexts.push(next);
-//
-//			var transferSequence = [];
-//			_.each(nexts, function(next, i){
-//				loc_buildTransitSequence(transferSequence, next);
-//			});
-//
-//			loc_currentTask = node_createStateMachineTask(transferSequence, loc_out);
-//			if(loc_taskCallback.startTask!=undefined)    loc_taskCallback.startTask();
-//			
-//			return loc_currentTask;
-//		},
-//
-//		newTask1 : function(nexts){
-//			if(loc_currentTask!=undefined)  return undefined;
-//			if(typeof nexts === 'string' || nexts instanceof String){
-//				//if nexts parm is command string
-//				var commandInfo = loc_stateDef.getCommandInfo(nexts, loc_currentState);
-//				if(commandInfo==undefined){
-//					//nexts parm is target state
-//					nexts = loc_stateDef.getNextsByTransitInfo(new node_SMTransitInfo(loc_currentState, nexts));
-//				}
-//				else{
-//					//command
-//					nexts = commandInfo.nexts;
-//				}
-//			}
-//			loc_currentTask = node_createStateMachineTask(nexts, loc_out);
-//			if(loc_taskCallback.startTask!=undefined)    loc_taskCallback.startTask();
-//			
-//			return loc_currentTask;
-//		},
 		
 	};
 	

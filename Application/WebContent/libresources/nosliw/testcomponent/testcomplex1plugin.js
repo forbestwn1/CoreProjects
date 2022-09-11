@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createConfigure;
+	var node_createErrorData;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,7 +28,6 @@ var node_createTestComplex1Plugin = function(){
 };
 
 var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
-	var loc_id = nosliw.generateId();
 	var loc_variableGroupId = variableGroupId;
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_runtimeInterface;
@@ -41,7 +41,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_out = {
 
 		getDataType: function(){    return  "testComplex1";   },
-		getId : function(){  return loc_id;   },
 		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
 		
@@ -90,6 +89,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
+//				return node_createErrorData();
 				var k = aaa.bbb.ccc;
 			}
 		},
@@ -146,6 +146,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

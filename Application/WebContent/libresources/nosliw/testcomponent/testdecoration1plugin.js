@@ -26,7 +26,7 @@ var node_createTestDecoration1Plugin = function(){
 var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var loc_complexEntityDef = complexEntityDef;
 	
-	var loc_id = nosliw.generateId();
+	var loc_id;
 	
 	var loc_parentView;
 	var loc_mainView;
@@ -37,6 +37,7 @@ var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variable
 
 		getDataType: function(){    return  "testDecoration1";   },
 		getId : function(){  return loc_id;   },
+		setId : function(id){   loc_id = id;   },
 		getConfigure : function(){   return loc_configure;    },
 		
 		

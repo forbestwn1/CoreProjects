@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoError;
 	var node_createStateMachine;
 	var node_createStateMachineDef;
 	var node_SMCommandInfo;
@@ -108,7 +109,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 	var loc_children = {};
 	
 	var loc_getDumyStateMachine = function(){
-		if(loc_dumyStateMachine==undefined)		loc_dumyStateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, undefined, nosliw.generateId());
+		if(loc_dumyStateMachine==undefined)		loc_dumyStateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, undefined, loc_id);
 		return loc_dumyStateMachine;
 	};
 	
@@ -122,7 +123,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 			});
 		},
 			
-		setComponentCore : function(componentCore){  loc_lifecycleEntity = loc_createComponentLifecycleEntity(componentCore);	},
+		setComponentCore : function(componentCore){  loc_lifecycleEntity = loc_createComponentLifecycleEntity(componentCore, loc_id);	},
 		
 		getId : function(){    return loc_id;    },	
 		
@@ -151,7 +152,7 @@ var node_createLifeCycleRuntimeContext = function(id){
 };
 
 //lifecycle entity 
-var loc_createComponentLifecycleEntity = function(componentCoreComplex){
+var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 	
 	var loc_componentCoreComplex = componentCoreComplex;
 
@@ -168,7 +169,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 	);
 
 	//init statemachine for component
-	var loc_init = function(){
+	var loc_init = function(componentCoreComplex, id){
 
 		//component lifecycle call back methods
 		var lifecycleCallback = {};
@@ -205,7 +206,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 
 
 		//build statemachine, start with init status
-		loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_componentCoreComplex, nosliw.generateId());
+		loc_stateMachine = node_createStateMachine(node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_INIT, loc_componentCoreComplex, id);
 		//register callback
 		//state transit callback method name follow naming conversion: from_to  or  _from_to for reverse 
 		_.each(node_getStateMachineDefinition().getAllTransits(), function(transit, i){	
@@ -226,6 +227,22 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 		
 	};
 
+	var loc_getComponentLifeCycleRequest = function(lifecycleName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var componentLifecycleResule = loc_componentCoreComplex.getLifeCycleRequest(lifecycleName);
+			var entityType = node_getObjectType(componentLifecycleResule);
+			if(node_CONSTANT.TYPEDOBJECT_TYPE_ERROR==entityType){
+				return node_createServiceRequestInfoError(componentLifecycleResule);
+			}
+			else if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+				return componentLifecycleResule;
+			}
+		}));
+		
+		return out;
+	};
+	
 	//call back method for normal lifecycle change
 	var loc_getNormalLiefCycleCallBackRequestRequest = function(lifecycleName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getNormal"+lifecycleName+"LifeCycleCallBackRequestRequest", {}), handlers, request);
@@ -234,7 +251,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 		//clear backup state
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
 		//execute complex lifecycle call back
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
+		out.addRequest(loc_getComponentLifeCycleRequest(lifecycleName));
 		return out;
 	};
 	
@@ -317,7 +334,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex){
 //		bindBaseObject : function(baseObject){		loc_baseObject = baseObject;	}
 	};
 
-	loc_init();
+	loc_init(componentCoreComplex, id);
 	
 	return loc_out;
 };
@@ -334,6 +351,7 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoError", function(){node_createServiceRequestInfoError = this.getData();});
 nosliw.registerSetNodeDataEvent("statemachine.createStateMachine", function(){node_createStateMachine = this.getData();	});
 nosliw.registerSetNodeDataEvent("statemachine.SMCommandInfo", function(){node_SMCommandInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("statemachine.createStateMachineDef", function(){node_createStateMachineDef = this.getData();	});

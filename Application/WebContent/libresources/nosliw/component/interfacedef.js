@@ -101,6 +101,7 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 
 //interface for component core 
 var node_buildComponentCore = function(rawComponentCore){
+	var loc_id;
 	var loc_rawComponentCore = rawComponentCore;
 	var loc_backupState;
 	var loc_lifecycleEntity;
@@ -113,12 +114,18 @@ var node_buildComponentCore = function(rawComponentCore){
 		if("true"==debugConf){
 			//debug mode
 			loc_debugMode = true;
-			loc_debugView = node_createComponentDebugView("Component: "+loc_out.getDataType()+"_"+loc_out.getId());
 		}
 	};
 	
 	var loc_isDebugMode = function(){
 		return loc_debugMode == true;
+	};
+	
+	var loc_getDebugView = function(){
+		if(loc_debugView==undefined){
+			loc_debugView = node_createComponentDebugView("Component: "+loc_out.getDataType()+"_"+loc_out.getId());
+		}
+		return loc_debugView;
 	};
 	
 	var loc_out = {
@@ -136,7 +143,8 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		//************************* for debugging
 		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },
-		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId():node_CONSTANT.VALUE_UNKNOW;    },
+		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId() : loc_id;    },
+		setId : function(id){  loc_rawComponentCore.setId!=undefined?loc_rawComponentCore.setId(id): loc_id = id;   },
 		
 		//************************* interface exposed by the core external
 		getAllInterfaceInfo : function(){  return loc_rawComponentCore.getAllInterfaceInfo!=undefined?loc_rawComponentCore.getAllInterfaceInfo():[];	},
@@ -159,7 +167,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("getPreInitRequest", {
+				loc_getDebugView().logMethodCalled("getPreInitRequest", {
 					"configure" : loc_configureValue
 				});
 			}
@@ -170,7 +178,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperUpdateRuntimeContextRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("UpdateRuntimeContextRequest",
+				loc_getDebugView().logMethodCalled("UpdateRuntimeContextRequest",
 						{
 							"runtimeContext" : runtimeContext
 						});
@@ -191,7 +199,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("getUpdateRuntimeInterfaceRequest");
+				loc_getDebugView().logMethodCalled("getUpdateRuntimeInterfaceRequest");
 			}
 			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest());
 			return out;
@@ -201,7 +209,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPostInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPostInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("getPostInitRequest");
+				loc_getDebugView().logMethodCalled("getPostInitRequest");
 			}
 			if(loc_rawComponentCore.getPostInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPostInitRequest());
 			return out;
@@ -211,7 +219,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperLifeCycleRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_debugView.logMethodCalled("getLifeCycleRequest", {
+				loc_getDebugView().logMethodCalled("getLifeCycleRequest", {
 					"transitName" : transitName
 				});
 			}
