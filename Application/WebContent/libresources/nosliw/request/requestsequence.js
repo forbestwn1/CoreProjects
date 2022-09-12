@@ -185,7 +185,16 @@ var node_createServiceRequestInfoSequence = function(service, handlers, requeste
 		},
 			
 		addRequest : function(requestInfo){
-			if(requestInfo!=undefined)	loc_addChildRequest(requestInfo);
+			if(requestInfo!=undefined){
+				var entityType = node_getObjectType(requestInfo);
+				if(node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==entityType){
+					loc_addChildRequest(requestInfo);
+				}
+				else{
+					var kkk = 555;
+					
+				}
+			}
 		},
 	};
 	

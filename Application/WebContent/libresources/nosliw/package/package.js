@@ -105,8 +105,8 @@ var node_createPackageCore = function(resourceId, configure){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
 			loc_runtimeContext = runtimeContext;
-			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
 			loc_backupState = loc_runtimeContext.backupState;
+			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
 			
 			loc_parentView = runtimeContext.view;
 

@@ -177,7 +177,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE] = function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getActivateLiefCycleCallBackRequestRequest", {}), undefined, request);
 			out.addRequest(loc_getRestoreStateRequest());
-			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE));
+			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE));
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request);  }));
 			return out;
 		};
@@ -188,7 +188,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 			//prepare roll back data
 			out.addRequest(loc_getSaveStateDataForRollBackRequest());
 			out.addRequest(loc_getBackupStateRequest());
-			out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
+			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
 			return out;
 		};
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND_REVERSE, undefined, request);	};	
@@ -263,7 +263,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 		//clear backup state
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
 		//execute complex lifecycle call back
-		out.addRequest(loc_componentCoreComplex.getLifeCycleRequest(lifecycleName));
+		out.addRequest(loc_getComponentLifeCycleRequest(lifecycleName));
 		return out;
 	};
 

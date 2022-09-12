@@ -150,9 +150,9 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		loc_currentNext--;
 		while(loc_currentNext>=1){
-			_.each(loc_stateMachineWrappers, function(wapper, i){
+			_.each(loc_stateMachineWrappers, function(wrapper, i){
 				var stateMachine = wrapper.getStateMachine();
-				var stateMachineId = wapper.getId();
+				var stateMachineId = wrapper.getId();
 				out.addRequest(stateMachine.prv_getRollBackRequest(loc_nexts[loc_currentNext], request));
 			});
 			loc_currentNext--;

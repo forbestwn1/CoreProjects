@@ -186,10 +186,10 @@ var node_buildComponentCore = function(rawComponentCore){
 				runtimeContext.view = loc_debugView.getWrapperView();
 			}
 			
+			loc_backupState = runtimeContext.backupState;
+			
 			loc_lifecycleEntity = runtimeContext.lifecycleEntity;
 			loc_lifecycleEntity.setComponentCore(this);
-			
-			loc_backupState = runtimeContext.backupState;
 			
 			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
 			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
@@ -217,15 +217,14 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperLifeCycleRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
 				loc_getDebugView().logMethodCalled("getLifeCycleRequest", {
 					"transitName" : transitName
 				});
 			}
 			
-			out.addRequest(loc_rawComponentCore.getLifeCycleRequest(transitName));
-			return out;
+			if(loc_rawComponentCore.getLifeCycleRequest!=undefined)		return loc_rawComponentCore.getLifeCycleRequest(transitName, handlers, request);
+			else return node_createServiceRequestInfoSequence(undefined, handlers, request);
 		},
 
 		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },

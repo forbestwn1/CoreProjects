@@ -23,6 +23,7 @@ var node_createErrorData = function(code, message, data){
 	}
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_ERROR);
+	return loc_out;
 };
 
 

@@ -256,19 +256,22 @@ var node_createComponentLifeCycleDebugView = function(){
 
 	var loc_processNextRequest = function(next){
 		var comInterface = node_getComponentManagementInterface(loc_component);
-		var loc_currentTask = comInterface.createLifecycleTask(next);
-		loc_currentTask.getProcessRequest({
+		loc_currentTask = comInterface.createLifecycleTask(next);
+		loc_currentTask.executeProcessRequest({
 			success : function(){
 				var comInterface = node_getComponentManagementInterface(loc_component);
 				loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()
+				loc_updateViewContent();
 			},
 			error: function(){
 				var comInterface = node_getComponentManagementInterface(loc_component);
 				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+				loc_updateViewContent();
 			},
 			exception : function(){
 				var comInterface = node_getComponentManagementInterface(loc_component);
 				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
+				loc_updateViewContent();
 			}
 		});
 	};
@@ -283,25 +286,7 @@ var node_createComponentLifeCycleDebugView = function(){
 			allStatesView.append($('<span>&nbsp;&nbsp;</span>'));
 			stateView.on('click', function(){
 				event.preventDefault();
-				var comInterface = node_getComponentManagementInterface(loc_component);
-				loc_currentTask = comInterface.createLifecycleTask(state);
-				loc_currentTask.executeProcessRequest({
-					success : function(){
-						var comInterface = node_getComponentManagementInterface(loc_component);
-						loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()
-						loc_updateViewContent();
-					},
-					error: function(){
-						var comInterface = node_getComponentManagementInterface(loc_component);
-						loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
-						loc_updateViewContent();
-					},
-					exception : function(){
-						var comInterface = node_getComponentManagementInterface(loc_component);
-						loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
-						loc_updateViewContent();
-					}
-				});
+				loc_processNextRequest(state);
 			});
 			loc_stateView[state] = stateView;
 		});
@@ -314,12 +299,7 @@ var node_createComponentLifeCycleDebugView = function(){
 			allCommandsView.append($('<span>&nbsp;&nbsp;</span>'));
 			commandView.on('click', function(){
 				event.preventDefault();
-//				loc_lifecycle.command(command);
-				loc_lifecycle.executeTransitRequest(command, {
-					success : function(request){
-						console.log('aaa');
-					}
-				});
+				loc_processNextRequest(command);
 			});
 			loc_commandView[command] = commandView;
 		});

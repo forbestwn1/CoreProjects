@@ -18,7 +18,6 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_basicUtility;
 	var node_requestServiceProcessor;
-	var node_createComponentState;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -199,7 +198,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createComponentState", function(){node_createComponentState = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentRuntime", node_createComponentRuntime); 
