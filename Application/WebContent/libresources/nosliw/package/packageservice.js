@@ -71,6 +71,19 @@ var node_createPackageRuntimeService = function() {
 
 	var loc_out = {
 
+		getCreateApplicationRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+			var application = node_createApplication(resourceId, configure);
+			return application.getInitRequest(runtimeContext, handlers, request);
+			
+			var coreLayer = node_buildComponentCore(componentCore);
+
+		},
+			
+		executeCreateApplicationRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreateApplicationRequest(packageResourceId, configure, runtimeContext, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},		
+
 		//create package runtime object
 		createPackageRuntime : function(packageResourceId, configure, request){
 			//get runtime configure & decoration info from configure

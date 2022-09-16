@@ -37,6 +37,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_mainView;
 	var loc_attributes = {};
 	var loc_attributeViews = {};
+	var loc_stateValueView;
 	
 	var loc_out = {
 
@@ -64,8 +65,13 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_parentView.append(loc_mainView);
 			
+			var stateValueViewWrapper = $('<div>state:</div>');
+			loc_stateValueView = $('<input type="text">');
+			stateValueViewWrapper.append(loc_stateValueView);
+			loc_mainView.append(stateValueViewWrapper);
+			
 			_.each(loc_attributes, function(attr, attrName){
-				var attrView = $('<div>attr: '+attrName+'</div>');
+				var attrView = $('<div>childAttr: '+attrName+'</div>');
 				loc_mainView.append(attrView);
 				loc_attributeViews[attrName] = attrView;
 				
@@ -74,6 +80,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 				});
 				out.addRequest(attr.getUpdateRuntimeContextRequest(attrRuntimeContext));
 			});
+			
 			return out;
 		},
 
@@ -89,10 +96,24 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
-				return node_createErrorData();
+//				return node_createErrorData();
 //				var k = aaa.bbb.ccc;
 			}
 		},
+		
+		
+		getGetStateDataRequest : function(handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+//				return "111111";
+				return loc_stateValueView.val();
+			}, handlers, request);
+		},
+		getRestoreStateDataRequest : function(stateData, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_stateValueView.val(stateData);
+			}, handlers, request);
+		},
+
 		
 		
 		

@@ -152,7 +152,10 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		
 		//get state value by name
 		getValue : function(path, request){	
-			if(request==undefined)   return loc_state.getValue(path);
+			if(request==undefined){
+				loc_retrieveStoreData();
+				return loc_state.getValue(path);
+			}
 			
 			var rootRequest = request.getRootRequest();
 			var requestId = rootRequest.getId();
@@ -203,7 +206,10 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 		},
 		
 		//create child state by path
-		createChildState : function(path){	return loc_createChildState(loc_out, path); },
+		createChildState : function(path){	
+			if(node_basicUtility.isStringEmpty(path))  return this;
+			return loc_createChildState(loc_out, path); 
+		},
 		
 		setVersion(version){  loc_version = version;  }
 	};
@@ -226,15 +232,26 @@ var loc_createState = function(){
 		getValue : function(path, request){		return node_objectOperationUtility.getObjectAttributeByPath(loc_stateValue, path);	},
 		//set state value by name
 		setValue : function(path, value, request){
-			if(loc_stateValue==undefined)  loc_stateValue = {};
-			node_objectOperationUtility.operateObject(loc_stateValue, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);	
+			if(value==undefined){
+				var currentValue = node_objectOperationUtility.getObjectAttributeByPath(loc_stateValue, path);
+				if(currentValue!=undefined){
+					node_objectOperationUtility.operateObject(loc_stateValue, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);	
+				}
+			}
+			else{
+				if(loc_stateValue==undefined)  loc_stateValue = {};
+				node_objectOperationUtility.operateObject(loc_stateValue, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);	
+			}
 		},
 		
 		//clear state
 		clear : function(request){		loc_stateValue = undefined;		},
 		
 		//create child state by path
-		createChildState : function(path){	return loc_createChildState(loc_out, path); },
+		createChildState : function(path){
+			if(node_basicUtility.isStringEmpty(path))  return this;
+			return loc_createChildState(loc_out, path); 
+		},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);
@@ -260,7 +277,10 @@ var loc_createChildState = function(parent, path){
 		clear : function(request){		loc_out.setStateValue(undefined, request);		},
 
 		//create child state by path
-		createChildState : function(path){		return loc_createChildState(loc_out, path);	},
+		createChildState : function(path){		
+			if(node_basicUtility.isStringEmpty(path))  return this;
+			return loc_createChildState(loc_out, path);	
+		},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);

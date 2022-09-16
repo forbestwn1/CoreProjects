@@ -176,9 +176,14 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE] = function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getActivateLiefCycleCallBackRequestRequest", {}), undefined, request);
+			//prepare roll back data
+			out.addRequest(loc_getSaveStateDataForRollBackRequest());
+			//restore back up data
 			out.addRequest(loc_getRestoreStateRequest());
-			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE));
+			//clear back up data
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request);  }));
+			//component job
+			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE));
 			return out;
 		};
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND_REVERSE] = function(request){	return loc_getReverseLiefCycleCallBackRequestRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESOURCE_REVERSE, undefined, request);	};	
@@ -187,7 +192,9 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getSuspendLiefCycleCallBackRequestRequest", {}), undefined, request);
 			//prepare roll back data
 			out.addRequest(loc_getSaveStateDataForRollBackRequest());
+			//save back up data
 			out.addRequest(loc_getBackupStateRequest());
+			//component job
 			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_SUSPEND));
 			return out;
 		};
@@ -281,13 +288,13 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 	
 	var loc_getBackupStateRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getBackupStateRequest", {}), handlers, request);
-		out.addRequest(loc_componentState.getBackupStateRequest(handlers, request));
+		out.addRequest(loc_componentState.getBackupStateRequest());
 		return out;
 	};
 
 	var loc_getRestoreStateRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getRestoreStateRequest", {}), handlers, request);
-		out.addRequest(loc_componentState.getRestoreStateRequest(handlers, request));
+		out.addRequest(loc_componentState.getRestoreStateRequest());
 		return out;
 	};
 	

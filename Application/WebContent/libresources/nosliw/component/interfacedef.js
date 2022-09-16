@@ -153,8 +153,46 @@ var node_buildComponentCore = function(rawComponentCore){
 		//*************************state
 		getBackupState : function(){   return loc_backupState;    },
 
-		getGetStateDataRequest : function(handlers, request){   },
-		getRestoreStateDataRequest : function(stateData, handlers, request){   },
+		getGetStateDataRequest : function(handlers, request){ 
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperGetStateData", {}), handlers, request);
+
+			var stateData;
+			if(loc_rawComponentCore.getGetStateDataRequest!=undefined){
+				out.addRequest(loc_rawComponentCore.getGetStateDataRequest({
+					success : function(request, data){
+						stateData = data;
+					}
+				}));
+			}
+
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				if(loc_isDebugMode()){
+					loc_getDebugView().logMethodCalled("getGetStateDataRequest", {
+						"stateData" : stateData
+					});
+				}
+				return stateData;
+			}));
+			
+			return out;
+		},
+		getRestoreStateDataRequest : function(stateData, handlers, request){ 
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperGetRestoreStateData", {}), handlers, request);
+
+			if(loc_rawComponentCore.getRestoreStateDataRequest!=undefined){
+				out.addRequest(loc_rawComponentCore.getRestoreStateDataRequest(stateData));
+			}
+			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				if(loc_isDebugMode()){
+					loc_getDebugView().logMethodCalled("getRestoreStateDataRequest", {
+						"stateData" : stateData
+					});
+				}
+			}));
+			
+			return out;
+		},
 
 		//*************************event
 		registerEventListener : function(listener, handler, thisContext){  },
