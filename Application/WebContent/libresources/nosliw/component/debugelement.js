@@ -257,23 +257,39 @@ var node_createComponentLifeCycleDebugView = function(){
 	var loc_processNextRequest = function(next){
 		var comInterface = node_getComponentManagementInterface(loc_component);
 		loc_currentTask = comInterface.createLifecycleTask(next);
-		loc_currentTask.executeProcessRequest({
-			success : function(){
-				var comInterface = node_getComponentManagementInterface(loc_component);
-				loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState()
-				loc_updateViewContent();
-			},
-			error: function(){
-				var comInterface = node_getComponentManagementInterface(loc_component);
-				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
-				loc_updateViewContent();
-			},
-			exception : function(){
-				var comInterface = node_getComponentManagementInterface(loc_component);
-				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState()
-				loc_updateViewContent();
+		
+		loc_currentTask.registerTransitEventListener(undefined, function(eventName, eventData, eventRequest){
+			var comInterface = node_getComponentManagementInterface(loc_component);
+			if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION){
+				loc_historyText = loc_historyText + " --> " + eventData.to;
 			}
+			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION){
+				loc_historyText = loc_historyText + " XX " + eventData.to;
+			}
+			else if(eventName==node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION){
+				loc_historyText = loc_historyText + " <-- " + eventData.to;
+			}
+			loc_updateViewContent();
 		});
+		loc_currentTask.process();
+		
+//		loc_currentTask.executeProcessRequest({
+//			success : function(){
+//				var comInterface = node_getComponentManagementInterface(loc_component);
+//				loc_historyText = loc_historyText + " -- " + comInterface.getLifecycleState();
+//				loc_updateViewContent();
+//			},
+//			error: function(){
+//				var comInterface = node_getComponentManagementInterface(loc_component);
+//				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState();
+//				loc_updateViewContent();
+//			},
+//			exception : function(){
+//				var comInterface = node_getComponentManagementInterface(loc_component);
+//				loc_historyText = loc_historyText + " XX " + comInterface.getLifecycleState();
+//				loc_updateViewContent();
+//			}
+//		});
 	};
 	
 	var loc_init = function(){

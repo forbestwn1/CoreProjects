@@ -36,19 +36,7 @@ var node_createApplication = function(resourceId, configure){
 	
 	var loc_lifecycleEntity;
 	var loc_backupState;
-	
-	var loc_getInitRequest = function(runtimeContext, handlers, request){
-		loc_runtimeContext = runtimeContext;
-		loc_runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_PACKAGE_NAME, loc_packageRuntime); 
-
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("initApplication", {}), handlers, request);
-		out.addRequest(node_packageService.getCreatePackageRuntimeRequest(loc_resourceId, loc_configure, loc_runtimeContextForPackage, undefined, {
-			success : function(request, packageRuntime){
-				loc_packageRuntime = packageRuntime;
-			}
-		}));
-		return out;
-	};
+	var loc_parentView;
 
 	var loc_out = {
 
@@ -56,12 +44,24 @@ var node_createApplication = function(resourceId, configure){
 		getId : function(){  return loc_id;   },
 		setId : function(id){   loc_id = id;    },
 
-		getInitRequest : function(runtimeContext, handlers, request){	return loc_getInitRequest(runtimeContext, handlers, request);	},
-		
-		getLifeCycleRequest : function(transitName, handlers, request){
-//			return loc_packageRuntime.getLifeCycleRequest(transitName, handlers, request);
+		getPreInitRequest : function(handlers, request){   
+			loc_packageRuntime = nosliw.runtime.getPackageService().createPackageRuntime(loc_resourceId, configure, request);
+			return loc_packageRuntime.getPreInitRequest(handlers, request);
 		},
 		
+		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreApplication", {}), handlers, request);
+			loc_runtimeContext = runtimeContext;
+			loc_backupState = loc_runtimeContext.backupState;
+			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
+			loc_parentView = loc_runtimeContext.view;
+
+			loc_runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_PACKAGE_NAME, loc_packageRuntime); 
+			out.addRequest(loc_packageRuntime.getUpdateRuntimeContextRequest(loc_runtimeContextForPackage));
+			return out;
+		},
+
+		getPostInitRequest : function(handlers, request){	return loc_packageRuntime.getPostInitRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION);

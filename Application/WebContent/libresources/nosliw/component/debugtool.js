@@ -93,10 +93,10 @@ var node_createDebugTool = function(views, resourceType, resourceId, inputValue,
 		loc_configure = configure;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		out.addRequest(nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId(resourceType, resourctId), configure, runtimeContext, undefined, {
-			success : function(request, packageRuntime){
-				loc_setComponent(request, packageRuntime);
-				return packageRuntime;
+		out.addRequest(nosliw.runtime.getPackageService().executeCreateApplicationRequest(new node_ResourceId(resourceType, resourctId), configure, runtimeContext, undefined, {
+			success : function(request, application){
+				loc_setComponent(request, application);
+				return application;
 			}
 		}));
 

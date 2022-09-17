@@ -134,6 +134,8 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 		
+		getPostInitRequest : function(handlers, request){	return loc_mainBundleRuntime.getPostInitRequest(handlers, request);	},
+		
 		
 		
 		
