@@ -253,7 +253,6 @@ var node_buildComponentCore = function(rawComponentCore){
 			return out;
 		},
 		
-		
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(loc_isDebugMode()){
 				loc_getDebugView().logMethodCalled("getLifeCycleRequest", {

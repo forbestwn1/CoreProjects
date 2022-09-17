@@ -65,7 +65,19 @@ var node_createLifecycleTask = function(next, rootComponent, request){
 	}
 	
 	var descendants = lifecycleEntity.getAllDescendants();
-	return node_createStateMachineTask(nexts, descendants);
+	return node_createStateMachineTask(nexts, descendants, {
+		transitSuccess : function(transit){
+			if(!(transit.from==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE&&transit.to==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_SUSPENDED)){
+				rootComponent.getBackupState().clear();
+			}
+		},
+		transitFail : function(transit){
+			
+		},
+		transitRollback : function(transit){
+			
+		},
+	});
 };
 
 
@@ -181,7 +193,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 			//restore back up data
 			out.addRequest(loc_getRestoreStateRequest());
 			//clear back up data
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request);  }));
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request);  }));
 			//component job
 			out.addRequest(loc_getComponentLifeCycleRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_RESTORE));
 			return out;
@@ -256,7 +268,7 @@ var loc_createComponentLifecycleEntity = function(componentCoreComplex, id){
 		//prepare roll back data
 		out.addRequest(loc_getSaveStateDataForRollBackRequest());
 		//clear backup state
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
+//		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  loc_clearBackupState(request)  }));
 		//execute complex lifecycle call back
 		out.addRequest(loc_getComponentLifeCycleRequest(lifecycleName));
 		return out;

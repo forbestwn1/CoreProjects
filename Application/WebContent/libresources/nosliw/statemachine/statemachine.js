@@ -24,10 +24,12 @@ var packageObj = library;
 //  handle success
 //  handle roll back when fail
 //  trigue event when task finish
-var node_createStateMachineTask = function(nexts, stateMachineWrappers){
+var node_createStateMachineTask = function(nexts, stateMachineWrappers, transitCallBack){
 
 	var loc_stateMachineWrappers = stateMachineWrappers;
 
+	var loc_transitCallBack = transitCallBack;
+	
 	var loc_nexts = [];
 	loc_nexts.push(loc_stateMachineWrappers[0].getStateMachine().getCurrentState());
 	_.each(nexts, function(next, i){loc_nexts.push(next);});
@@ -63,7 +65,10 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 				loc_currentStateMachine++;
 				if(loc_currentStateMachine==loc_stateMachineWrappers.length){
 					//when all statemachine done success,
+					//trigue transit event
 					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FINISHTRANSITION, eventData, request);
+					//transit success callback
+					if(loc_transitCallBack.transitSuccess!=undefined) loc_transitCallBack.transitSuccess(eventData);
 					loc_currentNext++;
 					loc_processNext(request);
 				}
@@ -76,12 +81,17 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 				var rollbackRequest = node_createServiceRequestInfoSequence(undefined, {}, request); 
 				//roll back state machine in current next
 				for(var i=0; i<loc_currentStateMachine; i++){
+					//trigue event
 					rollbackRequest.addRequest(loc_stateMachineWrappers[i].getStateMachine().prv_getRollBackRequest(loc_nexts[loc_currentNext-1]));
 				}
 				
 				var currentNext = loc_currentNext;
-				rollbackRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
-					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, new node_SMTransitInfo(loc_nexts[currentNext-1], loc_nexts[currentNext]), request);
+				rollbackRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					var transit = new node_SMTransitInfo(loc_nexts[currentNext-1], loc_nexts[currentNext]);
+					//trigue transit event
+					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, transit, request);
+					//transit fail callback
+					if(loc_transitCallBack.transitFail!=undefined) loc_transitCallBack.transitFail(transit);
 				}));
 				
 				rollbackRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
@@ -93,6 +103,7 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 					success : function(request){
 						//finish fail
 						loc_finishTask();
+						//trigue transit event
 						loc_trigueEventTask(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTASK, eventData, request);
 					}
 				}));
@@ -116,7 +127,11 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 			});
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
 				var currentNext = request.getData();
-				loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, new node_SMTransitInfo(loc_nexts[currentNext], loc_nexts[currentNext-1]), request);
+				var transit = new node_SMTransitInfo(loc_nexts[currentNext], loc_nexts[currentNext-1]);
+				//transit rollback callback
+				if(loc_transitCallBack.transitRollback!=undefined) loc_transitCallBack.transitRollback(transit);
+				//trigure transit rollback event
+				loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, transit, request);
 			}).setData(loc_currentNext));
 			loc_currentNext--;
 		};
