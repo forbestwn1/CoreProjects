@@ -79,12 +79,13 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 					rollbackRequest.addRequest(loc_stateMachineWrappers[i].getStateMachine().prv_getRollBackRequest(loc_nexts[loc_currentNext-1]));
 				}
 				
+				var currentNext = loc_currentNext;
 				rollbackRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
-					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, new node_SMTransitInfo(loc_nexts[loc_currentNext-1], loc_nexts[loc_currentNext]), request);
+					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_FAILTRANSITION, new node_SMTransitInfo(loc_nexts[currentNext-1], loc_nexts[currentNext]), request);
 				}));
 				
 				rollbackRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
-					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, new node_SMTransitInfo(loc_nexts[loc_currentNext], loc_nexts[loc_currentNext-1]), request);
+					loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, new node_SMTransitInfo(loc_nexts[currentNext], loc_nexts[currentNext-1]), request);
 				}));
 				
 				//roll back nexts
@@ -114,8 +115,9 @@ var node_createStateMachineTask = function(nexts, stateMachineWrappers){
 				out.addRequest(stateMachine.prv_getRollBackRequest(loc_nexts[loc_currentNext], request));
 			});
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  
-				loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, new node_SMTransitInfo(loc_nexts[loc_currentNext], loc_nexts[loc_currentNext-1]), request);
-			}));
+				var currentNext = request.getData();
+				loc_trigueEventTransit(node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_ROLLBACKTRANSITION, new node_SMTransitInfo(loc_nexts[currentNext], loc_nexts[currentNext-1]), request);
+			}).setData(loc_currentNext));
 			loc_currentNext--;
 		};
 		return out;
