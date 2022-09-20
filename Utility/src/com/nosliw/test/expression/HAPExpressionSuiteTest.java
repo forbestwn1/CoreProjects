@@ -3,7 +3,7 @@ package com.nosliw.test.expression;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPPackageExecutable;
+import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceIdExpressionSuite;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
@@ -26,7 +26,7 @@ public class HAPExpressionSuiteTest {
 		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPPackageExecutable executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
+		HAPExecutablePackage executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
 	}
 	
 	

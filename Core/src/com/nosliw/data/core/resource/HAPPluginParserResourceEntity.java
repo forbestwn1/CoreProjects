@@ -3,7 +3,7 @@ package com.nosliw.data.core.resource;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.component.HAPPathLocationBase;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPPluginParserResourceEntity {
@@ -14,6 +14,6 @@ public interface HAPPluginParserResourceEntity {
 	 * domain : domain that entity for resource add to
 	 * return : id for the entity
 	 */
-	HAPIdEntityInDomain parseResourceEntity(JSONObject jsonObj, HAPDomainEntityDefinitionSimpleResource entityDomain, HAPPathLocationBase localRefBase);
+	HAPIdEntityInDomain parseResourceEntity(JSONObject jsonObj, HAPDomainEntityDefinitionLocal entityDomain, HAPPathLocationBase localRefBase);
 	
 }

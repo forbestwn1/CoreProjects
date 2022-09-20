@@ -80,9 +80,9 @@ var node_createPackageCore = function(resourceId, configure){
 						var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
 						
 						//load all related resources first
-						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_DEPENDENCY], {
+						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
-								loc_mainBundleRuntime = nosliw.runtime.getPackageService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.PACKAGEEXECUTABLE_MAINENTITYID], loc_configure, requestInfo);
+								loc_mainBundleRuntime = nosliw.runtime.getPackageService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, requestInfo);
 								return loc_mainBundleRuntime.getPreInitRequest();
 							}
 						}));

@@ -1,7 +1,7 @@
 package com.nosliw.test.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPPackageExecutable;
+import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -19,7 +19,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPPackageExecutable executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
+		HAPExecutablePackage executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
 		
 //		System.out.println();
 //		System.out.println();

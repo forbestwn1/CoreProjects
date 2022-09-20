@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -19,7 +19,7 @@ import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.domain.HAPPackageExecutable;
+import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
@@ -37,16 +37,16 @@ public class HAPManagerComplexEntity {
 
 	private Map<String, HAPPluginAdapterProcessor> m_processorAdapterPlugins;
 	
-	private Map<HAPResourceIdSimple, HAPExecutableBundleComplexResource> m_complexResourceBundles;
+	private Map<HAPResourceIdSimple, HAPExecutableBundle> m_complexResourceBundles;
 	
 	public HAPManagerComplexEntity(HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_processorPlugins = new LinkedHashMap<String, HAPPluginComplexEntityProcessor>();
-		this.m_complexResourceBundles = new LinkedHashMap<HAPResourceIdSimple, HAPExecutableBundleComplexResource>();
+		this.m_complexResourceBundles = new LinkedHashMap<HAPResourceIdSimple, HAPExecutableBundle>();
 	}
 
-	public HAPPackageExecutable getExecutablePackage(HAPResourceId resourceId) {
-		HAPPackageExecutable out = new HAPPackageExecutable();
+	public HAPExecutablePackage getExecutablePackage(HAPResourceId resourceId) {
+		HAPExecutablePackage out = new HAPExecutablePackage();
 
 		//figure out root entity
 		HAPIdComplexEntityInGlobal gloablId = getComplexEntityGolbalIdResourceId(resourceId);
@@ -66,7 +66,7 @@ public class HAPManagerComplexEntity {
 	private void buildDependencyGroup(HAPResourceIdSimple complexEntityResourceId, Set<HAPResourceIdSimple> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
-			HAPExecutableBundleComplexResource bundle = this.getComplexEntityResourceBundle(complexEntityResourceId);
+			HAPExecutableBundle bundle = this.getComplexEntityResourceBundle(complexEntityResourceId);
 			Set<HAPResourceIdSimple> bundleDependency = bundle.getComplexResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {
 				buildDependencyGroup(id, dependency);
@@ -74,26 +74,26 @@ public class HAPManagerComplexEntity {
 		}
 	}
 	
-	public HAPExecutableBundleComplexResource getComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {
-		HAPExecutableBundleComplexResource out = this.m_complexResourceBundles.get(complexEntityResourceId);
+	public HAPExecutableBundle getComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {
+		HAPExecutableBundle out = this.m_complexResourceBundles.get(complexEntityResourceId);
 		if(out==null) {
 			out = buildComplexEntityResourceBundle(complexEntityResourceId);
 		}
 		return out;
 	}
 	
-	private HAPExecutableBundleComplexResource buildComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {
+	private HAPExecutableBundle buildComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {
 		//build definition
 		HAPDomainEntityDefinitionGlobal globalDefDomain = new HAPDomainEntityDefinitionGlobal(this.getDomainEntityDefinitionManager(), this.getResourceDefinitionManager());
 		this.getResourceDefinitionManager().getResourceDefinition(complexEntityResourceId, globalDefDomain);
 		//build executable
-		HAPContextProcessor processContext = new HAPContextProcessor(new HAPExecutableBundleComplexResource(complexEntityResourceId, globalDefDomain), m_runtimeEnv);
+		HAPContextProcessor processContext = new HAPContextProcessor(new HAPExecutableBundle(complexEntityResourceId, globalDefDomain), m_runtimeEnv);
 		this.process(processContext);
 		return processContext.getCurrentComplexResourceBundle();
 	}
 
 	private void process(HAPContextProcessor processContext) {
-		HAPExecutableBundleComplexResource complexResourcePackage = processContext.getCurrentComplexResourceBundle();
+		HAPExecutableBundle complexResourcePackage = processContext.getCurrentComplexResourceBundle();
 		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
 		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		
@@ -118,7 +118,7 @@ public class HAPManagerComplexEntity {
 	private HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager() {     return this.m_runtimeEnv.getDomainEntityManager();      }
 	
 	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		HAPExecutableBundleComplexResource complexResourcePackage = processContext.getCurrentComplexResourceBundle();
+		HAPExecutableBundle complexResourcePackage = processContext.getCurrentComplexResourceBundle();
 		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
 		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		

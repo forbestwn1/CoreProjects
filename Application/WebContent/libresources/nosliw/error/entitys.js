@@ -14,13 +14,12 @@ var node_ServiceData = function(code, message, data){
 };
 
 var node_createErrorData = function(code, message, data){
-	this.code = code;
-	this.message = message;
-	this.data = data;
 	
 	var loc_out = {
-			
-	}
+		code : code,
+		message : message,
+		data : data
+	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_ERROR);
 	return loc_out;

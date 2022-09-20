@@ -1,6 +1,6 @@
 package com.nosliw.data.core.complex;
 
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -20,7 +20,7 @@ public class HAPResourceManagerImpComplex extends HAPResourceManagerImp{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPExecutableBundleComplexResource bundle = this.m_complexEntityMan.getComplexEntityResourceBundle((HAPResourceIdSimple)resourceId);
+		HAPExecutableBundle bundle = this.m_complexEntityMan.getComplexEntityResourceBundle((HAPResourceIdSimple)resourceId);
 		return new HAPResource(resourceId, bundle.toResourceData(runtimeInfo), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 }

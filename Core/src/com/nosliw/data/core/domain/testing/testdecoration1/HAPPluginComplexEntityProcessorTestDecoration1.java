@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.testing.testdecoration1;
 
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPPluginComplexEntityProcessorTestDecoration1 extends HAPPluginComplexEntityProcessorImp{
@@ -14,7 +14,7 @@ public class HAPPluginComplexEntityProcessorTestDecoration1 extends HAPPluginCom
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
-		HAPExecutableBundleComplexResource currentPackage = processContext.getCurrentComplexResourceBundle();
+		HAPExecutableBundle currentPackage = processContext.getCurrentComplexResourceBundle();
 		
 		HAPExecutableTestDecoration1 executableEntity = (HAPExecutableTestDecoration1)currentPackage.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		

@@ -17,7 +17,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	public boolean isComplexEntity() {    return true;   }
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainEntityDefinitionSimpleResource definitionDomain) {
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainEntityDefinitionLocal definitionDomain) {
 		JSONObject jsonObj = (JSONObject)obj;
 		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
 		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, definitionDomain);
@@ -28,6 +28,6 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 		this.parseComplexDefinitionContent(entityId, jsonObj, definitionDomain);
 	}
 	
-	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainEntityDefinitionSimpleResource definitionDomain);
+	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainEntityDefinitionLocal definitionDomain);
 
 }

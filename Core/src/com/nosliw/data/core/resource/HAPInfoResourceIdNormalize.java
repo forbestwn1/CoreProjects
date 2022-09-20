@@ -18,6 +18,7 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	
 	public static final String RESOURCEENTITYTYPE = "resourceEntityType";
 	
+	//it maybe simple or local resource id
 	private HAPResourceId m_rootResourceId;
 	
 	private HAPPath m_path;

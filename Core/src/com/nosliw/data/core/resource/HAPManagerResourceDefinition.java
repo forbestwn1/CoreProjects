@@ -10,7 +10,7 @@ import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
@@ -26,6 +26,7 @@ public class HAPManagerResourceDefinition {
 		this.m_dynamicResourceManager = dynamicResourceMan;
 	}
 
+	
 	public HAPInfoResourceIdNormalize normalizeResourceId(HAPResourceId resourceId) {
 		HAPInfoResourceIdNormalize out = null;
 		String resourceType = resourceId.getResourceType();
@@ -69,7 +70,8 @@ public class HAPManagerResourceDefinition {
 				HAPResourceIdLocal localResourceId = (HAPResourceIdLocal)resourceId;
 				HAPIdEntityInDomain entityId =  this.m_plugins.get(resourceType).getResourceEntityByLocalResourceId(localResourceId, globalDomain, currentDomainResourceId);
 				out.setEntityId(entityId);
-				globalDomain.getResourceDomainById(currentDomainResourceId).addLocalResourceDefinition(out);
+				//local resource to local domain
+				globalDomain.getLocalDomainById(currentDomainResourceId).addLocalResourceDefinition(out);
 			}
 			else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 				HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
@@ -96,7 +98,7 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 	
-	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainEntityDefinitionSimpleResource entityDomain, HAPPathLocationBase localRefBase) {
+	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainEntityDefinitionLocal entityDomain, HAPPathLocationBase localRefBase) {
 		return this.m_plugins.get(entityType).parseResourceEntity(obj, entityDomain, localRefBase);
 	}
 	

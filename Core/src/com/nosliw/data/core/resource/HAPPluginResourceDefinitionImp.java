@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -41,10 +41,11 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		
 		//get root entity id
 		HAPIdEntityInDomain rootEntityId = null;
+		//first, check if resource has been loaded to global domain
 		HAPResourceDefinition rootResourceDef = globalDomain.getResourceDefinitionByResourceId(rootResourceId);
 		if(rootResourceDef==null) {
 			//if root resource not loaded in domain, load it
-			HAPDomainEntityDefinitionSimpleResource resourceDomain = globalDomain.newResourceDomain(rootResourceId);
+			HAPDomainEntityDefinitionLocal resourceDomain = globalDomain.newLocalDomain(rootResourceId);
 			
 			//get location information
 			HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(rootResourceId);
@@ -70,7 +71,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		HAPResourceIdLocal rootResourceId = (HAPResourceIdLocal)normalizedResourceId.getRootResourceId();
 		
 		//get root entity id
-		HAPDomainEntityDefinitionSimpleResource currentDomain = globalDomain.getResourceDomainById(currentDomainId);
+		HAPDomainEntityDefinitionLocal currentDomain = globalDomain.getLocalDomainById(currentDomainId);
 		HAPIdEntityInDomain rootEntityId = null;
 		HAPResourceDefinition rootResourceDef = currentDomain.getLocalResourceDefinition(rootResourceId);
 		if(rootResourceDef==null) {

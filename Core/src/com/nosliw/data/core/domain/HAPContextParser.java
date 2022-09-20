@@ -14,6 +14,6 @@ public class HAPContextParser {
 	
 	public HAPDomainEntityDefinitionGlobal getGlobalDomain() {    return this.m_globalDomain;      }
 
-	public HAPDomainEntityDefinitionSimpleResource getCurrentDomain() {    return this.m_globalDomain.getResourceDomainById(m_currentDomainId);     }
+	public HAPDomainEntityDefinitionLocal getCurrentDomain() {    return this.m_globalDomain.getLocalDomainById(m_currentDomainId);     }
 	public String getCurrentDomainId() {    return this.m_currentDomainId;    }
 }

@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 //all information for complex resource 
 @HAPEntityWithAttribute
-public class HAPExecutableBundleComplexResource extends HAPExecutableImp{
+public class HAPExecutableBundle extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String EXECUTABLEENTITYDOMAIN = "executableDomain";
@@ -44,7 +44,7 @@ public class HAPExecutableBundleComplexResource extends HAPExecutableImp{
 	
 	private HAPDomainAttachment m_attachmentDomain;
 	
-	public HAPExecutableBundleComplexResource(HAPResourceIdSimple rootResourceId, HAPDomainEntityDefinitionGlobal definitionDomain) {
+	public HAPExecutableBundle(HAPResourceIdSimple rootResourceId, HAPDomainEntityDefinitionGlobal definitionDomain) {
 		this.m_rootResourceId = rootResourceId;
 		this.m_definitionEntityDomain = definitionDomain;
 		this.m_executableEntityDomain = new HAPDomainEntityExecutableResourceComplex();
@@ -74,7 +74,7 @@ public class HAPExecutableBundleComplexResource extends HAPExecutableImp{
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){    return this.m_complexResourceDependency;     }
 	
 	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPInfoResourceIdNormalize normalizedResourceInfo) {
-		HAPIdEntityInDomain entityId = this.m_definitionEntityDomain.getResourceDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
+		HAPIdEntityInDomain entityId = this.m_definitionEntityDomain.getLocalDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
 		HAPIdEntityInDomain outEntityDefId = HAPUtilityDomain.getEntityDescent(entityId, normalizedResourceInfo.getPath(), this.m_definitionEntityDomain);
 		HAPIdEntityInDomain outEntityExeId = this.getExecutableEntityIdByDefinitionEntityId(outEntityDefId);
 		return this.m_executableEntityDomain.getEntityInfoExecutable(outEntityExeId);

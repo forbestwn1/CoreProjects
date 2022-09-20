@@ -31,7 +31,7 @@ public class HAPUtilityDomain {
 		HAPIdEntityInDomain entityId = null;
 		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
 			//local
-			entityId = globalDomain.getResourceDomainById(currentDomainId).getLocalResourceDefinition((HAPResourceIdLocal)resourceId).getEntityId();
+			entityId = globalDomain.getLocalDomainById(currentDomainId).getLocalResourceDefinition((HAPResourceIdLocal)resourceId).getEntityId();
 		}
 		else {
 			HAPResourceDefinition resourceDefinition = globalDomain.getResourceDefinitionByResourceId(resourceId);
@@ -90,7 +90,7 @@ public class HAPUtilityDomain {
 		}
 	}
 	
-	public static HAPPackageExecutable getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutablePackage getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityManager());
 		//build definition domain
 		HAPResourceDefinition resourceDefinition = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);

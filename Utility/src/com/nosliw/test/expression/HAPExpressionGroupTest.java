@@ -11,7 +11,7 @@ import com.nosliw.common.value.HAPJsonValueUtility;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPInfoEntityComplex;
 import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
@@ -43,7 +43,7 @@ public class HAPExpressionGroupTest {
 			for(String id : ids) {
 				HAPResourceId resourceId = HAPUtilityExpressionResource.buildResourceId(suite, id);
 				
-				HAPDomainEntityDefinitionSimpleResource defDomain = new HAPDomainEntityDefinitionSimpleResource(new HAPGeneratorId());
+				HAPDomainEntityDefinitionLocal defDomain = new HAPDomainEntityDefinitionLocal(new HAPGeneratorId());
 				HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, defDomain);
 				String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), defDomain);
 				System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));

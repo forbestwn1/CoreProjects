@@ -12,22 +12,24 @@ var packageObj = library.getChildPackage("request");
 /**
  * request that always error
  */
-var node_createServiceRequestInfoError = function(service, handlers, requester_parent){
+var node_createServiceRequestInfoError = function(errorData, service, handlers, requester_parent){
 
-	service = node_requestUtility.buildService(service);
+	var loc_errorData = errorData;
+	
+	var loc_service = node_requestUtility.buildService(service);
 	
 	/*
 	 * exectue function 
 	 */
 	var loc_process = function(requestInfo){
-		loc_out.errorFinish(undefined, loc_out);
+		loc_out.errorFinish(loc_errorData);
 	};
 		
 	var loc_out = {
 			
 	};
 	
-	loc_out = _.extend(node_createServiceRequestInfoCommon(service, handlers, requester_parent), loc_out);
+	loc_out = _.extend(node_createServiceRequestInfoCommon(loc_service, handlers, requester_parent), loc_out);
 	
 	//request type
 	loc_out.setType(node_CONSTANT.REQUEST_TYPE_ERROR);

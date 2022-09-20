@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.complex.HAPManagerComplexEntity;
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -24,7 +24,7 @@ public class HAPContextProcessor {
 
 	private HAPManagerComplexEntity m_complexEntityManager;
 	
-	private HAPExecutableBundleComplexResource m_complexResourceBundle;
+	private HAPExecutableBundle m_complexResourceBundle;
 	
 	//runtime
 	private HAPRuntimeEnvironment m_runtimeEnv;
@@ -32,10 +32,10 @@ public class HAPContextProcessor {
 	private HAPProcessTracker m_processTracker;
 	
 	public HAPContextProcessor(HAPResourceIdSimple currentResourceId, HAPDomainEntityDefinitionGlobal definitionDomain, HAPRuntimeEnvironment runtimeEnv) {
-		this(new HAPExecutableBundleComplexResource(currentResourceId, definitionDomain), runtimeEnv);
+		this(new HAPExecutableBundle(currentResourceId, definitionDomain), runtimeEnv);
 	}
 
-	public HAPContextProcessor(HAPExecutableBundleComplexResource currentResourceBundle, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPContextProcessor(HAPExecutableBundle currentResourceBundle, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_complexResourceBundle = currentResourceBundle;
 		this.m_complexEntityManager = this.m_runtimeEnv.getComplexEntityManager();
@@ -43,7 +43,7 @@ public class HAPContextProcessor {
 
 	public HAPResourceIdSimple getCurrentComplexResourceId() {     return this.m_complexResourceBundle.getRootResourceId();     }
 	
-	public HAPExecutableBundleComplexResource getCurrentComplexResourceBundle() {     return this.m_complexResourceBundle;      }
+	public HAPExecutableBundle getCurrentComplexResourceBundle() {     return this.m_complexResourceBundle;      }
 	
 	public HAPDomainEntityDefinitionGlobal getCurrentDefinitionDomain() {    return this.getCurrentComplexResourceBundle().getDefinitionDomain();     }
 	public HAPDomainEntityExecutableResourceComplex getCurrentExecutableDomain() {     return this.getCurrentComplexResourceBundle().getExecutableDomain();       }

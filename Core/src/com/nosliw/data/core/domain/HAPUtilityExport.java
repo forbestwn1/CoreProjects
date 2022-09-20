@@ -15,7 +15,7 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
 
-	public static void exportExecutablePackage(HAPPackageExecutable executablePackage, HAPManagerComplexEntity complexEntityManager) {
+	public static void exportExecutablePackage(HAPExecutablePackage executablePackage, HAPManagerComplexEntity complexEntityManager) {
 		String mainFolderUnique = getRootFolderUnique();
 		exportExecutablePackage(executablePackage, mainFolderUnique, complexEntityManager);
 
@@ -23,18 +23,18 @@ public class HAPUtilityExport {
 		exportExecutablePackage(executablePackage, mainFolderTemp, complexEntityManager);
 	}
 
-	private static void exportExecutablePackage(HAPPackageExecutable executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager) {
+	private static void exportExecutablePackage(HAPExecutablePackage executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
-		mainInfoJson.put(HAPPackageExecutable.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
+		mainInfoJson.put(HAPExecutablePackage.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPJsonUtility.buildMapJson(mainInfoJson));
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
 		for(HAPResourceIdSimple resourceId : executablePackage.getDependency()) {
-			HAPExecutableBundleComplexResource bundle = complexEntityManager.getComplexEntityResourceBundle(resourceId);
+			HAPExecutableBundle bundle = complexEntityManager.getComplexEntityResourceBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
 			//write attachment domain
@@ -73,12 +73,12 @@ public class HAPUtilityExport {
 		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, resourceId.toStringValue(HAPSerializationFormat.LITERATE)));  
 	}
 	
-	private static String toExpandedJsonStringDefintionDomain(HAPExecutableBundleComplexResource resourceBundle) {
+	private static String toExpandedJsonStringDefintionDomain(HAPExecutableBundle resourceBundle) {
 		HAPDomainEntityDefinitionGlobal definitionDomainGlobal = resourceBundle.getDefinitionDomain();
 		return definitionDomainGlobal.getEntityInfoDefinition(resourceBundle.getDefinitionRootEntityId()).toExpandedJsonString(definitionDomainGlobal);
 	}
 
-	private static String toExpandedJsonStringExecutableDomain(HAPExecutableBundleComplexResource resourceBundle) {
+	private static String toExpandedJsonStringExecutableDomain(HAPExecutableBundle resourceBundle) {
 		HAPDomainEntityExecutableResourceComplex executableDomain = resourceBundle.getExecutableDomain();
 		return executableDomain.getEntityInfoExecutable(resourceBundle.getExecutableRootEntityId()).toExpandedJsonString(executableDomain);
 	}

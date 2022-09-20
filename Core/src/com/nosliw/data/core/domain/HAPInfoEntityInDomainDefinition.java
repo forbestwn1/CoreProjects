@@ -10,6 +10,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
+//definition entity information in domain 
+//entity may defined in three form: solid, reference to other resource, reference to data in attachment 
 public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implements HAPInfoEntityInDomain{
 	
 	public static final String ENTITYTYPE = "entityType";
@@ -35,14 +37,8 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	//parent info definition
 	public static final String PARENT = "parent";
 	
+	//entity type
 	private String m_entityType;
-	
-	//entity object
-	private HAPDefinitionEntityInDomain m_entity;
-	
-	private HAPReferenceAttachment m_reference;
-	
-	private HAPResourceId m_resourceId;
 	
 	//entity id
 	private HAPIdEntityInDomain m_entityId;
@@ -52,6 +48,15 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 
 	//calculated value from entity type
 	private boolean m_isComplex;
+	
+	//solid: entity object itself
+	private HAPDefinitionEntityInDomain m_entity;
+	
+	//reference to data in attachment
+	private HAPReferenceAttachment m_reference;
+	
+	//reference to other resource
+	private HAPResourceId m_resourceId;
 	
 	public HAPInfoEntityInDomainDefinition() {
 		this.m_extraInfo = new HAPExtraInfoEntityInDomainDefinition();
@@ -122,9 +127,9 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 			if(entityInfo!=null)	jsonMap.put(ENTITY, entityInfo.toExpandedJsonString(entityDefDomain));
 		}
 		
-		HAPDomainEntityDefinitionSimpleResource resourceDomain = entityDefDomain.getResourceDomainById(this.m_entityId.getDomainId());
+		HAPDomainEntityDefinitionLocal resourceDomain = entityDefDomain.getLocalDomainById(this.m_entityId.getDomainId());
 		if(resourceDomain.isForComplexEntity()) {
-			HAPInfoParentComplex parentInfo = ((HAPDomainEntityDefinitionSimpleResourceComplex)resourceDomain).getParentInfo(this.m_entityId);
+			HAPInfoParentComplex parentInfo = ((HAPDomainEntityDefinitionLocalComplex)resourceDomain).getParentInfo(this.m_entityId);
 			if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
 		}
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);

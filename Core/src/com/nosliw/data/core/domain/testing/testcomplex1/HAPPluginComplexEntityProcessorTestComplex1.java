@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.testing.testcomplex1;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPExecutableBundleComplexResource;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 
@@ -16,7 +16,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
-		HAPExecutableBundleComplexResource currentBundle = processContext.getCurrentComplexResourceBundle();
+		HAPExecutableBundle currentBundle = processContext.getCurrentComplexResourceBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
 		HAPExecutableTestComplex1 executableEntity = (HAPExecutableTestComplex1)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();

@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 //executable package
 @HAPEntityWithAttribute
-public class HAPPackageExecutable extends HAPExecutableImp{
+public class HAPExecutablePackage extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String MAINENTITYID = "mainEntityId";
@@ -28,7 +28,7 @@ public class HAPPackageExecutable extends HAPExecutableImp{
 	//main global entity
 	private HAPIdComplexEntityInGlobal m_mainEntityId;
 	
-	public HAPPackageExecutable() {
+	public HAPExecutablePackage() {
 		this.m_dependency = new HashSet<HAPResourceIdSimple>();
 	}
 	

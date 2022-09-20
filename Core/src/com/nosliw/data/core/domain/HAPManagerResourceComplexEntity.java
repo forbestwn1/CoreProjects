@@ -13,7 +13,7 @@ public class HAPManagerResourceComplexEntity {
 		this.m_runtimeEnv = runtimeEnv;
 	}
 
-	public HAPPackageExecutable getExecutableComplexEntity(HAPResourceIdSimple resourceId) {
+	public HAPExecutablePackage getExecutableComplexEntity(HAPResourceIdSimple resourceId) {
 		return this.m_runtimeEnv.getComplexEntityManager().getExecutablePackage(resourceId);
 	}
 

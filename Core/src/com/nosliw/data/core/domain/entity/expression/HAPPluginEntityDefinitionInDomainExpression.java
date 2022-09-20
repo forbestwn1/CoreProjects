@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionSimpleResource;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -16,7 +16,7 @@ public class HAPPluginEntityDefinitionInDomainExpression extends HAPPluginEntity
 
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
-			HAPDomainEntityDefinitionSimpleResource definitionDomain) {
+			HAPDomainEntityDefinitionLocal definitionDomain) {
 		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)definitionDomain.getEntityInfoDefinition(entityId).getEntity();
 		
 		//parse expression items

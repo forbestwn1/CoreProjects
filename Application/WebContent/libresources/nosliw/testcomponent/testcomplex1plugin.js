@@ -96,7 +96,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
-//				return node_createErrorData("code", "message", "data");
+				return node_createErrorData("code", "message", "data");
 //				var k = aaa.bbb.ccc;
 			}
 		},
