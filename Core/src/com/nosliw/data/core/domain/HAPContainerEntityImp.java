@@ -13,12 +13,13 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  extends HAPSerializableImp implements HAPContainerEntity<T>{
 
 	private Map<String, T> m_eleByName;
-	private Map<HAPIdEntityInDomain, T> m_eleById;
+	private Map<String, T> m_eleById;
+	//extra info for container
 	private HAPEntityInfo m_extraInfo;
 	
 	public HAPContainerEntityImp() {
 		this.m_eleByName = new LinkedHashMap<String, T>();
-		this.m_eleById = new LinkedHashMap<HAPIdEntityInDomain, T>();
+		this.m_eleById = new LinkedHashMap<String, T>();
 	}
 
 	@Override
@@ -29,14 +30,14 @@ public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  
 	@Override
 	public void addEntityElement(T eleInfo) {
 		this.m_eleByName.put(eleInfo.getElementName(), eleInfo);
-		this.m_eleById.put(eleInfo.getEmbededElementEntity().getEntityId(), eleInfo);
+		this.m_eleById.put(eleInfo.getElementId(), eleInfo);
 	}
 
 	@Override
 	public T getElementInfoByName(String name) {  return this.m_eleByName.get(name);  }
 
 	@Override
-	public T getElementInfoById(HAPIdEntityInDomain id) {  return this.m_eleById.get(id);  }
+	public T getElementInfoById(String id) {  return this.m_eleById.get(id);  }
 
 	@Override
 	public List<T> getAllElementsInfo() {  return new ArrayList(this.m_eleById.values());  }

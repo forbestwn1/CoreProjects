@@ -1,16 +1,16 @@
-package com.nosliw.data.core.domain.entity.configure;
+package com.nosliw.data.core.domain.entity.script;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 
-public class HAPDefinitionEntityConfigure extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityScript extends HAPDefinitionEntityInDomainSimple{
 
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE;
+	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT;
 
 	private String m_script;
 	
-	public HAPDefinitionEntityConfigure() {
+	public HAPDefinitionEntityScript() {
 	}
 	
 	public String getScript() {   return this.m_script;   }
@@ -18,7 +18,7 @@ public class HAPDefinitionEntityConfigure extends HAPDefinitionEntityInDomainSim
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityConfigure out = new HAPDefinitionEntityConfigure();
+		HAPDefinitionEntityScript out = new HAPDefinitionEntityScript();
 		out.setScript(this.getScript());
 		return out;
 	}

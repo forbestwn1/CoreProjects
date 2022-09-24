@@ -19,7 +19,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public final static String CONTAINERATTRIBUTE = "containerAttributes"; 
 	
 	//simple attribute by name
-	private Map<String, HAPEmbededEntity> m_attributesSimple;
+	private Map<String, HAPEmbededWithId> m_attributesSimple;
 	
 	//container attribute by name
 	private Map<String, HAPContainerEntity> m_attributeContainer;
@@ -27,7 +27,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	private String m_entityType;
 	
 	protected HAPDefinitionEntityInDomain() {
-		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededEntity>();
+		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
 		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(this.getClass());
 	}
@@ -44,13 +44,13 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	}
 	
 	public HAPIdEntityInDomain getChild(String childName) {		
-		HAPEmbededEntity childEntity = this.m_attributesSimple.get(childName);
+		HAPEmbededWithId childEntity = this.m_attributesSimple.get(childName);
 		if(childEntity!=null)  return childEntity.getEntityId();
 
 		String[] containerSegs = HAPUtilityNamingConversion.parseLevel1(childName);
 		HAPContainerEntity childContainer = this.m_attributeContainer.get(containerSegs[0]);
 		if(childContainer!=null) {
-			return childContainer.getElementInfoByName(containerSegs[1]).getEmbededElementEntity().getEntityId();
+			return getEmbeded(childContainer.getElementInfoByName(containerSegs[1])).getEntityId();
 		}
 		
 		return null;
@@ -59,25 +59,27 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();
 
 	protected void getStandardChildrenEntity(Set<HAPIdEntityInDomain> out){
-		for(HAPEmbededEntity simpleAttr : this.m_attributesSimple.values()) {
+		for(HAPEmbededWithId simpleAttr : this.m_attributesSimple.values()) {
 			out.add(simpleAttr.getEntityId());
 		}
 		
 		for(HAPContainerEntity<HAPInfoContainerElement> containerAttr : this.m_attributeContainer.values()) {
 			for(HAPInfoContainerElement eleInfo : containerAttr.getAllElementsInfo()) {
-				out.add(eleInfo.getEmbededElementEntity().getEntityId());
+				out.add(getEmbeded(eleInfo).getEntityId());
 			}
 		}
 	}
+	
+	private HAPEmbededWithId getEmbeded(HAPInfoContainerElement eleInfo) {		return (HAPEmbededWithId)eleInfo.getEmbededElementEntity();	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	public String getEntityType() {  return this.m_entityType;	}
 
-	public HAPEmbededEntity getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
+	public HAPEmbededWithId getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
 
-	public void setSimpleAttribute(String attributeName, HAPEmbededEntity attrEntity) {
+	public void setSimpleAttribute(String attributeName, HAPEmbededWithId attrEntity) {
 		if(attrEntity==null) {
 			this.m_attributesSimple.remove(attributeName);
 		}
@@ -86,12 +88,21 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 	}
 	
-	public Map<String, HAPEmbededEntity> getSimpleAttributes(){    return this.m_attributesSimple;     }
+	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain attrEntityId) {
+		if(attrEntityId==null) {
+			this.m_attributesSimple.remove(attributeName);
+		}
+		else {
+			this.m_attributesSimple.put(attributeName, new HAPEmbededWithId(attrEntityId));	
+		}
+	}	
+	
+	public Map<String, HAPEmbededWithId> getSimpleAttributes(){    return this.m_attributesSimple;     }
 	
 	public Map<String, HAPContainerEntity> getContainerAttributes(){    return this.m_attributeContainer;     }
 	
-	public HAPEmbededEntity getConatinerAttributeElementByName(String attributeName, String eleName) {
-		return this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName).getEmbededElementEntity();
+	public HAPEmbededWithId getConatinerAttributeElementByName(String attributeName, String eleName) {
+		return getEmbeded(this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName));
 	}
 	
 	public void setContainerAttribute(String attributeName, HAPContainerEntity container) {

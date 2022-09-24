@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPInfoContainerElementSet extends HAPInfoContainerElement{
 
-	public HAPInfoContainerElementSet(HAPEmbededEntity embededEntity) {
+	public HAPInfoContainerElementSet(HAPEmbeded embededEntity) {
 		super(embededEntity);
 	}
 

@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
 
 //container for entity
-public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends HAPSerializable{
+public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends HAPSerializable, HAPExpandable{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";
@@ -22,18 +22,12 @@ public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends H
 
 	void addEntityElement(T eleInfo);
 
-	T getElementInfoById(HAPIdEntityInDomain id);
+	T getElementInfoById(String id);
 	
 	T getElementInfoByName(String name);
 	
 	List<T> getAllElementsInfo();
 	
-	
-//	HAPInfoContainerElement newElementInfoInstance();
-	
-	
 	HAPContainerEntity<T> cloneContainerEntity();
-
-	String toExpandedJsonString(HAPDomainEntity entityDomain);
 
 }

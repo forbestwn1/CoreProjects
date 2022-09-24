@@ -49,7 +49,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 			var attrsValue = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_ATTRIBUTE];
 			_.each(attrsValue, function(attrValue, attrName){
-				var complexEntityId = attrValue[node_COMMONATRIBUTECONSTANT.EMBEDEDENTITY_ENTITYID];
+				var complexEntityId = attrValue[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
 				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
 				loc_attributes[attrName] = attrEntity;
 				out.addRequest(attrEntity.getPreInitRequest());

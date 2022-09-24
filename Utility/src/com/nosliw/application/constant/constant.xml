@@ -574,6 +574,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX" value="valuestructurecomplex"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ATTACHMENT" value="attachment"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONFIGURE" value="configure"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPT" value="script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1" value="testsimple1"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1" value="testcomplex1"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION1" value="testdecoration1"/>

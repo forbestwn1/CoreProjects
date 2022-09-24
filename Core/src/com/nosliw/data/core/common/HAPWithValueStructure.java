@@ -1,16 +1,16 @@
 package com.nosliw.data.core.common;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.domain.HAPEmbededEntity;
+import com.nosliw.data.core.domain.HAPEmbededWithId;
 
 public interface HAPWithValueStructure {
 
 	@HAPAttribute
 	public static String VALUESTRUCTURE = "valueStructure";
 	
-	HAPEmbededEntity getValueStructureComplexEntity();
+	HAPEmbededWithId getValueStructureComplexEntity();
 
-	void setValueStructureComplexEntity(HAPEmbededEntity valueStructureComplexEntity);
+	void setValueStructureComplexEntity(HAPEmbededWithId valueStructureComplexEntity);
 	
 	String getValueStructureTypeIfNotDefined();
 

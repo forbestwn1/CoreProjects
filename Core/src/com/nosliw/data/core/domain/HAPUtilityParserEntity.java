@@ -84,54 +84,54 @@ public class HAPUtilityParserEntity {
 //		return out;
 //	}
 
-	public static HAPEmbededEntity parseEmbededEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededWithId parseEmbededEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededEntity(obj, entityType, null, parserContext, domainEntityManager, resourceDefinitionManager);
 	}
 
-	public static HAPEmbededEntity parseEmbededEntity(Object obj, String entityType, String adapterType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPEmbededEntity out = null;
+	public static HAPEmbededWithId parseEmbededEntity(Object obj, String entityType, String adapterType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+		HAPEmbededWithId out = null;
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 			//adapter
 			Object adapterObj = null;
-			JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbededEntity.ADAPTER);
+			JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
 			if(adapterJsonObj!=null) {
 				if(adapterType==null)  adapterType = domainEntityManager.getDefaultAdapterByEntity(entityType);
 				if(adapterType!=null)	adapterObj = domainEntityManager.parseAdapter(adapterType, adapterJsonObj);
 			}
 			
 			//embeded entity
-			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededEntity.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
+			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededWithId.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededEntity(entityId);
+			if(entityId!=null)  out = new HAPEmbededWithId(entityId);
 		}
 		return out;
 	}
 
-	public static HAPEmbededEntity parseEmbededComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededWithId parseEmbededComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededComplexEntity(obj, entityType, null, parentEntityId, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager);		
 	}
 	
-	public static HAPEmbededEntity parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededWithId parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededComplexEntity(obj, entityType, adapterType, parentEntityId, null, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager);		
 	}
 	
-	public static HAPEmbededEntity parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPEmbededEntity out = null;
+	public static HAPEmbededWithId parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+		HAPEmbededWithId out = null;
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 			//adapter
 			Object adapterObj = null;
-			JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbededEntity.ADAPTER);
+			JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
 			if(adapterJsonObj!=null) {
 				if(adapterType==null)  adapterType = domainEntityManager.getDefaultAdapterByEntity(entityType);
 				if(adapterType!=null)  adapterObj = domainEntityManager.parseAdapter(adapterType, adapterJsonObj);
 			}
 			
 			//embeded entity
-			HAPIdEntityInDomain entityId = parseComplexEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededEntity.EMBEDED), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
+			HAPIdEntityInDomain entityId = parseComplexEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededWithId.EMBEDED), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededEntity(entityId);
+			if(entityId!=null)  out = new HAPEmbededWithId(entityId);
 		}
 		return out;
 	}

@@ -88,5 +88,5 @@ public class HAPReferenceAttachment extends HAPSerializableImp implements HAPEnt
 		this.m_name = jsonObj.getString(NAME);
 		return true;  
 	}
-	
+
 }

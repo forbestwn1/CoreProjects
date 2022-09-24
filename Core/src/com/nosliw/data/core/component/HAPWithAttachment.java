@@ -1,15 +1,15 @@
 package com.nosliw.data.core.component;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.domain.HAPEmbededEntity;
+import com.nosliw.data.core.domain.HAPEmbededWithId;
 
 public interface HAPWithAttachment {
 
 	@HAPAttribute
 	public static final String ATTACHMENT = "attachment";
 
-	HAPEmbededEntity getAttachmentContainerEntity();
+	HAPEmbededWithId getAttachmentContainerEntity();
 
-	void setAttachmentContainerEntity(HAPEmbededEntity attachmentEntity);
+	void setAttachmentContainerEntity(HAPEmbededWithId attachmentEntity);
 
 }

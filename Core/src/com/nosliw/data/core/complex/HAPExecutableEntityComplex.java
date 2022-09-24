@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
-import com.nosliw.data.core.domain.HAPEmbededEntity;
+import com.nosliw.data.core.domain.HAPEmbededWithId;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -30,7 +30,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	private String m_attachmentContainerId;
 	
 	//simple attribute by name
-	private Map<String, HAPEmbededEntity> m_attributesNormal;
+	private Map<String, HAPEmbededWithId> m_attributesNormal;
 	
 	//container attribute by name
 	private Map<String, HAPContainerEntity> m_attributeContainer;
@@ -39,7 +39,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	
 	public HAPExecutableEntityComplex(String entityType) {
 		this.m_entityType = entityType;
-		this.m_attributesNormal = new LinkedHashMap<String, HAPEmbededEntity>();
+		this.m_attributesNormal = new LinkedHashMap<String, HAPEmbededWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
 	}
 	
@@ -51,8 +51,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public void setAttachmentContainerId(String id) {    this.m_attachmentContainerId = id;    }
 	public String getAttachmentContainerId() {    return this.m_attachmentContainerId;    }
 	
-	public Map<String, HAPEmbededEntity> getNormalAttributes(){    return this.m_attributesNormal;    }
-	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_attributesNormal.put(attrName, new HAPEmbededEntity(complexEntityExeId));	}
+	public Map<String, HAPEmbededWithId> getNormalAttributes(){    return this.m_attributesNormal;    }
+	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_attributesNormal.put(attrName, new HAPEmbededWithId(complexEntityExeId));	}
 	
 	public void setContainerAttributeElementComplex(String attribute, HAPContainerEntity entityContainer) {		this.m_attributeContainer.put(attribute, entityContainer);	}
 	public Map<String, HAPContainerEntity> getContainerAttributes(){   return this.m_attributeContainer;   }

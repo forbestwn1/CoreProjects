@@ -25,7 +25,10 @@ public class HAPContainerEntityList extends HAPContainerEntityImp<HAPInfoContain
 			this.m_eleArray.add(eleInfo);
 		}
 		else {
-			this.m_eleArray.add(eleInfo.getIndex(), eleInfo);
+			this.m_eleArray.add(index, eleInfo);
+			for(int i=index+1; i<this.m_eleArray.size(); i++) {
+				this.m_eleArray.get(i).setIndex(i);
+			}
 		}
 	}
 

@@ -12,7 +12,7 @@ public class HAPInfoContainerElementList extends HAPInfoContainerElement{
 
 	private int m_index;
 	
-	public HAPInfoContainerElementList(HAPEmbededEntity embededEntity) {
+	public HAPInfoContainerElementList(HAPEmbeded embededEntity) {
 		super(embededEntity);
 	}
 

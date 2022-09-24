@@ -70,9 +70,9 @@ public class HAPUtilityDomain {
 		HAPExecutableEntityComplex complexEntity = entityInfo.getEntity();
 		if(complexEntity!=null) {
 			//process attribute entity
-			Map<String, HAPEmbededEntity> simpleAttributes = complexEntity.getNormalAttributes();
+			Map<String, HAPEmbededWithId> simpleAttributes = complexEntity.getNormalAttributes();
 			for(String attrName : simpleAttributes.keySet()) {
-				HAPEmbededEntity attributeEntity = simpleAttributes.get(attrName);
+				HAPEmbededWithId attributeEntity = simpleAttributes.get(attrName);
 				HAPInfoEntityInDomainExecutable attrEntityInfo = exeDomain.getEntityInfoExecutable(attributeEntity.getEntityId());
 				traverseExecutableComplexEntityTree(attrEntityInfo, attributeEntity.getAdapter(), entityInfo, processor, processContext);
 			}
@@ -82,7 +82,7 @@ public class HAPUtilityDomain {
 			for(String attrName : containerAttributes.keySet()) {
 				List<HAPInfoContainerElement> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
 				for(HAPInfoContainerElement eleInfo : eleInfos) {
-					HAPEmbededEntity eleEntity = eleInfo.getEmbededElementEntity();
+					HAPEmbededWithId eleEntity = eleInfo.getEmbededElementEntity();
 					HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
 					traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
 				}
