@@ -19,6 +19,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 
 	@HAPAttribute
+	public static final String ENTITYTYPE = "entityType";
+	@HAPAttribute
 	public static final String VALUESTRUCTURECOMPLEX = "valueStructureComplex";
 	@HAPAttribute
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
@@ -29,10 +31,10 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 
 	private String m_attachmentContainerId;
 	
-	//simple attribute by name
+	//simple attribute by name, complex entity type
 	private Map<String, HAPEmbededWithId> m_attributesNormal;
 	
-	//container attribute by name
+	//container attribute by name, complex entity type
 	private Map<String, HAPContainerEntity> m_attributeContainer;
 	
 	private String m_entityType;
@@ -60,6 +62,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 
+		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
 		jsonMap.put(VALUESTRUCTURECOMPLEX, this.m_valueStructureComplex.toExpandedString(entityDomainExe.getValueStructureDomain()));
 
@@ -83,6 +86,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		jsonMap.put(VALUESTRUCTURECOMPLEX, this.m_valueStructureComplex.toResourceData(runtimeInfo).toString());
 
 		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();

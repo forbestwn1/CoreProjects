@@ -20,11 +20,19 @@ public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntit
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityTestSimple1 entity = (HAPDefinitionEntityTestSimple1)this.getEntity(entityId, parserContext);
 		JSONObject jsonObj = (JSONObject)obj;
+
+		//script
 		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestSimple1.ATTR_SCRIPTNAME);
 		entity.setScriptName(scriptName);
-
 		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
 		entity.setSimpleAttribute(HAPDefinitionEntityTestSimple1.ATTR_SCRIPT, scriptResoureDef.getEntityId());
+		
+		//parms
+		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestSimple1.ATTR_PARM);
+		for(Object key : parms.keySet()) {
+			String parmName = (String)key;
+			entity.setParm(parmName, parms.opt(parmName));
+		}
 	}
 
 	@Override

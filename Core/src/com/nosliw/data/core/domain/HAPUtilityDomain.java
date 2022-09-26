@@ -82,7 +82,7 @@ public class HAPUtilityDomain {
 			for(String attrName : containerAttributes.keySet()) {
 				List<HAPInfoContainerElement> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
 				for(HAPInfoContainerElement eleInfo : eleInfos) {
-					HAPEmbededWithId eleEntity = eleInfo.getEmbededElementEntity();
+					HAPEmbededWithId eleEntity = (HAPEmbededWithId)eleInfo.getEmbededElementEntity();
 					HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
 					traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
 				}

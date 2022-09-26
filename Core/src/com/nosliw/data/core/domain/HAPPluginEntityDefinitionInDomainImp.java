@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
@@ -72,6 +73,12 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 
 	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
 	
+	protected JSONObject convertToJsonObject(Object obj) {
+		JSONObject out = null;
+		if(obj instanceof JSONObject) out = (JSONObject)obj;
+		else if(obj instanceof String)  out = new JSONObject(HAPJsonUtility.formatJson((String)obj));
+		return out;
+	}
 
 	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		return parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();

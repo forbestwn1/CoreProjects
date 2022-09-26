@@ -34,42 +34,39 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		JSONObject jsonObj = this.convertToJsonObject(obj);
 
-		if(obj instanceof JSONObject) {
-			JSONObject jsonObj = (JSONObject)obj;
-			for(Object key : jsonObj.keySet()) {
-				String attrName = (String)key;
-				if(!attrName.startsWith(PREFIX_IGNORE)) {
-					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
-					}
-					else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
-						this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, parserContext);
-					}
-					else {
-						Object entityObj = jsonObj.opt(attrName);
-						HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
-						if(entityInfo.isContainer) {
-							if(entityInfo.isComplex) {
-								parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
-							}
-							else {
-								parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
-							}
+		for(Object key : jsonObj.keySet()) {
+			String attrName = (String)key;
+			if(!attrName.startsWith(PREFIX_IGNORE)) {
+				if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
+					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+				}
+				else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
+					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, parserContext);
+				}
+				else {
+					Object entityObj = jsonObj.opt(attrName);
+					HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
+					if(entityInfo.isContainer) {
+						if(entityInfo.isComplex) {
+							parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
 						}
 						else {
-							if(entityInfo.isComplex) {
-								this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
-							}
-							else {
-								this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
-							}
+							parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
+						}
+					}
+					else {
+						if(entityInfo.isComplex) {
+							this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
+						}
+						else {
+							this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
 						}
 					}
 				}
 			}
 		}
-		
 	}
 	
 	//name_(none|set|list|container)_entitytype_adapterType

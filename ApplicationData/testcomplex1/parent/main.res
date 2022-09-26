@@ -6,6 +6,9 @@
 	"entity": {
 		"ignore_variable" : "parent_public",
 		"simplized1_none_testsimple1": {
+			"extra": {
+				"status": "disabled"
+			},
 			"attribute2_none_testsimple1": {
 			
 			}

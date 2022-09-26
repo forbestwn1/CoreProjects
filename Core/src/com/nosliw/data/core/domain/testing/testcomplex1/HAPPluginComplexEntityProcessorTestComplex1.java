@@ -40,7 +40,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 			HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityId);
 			if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
 				HAPExecutableTestSimple1 simpleTest1Exe = HAPProcessorTestSimple1.process(attrEntityInfo.getEntityId(), processContext);
-				executableEntity.setSimpleAttribute(simpleAttrName, simpleTest1Exe);
+				executableEntity.setTestSimpleAttribute( simpleAttrName, simpleTest1Exe);
 			}
 		}
 		

@@ -1,14 +1,12 @@
-package com.nosliw.data.core.domain.entity.script;
+package com.nosliw.data.core.domain;
 
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginResourceDefinitionImpScript extends HAPPluginResourceDefinitionImp{
+public class HAPPluginResourceDefinitionImpEntityThin extends HAPPluginResourceDefinitionImp{
 
-	public HAPPluginResourceDefinitionImpScript(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityScript.ENTITY_TYPE, runtimeEnv);
+	public HAPPluginResourceDefinitionImpEntityThin(String entityType, HAPRuntimeEnvironment runtimeEnv) {
+		super(entityType, runtimeEnv);
 	}
 
 	@Override

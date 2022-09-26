@@ -20,6 +20,7 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntity;
+import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntityThin;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionInDomainAttachment;
 import com.nosliw.data.core.domain.entity.configure.HAPPluginEntityDefinitionInDomainConfigure;
@@ -238,8 +239,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpTestDecoration1(this));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, this));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, this));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntityThin(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, this));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntityThin(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, this));
 		
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
 
