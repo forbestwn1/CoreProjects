@@ -12,20 +12,17 @@ import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbededWithId;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
+public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
-	@HAPAttribute
-	public static final String ENTITYTYPE = "entityType";
 	@HAPAttribute
 	public static final String VALUESTRUCTURECOMPLEX = "valueStructureComplex";
 	@HAPAttribute
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
 	@HAPAttribute
-	public static final String ATTRIBUTE = "attribute";
+	public static final String CHILDREN = "children";
 	
 	private HAPExecutableEntityComplexValueStructure m_valueStructureComplex;
 
@@ -37,15 +34,11 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	//container attribute by name, complex entity type
 	private Map<String, HAPContainerEntity> m_attributeContainer;
 	
-	private String m_entityType;
-	
 	public HAPExecutableEntityComplex(String entityType) {
-		this.m_entityType = entityType;
+		super(entityType);
 		this.m_attributesNormal = new LinkedHashMap<String, HAPEmbededWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
 	}
-	
-	public String getEntityType() {    return this.m_entityType;   }
 	
 	public void setValueStructureComplex(HAPExecutableEntityComplexValueStructure valueStructureComplex) {     this.m_valueStructureComplex = valueStructureComplex;      }
 	public HAPExecutableEntityComplexValueStructure getValueStructureComplex() {    return this.m_valueStructureComplex;    }
@@ -62,7 +55,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 
-		jsonMap.put(ENTITYTYPE, this.m_entityType);
+		jsonMap.put(ENTITYTYPE, this.getEntityType());
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
 		jsonMap.put(VALUESTRUCTURECOMPLEX, this.m_valueStructureComplex.toExpandedString(entityDomainExe.getValueStructureDomain()));
 
@@ -85,17 +78,18 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableImp{
 	}
 
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
-		jsonMap.put(ENTITYTYPE, this.m_entityType);
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		jsonMap.put(VALUESTRUCTURECOMPLEX, this.m_valueStructureComplex.toResourceData(runtimeInfo).toString());
+		
+		Map<String, String> childrenJsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> childrenTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
+		this.buildChildrenResourceJsonMap(childrenJsonMap, childrenTypeJsonMap, runtimeInfo);
+		jsonMap.put(CHILDREN, HAPJsonUtility.buildMapJson(childrenJsonMap, childrenTypeJsonMap));
 
-		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
-		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
-		this.buildResourceAttributeJsonMap(attrJsonMap, attrTypeJsonMap, runtimeInfo);
-		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
 	}
 
-	protected void buildResourceAttributeJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
+	protected void buildChildrenResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		for(String attrName : this.m_attributesNormal.keySet()) {
 			jsonMap.put(attrName, this.m_attributesNormal.get(attrName).toStringValue(HAPSerializationFormat.JSON));
 		}

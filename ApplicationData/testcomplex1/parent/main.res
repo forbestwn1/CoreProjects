@@ -15,12 +15,10 @@
 		},
 		"entity1_none_testsimple1": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"entity":{
-				"attribute2_none_testsimple1": {
-				
-				}
+				"scriptName": "testsimple1"
 			}
 		},
 		"entity2_none_testcomplex1": {

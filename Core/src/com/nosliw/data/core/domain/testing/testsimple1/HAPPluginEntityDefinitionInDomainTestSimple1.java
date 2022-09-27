@@ -29,9 +29,11 @@ public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntit
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestSimple1.ATTR_PARM);
-		for(Object key : parms.keySet()) {
-			String parmName = (String)key;
-			entity.setParm(parmName, parms.opt(parmName));
+		if(parms!=null) {
+			for(Object key : parms.keySet()) {
+				String parmName = (String)key;
+				entity.setParm(parmName, parms.opt(parmName));
+			}
 		}
 	}
 

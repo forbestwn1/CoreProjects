@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createConfigure;
 	var node_createErrorData;
+	var node_createTestSimple1;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,9 +36,29 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	var loc_parentView;
 	var loc_mainView;
-	var loc_attributes = {};
-	var loc_attributeViews = {};
+	var loc_children = {};
+	var loc_childrenViews = {};
 	var loc_stateValueView;
+	
+	var loc_simpleTest1Atts = {};
+	
+	var loc_init = function(complexEntityDef, variableGroupId, bundleCore, configure){
+		var attrs = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
+		_.each(attrs, function(attr, attrName){
+			var entityType = attr[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];
+			if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+				//test simple attribute
+				loc_simpleTest1Atts[attrName] = node_createTestSimple1(attr);
+			}
+		});
+	};
+	
+	var loc_simpleTest1AttrsInvoke = function(funName, parm1, parm2){
+		var argus = arguments;
+		_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
+			simpleTest1Att.callBack.apply(simpleTest1Att, argus);
+		});
+	};
 	
 	var loc_out = {
 
@@ -47,13 +68,19 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
-			var attrsValue = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_ATTRIBUTE];
-			_.each(attrsValue, function(attrValue, attrName){
-				var complexEntityId = attrValue[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
+			
+			//complex children
+			var childrenComplex = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_CHILDREN];
+			_.each(childrenComplex, function(childComplex, attrName){
+				var complexEntityId = childComplex[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
 				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
-				loc_attributes[attrName] = attrEntity;
+				loc_children[attrName] = attrEntity;
 				out.addRequest(attrEntity.getPreInitRequest());
 			});
+			
+			//simpletest1 attribute
+			loc_simpleTest1AttrsInvoke("getPreInitRequest");
+			
 			return out;
 		},		
 		
@@ -65,21 +92,25 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_parentView.append(loc_mainView);
 			
-			var stateValueViewWrapper = $('<div>state:</div>');
-			loc_stateValueView = $('<input type="text">');
-			stateValueViewWrapper.append(loc_stateValueView);
-			loc_mainView.append(stateValueViewWrapper);
-			
-			_.each(loc_attributes, function(attr, attrName){
-				var attrView = $('<div>childAttr: '+attrName+'</div>');
-				loc_mainView.append(attrView);
-				loc_attributeViews[attrName] = attrView;
+//			var stateValueViewWrapper = $('<div>state:</div>');
+//			loc_stateValueView = $('<input type="text">');
+//			stateValueViewWrapper.append(loc_stateValueView);
+//			loc_mainView.append(stateValueViewWrapper);
+
+			//complex children
+			_.each(loc_children, function(child, childName){
+				var childView = $('<div>childAttr: '+childName+'</div>');
+				loc_mainView.append(childView);
+				loc_childrenViews[childName] = childView;
 				
-				var attrRuntimeContext = _.extend({}, runtimeContext, {
-					view : attrView
+				var childRuntimeContext = _.extend({}, runtimeContext, {
+					view : childView
 				});
-				out.addRequest(attr.getUpdateRuntimeContextRequest(attrRuntimeContext));
+				out.addRequest(child.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
+			
+			//simpletest1 attribute
+			loc_simpleTest1AttrsInvoke("getUpdateRuntimeContextRequest", runtimeContext);
 			
 			return out;
 		},
@@ -96,7 +127,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
-				return node_createErrorData("code", "message", "data");
+//				return node_createErrorData("code", "message", "data");
 //				var k = aaa.bbb.ccc;
 			}
 		},
@@ -104,13 +135,18 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		
 		getGetStateDataRequest : function(handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-//				return "111111";
-				return loc_stateValueView.val();
+				var out = {};
+				_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
+					out[name] = simpleTest1Att.callBack("getGetStateDataRequest");
+				});
+				return out;
 			}, handlers, request);
 		},
 		getRestoreStateDataRequest : function(stateData, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_stateValueView.val(stateData);
+				_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
+					simpleTest1Att.callBack("getRestoreStateDataRequest", stateData==undefined?undefined:stateData[name]);
+				});
 			}, handlers, request);
 		},
 
@@ -154,6 +190,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			
 	};
 	
+	loc_init(complexEntityDef, variableGroupId, bundleCore, configure);
+	
 	return loc_out;
 };
 
@@ -168,6 +206,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
+nosliw.registerSetNodeDataEvent("testcomponent.createTestSimple1", function(){node_createTestSimple1 = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 
