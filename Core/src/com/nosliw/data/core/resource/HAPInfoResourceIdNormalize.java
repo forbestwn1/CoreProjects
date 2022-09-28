@@ -2,6 +2,8 @@ package com.nosliw.data.core.resource;
 
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
@@ -10,12 +12,16 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 //normalized resource id:
 //    root simple resource id
 //    path from root
+@HAPEntityWithAttribute
 public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 
+	@HAPAttribute
 	public static final String ROOTRESOURCEID = "rootResourceId";
 	
+	@HAPAttribute
 	public static final String PATH = "path";
 	
+	@HAPAttribute
 	public static final String RESOURCEENTITYTYPE = "resourceEntityType";
 	
 	//it maybe simple or local resource id
@@ -43,7 +49,7 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
-		jsonMap.put(ROOTRESOURCEID, this.m_rootResourceId.toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ROOTRESOURCEID, this.m_rootResourceId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PATH, this.m_path.getPath());
 		jsonMap.put(RESOURCEENTITYTYPE, this.m_resourceEntityType);
 	}

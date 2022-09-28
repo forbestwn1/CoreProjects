@@ -75,7 +75,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
 		//load related resources
-		var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ROOTRESOURCEID];
+		var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_RESOURCEINFO][node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
 		out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 			success : function(requestInfo, resourceTree){
 				//get bundle definition

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -67,6 +68,11 @@ public class HAPResourceIdSimple extends HAPResourceId{
 		this.m_id = jsonObj.getString(ID);
 	}
 
+	@Override
+	public int hashCode() {
+		return this.toStringValue(HAPSerializationFormat.LITERATE).hashCode();
+	}
+	
 	@Override
 	public boolean equals(Object o){
 		boolean out = false;

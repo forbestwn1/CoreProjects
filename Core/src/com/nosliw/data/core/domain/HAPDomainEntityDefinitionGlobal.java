@@ -64,6 +64,9 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		return out;
 	}
 	
+	//solid entity means:
+	//   if entity is attachment ref, then replace with real entity
+	//   if entity is local or global simple resource ref, then replace with real entity
 	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId);
 		if(out.getEntity()==null){

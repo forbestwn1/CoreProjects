@@ -61,8 +61,9 @@ var node_createPackageRuntimeService = function() {
 		else{
 			//refer to external Entity (bundle)
 			var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_EXTERNALCOMPLEXENTITYID];
+			var globalId = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_EXTERNALENTITY][externalEntityId];
 			//create bundle runtime
-			return loc_out.createBundleRuntime(externalEntityId, configure, request);
+			return loc_out.createBundleRuntime(globalId, configure, request);
 		}
 	};
 

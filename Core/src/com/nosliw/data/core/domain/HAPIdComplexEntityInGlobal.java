@@ -4,48 +4,38 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 //id for entity globally (accross different complex resource)
 @HAPEntityWithAttribute
 public class HAPIdComplexEntityInGlobal extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static String ROOTRESOURCEID = "rootResourceId";
-
-	@HAPAttribute
-	public static String PATH = "path";
+	public static String RESOURCEINFO = "resourceInfo";
 
 	@HAPAttribute
 	public static String ENTITYIDINDOMAIN = "entityIdInDomain";
 
-	//root resource id
-	private HAPResourceIdSimple m_rootResourceId;
+	//resource info for this complex entity
+	private HAPInfoResourceIdNormalize m_resourceInfo;
 	
-	//path to entity
-	private HAPPath m_path;
-	
-	//entity id within resource domain
+	//entity id within resource domain (calcuated)
 	private HAPIdEntityInDomain m_entityIdInDomain;
 
-	public HAPIdComplexEntityInGlobal(HAPResourceIdSimple rootResourceId, HAPPath path, HAPIdEntityInDomain entityIdInDomain) {
-		this.m_rootResourceId = rootResourceId;
-		this.m_path = path;
+	public HAPIdComplexEntityInGlobal(HAPInfoResourceIdNormalize resourceInfo, HAPIdEntityInDomain entityIdInDomain) {
+		this.m_resourceInfo = resourceInfo;
 		this.m_entityIdInDomain = entityIdInDomain;
 	}
 	
-	public HAPResourceIdSimple getRootResourceId() {   return this.m_rootResourceId;     }
 	public HAPIdEntityInDomain getEntityIdInDomain() {    return this.m_entityIdInDomain;    }
-	public HAPPath getPath() {   return this.m_path;    }
+	public HAPInfoResourceIdNormalize getResourceInfo() {   return this.m_resourceInfo;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ROOTRESOURCEID, this.getRootResourceId().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(RESOURCEINFO, this.getResourceInfo().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ENTITYIDINDOMAIN, this.getEntityIdInDomain().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PATH, this.m_path.getPath());
 	}
 
 }

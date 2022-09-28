@@ -1,7 +1,6 @@
 package com.nosliw.data.core.domain;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,9 +38,7 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableComplexEntityIdByDefinitionComplexEntityId;
 	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionComplexEntityIdByExecutableComplexEntityId;
 	
-	//all other complex resource this resource depend on
-	private Set<HAPResourceIdSimple> m_complexResourceDependency;
-	
+	//
 	private HAPDomainAttachment m_attachmentDomain;
 	
 	public HAPExecutableBundle(HAPResourceIdSimple rootResourceId, HAPDomainEntityDefinitionGlobal definitionDomain) {
@@ -51,7 +48,6 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 		this.m_attachmentDomain = new HAPDomainAttachment();
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
 		this.m_definitionComplexEntityIdByExecutableComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
-		this.m_complexResourceDependency = new HashSet<HAPResourceIdSimple>();
 	}
 	
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
@@ -70,8 +66,7 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	public HAPIdEntityInDomain getExecutableEntityIdByDefinitionEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_executableComplexEntityIdByDefinitionComplexEntityId.get(defEntityId);  	}
 	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_definitionComplexEntityIdByExecutableComplexEntityId.get(defEntityId);  	}
 	
-	public void addComplexResourceDependency(HAPResourceIdSimple resourceId) {   this.m_complexResourceDependency.add(resourceId);    }
-	public Set<HAPResourceIdSimple> getComplexResourceDependency(){    return this.m_complexResourceDependency;     }
+	public Set<HAPResourceIdSimple> getComplexResourceDependency(){   return this.m_executableEntityDomain.getComplexResourceDependency();  }
 	
 	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPInfoResourceIdNormalize normalizedResourceInfo) {
 		HAPIdEntityInDomain entityId = this.m_definitionEntityDomain.getLocalDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
@@ -80,14 +75,14 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 		return this.m_executableEntityDomain.getEntityInfoExecutable(outEntityExeId);
 	}
 
-	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain out = this.m_executableEntityDomain.addExecutableEntity(executableEntity, extraInfo);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
 		this.m_definitionComplexEntityIdByExecutableComplexEntityId.put(out, extraInfo.getEntityDefinitionId());
 		return out;
 	}
 
-	public HAPIdEntityInDomain addExecutableEntity(HAPIdEntityInDomain definitionEntityId, HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+	public HAPIdEntityInDomain addExecutableEntity(HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		HAPIdEntityInDomain out = this.m_executableEntityDomain.addExecutableEntity(complexEntityIdInGloabal, extraInfo);
 		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
 		this.m_definitionComplexEntityIdByExecutableComplexEntityId.put(out, extraInfo.getEntityDefinitionId());

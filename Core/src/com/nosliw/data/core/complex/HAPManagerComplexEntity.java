@@ -55,7 +55,7 @@ public class HAPManagerComplexEntity {
 		
 		//find all related complex resource
 		Set<HAPResourceIdSimple> dependency = new HashSet<HAPResourceIdSimple>();
-		buildDependencyGroup(gloablId.getRootResourceId(), dependency);
+		buildDependencyGroup(gloablId.getResourceInfo().getRootResourceIdSimple(), dependency);
 		for(HAPResourceIdSimple bundleId : dependency) {
 			out.addDependency(bundleId);
 		}
@@ -119,9 +119,9 @@ public class HAPManagerComplexEntity {
 	private HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager() {     return this.m_runtimeEnv.getDomainEntityManager();      }
 	
 	private HAPIdEntityInDomain buildExecutableTree(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		HAPExecutableBundle complexResourcePackage = processContext.getCurrentComplexResourceBundle();
-		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
-		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
+		HAPExecutableBundle complexResourceBundle = processContext.getCurrentComplexResourceBundle();
+		HAPDomainEntityDefinitionGlobal defDomain = complexResourceBundle.getDefinitionDomain();
+		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourceBundle.getExecutableDomain();
 		
 		//create executable and add to domain
 		HAPIdEntityInDomain out = null;
@@ -131,7 +131,7 @@ public class HAPManagerComplexEntity {
 			String entityType = complexEntityDef.getEntityType();
 			HAPExecutableEntityComplex exeEntity = this.m_processorPlugins.get(entityType).newExecutable();
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
-			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, exeEntity, exeExtraInfo);
+			out = complexResourceBundle.addExecutableEntity(exeEntity, exeExtraInfo);
 			HAPExecutableEntityComplex complexEntityExe = exeDomain.getEntityInfoExecutable(out).getEntity();
 			
 			//build executable for simple complex attribute
@@ -167,8 +167,7 @@ public class HAPManagerComplexEntity {
 		else {
 			HAPIdComplexEntityInGlobal globalId = getComplexEntityGolbalIdResourceId(entityDefInfo.getResourceId());
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
-			out = complexResourcePackage.addExecutableEntity(complexEntityDefinitionId, globalId, exeExtraInfo);
-			complexResourcePackage.addComplexResourceDependency(globalId.getRootResourceId());
+			out = complexResourceBundle.addExecutableEntity(globalId, exeExtraInfo);
 		}
 		
 		return out;
@@ -176,10 +175,11 @@ public class HAPManagerComplexEntity {
 	
 	public void registerProcessorPlugin(HAPPluginComplexEntityProcessor processorPlugin) {	this.m_processorPlugins.put(processorPlugin.getEntityType(), processorPlugin);	}
 	
+	//
 	private HAPIdComplexEntityInGlobal getComplexEntityGolbalIdResourceId(HAPResourceId resourceId) {
 		HAPInfoResourceIdNormalize normalizedResourceInfo = this.getResourceDefinitionManager().normalizeResourceId(resourceId);
 		HAPInfoEntityInDomainExecutable entityInfo = this.getComplexEntityResourceBundle(normalizedResourceInfo.getRootResourceIdSimple()).getEntityInfoExecutable(normalizedResourceInfo);
-		return new HAPIdComplexEntityInGlobal(normalizedResourceInfo.getRootResourceIdSimple(), normalizedResourceInfo.getPath(), entityInfo.getEntityId());
+		return new HAPIdComplexEntityInGlobal(normalizedResourceInfo, entityInfo.getEntityId());
 	}
 	
 

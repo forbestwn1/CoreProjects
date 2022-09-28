@@ -37,7 +37,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 	private HAPExecutableEntityComplex m_entity;
 
 	//when refer to external complex entity
-	private HAPIdComplexEntityInGlobal m_externalComplexEntityId;
+	private String m_externalComplexEntityId;
 	
 	//extra info for this entity
 	private HAPExtraInfoEntityInDomainExecutable m_extraInfo;
@@ -48,7 +48,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 		this.m_extraInfo = extraInfo;
 	}
 	
-	public HAPInfoEntityInDomainExecutable(HAPIdComplexEntityInGlobal externalComplexEntityId, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
+	public HAPInfoEntityInDomainExecutable(String externalComplexEntityId, HAPIdEntityInDomain entityId, HAPExtraInfoEntityInDomainExecutable extraInfo) {
 		this.m_entityId = entityId;
 		this.m_externalComplexEntityId = externalComplexEntityId;
 		this.m_extraInfo = extraInfo;
@@ -58,7 +58,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 	
 	public HAPExecutableEntityComplex getEntity() {   return this.m_entity;     }
 	
-	public HAPIdComplexEntityInGlobal getExternalComplexEntityId() {     return this.m_externalComplexEntityId;       }
+	public String getExternalComplexEntityId() {     return this.m_externalComplexEntityId;       }
 	
 	public HAPExtraInfoEntityInDomainExecutable getExtraInfo() {    return this.m_extraInfo;    }
 	
@@ -68,7 +68,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_externalComplexEntityId!=null)  jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
-		if(this.m_externalComplexEntityId!=null)  jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId);
 		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
 	}
 
