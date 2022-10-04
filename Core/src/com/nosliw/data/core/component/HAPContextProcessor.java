@@ -24,7 +24,7 @@ public class HAPContextProcessor {
 
 	private HAPManagerComplexEntity m_complexEntityManager;
 	
-	private HAPExecutableBundle m_complexResourceBundle;
+	private HAPExecutableBundle m_bundle;
 	
 	//runtime
 	private HAPRuntimeEnvironment m_runtimeEnv;
@@ -35,21 +35,21 @@ public class HAPContextProcessor {
 		this(new HAPExecutableBundle(currentResourceId, definitionDomain), runtimeEnv);
 	}
 
-	public HAPContextProcessor(HAPExecutableBundle currentResourceBundle, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPContextProcessor(HAPExecutableBundle currentBundle, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
-		this.m_complexResourceBundle = currentResourceBundle;
+		this.m_bundle = currentBundle;
 		this.m_complexEntityManager = this.m_runtimeEnv.getComplexEntityManager();
 	}
 
-	public HAPResourceIdSimple getCurrentComplexResourceId() {     return this.m_complexResourceBundle.getRootResourceId();     }
+	public HAPResourceIdSimple getCurrentComplexResourceId() {     return this.m_bundle.getRootResourceId();     }
 	
-	public HAPExecutableBundle getCurrentComplexResourceBundle() {     return this.m_complexResourceBundle;      }
+	public HAPExecutableBundle getCurrentBundle() {     return this.m_bundle;      }
 	
-	public HAPDomainEntityDefinitionGlobal getCurrentDefinitionDomain() {    return this.getCurrentComplexResourceBundle().getDefinitionDomain();     }
-	public HAPDomainEntityExecutableResourceComplex getCurrentExecutableDomain() {     return this.getCurrentComplexResourceBundle().getExecutableDomain();       }
+	public HAPDomainEntityDefinitionGlobal getCurrentDefinitionDomain() {    return this.getCurrentBundle().getDefinitionDomain();     }
+	public HAPDomainEntityExecutableResourceComplex getCurrentExecutableDomain() {     return this.getCurrentBundle().getExecutableDomain();       }
 	
-	public HAPDomainAttachment getCurrentAttachmentDomain() {    return this.getCurrentComplexResourceBundle().getAttachmentDomain();     }
-	public HAPDomainValueStructure getCurrentValueStructureDomain() {    return this.getCurrentComplexResourceBundle().getValueStructureDomain();     }
+	public HAPDomainAttachment getCurrentAttachmentDomain() {    return this.getCurrentBundle().getAttachmentDomain();     }
+	public HAPDomainValueStructure getCurrentValueStructureDomain() {    return this.getCurrentBundle().getValueStructureDomain();     }
 	
 
 	

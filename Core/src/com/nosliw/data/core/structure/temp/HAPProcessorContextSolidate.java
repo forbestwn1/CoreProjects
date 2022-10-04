@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureExecutable;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
@@ -17,9 +17,9 @@ public class HAPProcessorContextSolidate {
 
 	
 	
-	private static Map<String, Object> buildConstants(List<HAPWrapperValueStructureExecutable> valueStructureGroup, HAPDomainValueStructure valueStructureDomain){
+	private static Map<String, Object> buildConstants(List<HAPWrapperExecutableValueStructure> valueStructureGroup, HAPDomainValueStructure valueStructureDomain){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
-		for(HAPWrapperValueStructureExecutable valueStructureWrapper : valueStructureGroup) {
+		for(HAPWrapperExecutableValueStructure valueStructureWrapper : valueStructureGroup) {
 			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 			for(String rootName : valueStructure.getRootNames()) {
 				HAPRootStructure rootNode = valueStructure.getRootByName(rootName);

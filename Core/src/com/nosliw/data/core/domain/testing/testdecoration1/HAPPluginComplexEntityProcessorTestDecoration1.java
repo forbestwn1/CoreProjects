@@ -14,7 +14,7 @@ public class HAPPluginComplexEntityProcessorTestDecoration1 extends HAPPluginCom
 	@Override
 	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
-		HAPExecutableBundle currentPackage = processContext.getCurrentComplexResourceBundle();
+		HAPExecutableBundle currentPackage = processContext.getCurrentBundle();
 		
 		HAPExecutableTestDecoration1 executableEntity = (HAPExecutableTestDecoration1)currentPackage.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		

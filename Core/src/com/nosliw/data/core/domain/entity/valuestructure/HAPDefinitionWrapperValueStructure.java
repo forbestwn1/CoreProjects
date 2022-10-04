@@ -12,7 +12,7 @@ import com.nosliw.data.core.domain.HAPUtilityDomain;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPWrapperValueStructureDefinition extends HAPSerializableImp{
+public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp{
 
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
@@ -25,9 +25,9 @@ public class HAPWrapperValueStructureDefinition extends HAPSerializableImp{
 	
 	private HAPIdEntityInDomain m_valueStructureId;
 	
-	public HAPWrapperValueStructureDefinition() {}
+	public HAPDefinitionWrapperValueStructure() {}
 
-	public HAPWrapperValueStructureDefinition(HAPIdEntityInDomain valueStructureId) {
+	public HAPDefinitionWrapperValueStructure(HAPIdEntityInDomain valueStructureId) {
 		this.m_valueStructureId = valueStructureId;
 	}
 	
@@ -54,8 +54,8 @@ public class HAPWrapperValueStructureDefinition extends HAPSerializableImp{
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
-	public HAPWrapperValueStructureDefinition cloneValueStructureWrapper() {
-		HAPWrapperValueStructureDefinition out = new HAPWrapperValueStructureDefinition();
+	public HAPDefinitionWrapperValueStructure cloneValueStructureWrapper() {
+		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure();
 		out.m_groupName = this.m_groupName;
 		out.m_groupType = this.m_groupType;
 		out.m_valueStructureId = this.m_valueStructureId.cloneIdEntityInDomain();

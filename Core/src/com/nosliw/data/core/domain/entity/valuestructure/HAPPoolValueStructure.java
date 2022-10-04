@@ -12,7 +12,7 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 public class HAPPoolValueStructure {
 	
 	//value structure definitions by id
-	private Map<String, HAPWrapperValueStructureDefinition> m_valueStructure;
+	private Map<String, HAPDefinitionWrapperValueStructure> m_valueStructure;
 	
 	//all value structure complex by id
 	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
@@ -24,14 +24,14 @@ public class HAPPoolValueStructure {
 	private int m_idIndex;
 	
 	public HAPPoolValueStructure() {
-		this.m_valueStructure = new LinkedHashMap<String, HAPWrapperValueStructureDefinition>();
+		this.m_valueStructure = new LinkedHashMap<String, HAPDefinitionWrapperValueStructure>();
 		this.m_idIndex = 0;
 	}
 	
 	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplex, String parentId) {
 		String id = this.generateId();
 		valueStructureComplex.setId(id);
-		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
+		for(HAPExecutablePartComplexValueStructure part : valueStructureComplex.getValueStructures()) {
 			extractSimpleValueStructure(part);
 		}
 		this.m_valueStructureComplex.put(id, valueStructureComplex);
@@ -53,7 +53,7 @@ public class HAPPoolValueStructure {
 	public HAPValueStructure getValueStructure(String id) {   return this.m_valueStructure.get(id).getValueStructure();    }
 	
 	public void setValueStructure(String id, HAPValueStructure valueStructure) {   
-		HAPWrapperValueStructureDefinition wrapper = this.getValueStructureWrapper(id);
+		HAPDefinitionWrapperValueStructure wrapper = this.getValueStructureWrapper(id);
 		if(wrapper==null) {
 			this.addValueStructure(id, valueStructure);
 		}
@@ -69,12 +69,12 @@ public class HAPPoolValueStructure {
 	}
 	
 	private void addValueStructure(String id, HAPValueStructure valueStructure) {
-		HAPWrapperValueStructureDefinition wrapper = new HAPWrapperValueStructureDefinition(valueStructure);
+		HAPDefinitionWrapperValueStructure wrapper = new HAPDefinitionWrapperValueStructure(valueStructure);
 		wrapper.setId(id);
 		this.m_valueStructure.put(wrapper.getId(), wrapper);
 	}
 	
-	private HAPWrapperValueStructureDefinition getValueStructureWrapper(String id) {
+	private HAPDefinitionWrapperValueStructure getValueStructureWrapper(String id) {
 		return this.m_valueStructure.get(id);
 	}
 	
@@ -84,16 +84,16 @@ public class HAPPoolValueStructure {
 	}
 	
 	//extract value structure from complex and add to pool
-	private void extractSimpleValueStructure(HAPPartComplexValueStructure part) {
+	private void extractSimpleValueStructure(HAPExecutablePartComplexValueStructure part) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
-			HAPPartComplexValueStructureSimple simplePart = (HAPPartComplexValueStructureSimple)part;
+			HAPExecutablePartComplexValueStructureSimple simplePart = (HAPExecutablePartComplexValueStructureSimple)part;
 			String valueStructureId = this.addValueStructure(simplePart.getValueStructure());
 			simplePart.setValueStructureDefinitionId(valueStructureId);
 		}
 		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
-			HAPPartComplexValueStructureGroupWithEntity entityGroup = (HAPPartComplexValueStructureGroupWithEntity)part;
-			for(HAPPartComplexValueStructure child : entityGroup.getChildren()) {
+			HAPExecutablePartComplexValueStructureGroupWithEntity entityGroup = (HAPExecutablePartComplexValueStructureGroupWithEntity)part;
+			for(HAPExecutablePartComplexValueStructure child : entityGroup.getChildren()) {
 				extractSimpleValueStructure(child);
 			}
 		}

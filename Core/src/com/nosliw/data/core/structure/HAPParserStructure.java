@@ -79,7 +79,7 @@ public class HAPParserStructure {
 			
 			HAPReferenceElementInStructureComplex path = new HAPReferenceElementInStructureComplex();
 			path.buildObject(eleDefJson.get(HAPElementStructureLeafRelative.PATH), HAPSerializationFormat.JSON);
-			relativeLeaf.setPath(path);
+			relativeLeaf.setReference(path);
 			
 			Object resolvedPathObj = eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
 			if(resolvedPathObj!=null) {

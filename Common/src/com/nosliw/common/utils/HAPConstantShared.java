@@ -182,7 +182,8 @@ public class HAPConstantShared {
 
 
 
-		public static final String CONTEXT_ELEMENTTYPE_RELATIVE = "relative";
+		public static final String CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION = "relativeForDefinition";
+		public static final String CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE = "relativeForValue";
 		public static final String CONTEXT_ELEMENTTYPE_DATA = "data";
 		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANT = "constant";

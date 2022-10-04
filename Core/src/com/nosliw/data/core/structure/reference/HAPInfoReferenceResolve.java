@@ -1,8 +1,6 @@
 package com.nosliw.data.core.structure.reference;
 
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPRootStructure;
 
 //store result for resolve structure element reference path
 //this can be used:
@@ -29,15 +27,12 @@ public class HAPInfoReferenceResolve{
 	
 /////////// below part may not need	
 	//path to element (root id + path)
-	public HAPComplexPath path;
+//	public HAPComplexPath path;
 
 	//resolved root node
-	public HAPRootStructure referredRoot;
+//	public HAPRootStructure referredRoot;
 	
 	//unique reference to root
 //	public HAPReferenceRootInStrucutre rootReference;
 
-	
-	
-	
 }

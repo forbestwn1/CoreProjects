@@ -44,7 +44,7 @@ public class HAPProcessorElementRelative {
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-						String parent = relativeEle.getPath().getParentComplexName();
+						String parent = relativeEle.getReference().getParentComplexName();
 						if(dependency!=null)   dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
 							HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, structure);
@@ -72,7 +72,7 @@ public class HAPProcessorElementRelative {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-					String parent = relativeEle.getPath().getParentComplexName();
+					String parent = relativeEle.getReference().getParentComplexName();
 					if(dependency!=null)   dependency.add(parent);
 					if(!relativeEle.isProcessed()) {
 						HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, null);
@@ -91,7 +91,7 @@ public class HAPProcessorElementRelative {
 	private static HAPElementStructure processRelativeElement(HAPInfoElement eleInfo, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructureLeafRelative relativeElement = (HAPElementStructureLeafRelative)eleInfo.getElement();
 		HAPElementStructure out = relativeElement;
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeElement.getPath().getElementPath(), parentStructure, configure.elementReferenceResolveMode, configure.relativeInheritRule, null);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeElement.getReference().getElementPath(), parentStructure, configure.elementReferenceResolveMode, configure.relativeInheritRule, null);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
 			errors.add(HAPServiceData.createFailureData(eleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));

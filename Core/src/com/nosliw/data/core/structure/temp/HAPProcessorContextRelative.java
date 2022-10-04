@@ -132,7 +132,7 @@ public class HAPProcessorContextRelative {
 			{
 				if(isParentFlat)  path.getRootReference().setCategary(null);
 				else path.getRootReference().setCategary(resolveInfo.path.getRootReference().getCategary());
-				defContextElementRelative.setPath(path);
+				defContextElementRelative.setReference(path);
 				
 				HAPElementStructure solvedContextEle = resolveInfo.finalElement; 
 				if(solvedContextEle!=null){

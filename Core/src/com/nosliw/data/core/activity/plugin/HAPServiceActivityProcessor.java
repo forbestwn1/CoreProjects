@@ -11,7 +11,7 @@ import com.nosliw.data.core.activity.HAPUtilityActivity;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
@@ -27,7 +27,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPWrapperValueStructureDefinition valueStructureWrapper,
+			HAPDefinitionWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {

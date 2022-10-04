@@ -34,7 +34,7 @@ public class HAPUtilityAttachment {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityInfo, Object adapter, HAPInfoEntityInDomainExecutable parentEntityInfo, HAPContextProcessor processContext) {
 				
-				HAPExecutableBundle complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+				HAPExecutableBundle complexEntityPackage = processContext.getCurrentBundle();
 				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
 				HAPDomainAttachment attachmentDomain = processContext.getCurrentAttachmentDomain();
@@ -59,7 +59,7 @@ public class HAPUtilityAttachment {
 			@Override
 			public void process(HAPInfoEntityInDomainExecutable entityExeInfo, Object adapter, HAPInfoEntityInDomainExecutable parentComplexEntityExeInfo, HAPContextProcessor processContext) {
 				if(parentComplexEntityExeInfo!=null) {
-					HAPExecutableBundle complexEntityPackage = processContext.getCurrentComplexResourceBundle();
+					HAPExecutableBundle complexEntityPackage = processContext.getCurrentBundle();
 					HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
 
 					HAPIdEntityInDomain entityIdExe = entityExeInfo.getEntityId();

@@ -15,42 +15,42 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 
 	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
 
-	public static final String PART = "part";
+	public static final String VALUESTRUCTURE = "valueStructure";
 	
-	private List<HAPWrapperValueStructureDefinition> m_parts;
+	private List<HAPDefinitionWrapperValueStructure> m_valueStructures;
 	
 	public HAPDefinitionEntityComplexValueStructure() {
-		this.m_parts = new ArrayList<HAPWrapperValueStructureDefinition>();
+		this.m_valueStructures = new ArrayList<HAPDefinitionWrapperValueStructure>();
 	}
 	
-	public List<HAPWrapperValueStructureDefinition> getParts(){   return this.m_parts;  }
-	public void addPart(HAPWrapperValueStructureDefinition part) {    this.m_parts.add(part);    }
+	public List<HAPDefinitionWrapperValueStructure> getValueStructures(){   return this.m_valueStructures;  }
+	public void addValueStructure(HAPDefinitionWrapperValueStructure valueStructure) {    this.m_valueStructures.add(valueStructure);    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		List<String> partJsonArray = new ArrayList<String>();
-		for(HAPWrapperValueStructureDefinition part : this.m_parts) {
-			partJsonArray.add(part.toStringValue(HAPSerializationFormat.JSON));
+		List<String> valueStructureJsonArray = new ArrayList<String>();
+		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
+			valueStructureJsonArray.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partJsonArray.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
 	
 	@Override
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
 		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
-		List<String> partJsonArray = new ArrayList<String>();
-		for(HAPWrapperValueStructureDefinition part : this.m_parts) {
-			partJsonArray.add(part.toExpandedJsonString(entityDefDomain));
+		List<String> valueStructureJsonArray = new ArrayList<String>();
+		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
+			valueStructureJsonArray.add(part.toExpandedJsonString(entityDefDomain));
 		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partJsonArray.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
 
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexValueStructure out = new HAPDefinitionEntityComplexValueStructure();
-		for(HAPWrapperValueStructureDefinition part : this.m_parts) {
-			out.m_parts.add(part.cloneValueStructureWrapper());
+		for(HAPDefinitionWrapperValueStructure valueStructure : this.m_valueStructures) {
+			out.m_valueStructures.add(valueStructure.cloneValueStructureWrapper());
 		}
 		return out;
 	}

@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginActivityImp implements HAPPluginActivity{
@@ -62,7 +62,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPWrapperValueStructureDefinition valueStructureWrapper,
+			HAPDefinitionWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {

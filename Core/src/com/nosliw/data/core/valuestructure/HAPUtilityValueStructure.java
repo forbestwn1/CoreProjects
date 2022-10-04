@@ -12,10 +12,10 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -34,16 +34,16 @@ public class HAPUtilityValueStructure {
 		return null;
 	}
 	
-	public static HAPValueStructure getValueStructureFromWrapper(HAPWrapperValueStructureDefinition wrapper) {
+	public static HAPValueStructure getValueStructureFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
 		return wrapper.getValueStructure();
 	}
 	
-	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPWrapperValueStructureDefinition wrapper) {
+	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionFlat)getValueStructureFromWrapper(wrapper);
 	}
 	
-	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPWrapperValueStructureDefinition wrapper) {
+	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionGroup)getValueStructureFromWrapper(wrapper);
 	}
 	
@@ -123,6 +123,8 @@ public class HAPUtilityValueStructure {
 
 	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPDomainValueStructure valueStructureDomain) {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
+		
+		
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
 			discoverDataVariablesDefinitionInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());

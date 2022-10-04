@@ -24,28 +24,28 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPP
 			JSONArray partJsonArray = (JSONArray)obj;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
-				HAPWrapperValueStructureDefinition valueStructureWrapper = parseValueStructureWrapper(partObj, parserContext);
-				valueStructureComplex.addPart(valueStructureWrapper);
+				HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parserContext);
+				valueStructureComplex.addValueStructure(valueStructureWrapper);
 			}
 		}
 		else if(obj instanceof JSONObject) {
-			HAPWrapperValueStructureDefinition valueStructureWrapper = parseValueStructureWrapper((JSONObject)obj, parserContext);
-			valueStructureComplex.addPart(valueStructureWrapper);
+			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)obj, parserContext);
+			valueStructureComplex.addValueStructure(valueStructureWrapper);
 		}
 	}
 
-	private HAPWrapperValueStructureDefinition parseValueStructureWrapper(JSONObject wrapperObj, HAPContextParser parserContext) {
-		String groupType = (String)wrapperObj.opt(HAPWrapperValueStructureDefinition.GROUPTYPE);
+	private HAPDefinitionWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPContextParser parserContext) {
+		String groupType = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.GROUPTYPE);
 		if(groupType==null)  groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 
-		String groupName = (String)wrapperObj.opt(HAPWrapperValueStructureDefinition.GROUPNAME);
+		String groupName = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.GROUPNAME);
 
-		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPWrapperValueStructureDefinition.VALUESTRUCTURE);
+		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPDefinitionWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null)   valueStructureJsonObj = wrapperObj;
 		
 		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 
-		HAPWrapperValueStructureDefinition out = new HAPWrapperValueStructureDefinition(valueStructureEntityId);
+		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure(valueStructureEntityId);
 		out.setGroupName(groupName);
 		out.setGroupType(groupType);
 		return out;

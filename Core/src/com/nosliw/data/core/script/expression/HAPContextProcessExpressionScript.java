@@ -9,7 +9,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite1;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 
 public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
 
@@ -20,7 +20,7 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
 
 	//context for expression
-	private HAPWrapperValueStructureDefinition m_valueStructureWrapper;
+	private HAPDefinitionWrapperValueStructure m_valueStructureWrapper;
 	
 	public HAPContextProcessExpressionScript() {
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
@@ -39,9 +39,9 @@ public class HAPContextProcessExpressionScript implements HAPWithValueStructure,
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantsDefinition.put(constantDef.getId(), constantDef);  }
 
 	@Override
-	public HAPWrapperValueStructureDefinition getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
+	public HAPDefinitionWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
 
 	@Override
-	public void setValueStructureWrapper(HAPWrapperValueStructureDefinition valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
+	public void setValueStructureWrapper(HAPDefinitionWrapperValueStructure valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
 
 }

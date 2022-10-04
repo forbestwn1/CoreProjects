@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 
+//criteria for reference
 @HAPEntityWithAttribute
 public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 

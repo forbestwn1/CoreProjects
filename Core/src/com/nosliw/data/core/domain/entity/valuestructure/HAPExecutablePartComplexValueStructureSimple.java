@@ -11,38 +11,38 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
-public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStructure{
+public class HAPExecutablePartComplexValueStructureSimple extends HAPExecutablePartComplexValueStructure{
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
-	private List<HAPWrapperValueStructureExecutable> m_valueStructures;
+	private List<HAPWrapperExecutableValueStructure> m_valueStructures;
 	
-	public HAPPartComplexValueStructureSimple(HAPInfoPartValueStructure partInfo) {
+	public HAPExecutablePartComplexValueStructureSimple(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
-		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureExecutable>();
+		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
 
-	public HAPPartComplexValueStructureSimple() {
-		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureExecutable>();
+	public HAPExecutablePartComplexValueStructureSimple() {
+		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
 	
 	@Override
 	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE;    }
 
-	public List<HAPWrapperValueStructureExecutable> getValueStructures(){    return this.m_valueStructures;    }
-	public void addValueStructure(HAPWrapperValueStructureExecutable valueStructure) {   
+	public List<HAPWrapperExecutableValueStructure> getValueStructures(){    return this.m_valueStructures;    }
+	public void addValueStructure(HAPWrapperExecutableValueStructure valueStructure) {   
 		if(valueStructure!=null) this.m_valueStructures.add(valueStructure);   
 	}
 	
-	public HAPPartComplexValueStructureSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple(this.getPartInfo());
+	public HAPExecutablePartComplexValueStructureSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPExecutablePartComplexValueStructureSimple out = new HAPExecutablePartComplexValueStructureSimple(this.getPartInfo());
 		this.cloneToPartComplexValueStructure(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
 
-		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
+		for(HAPWrapperExecutableValueStructure valueStructure : this.m_valueStructures) {
 			if(groupTypeCandidates==null||groupTypeCandidates.length==0||Arrays.asList(groupTypeCandidates).contains(valueStructure.getGroupType())) {
-				HAPWrapperValueStructureExecutable cloned = null;
+				HAPWrapperExecutableValueStructure cloned = null;
 				if(mode.equals(HAPConstantShared.INHERITMODE_RUNTIME)) {
 					cloned = valueStructure.cloneValueStructureWrapper();
 				}
@@ -61,15 +61,15 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	}
 
 	@Override
-	public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+	public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		return this.cloneValueStructureComplexPartSimple(valueStructureDomain, mode, groupTypeCandidates);  
 	}
 	
 	@Override
-	public HAPPartComplexValueStructure cloneComplexValueStructurePart() {
-		HAPPartComplexValueStructureSimple out = new HAPPartComplexValueStructureSimple();
+	public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart() {
+		HAPExecutablePartComplexValueStructureSimple out = new HAPExecutablePartComplexValueStructureSimple();
 		this.cloneToPartComplexValueStructure(out);
-		for(HAPWrapperValueStructureExecutable valueStructureWrapper : this.m_valueStructures) {
+		for(HAPWrapperExecutableValueStructure valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
 		}
 		return out;
@@ -81,7 +81,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		List<String> valueStructureJsonArray = new ArrayList<String>();
-		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
+		for(HAPWrapperExecutableValueStructure valueStructure : this.m_valueStructures) {
 			valueStructureJsonArray.add(valueStructure.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
@@ -89,7 +89,7 @@ public class HAPPartComplexValueStructureSimple extends HAPPartComplexValueStruc
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		List<String> arrayJson = new ArrayList<String>();
-		for(HAPWrapperValueStructureExecutable valueStructure : this.m_valueStructures) {
+		for(HAPWrapperExecutableValueStructure valueStructure : this.m_valueStructures) {
 			arrayJson.add(valueStructure.toExpandedString(valueStructureDomain));
 		}
 		return HAPJsonUtility.buildArrayJson(arrayJson.toArray(new String[0]));

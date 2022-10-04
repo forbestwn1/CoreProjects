@@ -14,7 +14,7 @@ import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -34,7 +34,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPWrapperValueStructureDefinition valueStructureWrapper,
+			HAPDefinitionWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {

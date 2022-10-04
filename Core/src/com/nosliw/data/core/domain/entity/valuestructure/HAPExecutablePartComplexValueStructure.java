@@ -4,13 +4,13 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
-public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
+public abstract class HAPExecutablePartComplexValueStructure extends HAPEntityInfoImp{
 	
 	private HAPInfoPartValueStructure m_partInfo;
 	
-	public HAPPartComplexValueStructure() {}
+	public HAPExecutablePartComplexValueStructure() {}
 	
-	public HAPPartComplexValueStructure(HAPInfoPartValueStructure partInfo) {
+	public HAPExecutablePartComplexValueStructure(HAPInfoPartValueStructure partInfo) {
 		this.m_partInfo = processPartInfo(partInfo);
 	}
 
@@ -18,12 +18,12 @@ public abstract class HAPPartComplexValueStructure extends HAPEntityInfoImp{
 	
 	abstract public String getPartType();
 	
-	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
-	abstract public HAPPartComplexValueStructure cloneComplexValueStructurePart();
+	abstract public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
+	abstract public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart();
 	
 	abstract public boolean isEmpty();
 
-	protected void cloneToPartComplexValueStructure(HAPPartComplexValueStructure part) {
+	protected void cloneToPartComplexValueStructure(HAPExecutablePartComplexValueStructure part) {
 		this.cloneToEntityInfo(part);
 		part.m_partInfo = this.m_partInfo.cloneValueStructurePartInfo();
 	}

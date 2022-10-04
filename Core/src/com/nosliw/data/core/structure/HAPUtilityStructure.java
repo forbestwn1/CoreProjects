@@ -13,9 +13,9 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
@@ -57,6 +57,7 @@ public class HAPUtilityStructure {
 					HAPElementStructure solidEle = null;
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solvedElment.getType())) {
 						solidEle = ((HAPElementStructureNode)solvedElment).getChildren().get(pathSeg);
+						if(solidEle==null)   return null;   //not valid path
 					}
 					if(solidEle==null) 		remainingPath = remainingPath.appendSegment(pathSeg);
 					else{
@@ -65,6 +66,7 @@ public class HAPUtilityStructure {
 					}
 				}
 				else {
+					//remaining path
 					remainingPath = remainingPath.appendSegment(pathSeg);
 				}
 			}
@@ -168,7 +170,7 @@ public class HAPUtilityStructure {
 	public static HAPRootStructure createRootWithRelativeElement(String refPath, String parentStructure) {
 		HAPRootStructure out = new HAPRootStructure();
 		HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-		relativeEle.setPath(new HAPReferenceElementInStructureComplex(parentStructure, refPath));
+		relativeEle.setReference(new HAPReferenceElementInStructureComplex(parentStructure, refPath));
 		out.setDefinition(relativeEle);
 		return out;
 	}
@@ -183,7 +185,7 @@ public class HAPUtilityStructure {
 			out = new HAPRootStructure();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-			relativeEle.setPath(new HAPReferenceElementInStructureComplex(parentStructure, elePath));
+			relativeEle.setReference(new HAPReferenceElementInStructureComplex(parentStructure, elePath));
 			relativeEle.setResolvedIdPath(new HAPComplexPath(parentNode.getLocalId(), elePath));
 			if(parentNode.getDefinition().isProcessed()) {
 //				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());

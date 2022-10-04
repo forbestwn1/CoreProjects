@@ -14,7 +14,7 @@ import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperValueStructureDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
@@ -24,7 +24,7 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPWrapperValueStructureDefinition valueStructureWrapper,
+			HAPDefinitionWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {

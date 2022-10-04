@@ -7,11 +7,10 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.HAPConfigureComplexRelationValueStructure;
+import com.nosliw.data.core.complex.HAPUtilityValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityComplexValueStructure {
@@ -25,26 +24,81 @@ public class HAPUtilityComplexValueStructure {
 		return out;
 	}
 	
+	public static List<HAPInfoValueStructureSorting> getAllValueStructuresSorted(HAPExecutableEntityComplexValueStructure valueStructureComplex){
+		List<HAPInfoValueStructureSorting> out = getAllValueStructures(valueStructureComplex);
+		sortValueStructureInfos(out);
+		return out;
+	}
+	
+	public static List<HAPInfoValueStructureSorting> getAllValueStructures(HAPExecutableEntityComplexValueStructure valueStructureComplex){
+		List<HAPInfoValueStructureSorting> out = new ArrayList<HAPInfoValueStructureSorting>();
+		for(HAPExecutablePartComplexValueStructure part : valueStructureComplex.getParts()) {
+			getAllChildren(null, part, out);
+		}
+		return out;
+	}
+
+	private static void sortValueStructureInfos(List<HAPInfoValueStructureSorting> valueStructures) {
+		Collections.sort(valueStructures, new Comparator<HAPInfoValueStructureSorting>() {
+			@Override
+			public int compare(HAPInfoValueStructureSorting arg0, HAPInfoValueStructureSorting arg1) {
+				String groupType0 = arg0.getValueStructure().getGroupType();
+				String groupType1 = arg1.getValueStructure().getGroupType();
+				
+				List<String> groups = HAPUtilityValueStructure.getAllCategariesWithResolvePriority();
+				int groupPriority0 = groups.indexOf(groupType0);
+				int groupPriority1 = groups.indexOf(groupType1);
+
+				//compare priority first
+				int out = sortPriority(arg0.getPriority(), arg1.getPriority());
+				if(out!=0)  return out;
+				else {
+					//if priority equal, then compare by group type
+					return groupPriority1 - groupPriority0;
+				}
+			}
+		});
+	}
+
+	private static void getAllChildren(List<Integer> priorityBase, HAPExecutablePartComplexValueStructure part, List<HAPInfoValueStructureSorting> out) {
+		String partType = part.getPartType();
+		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
+			HAPExecutablePartComplexValueStructureSimple simplePart = (HAPExecutablePartComplexValueStructureSimple)part;
+			for(HAPWrapperExecutableValueStructure valueStructure : simplePart.getValueStructures()) {
+				HAPInfoValueStructureSorting valueStructureInfo = new HAPInfoValueStructureSorting(valueStructure);
+				valueStructureInfo.setPriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority()));
+				out.add(valueStructureInfo);
+			}
+		}
+		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)){
+			HAPExecutablePartComplexValueStructureGroupWithEntity groupPart = (HAPExecutablePartComplexValueStructureGroupWithEntity)part;
+			for(HAPExecutablePartComplexValueStructure child : groupPart.getChildren()) {
+				getAllChildren(appendParentInfo(priorityBase, child.getPartInfo().getPriority()), child, out);
+			}
+		}
+	}
+
+	
 	public static List<HAPInfoPartSimple> getAllSimpleParts(HAPExecutableEntityComplexValueStructure valueStructureComplex){
 		List<HAPInfoPartSimple> out = new ArrayList<HAPInfoPartSimple>();
-		for(HAPPartComplexValueStructure part : valueStructureComplex.getParts()) {
-			getAllChildren(null, part, out);
+		for(HAPExecutablePartComplexValueStructure part : valueStructureComplex.getParts()) {
+			getAllChildren1(null, part, out);
 		}
 		sortSimplePartInfos(out);
 		return out;
 	}
 
-	private static void getAllChildren(List<Integer> priorityBase, HAPPartComplexValueStructure part, List<HAPInfoPartSimple> out) {
+	private static void getAllChildren1(List<Integer> priorityBase, HAPExecutablePartComplexValueStructure part, List<HAPInfoPartSimple> out) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
-			HAPPartComplexValueStructureSimple simplePart = (HAPPartComplexValueStructureSimple)part;
+			HAPExecutablePartComplexValueStructureSimple simplePart = (HAPExecutablePartComplexValueStructureSimple)part;
 			HAPInfoPartSimple simpleInfo = new HAPInfoPartSimple(simplePart);
 			simpleInfo.setPriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority()));
 			out.add(simpleInfo);
 		}
 		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)){
-			HAPPartComplexValueStructureGroupWithEntity groupPart = (HAPPartComplexValueStructureGroupWithEntity)part;
-			for(HAPPartComplexValueStructure child : groupPart.getChildren()) {
+			HAPExecutablePartComplexValueStructureGroupWithEntity groupPart = (HAPExecutablePartComplexValueStructureGroupWithEntity)part;
+			for(HAPExecutablePartComplexValueStructure child : groupPart.getChildren()) {
 				getAllChildren(appendParentInfo(priorityBase, child.getPartInfo().getPriority()), child, out);
 			}
 		}
@@ -59,7 +113,7 @@ public class HAPUtilityComplexValueStructure {
 
 	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPDefinitionEntityComplexValueStructure valueStructureComplex) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
-		List<HAPPartComplexValueStructureSimple> parts = getAllSimpleParts(valueStructureComplex);
+		List<HAPExecutablePartComplexValueStructureSimple> parts = getAllSimpleParts(valueStructureComplex);
 		for(int i=parts.size()-1; i>=0; i--) {
 			HAPExecutableValueStructure vsExe = HAPUtilityValueStructure.buildExecuatableValueStructure(parts.get(i).getValueStructureWrapper().getValueStructure());
 			
@@ -71,16 +125,16 @@ public class HAPUtilityComplexValueStructure {
 		if(info1==null)   out = info2.cloneValueStructurePartInfo();
 		else if(info2==null)  out = info1.cloneValueStructurePartInfo();
 		else {
-			out = info1.cloneValueStructurePartInfo().appendPath(info2.getPath()).appendPriority(info2.getPriority());
+			out = info1.cloneValueStructurePartInfo().appendPath(info2.getReference()).appendPriority(info2.getPriority());
 		}
 		return out;
 	}
 	
-	public static void sortParts(List<HAPPartComplexValueStructure> parts) {
-		Collections.sort(parts, new Comparator<HAPPartComplexValueStructure>() {
+	public static void sortParts(List<HAPExecutablePartComplexValueStructure> parts) {
+		Collections.sort(parts, new Comparator<HAPExecutablePartComplexValueStructure>() {
 
 			@Override
-			public int compare(HAPPartComplexValueStructure arg0, HAPPartComplexValueStructure arg1) {
+			public int compare(HAPExecutablePartComplexValueStructure arg0, HAPExecutablePartComplexValueStructure arg1) {
 				return sortPriority(arg0.getPartInfo().getPriority(), arg1.getPartInfo().getPriority());
 			}
 		});
@@ -125,11 +179,11 @@ public class HAPUtilityComplexValueStructure {
 	}
 	
 
-	public static void setValueStructureFromParent(HAPWithValueStructure withValueStructure, List<HAPPartComplexValueStructure> partsFromParent) {
+	public static void setValueStructureFromParent(HAPWithValueStructure withValueStructure, List<HAPExecutablePartComplexValueStructure> partsFromParent) {
 		HAPDefinitionEntityComplexValueStructure valueStructureComplex = withValueStructure.getValueStructureComplex();
 		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityComplexValueStructure.createPartInfoFromParent());
 	}
 	
-	public static void setParentPart(HAPWithValueStructure child, HAPWithValueStructure parent) {	setValueStructureFromParent(child, parent.getValueStructureComplex().getParts());	}
+	public static void setParentPart(HAPWithValueStructure child, HAPWithValueStructure parent) {	setValueStructureFromParent(child, parent.getValueStructureComplex().getValueStructures());	}
 
 }

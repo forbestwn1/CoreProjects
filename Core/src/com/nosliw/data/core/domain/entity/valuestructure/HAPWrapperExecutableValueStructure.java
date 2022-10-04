@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
+public class HAPWrapperExecutableValueStructure extends HAPSerializableImp{
 
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
@@ -25,9 +25,9 @@ public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
 	
 	private String m_valueStructureRuntimeId;
 	
-	public HAPWrapperValueStructureExecutable() {}
+	public HAPWrapperExecutableValueStructure() {}
 
-	public HAPWrapperValueStructureExecutable(String valueStructureRuntimeId) {
+	public HAPWrapperExecutableValueStructure(String valueStructureRuntimeId) {
 		this.m_valueStructureRuntimeId = valueStructureRuntimeId;
 	}
 	
@@ -47,13 +47,13 @@ public class HAPWrapperValueStructureExecutable extends HAPSerializableImp{
 		jsonMap.put(RUNTIMEID, this.m_valueStructureRuntimeId);
 	}
 
-	public void cloneFromDefinition(HAPWrapperValueStructureDefinition valueStructureDefWrapper) {
+	public void cloneFromDefinition(HAPDefinitionWrapperValueStructure valueStructureDefWrapper) {
 		this.m_groupName = valueStructureDefWrapper.getGroupName();
 		this.m_groupType = valueStructureDefWrapper.getGroupType();
 	}
 	
-	public HAPWrapperValueStructureExecutable cloneValueStructureWrapper() {
-		HAPWrapperValueStructureExecutable out = new HAPWrapperValueStructureExecutable();
+	public HAPWrapperExecutableValueStructure cloneValueStructureWrapper() {
+		HAPWrapperExecutableValueStructure out = new HAPWrapperExecutableValueStructure();
 		out.m_valueStructureRuntimeId = this.m_valueStructureRuntimeId;
 		out.m_groupName = this.m_groupName;
 		out.m_groupType = this.m_groupType;
