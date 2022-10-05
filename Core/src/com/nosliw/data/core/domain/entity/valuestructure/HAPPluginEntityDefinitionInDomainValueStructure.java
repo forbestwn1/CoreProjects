@@ -24,7 +24,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEn
 			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)this.getEntity(entityId, parserContext);
 			Object elementsObj = structureJson.opt(HAPDefinitionEntityValueStructure.VALUE);
 			if(elementsObj==null)  elementsObj = structureJson;
-			List<HAPRootStructure> roots = HAPParserStructure.parseRoots(elementsObj);
+			List<HAPRootStructure> roots = HAPParserStructure.parseStructureRoots(elementsObj);
 			for(HAPRootStructure root : roots)  valueStructure.addRoot(root);
 		}
 	}

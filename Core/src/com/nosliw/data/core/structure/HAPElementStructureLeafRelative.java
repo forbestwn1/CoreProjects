@@ -18,6 +18,9 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	@HAPAttribute
 	public static final String SOLIDNODEREF = "solidNodeRef";
 
+	@HAPAttribute
+	public static final String RESOLVEDINFO = "resolvedInfo";
+
 	//reference definition
 	private HAPReferenceElementInStructureComplex m_reference;
 
@@ -62,6 +65,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(RESOLVEDINFO, HAPJsonUtility.buildJson(this.m_resolvedInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(SOLIDNODEREF, HAPJsonUtility.buildJson(this.m_solidNodeRef, HAPSerializationFormat.JSON));
 	}
 

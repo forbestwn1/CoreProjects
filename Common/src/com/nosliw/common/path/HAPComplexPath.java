@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPBasicUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -25,6 +26,16 @@ public class HAPComplexPath extends HAPSerializableImp{
 	private HAPPath m_path;
 	
 	private String m_root;
+	
+	public static HAPComplexPath newInstance(Object obj) {
+		HAPComplexPath out = null;
+		if(obj instanceof String)  out = new HAPComplexPath((String)obj);
+		else if(obj instanceof JSONObject) {
+			out = new HAPComplexPath();
+			out.buildObject(obj, HAPSerializationFormat.JSON);
+		}
+		return out;
+	}
 	
 	public HAPComplexPath() {}
 	

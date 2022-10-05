@@ -17,7 +17,7 @@ public class HAPParserResourceDefinitionStructure extends HAPParserResourceEntit
 		HAPResourceDefinitionValueStructure out = new HAPResourceDefinitionValueStructure();
 		
 		Object rootsObj = jsonObj.get(HAPResourceDefinitionValueStructure.ROOT);
-		List<HAPRootStructure> roots = HAPParserStructure.parseRoots(rootsObj);
+		List<HAPRootStructure> roots = HAPParserStructure.parseStructureRoots(rootsObj);
 		for(HAPRootStructure root : roots)  out.addRoot(root);
 		
 		JSONArray refArray = jsonObj.optJSONArray(HAPResourceDefinitionValueStructure.REFERENCE);

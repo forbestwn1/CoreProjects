@@ -85,7 +85,7 @@ public class HAPParserValueStructure {
 		if(structureJson!=null) {
 			Object elementsObj = structureJson.opt(HAPValueStructureDefinitionFlat.FLAT);
 			if(elementsObj==null)  elementsObj = structureJson;
-			out = HAPParserStructure.parseRoots(elementsObj);
+			out = HAPParserStructure.parseStructureRoots(elementsObj);
 			for(HAPRootStructure root : out) {
 				root.setLocalId(getElementId(root.getLocalId(), root.getName(), createIdByName));
 			}

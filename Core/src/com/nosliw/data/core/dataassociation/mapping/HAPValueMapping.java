@@ -62,7 +62,7 @@ public class HAPValueMapping extends HAPSerializableImp{
 			if(jsonMapping==null)  jsonMapping = jsonObj;
 			for(Object key : jsonMapping.keySet()) {
 				String name = (String)key;
-				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(jsonMapping.getJSONObject(name));
+				HAPRootStructure root = HAPParserStructure.parseStructureRootFromJson(jsonMapping.getJSONObject(name));
 				this.addItem(name, root);
 			}
 			return true;  

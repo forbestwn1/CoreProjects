@@ -9,7 +9,7 @@ public class HAPProcessorAttachmentEntityValueStructure implements HAPProcessorA
 
 	@Override
 	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPDefinitionEntityInDomainComplex complexEntity) {
-		return HAPParserStructure.parseRoots(attachmentInfo.getEntity());
+		return HAPParserStructure.parseStructureRoots(attachmentInfo.getEntity());
 	}
 
 }

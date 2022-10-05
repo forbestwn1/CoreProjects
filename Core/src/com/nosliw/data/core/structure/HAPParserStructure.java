@@ -7,14 +7,13 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
 
 public class HAPParserStructure {
 
-	public static List<HAPRootStructure> parseRoots(Object rootsObj){
+	public static List<HAPRootStructure> parseStructureRoots(Object rootsObj){
 		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
 		if(rootsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)rootsObj;
@@ -22,7 +21,7 @@ public class HAPParserStructure {
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+				HAPRootStructure root = HAPParserStructure.parseStructureRootFromJson(eleDefJson);
 				root.setName(eleName);
 				out.add(root);
 			}
@@ -31,7 +30,7 @@ public class HAPParserStructure {
 			JSONArray elementsArray = (JSONArray)rootsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPRootStructure root = HAPParserStructure.parseContextRootFromJson(eleDefJson);
+				HAPRootStructure root = HAPParserStructure.parseStructureRootFromJson(eleDefJson);
 				out.add(root);
 			}
 		}
@@ -39,7 +38,7 @@ public class HAPParserStructure {
 	}
 	
 	//parse context root
-	public static HAPRootStructure parseContextRootFromJson(JSONObject eleDefJson){
+	public static HAPRootStructure parseStructureRootFromJson(JSONObject eleDefJson){
 		HAPRootStructure out = new HAPRootStructure();
 
 		//info
@@ -53,7 +52,7 @@ public class HAPParserStructure {
 		
 		//definition
 		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPRootStructure.DEFINITION);
-		if(defJsonObj!=null)  out.setDefinition(parseContextDefinitionElement(defJsonObj));
+		if(defJsonObj!=null)  out.setDefinition(parseStructureElement(defJsonObj));
 		else{
 			//if no definition, then treat it as data leaf
 			out.setDefinition(new HAPElementStructureLeafData());
@@ -63,74 +62,77 @@ public class HAPParserStructure {
 		return out;
 	}
 	
-	public static HAPElementStructure parseContextDefinitionElement(JSONObject eleDefJson) {
-		HAPElementStructure contextRootDef = null;
+	public static HAPElementStructure parseStructureElement(JSONObject eleDefJson) {
+		HAPElementStructure out = null;
 		
-		Object pathObj = eleDefJson.opt(HAPElementStructureLeafRelative.PATH);
+		Object defRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForDefinition.REFERENCE);
+		Object linkRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForValue.LINK);
 		Object criteriaDef = eleDefJson.opt(HAPElementStructureLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPElementStructureLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPElementStructureNode.CHILD);
 		String constantName = (String)eleDefJson.opt(HAPElementStructureLeafConstantReference.CONSTANT);
 		
-		if(pathObj!=null){
-			//relative
-			contextRootDef = new HAPElementStructureLeafRelative();
-			HAPElementStructureLeafRelative relativeLeaf = (HAPElementStructureLeafRelative)contextRootDef;
+		if(defRefObj!=null) {
+			//relative for definition
+			out = new HAPElementStructureLeafRelativeForDefinition();
+			parseRelativeElement((HAPElementStructureLeafRelativeForDefinition)out, defRefObj, eleDefJson);
+		}
+		else if(linkRefObj!=null){
+			//relative for value link
+			HAPElementStructureLeafRelativeForValue relativeEle = new HAPElementStructureLeafRelativeForValue();
+			out = relativeEle;
+			parseRelativeElement(relativeEle, defRefObj, eleDefJson);
 			
-			HAPReferenceElementInStructureComplex path = new HAPReferenceElementInStructureComplex();
-			path.buildObject(eleDefJson.get(HAPElementStructureLeafRelative.PATH), HAPSerializationFormat.JSON);
-			relativeLeaf.setReference(path);
-			
-			Object resolvedPathObj = eleDefJson.opt(HAPElementStructureLeafRelative.RESOLVEDPATH);
-			if(resolvedPathObj!=null) {
-				if(resolvedPathObj instanceof String) {
-					HAPComplexPath resolvedPath = new HAPComplexPath((String)resolvedPathObj);
-					relativeLeaf.setResolvedIdPath(resolvedPath);
-				}
-				else {
-					HAPComplexPath resolvedPath = new HAPComplexPath();
-					resolvedPath.buildObject(resolvedPathObj, HAPSerializationFormat.JSON);
-					relativeLeaf.setResolvedIdPath(resolvedPath);
-				}
-			}
-			
-			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.DEFINITION);
-			if(definitionJsonObj!=null) 	relativeLeaf.setDefinition(parseContextDefinitionElement(definitionJsonObj));
-			
-			JSONObject solidNodeRefJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.SOLIDNODEREF);
-			if(solidNodeRefJsonObj!=null) {
-				HAPInfoPathToSolidRoot solidNodeRef = new HAPInfoPathToSolidRoot();
-				solidNodeRef.buildObject(solidNodeRefJsonObj, HAPSerializationFormat.JSON);
-				relativeLeaf.setSolidNodeReference(solidNodeRef);
-			}
+			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelativeForValue.DEFINITION);
+			if(definitionJsonObj!=null) 	relativeEle.setDefinition(parseStructureElement(definitionJsonObj));
 		}
 		else if(criteriaDef!=null) {
 			//data
 			HAPVariableDataInfo dataInfo = new HAPVariableDataInfo();
 			dataInfo.buildObject(criteriaDef, null);
-			contextRootDef = new HAPElementStructureLeafData(dataInfo);   
+			out = new HAPElementStructureLeafData(dataInfo);   
 		}
 		else if(childrenJsonObj!=null) {
 			//node
-			contextRootDef = new HAPElementStructureNode();
+			out = new HAPElementStructureNode();
 			for(Object key : childrenJsonObj.keySet()) {
-				((HAPElementStructureNode)contextRootDef).addChild((String)key, parseContextDefinitionElement(childrenJsonObj.getJSONObject((String)key)));
+				((HAPElementStructureNode)out).addChild((String)key, parseStructureElement(childrenJsonObj.getJSONObject((String)key)));
 			}
 		}
 		else if(valueJsonObj!=null){
 			//constant
-			contextRootDef = new HAPElementStructureLeafConstant();
-			((HAPElementStructureLeafConstant)contextRootDef).setValue(valueJsonObj);
+			out = new HAPElementStructureLeafConstant();
+			((HAPElementStructureLeafConstant)out).setValue(valueJsonObj);
 		}
 		else if(constantName!=null) {
 			//constant reference
-			contextRootDef = new HAPElementStructureLeafConstantReference(constantName);
+			out = new HAPElementStructureLeafConstantReference(constantName);
 		}
 		else {
 			//value
-			contextRootDef = new HAPElementStructureLeafValue();
+			out = new HAPElementStructureLeafValue();
 		}
-		return contextRootDef;
+		return out;
 	}
 
+	private static void parseRelativeElement(HAPElementStructureLeafRelative relativeEle, Object refObj, JSONObject eleDefJson) {
+		
+		HAPReferenceElementInStructureComplex path = new HAPReferenceElementInStructureComplex();
+		path.buildObject(refObj, HAPSerializationFormat.JSON);
+		relativeEle.setReference(path);
+
+		JSONObject resolvedInfoJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.RESOLVEDINFO);
+		if(resolvedInfoJsonObj!=null) {
+			HAPInfoRelativeResolve resolvedInfo = new HAPInfoRelativeResolve();
+			resolvedInfo.buildObject(resolvedInfoJsonObj, HAPSerializationFormat.JSON);
+			relativeEle.setResolvedInfo(resolvedInfo);
+		}
+		
+		JSONObject solidNodeRefJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelative.SOLIDNODEREF);
+		if(solidNodeRefJsonObj!=null) {
+			HAPInfoPathToSolidRoot solidNodeRef = new HAPInfoPathToSolidRoot();
+			solidNodeRef.buildObject(solidNodeRefJsonObj, HAPSerializationFormat.JSON);
+			relativeEle.setSolidNodeReference(solidNodeRef);
+		}
+	}
 }
