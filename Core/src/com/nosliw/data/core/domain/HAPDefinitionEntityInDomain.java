@@ -11,6 +11,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.domain.container.HAPContainerEntity;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
 
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
@@ -63,14 +65,14 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 			out.add(simpleAttr.getEntityId());
 		}
 		
-		for(HAPContainerEntity<HAPInfoContainerElement> containerAttr : this.m_attributeContainer.values()) {
-			for(HAPInfoContainerElement eleInfo : containerAttr.getAllElementsInfo()) {
+		for(HAPContainerEntity<HAPInfoContainerElementImp> containerAttr : this.m_attributeContainer.values()) {
+			for(HAPInfoContainerElementImp eleInfo : containerAttr.getAllElementsInfo()) {
 				out.add(getEmbeded(eleInfo).getEntityId());
 			}
 		}
 	}
 	
-	private HAPEmbededWithId getEmbeded(HAPInfoContainerElement eleInfo) {		return (HAPEmbededWithId)eleInfo.getEmbededElementEntity();	}
+	private HAPEmbededWithId getEmbeded(HAPInfoContainerElementImp eleInfo) {		return (HAPEmbededWithId)eleInfo.getEmbededElementEntity();	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }

@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoContainerElementSet;
+import com.nosliw.data.core.domain.container.HAPInfoDefinitionContainerElementSet;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 
 public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDomainComplex{
@@ -27,7 +27,7 @@ public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDom
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 
-	public void addExpressionGroup(HAPInfoContainerElementSet eleInfo) {	this.addContainerElementAttribute(GROUP, eleInfo);	}
+	public void addExpressionGroup(HAPInfoDefinitionContainerElementSet eleInfo) {	this.addContainerElementAttribute(GROUP, eleInfo);	}
 	public HAPIdEntityInDomain getExpressionGroup(String name) {
 		return this.getConatinerAttributeElementByName(GROUP, name);
 	}

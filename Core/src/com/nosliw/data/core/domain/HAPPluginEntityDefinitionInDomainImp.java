@@ -9,6 +9,11 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.container.HAPContainerEntity;
+import com.nosliw.data.core.domain.container.HAPContainerEntityImp;
+import com.nosliw.data.core.domain.container.HAPInfoDefinitionContainerElementList;
+import com.nosliw.data.core.domain.container.HAPInfoDefinitionContainerElementSet;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -194,14 +199,14 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		}
 	}
 
-	private HAPInfoContainerElement buildContainerElementInfo(JSONObject eleObj, HAPEmbededWithId embededEntity, String containerType, HAPContextParser parserContext) {
-		HAPInfoContainerElement out = null;
+	private HAPInfoContainerElementImp buildContainerElementInfo(JSONObject eleObj, HAPEmbededWithId embededEntity, String containerType, HAPContextParser parserContext) {
+		HAPInfoContainerElementImp out = null;
 		JSONObject eleInfoObj = eleObj.optJSONObject(HAPContainerEntity.ELEMENT_INFO);
 		if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_SET)) {
-			out = new HAPInfoContainerElementSet(embededEntity);
+			out = new HAPInfoDefinitionContainerElementSet(embededEntity);
 		}
 		else if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_LIST)) {
-			out = new HAPInfoContainerElementList(embededEntity);
+			out = new HAPInfoDefinitionContainerElementList(embededEntity);
 		}
 		out.buildObject(eleInfoObj, HAPSerializationFormat.JSON);
 		if(out.getElementName()==null) {

@@ -7,10 +7,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbededWithId;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.container.HAPContainerEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -29,14 +29,14 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	private String m_attachmentContainerId;
 	
 	//simple attribute by name, complex entity type
-	private Map<String, HAPEmbededWithId> m_attributesNormal;
+	private Map<String, HAPEmbededWithId> m_complexAttributesNormal;
 	
 	//container attribute by name, complex entity type
 	private Map<String, HAPContainerEntity> m_attributeContainer;
 	
 	public HAPExecutableEntityComplex(String entityType) {
 		super(entityType);
-		this.m_attributesNormal = new LinkedHashMap<String, HAPEmbededWithId>();
+		this.m_complexAttributesNormal = new LinkedHashMap<String, HAPEmbededWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
 	}
 	
@@ -46,11 +46,11 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public void setAttachmentContainerId(String id) {    this.m_attachmentContainerId = id;    }
 	public String getAttachmentContainerId() {    return this.m_attachmentContainerId;    }
 	
-	public Map<String, HAPEmbededWithId> getNormalAttributes(){    return this.m_attributesNormal;    }
-	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_attributesNormal.put(attrName, new HAPEmbededWithId(complexEntityExeId));	}
+	public Map<String, HAPEmbededWithId> getNormalComplexAttributes(){    return this.m_complexAttributesNormal;    }
+	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_complexAttributesNormal.put(attrName, new HAPEmbededWithId(complexEntityExeId));	}
 	
-	public void setContainerAttributeElementComplex(String attribute, HAPContainerEntity entityContainer) {		this.m_attributeContainer.put(attribute, entityContainer);	}
-	public Map<String, HAPContainerEntity> getContainerAttributes(){   return this.m_attributeContainer;   }
+	public void setContainerComplexAttribute(String attribute, HAPContainerEntity entityContainer) {		this.m_attributeContainer.put(attribute, entityContainer);	}
+	public Map<String, HAPContainerEntity> getContainerComplexAttributes(){   return this.m_attributeContainer;   }
 	
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
@@ -68,8 +68,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	}
 
 	protected void buildExpandedAttributeJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityExecutableResourceComplex entityDomainExe){
-		for(String attrName : this.m_attributesNormal.keySet()) {
-			jsonMap.put(attrName, this.m_attributesNormal.get(attrName).toExpandedJsonString(entityDomainExe));
+		for(String attrName : this.m_complexAttributesNormal.keySet()) {
+			jsonMap.put(attrName, this.m_complexAttributesNormal.get(attrName).toExpandedJsonString(entityDomainExe));
 		}
 		
 		for(String attrName : this.m_attributeContainer.keySet()) {
@@ -90,8 +90,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	}
 
 	protected void buildChildrenResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
-		for(String attrName : this.m_attributesNormal.keySet()) {
-			jsonMap.put(attrName, this.m_attributesNormal.get(attrName).toStringValue(HAPSerializationFormat.JSON));
+		for(String attrName : this.m_complexAttributesNormal.keySet()) {
+			jsonMap.put(attrName, this.m_complexAttributesNormal.get(attrName).toStringValue(HAPSerializationFormat.JSON));
 		}
 		
 		for(String attrName : this.m_attributeContainer.keySet()) {

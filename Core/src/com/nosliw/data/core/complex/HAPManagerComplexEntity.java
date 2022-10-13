@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPContainerEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbeded;
@@ -17,12 +16,13 @@ import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPIdComplexEntityInGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityExport;
+import com.nosliw.data.core.domain.container.HAPContainerEntity;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -150,18 +150,18 @@ public class HAPManagerComplexEntity {
 			for(String attrName : containerAttributes.keySet()) {
 				HAPContainerEntity defContainer = containerAttributes.get(attrName);
 				HAPContainerEntity exeContainer = HAPUtilityDomain.buildContainer(defContainer.getContainerType());
-				List<HAPInfoContainerElement> defEleInfos = defContainer.getAllElementsInfo();
-				for(HAPInfoContainerElement defEleInfo : defEleInfos) {
+				List<HAPInfoContainerElementImp> defEleInfos = defContainer.getAllElementsInfo();
+				for(HAPInfoContainerElementImp defEleInfo : defEleInfos) {
 					HAPIdEntityInDomain defEleId = ((HAPEmbededWithId)defEleInfo.getEmbededElementEntity()).getEntityId();
 					HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
 					if(eleEntityInfo.isComplexEntity()) {
 						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
-						HAPInfoContainerElement exeEleInfo = defEleInfo.cloneContainerElementInfo();
+						HAPInfoContainerElementImp exeEleInfo = defEleInfo.cloneContainerElementInfo();
 						exeEleInfo.setEmbededElementEntity(new HAPEmbeded(eleEntityExeId));
 						exeContainer.addEntityElement(exeEleInfo);
 					}
 				}
-				complexEntityExe.setContainerAttributeElementComplex(attrName, exeContainer);
+				complexEntityExe.setContainerComplexAttribute(attrName, exeContainer);
 			}
 		}
 		else {

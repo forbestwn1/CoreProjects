@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.container;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,8 +9,9 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.domain.HAPDomainEntity;
 
-public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElement>  extends HAPSerializableImp implements HAPContainerEntity<T>{
+public abstract class HAPContainerEntityImp<T extends HAPInfoContainerElementImp>  extends HAPSerializableImp implements HAPContainerEntity<T>{
 
 	private Map<String, T> m_eleByName;
 	private Map<String, T> m_eleById;

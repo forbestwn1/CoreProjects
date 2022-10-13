@@ -5,7 +5,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 @HAPEntityWithAttribute
-public class HAPEmbeded extends HAPSerializableImp{
+public abstract class HAPEmbeded extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ENTITY = "entity";
@@ -17,6 +17,8 @@ public class HAPEmbeded extends HAPSerializableImp{
 	
 	private Object m_adapter;
 	
+	public HAPEmbeded() {}
+	
 	public HAPEmbeded(Object entity) {
 		this.m_entity = entity;
 	}
@@ -26,5 +28,7 @@ public class HAPEmbeded extends HAPSerializableImp{
 	
 	public Object getAdapter() {	return m_adapter;	}
 	public void setAdapter(Object adapter) {	this.m_adapter = adapter;	}
+
+	public abstract HAPEmbeded cloneEmbeded();
 
 }

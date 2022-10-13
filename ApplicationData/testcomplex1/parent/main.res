@@ -9,13 +9,11 @@
 			"extra": {
 				"status": "disabled"
 			},
-			"attribute2_none_testsimple1": {
-			
-			}
+			"scriptName": "testsimple1"
 		},
 		"entity1_none_testsimple1": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "testsimple1"
@@ -131,7 +129,7 @@
 		},
 		"globalresource2_none_testcomplex1": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"resourceId": "testcomplex1|*child",
 			"parent": {
@@ -154,7 +152,7 @@
 		},
 		"normal1_set_testsimple1": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"element": [
 				{
@@ -162,11 +160,18 @@
 						"name": "element1",
 						"description": "element1"
 					},
-					"entity": {
-						"attribute2_none_testsimple1": {
-						
-						}
-					}					
+					"entity":{
+						"scriptName": "testsimple1"
+					}
+				},
+				{
+					"extra": {
+						"name": "element2",
+						"description": "element2"
+					},
+					"entity":{
+						"scriptName": "testsimple1"
+					}
 				}
 			]
 		},

@@ -1,13 +1,14 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.container;
 
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.data.core.domain.HAPExpandable;
 
 //container for entity
-public interface HAPContainerEntity<T extends HAPInfoContainerElement> extends HAPSerializable, HAPExpandable{
+public interface HAPContainerEntity<T extends HAPInfoContainerElementImp> extends HAPSerializable, HAPExpandable{
 
 	@HAPAttribute
 	public static String ELEMENT = "element";

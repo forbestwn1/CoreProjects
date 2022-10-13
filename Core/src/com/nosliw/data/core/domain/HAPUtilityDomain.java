@@ -14,6 +14,12 @@ import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.container.HAPContainerEntity;
+import com.nosliw.data.core.domain.container.HAPContainerEntityImp;
+import com.nosliw.data.core.domain.container.HAPContainerEntityList;
+import com.nosliw.data.core.domain.container.HAPContainerEntitySet;
+import com.nosliw.data.core.domain.container.HAPInfoDefinitionContainerElementSet;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
@@ -69,7 +75,7 @@ public class HAPUtilityDomain {
 		HAPExecutableEntityComplex complexEntity = entityInfo.getEntity();
 		if(complexEntity!=null) {
 			//process attribute entity
-			Map<String, HAPEmbededWithId> simpleAttributes = complexEntity.getNormalAttributes();
+			Map<String, HAPEmbededWithId> simpleAttributes = complexEntity.getNormalComplexAttributes();
 			for(String attrName : simpleAttributes.keySet()) {
 				HAPEmbededWithId attributeEntity = simpleAttributes.get(attrName);
 				HAPInfoEntityInDomainExecutable attrEntityInfo = exeDomain.getEntityInfoExecutable(attributeEntity.getEntityId());
@@ -77,10 +83,10 @@ public class HAPUtilityDomain {
 			}
 
 			//process container attribute entity
-			Map<String, HAPContainerEntity> containerAttributes = complexEntity.getContainerAttributes();
+			Map<String, HAPContainerEntity> containerAttributes = complexEntity.getContainerComplexAttributes();
 			for(String attrName : containerAttributes.keySet()) {
-				List<HAPInfoContainerElement> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
-				for(HAPInfoContainerElement eleInfo : eleInfos) {
+				List<HAPInfoContainerElementImp> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
+				for(HAPInfoContainerElementImp eleInfo : eleInfos) {
 					HAPEmbededWithId eleEntity = (HAPEmbededWithId)eleInfo.getEmbededElementEntity();
 					HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
 					traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
@@ -127,8 +133,8 @@ public class HAPUtilityDomain {
 		//build executable
 	}
 	
-	public static HAPInfoContainerElementSet newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
-		HAPInfoContainerElementSet out = new HAPInfoContainerElementSet(entityId);
+	public static HAPInfoDefinitionContainerElementSet newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
+		HAPInfoDefinitionContainerElementSet out = new HAPInfoDefinitionContainerElementSet(entityId);
 		out.buildEntityInfoByJson(jsonObj);
 		return out;
 	}

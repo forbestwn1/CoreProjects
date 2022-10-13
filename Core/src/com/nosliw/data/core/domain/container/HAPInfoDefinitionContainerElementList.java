@@ -1,34 +1,38 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.container;
 
 import java.util.Map;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainEntity;
+import com.nosliw.data.core.domain.HAPEmbededWithId;
 
-public class HAPInfoContainerElementList extends HAPInfoContainerElement{
-
-	public static final String INDEX = "index";
+public class HAPInfoDefinitionContainerElementList extends HAPInfoDefinitionContainerElement implements HAPInfoContainerElementList<HAPEmbededWithId>{
 
 	private int m_index;
 	
-	public HAPInfoContainerElementList(HAPEmbeded embededEntity) {
-		super(embededEntity);
+	public HAPInfoDefinitionContainerElementList(HAPEmbededWithId embededWithId) {
+		super(embededWithId);
+		this.m_index = -1;
 	}
 
-	public HAPInfoContainerElementList() {
+	public HAPInfoDefinitionContainerElementList() {
 		this.m_index = -1;
 	}
 
 	@Override
-	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_LIST;    }
-	
+	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST;    }
+
+	@Override
 	public int getIndex() {   return this.m_index;    }
 	public void setIndex(int index) {    this.m_index = index;     }
 	
+	public HAPInfoDefinitionContainerElementList cloneContainerElementInfoList() {	return this.cloneContainerElementInfo();	}
+
 	@Override
-	public HAPInfoContainerElement cloneContainerElementInfo() {
-		HAPInfoContainerElementList out = new HAPInfoContainerElementList();
+	public HAPInfoDefinitionContainerElementList cloneContainerElementInfo() {
+		HAPInfoDefinitionContainerElementList out = new HAPInfoDefinitionContainerElementList();
 		this.cloneToInfoContainerElement(out);
 		out.m_index = this.m_index;
 		return out;

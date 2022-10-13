@@ -17,6 +17,8 @@ public class HAPEmbededWithId extends HAPEmbeded implements HAPExpandable{
 	@HAPAttribute
 	public static String ENTITYID = "entityId";
 
+	public HAPEmbededWithId() {}
+	
 	public HAPEmbededWithId(HAPIdEntityInDomain entityId) {
 		super(entityId);
 	}
@@ -24,6 +26,14 @@ public class HAPEmbededWithId extends HAPEmbeded implements HAPExpandable{
 	public HAPIdEntityInDomain getEntityId() {	return (HAPIdEntityInDomain)this.getEntity();	}
 	
 	public void setEntityId(HAPIdEntityInDomain entityId) {  this.setEntity(entityId);  }
+
+	@Override
+	public HAPEmbeded cloneEmbeded() {
+		HAPEmbededWithId out = new HAPEmbededWithId();
+		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
+		out.setAdapter(this.getAdapter());
+		return out;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

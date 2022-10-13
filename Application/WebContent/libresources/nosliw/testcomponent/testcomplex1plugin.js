@@ -92,11 +92,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_parentView.append(loc_mainView);
 			
-//			var stateValueViewWrapper = $('<div>state:</div>');
-//			loc_stateValueView = $('<input type="text">');
-//			stateValueViewWrapper.append(loc_stateValueView);
-//			loc_mainView.append(stateValueViewWrapper);
-
 			//complex children
 			_.each(loc_children, function(child, childName){
 				var childView = $('<div>childAttr: '+childName+'</div>');
