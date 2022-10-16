@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 
-public class HAPContainerEntitySetDefinition extends HAPContainerEntitySet<HAPInfoContainerElementSetDefinition> implements HAPExpandable{
+public class HAPContainerEntitySetDefinition extends HAPContainerEntitySet<HAPElementContainerSetDefinition> implements HAPExpandable{
 
 	public HAPContainerEntitySetDefinition() {}
 	
@@ -29,7 +29,7 @@ public class HAPContainerEntitySetDefinition extends HAPContainerEntitySet<HAPIn
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDefDomain) {
 		List<String> eleArray = new ArrayList<String>();
-		for(HAPInfoContainerElementSetDefinition ele : this.getAllElementsInfo()) {
+		for(HAPElementContainerSetDefinition ele : this.getAllElementsInfo()) {
 			eleArray.add(ele.toExpandedJsonString(entityDefDomain));
 		}
 		return HAPJsonUtility.buildArrayJson(eleArray.toArray(new String[0]));

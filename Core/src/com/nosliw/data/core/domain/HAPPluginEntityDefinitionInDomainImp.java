@@ -10,9 +10,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElement;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElementListDefinition;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElementSetDefinition;
+import com.nosliw.data.core.domain.container.HAPElementContainer;
+import com.nosliw.data.core.domain.container.HAPElementContainerListDefinition;
+import com.nosliw.data.core.domain.container.HAPElementContainerSetDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -103,7 +103,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		Object attrEntityObj = entityJsonObj.opt(attributeName);
 		if(attrEntityObj!=null) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-			HAPEmbededWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			HAPEmbededWithIdDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setSimpleAttribute(attributeName, attributeEntity);
 		}
 	}
@@ -112,7 +112,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		Object attrEntityObj = entityJsonObj.opt(attributeName);
 		if(attrEntityObj!=null) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-			HAPEmbededWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			HAPEmbededWithIdDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setSimpleAttribute(attributeName, attributeEntity);
 		}
 	}
@@ -157,7 +157,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 					JSONObject eleObj = eleArrayObj.getJSONObject(i);
 					
 					//element entity
-					HAPEmbededWithId embededEntity = HAPUtilityParserEntity.parseEmbededComplexEntity(eleObj, eleEntityType, adapterType, entityId, parentRelationConfigureCustomer, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+					HAPEmbededWithIdDefinition embededEntity = HAPUtilityParserEntity.parseEmbededComplexEntity(eleObj, eleEntityType, adapterType, entityId, parentRelationConfigureCustomer, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 					
 					//element info
 					entityContainer.addEntityElement(buildContainerElementInfo(eleObj, embededEntity, containerType, parserContext));
@@ -188,7 +188,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 					JSONObject eleObj = eleArrayObj.getJSONObject(i);
 					
 					//element entity
-					HAPEmbededWithId embededEntity = HAPUtilityParserEntity.parseEmbededEntity(eleObj, eleEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+					HAPEmbededWithIdDefinition embededEntity = HAPUtilityParserEntity.parseEmbededEntity(eleObj, eleEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 					
 					//element info
 					entityContainer.addEntityElement(buildContainerElementInfo(eleObj, embededEntity, containerType, parserContext));
@@ -198,13 +198,13 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		}
 	}
 
-	private HAPInfoContainerElement buildContainerElementInfo(JSONObject eleObj, HAPEmbededWithId embededEntity, String containerType, HAPContextParser parserContext) {
-		HAPInfoContainerElement out = null;
+	private HAPElementContainer buildContainerElementInfo(JSONObject eleObj, HAPEmbededWithIdDefinition embededEntity, String containerType, HAPContextParser parserContext) {
+		HAPElementContainer out = null;
 		if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET)) {
-			out = new HAPInfoContainerElementSetDefinition(embededEntity);
+			out = new HAPElementContainerSetDefinition(embededEntity);
 		}
 		else if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST)) {
-			out = new HAPInfoContainerElementListDefinition(embededEntity);
+			out = new HAPElementContainerListDefinition(embededEntity);
 		}
 		
 		out.setInfo(parserContext.getCurrentDomain().getEntityInfoDefinition(embededEntity.getEntityId()).getExtraInfo().cloneEntityInfo());

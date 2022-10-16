@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAPInfoContainerElementListExecutable> implements HAPExecutable{
+public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAPElementContainerListExecutableWithEntity> implements HAPExecutable{
 
 	public HAPContainerEntityListExecutable() {	}
 
@@ -41,7 +41,7 @@ public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAP
 		
 		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		List<String> elesJsonArray = new ArrayList<String>();
-		for(HAPInfoContainerElementListExecutable ele : this.getAllElementsInfo()) {
+		for(HAPElementContainerListExecutableWithEntity ele : this.getAllElementsInfo()) {
 			byIdJsonMap.put(ele.getElementId(), ele.toStringValue(HAPSerializationFormat.JSON));
 			elesJsonArray.add(ele.toStringValue(HAPSerializationFormat.JSON));
 		}
@@ -53,7 +53,7 @@ public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAP
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPInfoContainerElementListExecutable ele : this.getAllElementsInfo()) {
+		for(HAPElementContainerListExecutableWithEntity ele : this.getAllElementsInfo()) {
 			out.addAll(ele.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;

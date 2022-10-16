@@ -9,12 +9,12 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPEmbededWithExecutable;
-import com.nosliw.data.core.domain.HAPEmbededWithId;
+import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElement;
+import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.domain.testing.testsimple1.HAPExecutableTestSimple1;
 import com.nosliw.data.core.domain.testing.testsimple1.HAPProcessorTestSimple1;
@@ -39,7 +39,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 		HAPDefinitionEntityTestComplex1 definitionEntity = (HAPDefinitionEntityTestComplex1)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
 		//normal attribute
-		Map<String, HAPEmbededWithId> simpleAttrs = definitionEntity.getSimpleAttributes();
+		Map<String, HAPEmbededWithIdDefinition> simpleAttrs = definitionEntity.getSimpleAttributes();
 		for(String simpleAttrName : simpleAttrs.keySet()) {
 			HAPIdEntityInDomain attrEntityId = simpleAttrs.get(simpleAttrName).getEntityId();
 			HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityId);
@@ -55,9 +55,9 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 			HAPContainerEntity containerEntityDef = containerAttrs.get(attrName);
 			HAPContainerEntity conatinerEntityExe = containerEntityDef.cloneContainerEntity();
 			
-			List<HAPInfoContainerElement> eleInfoExes = conatinerEntityExe.getAllElementsInfo();
-			for(HAPInfoContainerElement eleInfoExe : eleInfoExes) {
-				HAPEmbededWithId embededDef = (HAPEmbededWithId)eleInfoExe.getEmbededElementEntity();
+			List<HAPElementContainer> eleInfoExes = conatinerEntityExe.getAllElementsInfo();
+			for(HAPElementContainer eleInfoExe : eleInfoExes) {
+				HAPEmbededWithIdDefinition embededDef = (HAPEmbededWithIdDefinition)eleInfoExe.getEmbededElementEntity();
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(embededDef.getEntityId());
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
 					HAPExecutableTestSimple1 simpleTest1Exe = HAPProcessorTestSimple1.process(attrEntityInfo.getEntityId(), processContext);

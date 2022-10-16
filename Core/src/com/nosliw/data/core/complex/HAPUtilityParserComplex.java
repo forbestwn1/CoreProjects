@@ -8,7 +8,7 @@ import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
-import com.nosliw.data.core.domain.HAPEmbededWithId;
+import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
@@ -22,7 +22,7 @@ public class HAPUtilityParserComplex {
 		
 		//parse value structure
 		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
-		HAPEmbededWithId valueStructureEntity = HAPUtilityParserEntity.parseEmbededEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
+		HAPEmbededWithIdDefinition valueStructureEntity = HAPUtilityParserEntity.parseEmbededEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 		
 		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setValueStructureComplexEntity(valueStructureEntity);
 	}
@@ -33,7 +33,7 @@ public class HAPUtilityParserComplex {
 		
 		//parse attachment
 		JSONObject attachmentJsonObj = entityJsonObj.optJSONObject(HAPWithAttachment.ATTACHMENT);
-		HAPEmbededWithId attachmentEntity = HAPUtilityParserEntity.parseEmbededEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
+		HAPEmbededWithIdDefinition attachmentEntity = HAPUtilityParserEntity.parseEmbededEntity(attachmentJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 
 		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setAttachmentContainerEntity(attachmentEntity);
 	}

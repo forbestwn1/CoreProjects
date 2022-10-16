@@ -16,9 +16,11 @@ import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
 import com.nosliw.data.core.domain.container.HAPContainerEntityListDefinition;
+import com.nosliw.data.core.domain.container.HAPContainerEntityListExecutable;
 import com.nosliw.data.core.domain.container.HAPContainerEntitySetDefinition;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElement;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElementSetDefinition;
+import com.nosliw.data.core.domain.container.HAPContainerEntitySetExecutable;
+import com.nosliw.data.core.domain.container.HAPElementContainer;
+import com.nosliw.data.core.domain.container.HAPElementContainerSetDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
@@ -74,9 +76,9 @@ public class HAPUtilityDomain {
 		HAPExecutableEntityComplex complexEntity = entityInfo.getEntity();
 		if(complexEntity!=null) {
 			//process attribute entity
-			Map<String, HAPEmbededWithId> simpleAttributes = complexEntity.getNormalComplexAttributes();
+			Map<String, HAPEmbededWithIdDefinition> simpleAttributes = complexEntity.getNormalComplexAttributes();
 			for(String attrName : simpleAttributes.keySet()) {
-				HAPEmbededWithId attributeEntity = simpleAttributes.get(attrName);
+				HAPEmbededWithIdDefinition attributeEntity = simpleAttributes.get(attrName);
 				HAPInfoEntityInDomainExecutable attrEntityInfo = exeDomain.getEntityInfoExecutable(attributeEntity.getEntityId());
 				traverseExecutableComplexEntityTree(attrEntityInfo, attributeEntity.getAdapter(), entityInfo, processor, processContext);
 			}
@@ -84,9 +86,9 @@ public class HAPUtilityDomain {
 			//process container attribute entity
 			Map<String, HAPContainerEntity> containerAttributes = complexEntity.getContainerComplexAttributes();
 			for(String attrName : containerAttributes.keySet()) {
-				List<HAPInfoContainerElement> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
-				for(HAPInfoContainerElement eleInfo : eleInfos) {
-					HAPEmbededWithId eleEntity = (HAPEmbededWithId)eleInfo.getEmbededElementEntity();
+				List<HAPElementContainer> eleInfos = containerAttributes.get(attrName).getAllElementsInfo();
+				for(HAPElementContainer eleInfo : eleInfos) {
+					HAPEmbededWithIdDefinition eleEntity = (HAPEmbededWithIdDefinition)eleInfo.getEmbededElementEntity();
 					HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
 					traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
 				}
@@ -132,8 +134,8 @@ public class HAPUtilityDomain {
 		//build executable
 	}
 	
-	public static HAPInfoContainerElementSetDefinition newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
-		HAPInfoContainerElementSetDefinition out = new HAPInfoContainerElementSetDefinition(entityId);
+	public static HAPElementContainerSetDefinition newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
+		HAPElementContainerSetDefinition out = new HAPElementContainerSetDefinition(entityId);
 		out.buildEntityInfoByJson(jsonObj);
 		return out;
 	}
@@ -180,6 +182,17 @@ public class HAPUtilityDomain {
 		return out;
 	}
 	
+	public static HAPContainerEntity buildExecutionContainer(String containerType, String elementType) {
+		HAPContainerEntity out = null;
+		if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET.equals(containerType)) {
+			out = new HAPContainerEntitySetExecutable(elementType);
+		}
+		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST.equals(containerType)) {
+			out = new HAPContainerEntityListExecutable(elementType);
+		}
+		return out;
+	}
+
 	public static HAPContainerEntity buildDefinitionContainer(String containerType, String elementType) {
 		HAPContainerEntity out = null;
 		if(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET.equals(containerType)) {

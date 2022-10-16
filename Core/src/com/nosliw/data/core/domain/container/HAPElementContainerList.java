@@ -4,22 +4,22 @@ import java.util.Map;
 
 import com.nosliw.data.core.domain.HAPEmbeded;
 
-public abstract class HAPInfoContainerElementList<T extends HAPEmbeded> extends HAPInfoContainerElement<T>{
+public abstract class HAPElementContainerList<T extends HAPEmbeded> extends HAPElementContainer<T>{
 
 	public static final String INDEX = "index";
 
 	private int m_index;
 	
-	public HAPInfoContainerElementList() {}
+	public HAPElementContainerList() {}
 	
-	public HAPInfoContainerElementList(T embeded) {
-		super(embeded);
+	public HAPElementContainerList(T embeded, String elementId) {
+		super(embeded, elementId);
 	}
 	
 	public int getIndex() {   return this.m_index;    }
 	public void setIndex(int index) {    this.m_index = index;     }
 
-	protected void cloneToInfoContainerElement(HAPInfoContainerElementList containerEleInfo) {
+	protected void cloneToInfoContainerElement(HAPElementContainerList containerEleInfo) {
 		super.cloneToInfoContainerElement(containerEleInfo);
 		containerEleInfo.m_index = this.m_index;
 	}

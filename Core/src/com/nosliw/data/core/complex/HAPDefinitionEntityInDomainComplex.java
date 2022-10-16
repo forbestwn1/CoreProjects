@@ -3,7 +3,7 @@ package com.nosliw.data.core.complex;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPEmbededWithId;
+import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
 
 //entity that have data value structure and attachment
 public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
@@ -17,18 +17,18 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	}
 	
 	@Override
-	public HAPEmbededWithId getValueStructureComplexEntity() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE);  }
+	public HAPEmbededWithIdDefinition getValueStructureComplexEntity() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE);  }
 
 	@Override
-	public void setValueStructureComplexEntity(HAPEmbededWithId valueStructureComplexEntity) {    this.setSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
+	public void setValueStructureComplexEntity(HAPEmbededWithIdDefinition valueStructureComplexEntity) {    this.setSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return null;  }
 
 	@Override
-	public HAPEmbededWithId getAttachmentContainerEntity() {   return this.getSimpleAttribute(HAPWithAttachment.ATTACHMENT);  }
+	public HAPEmbededWithIdDefinition getAttachmentContainerEntity() {   return this.getSimpleAttribute(HAPWithAttachment.ATTACHMENT);  }
 
 	@Override
-	public void setAttachmentContainerEntity(HAPEmbededWithId attachmentEntity) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
+	public void setAttachmentContainerEntity(HAPEmbededWithIdDefinition attachmentEntity) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
 
 }

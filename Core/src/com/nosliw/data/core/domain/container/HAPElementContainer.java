@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPEmbeded;
 
-public abstract class HAPInfoContainerElement<T extends HAPEmbeded> extends HAPSerializableImp{
+public abstract class HAPElementContainer<T extends HAPEmbeded> extends HAPSerializableImp{
 
 	public static final String INFO = "info";
 
@@ -15,16 +15,21 @@ public abstract class HAPInfoContainerElement<T extends HAPEmbeded> extends HAPS
 
 	public static final String ENTITY = "entity";
 
+	private String m_elementId;
+
 	private HAPEntityInfo m_entityInfo;
 	
 	private T m_embededEntity;
 
-	public HAPInfoContainerElement(T embededEntity) {
+	public HAPElementContainer(T embededEntity, String elementId) {
 		this.m_embededEntity = embededEntity;
+		this.m_elementId = elementId;
 	}
 	
-	public HAPInfoContainerElement() {	}
+	public HAPElementContainer() {	}
 	
+	public String getElementId() {  return this.m_elementId;  }
+
 	public HAPEntityInfo getInfo() {    return this.m_entityInfo;    }
 	public void setInfo(HAPEntityInfo entityInfo) {   this.m_entityInfo = entityInfo;    }
 	
@@ -35,13 +40,12 @@ public abstract class HAPInfoContainerElement<T extends HAPEmbeded> extends HAPS
 
 	public abstract String getInfoType();
 
-	public abstract String getElementId(); 
+	public abstract HAPElementContainer cloneContainerElementInfo();
 
-	public abstract HAPInfoContainerElement cloneContainerElementInfo();
-
-	protected void cloneToInfoContainerElement(HAPInfoContainerElement containerEleInfo) {
+	protected void cloneToInfoContainerElement(HAPElementContainer containerEleInfo) {
 		containerEleInfo.m_embededEntity = this.m_embededEntity.cloneEmbeded();
 		containerEleInfo.m_entityInfo = this.m_entityInfo.cloneEntityInfo();
+		containerEleInfo.m_elementId = this.m_elementId;
 	}
 	
 	@Override

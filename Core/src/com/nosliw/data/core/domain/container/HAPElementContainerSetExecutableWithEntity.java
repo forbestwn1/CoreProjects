@@ -15,33 +15,22 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPInfoContainerElementSetExecutable extends HAPInfoContainerElementSet<HAPEmbededWithExecutable> implements HAPExecutable{
+public class HAPElementContainerSetExecutableWithEntity extends HAPElementContainerSet<HAPEmbededWithExecutable> implements HAPExecutable{
 
-	private String m_elementId;
-
-	public HAPInfoContainerElementSetExecutable(HAPEmbededWithExecutable embededEntity, String elementId) {
-		super(embededEntity);
-		this.m_elementId = elementId;
+	public HAPElementContainerSetExecutableWithEntity(HAPEmbededWithExecutable embededEntity, String elementId) {
+		super(embededEntity, elementId);
 	}
 
-	public HAPInfoContainerElementSetExecutable() {	}
+	public HAPElementContainerSetExecutableWithEntity() {	}
 
 	@Override
 	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET;    }
 
 	@Override
-	public String getElementId() {  return this.m_elementId;  }
-
-	@Override
-	public HAPInfoContainerElementSetExecutable cloneContainerElementInfo() {
-		HAPInfoContainerElementSetExecutable out = new HAPInfoContainerElementSetExecutable();
+	public HAPElementContainerSetExecutableWithEntity cloneContainerElementInfo() {
+		HAPElementContainerSetExecutableWithEntity out = new HAPElementContainerSetExecutableWithEntity();
 		this.cloneToInfoContainerElement(out);
 		return out;
-	}
-	
-	protected void cloneToInfoContainerElement(HAPInfoContainerElementSetExecutable containerEleInfo) {
-		super.cloneToInfoContainerElement(containerEleInfo);
-		containerEleInfo.m_elementId = this.m_elementId;
 	}
 	
 	@Override

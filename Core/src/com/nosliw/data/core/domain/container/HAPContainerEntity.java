@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public abstract class HAPContainerEntity<T extends HAPInfoContainerElement>  extends HAPSerializableImp{
+public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String TYPE = "type";
@@ -35,15 +35,19 @@ public abstract class HAPContainerEntity<T extends HAPInfoContainerElement>  ext
 	//extra info for container
 	private HAPEntityInfo m_extraInfo;
 	
+	private List<T> m_eleArray;
+	
 	private Map<String, T> m_eleById;
 
 	public HAPContainerEntity(String elementType) {
 		this();
 		this.m_elementType = elementType;
+		this.m_eleArray = new ArrayList<T>();
 	}
 	
 	public HAPContainerEntity() {
 		this.m_eleById = new LinkedHashMap<String, T>();
+		this.m_eleArray = new ArrayList<T>();
 	}
 
 	public String getElementType() {    return this.m_elementType;     }
@@ -66,7 +70,7 @@ public abstract class HAPContainerEntity<T extends HAPInfoContainerElement>  ext
 
 	public T getElementInfoById(String id) {  return this.m_eleById.get(id);  }
 
-	public List<T> getAllElementsInfo() {  return new ArrayList(this.m_eleById.values());  }
+	public List<T> getAllElementsInfo() {  return this.m_eleArray;  }
 
 	public abstract String getContainerType();
 	

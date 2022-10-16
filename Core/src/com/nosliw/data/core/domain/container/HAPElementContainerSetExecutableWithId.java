@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPEmbededWithExecutable;
+import com.nosliw.data.core.domain.HAPEmbededWithIdExecutable;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -15,35 +15,24 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPInfoContainerElementListExecutable extends HAPInfoContainerElementList<HAPEmbededWithExecutable> implements HAPExecutable{
+public class HAPElementContainerSetExecutableWithId extends HAPElementContainerSet<HAPEmbededWithIdExecutable> implements HAPExecutable{
 
-	private String m_elementId;
-
-	public HAPInfoContainerElementListExecutable(HAPEmbededWithExecutable embededEntity, String elementId) {
-		super(embededEntity);
-		this.m_elementId = elementId;
+	public HAPElementContainerSetExecutableWithId(HAPEmbededWithIdExecutable embededEntity, String elementId) {
+		super(embededEntity, elementId);
 	}
 
-	public HAPInfoContainerElementListExecutable() {}
+	public HAPElementContainerSetExecutableWithId() {	}
 
 	@Override
-	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST;    }
+	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET;    }
 
 	@Override
-	public String getElementId() {  return this.m_elementId;  }
-
-	@Override
-	public HAPInfoContainerElementListExecutable cloneContainerElementInfo() {
-		HAPInfoContainerElementListExecutable out = new HAPInfoContainerElementListExecutable();
+	public HAPElementContainerSetExecutableWithId cloneContainerElementInfo() {
+		HAPElementContainerSetExecutableWithId out = new HAPElementContainerSetExecutableWithId();
 		this.cloneToInfoContainerElement(out);
 		return out;
 	}
 	
-	protected void cloneToInfoContainerElement(HAPInfoContainerElementListExecutable containerEleInfo) {
-		super.cloneToInfoContainerElement(containerEleInfo);
-		containerEleInfo.m_elementId = this.m_elementId;
-	}
-
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

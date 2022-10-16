@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPEmbededWithId extends HAPEmbeded implements HAPExpandable{
+public class HAPEmbededWithIdDefinition extends HAPEmbeded implements HAPExpandable{
 
 	@HAPAttribute
 	public static String EMBEDED = "embeded";
@@ -17,9 +17,9 @@ public class HAPEmbededWithId extends HAPEmbeded implements HAPExpandable{
 	@HAPAttribute
 	public static String ENTITYID = "entityId";
 
-	public HAPEmbededWithId() {}
+	public HAPEmbededWithIdDefinition() {}
 	
-	public HAPEmbededWithId(HAPIdEntityInDomain entityId) {
+	public HAPEmbededWithIdDefinition(HAPIdEntityInDomain entityId) {
 		super(entityId);
 	}
 	
@@ -29,7 +29,7 @@ public class HAPEmbededWithId extends HAPEmbeded implements HAPExpandable{
 
 	@Override
 	public HAPEmbeded cloneEmbeded() {
-		HAPEmbededWithId out = new HAPEmbededWithId();
+		HAPEmbededWithIdDefinition out = new HAPEmbededWithIdDefinition();
 		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
 		out.setAdapter(this.getAdapter());
 		return out;

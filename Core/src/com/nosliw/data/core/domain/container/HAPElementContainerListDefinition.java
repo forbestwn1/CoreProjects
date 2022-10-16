@@ -6,17 +6,17 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
-import com.nosliw.data.core.domain.HAPEmbededWithId;
+import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
 import com.nosliw.data.core.domain.HAPExpandable;
 
-public class HAPInfoContainerElementListDefinition extends HAPInfoContainerElementList<HAPEmbededWithId> implements HAPExpandable{
+public class HAPElementContainerListDefinition extends HAPElementContainerList<HAPEmbededWithIdDefinition> implements HAPExpandable{
 
-	public HAPInfoContainerElementListDefinition(HAPEmbededWithId embededWithId) {
-		super(embededWithId);
+	public HAPElementContainerListDefinition(HAPEmbededWithIdDefinition embededWithId, String elementId) {
+		super(embededWithId, elementId);
 		this.setIndex(-1);
 	}
 
-	public HAPInfoContainerElementListDefinition() {
+	public HAPElementContainerListDefinition() {
 		this.setIndex(-1);
 	}
 
@@ -24,18 +24,13 @@ public class HAPInfoContainerElementListDefinition extends HAPInfoContainerEleme
 	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST;    }
 
 	@Override
-	public String getElementId() {
-		return this.getEmbededElementEntity().getEntityId().toString();
-	} 
-	
-	public HAPInfoContainerElementListDefinition cloneContainerElementInfoList() {	return this.cloneContainerElementInfo();	}
-
-	@Override
-	public HAPInfoContainerElementListDefinition cloneContainerElementInfo() {
-		HAPInfoContainerElementListDefinition out = new HAPInfoContainerElementListDefinition();
+	public HAPElementContainerListDefinition cloneContainerElementInfo() {
+		HAPElementContainerListDefinition out = new HAPElementContainerListDefinition();
 		this.cloneToInfoContainerElement(out);
 		return out;
 	}
+
+	public HAPElementContainerListDefinition cloneContainerElementInfoList() {	return this.cloneContainerElementInfo();	}
 
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {

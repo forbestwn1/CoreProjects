@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -15,22 +13,12 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPContainerEntitySetExecutable extends HAPContainerEntitySet<HAPElementContainerSetExecutableWithEntity> implements HAPExecutable{
+public abstract class HAPContainerEntityExecutable extends HAPContainerEntity<HAPElementContainer> implements HAPExecutable{
 
-	public HAPContainerEntitySetExecutable() {	}
-	
-	public HAPContainerEntitySetExecutable(String eleType) {
+	public HAPContainerEntityExecutable() {	}
+
+	public HAPContainerEntityExecutable(String eleType) {
 		super(eleType);
-	}
-	
-	@Override
-	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET; }
-
-	@Override
-	public HAPContainerEntitySetExecutable cloneContainerEntity() {
-		HAPContainerEntitySetExecutable out = new HAPContainerEntitySetExecutable();
-		this.cloneToContainer(out);
-		return out;
 	}
 
 	@Override
@@ -41,9 +29,10 @@ public class HAPContainerEntitySetExecutable extends HAPContainerEntitySet<HAPEl
 		
 		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		List<String> elesJsonArray = new ArrayList<String>();
-		for(HAPElementContainerSetExecutableWithEntity ele : this.getAllElementsInfo()) {
-			byIdJsonMap.put(ele.getElementId(), ele.toStringValue(HAPSerializationFormat.JSON));
-			elesJsonArray.add(ele.toStringValue(HAPSerializationFormat.JSON));
+		for(HAPElementContainer ele : this.getAllElementsInfo()) {
+			String resourceStr = ((HAPExecutable)ele).toResourceData(runtimeInfo).toString();
+			byIdJsonMap.put(ele.getElementId(), resourceStr);
+			elesJsonArray.add(resourceStr);
 		}
 		jsonMap.put(ELEMENTBYID, HAPJsonUtility.buildMapJson(byIdJsonMap));
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(elesJsonArray.toArray(new String[0])));
@@ -53,8 +42,8 @@ public class HAPContainerEntitySetExecutable extends HAPContainerEntitySet<HAPEl
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPElementContainerSetExecutableWithEntity ele : this.getAllElementsInfo()) {
-			out.addAll(ele.getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPElementContainer ele : this.getAllElementsInfo()) {
+			out.addAll(((HAPExecutable)ele).getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;
 	}

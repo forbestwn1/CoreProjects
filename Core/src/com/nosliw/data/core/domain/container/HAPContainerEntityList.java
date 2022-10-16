@@ -1,19 +1,14 @@
 package com.nosliw.data.core.domain.container;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public abstract class HAPContainerEntityList<T extends HAPInfoContainerElementList> extends HAPContainerEntity<T>{
+public abstract class HAPContainerEntityList<T extends HAPElementContainerList> extends HAPContainerEntity<T>{
 
-	private List<T> m_eleArray;
-	
 	public HAPContainerEntityList(String elementType) {
 		super(elementType);
-		this.m_eleArray = new ArrayList<T>();
 	}
 
 	public HAPContainerEntityList() {
-		this.m_eleArray = new ArrayList<T>();
 	}
 	
 	@Override
