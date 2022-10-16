@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPEmbededWithExecutable;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -14,31 +15,42 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public abstract class HAPInfoExecutableContainerElement extends HAPInfoContainerElementImp<HAPEmbededWithExecutable> implements HAPExecutable{
+public class HAPInfoContainerElementListExecutable extends HAPInfoContainerElementList<HAPEmbededWithExecutable> implements HAPExecutable{
 
 	private String m_elementId;
-	
-	public HAPInfoExecutableContainerElement(HAPEmbededWithExecutable embededEntity, String elementId) {
+
+	public HAPInfoContainerElementListExecutable(HAPEmbededWithExecutable embededEntity, String elementId) {
 		super(embededEntity);
 		this.m_elementId = elementId;
 	}
 
-	public HAPInfoExecutableContainerElement() {	}
+	public HAPInfoContainerElementListExecutable() {}
+
+	@Override
+	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST;    }
 
 	@Override
 	public String getElementId() {  return this.m_elementId;  }
+
+	@Override
+	public HAPInfoContainerElementListExecutable cloneContainerElementInfo() {
+		HAPInfoContainerElementListExecutable out = new HAPInfoContainerElementListExecutable();
+		this.cloneToInfoContainerElement(out);
+		return out;
+	}
+	
+	protected void cloneToInfoContainerElement(HAPInfoContainerElementListExecutable containerEleInfo) {
+		super.cloneToInfoContainerElement(containerEleInfo);
+		containerEleInfo.m_elementId = this.m_elementId;
+	}
 
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		this.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
-	}
-
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		jsonMap.put(ENTITY, this.getEmbededElementEntity().toResourceData(runtimeInfo).toString());
+		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElement;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.domain.testing.testsimple1.HAPExecutableTestSimple1;
 import com.nosliw.data.core.domain.testing.testsimple1.HAPProcessorTestSimple1;
@@ -55,8 +55,8 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 			HAPContainerEntity containerEntityDef = containerAttrs.get(attrName);
 			HAPContainerEntity conatinerEntityExe = containerEntityDef.cloneContainerEntity();
 			
-			List<HAPInfoContainerElementImp> eleInfoExes = conatinerEntityExe.getAllElementsInfo();
-			for(HAPInfoContainerElementImp eleInfoExe : eleInfoExes) {
+			List<HAPInfoContainerElement> eleInfoExes = conatinerEntityExe.getAllElementsInfo();
+			for(HAPInfoContainerElement eleInfoExe : eleInfoExes) {
 				HAPEmbededWithId embededDef = (HAPEmbededWithId)eleInfoExe.getEmbededElementEntity();
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(embededDef.getEntityId());
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {

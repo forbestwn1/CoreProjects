@@ -22,7 +22,7 @@ import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPInfoContainerElementImp;
+import com.nosliw.data.core.domain.container.HAPInfoContainerElement;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -150,13 +150,13 @@ public class HAPManagerComplexEntity {
 			for(String attrName : containerAttributes.keySet()) {
 				HAPContainerEntity defContainer = containerAttributes.get(attrName);
 				HAPContainerEntity exeContainer = HAPUtilityDomain.buildContainer(defContainer.getContainerType());
-				List<HAPInfoContainerElementImp> defEleInfos = defContainer.getAllElementsInfo();
-				for(HAPInfoContainerElementImp defEleInfo : defEleInfos) {
+				List<HAPInfoContainerElement> defEleInfos = defContainer.getAllElementsInfo();
+				for(HAPInfoContainerElement defEleInfo : defEleInfos) {
 					HAPIdEntityInDomain defEleId = ((HAPEmbededWithId)defEleInfo.getEmbededElementEntity()).getEntityId();
 					HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
 					if(eleEntityInfo.isComplexEntity()) {
 						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
-						HAPInfoContainerElementImp exeEleInfo = defEleInfo.cloneContainerElementInfo();
+						HAPInfoContainerElement exeEleInfo = defEleInfo.cloneContainerElementInfo();
 						exeEleInfo.setEmbededElementEntity(new HAPEmbeded(eleEntityExeId));
 						exeContainer.addEntityElement(exeEleInfo);
 					}

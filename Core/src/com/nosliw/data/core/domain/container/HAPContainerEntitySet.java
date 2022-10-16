@@ -1,8 +1,10 @@
 package com.nosliw.data.core.domain.container;
 
-public abstract class HAPContainerEntitySet<T extends HAPInfoDefinitionContainerElementSet> extends HAPContainerEntityImp<T>{
+public abstract class HAPContainerEntitySet<T extends HAPInfoContainerElementSet> extends HAPContainerEntity<T>{
 
-	public HAPContainerEntitySet() {
-	}
+	public HAPContainerEntitySet() {	}
 	
+	public HAPContainerEntitySet(String eleType) {
+		super(eleType);
+	}
 }

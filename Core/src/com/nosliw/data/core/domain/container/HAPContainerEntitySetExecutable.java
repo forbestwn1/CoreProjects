@@ -15,20 +15,20 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAPInfoContainerElementListExecutable> implements HAPExecutable{
+public class HAPContainerEntitySetExecutable extends HAPContainerEntitySet<HAPInfoContainerElementSetExecutable> implements HAPExecutable{
 
-	public HAPContainerEntityListExecutable() {	}
-
-	public HAPContainerEntityListExecutable(String eleType) {
+	public HAPContainerEntitySetExecutable() {	}
+	
+	public HAPContainerEntitySetExecutable(String eleType) {
 		super(eleType);
 	}
+	
+	@Override
+	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET; }
 
 	@Override
-	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST; }
-
-	@Override
-	public HAPContainerEntityListExecutable cloneContainerEntity() {
-		HAPContainerEntityListExecutable out = new HAPContainerEntityListExecutable();
+	public HAPContainerEntitySetExecutable cloneContainerEntity() {
+		HAPContainerEntitySetExecutable out = new HAPContainerEntitySetExecutable();
 		this.cloneToContainer(out);
 		return out;
 	}
@@ -41,7 +41,7 @@ public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAP
 		
 		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		List<String> elesJsonArray = new ArrayList<String>();
-		for(HAPInfoContainerElementListExecutable ele : this.getAllElementsInfo()) {
+		for(HAPInfoContainerElementSetExecutable ele : this.getAllElementsInfo()) {
 			byIdJsonMap.put(ele.getElementId(), ele.toStringValue(HAPSerializationFormat.JSON));
 			elesJsonArray.add(ele.toStringValue(HAPSerializationFormat.JSON));
 		}
@@ -53,7 +53,7 @@ public class HAPContainerEntityListExecutable extends HAPContainerEntityList<HAP
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPInfoContainerElementListExecutable ele : this.getAllElementsInfo()) {
+		for(HAPInfoContainerElementSetExecutable ele : this.getAllElementsInfo()) {
 			out.addAll(ele.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;
