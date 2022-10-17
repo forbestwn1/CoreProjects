@@ -35,9 +35,9 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	//extra info for container
 	private HAPEntityInfo m_extraInfo;
 	
-	private List<T> m_eleArray;
+	protected List<T> m_eleArray;
 	
-	private Map<String, T> m_eleById;
+	protected Map<String, T> m_eleById;
 
 	public HAPContainerEntity(String elementType) {
 		this();
@@ -58,6 +58,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	
 	public void addEntityElement(T eleInfo) {
 		this.m_eleById.put(eleInfo.getElementId(), eleInfo);
+		this.m_eleArray.add(eleInfo);
 	}
 
 	public Set<T> getElementInfoByName(String name) {
@@ -80,7 +81,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		container.m_elementType = this.m_elementType;
 		container.m_extraInfo = this.m_extraInfo.cloneEntityInfo();
 		for(T eleInfo : this.getAllElementsInfo()) {
-			container.addEntityElement((T)eleInfo.cloneContainerElementInfo());
+			container.addEntityElement((T)eleInfo.cloneContainerElement());
 		}
 	}
 	

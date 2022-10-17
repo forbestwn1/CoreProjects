@@ -13,7 +13,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public abstract class HAPContainerEntityExecutable extends HAPContainerEntity<HAPElementContainer> implements HAPExecutable{
+public abstract class HAPContainerEntityExecutable<T extends HAPElementContainerExecutable> extends HAPContainerEntity<T> implements HAPExecutable{
 
 	public HAPContainerEntityExecutable() {	}
 

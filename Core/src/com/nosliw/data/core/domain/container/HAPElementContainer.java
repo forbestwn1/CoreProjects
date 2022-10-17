@@ -38,9 +38,7 @@ public abstract class HAPElementContainer<T extends HAPEmbeded> extends HAPSeria
 
 	public String getElementName() {    return this.getInfo().getName();    }
 
-	public abstract String getInfoType();
-
-	public abstract HAPElementContainer cloneContainerElementInfo();
+	public abstract HAPElementContainer cloneContainerElement();
 
 	protected void cloneToInfoContainerElement(HAPElementContainer containerEleInfo) {
 		containerEleInfo.m_embededEntity = this.m_embededEntity.cloneEmbeded();

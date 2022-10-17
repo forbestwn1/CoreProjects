@@ -15,12 +15,12 @@ import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPContainerEntityListDefinition;
+import com.nosliw.data.core.domain.container.HAPContainerEntityDefinitionList;
 import com.nosliw.data.core.domain.container.HAPContainerEntityListExecutable;
 import com.nosliw.data.core.domain.container.HAPContainerEntitySetDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntitySetExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
-import com.nosliw.data.core.domain.container.HAPElementContainerSetDefinition;
+import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
@@ -134,8 +134,8 @@ public class HAPUtilityDomain {
 		//build executable
 	}
 	
-	public static HAPElementContainerSetDefinition newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
-		HAPElementContainerSetDefinition out = new HAPElementContainerSetDefinition(entityId);
+	public static HAPElementContainerDefinitionWithId newInfoContainerElementSet(HAPIdEntityInDomain entityId, JSONObject jsonObj) {
+		HAPElementContainerDefinitionWithId out = new HAPElementContainerDefinitionWithId(entityId);
 		out.buildEntityInfoByJson(jsonObj);
 		return out;
 	}
@@ -199,7 +199,7 @@ public class HAPUtilityDomain {
 			out = new HAPContainerEntitySetDefinition(elementType);
 		}
 		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST.equals(containerType)) {
-			out = new HAPContainerEntityListDefinition(elementType);
+			out = new HAPContainerEntityDefinitionList(elementType);
 		}
 		return out;
 	}

@@ -158,7 +158,7 @@ public class HAPManagerComplexEntity {
 						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
 						
 						
-						HAPElementContainer exeEleInfo = defEleInfo.cloneContainerElementInfo();
+						HAPElementContainer exeEleInfo = defEleInfo.cloneContainerElement();
 						exeEleInfo.setEmbededElementEntity(new HAPEmbeded(eleEntityExeId));
 						exeContainer.addEntityElement(exeEleInfo);
 					}

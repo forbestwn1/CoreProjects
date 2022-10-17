@@ -16,22 +16,22 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
-public class HAPEmbededWithExecutable extends HAPEmbeded implements HAPExecutable{
+public class HAPEmbededWithEntityExecutable extends HAPEmbeded implements HAPExecutable{
 
 	@HAPAttribute
-	public static String EXECUTABLE = "executable";
+	public static String ENTITY = "entity";
 
-	public HAPEmbededWithExecutable(HAPExecutable executable) {
+	public HAPEmbededWithEntityExecutable(HAPExecutable executable) {
 		super(executable);
 	}
 	
-	public HAPExecutable getExecutable() {	return (HAPExecutable)this.getEntity();	}
+	public HAPExecutable getEntity() {	return (HAPExecutable)this.getEntity();	}
 	
-	public void setExecutable(HAPExecutable executable) {  this.setEntity(executable);  }
+	public void setEntity(HAPExecutable executable) {  this.setEntity(executable);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(EXECUTABLE, this.getExecutable().toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ENTITY, this.getEntity().toStringValue(HAPSerializationFormat.LITERATE));
 		if(this.getAdapter()!=null) {
 			jsonMap.put(ADAPTER, this.getAdapter().toString());
 		}
@@ -42,18 +42,18 @@ public class HAPEmbededWithExecutable extends HAPEmbeded implements HAPExecutabl
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXECUTABLE, this.getExecutable().toResourceData(runtimeInfo).toString());
+		jsonMap.put(ENTITY, this.getEntity().toResourceData(runtimeInfo).toString());
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		return this.getExecutable().getResourceDependency(runtimeInfo, resourceManager);
+		return this.getEntity().getResourceDependency(runtimeInfo, resourceManager);
 	}
 
 	@Override
 	public HAPEmbeded cloneEmbeded() {
-		HAPEmbededWithExecutable out = new HAPEmbededWithExecutable(this.getExecutable());
+		HAPEmbededWithEntityExecutable out = new HAPEmbededWithEntityExecutable(this.getEntity());
 		out.setAdapter(this.getAdapter());
 		return out;
 	}

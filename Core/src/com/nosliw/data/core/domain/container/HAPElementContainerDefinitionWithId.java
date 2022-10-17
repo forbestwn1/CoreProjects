@@ -4,30 +4,25 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
-import com.nosliw.data.core.domain.HAPExpandable;
 
-public class HAPElementContainerSetDefinition extends HAPElementContainerSet<HAPEmbededWithIdDefinition> implements HAPExpandable{
+public class HAPElementContainerDefinitionWithId extends HAPElementContainerDefinition<HAPEmbededWithIdDefinition>{
 
-	public HAPElementContainerSetDefinition(HAPEmbededWithIdDefinition embededWithId, String elementId) {
+	public HAPElementContainerDefinitionWithId(HAPEmbededWithIdDefinition embededWithId, String elementId) {
 		super(embededWithId, elementId);
 	}
 
-	public HAPElementContainerSetDefinition() {	}
+	public HAPElementContainerDefinitionWithId() {	}
 
 	@Override
-	public String getInfoType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET;    }
-
-	@Override
-	public HAPElementContainerSetDefinition cloneContainerElementInfo() {
-		HAPElementContainerSetDefinition out = new HAPElementContainerSetDefinition();
+	public HAPElementContainerDefinitionWithId cloneContainerElement() {
+		HAPElementContainerDefinitionWithId out = new HAPElementContainerDefinitionWithId();
 		this.cloneToInfoContainerElement(out);
 		return out;
 	}
 
-	public HAPElementContainerSetDefinition cloneContainerElementInfoSet() {	return this.cloneContainerElementInfo();	}
+	public HAPElementContainerDefinitionWithId cloneContainerElementInfoSet() {	return this.cloneContainerElement();	}
 	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {

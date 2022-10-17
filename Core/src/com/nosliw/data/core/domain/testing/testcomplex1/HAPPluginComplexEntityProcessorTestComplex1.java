@@ -8,7 +8,7 @@ import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPEmbededWithExecutable;
+import com.nosliw.data.core.domain.HAPEmbededWithEntityExecutable;
 import com.nosliw.data.core.domain.HAPEmbededWithIdDefinition;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -61,7 +61,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(embededDef.getEntityId());
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
 					HAPExecutableTestSimple1 simpleTest1Exe = HAPProcessorTestSimple1.process(attrEntityInfo.getEntityId(), processContext);
-					HAPEmbededWithExecutable embededExe = new HAPEmbededWithExecutable(simpleTest1Exe);
+					HAPEmbededWithEntityExecutable embededExe = new HAPEmbededWithEntityExecutable(simpleTest1Exe);
 					eleInfoExe.setEmbededElementEntity(embededExe);
 				}
 			}

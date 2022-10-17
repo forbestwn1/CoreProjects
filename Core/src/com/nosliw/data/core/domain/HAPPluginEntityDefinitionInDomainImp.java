@@ -12,7 +12,7 @@ import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.container.HAPElementContainerListDefinition;
-import com.nosliw.data.core.domain.container.HAPElementContainerSetDefinition;
+import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -201,7 +201,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	private HAPElementContainer buildContainerElementInfo(JSONObject eleObj, HAPEmbededWithIdDefinition embededEntity, String containerType, HAPContextParser parserContext) {
 		HAPElementContainer out = null;
 		if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET)) {
-			out = new HAPElementContainerSetDefinition(embededEntity);
+			out = new HAPElementContainerDefinitionWithId(embededEntity);
 		}
 		else if(containerType.equals(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST)) {
 			out = new HAPElementContainerListDefinition(embededEntity);
