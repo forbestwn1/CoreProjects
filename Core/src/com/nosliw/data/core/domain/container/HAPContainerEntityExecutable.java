@@ -27,14 +27,11 @@ public abstract class HAPContainerEntityExecutable<T extends HAPElementContainer
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		
-		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		List<String> elesJsonArray = new ArrayList<String>();
-		for(HAPElementContainer ele : this.getAllElementsInfo()) {
+		for(T ele : this.getAllElements()) {
 			String resourceStr = ((HAPExecutable)ele).toResourceData(runtimeInfo).toString();
-			byIdJsonMap.put(ele.getElementId(), resourceStr);
 			elesJsonArray.add(resourceStr);
 		}
-		jsonMap.put(ELEMENTBYID, HAPJsonUtility.buildMapJson(byIdJsonMap));
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(elesJsonArray.toArray(new String[0])));
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
@@ -42,7 +39,7 @@ public abstract class HAPContainerEntityExecutable<T extends HAPElementContainer
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPElementContainer ele : this.getAllElementsInfo()) {
+		for(T ele : this.getAllElements()) {
 			out.addAll(((HAPExecutable)ele).getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;

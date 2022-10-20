@@ -82,7 +82,7 @@ public class HAPProcessorModule {
 		
 		//resolve page reference
 		HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(moduleUIDefinition.getPage(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, processContext);
-		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIUnitPage)refSolveResult.getEntity(), id, processContext);
+		HAPExecutableUIUnitPage pageExe = uiResourceMan.getUIPage((HAPDefinitionUIUnitPage)refSolveResult.getValue(), id, processContext);
 		out.setPage(pageExe);
 
 		HAPProcessorEmbededComponent.process(moduleUIDefinition, out, pageExe.getBody(), moduleExe, runtimeEnv);

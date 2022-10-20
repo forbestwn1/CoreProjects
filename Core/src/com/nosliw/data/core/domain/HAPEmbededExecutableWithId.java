@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,50 +12,60 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
-public class HAPEmbededWithEntityExecutable extends HAPEmbeded implements HAPExecutable{
+public class HAPEmbededExecutableWithId extends HAPEmbededExecutable{
+
+	@HAPAttribute
+	public static String ENTITYID = "entityId";
 
 	@HAPAttribute
 	public static String ENTITY = "entity";
 
-	public HAPEmbededWithEntityExecutable(HAPExecutable executable) {
-		super(executable);
+	public HAPEmbededExecutableWithId() {}
+	
+	public HAPEmbededExecutableWithId(HAPIdEntityInDomain entityId) {
+		super(entityId);
 	}
 	
-	public HAPExecutable getEntity() {	return (HAPExecutable)this.getEntity();	}
+	public HAPIdEntityInDomain getEntityId() {	return (HAPIdEntityInDomain)this.getValue();	}
 	
-	public void setEntity(HAPExecutable executable) {  this.setEntity(executable);  }
+	public void setEntityId(HAPIdEntityInDomain entityId) {  this.setValue(entityId);  }
+
+	@Override
+	public HAPEmbeded cloneEmbeded() {
+		HAPEmbededExecutableWithId out = new HAPEmbededExecutableWithId();
+		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
+		out.setAdapter(this.getAdapter());
+		return out;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ENTITY, this.getEntity().toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(ENTITYID, this.getEntityId().toStringValue(HAPSerializationFormat.LITERATE));
 		if(this.getAdapter()!=null) {
 			jsonMap.put(ADAPTER, this.getAdapter().toString());
 		}
 	}
-	
+
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTITY, this.getEntity().toResourceData(runtimeInfo).toString());
 		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		return this.getEntity().getResourceDependency(runtimeInfo, resourceManager);
+		return new ArrayList<HAPResourceDependency>();
+	}
+	
+	@Override
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {	
+		jsonMap.put(ENTITY, HAPUtilityDomain.getEntityExpandedJsonString(this.getEntityId(), entityDomain));
 	}
 
-	@Override
-	public HAPEmbeded cloneEmbeded() {
-		HAPEmbededWithEntityExecutable out = new HAPEmbededWithEntityExecutable(this.getEntity());
-		out.setAdapter(this.getAdapter());
-		return out;
-	}
 }

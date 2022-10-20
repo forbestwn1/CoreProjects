@@ -84,12 +84,12 @@ public class HAPUtilityParserEntity {
 //		return out;
 //	}
 
-	public static HAPEmbededWithIdDefinition parseEmbededEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededDefinitionWithId parseEmbededEntity(Object obj, String entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededEntity(obj, entityType, null, parserContext, domainEntityManager, resourceDefinitionManager);
 	}
 
-	public static HAPEmbededWithIdDefinition parseEmbededEntity(Object obj, String entityType, String adapterType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPEmbededWithIdDefinition out = null;
+	public static HAPEmbededDefinitionWithId parseEmbededEntity(Object obj, String entityType, String adapterType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+		HAPEmbededDefinitionWithId out = null;
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 			//adapter
@@ -101,23 +101,23 @@ public class HAPUtilityParserEntity {
 			}
 			
 			//embeded entity
-			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededWithIdDefinition.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
+			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededDefinitionWithId.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededWithIdDefinition(entityId);
+			if(entityId!=null)  out = new HAPEmbededDefinitionWithId(entityId);
 		}
 		return out;
 	}
 
-	public static HAPEmbededWithIdDefinition parseEmbededComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededDefinitionWithId parseEmbededComplexEntity(Object obj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededComplexEntity(obj, entityType, null, parentEntityId, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager);		
 	}
 	
-	public static HAPEmbededWithIdDefinition parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+	public static HAPEmbededDefinitionWithId parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededComplexEntity(obj, entityType, adapterType, parentEntityId, null, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager);		
 	}
 	
-	public static HAPEmbededWithIdDefinition parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPEmbededWithIdDefinition out = null;
+	public static HAPEmbededDefinitionWithId parseEmbededComplexEntity(Object obj, String entityType, String adapterType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
+		HAPEmbededDefinitionWithId out = null;
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 			//adapter
@@ -129,9 +129,9 @@ public class HAPUtilityParserEntity {
 			}
 			
 			//embeded entity
-			HAPIdEntityInDomain entityId = parseComplexEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededWithIdDefinition.EMBEDED), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
+			HAPIdEntityInDomain entityId = parseComplexEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededDefinitionWithId.EMBEDED), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededWithIdDefinition(entityId);
+			if(entityId!=null)  out = new HAPEmbededDefinitionWithId(entityId);
 		}
 		return out;
 	}

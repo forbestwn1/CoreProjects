@@ -12,17 +12,16 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.domain.HAPDomainEntity;
+import com.nosliw.data.core.domain.HAPExpandable;
 
-public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends HAPSerializableImp{
+public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends HAPSerializableImp implements HAPExpandable{
 
 	@HAPAttribute
 	public static String TYPE = "type";
 
 	@HAPAttribute
 	public static String ELEMENTTYPE = "elementType";
-
-	@HAPAttribute
-	public static String ELEMENTBYID = "elementById";
 
 	@HAPAttribute
 	public static String ELEMENT = "element";
@@ -61,17 +60,17 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		this.m_eleArray.add(eleInfo);
 	}
 
-	public Set<T> getElementInfoByName(String name) {
+	public Set<T> getElementByName(String name) {
 		Set<T> out = new HashSet<T>();
-		for(T ele : this.getAllElementsInfo()) {
+		for(T ele : this.getAllElements()) {
 			if(name.equals(ele.getElementName()));
 		}
 		return out;
 	}
 
-	public T getElementInfoById(String id) {  return this.m_eleById.get(id);  }
+	public T getElementById(String id) {  return this.m_eleById.get(id);  }
 
-	public List<T> getAllElementsInfo() {  return this.m_eleArray;  }
+	public List<T> getAllElements() {  return this.m_eleArray;  }
 
 	public abstract String getContainerType();
 	
@@ -80,7 +79,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	protected void cloneToContainer(HAPContainerEntity<T> container) {
 		container.m_elementType = this.m_elementType;
 		container.m_extraInfo = this.m_extraInfo.cloneEntityInfo();
-		for(T eleInfo : this.getAllElementsInfo()) {
+		for(T eleInfo : this.getAllElements()) {
 			container.addEntityElement((T)eleInfo.cloneContainerElement());
 		}
 	}
@@ -92,15 +91,26 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getContainerType());
 		
-		for(String id : this.m_eleById.keySet()) {
-			byIdJsonMap.put(id, this.m_eleById.get(id).toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(ELEMENTBYID, HAPJsonUtility.buildMapJson(byIdJsonMap));
-		
 		List<String> elesJsonArray = new ArrayList<String>();
-		for(T ele : this.getAllElementsInfo()) {
+		for(T ele : this.getAllElements()) {
 			elesJsonArray.add(ele.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(elesJsonArray.toArray(new String[0])));
 	}
+	
+	@Override
+	public String toExpandedJsonString(HAPDomainEntity entityDefDomain) {
+		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+		this.buildJsonMap(jsonMap, typeJsonMap);
+		
+		List<String> eleArray = new ArrayList<String>();
+		for(T ele : this.getAllElements()) {
+			eleArray.add(ele.toExpandedJsonString(entityDefDomain));
+		}
+		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(eleArray.toArray(new String[0])));
+
+		return HAPJsonUtility.buildMapJson(jsonMap);
+	}
+
 }

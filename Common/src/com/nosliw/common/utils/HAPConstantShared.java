@@ -823,10 +823,10 @@ public class HAPConstantShared {
 
 
 
-		public static final String ENTITYCONTAINER_TYPE_DEFINITION_LIST = "definitionList";
-		public static final String ENTITYCONTAINER_TYPE_DEFINITION_SET = "definitionSet";
-		public static final String ENTITYCONTAINER_TYPE_EXECUTABLE_LIST = "executableList";
-		public static final String ENTITYCONTAINER_TYPE_EXECUTABLE_SET = "executableSet";
+		public static final String ENTITYCONTAINER_TYPE_DEFINITION_LIST = "list";
+		public static final String ENTITYCONTAINER_TYPE_DEFINITION_SET = "set";
+		public static final String ENTITYCONTAINER_TYPE_EXECUTABLE_LIST = "list";
+		public static final String ENTITYCONTAINER_TYPE_EXECUTABLE_SET = "set";
 
 
 }

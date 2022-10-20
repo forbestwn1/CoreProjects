@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPElementContainer;
+import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
+import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
@@ -21,16 +21,16 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public final static String CONTAINERATTRIBUTE = "containerAttributes"; 
 	
 	//simple attribute by name
-	private Map<String, HAPEmbededWithIdDefinition> m_attributesSimple;
+	private Map<String, HAPEmbededDefinitionWithId> m_attributesSimple;
 	
 	//container attribute by name
-	private Map<String, HAPContainerEntity> m_attributeContainer;
+	private Map<String, HAPContainerEntityDefinition> m_attributeContainer;
 	
 	private String m_entityType;
 	
 	protected HAPDefinitionEntityInDomain() {
-		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededWithIdDefinition>();
-		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntity>();
+		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededDefinitionWithId>();
+		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntityDefinition>();
 		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(this.getClass());
 	}
 	
@@ -46,13 +46,13 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	}
 	
 	public HAPIdEntityInDomain getChild(String childName) {		
-		HAPEmbededWithIdDefinition childEntity = this.m_attributesSimple.get(childName);
+		HAPEmbededDefinitionWithId childEntity = this.m_attributesSimple.get(childName);
 		if(childEntity!=null)  return childEntity.getEntityId();
 
 		String[] containerSegs = HAPUtilityNamingConversion.parseLevel1(childName);
-		HAPContainerEntity childContainer = this.m_attributeContainer.get(containerSegs[0]);
+		HAPContainerEntityDefinition childContainer = this.m_attributeContainer.get(containerSegs[0]);
 		if(childContainer!=null) {
-			return getEmbeded(childContainer.getElementInfoByName(containerSegs[1])).getEntityId();
+			return getEmbeded(childContainer.getElementByName(containerSegs[1])).getEntityId();
 		}
 		
 		return null;
@@ -61,27 +61,27 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();
 
 	protected void getStandardChildrenEntity(Set<HAPIdEntityInDomain> out){
-		for(HAPEmbededWithIdDefinition simpleAttr : this.m_attributesSimple.values()) {
+		for(HAPEmbededDefinitionWithId simpleAttr : this.m_attributesSimple.values()) {
 			out.add(simpleAttr.getEntityId());
 		}
 		
-		for(HAPContainerEntity<HAPElementContainer> containerAttr : this.m_attributeContainer.values()) {
-			for(HAPElementContainer eleInfo : containerAttr.getAllElementsInfo()) {
+		for(HAPContainerEntityDefinition<HAPElementContainerDefinition> containerAttr : this.m_attributeContainer.values()) {
+			for(HAPElementContainerDefinition eleInfo : containerAttr.getAllElements()) {
 				out.add(getEmbeded(eleInfo).getEntityId());
 			}
 		}
 	}
 	
-	private HAPEmbededWithIdDefinition getEmbeded(HAPElementContainer eleInfo) {		return (HAPEmbededWithIdDefinition)eleInfo.getEmbededElementEntity();	}
+	private HAPEmbededDefinitionWithId getEmbeded(HAPElementContainerDefinition eleInfo) {		return (HAPEmbededDefinitionWithId)eleInfo.getEmbededElementEntity();	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	public String getEntityType() {  return this.m_entityType;	}
 
-	public HAPEmbededWithIdDefinition getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
+	public HAPEmbededDefinitionWithId getSimpleAttribute(String attributeName) {		return this.m_attributesSimple.get(attributeName);	}
 
-	public void setSimpleAttribute(String attributeName, HAPEmbededWithIdDefinition attrEntity) {
+	public void setSimpleAttribute(String attributeName, HAPEmbededDefinitionWithId attrEntity) {
 		if(attrEntity==null) {
 			this.m_attributesSimple.remove(attributeName);
 		}
@@ -95,19 +95,19 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 			this.m_attributesSimple.remove(attributeName);
 		}
 		else {
-			this.m_attributesSimple.put(attributeName, new HAPEmbededWithIdDefinition(attrEntityId));	
+			this.m_attributesSimple.put(attributeName, new HAPEmbededDefinitionWithId(attrEntityId));	
 		}
 	}	
 	
-	public Map<String, HAPEmbededWithIdDefinition> getSimpleAttributes(){    return this.m_attributesSimple;     }
+	public Map<String, HAPEmbededDefinitionWithId> getSimpleAttributes(){    return this.m_attributesSimple;     }
 	
-	public Map<String, HAPContainerEntity> getContainerAttributes(){    return this.m_attributeContainer;     }
+	public Map<String, HAPContainerEntityDefinition> getContainerAttributes(){    return this.m_attributeContainer;     }
 	
-	public HAPEmbededWithIdDefinition getConatinerAttributeElementByName(String attributeName, String eleName) {
-		return getEmbeded(this.m_attributeContainer.get(attributeName).getElementInfoByName(eleName));
+	public HAPEmbededDefinitionWithId getConatinerAttributeElementByName(String attributeName, String eleName) {
+		return getEmbeded(this.m_attributeContainer.get(attributeName).getElementByName(eleName));
 	}
 	
-	public void setContainerAttribute(String attributeName, HAPContainerEntity container) {
+	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container) {
 		this.m_attributeContainer.put(attributeName, container);
 	}
 	

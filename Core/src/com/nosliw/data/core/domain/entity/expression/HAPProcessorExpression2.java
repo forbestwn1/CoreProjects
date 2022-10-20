@@ -312,7 +312,7 @@ public class HAPProcessorExpression2 {
 						referenceOperand.setElementName(eleName);
 						
 						//process refered expression
-						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup1)refSolveResult.getEntity(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
+						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup1)refSolveResult.getValue(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
 						expandReference(refExpressionExe, refSolveResult.getContext(), runtimeEnv, processTracker);
 						
 						referenceOperand.setReferedExpression(refExpressionExe);
