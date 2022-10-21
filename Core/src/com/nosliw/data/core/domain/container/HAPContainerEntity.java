@@ -88,7 +88,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_extraInfo!=null)  jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getContainerType());
 		
 		List<String> elesJsonArray = new ArrayList<String>();

@@ -21,8 +21,8 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityExport;
-import com.nosliw.data.core.domain.container.HAPContainerEntity;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
+import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainerExecutableWithId1;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
@@ -151,8 +151,8 @@ public class HAPManagerComplexEntity {
 			//build executable for container complex attribute
 			Map<String, HAPContainerEntityDefinition> containerAttributes = complexEntityDef.getContainerAttributes();
 			for(String attrName : containerAttributes.keySet()) {
-				HAPContainerEntity defContainer = containerAttributes.get(attrName);
-				HAPContainerEntity exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType());
+				HAPContainerEntityDefinition defContainer = containerAttributes.get(attrName);
+				HAPContainerEntityExecutable exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType());
 				List<HAPElementContainerDefinition> defEles = defContainer.getAllElements();
 				for(HAPElementContainerDefinition defEle : defEles) {
 					HAPIdEntityInDomain defEleId = ((HAPEmbededDefinitionWithId)defEle.getEmbededElementEntity()).getEntityId();
