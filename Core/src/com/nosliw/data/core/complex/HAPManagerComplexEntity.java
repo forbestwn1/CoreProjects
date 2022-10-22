@@ -24,7 +24,7 @@ import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
-import com.nosliw.data.core.domain.container.HAPElementContainerExecutableWithId1;
+import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -140,11 +140,12 @@ public class HAPManagerComplexEntity {
 			//build executable for simple complex attribute
 			Map<String, HAPEmbededDefinitionWithId> simpleAttributes = complexEntityDef.getSimpleAttributes();
 			for(String attrName : simpleAttributes.keySet()) {
-				HAPIdEntityInDomain attrEntityDefId = simpleAttributes.get(attrName).getEntityId();
+				HAPEmbededDefinitionWithId embededAttributeDef = simpleAttributes.get(attrName);
+				HAPIdEntityInDomain attrEntityDefId = embededAttributeDef.getEntityId();
 				HAPInfoEntityInDomainDefinition entityInfo = defDomain.getEntityInfoDefinition(attrEntityDefId);
 				if(entityInfo.isComplexEntity()) {
 					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-					complexEntityExe.setNormalComplexAttribute(attrName, attrEntityExeId);
+					complexEntityExe.setNormalAttribute(attrName, new HAPEmbededExecutableWithId(attrEntityExeId, embededAttributeDef.getIsComplex()));
 				}
 			}
 			
@@ -165,11 +166,11 @@ public class HAPManagerComplexEntity {
 						
 						
 						
-						HAPElementContainerExecutableWithId1 eleExe = new HAPElementContainerExecutableWithId1(new HAPEmbededExecutableWithId(eleEntityExeId), defEleId.toString());
+						HAPElementContainerExecutable eleExe = new HAPElementContainerExecutable(new HAPEmbededExecutableWithId(eleEntityExeId), defEleId.toString());
 						exeContainer.addEntityElement(eleExe);
 					}
 				}
-				complexEntityExe.setContainerComplexAttribute(attrName, exeContainer);
+				complexEntityExe.setContainerAttribute(attrName, exeContainer);
 			}
 		}
 		else {

@@ -6,8 +6,8 @@ public abstract class HAPEmbededExecutable extends HAPEmbeded implements HAPExec
 
 	public HAPEmbededExecutable() {}
 	
-	public HAPEmbededExecutable(Object entity) {
-		super(entity);
+	public HAPEmbededExecutable(Object entity, String entityType, boolean isComplex) {
+		super(entity, entityType, isComplex);
 	}
 
 }

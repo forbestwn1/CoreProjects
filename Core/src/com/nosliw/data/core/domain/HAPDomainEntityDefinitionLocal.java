@@ -78,12 +78,12 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 	public HAPResourceDefinition getLocalResourceDefinition(HAPResourceIdLocal resourceId) {    return this.m_entityIdByLocalResourceId.get(resourceId);     }
 
 	public HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, String entityType) {
-		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entityType, this.m_entityDefMan); 
+		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDefinition.newEntityDefinitionInfoInDomain(entityType, this.m_entityDefMan); 
 		return this.addEntityOrReference(entityOrRef, entityInfo);
 	}
 	
 	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity, HAPInfoEntityInDomainDefinition entityInfo) {
-		HAPInfoEntityInDomainDefinition out = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan);
+		HAPInfoEntityInDomainDefinition out = HAPUtilityDefinition.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan);
 		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
 		out.setEntity(entity);
 		out.setEntityId(this.newEntityId(entity.getEntityType()));
@@ -92,7 +92,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 	}
 
 	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity) {
-		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan); 
+		HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDefinition.newEntityDefinitionInfoInDomain(entity.getEntityType(), this.m_entityDefMan); 
 		return this.addEntity(entity, entityInfo);
 	}
 
@@ -102,7 +102,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 	}
 	
 	private HAPIdEntityInDomain addEntityOrReference(HAPEntityOrReference entityOrRef, HAPInfoEntityInDomainDefinition entityInfo) {
-		HAPInfoEntityInDomainDefinition out = HAPUtilityDomain.newEntityDefinitionInfoInDomain(entityInfo.getEntityType(), this.m_entityDefMan); 
+		HAPInfoEntityInDomainDefinition out = HAPUtilityDefinition.newEntityDefinitionInfoInDomain(entityInfo.getEntityType(), this.m_entityDefMan); 
 		entityInfo.cloneToInfoDefinitionEntityInDomain(out);
 		String entityType = null; 
 		String type = entityOrRef.getEntityOrReferenceType();

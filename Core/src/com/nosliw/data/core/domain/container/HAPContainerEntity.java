@@ -31,6 +31,8 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 
 	private String m_elementType;
 	
+	private boolean m_isComplex;
+	
 	//extra info for container
 	private HAPEntityInfo m_extraInfo;
 	
@@ -38,9 +40,10 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	
 	protected Map<String, T> m_eleById;
 
-	public HAPContainerEntity(String elementType) {
+	public HAPContainerEntity(String elementType, boolean isComplex) {
 		this();
 		this.m_elementType = elementType;
+		this.m_isComplex = isComplex;
 		this.m_eleArray = new ArrayList<T>();
 	}
 	
@@ -48,6 +51,8 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		this.m_eleById = new LinkedHashMap<String, T>();
 		this.m_eleArray = new ArrayList<T>();
 	}
+
+	public boolean getIsComplex() {    return this.m_isComplex;   }
 
 	public String getElementType() {    return this.m_elementType;     }
 	public void setElementType(String eleType) {     this.m_elementType = eleType;      }
@@ -78,6 +83,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	
 	protected void cloneToContainer(HAPContainerEntity<T> container) {
 		container.m_elementType = this.m_elementType;
+		container.m_isComplex = this.m_isComplex;
 		container.m_extraInfo = this.m_extraInfo.cloneEntityInfo();
 		for(T eleInfo : this.getAllElements()) {
 			container.addEntityElement((T)eleInfo.cloneContainerElement());

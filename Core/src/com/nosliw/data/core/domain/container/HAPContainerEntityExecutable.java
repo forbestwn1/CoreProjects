@@ -17,8 +17,8 @@ public abstract class HAPContainerEntityExecutable<T extends HAPElementContainer
 
 	public HAPContainerEntityExecutable() {	}
 
-	public HAPContainerEntityExecutable(String eleType) {
-		super(eleType);
+	public HAPContainerEntityExecutable(String eleType, boolean isComplex) {
+		super(eleType, isComplex);
 	}
 
 	@Override

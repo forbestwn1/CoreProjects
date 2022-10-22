@@ -103,7 +103,7 @@ public class HAPUtilityParserEntity {
 			//embeded entity
 			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededDefinitionWithId.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededDefinitionWithId(entityId);
+			if(entityId!=null)  out = HAPUtilityDefinition.newEmbededDefinitionWithId(entityId, domainEntityManager); 
 		}
 		return out;
 	}
@@ -131,7 +131,7 @@ public class HAPUtilityParserEntity {
 			//embeded entity
 			HAPIdEntityInDomain entityId = parseComplexEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededDefinitionWithId.EMBEDED), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = new HAPEmbededDefinitionWithId(entityId);
+			if(entityId!=null)  out = new HAPEmbededDefinitionWithId(entityId, true);
 		}
 		return out;
 	}

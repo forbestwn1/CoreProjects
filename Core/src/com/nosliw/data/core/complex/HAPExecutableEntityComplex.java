@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPEmbededExecutableWithId;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -46,11 +45,11 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public void setAttachmentContainerId(String id) {    this.m_attachmentContainerId = id;    }
 	public String getAttachmentContainerId() {    return this.m_attachmentContainerId;    }
 	
-	public Map<String, HAPEmbededExecutableWithId> getNormalComplexAttributes(){    return this.m_complexAttributesNormal;    }
-	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_complexAttributesNormal.put(attrName, new HAPEmbededExecutableWithId(complexEntityExeId));	}
-	
-	public void setContainerComplexAttribute(String attribute, HAPContainerEntityExecutable entityContainer) {		this.m_complexAttributeContainer.put(attribute, entityContainer);	}
-	public Map<String, HAPContainerEntityExecutable> getContainerComplexAttributes(){   return this.m_complexAttributeContainer;   }
+//	public Map<String, HAPEmbededExecutableWithId> getNormalComplexAttributes(){    return this.m_complexAttributesNormal;    }
+//	public void setNormalComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExeId) {	this.m_complexAttributesNormal.put(attrName, new HAPEmbededExecutableWithId(complexEntityExeId));	}
+//	
+//	public void setContainerComplexAttribute(String attribute, HAPContainerEntityExecutable entityContainer) {		this.m_complexAttributeContainer.put(attribute, entityContainer);	}
+//	public Map<String, HAPContainerEntityExecutable> getContainerComplexAttributes(){   return this.m_complexAttributeContainer;   }
 	
 	public String toExpandedJsonString(HAPDomainEntityExecutableResourceComplex entityDomainExe) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

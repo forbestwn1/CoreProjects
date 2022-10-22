@@ -31,7 +31,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	protected HAPDefinitionEntityInDomain() {
 		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededDefinitionWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntityDefinition>();
-		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(this.getClass());
+		this.m_entityType = HAPUtilityDefinition.getEntityTypeFromEntityClass(this.getClass());
 	}
 	
 	public HAPDefinitionEntityInDomain (String entityType) {
@@ -90,14 +90,9 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 	}
 	
-	public void setSimpleAttribute(String attributeName, HAPIdEntityInDomain attrEntityId) {
-		if(attrEntityId==null) {
-			this.m_attributesSimple.remove(attributeName);
-		}
-		else {
-			this.m_attributesSimple.put(attributeName, new HAPEmbededDefinitionWithId(attrEntityId));	
-		}
-	}	
+	public void removeSimpleAttribute(String attributeName) {
+		this.m_attributesSimple.remove(attributeName);
+	}
 	
 	public Map<String, HAPEmbededDefinitionWithId> getSimpleAttributes(){    return this.m_attributesSimple;     }
 	

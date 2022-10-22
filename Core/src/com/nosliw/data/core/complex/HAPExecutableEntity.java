@@ -6,6 +6,9 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.data.core.domain.HAPEmbededExecutable;
+import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -19,11 +22,18 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp{
 	
 	private String m_entityType;
 	
+	private Map<String, HAPExecutable> m_attributes;
+
 	public HAPExecutableEntity(String entityType) {
 		this.m_entityType = entityType;
+		this.m_attributes = new LinkedHashMap<String, HAPExecutable>();
 	}
 	
 	public String getEntityType() {    return this.m_entityType;   }
+	
+	public void setNormalAttribute(String attrName, HAPEmbededExecutable embeded) {	this.m_attributes.put(attrName, embeded);	}
+	
+	public void setContainerAttribute(String attribute, HAPContainerEntityExecutable entityContainer) {		this.m_attributes.put(attribute, entityContainer);	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	

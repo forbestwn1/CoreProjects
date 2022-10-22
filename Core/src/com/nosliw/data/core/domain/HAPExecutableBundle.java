@@ -70,7 +70,7 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	
 	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPInfoResourceIdNormalize normalizedResourceInfo) {
 		HAPIdEntityInDomain entityId = this.m_definitionEntityDomain.getLocalDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
-		HAPIdEntityInDomain outEntityDefId = HAPUtilityDomain.getEntityDescent(entityId, normalizedResourceInfo.getPath(), this.m_definitionEntityDomain);
+		HAPIdEntityInDomain outEntityDefId = HAPUtilityDefinition.getEntityDescent(entityId, normalizedResourceInfo.getPath(), this.m_definitionEntityDomain);
 		HAPIdEntityInDomain outEntityExeId = this.getExecutableEntityIdByDefinitionEntityId(outEntityDefId);
 		return this.m_executableEntityDomain.getEntityInfoExecutable(outEntityExeId);
 	}

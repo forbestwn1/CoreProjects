@@ -28,7 +28,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		this.m_entityClass = entityClass;
 		
 		//get entity type from class
-		this.m_entityType = HAPUtilityDomain.getEntityTypeFromEntityClass(entityClass);
+		this.m_entityType = HAPUtilityDefinition.getEntityTypeFromEntityClass(entityClass);
 	}
 	
 	public HAPPluginEntityDefinitionInDomainImp(String entityType, Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {

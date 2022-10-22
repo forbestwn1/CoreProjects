@@ -6,8 +6,8 @@ public class HAPContainerEntityExecutableSet<T extends HAPElementContainerExecut
 
 	public HAPContainerEntityExecutableSet() {	}
 
-	public HAPContainerEntityExecutableSet(String eleType) {
-		super(eleType);
+	public HAPContainerEntityExecutableSet(String eleType, boolean isComplex) {
+		super(eleType, isComplex);
 	}
 
 	@Override

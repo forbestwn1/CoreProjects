@@ -4,8 +4,8 @@ public abstract class HAPContainerEntityDefinition<T extends HAPElementContainer
 
 	public HAPContainerEntityDefinition() {	}
 
-	public HAPContainerEntityDefinition(String eleType) {
-		super(eleType);
+	public HAPContainerEntityDefinition(String eleType, boolean isComplex) {
+		super(eleType, isComplex);
 	}
 
 }

@@ -26,8 +26,8 @@ public class HAPEmbededExecutableWithId extends HAPEmbededExecutable{
 
 	public HAPEmbededExecutableWithId() {}
 	
-	public HAPEmbededExecutableWithId(HAPIdEntityInDomain entityId) {
-		super(entityId);
+	public HAPEmbededExecutableWithId(HAPIdEntityInDomain entityId, boolean isComplex) {
+		super(entityId, entityId.getEntityType(), isComplex);
 	}
 	
 	public HAPIdEntityInDomain getEntityId() {	return (HAPIdEntityInDomain)this.getValue();	}
@@ -35,8 +35,9 @@ public class HAPEmbededExecutableWithId extends HAPEmbededExecutable{
 	public void setEntityId(HAPIdEntityInDomain entityId) {  this.setValue(entityId);  }
 
 	@Override
-	public HAPEmbeded cloneEmbeded() {
+	public HAPEmbededExecutableWithId cloneEmbeded() {
 		HAPEmbededExecutableWithId out = new HAPEmbededExecutableWithId();
+		this.cloneToEmbeded(out);
 		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
 		out.setAdapter(this.getAdapter());
 		return out;

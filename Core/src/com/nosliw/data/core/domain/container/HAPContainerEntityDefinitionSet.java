@@ -6,8 +6,8 @@ public class HAPContainerEntityDefinitionSet<T extends HAPElementContainerDefini
 
 	public HAPContainerEntityDefinitionSet() {}
 
-	public HAPContainerEntityDefinitionSet(String eleType) {
-		super(eleType);
+	public HAPContainerEntityDefinitionSet(String eleType, boolean isComplex) {
+		super(eleType, isComplex);
 	}
 
 	@Override

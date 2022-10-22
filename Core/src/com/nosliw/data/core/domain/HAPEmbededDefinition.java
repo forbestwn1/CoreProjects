@@ -4,8 +4,8 @@ public abstract class HAPEmbededDefinition extends HAPEmbeded{
 
 	public HAPEmbededDefinition() {}
 	
-	public HAPEmbededDefinition(Object entity) {
-		super(entity);
+	public HAPEmbededDefinition(Object value, String entityType, boolean isComplex) {
+		super(value, entityType, isComplex);
 	}
 
 }

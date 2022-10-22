@@ -17,8 +17,8 @@ public class HAPEmbededDefinitionWithId extends HAPEmbededDefinition{
 	
 	public HAPEmbededDefinitionWithId() {}
 	
-	public HAPEmbededDefinitionWithId(HAPIdEntityInDomain entityId) {
-		super(entityId);
+	public HAPEmbededDefinitionWithId(HAPIdEntityInDomain entityId, boolean isComplex) {
+		super(entityId, entityId.getEntityType(), isComplex);
 	}
 	
 	public HAPIdEntityInDomain getEntityId() {	return (HAPIdEntityInDomain)this.getValue();	}
@@ -26,8 +26,9 @@ public class HAPEmbededDefinitionWithId extends HAPEmbededDefinition{
 	public void setEntityId(HAPIdEntityInDomain entityId) {  this.setValue(entityId);  }
 
 	@Override
-	public HAPEmbeded cloneEmbeded() {
+	public HAPEmbededDefinitionWithId cloneEmbeded() {
 		HAPEmbededDefinitionWithId out = new HAPEmbededDefinitionWithId();
+		this.cloneToEmbeded(out);
 		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
 		out.setAdapter(this.getAdapter());
 		return out;

@@ -1,12 +1,10 @@
 package com.nosliw.data.core.domain;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationInfo;
@@ -105,18 +103,6 @@ public class HAPUtilityDomain {
 	}
 
 	
-	public static HAPIdEntityInDomain getEntityDescent(HAPIdEntityInDomain entityId, HAPPath p, HAPDomainEntityDefinitionGlobal globalDomain) {
-		if(p==null || p.isEmpty())  return entityId;
-		HAPIdEntityInDomain currentEntityId = entityId;
-		HAPInfoEntityInDomainDefinition currentEntityInfo = globalDomain.getEntityInfoDefinition(currentEntityId);
-		HAPDefinitionEntityInDomain currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
-		for(String seg : p.getPathSegments()) {
-			currentEntityId = currentEntityDef.getChild(seg);
-			currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
-		}
-		return currentEntityId;
-	}
-	
 	public static HAPContextParser getContextParse(HAPDomainEntityDefinitionGlobal globalDomain, String currentDomainId) {
 		return new HAPContextParser(globalDomain, currentDomainId);
 	}
@@ -158,24 +144,6 @@ public class HAPUtilityDomain {
 	
 	public static String getEntityExpandedJsonString(HAPIdEntityInDomain entityId, HAPDomainEntity entityDomain) {
 		return entityDomain.getEntityInfo(entityId).toExpandedJsonString(entityDomain);
-	}
-	
-	public static HAPInfoEntityInDomainDefinition newEntityDefinitionInfoInDomain(String entityType, HAPManagerDomainEntityDefinition entityDefMan) {
-		HAPInfoEntityInDomainDefinition out = new HAPInfoEntityInDomainDefinition(entityType);
-		out.setIsComplexEntity(entityDefMan.isComplexEntity(entityType));
-		return out;
-	}
-	
-	//get entity type from class
-	public static String getEntityTypeFromEntityClass(Class<? extends HAPDefinitionEntityInDomain> entityClass) {
-		String out = null;
-		try {
-			Field f = entityClass.getField("ENTITY_TYPE");
-			out = (String)f.get(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out;
 	}
 	
 }
