@@ -103,7 +103,7 @@ public class HAPUtilityParserEntity {
 			//embeded entity
 			HAPIdEntityInDomain entityId = parseEntity(adapterJsonObj==null?jsonObj:jsonObj.opt(HAPEmbededDefinitionWithId.EMBEDED), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
-			if(entityId!=null)  out = HAPUtilityDefinition.newEmbededDefinitionWithId(entityId, domainEntityManager); 
+			if(entityId!=null)  out = HAPUtilityEntityDefinition.newEmbededDefinitionWithId(entityId, domainEntityManager); 
 		}
 		return out;
 	}

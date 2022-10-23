@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import com.nosliw.common.path.HAPPath;
 
-public class HAPUtilityDefinition {
+public class HAPUtilityEntityDefinition {
 
 	public static HAPEmbededDefinitionWithId newEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
 		return new HAPEmbededDefinitionWithId(entityId, entityDefDomainMan.isComplexEntity(entityId.getEntityType()));

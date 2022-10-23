@@ -31,7 +31,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	protected HAPDefinitionEntityInDomain() {
 		this.m_attributesSimple = new LinkedHashMap<String, HAPEmbededDefinitionWithId>();
 		this.m_attributeContainer = new LinkedHashMap<String, HAPContainerEntityDefinition>();
-		this.m_entityType = HAPUtilityDefinition.getEntityTypeFromEntityClass(this.getClass());
+		this.m_entityType = HAPUtilityEntityDefinition.getEntityTypeFromEntityClass(this.getClass());
 	}
 	
 	public HAPDefinitionEntityInDomain (String entityType) {

@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
-import com.nosliw.data.core.domain.HAPUtilityDefinition;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -26,7 +26,7 @@ public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntit
 		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestSimple1.ATTR_SCRIPTNAME);
 		entity.setScriptName(scriptName);
 		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-		HAPUtilityDefinition.setEntitySimpleAttribute(entity, HAPDefinitionEntityTestSimple1.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
+		HAPUtilityEntityDefinition.setEntitySimpleAttribute(entity, HAPDefinitionEntityTestSimple1.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestSimple1.ATTR_PARM);

@@ -31,6 +31,8 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp{
 	
 	public String getEntityType() {    return this.m_entityType;   }
 	
+	public Map<String, HAPExecutable> getAttributes(){    return this.m_attributes;     }
+	
 	public void setNormalAttribute(String attrName, HAPEmbededExecutable embeded) {	this.m_attributes.put(attrName, embeded);	}
 	
 	public void setContainerAttribute(String attribute, HAPContainerEntityExecutable entityContainer) {		this.m_attributes.put(attribute, entityContainer);	}

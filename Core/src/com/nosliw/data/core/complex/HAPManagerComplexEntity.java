@@ -153,20 +153,14 @@ public class HAPManagerComplexEntity {
 			Map<String, HAPContainerEntityDefinition> containerAttributes = complexEntityDef.getContainerAttributes();
 			for(String attrName : containerAttributes.keySet()) {
 				HAPContainerEntityDefinition defContainer = containerAttributes.get(attrName);
-				HAPContainerEntityExecutable exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType());
+				HAPContainerEntityExecutable exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType(), this.getDomainEntityDefinitionManager());
 				List<HAPElementContainerDefinition> defEles = defContainer.getAllElements();
 				for(HAPElementContainerDefinition defEle : defEles) {
 					HAPIdEntityInDomain defEleId = ((HAPEmbededDefinitionWithId)defEle.getEmbededElementEntity()).getEntityId();
 					HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
 					if(eleEntityInfo.isComplexEntity()) {
 						HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
-						
-						
-						HAPUtilityContainerEntity.buildExecutableContainerElement(defEle, defEleId.toString());
-						
-						
-						
-						HAPElementContainerExecutable eleExe = new HAPElementContainerExecutable(new HAPEmbededExecutableWithId(eleEntityExeId), defEleId.toString());
+						HAPElementContainerExecutable eleExe = HAPUtilityContainerEntity.buildExecutableContainerElement(defEle, defEleId.toString());
 						exeContainer.addEntityElement(eleExe);
 					}
 				}

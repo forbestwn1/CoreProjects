@@ -28,7 +28,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		this.m_entityClass = entityClass;
 		
 		//get entity type from class
-		this.m_entityType = HAPUtilityDefinition.getEntityTypeFromEntityClass(entityClass);
+		this.m_entityType = HAPUtilityEntityDefinition.getEntityTypeFromEntityClass(entityClass);
 	}
 	
 	public HAPPluginEntityDefinitionInDomainImp(String entityType, Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
@@ -151,7 +151,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			}
 
 			if(isEnable) {
-				HAPContainerEntity entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType);
+				HAPContainerEntity entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType, this.getRuntimeEnvironment().getDomainEntityManager());
 				entityContainer.setExtraInfo(extraInfo);
 				for(int i=0; i<eleArrayObj.length(); i++) {
 					JSONObject eleObj = eleArrayObj.getJSONObject(i);
@@ -182,7 +182,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			}
 			
 			if(isEnable) {
-				HAPContainerEntityDefinition entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType);
+				HAPContainerEntityDefinition entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType, this.getRuntimeEnvironment().getDomainEntityManager());
 				entityContainer.setExtraInfo(extraInfo);
 				for(int i=0; i<eleArrayObj.length(); i++) {
 					JSONObject eleObj = eleArrayObj.getJSONObject(i);

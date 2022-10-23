@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityDefinition;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{
@@ -60,7 +60,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		}
 		
 		//get resource entity id by path
-		HAPIdEntityInDomain out = HAPUtilityDefinition.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
+		HAPIdEntityInDomain out = HAPUtilityEntityDefinition.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
 		return out;
 	}
 
@@ -86,7 +86,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		}
 		
 		//get resource entity id by path
-		HAPIdEntityInDomain out = HAPUtilityDefinition.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
+		HAPIdEntityInDomain out = HAPUtilityEntityDefinition.getEntityDescent(rootEntityId, normalizedResourceId.getPath(), globalDomain);
 		return out;
 	}
 
