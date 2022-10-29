@@ -17,6 +17,9 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	@HAPAttribute
 	public static String ADAPTER = "adapter";
 
+	@HAPAttribute
+	public static String VALUETYPE = "valueType";
+
 	private String m_entityType;
 	
 	private boolean m_isComplex;
@@ -51,6 +54,11 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		jsonMap.put(VALUETYPE, this.m_entityType);
+	}
+	
 	protected abstract void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain);	
 
 	public abstract HAPEmbeded cloneEmbeded();

@@ -36,6 +36,7 @@ public class HAPEmbededDefinitionWithId extends HAPEmbededDefinition{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.getEntityId().toStringValue(HAPSerializationFormat.LITERATE));
 		if(this.getAdapter()!=null) {
 			jsonMap.put(ADAPTER, this.getAdapter().toString());

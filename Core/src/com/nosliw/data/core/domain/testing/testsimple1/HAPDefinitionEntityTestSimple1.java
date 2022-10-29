@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain.testing.testsimple1;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
@@ -32,6 +34,13 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 	public Object getParm(String name) {   return this.m_parms.get(name);    }
 	public Map<String, Object> getParms(){   return this.m_parms;    }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ATTR_SCRIPTNAME, this.m_scriptName);
+		jsonMap.put(ATTR_PARM, HAPSerializeManager.getInstance().toStringValue(this.m_parms, HAPSerializationFormat.JSON));
+	}
+
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityTestSimple1 out = new HAPDefinitionEntityTestSimple1();

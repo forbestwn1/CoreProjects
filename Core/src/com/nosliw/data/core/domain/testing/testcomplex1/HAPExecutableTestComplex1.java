@@ -7,7 +7,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPExecutableTestComplex1 extends HAPExecutableEntityComplex{
@@ -28,11 +27,4 @@ public class HAPExecutableTestComplex1 extends HAPExecutableEntityComplex{
 		this.m_attributes.put(attrName, attrExe);
 	}
 
-	@Override
-	protected void buildAttributeResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		for(String attrName : this.m_attributes.keySet()) {
-			jsonMap.put(attrName, this.m_attributes.get(attrName).toResourceData(runtimeInfo).toString());
-		}
-	}
-	
 }

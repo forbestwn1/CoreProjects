@@ -292,6 +292,9 @@ var node_CONSTANT=
 	  "VALUE_UNKNOW" : "UNKNOW",
 	  
 	  "INTERFACE_GETCOREINTERFACE" : "getCoreInterface",
+	  
+	  "ATTRIBUTE_TYPE_SIMPLE" : "simple",
+	  "ATTRIBUTE_TYPE_CONTAINER" : "container",
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -12,7 +12,7 @@ import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.container.HAPContainerEntity;
+import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -69,22 +69,29 @@ public class HAPUtilityDomain {
 
 		HAPExecutableEntityComplex complexEntity = entityInfo.getEntity();
 		if(complexEntity!=null) {
-			//process attribute entity
-			Map<String, HAPEmbededExecutableWithId> simpleAttributes = complexEntity.getNormalComplexAttributes();
-			for(String attrName : simpleAttributes.keySet()) {
-				HAPEmbededExecutableWithId attributeEntity = simpleAttributes.get(attrName);
-				HAPInfoEntityInDomainExecutable attrEntityInfo = exeDomain.getEntityInfoExecutable(attributeEntity.getEntityId());
-				traverseExecutableComplexEntityTree(attrEntityInfo, attributeEntity.getAdapter(), entityInfo, processor, processContext);
-			}
-
-			//process container attribute entity
-			Map<String, HAPContainerEntity> containerAttributes = complexEntity.getContainerComplexAttributes();
-			for(String attrName : containerAttributes.keySet()) {
-				List<HAPElementContainer> eleInfos = containerAttributes.get(attrName).getAllElements();
-				for(HAPElementContainer eleInfo : eleInfos) {
-					HAPEmbededDefinitionWithId eleEntity = (HAPEmbededDefinitionWithId)eleInfo.getEmbededElementEntity();
-					HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
-					traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
+			Map<String, Object> attrsExe = complexEntity.getAttributes();
+			for(String attrName : attrsExe.keySet()) {
+				Object attrExe = attrsExe.get(attrName);
+				if(attrExe instanceof HAPContainerEntityExecutable) {
+					//process container complex attribute
+					HAPContainerEntityExecutable containerAttrExe = (HAPContainerEntityExecutable)attrExe;
+					if(containerAttrExe.getIsComplex()) {
+						List<HAPElementContainer> eleInfos = containerAttrExe.getAllElements();
+						for(HAPElementContainer eleInfo : eleInfos) {
+							HAPEmbededDefinitionWithId eleEntity = (HAPEmbededDefinitionWithId)eleInfo.getEmbededElementEntity();
+							HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
+							traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
+						}
+					}
+				}
+				else if(attrExe instanceof HAPEmbededExecutable) {
+					HAPEmbededExecutable simpleAttrExe = (HAPEmbededExecutable)attrExe;
+					if(simpleAttrExe.getIsComplex()) {
+						//process complex simple attribute
+						HAPEmbededExecutableWithId complexSimpleAttrExe = (HAPEmbededExecutableWithId)attrExe;
+						HAPInfoEntityInDomainExecutable attrEntityInfo = exeDomain.getEntityInfoExecutable(complexSimpleAttrExe.getEntityId());
+						traverseExecutableComplexEntityTree(attrEntityInfo, complexSimpleAttrExe.getAdapter(), entityInfo, processor, processContext);
+					}
 				}
 			}
 		}
