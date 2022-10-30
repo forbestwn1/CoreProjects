@@ -31,7 +31,7 @@ var node_createTestComplex1Plugin = function(){
 
 var loc_createSimpleAttribute = function(entity, adapter){
 	var loc_entity = entity;
-	var loc_adapter = adpater;
+	var loc_adapter = adapter;
 	
 	var loc_out = {
 		getType : function(){   return node_COMMONCONSTANT.ATTRIBUTE_TYPE_SIMPLE;    },
@@ -81,15 +81,15 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		var attrs = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
 		_.each(attrs, function(attr, attrName){
 			var attrType = node_packageUtility.getAttributeType(attr);
-			if(attrType==node_COMMONCONSTANT.ATTRIBUTE_TYPE_SIMPLE){
-				var entityType = attr[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];
+			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE){
+				var entityType = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE];
 				//simple attribute
 				if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
 					//test_simple attribute
 					loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(node_createTestSimple1(attr[node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
 				}
 			}
-			else if(attrType==node_COMMONCONSTANT.ATTRIBUTE_TYPE_CONTAINER){
+			else if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER){
 				//container attribute
 				var entityType = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE];
 				if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){

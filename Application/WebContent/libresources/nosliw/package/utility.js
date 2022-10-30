@@ -14,10 +14,10 @@ var node_packageUtility = {
 	
 	getAttributeType : function(attributeObj){
 		if(attributeObj[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE]!=undefined){
-			return node_COMMONCONSTANT.ATTRIBUTE_TYPE_SIMPLE;
+			return node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE;
 		}
-		else if(attributeObj[node_COMMONATRIBUTECONSTANT.ContainerEntity_ELEMENTTYPE]!=undefined){
-			return node_COMMONCONSTANT.ATTRIBUTE_TYPE_CONTAINER;
+		else if(attributeObj[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE]!=undefined){
+			return node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER;
 		}
 	}
 

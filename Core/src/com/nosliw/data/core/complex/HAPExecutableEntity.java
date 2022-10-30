@@ -48,25 +48,41 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		buildCommonJsonMap(jsonMap, typeJsonMap);
 
 		Map<String, String> attrsMapJson = new LinkedHashMap<String, String>();
-		for(String attrName : this.m_attributes.keySet()) {
-			attrsMapJson.put(attrName, HAPSerializeManager.getInstance().toStringValue(this.m_attributes.get(attrName), HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrsMapJson));
+		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
+		this.buildAttributeJsonMap(attrsMapJson, attrTypeJsonMap);
+		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrsMapJson, attrTypeJsonMap));
 	}
 
+	protected void buildAttributeJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		for(String attrName : this.m_attributes.keySet()) {
+			jsonMap.put(attrName, HAPSerializeManager.getInstance().toStringValue(this.m_attributes.get(attrName), HAPSerializationFormat.JSON));
+			typeJsonMap.put(attrName, this.m_attributes.get(attrName).getClass());
+		}
+	}
+
+	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		
 		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
-		for(String attrName : this.m_attributes.keySet()) {
-			Object attrObj = this.m_attributes.get(attrName);
-			if(attrObj instanceof HAPExecutable)	attrJsonMap.put(attrName, ((HAPExecutable)attrObj).toResourceData(runtimeInfo).toString());
-		}
+		this.buildAttributeResourceJsonMap(attrJsonMap, attrTypeJsonMap, runtimeInfo);
 		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
 	}
 
+	protected void buildAttributeResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		this.buildAttributeJsonMap(jsonMap, typeJsonMap);
+		for(String attrName : this.m_attributes.keySet()) {
+			Object attrObj = this.m_attributes.get(attrName);
+			if(attrObj instanceof HAPExecutable) {
+				jsonMap.put(attrName, ((HAPExecutable)attrObj).toResourceData(runtimeInfo).toString());
+				typeJsonMap.put(attrName, attrObj.getClass());
+			}
+		}
+	}
+
+	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
@@ -80,14 +96,19 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> attrTypeJsonMap = new LinkedHashMap<String, Class<?>>(); 
-
-		for(String attrName : this.m_attributes.keySet()) {
-			Object attrObj = this.m_attributes.get(attrName);
-			if(attrObj instanceof HAPExpandable) attrJsonMap.put(attrName, ((HAPExpandable)attrObj).toExpandedJsonString(entityDomain));
-		}
+		this.buildAttributeExpandedJsonMap(attrJsonMap, attrTypeJsonMap, entityDomain);
 		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildMapJson(attrJsonMap, attrTypeJsonMap));
 	}
 
+	protected void buildAttributeExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {
+		this.buildAttributeJsonMap(jsonMap, typeJsonMap);
+		for(String attrName : this.m_attributes.keySet()) {
+			Object attrObj = this.m_attributes.get(attrName);
+			if(attrObj instanceof HAPExpandable) jsonMap.put(attrName, ((HAPExpandable)attrObj).toExpandedJsonString(entityDomain));
+		}
+	}
+
+	
 	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 	}

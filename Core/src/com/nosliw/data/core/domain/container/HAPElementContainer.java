@@ -3,6 +3,7 @@ package com.nosliw.data.core.domain.container;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPJsonUtility;
@@ -15,10 +16,13 @@ import com.nosliw.data.core.domain.HAPExpandable;
 @HAPEntityWithAttribute
 public abstract class HAPElementContainer<T extends HAPEmbeded> extends HAPSerializableImp  implements HAPExpandable{
 
+	@HAPAttribute
 	public static final String INFO = "info";
 
+	@HAPAttribute
 	public static final String ELEMENTID = "elementId";
 
+	@HAPAttribute
 	public static final String ENTITY = "entity";
 
 	private HAPEntityInfo m_entityInfo;

@@ -13,7 +13,7 @@ public class HAPJsonTypeScript extends HAPSerializableImp implements HAPJsonType
 	@Override
 	protected String buildFullJson(){ return this.m_script; }
 	@Override
-	protected String buildJson(){ return "Empty"; }
+	protected String buildJson(){ return this.m_script; }
 
 	@Override
 	public String toString(){  return this.m_script;  }
