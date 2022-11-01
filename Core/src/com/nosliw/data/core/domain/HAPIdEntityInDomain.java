@@ -62,6 +62,9 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	public HAPIdEntityInDomain cloneIdEntityInDomain() {
 		return new HAPIdEntityInDomain(this.m_domainId, this.m_entityId, this.m_entityType);
 	}
+
+	@Override
+	public HAPIdEntityInDomain clone() {     return this.cloneIdEntityInDomain();     }
 	
 	@Override
 	public int hashCode() {

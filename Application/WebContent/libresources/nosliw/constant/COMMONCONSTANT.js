@@ -505,7 +505,9 @@ var COMMONCONSTANT=
   "ENTITYCONTAINER_TYPE_DEFINITION_LIST": "list",
   "ENTITYCONTAINER_TYPE_DEFINITION_SET": "set",
   "ENTITYCONTAINER_TYPE_EXECUTABLE_LIST": "list",
-  "ENTITYCONTAINER_TYPE_EXECUTABLE_SET": "set"
+  "ENTITYCONTAINER_TYPE_EXECUTABLE_SET": "set",
+  "ENTITYATTRIBUTE_TYPE_SIMPLE": "simple",
+  "ENTITYATTRIBUTE_TYPE_CONTAINER": "container"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

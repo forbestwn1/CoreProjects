@@ -42,6 +42,10 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 		HAPDefinitionEntityTestComplex1 definitionEntity = (HAPDefinitionEntityTestComplex1)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
 		//normal attribute
+		
+		
+		
+		
 		Map<String, HAPEmbededDefinitionWithId> simpleAttrs = definitionEntity.getSimpleAttributes();
 		for(String simpleAttrName : simpleAttrs.keySet()) {
 			HAPIdEntityInDomain attrEntityId = simpleAttrs.get(simpleAttrName).getEntityId();

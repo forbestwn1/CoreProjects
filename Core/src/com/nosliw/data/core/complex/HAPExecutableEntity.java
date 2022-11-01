@@ -60,7 +60,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		}
 	}
 
-	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		this.buildJsonMap(jsonMap, typeJsonMap);
@@ -82,7 +81,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		}
 	}
 
-	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
@@ -107,7 +105,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 			if(attrObj instanceof HAPExpandable) jsonMap.put(attrName, ((HAPExpandable)attrObj).toExpandedJsonString(entityDomain));
 		}
 	}
-
 	
 	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		jsonMap.put(ENTITYTYPE, this.m_entityType);

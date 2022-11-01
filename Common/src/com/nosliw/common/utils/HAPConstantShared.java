@@ -829,4 +829,9 @@ public class HAPConstantShared {
 		public static final String ENTITYCONTAINER_TYPE_EXECUTABLE_SET = "set";
 
 
+
+		public static final String ENTITYATTRIBUTE_TYPE_SIMPLE = "simple";
+		public static final String ENTITYATTRIBUTE_TYPE_CONTAINER = "container";
+
+
 }

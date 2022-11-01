@@ -120,6 +120,19 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
+
+//			//process attributes
+//			var attributes = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
+//			_.each(attributes, function(attribute, attrName){
+//				
+//				attribute[]
+//				
+//				var complexEntityId = childComplex[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
+//				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
+//				loc_children[attrName] = attrEntity;
+//				out.addRequest(attrEntity.getPreInitRequest());
+//			});
+
 			
 			//complex children
 			var childrenComplex = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_CHILDREN];
