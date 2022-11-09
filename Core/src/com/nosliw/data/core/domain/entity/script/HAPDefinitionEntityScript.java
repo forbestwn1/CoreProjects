@@ -1,8 +1,8 @@
 package com.nosliw.data.core.domain.entity.script;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 
 public class HAPDefinitionEntityScript extends HAPDefinitionEntityInDomainSimple{
 

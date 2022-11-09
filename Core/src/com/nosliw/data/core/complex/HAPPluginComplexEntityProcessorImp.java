@@ -2,6 +2,8 @@ package com.nosliw.data.core.complex;
 
 import java.lang.reflect.Field;
 
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+
 public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginComplexEntityProcessor{
 
 	private Class<? extends HAPExecutableEntityComplex> m_exeEntityClass;

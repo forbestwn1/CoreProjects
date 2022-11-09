@@ -1,8 +1,8 @@
 package com.nosliw.data.core.domain.testing.testdecoration1;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 public class HAPDefinitionEntityTestDecoration1 extends HAPDefinitionEntityInDomainComplex{
 

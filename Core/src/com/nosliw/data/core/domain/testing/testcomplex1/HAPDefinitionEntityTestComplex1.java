@@ -3,9 +3,9 @@ package com.nosliw.data.core.domain.testing.testcomplex1;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 public class HAPDefinitionEntityTestComplex1 extends HAPDefinitionEntityInDomainComplex{
 

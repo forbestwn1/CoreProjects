@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 public class HAPDomainEntityExecutableResourceComplex2 extends HAPSerializableImp implements HAPDomainEntity{

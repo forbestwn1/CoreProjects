@@ -7,9 +7,9 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 
 public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
 

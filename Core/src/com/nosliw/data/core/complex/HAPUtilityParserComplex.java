@@ -8,11 +8,13 @@ import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
-import com.nosliw.data.core.domain.HAPEmbededDefinitionWithId;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityComplexContainer;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 
 public class HAPUtilityParserComplex {
 

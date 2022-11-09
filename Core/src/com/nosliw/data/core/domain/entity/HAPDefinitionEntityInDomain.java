@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +13,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 
@@ -49,21 +52,21 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 		return out;
 	}
-	public HAPAttributeEntityDefinitionId getSimpleAttributeWithId(String attrName) {    return (HAPAttributeEntityDefinitionId)this.getAttribute(attrName);    }
-	public HAPAttributeEntityDefinitionValue getSimpleAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionValue)this.getAttribute(attrName);    }
+	public HAPAttributeEntityDefinitionNormalId getNormalAttributeWithId(String attrName) {    return (HAPAttributeEntityDefinitionNormalId)this.getAttribute(attrName);    }
+	public HAPAttributeEntityDefinitionNormalValue getNormalAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);    }
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	
 	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container) {
-		if(container!=null)		this.m_attributes.add(new HAPAttributeEntityDefinitionContainer(attributeName, container));    
+		if(container!=null)		this.setAttribute(new HAPAttributeEntityDefinitionContainer(attributeName, container));    
 	}
 	
-	public void setSimpleAttribute(String attributeName, HAPEmbededDefinition embededEntity) {
+	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity) {
 		if(embededEntity!=null) {
 			if(embededEntity instanceof HAPEmbededDefinitionWithId) {
-				this.setAttribute(new HAPAttributeEntityDefinitionId(attributeName, (HAPEmbededDefinitionWithId)embededEntity));    
+				this.setAttribute(new HAPAttributeEntityDefinitionNormalId(attributeName, (HAPEmbededDefinitionWithId)embededEntity));    
 			}
 			else if(embededEntity instanceof HAPEmbededDefinitionWithValue) {
-				this.setAttribute(new HAPAttributeEntityDefinitionValue(attributeName, (HAPEmbededDefinitionWithValue)embededEntity));    
+				this.setAttribute(new HAPAttributeEntityDefinitionNormalValue(attributeName, (HAPEmbededDefinitionWithValue)embededEntity));    
 			}
 		}
 	}

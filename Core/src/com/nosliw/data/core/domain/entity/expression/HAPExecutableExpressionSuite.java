@@ -2,8 +2,8 @@ package com.nosliw.data.core.domain.entity.expression;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 @HAPEntityWithAttribute(baseName="EXPRESSIONSUITE")
 public class HAPExecutableExpressionSuite extends HAPExecutableEntityComplex{

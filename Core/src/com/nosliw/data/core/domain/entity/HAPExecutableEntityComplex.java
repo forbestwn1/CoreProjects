@@ -1,4 +1,4 @@
-package com.nosliw.data.core.complex;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.Map;
 

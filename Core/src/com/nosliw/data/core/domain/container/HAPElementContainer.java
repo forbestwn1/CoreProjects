@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntity;
-import com.nosliw.data.core.domain.HAPEmbeded;
 import com.nosliw.data.core.domain.HAPExpandable;
+import com.nosliw.data.core.domain.entity.HAPEmbeded;
 
 @HAPEntityWithAttribute
 public abstract class HAPElementContainer<T extends HAPEmbeded> extends HAPSerializableImp  implements HAPExpandable{

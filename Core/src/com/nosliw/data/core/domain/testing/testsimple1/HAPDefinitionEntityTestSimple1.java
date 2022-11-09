@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.HAPEmbededDefinitionWithValue;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
 
 public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainSimple{
 
@@ -19,14 +19,14 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 
 	public HAPDefinitionEntityTestSimple1() {
 		super(ENTITY_TYPE);
-		this.setSimpleAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
+		this.setNormalAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
 	}
 
-	public void setScriptName(String scriptName) {    this.setSimpleAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(scriptName));    }
-	public String getScriptName() {   return (String)this.getSimpleAttributeWithValue(ATTR_SCRIPTNAME).getValue().getValue();     }
+	public void setScriptName(String scriptName) {    this.setNormalAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(scriptName));    }
+	public String getScriptName() {   return (String)this.getNormalAttributeWithValue(ATTR_SCRIPTNAME).getValue().getValue();     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
-	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getSimpleAttributeWithValue(ATTR_PARM).getValue();    }
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeWithValue(ATTR_PARM).getValue();    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override

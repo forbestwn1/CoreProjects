@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.attachment;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 public class HAPManagerAttachment {
 

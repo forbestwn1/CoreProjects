@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.container;
 
-import com.nosliw.data.core.domain.HAPEmbededDefinitionWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 
 public class HAPElementContainerDefinitionWithId1 extends HAPElementContainerDefinition<HAPEmbededDefinitionWithId>{
 

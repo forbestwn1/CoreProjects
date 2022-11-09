@@ -13,6 +13,8 @@ import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -104,7 +106,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(attrEntityObj!=null) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinitionWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-			entity.setSimpleAttribute(attributeName, attributeEntity);
+			entity.setNormalAttribute(attributeName, attributeEntity);
 		}
 	}
 
@@ -113,7 +115,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(attrEntityObj!=null) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinitionWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-			entity.setSimpleAttribute(attributeName, attributeEntity);
+			entity.setNormalAttribute(attributeName, attributeEntity);
 		}
 	}
 	

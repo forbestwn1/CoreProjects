@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -6,6 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.HAPDomainEntity;
+import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;

@@ -12,6 +12,7 @@ import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;

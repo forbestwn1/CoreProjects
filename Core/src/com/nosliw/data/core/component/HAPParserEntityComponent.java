@@ -5,13 +5,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithValueStructure;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.component.event.HAPWithEvent;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAParserComponentValueStructure;

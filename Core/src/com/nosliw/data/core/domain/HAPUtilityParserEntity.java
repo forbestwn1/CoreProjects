@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.HAPEmbeded;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;

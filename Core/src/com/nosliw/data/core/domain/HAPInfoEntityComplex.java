@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 

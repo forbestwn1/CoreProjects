@@ -8,11 +8,11 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 

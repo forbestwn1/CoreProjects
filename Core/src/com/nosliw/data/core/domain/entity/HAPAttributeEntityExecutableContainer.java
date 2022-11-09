@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPAttributeEntityExecutableContainer extends HAPAttributeEntity<HAPContainerEntityExecutable> implements HAPExecutable{
+public class HAPAttributeEntityExecutableContainer extends HAPAttributeEntityExecutable<HAPContainerEntityExecutable> implements HAPExecutable{
 
 	public HAPAttributeEntityExecutableContainer(String name, HAPContainerEntityExecutable value) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER, name, value);

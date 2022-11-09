@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 
 //a complex resource definition that contains attachment, context data, child resource 

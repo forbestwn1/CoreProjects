@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.HAPEmbededExecutable;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;

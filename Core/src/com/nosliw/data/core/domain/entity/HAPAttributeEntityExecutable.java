@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

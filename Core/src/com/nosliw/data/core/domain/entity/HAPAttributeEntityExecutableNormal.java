@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,14 +14,14 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPAttributeEntityExecutableEntity extends HAPAttributeEntityExecutable<HAPEmbededExecutableWithEntity> implements HAPExecutable{
+public abstract class HAPAttributeEntityExecutableNormal<T extends HAPEmbededExecutable> extends HAPAttributeEntityExecutable<T> implements HAPExecutable{
 
-	public HAPAttributeEntityExecutableEntity(String name, HAPEmbededExecutableWithEntity value) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_SIMPLE, name, value);
+	public HAPAttributeEntityExecutableNormal(String name, T value) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL, name, value);
 	}
 
-	public HAPAttributeEntityExecutableEntity() {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_SIMPLE);
+	public HAPAttributeEntityExecutableNormal() {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL);
 	}
 
 	@Override
@@ -43,16 +43,8 @@ public class HAPAttributeEntityExecutableEntity extends HAPAttributeEntityExecut
 		return out;
 	}
 
-	@Override
-	public HAPAttributeEntityExecutableEntity cloneEntityAttribute() {
-		HAPAttributeEntityExecutableEntity out = new HAPAttributeEntityExecutableEntity();
-		this.cloneToEntityAttribute(out);
-		return out;
-	}
-	
-	protected void cloneToEntityAttribute(HAPAttributeEntityExecutableEntity attr) {
+	protected void cloneToEntityAttribute(HAPAttributeEntityExecutableNormal attr) {
 		super.cloneToEntityAttribute(attr);
-		this.setValue(this.getValue().cloneEmbeded());
+		this.setValue((T)this.getValue().cloneEmbeded());
 	}
-
 }

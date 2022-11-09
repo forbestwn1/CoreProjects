@@ -830,7 +830,7 @@ public class HAPConstantShared {
 
 
 
-		public static final String ENTITYATTRIBUTE_TYPE_SIMPLE = "simple";
+		public static final String ENTITYATTRIBUTE_TYPE_NORMAL = "simple";
 		public static final String ENTITYATTRIBUTE_TYPE_CONTAINER = "container";
 
 

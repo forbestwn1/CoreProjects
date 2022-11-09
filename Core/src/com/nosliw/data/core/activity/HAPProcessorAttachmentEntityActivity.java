@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
 

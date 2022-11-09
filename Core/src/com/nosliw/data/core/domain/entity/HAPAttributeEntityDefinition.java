@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 public abstract class HAPAttributeEntityDefinition<T> extends HAPAttributeEntity<T>{
 

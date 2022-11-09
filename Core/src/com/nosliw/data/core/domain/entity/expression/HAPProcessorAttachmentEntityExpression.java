@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity.expression;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

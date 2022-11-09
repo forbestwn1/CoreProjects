@@ -2,8 +2,8 @@ package com.nosliw.data.core.domain;
 
 import org.apache.commons.lang3.tuple.Triple;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
 
 //

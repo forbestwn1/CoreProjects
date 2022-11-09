@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain;
 import java.lang.reflect.Field;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 
 public class HAPUtilityEntityDefinition {
 
@@ -12,7 +14,7 @@ public class HAPUtilityEntityDefinition {
 	
 	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPDefinitionEntityInDomain entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
 		HAPEmbededDefinitionWithId embeded = new HAPEmbededDefinitionWithId(attrEntityId, entityDefDomainMan.isComplexEntity(attrEntityId.getEntityType()));
-		entityDef.setSimpleAttribute(attributeName, embeded);
+		entityDef.setNormalAttribute(attributeName, embeded);
 		return embeded;
 	}
 	

@@ -1,5 +1,6 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.HAPDomainEntity;
+import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -16,25 +20,21 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 @HAPEntityWithAttribute
-public class HAPEmbededExecutableWithEntity extends HAPEmbededExecutable{
+public class HAPEmbededExecutableWithValue extends HAPEmbededExecutable{
 
 	@HAPAttribute
-	public static String ENTITY = "entity";
+	public static String VALUE = "value";
 
-	public HAPEmbededExecutableWithEntity() {}
+	public HAPEmbededExecutableWithValue() {}
 	
-	public HAPEmbededExecutableWithEntity(HAPExecutable executable, String entityType, boolean isComplex) {
+	public HAPEmbededExecutableWithValue(HAPExecutable executable, String entityType, boolean isComplex) {
 		super(executable, entityType, isComplex);
 	}
-	
-	public HAPExecutable getEntity() {	return (HAPExecutable)this.getValue();	}
-	
-	public void setEntity(HAPExecutable executable) {  this.setEntity(executable);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTITY, this.getEntity().toStringValue(HAPSerializationFormat.LITERATE));
+		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -47,18 +47,18 @@ public class HAPEmbededExecutableWithEntity extends HAPEmbededExecutable{
 
 	@Override
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {	
-		if(this.getValue() instanceof HAPExpandable)   jsonMap.put(ENTITY, ((HAPExpandable) this.getValue()).toExpandedJsonString(entityDomain));
+		if(this.getValue() instanceof HAPExpandable)   jsonMap.put(VALUE, ((HAPExpandable) this.getValue()).toExpandedJsonString(entityDomain));
+	}
+
+	@Override
+	public HAPEmbededExecutableWithValue cloneEmbeded() {
+		HAPEmbededExecutableWithValue out = new HAPEmbededExecutableWithValue();
+		this.cloneToEmbeded(out);
+		return out;
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		return this.getEntity().getResourceDependency(runtimeInfo, resourceManager);
-	}
-
-	@Override
-	public HAPEmbededExecutableWithEntity cloneEmbeded() {
-		HAPEmbededExecutableWithEntity out = new HAPEmbededExecutableWithEntity();
-		this.cloneToEmbeded(out);
-		return out;
+		return new ArrayList<HAPResourceDependency>();
 	}
 }

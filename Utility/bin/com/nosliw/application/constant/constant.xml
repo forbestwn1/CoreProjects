@@ -870,7 +870,7 @@
 			<definition name="ENTITYCONTAINER_TYPE_EXECUTABLE_SET" value="set"/>
 
 			<definition type="space"/>
-			<definition name="ENTITYATTRIBUTE_TYPE_SIMPLE" value="simple"/>
+			<definition name="ENTITYATTRIBUTE_TYPE_NORMAL" value="normal"/>
 			<definition name="ENTITYATTRIBUTE_TYPE_CONTAINER" value="container"/>
 		</definitions>
 	</constants>

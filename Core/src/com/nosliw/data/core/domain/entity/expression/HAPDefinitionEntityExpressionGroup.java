@@ -13,8 +13,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDomainComplex implements HAPWithEntityElement<HAPDefinitionExpression>{

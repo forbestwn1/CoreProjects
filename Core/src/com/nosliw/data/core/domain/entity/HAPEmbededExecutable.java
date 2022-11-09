@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain;
+package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.data.core.runtime.HAPExecutable;
 

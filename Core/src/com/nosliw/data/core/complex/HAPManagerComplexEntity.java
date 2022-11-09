@@ -8,13 +8,8 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPAttributeEntityDefinition;
-import com.nosliw.data.core.domain.HAPAttributeEntityDefinitionContainer;
-import com.nosliw.data.core.domain.HAPAttributeEntityDefinitionId;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
-import com.nosliw.data.core.domain.HAPEmbededDefinitionWithId;
-import com.nosliw.data.core.domain.HAPEmbededExecutableWithId;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainExecutable;
@@ -30,6 +25,13 @@ import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionContainer;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormalId;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithId;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -144,8 +146,8 @@ public class HAPManagerComplexEntity {
 			List<HAPAttributeEntityDefinition> attrsDef = complexEntityDef.getAttributes();
 			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
 				if(attrDef.getIsComplex()) {
-					if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_SIMPLE)){
-						HAPAttributeEntityDefinitionId simpleAttrDef = (HAPAttributeEntityDefinitionId)attrDef;
+					if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)){
+						HAPAttributeEntityDefinitionNormalId simpleAttrDef = (HAPAttributeEntityDefinitionNormalId)attrDef;
 						HAPEmbededDefinitionWithId embededAttributeDef = simpleAttrDef.getValue();
 						HAPIdEntityInDomain attrEntityDefId = embededAttributeDef.getEntityId();
 						HAPInfoEntityInDomainDefinition entityInfo = defDomain.getEntityInfoDefinition(attrEntityDefId);

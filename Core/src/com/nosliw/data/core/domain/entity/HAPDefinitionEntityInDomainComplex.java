@@ -1,9 +1,7 @@
-package com.nosliw.data.core.complex;
+package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.HAPEmbededDefinitionWithId;
 
 //entity that have data value structure and attachment
 public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
@@ -20,7 +18,7 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public HAPEmbededDefinitionWithId getValueStructureComplexEntity() {  return this.getSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE).getValue();  }
 
 	@Override
-	public void setValueStructureComplexEntity(HAPEmbededDefinitionWithId valueStructureComplexEntity) {    this.setSimpleAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
+	public void setValueStructureComplexEntity(HAPEmbededDefinitionWithId valueStructureComplexEntity) {    this.setNormalAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return null;  }
@@ -29,6 +27,6 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public HAPEmbededDefinitionWithId getAttachmentContainerEntity() {   return this.getSimpleAttribute(HAPWithAttachment.ATTACHMENT).getValue();  }
 
 	@Override
-	public void setAttachmentContainerEntity(HAPEmbededDefinitionWithId attachmentEntity) {    this.setSimpleAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
+	public void setAttachmentContainerEntity(HAPEmbededDefinitionWithId attachmentEntity) {    this.setNormalAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
 
 }

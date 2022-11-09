@@ -7,8 +7,8 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 

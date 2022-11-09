@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.complex.HAPExecutableEntitySimple;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
 
 @HAPEntityWithAttribute
 public class HAPExecutableTestSimple1 extends HAPExecutableEntitySimple{
