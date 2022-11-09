@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPDefinitionEntityComplexImp;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
@@ -91,8 +91,8 @@ abstract public class HAPDefinitionEntityComponentImp extends HAPDefinitionEntit
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(COMMAND, HAPJsonUtility.buildJson(this.m_commands, HAPSerializationFormat.JSON));
-		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_events, HAPSerializationFormat.JSON));
-		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));
+		jsonMap.put(COMMAND, HAPUtilityJson.buildJson(this.m_commands, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENT, HAPUtilityJson.buildJson(this.m_events, HAPSerializationFormat.JSON));
+		jsonMap.put(TASK, HAPUtilityJson.buildJson(this.m_taskSuite, HAPSerializationFormat.JSON));
 	}
 }

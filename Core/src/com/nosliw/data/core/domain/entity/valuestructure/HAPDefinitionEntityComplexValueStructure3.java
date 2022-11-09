@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
@@ -93,7 +93,7 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 		for(HAPExecutablePartComplexValueStructure part : this.m_parts) {
 			partJsonArray.add(part.toExpandedJsonString(entityDefDomain));
 		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partJsonArray.toArray(new String[0])));
+		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partJsonArray.toArray(new String[0])));
 	}
 
 }

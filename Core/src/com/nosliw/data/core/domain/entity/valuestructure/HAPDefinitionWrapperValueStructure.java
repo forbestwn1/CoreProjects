@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -51,7 +51,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp{
 		jsonMap.put(GROUPTYPE, this.m_groupType);
 		jsonMap.put(GROUPNAME, this.m_groupName);
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityDomain.getEntityExpandedJsonString(this.m_valueStructureId, entityDefDomain));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	public HAPDefinitionWrapperValueStructure cloneValueStructureWrapper() {

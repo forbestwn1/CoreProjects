@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
@@ -49,18 +49,26 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 		return out;
 	}
-	public HAPAttributeEntityDefinitionSimple getSimpleAttribute(String attrName) {    return (HAPAttributeEntityDefinitionSimple)this.getAttribute(attrName);    }
+	public HAPAttributeEntityDefinitionId getSimpleAttributeWithId(String attrName) {    return (HAPAttributeEntityDefinitionId)this.getAttribute(attrName);    }
+	public HAPAttributeEntityDefinitionValue getSimpleAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionValue)this.getAttribute(attrName);    }
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	
 	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container) {
 		if(container!=null)		this.m_attributes.add(new HAPAttributeEntityDefinitionContainer(attributeName, container));    
 	}
 	
-	public void setSimpleAttribute(String attributeName, HAPEmbededDefinitionWithId embededEntity) {
-		if(embededEntity!=null)		this.m_attributes.add(new HAPAttributeEntityDefinitionSimple(attributeName, embededEntity));    
+	public void setSimpleAttribute(String attributeName, HAPEmbededDefinition embededEntity) {
+		if(embededEntity!=null) {
+			if(embededEntity instanceof HAPEmbededDefinitionWithId) {
+				this.setAttribute(new HAPAttributeEntityDefinitionId(attributeName, (HAPEmbededDefinitionWithId)embededEntity));    
+			}
+			else if(embededEntity instanceof HAPEmbededDefinitionWithValue) {
+				this.setAttribute(new HAPAttributeEntityDefinitionValue(attributeName, (HAPEmbededDefinitionWithValue)embededEntity));    
+			}
+		}
 	}
 
-	private void setAttribute(HAPAttributeEntityDefinition attribute) {    this.m_attributes.add(attribute);    }
+	public void setAttribute(HAPAttributeEntityDefinition attribute) {    this.m_attributes.add(attribute);    }
 
 	//normal json
 	@Override
@@ -70,7 +78,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		for(HAPAttributeEntity attribute : this.getAttributes()) {
 			attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildArrayJson(attrArray.toArray(new String[0])));
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
 
 	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
@@ -81,8 +89,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		for(HAPAttributeEntity attribute : this.getAttributes()) {
 			attrArray.add(attribute.toExpandedJsonString(entityDefDomain));
 		}
-		jsonMap.put(ATTRIBUTE, HAPJsonUtility.buildArrayJson(attrArray.toArray(new String[0])));
-		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
+		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);
 	}
 	
 	public abstract HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain();

@@ -1,6 +1,6 @@
 package com.nosliw.common.literate;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPLiterateType {
 
@@ -20,7 +20,7 @@ public class HAPLiterateType {
 		boolean out = false;
 		if(o instanceof HAPLiterateType){
 			HAPLiterateType value = (HAPLiterateType)o;
-			out = HAPBasicUtility.isEquals(m_type, value.m_type) && HAPBasicUtility.isEquals(m_subType, value.m_subType);
+			out = HAPUtilityBasic.isEquals(m_type, value.m_type) && HAPUtilityBasic.isEquals(m_subType, value.m_subType);
 		}
 		return out;
 	}

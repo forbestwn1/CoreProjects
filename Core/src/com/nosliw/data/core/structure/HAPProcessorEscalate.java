@@ -9,7 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
@@ -34,9 +34,9 @@ public class HAPProcessorEscalate {
 				String targetPath = null;
 				for(HAPInfoAlias aliasInfo : rootAliases) {
 					targetPath = contextMapping.get(aliasInfo.getName());
-					if(!HAPBasicUtility.isStringEmpty(targetPath)) break;
+					if(!HAPUtilityBasic.isStringEmpty(targetPath)) break;
 				}
-				if(HAPBasicUtility.isStringEmpty(targetPath)) {
+				if(HAPUtilityBasic.isStringEmpty(targetPath)) {
 					targetPath = rootAliases.get(0).getName();
 				}
 
@@ -80,7 +80,7 @@ public class HAPProcessorEscalate {
 			if(isEnd){
 				//at the end of escalate
 				//only root name is valid, mappedPath with path is not valid
-				if(HAPBasicUtility.isStringEmpty(path.getPathStr())) {
+				if(HAPUtilityBasic.isStringEmpty(path.getPathStr())) {
 					//clone original root node to parent context
 					HAPRootStructure newRoot = HAPUtilityStructure.addRoot(parentStructure, path.getRoot(), originalStrucutre.getRoot(originalRootId).cloneRoot());
 					out = Pair.of(false, newRoot);

@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 
 public class HAPUtilityFile {
 	
@@ -79,8 +79,8 @@ public class HAPUtilityFile {
 		return readFile(stream, "\n");
 	}
 
-	public static String writeJsonFile(String folder, String fileName, String content) {    return writeFile(folder, fileName, HAPJsonUtility.formatJson(content));     }
-	public static String writeJsonFile(String fileName, String content){    return writeFile(fileName, HAPJsonUtility.formatJson(content));     }
+	public static String writeJsonFile(String folder, String fileName, String content) {    return writeFile(folder, fileName, HAPUtilityJson.formatJson(content));     }
+	public static String writeJsonFile(String fileName, String content){    return writeFile(fileName, HAPUtilityJson.formatJson(content));     }
 	
 	public static String writeFile(String folder, String fileName, String content){		return writeFile(buildFullFileName(folder, fileName), content); 	}
 	public static String writeFile(String fileName, String content){

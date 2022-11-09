@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -104,10 +104,10 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(LINK, this.getReference().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(this.m_definition, HAPSerializationFormat.JSON));
+		jsonMap.put(DEFINITION, HAPUtilityJson.buildJson(this.m_definition, HAPSerializationFormat.JSON));
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
-			jsonMap.put(MATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
-			jsonMap.put(REVERSEMATCHERS, HAPJsonUtility.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
+			jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
+			jsonMap.put(REVERSEMATCHERS, HAPUtilityJson.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
 		}
 	}
 
@@ -118,9 +118,9 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafRelativeForValue) {
 			HAPElementStructureLeafRelativeForValue ele = (HAPElementStructureLeafRelativeForValue)obj;
-			if(!HAPBasicUtility.isEquals(this.getReference(), ele.getReference()))  return false;
-			if(!HAPBasicUtility.isEqualMaps(ele.m_matchers, this.m_matchers)) 	return false;
-			if(!HAPBasicUtility.isEqualMaps(ele.m_reverseMatchers, this.m_matchers))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getReference(), ele.getReference()))  return false;
+			if(!HAPUtilityBasic.isEqualMaps(ele.m_matchers, this.m_matchers)) 	return false;
+			if(!HAPUtilityBasic.isEqualMaps(ele.m_reverseMatchers, this.m_matchers))  return false;
 			if(!ele.m_definition.equals(this.m_definition))  return false;
 			out = true;
 		}

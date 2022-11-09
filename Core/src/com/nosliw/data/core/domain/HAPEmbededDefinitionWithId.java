@@ -29,18 +29,13 @@ public class HAPEmbededDefinitionWithId extends HAPEmbededDefinition{
 	public HAPEmbededDefinitionWithId cloneEmbeded() {
 		HAPEmbededDefinitionWithId out = new HAPEmbededDefinitionWithId();
 		this.cloneToEmbeded(out);
-		out.setEntityId(this.getEntityId().cloneIdEntityInDomain());
-		out.setAdapter(this.getAdapter());
 		return out;
 	}
-	
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.getEntityId().toStringValue(HAPSerializationFormat.LITERATE));
-		if(this.getAdapter()!=null) {
-			jsonMap.put(ADAPTER, this.getAdapter().toString());
-		}
 	}
 	
 	@Override

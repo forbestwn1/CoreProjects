@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
@@ -42,7 +42,7 @@ public class HAPParseMiniApp {
 
 		HAPParserEntityComponent.parseComplextResourceDefinition(out, jsonObj);
 		
-		out.setApplicationData(HAPSerializeUtility.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
+		out.setApplicationData(HAPUtilitySerialize.buildMapFromJsonObject(HAPDefinitionAppData.class.getName(), jsonObj.optJSONObject(HAPDefinitionApp.APPLICATIONDATA)));
 
 		JSONArray entryArray = jsonObj.optJSONArray(HAPDefinitionEntityContainer.ELEMENT);
 		if(entryArray!=null) {

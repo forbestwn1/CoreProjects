@@ -3,7 +3,7 @@ package com.nosliw.data.core.story.change;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPElementGroup;
 import com.nosliw.data.core.story.HAPInfoElement;
@@ -50,7 +50,7 @@ public class HAPRequestChangeWrapper {
 	}
 	
 	public HAPChangeItemNew addNewChange(HAPStoryElement storyElement, String alias) {
-		if(HAPBasicUtility.isStringEmpty(storyElement.getId())) storyElement.setId(HAPUtilityStory.buildStoryElementId(storyElement, this.m_story.getNextId()));
+		if(HAPUtilityBasic.isStringEmpty(storyElement.getId())) storyElement.setId(HAPUtilityStory.buildStoryElementId(storyElement, this.m_story.getNextId()));
 		HAPAliasElement aliasObj = null;
 		if(alias!=null)		aliasObj = new HAPAliasElement(alias, false);
 		else aliasObj = this.m_story.generateTemporaryAlias();

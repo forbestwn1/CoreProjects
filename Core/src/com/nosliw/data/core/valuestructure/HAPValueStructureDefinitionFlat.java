@@ -12,10 +12,10 @@ import org.json.JSONObject;
 import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
@@ -63,7 +63,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 	public HAPRootStructure addRoot(HAPRootStructure root) {
 		root = root.cloneRoot();
 		String name = root.getName();
-		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(name);
+		if(HAPUtilityBasic.isStringEmpty(root.getLocalId()))  root.setLocalId(name);
 		this.m_rootById.put(root.getLocalId(), root);
 		this.m_idByName.put(name, root.getLocalId());
 		return root;
@@ -207,7 +207,7 @@ public class HAPValueStructureDefinitionFlat extends HAPValueStructureDefinition
 		for(String name : this.m_idByName.keySet()) {
 			rootsMap.put(name, this.getRootByName(name).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(FLAT, HAPJsonUtility.buildMapJson(rootsMap));
+		jsonMap.put(FLAT, HAPUtilityJson.buildMapJson(rootsMap));
 	}
 	
 	@Override

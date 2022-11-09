@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
@@ -86,7 +86,7 @@ public class HAPUtilityStory {
 		List<HAPConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstantShared.STORYCONNECTION_TYPE_CONTAIN, HAPConstantShared.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPConnectionEnd connectionEnd : childConnectionEnds) {
 			HAPConnectionContain containerConnectionEntity = (HAPConnectionContain)story.getConnection(connectionEnd.getConnectionId());
-			if(HAPBasicUtility.isEquals(childId, containerConnectionEntity.getChildId())) {
+			if(HAPUtilityBasic.isEquals(childId, containerConnectionEntity.getChildId())) {
 				HAPStoryNode node = (HAPStoryNode)story.getElement(connectionEnd.getNodeRef());
 				if(isValid(containerConnectionEntity, onlyEnable) && isValid(node, onlyEnable)) {
 					out.add(node);

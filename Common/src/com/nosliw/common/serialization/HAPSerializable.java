@@ -1,6 +1,8 @@
 package com.nosliw.common.serialization;
 
-public interface HAPSerializable {
+import com.nosliw.common.interfac.HAPCloneable;
+
+public interface HAPSerializable extends HAPCloneable{
 	
 	public String toStringValue(HAPSerializationFormat format);
 	

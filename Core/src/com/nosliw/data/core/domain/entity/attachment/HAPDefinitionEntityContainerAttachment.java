@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -124,6 +124,6 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	}
 
 	private void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildJson(this.m_element, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildJson(this.m_element, HAPSerializationFormat.JSON));
 	}
 }

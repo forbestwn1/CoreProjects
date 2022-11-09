@@ -3,9 +3,9 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -102,7 +102,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 		out.m_isComplex = this.m_isComplex;
 		out.m_entityType = this.m_entityType;
 		if(this.m_entity!=null)  out.m_entity = this.m_entity.cloneEntityDefinitionInDomain();
-		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneIdEntityInDomain();
+		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneValue();
 		if(this.m_resourceId!=null)  out.m_resourceId = this.m_resourceId.clone();
 		if(this.m_reference!=null)   out.m_reference = this.m_reference.cloneAttachmentReference();
 		if(this.m_extraInfo!=null)  out.m_extraInfo = this.m_extraInfo.cloneExtraInfo();
@@ -132,7 +132,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 			HAPInfoParentComplex parentInfo = ((HAPDomainEntityDefinitionLocalComplex)resourceDomain).getParentInfo(this.m_entityId);
 			if(parentInfo!=null)   jsonMap.put(PARENT, parentInfo.toStringValue(HAPSerializationFormat.JSON));
 		}
-		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);
 	}
 	
 	@Override

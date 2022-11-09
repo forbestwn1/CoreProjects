@@ -13,7 +13,7 @@ import java.util.Properties;
 
 import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -79,7 +79,7 @@ public class HAPConfigureUtility {
 	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1){  return importFromProperty(configure, file, class1, null);}
 	public static HAPConfigureImp importFromProperty(HAPConfigureImp configure, String file, Class<?> class1, HAPImportConfigure importConfigure){
 		HAPConfigureImp out = configure;
-		if(!HAPBasicUtility.isStringEmpty(file)){
+		if(!HAPUtilityBasic.isStringEmpty(file)){
 			InputStream input = HAPUtilityFile.getInputStreamOnClassPath(class1, file);
 			out = importFromProperty(configure, input, importConfigure);
 		}

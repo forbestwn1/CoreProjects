@@ -8,10 +8,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPContainerStructure extends HAPSerializableImp{
@@ -37,7 +37,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 		if(structure==null)  return this;
 		if(this.isSelf(name))  return this;   //ignore self parent
 		
-		if(HAPBasicUtility.isStringEmpty(name))  name = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(name))  name = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_structures.put(name, structure);
 		this.m_structureNames.add(name);
 		return this;
@@ -63,7 +63,7 @@ public class HAPContainerStructure extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(STRUCTURE, HAPJsonUtility.buildJson(this.m_structures, HAPSerializationFormat.JSON));
+		jsonMap.put(STRUCTURE, HAPUtilityJson.buildJson(this.m_structures, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

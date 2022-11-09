@@ -1,6 +1,6 @@
 package com.nosliw.test.expression;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
@@ -23,7 +23,7 @@ public class HAPExpressionSuiteTest {
 		//definition
 		HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, globalDomain);
 		String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), globalDomain);
-		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
+		System.out.println(HAPUtilityJson.formatJson(expandedJsonStr));
 
 		//process
 		HAPExecutablePackage executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);

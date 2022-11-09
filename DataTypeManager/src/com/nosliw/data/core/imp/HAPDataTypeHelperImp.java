@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeFamily;
@@ -313,7 +313,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 				HAPMatcher matcher = matchByDataTypes.get(dataTypeId);
 				this.processSubMatcher(matcher);
 				
-				if((!HAPBasicUtility.isEquals(matcher.getRelationship().getSource(), matcher.getRelationship().getTarget())) && 
+				if((!HAPUtilityBasic.isEquals(matcher.getRelationship().getSource(), matcher.getRelationship().getTarget())) && 
 						(matcher.getSubMatchers()==null||matcher.getSubMatchers().isEmpty())){
 					canRemove = false;
 				}

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -46,7 +46,7 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 		HAPBrowseResourceServlet that = new HAPBrowseResourceServlet();
 		that.m_uiResourceMan = uiResourceMan;
 		HAPResourceNodeContainer resourceTree = that.buildResourceTree();
-		System.out.println(HAPJsonUtility.buildJson(resourceTree, HAPSerializationFormat.JSON));
+		System.out.println(HAPUtilityJson.buildJson(resourceTree, HAPSerializationFormat.JSON));
 	}
 	
 	private HAPResourceNodeContainer buildResourceTree(){

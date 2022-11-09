@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.handler.HAPExecutableHandler;
@@ -51,8 +51,8 @@ public class HAPExecutableHandlerEvent extends HAPExecutableImpEntityInfo{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EVENTNAME, this.m_eventName);
-		jsonMap.put(HANDLER, HAPJsonUtility.buildJson(this.m_handler, HAPSerializationFormat.JSON));
-		jsonMap.put(IN, HAPJsonUtility.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
+		jsonMap.put(HANDLER, HAPUtilityJson.buildJson(this.m_handler, HAPSerializationFormat.JSON));
+		jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -64,7 +64,7 @@ public class HAPExecutableHandlerEvent extends HAPExecutableImpEntityInfo{
 		jsonMap.put(IN, this.m_inDataAssociation.toResourceData(runtimeInfo).toString());
 		jsonMap.put(HANDLER, this.m_handler.toResourceData(runtimeInfo).toString());
 
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

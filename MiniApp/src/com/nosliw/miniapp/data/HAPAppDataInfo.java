@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.miniapp.entity.HAPOwnerInfo;
@@ -45,7 +45,7 @@ public class HAPAppDataInfo extends HAPSerializableImp{
 	public void setOwnerInfo(HAPOwnerInfo ownerInfo) {  this.m_ownerInfo = ownerInfo;  }
 
 	public JSONArray getData() {   return this.m_data;   }
-	public String getDataStr() { return HAPJsonUtility.buildJson(this.m_data, HAPSerializationFormat.JSON);  }
+	public String getDataStr() { return HAPUtilityJson.buildJson(this.m_data, HAPSerializationFormat.JSON);  }
 	public void setData(Object data) {
 		if(data instanceof String)	this.m_data = new JSONArray((String)data);
 		else if(data instanceof JSONArray)  this.m_data = (JSONArray)data;
@@ -56,7 +56,7 @@ public class HAPAppDataInfo extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(OWNERINFO, HAPJsonUtility.buildJson(this.m_ownerInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(OWNERINFO, HAPUtilityJson.buildJson(this.m_ownerInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(DATA, this.getDataStr());
 	}
 	

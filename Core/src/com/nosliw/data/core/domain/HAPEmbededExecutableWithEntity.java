@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -35,9 +35,6 @@ public class HAPEmbededExecutableWithEntity extends HAPEmbededExecutable{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITY, this.getEntity().toStringValue(HAPSerializationFormat.LITERATE));
-		if(this.getAdapter()!=null) {
-			jsonMap.put(ADAPTER, this.getAdapter().toString());
-		}
 	}
 	
 	@Override
@@ -45,8 +42,7 @@ public class HAPEmbededExecutableWithEntity extends HAPEmbededExecutable{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTITY, this.getEntity().toResourceData(runtimeInfo).toString());
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override
@@ -63,8 +59,6 @@ public class HAPEmbededExecutableWithEntity extends HAPEmbededExecutable{
 	public HAPEmbededExecutableWithEntity cloneEmbeded() {
 		HAPEmbededExecutableWithEntity out = new HAPEmbededExecutableWithEntity();
 		this.cloneToEmbeded(out);
-		out.setAdapter(this.getAdapter());
-		out.setValue(this.getValue());
 		return out;
 	}
 }

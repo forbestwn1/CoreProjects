@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -78,6 +78,6 @@ public class HAPLiterateArray  implements HAPLiterateDef{
 
 	@Override
 	public String getSubTypeByType(Type valueType) {
-		return HAPBasicUtility.getParameterizedType(valueType);
+		return HAPUtilityBasic.getParameterizedType(valueType);
 	}
 }

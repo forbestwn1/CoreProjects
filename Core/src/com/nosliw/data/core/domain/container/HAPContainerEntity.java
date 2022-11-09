@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntity;
@@ -104,7 +104,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		for(T ele : this.getAllElements()) {
 			elesJsonArray.add(ele.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(elesJsonArray.toArray(new String[0])));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildArrayJson(elesJsonArray.toArray(new String[0])));
 	}
 	
 	@Override
@@ -117,9 +117,9 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		for(T ele : this.getAllElements()) {
 			eleArray.add(ele.toExpandedJsonString(entityDefDomain));
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(eleArray.toArray(new String[0])));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildArrayJson(eleArray.toArray(new String[0])));
 
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 }

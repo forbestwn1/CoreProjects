@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -50,7 +50,7 @@ public class HAPComplexPath extends HAPSerializableImp{
 	}
 	
 	public HAPComplexPath(String fullName){
-		if(HAPBasicUtility.isStringNotEmpty(fullName)){
+		if(HAPUtilityBasic.isStringNotEmpty(fullName)){
 			this.m_fullName = fullName;
 			
 			int index = this.m_fullName.indexOf(HAPConstantShared.SEPERATOR_PATH);

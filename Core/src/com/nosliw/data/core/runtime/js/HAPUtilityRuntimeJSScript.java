@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPOperationParm;
@@ -77,7 +77,7 @@ public class HAPUtilityRuntimeJSScript {
 		templateParms.put("resourceInfo", resourceInfo.toStringValue(HAPSerializationFormat.JSON));
 		
 		String infoJson = HAPSerializeManager.getInstance().toStringValue(resource.getInfo(), HAPSerializationFormat.JSON);
-		if(HAPBasicUtility.isStringEmpty(infoJson)){
+		if(HAPUtilityBasic.isStringEmpty(infoJson)){
 			templateParms.put(HAPResource.INFO, "undefined");
 		}
 		else{
@@ -116,7 +116,7 @@ public class HAPUtilityRuntimeJSScript {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("dataTypeId", executeDataOperationTask.getDataTypeId().toStringValue(HAPSerializationFormat.LITERATE));
 		templateParms.put("operation", executeDataOperationTask.getOperation());
-		templateParms.put("parmsArray", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(executeDataOperationTask.getParms()==null?new ArrayList<HAPOperationParm>() : executeDataOperationTask.getParms(), HAPSerializationFormat.JSON)));
+		templateParms.put("parmsArray", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(executeDataOperationTask.getParms()==null?new ArrayList<HAPOperationParm>() : executeDataOperationTask.getParms(), HAPSerializationFormat.JSON)));
 
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
@@ -135,8 +135,8 @@ public class HAPUtilityRuntimeJSScript {
 
 	public static HAPJSScriptInfo buildRequestScriptForExecuteDataConvertTask(HAPRuntimeTaskExecuteConverter executeConverterTask, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("data", HAPJsonUtility.formatJson(executeConverterTask.getData().toStringValue(HAPSerializationFormat.JSON)));
-		templateParms.put("matchers", HAPJsonUtility.formatJson(executeConverterTask.getMatchers().toStringValue(HAPSerializationFormat.JSON)));
+		templateParms.put("data", HAPUtilityJson.formatJson(executeConverterTask.getData().toStringValue(HAPSerializationFormat.JSON)));
+		templateParms.put("matchers", HAPUtilityJson.formatJson(executeConverterTask.getMatchers().toStringValue(HAPSerializationFormat.JSON)));
 
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
@@ -162,7 +162,7 @@ public class HAPUtilityRuntimeJSScript {
 		
 		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
 		
-		String inputJson = HAPJsonUtility.buildJson(task.getInput(), HAPSerializationFormat.JSON);
+		String inputJson = HAPUtilityJson.buildJson(task.getInput(), HAPSerializationFormat.JSON);
 		templateParms.put("inputData", inputJson);
 		
 		templateParms.put("taskId", task.getTaskId());
@@ -188,7 +188,7 @@ public class HAPUtilityRuntimeJSScript {
 		templateParms.put("taskId", loadResourcesTask.getTaskId());
 		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
 
-		templateParms.put("resourceInfos", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
+		templateParms.put("resourceInfos", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
 		
 		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "LoadResources.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
@@ -205,7 +205,7 @@ public class HAPUtilityRuntimeJSScript {
 		
 		templateParms.put("processDef", task.getProcess().toResourceData(runtime.getRuntimeInfo()).toString());
 		
-		String parentContextDataJson = HAPJsonUtility.buildJson(task.getParentContextData(), HAPSerializationFormat.JSON);
+		String parentContextDataJson = HAPUtilityJson.buildJson(task.getParentContextData(), HAPSerializationFormat.JSON);
 		templateParms.put("parentContextData", parentContextDataJson);
 		
 		templateParms.put("taskId", task.getTaskId());

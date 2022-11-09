@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityData {
@@ -68,7 +68,7 @@ public class HAPUtilityData {
 	public static Map<String, HAPData> buildDataWrapperMap(Object obj){
 		JSONObject jsonObj = null;
 		if(obj instanceof String) {
-			if(HAPBasicUtility.isStringNotEmpty((String)obj)) {
+			if(HAPUtilityBasic.isStringNotEmpty((String)obj)) {
 				jsonObj = new JSONObject((String)obj);
 			}
 		}

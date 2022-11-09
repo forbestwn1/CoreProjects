@@ -39,7 +39,7 @@ public class HAPUtilityNamingConversion {
 		int k = 0;
 		for(int i=0; i<parts.length; i++){
 			String part = parts[i];
-			if(HAPBasicUtility.isStringNotEmpty(part)){
+			if(HAPUtilityBasic.isStringNotEmpty(part)){
 				if(k>=1){
 					out.append(seperator);
 				}
@@ -72,14 +72,14 @@ public class HAPUtilityNamingConversion {
 	}
 
 	public static String[] splitTextByElements(String text, String token){
-		if(HAPBasicUtility.isStringEmpty(text)){
+		if(HAPUtilityBasic.isStringEmpty(text)){
 			return new String[0];
 		}
 		
 		String[] split = text.split(token);
 		List<String> out = new ArrayList<String>();
 		for(String ele : split){
-			if(HAPBasicUtility.isStringNotEmpty(ele)){
+			if(HAPUtilityBasic.isStringNotEmpty(ele)){
 				out.add(ele);
 			}
 		}
@@ -167,10 +167,10 @@ public class HAPUtilityNamingConversion {
 	}
 	
 	static public String buildPath(String path1, String path2){
-		if(HAPBasicUtility.isStringEmpty(path1)){
+		if(HAPUtilityBasic.isStringEmpty(path1)){
 			return path2;
 		}
-		if(HAPBasicUtility.isStringEmpty(path2)){
+		if(HAPUtilityBasic.isStringEmpty(path2)){
 			return path1;
 		}
 		else{

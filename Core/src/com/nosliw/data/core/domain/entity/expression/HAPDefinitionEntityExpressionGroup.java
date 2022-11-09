@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -53,7 +53,7 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDom
 		for(HAPDefinitionExpression expression : this.m_elements.values()) {
 			expressionJsonArray.add(expression.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(expressionJsonArray.toArray(new String[0])));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildArrayJson(expressionJsonArray.toArray(new String[0])));
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 
@@ -46,7 +46,7 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 	}
 	
 	public String getParentComplexName() {
-		if(HAPBasicUtility.isStringNotEmpty(this.m_parentComplex))   return this.m_parentComplex;
+		if(HAPUtilityBasic.isStringNotEmpty(this.m_parentComplex))   return this.m_parentComplex;
 		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
 	
@@ -98,8 +98,8 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPReferenceElementInStructureComplex) {
 			HAPReferenceElementInStructureComplex ele = (HAPReferenceElementInStructureComplex)obj;
-			if(!HAPBasicUtility.isEquals(this.getElementPath(), ele.getElementPath()))  return false;
-			if(!HAPBasicUtility.isEquals(this.getParentComplexName(), ele.getParentComplexName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getElementPath(), ele.getElementPath()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getParentComplexName(), ele.getParentComplexName()))  return false;
 			out = true;
 		}
 		return out;

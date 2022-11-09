@@ -5,13 +5,15 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.value.HAPUtilityClone;
 
 @HAPEntityWithAttribute
 public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpandable{
 
-	@HAPAttribute
 	public static String EMBEDED = "embeded";
 
 	@HAPAttribute
@@ -19,6 +21,9 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	@HAPAttribute
 	public static String VALUETYPE = "valueType";
+
+	@HAPAttribute
+	public static String ISCOMPLEX = "isComplex";
 
 	private String m_entityType;
 	
@@ -51,20 +56,27 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomain);
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(VALUETYPE, this.m_entityType);
+		jsonMap.put(ISCOMPLEX, this.m_isComplex+"");
+		typeJsonMap.put(ISCOMPLEX, Boolean.class);
+		if(this.getAdapter()!=null) {
+			jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapter(), HAPSerializationFormat.JSON));
+		}
 	}
 	
-	protected abstract void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain);	
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {}	
 
 	public abstract HAPEmbeded cloneEmbeded();
-	
+
 	protected void cloneToEmbeded(HAPEmbeded embeded) {
 		embeded.m_entityType = this.m_entityType;
 		embeded.m_isComplex = this.m_isComplex;
+		embeded.setAdapter(HAPUtilityClone.cloneValue(this.getAdapter()));
+		embeded.setValue(HAPUtilityClone.cloneValue(this.getValue()));	
 	}
 }

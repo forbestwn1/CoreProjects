@@ -8,7 +8,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
@@ -83,7 +83,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		for(String assosName : this.m_mappings.keySet()) {
 			assocationJsonMap.put(assosName, this.m_mappings.get(assosName).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildMapJson(assocationJsonMap));
+		jsonMap.put(ASSOCIATION, HAPUtilityJson.buildMapJson(assocationJsonMap));
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		for(String assosName : this.m_mappings.keySet()) {
 			assocationJsonMap.put(assosName, this.m_mappings.get(assosName).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(ASSOCIATION, HAPJsonUtility.buildMapJson(assocationJsonMap));
+		jsonMap.put(ASSOCIATION, HAPUtilityJson.buildMapJson(assocationJsonMap));
 	}
 
 }

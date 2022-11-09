@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPReferenceElement;
@@ -53,7 +53,7 @@ public class HAPChangeItemPatch extends HAPChangeItemModifyElement{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PATH, this.m_path);
 		if(this.m_value!=null) {
-			jsonMap.put(VALUE, HAPJsonUtility.buildJson(m_value, HAPSerializationFormat.JSON));
+			jsonMap.put(VALUE, HAPUtilityJson.buildJson(m_value, HAPSerializationFormat.JSON));
 			typeJsonMap.put(VALUE, this.m_value.getClass());
 		}
 	}

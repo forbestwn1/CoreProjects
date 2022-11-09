@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -43,8 +43,8 @@ public class HAPResponseDesign extends HAPSerializableImp{
 		for(HAPAnswer answer : this.m_answer) {
 			answerMap.put(answer.getQuestionId(), answer);
 		}
-		jsonMap.put(ANSWER, HAPJsonUtility.buildJson(answerMap, HAPSerializationFormat.JSON));
-		jsonMap.put(ANSWEREXTEND, HAPJsonUtility.buildJson(m_answerExtend, HAPSerializationFormat.JSON));
-		jsonMap.put(STEP, HAPJsonUtility.buildJson(this.m_step, HAPSerializationFormat.JSON));
+		jsonMap.put(ANSWER, HAPUtilityJson.buildJson(answerMap, HAPSerializationFormat.JSON));
+		jsonMap.put(ANSWEREXTEND, HAPUtilityJson.buildJson(m_answerExtend, HAPSerializationFormat.JSON));
+		jsonMap.put(STEP, HAPUtilityJson.buildJson(this.m_step, HAPSerializationFormat.JSON));
 	}
 }

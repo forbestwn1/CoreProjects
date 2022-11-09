@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -60,7 +60,7 @@ public class HAPExecutableMapping extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_outputMatchers!=null && !this.m_outputMatchers.isEmpty()) {
-			jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
+			jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 		}
 	}
 
@@ -106,7 +106,7 @@ public class HAPExecutableMapping extends HAPExecutableImp{
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		if(this.m_outputMatchers!=null && !this.m_outputMatchers.isEmpty()) {
-			jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
+			jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(m_outputMatchers, HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(CONVERTFUNCTION, HAPUtilityScript.buildAssociationConvertFunction(this).getScript());
 		typeJsonMap.put(CONVERTFUNCTION, HAPJsonTypeScript.class);

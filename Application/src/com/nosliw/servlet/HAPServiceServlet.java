@@ -15,9 +15,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
@@ -111,11 +111,11 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 		}
 		catch(Exception e) {
 			serviceData = HAPServiceData.createFailureData(e, "Exceptione during process gateway service request!!!!");
-			LOGGER.severe(HAPBasicUtility.toString(e));
+			LOGGER.severe(HAPUtilityBasic.toString(e));
 		}
 		
 		String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
-		content = HAPJsonUtility.formatJson(content);
+		content = HAPUtilityJson.formatJson(content);
 		
 		logContent.append("return: \n" + content);
 		logContent.append("\n");

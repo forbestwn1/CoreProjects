@@ -13,10 +13,10 @@ import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureUtility;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.strvalue.HAPStringableValueAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -152,7 +152,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	}
 
 	private void writeJS(Map<String, String> valueMap, Map<String, Class<?>> datatypeMap, String moduleName){
-		String jsonContent = HAPJsonUtility.formatJson(HAPJsonUtility.buildMapJson(valueMap, datatypeMap));
+		String jsonContent = HAPUtilityJson.formatJson(HAPUtilityJson.buildMapJson(valueMap, datatypeMap));
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("moduleName", moduleName);
@@ -169,7 +169,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	private void processJSItem(HAPConstantInfo info, Map<String, String> valueMap, Map<String, Class<?>> datatypeMap){
 		if("js".equals(info.getSkip()))  return;
 		
-		if(HAPBasicUtility.isStringEmpty(info.getType())){
+		if(HAPUtilityBasic.isStringEmpty(info.getType())){
 			valueMap.put(info.getName(), info.getValue());
 		}
 		else if(info.getType().equals("string")){
@@ -189,7 +189,7 @@ public class HAPConstantManager  extends HAPConfigurableImp{
 	 */
 	private String getJavaItem(HAPConstantInfo info){
 		String out = "";
-		if(HAPBasicUtility.isStringEmpty(info.getType()) || info.getType().equals("string")){
+		if(HAPUtilityBasic.isStringEmpty(info.getType()) || info.getType().equals("string")){
 			out = "		public static final String " + info.getName() + " = \"" + info.getValue() + "\";\n";
 		}
 		else if(info.getType().equals("int")){

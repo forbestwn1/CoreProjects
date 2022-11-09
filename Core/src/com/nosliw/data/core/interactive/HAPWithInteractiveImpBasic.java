@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -79,8 +79,8 @@ public abstract class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableIm
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(REQUEST, HAPJsonUtility.buildJson(this.m_requestParms, HAPSerializationFormat.JSON));
-		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
+		jsonMap.put(REQUEST, HAPUtilityJson.buildJson(this.m_requestParms, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULT, HAPUtilityJson.buildJson(this.m_results, HAPSerializationFormat.JSON));
 	}
 
 }

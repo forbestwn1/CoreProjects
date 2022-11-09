@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -80,7 +80,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
 		jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId);
-		return HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);
 	}
 
 	@Override

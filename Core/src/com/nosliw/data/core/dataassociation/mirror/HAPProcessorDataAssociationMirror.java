@@ -3,7 +3,7 @@ package com.nosliw.data.core.dataassociation.mirror;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPValueMapping;
 import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
@@ -22,7 +22,7 @@ public class HAPProcessorDataAssociationMirror {
 			HAPValueStructure inputStructure = input.getStructure(inputStructureName);
 			HAPValueStructure outputStructure = output.getStructure(inputStructureName);
 			if(outputStructure!=null) {
-				if(HAPBasicUtility.isEquals(inputStructure.getStructureType(), outputStructure.getStructureType())) {
+				if(HAPUtilityBasic.isEquals(inputStructure.getStructureType(), outputStructure.getStructureType())) {
 					
 					HAPValueMapping valueMapping = new HAPValueMapping();
 					

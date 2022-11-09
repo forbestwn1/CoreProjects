@@ -11,7 +11,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class HAPXMLUtility {
+public class HAPUtilityXML {
 
 	public static Element getFirstChildElementByName(Element parent, String name){
 		NodeList children = parent.getChildNodes();

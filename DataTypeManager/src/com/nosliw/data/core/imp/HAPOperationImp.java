@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.HAPStringableValue;
@@ -75,7 +75,7 @@ public class HAPOperationImp extends HAPStringableValueEntityWithID implements H
 			parmsMapJson.put(parmInfo.getName(), HAPSerializeManager.getInstance().toStringValue(parmInfo, HAPSerializationFormat.JSON));
 			if(parmInfo.getIsBase())   baseParm = parmInfo.getName();
 		}
-		jsonMap.put(PAMRS, HAPJsonUtility.buildMapJson(parmsMapJson));
+		jsonMap.put(PAMRS, HAPUtilityJson.buildMapJson(parmsMapJson));
 		jsonMap.put(BASEPARM, baseParm);
 	}
 }

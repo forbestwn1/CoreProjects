@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -23,7 +23,7 @@ public class HAPProcessorEscalate {
 			Map<String, String> contextMapping = new LinkedHashMap<String, String>();
 			contextMapping.putAll(cm);
 			for(String eleName : context.getRootNames()) {
-				if(HAPBasicUtility.isStringEmpty(contextMapping.get(eleName)))			contextMapping.put(eleName, eleName);
+				if(HAPUtilityBasic.isStringEmpty(contextMapping.get(eleName)))			contextMapping.put(eleName, eleName);
 			}
 			
 			for(String eleName : context.getRootNames()) {
@@ -63,7 +63,7 @@ public class HAPProcessorEscalate {
 			if(isEnd){
 				//at the end of escalate
 				//only root name is valid, mappedPath with path is not valid
-				if(HAPBasicUtility.isStringEmpty(path.getPathStr())) {
+				if(HAPUtilityBasic.isStringEmpty(path.getPathStr())) {
 					//clone original root node to parent context
 					HAPRootStructure rootNode = original.cloneRoot();
 					parentContextGroup.addRoot(path.getRoot(), rootNode, categaryType);

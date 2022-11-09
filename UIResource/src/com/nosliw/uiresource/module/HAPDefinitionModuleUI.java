@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.data.core.component.HAPDefinitionEmbededComponent;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 
@@ -67,7 +67,7 @@ public class HAPDefinitionModuleUI extends HAPDefinitionEmbededComponent{
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModuleUI.UIDECORATION);
 		if(uiDecJsonArray!=null) {
-			this.setUIDecoration(HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
+			this.setUIDecoration(HAPUtilitySerialize.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
 		}
 		
 		return true;
@@ -77,7 +77,7 @@ public class HAPDefinitionModuleUI extends HAPDefinitionEmbededComponent{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PAGE, this.m_page);
-		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
+		jsonMap.put(UIDECORATION, HAPUtilityJson.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
 	
 	public HAPDefinitionModuleUI cloneModuleUIDef() {

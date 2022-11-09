@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
@@ -59,7 +59,7 @@ public class HAPParserModule implements HAPParserResourceEntity{
 		//ui decoration
 		JSONArray uiDecJsonArray = jsonObj.optJSONArray(HAPDefinitionModule.UIDECORATION);
 		if(uiDecJsonArray!=null) {
-			out.setUIDecoration(HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
+			out.setUIDecoration(HAPUtilitySerialize.buildListFromJsonArray(HAPInfoDecoration.class.getName(), uiDecJsonArray));
 		}
 		
 		//ui

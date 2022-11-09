@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
 public class HAPOwnerInfo extends HAPSerializableImp{
@@ -66,9 +66,9 @@ public class HAPOwnerInfo extends HAPSerializableImp{
 		boolean out = false;
 		if(o instanceof HAPOwnerInfo) {
 			HAPOwnerInfo ownerInfo = (HAPOwnerInfo)o;
-			if(HAPBasicUtility.isEquals(ownerInfo.getUserId(), this.getUserId())) {
-				if(HAPBasicUtility.isEquals(ownerInfo.getComponentType(), this.getComponentType())) {
-					if(HAPBasicUtility.isEquals(ownerInfo.getComponentId(), this.getComponentId())) {
+			if(HAPUtilityBasic.isEquals(ownerInfo.getUserId(), this.getUserId())) {
+				if(HAPUtilityBasic.isEquals(ownerInfo.getComponentType(), this.getComponentType())) {
+					if(HAPUtilityBasic.isEquals(ownerInfo.getComponentId(), this.getComponentId())) {
 						out = true;
 					}
 				}

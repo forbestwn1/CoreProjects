@@ -10,7 +10,7 @@ public class HAPUtilityEntityDefinition {
 		return new HAPEmbededDefinitionWithId(entityId, entityDefDomainMan.isComplexEntity(entityId.getEntityType()));
 	}
 	
-	public static HAPEmbededDefinitionWithId setEntitySimpleAttribute(HAPDefinitionEntityInDomain entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
+	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPDefinitionEntityInDomain entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
 		HAPEmbededDefinitionWithId embeded = new HAPEmbededDefinitionWithId(attrEntityId, entityDefDomainMan.isComplexEntity(attrEntityId.getEntityType()));
 		entityDef.setSimpleAttribute(attributeName, embeded);
 		return embeded;

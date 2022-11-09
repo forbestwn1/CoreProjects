@@ -17,10 +17,10 @@ import org.w3c.dom.css.CSSStyleSheet;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.steadystate.css.parser.CSSOMParser;
@@ -70,7 +70,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 		StringBuffer out = new StringBuffer();
 		try {
 	         if(parentIds==null)  parentIds = new ArrayList<String>();
-			if(HAPBasicUtility.isStringNotEmpty(this.m_definition)) {
+			if(HAPUtilityBasic.isStringNotEmpty(this.m_definition)) {
 				
 		         StringBuffer parentSelectors = new StringBuffer();
 //		         for(String parentId : parentIds) {
@@ -163,7 +163,7 @@ public class HAPExecutableStyle extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ID, HAPJsonUtility.buildJson(this.m_id, HAPSerializationFormat.JSON));
-		jsonMap.put(DEFINITION, HAPJsonUtility.buildJson(StringEscapeUtils.escapeHtml(this.getScript()), HAPSerializationFormat.JSON).replaceAll("(\\r|\\n)", ""));
+		jsonMap.put(ID, HAPUtilityJson.buildJson(this.m_id, HAPSerializationFormat.JSON));
+		jsonMap.put(DEFINITION, HAPUtilityJson.buildJson(StringEscapeUtils.escapeHtml(this.getScript()), HAPSerializationFormat.JSON).replaceAll("(\\r|\\n)", ""));
 	}
 }

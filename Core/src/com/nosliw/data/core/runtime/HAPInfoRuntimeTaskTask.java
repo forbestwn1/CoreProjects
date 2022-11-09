@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 
@@ -29,7 +29,7 @@ public class HAPInfoRuntimeTaskTask{
 	public HAPInfoRuntimeTaskTask(HAPExecutableTaskSuite taskSuite, String itemName, Map<String, Object> inputValue){
 		this.m_taskSuite = taskSuite;
 		this.m_itemName = itemName;
-		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
 		this.m_inputValue = inputValue; 
 	}
 	

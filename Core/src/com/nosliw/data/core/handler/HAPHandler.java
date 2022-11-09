@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
@@ -31,7 +31,7 @@ public class HAPHandler extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(STEPS, HAPJsonUtility.buildJson(this.m_steps, HAPSerializationFormat.JSON));
+		jsonMap.put(STEPS, HAPUtilityJson.buildJson(this.m_steps, HAPSerializationFormat.JSON));
 	}
 
 	@Override

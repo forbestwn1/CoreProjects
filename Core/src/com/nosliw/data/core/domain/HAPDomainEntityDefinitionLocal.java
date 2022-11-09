@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -138,6 +138,6 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 		for(HAPInfoEntityInDomainDefinition entity : this.m_entity.values()) {
 			entityArray.add(entity.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ENTITY, HAPJsonUtility.buildArrayJson(entityArray.toArray(new String[0])));
+		jsonMap.put(ENTITY, HAPUtilityJson.buildArrayJson(entityArray.toArray(new String[0])));
 	}
 }

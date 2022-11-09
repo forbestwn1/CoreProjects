@@ -9,7 +9,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.miniapp.data.HAPAppDataInfoContainer;
@@ -63,8 +63,8 @@ public class HAPPlayerManager {
 	}
 
 	private void savePlayerInfos() {
-		String content = HAPJsonUtility.buildJson(this.getPlayerInfos(), HAPSerializationFormat.JSON);
-		HAPUtilityFile.writeFile(HAPUtility.getPlayerInfoFile(), HAPJsonUtility.formatJson(content));
+		String content = HAPUtilityJson.buildJson(this.getPlayerInfos(), HAPSerializationFormat.JSON);
+		HAPUtilityFile.writeFile(HAPUtility.getPlayerInfoFile(), HAPUtilityJson.formatJson(content));
 	}
 
 	private HAPOwnerInfo getOwnerInfo(String userId) {

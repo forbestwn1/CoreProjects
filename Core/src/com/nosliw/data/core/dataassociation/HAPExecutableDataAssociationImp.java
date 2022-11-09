@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -69,7 +69,7 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 			outputFlatMap.put(name, this.getOutput().getOutputStructure(name).isFlat()+"");
 			outputFlatTypeMap.put(name, Boolean.class);
 		}
-		jsonMap.put(OUTPUT, HAPJsonUtility.buildMapJson(outputFlatMap, outputFlatTypeMap));
+		jsonMap.put(OUTPUT, HAPUtilityJson.buildMapJson(outputFlatMap, outputFlatTypeMap));
 
 
 		Map<String, String> inputFlatMap = new LinkedHashMap<String, String>();
@@ -78,7 +78,7 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 			inputFlatMap.put(name, this.m_input.getStructure(name).isFlat()+"");
 			inputFlatTypeMap.put(name, Boolean.class);
 		}
-		jsonMap.put(INPUT, HAPJsonUtility.buildMapJson(inputFlatMap, inputFlatTypeMap));
+		jsonMap.put(INPUT, HAPUtilityJson.buildMapJson(inputFlatMap, inputFlatTypeMap));
 	}
 
 	@Override

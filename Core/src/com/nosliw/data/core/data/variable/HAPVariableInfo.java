@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
@@ -77,7 +77,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 		boolean out = false;
 		if(obj instanceof HAPVariableInfo){
 			HAPVariableInfo varInfo = (HAPVariableInfo)obj;
-			if(HAPBasicUtility.isEquals(this.m_dataInfo, varInfo.m_dataInfo)){
+			if(HAPUtilityBasic.isEquals(this.m_dataInfo, varInfo.m_dataInfo)){
 				out = true;
 			}
 		}

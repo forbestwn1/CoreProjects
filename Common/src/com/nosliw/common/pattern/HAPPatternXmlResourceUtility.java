@@ -16,8 +16,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPXMLUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.utils.HAPUtilityXML;
 
 public class HAPPatternXmlResourceUtility {
 
@@ -29,7 +29,7 @@ public class HAPPatternXmlResourceUtility {
 			DOMbuilder = DOMfactory.newDocumentBuilder();
 
 			Document doc = DOMbuilder.parse(inputStream);
-			Element[] eles = HAPXMLUtility.getChildElements(doc.getDocumentElement());
+			Element[] eles = HAPUtilityXML.getChildElements(doc.getDocumentElement());
 			for(Element ele : eles){
 				String type = ele.getTagName();
 				HAPPatternProcessorInfo processorInfo = importProcessorInfo(ele);
@@ -82,7 +82,7 @@ public class HAPPatternXmlResourceUtility {
 			element.setAttribute("classname", className);
 
 			String name = processorInfo.getName();
-			if(HAPBasicUtility.isStringEmpty(name)){
+			if(HAPUtilityBasic.isStringEmpty(name)){
 				HAPPatternProcessor processor = (HAPPatternProcessor) Class.forName(className).newInstance();
 				name = processor.getName();
 			}

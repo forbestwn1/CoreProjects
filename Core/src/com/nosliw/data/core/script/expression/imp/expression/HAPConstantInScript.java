@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.expression.imp.expression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
@@ -44,6 +44,6 @@ public class HAPConstantInScript extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CONSTANTNAME, this.m_constantName);
-		jsonMap.put(VALUE, HAPJsonUtility.buildJson(this.m_value, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUE, HAPUtilityJson.buildJson(this.m_value, HAPSerializationFormat.JSON));
 	}
 }

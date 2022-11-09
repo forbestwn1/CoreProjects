@@ -7,7 +7,7 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPRelationshipPath extends HAPSerializableImp{
@@ -71,7 +71,7 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPRelationshipPath) {
 			HAPRelationshipPath path = (HAPRelationshipPath)obj;
-			if(!HAPBasicUtility.isEqualLists(this.m_segments, path.m_segments))  return false;
+			if(!HAPUtilityBasic.isEqualLists(this.m_segments, path.m_segments))  return false;
 			out = true;
 		}
 		return out;

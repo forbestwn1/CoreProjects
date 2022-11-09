@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
@@ -75,8 +75,8 @@ public class HAPDefinitionModule extends HAPDefinitionEntityComponentImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
-		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
+		jsonMap.put(UI, HAPUtilityJson.buildJson(this.m_uis, HAPSerializationFormat.JSON));
+		jsonMap.put(UIDECORATION, HAPUtilityJson.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 	}
 
 	@Override

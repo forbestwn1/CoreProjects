@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.common.value.HAPJsonValueUtility;
+import com.nosliw.common.value.HAPUtilityJsonValue;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
@@ -46,7 +46,7 @@ public class HAPExpressionGroupTest {
 				HAPDomainEntityDefinitionLocal defDomain = new HAPDomainEntityDefinitionLocal(new HAPGeneratorId());
 				HAPResourceDefinition resourceDef = runtimeEnvironment.getResourceDefinitionManager().getResourceDefinition(resourceId, defDomain);
 				String expandedJsonStr = HAPUtilityDomain.getEntityExpandedJsonString(resourceDef.getEntityId(), defDomain);
-				System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
+				System.out.println(HAPUtilityJson.formatJson(expandedJsonStr));
 				
 				
 				//process resource
@@ -70,7 +70,7 @@ public class HAPExpressionGroupTest {
 				//prepare variable with input value
 				Map<String, HAPData> varInput = new LinkedHashMap<String, HAPData>();
 				for(String varName : expresionExecutable.getVariablesInfo().getVariablesId()) {
-					Object varValue = HAPJsonValueUtility.getValue(inputById, new HAPComplexPath(varName));
+					Object varValue = HAPUtilityJsonValue.getValue(inputById, new HAPComplexPath(varName));
 					if(varValue!=null)   varInput.put(varName, HAPUtilityData.buildDataWrapperFromObject(varValue));					
 				}
 				

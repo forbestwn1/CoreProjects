@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
@@ -49,7 +49,7 @@ public class HAPUtilityStructure {
 		HAPElementStructure solvedElment = element;
 		HAPPath solvedPath = new HAPPath();
 		HAPPath remainingPath = new HAPPath();
-		if(HAPBasicUtility.isStringNotEmpty(path)) {
+		if(HAPUtilityBasic.isStringNotEmpty(path)) {
 			String[] pathSegs = new HAPPath(path).getPathSegments();
 			for(String pathSeg : pathSegs){
 				if(remainingPath.isEmpty()) {

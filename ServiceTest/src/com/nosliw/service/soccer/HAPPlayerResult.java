@@ -3,7 +3,7 @@ package com.nosliw.service.soccer;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPPlayerResult {
 
@@ -24,7 +24,7 @@ public class HAPPlayerResult {
 		StringBuffer out = new StringBuffer();
 		Set<String> emails = new HashSet<String>();
 		for(HAPPlayerInfo playerInfo : this.m_playerInfos) {
-			if(!HAPBasicUtility.isStringEmpty(playerInfo.getEmail())) {
+			if(!HAPUtilityBasic.isStringEmpty(playerInfo.getEmail())) {
 				emails.add(playerInfo.getEmail());
 			}
 		}

@@ -1,6 +1,6 @@
 package com.nosliw.common.utils;
 
-public class HAPNosliwUtility {
+public class HAPUtilityNosliw {
 
 	public static String buildNosliwFullName(String name){
 		return HAPConstantShared.NOSLIW_NAME_PREFIX+name;

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
@@ -33,7 +33,7 @@ public class HAPInfoRuntimeTaskExpression{
 	public HAPInfoRuntimeTaskExpression(HAPExecutableExpressionGroup expression, String itemName, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_itemName = itemName;
-		if(HAPBasicUtility.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
 		this.m_variablesValue = variablesValue; 
 		this.m_referencesValue = referencesValue;
 	}

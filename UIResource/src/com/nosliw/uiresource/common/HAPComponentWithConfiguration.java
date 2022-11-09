@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceInEntity;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
@@ -49,8 +49,8 @@ public class HAPComponentWithConfiguration extends HAPEntityInfoWritableImp  imp
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(SERVICE, HAPJsonUtility.buildJson(this.m_serviceDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(PAGEINFO, HAPJsonUtility.buildJson(this.m_pagesInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICE, HAPUtilityJson.buildJson(this.m_serviceDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(PAGEINFO, HAPUtilityJson.buildJson(this.m_pagesInfo, HAPSerializationFormat.JSON));
 	}
 
 	@Override

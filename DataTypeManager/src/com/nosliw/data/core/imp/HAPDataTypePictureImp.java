@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPDataType;
@@ -65,6 +65,6 @@ public class HAPDataTypePictureImp extends HAPSerializableImp implements HAPData
 		for(HAPDataTypeId dataTypeId : this.m_relationships.keySet()){
 			relationJsonMap.put(dataTypeId.toStringValue(HAPSerializationFormat.LITERATE), this.m_relationships.get(dataTypeId).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(RELATIONSHIPS, HAPJsonUtility.buildMapJson(relationJsonMap));
+		jsonMap.put(RELATIONSHIPS, HAPUtilityJson.buildMapJson(relationJsonMap));
 	}	
 }

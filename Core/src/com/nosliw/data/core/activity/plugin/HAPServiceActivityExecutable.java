@@ -3,7 +3,7 @@ package com.nosliw.data.core.activity.plugin;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPExecutableActivity;
@@ -34,8 +34,8 @@ public class HAPServiceActivityExecutable extends HAPExecutableActivity{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(SERVICE, HAPJsonUtility.buildJson(this.m_service, HAPSerializationFormat.JSON));
-		jsonMap.put(PROVIDER, HAPJsonUtility.buildJson(this.m_provider, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICE, HAPUtilityJson.buildJson(this.m_service, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDER, HAPUtilityJson.buildJson(this.m_provider, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

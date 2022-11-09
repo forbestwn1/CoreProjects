@@ -12,7 +12,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -98,10 +98,10 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 		jsonMap.put(TYPE, this.m_type);
 		jsonMap.put(BASE, this.m_base);
 		HAPValueStructureDefinitionGroup valueStructure = HAPUtilityValueStructure.getGroupFromWrapper(m_valueStructureDefinitionWrapper);
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildJson(valueStructure, HAPSerializationFormat.JSON));
-		jsonMap.put(VALUESTRUCTUREEXE, HAPJsonUtility.buildJson(HAPUtilityValueStructure.buildExecuatableValueStructure(valueStructure), HAPSerializationFormat.JSON));
-		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
-		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildJson(valueStructure, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREEXE, HAPUtilityJson.buildJson(HAPUtilityValueStructure.buildExecuatableValueStructure(valueStructure), HAPSerializationFormat.JSON));
+		jsonMap.put(ATTRIBUTES, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENT, HAPUtilityJson.buildJson(this.m_eventsDefinition, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

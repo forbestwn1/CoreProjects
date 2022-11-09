@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.data.core.resource.HAPLoadResourceResponse;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -89,7 +89,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	 */
 	private HAPServiceData requestLoadResources(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		JSONArray resourceJsonArray = parms.getJSONArray(COMMAND_LOADRESOURCES_RESOURCEINFOS);
-		List<HAPResourceInfo> resourcesInfo = HAPSerializeUtility.buildListFromJsonArray(HAPResourceInfo.class.getName(), resourceJsonArray);
+		List<HAPResourceInfo> resourcesInfo = HAPUtilitySerialize.buildListFromJsonArray(HAPResourceInfo.class.getName(), resourceJsonArray);
 		return this.loadResources(resourcesInfo, runtimeInfo);
 	}
 	

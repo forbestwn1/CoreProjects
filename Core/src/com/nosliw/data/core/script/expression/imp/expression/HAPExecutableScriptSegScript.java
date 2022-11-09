@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPEntityWithName;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -202,7 +202,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 				content = content.substring(endIndex+endToken.length());
 				indexs = this.index(content);
 			}
-			if(HAPBasicUtility.isStringNotEmpty(content)){
+			if(HAPUtilityBasic.isStringNotEmpty(content)){
 				this.m_elements.add(content);
 			}
 		}
@@ -239,7 +239,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SCRIPT, this.m_orignalScript);
-		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTS, HAPUtilityJson.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
 
 }

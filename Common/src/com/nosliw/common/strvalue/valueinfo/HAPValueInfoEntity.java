@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueList;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueInfoEntityable{
@@ -49,7 +49,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	@Override
 	public HAPValueInfo getSolidValueInfo(){
 		if(this.m_solidValueInfo==null){
-			if(HAPBasicUtility.isStringEmpty(this.getParent())){
+			if(HAPUtilityBasic.isStringEmpty(this.getParent())){
 				this.m_solidValueInfo = this.clone();
 				for(String property : this.m_solidValueInfo.getEntityProperties()){
 					this.m_solidValueInfo.updateEntityProperty(property, this.getPropertyInfo(property).getSolidValueInfo().clone());
@@ -136,7 +136,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	private HAPValueInfoEntity getParentEntityValueInfo(){
 		HAPValueInfoEntity out = null;
 		String parent = this.getParent();
-		if(HAPBasicUtility.isStringNotEmpty(parent)){
+		if(HAPUtilityBasic.isStringNotEmpty(parent)){
 			out = (HAPValueInfoEntity)this.getValueInfoManager().getValueInfo(parent);
 		}
 		return out;
@@ -185,7 +185,7 @@ public class HAPValueInfoEntity extends HAPValueInfoComplex implements HAPValueI
 	public boolean equals(Object data){
 		boolean out = false;
 		if(data instanceof HAPValueInfoEntity){
-			out = HAPBasicUtility.isEquals(this.getName(), ((HAPValueInfoEntity)data).getName());
+			out = HAPUtilityBasic.isEquals(this.getName(), ((HAPValueInfoEntity)data).getName());
 		}
 		return out;
 	}

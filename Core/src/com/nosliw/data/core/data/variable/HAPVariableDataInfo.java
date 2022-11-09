@@ -9,11 +9,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
@@ -89,9 +89,9 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPVariableDataInfo){
 			HAPVariableDataInfo dataInfo = (HAPVariableDataInfo)obj;
-			if(HAPBasicUtility.isEquals(this.getCriteria(), dataInfo.getCriteria()) 
-				&& HAPBasicUtility.isEqualLists(this.getRules(), dataInfo.getRules()) 
-				&& HAPBasicUtility.isEquals(this.getRuleMatchers(), dataInfo.getRuleMatchers())
+			if(HAPUtilityBasic.isEquals(this.getCriteria(), dataInfo.getCriteria()) 
+				&& HAPUtilityBasic.isEqualLists(this.getRules(), dataInfo.getRules()) 
+				&& HAPUtilityBasic.isEquals(this.getRuleMatchers(), dataInfo.getRuleMatchers())
 			){
 				out = true;
 			}
@@ -103,7 +103,7 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.getCriteria()!=null)	jsonMap.put(CRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
-		jsonMap.put(RULE, HAPJsonUtility.buildJson(m_rules, HAPSerializationFormat.JSON));
+		jsonMap.put(RULE, HAPUtilityJson.buildJson(m_rules, HAPSerializationFormat.JSON));
 		if(this.m_ruleMatchers!=null) jsonMap.put(RULEMATCHERS, this.m_ruleMatchers.toStringValue(HAPSerializationFormat.JSON));
 		if(this.getRuleCriteria()!=null)	jsonMap.put(RULECRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getRuleCriteria(), HAPSerializationFormat.LITERATE));
 	}

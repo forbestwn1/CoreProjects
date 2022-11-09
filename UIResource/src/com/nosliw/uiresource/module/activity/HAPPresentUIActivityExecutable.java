@@ -7,7 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
@@ -47,7 +47,7 @@ public class HAPPresentUIActivityExecutable extends HAPExecutableActivity{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(UI, this.m_ui);
-		jsonMap.put(SETTING, HAPJsonUtility.buildJson(this.m_setting, HAPSerializationFormat.JSON));
+		jsonMap.put(SETTING, HAPUtilityJson.buildJson(this.m_setting, HAPSerializationFormat.JSON));
 	}
 
 	@Override

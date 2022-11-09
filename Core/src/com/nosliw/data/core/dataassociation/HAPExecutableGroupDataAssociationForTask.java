@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -60,8 +60,8 @@ public class HAPExecutableGroupDataAssociationForTask extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_inDataAssociation!=null)   jsonMap.put(IN, HAPJsonUtility.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
-		if(!this.m_outDataAssociations.isEmpty())   jsonMap.put(OUT, HAPJsonUtility.buildJson(this.m_outDataAssociations, HAPSerializationFormat.JSON));
+		if(this.m_inDataAssociation!=null)   jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
+		if(!this.m_outDataAssociations.isEmpty())   jsonMap.put(OUT, HAPUtilityJson.buildJson(this.m_outDataAssociations, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class HAPExecutableGroupDataAssociationForTask extends HAPExecutableImp{
 			for(String resultName : this.m_outDataAssociations.keySet()) {
 				outputMappingMap.put(resultName, this.m_outDataAssociations.get(resultName).toResourceData(runtimeInfo).toString());
 			}
-			jsonMap.put(OUT, HAPJsonUtility.buildMapJson(outputMappingMap));
+			jsonMap.put(OUT, HAPUtilityJson.buildMapJson(outputMappingMap));
 		}
 	}
 

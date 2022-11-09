@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForComponent;
@@ -87,11 +87,11 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ROLE, this.m_definition.getRole());
-		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_module, HAPSerializationFormat.JSON));
-		jsonMap.put(INPUTMAPPING, HAPJsonUtility.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMAPPING, HAPJsonUtility.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(DATADEPENDENCY, HAPJsonUtility.buildJson(this.m_dataDependency, HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(MODULE, HAPUtilityJson.buildJson(this.m_module, HAPSerializationFormat.JSON));
+		jsonMap.put(INPUTMAPPING, HAPUtilityJson.buildJson(this.m_inputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMAPPING, HAPUtilityJson.buildJson(this.m_outputMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(DATADEPENDENCY, HAPUtilityJson.buildJson(this.m_dataDependency, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPUtilityJson.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -105,9 +105,9 @@ public class HAPExecutableAppModule extends HAPEntityInfoImpWrapper implements H
 
 		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
 		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
+		jsonMap.put(EVENTHANDLER, HAPUtilityJson.buildMapJson(eventJsonMap));
 
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.story.HAPStory;
 import com.nosliw.data.core.story.change.HAPChangeItem;
@@ -89,7 +89,7 @@ public class HAPDesignStep extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CHANGES, HAPJsonUtility.buildJson(this.m_changes, HAPSerializationFormat.JSON));
-		jsonMap.put(QUESTIONAIRE, HAPJsonUtility.buildJson(this.m_questionaire, HAPSerializationFormat.JSON));
+		jsonMap.put(CHANGES, HAPUtilityJson.buildJson(this.m_changes, HAPSerializationFormat.JSON));
+		jsonMap.put(QUESTIONAIRE, HAPUtilityJson.buildJson(this.m_questionaire, HAPSerializationFormat.JSON));
 	}
 }

@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -79,7 +79,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 		if(super.equals(o)) {
 			if(o instanceof HAPResourceIdSimple){
 				HAPResourceIdSimple resourceId = (HAPResourceIdSimple)o;
-				return HAPBasicUtility.isEquals(this.getId(), resourceId.getId());
+				return HAPUtilityBasic.isEquals(this.getId(), resourceId.getId());
 			}
 		}
 		return out;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public abstract class HAPTestInfo extends HAPSerializableImp{
 	//id used to identify test, it is unique globally
@@ -91,7 +91,7 @@ public abstract class HAPTestInfo extends HAPSerializableImp{
 	public boolean equals(Object obj){
 		if(obj instanceof HAPTestInfo){
 			HAPTestInfo t = (HAPTestInfo)obj;
-			return HAPBasicUtility.isEquals(this.getType(), t.getType()) && HAPBasicUtility.isEquals(this.getName(), t.getName());
+			return HAPUtilityBasic.isEquals(this.getType(), t.getType()) && HAPUtilityBasic.isEquals(this.getName(), t.getName());
 		}
 		else return false;
 	}

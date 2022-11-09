@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -61,10 +61,10 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(IN, HAPJsonUtility.buildJson(this.m_inDataAssociations, HAPSerializationFormat.JSON));
-		jsonMap.put(OUT, HAPJsonUtility.buildJson(this.m_outDataAssociations, HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
-		jsonMap.put(COMPONENT, HAPJsonUtility.buildJson(this.m_component, HAPSerializationFormat.JSON));
+		jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_inDataAssociations, HAPSerializationFormat.JSON));
+		jsonMap.put(OUT, HAPUtilityJson.buildJson(this.m_outDataAssociations, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPUtilityJson.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(COMPONENT, HAPUtilityJson.buildJson(this.m_component, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -72,7 +72,7 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		Map<String, String> eventJsonMap = new LinkedHashMap<String, String>();
 		for(String eventName :this.m_eventHandlers.keySet()) {	eventJsonMap.put(eventName, this.m_eventHandlers.get(eventName).toResourceData(runtimeInfo).toString());	}
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildMapJson(eventJsonMap));
+		jsonMap.put(EVENTHANDLER, HAPUtilityJson.buildMapJson(eventJsonMap));
 
 		jsonMap.put(IN, this.m_inDataAssociations.toResourceData(runtimeInfo).toString());
 		jsonMap.put(OUT, this.m_outDataAssociations.toResourceData(runtimeInfo).toString());

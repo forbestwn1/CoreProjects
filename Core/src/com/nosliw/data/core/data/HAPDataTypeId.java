@@ -6,7 +6,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
@@ -59,7 +59,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 	}
 	
 	public String getFullName(){
-		if(HAPBasicUtility.isStringEmpty(this.m_fullName)){
+		if(HAPUtilityBasic.isStringEmpty(this.m_fullName)){
 			String versionLiterate = null;
 			if(this.m_version!=null){
 				versionLiterate = this.m_version.toStringValue(HAPSerializationFormat.LITERATE);
@@ -134,7 +134,7 @@ public class HAPDataTypeId extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPDataTypeId){
 			HAPDataTypeId id = (HAPDataTypeId)obj;
-			out = HAPBasicUtility.isEquals(id.getFullName(), this.getFullName());
+			out = HAPUtilityBasic.isEquals(id.getFullName(), this.getFullName());
 		}
 		return out;
 	}

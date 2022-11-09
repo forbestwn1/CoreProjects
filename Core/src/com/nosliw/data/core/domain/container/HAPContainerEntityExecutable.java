@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -32,8 +32,8 @@ public abstract class HAPContainerEntityExecutable<T extends HAPElementContainer
 			String resourceStr = ((HAPExecutable)ele).toResourceData(runtimeInfo).toString();
 			elesJsonArray.add(resourceStr);
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildArrayJson(elesJsonArray.toArray(new String[0])));
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildArrayJson(elesJsonArray.toArray(new String[0])));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

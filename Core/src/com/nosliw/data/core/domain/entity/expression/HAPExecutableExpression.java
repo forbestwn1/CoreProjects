@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -152,7 +152,7 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	@Override
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMATCHERS, HAPJsonUtility.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
+		jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEINFOS, HAPUtilityJson.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
 	}
 }

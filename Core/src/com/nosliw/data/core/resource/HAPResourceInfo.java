@@ -14,7 +14,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -78,7 +78,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPUtilityJson.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 
 		Map<String, String> dependencyJsonMap = new LinkedHashMap<String, String>();
 		for(HAPResourceDependency dep : this.m_dependency){
@@ -86,7 +86,7 @@ public class HAPResourceInfo extends HAPSerializableImp{
 				dependencyJsonMap.put(alias, dep.getId().toStringValue(HAPSerializationFormat.JSON));
 			}
 		}
-		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildMapJson(dependencyJsonMap));
+		jsonMap.put(DEPENDENCY, HAPUtilityJson.buildMapJson(dependencyJsonMap));
 		
 		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}

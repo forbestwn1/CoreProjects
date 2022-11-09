@@ -3,9 +3,9 @@ package com.nosliw.data.core.structure;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
@@ -65,8 +65,8 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(RESOLVEDINFO, HAPJsonUtility.buildJson(this.m_resolvedInfo, HAPSerializationFormat.JSON));
-		jsonMap.put(SOLIDNODEREF, HAPJsonUtility.buildJson(this.m_solidNodeRef, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOLVEDINFO, HAPUtilityJson.buildJson(this.m_resolvedInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(SOLIDNODEREF, HAPUtilityJson.buildJson(this.m_solidNodeRef, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafRelative) {
 			HAPElementStructureLeafRelative ele = (HAPElementStructureLeafRelative)obj;
-			if(!HAPBasicUtility.isEquals(this.getReference(), ele.getReference()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getReference(), ele.getReference()))  return false;
 			out = true;
 		}
 		return out;

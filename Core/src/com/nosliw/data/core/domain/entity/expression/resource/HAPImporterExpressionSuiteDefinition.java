@@ -4,7 +4,7 @@ import java.io.InputStream;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpression;
 
@@ -14,7 +14,7 @@ public class HAPImporterExpressionSuiteDefinition {
 		HAPResourceEntityExpressionSuite suite = null;
 		try{
 			String content = HAPUtilityFile.readFile(inputStream);
-			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
+			JSONObject contentJson = HAPUtilityJson.newJsonObject(content);
 //			suite = HAPParserResourceExpressionDefinition.parseExpressionSuite(contentJson);
 		}
 		catch(Exception e){

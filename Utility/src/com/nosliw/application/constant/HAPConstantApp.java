@@ -15,7 +15,7 @@ import com.nosliw.common.constant.HAPConstantManager;
 import com.nosliw.common.interpolate.HAPInterpolateUtility;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.common.utils.HAPXMLUtility;
+import com.nosliw.common.utils.HAPUtilityXML;
 
 public class HAPConstantApp extends HAPConfigurableImp{
 
@@ -46,13 +46,13 @@ public class HAPConstantApp extends HAPConfigurableImp{
 			String jsConstantFile = rootEle.getAttribute("jsConstantFile");
 			constantMan.setJsConstantFile(jsConstantFile);
 
-			Element[] attrsEles = HAPXMLUtility.getMultiChildElementByName(rootEle, "attributes");
+			Element[] attrsEles = HAPUtilityXML.getMultiChildElementByName(rootEle, "attributes");
 			for(Element attrsEle : attrsEles){
 				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(attrsEle, "group_attribute");
 				constantMan.addConstantGroup(group);
 			}
 			
-			Element[] constantsEles = HAPXMLUtility.getMultiChildElementByName(rootEle, "constants");
+			Element[] constantsEles = HAPUtilityXML.getMultiChildElementByName(rootEle, "constants");
 			for(Element constantsEle : constantsEles){
 				HAPConstantGroup group = (HAPConstantGroup)HAPStringableEntityImporterXML.readRootEntity(constantsEle, "group_constant");
 				constantMan.addConstantGroup(group);

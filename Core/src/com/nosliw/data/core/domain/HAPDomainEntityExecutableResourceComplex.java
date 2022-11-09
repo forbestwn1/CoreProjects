@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
@@ -82,15 +82,15 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUESTRUCTUREDOMAIN, HAPJsonUtility.buildJson(this.m_valueStructureDomain, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREDOMAIN, HAPUtilityJson.buildJson(this.m_valueStructureDomain, HAPSerializationFormat.JSON));
 		
 		Map<String, String> entityJsonObj = new LinkedHashMap<String, String>();
 		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
 			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(COMPLEXENTITY, HAPJsonUtility.buildMapJson(entityJsonObj));
+		jsonMap.put(COMPLEXENTITY, HAPUtilityJson.buildMapJson(entityJsonObj));
 		
-		jsonMap.put(EXTERNALENTITY, HAPJsonUtility.buildJson(this.m_externalComplexEntityDpendency, HAPSerializationFormat.JSON));
+		jsonMap.put(EXTERNALENTITY, HAPUtilityJson.buildJson(this.m_externalComplexEntityDpendency, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -101,7 +101,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
 			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(COMPLEXENTITY, HAPJsonUtility.buildMapJson(entityJsonObj));
+		jsonMap.put(COMPLEXENTITY, HAPUtilityJson.buildMapJson(entityJsonObj));
 	}
 
 	@Override

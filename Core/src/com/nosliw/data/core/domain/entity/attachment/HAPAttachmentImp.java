@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implements HAPAttachment{
 
@@ -52,7 +52,7 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 		if(obj instanceof HAPAttachmentImp) {
 			HAPAttachmentImp ele = (HAPAttachmentImp)obj;
 			if(super.equals(ele)) {
-				if(HAPBasicUtility.isEquals(ele.getValueType(), this.getValueType())) {
+				if(HAPUtilityBasic.isEquals(ele.getValueType(), this.getValueType())) {
 					out = true;
 				}
 			}

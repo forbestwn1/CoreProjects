@@ -22,7 +22,7 @@ import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.Undefined;
 
 import com.nosliw.common.serialization.HAPJsonTypeUnchange;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager; 
  
@@ -31,7 +31,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
  *  
  */ 
  
-public class HAPRhinoValueUtility 
+public class HAPUtilityRhinoValue 
 { 
     /**
      * Takes a java object and converts it to a native java script object 
@@ -172,7 +172,7 @@ public class HAPRhinoValueUtility
             }
         } 
      
-        return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  
+        return HAPUtilityJson.buildMapJson(mapJson, mapTypeJson);  
     } 
      
     /**
@@ -198,7 +198,7 @@ public class HAPRhinoValueUtility
                     if(typeClass==null)  typeClass = json.getClass();
                 } 
             } 
-            return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]), typeClass);
+            return HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0]), typeClass);
         } 
         else 
         { 
@@ -212,7 +212,7 @@ public class HAPRhinoValueUtility
                 mapJson.put(key, json+"");
                 mapTypeJson.put(key, json.getClass()); 
             } 
-            return HAPJsonUtility.buildMapJson(mapJson, mapTypeJson);  
+            return HAPUtilityJson.buildMapJson(mapJson, mapTypeJson);  
         }
     } 
      

@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /*
@@ -67,8 +67,8 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 	public boolean equals(Object obj){
 		if(obj instanceof HAPRuntimeInfo){
 			HAPRuntimeInfo runtimeInfo = (HAPRuntimeInfo)obj;
-			return HAPBasicUtility.isEquals(this.m_language, runtimeInfo.m_language) &&
-					HAPBasicUtility.isEquals(this.m_environment, runtimeInfo.m_environment);
+			return HAPUtilityBasic.isEquals(this.m_language, runtimeInfo.m_language) &&
+					HAPUtilityBasic.isEquals(this.m_environment, runtimeInfo.m_environment);
 		}
 		else{
 			return false;

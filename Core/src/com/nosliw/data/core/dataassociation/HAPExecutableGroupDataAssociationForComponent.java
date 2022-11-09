@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -44,7 +44,7 @@ public class HAPExecutableGroupDataAssociationForComponent extends HAPSerializab
 		for(String name : this.m_dataAssociations.keySet()) {
 			jsonEleMap.put(name, this.m_dataAssociations.get(name).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(jsonEleMap)); 
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildMapJson(jsonEleMap)); 
 	}
 	
 	private String getDefaultName() {  return HAPConstantShared.GLOBAL_VALUE_DEFAULT;   }
@@ -59,8 +59,8 @@ public class HAPExecutableGroupDataAssociationForComponent extends HAPSerializab
 		for(String name : this.m_dataAssociations.keySet()) {
 			jsonEleMap.put(name, this.m_dataAssociations.get(name).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(jsonEleMap)); 
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildMapJson(jsonEleMap)); 
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

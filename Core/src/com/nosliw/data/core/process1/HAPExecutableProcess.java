@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -160,13 +160,13 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		for(String actId : this.m_activities.keySet()) {
 			activityJsonMap.put(actId, this.m_activities.get(actId).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(ACTIVITY, HAPJsonUtility.buildMapJson(activityJsonMap));
+		jsonMap.put(ACTIVITY, HAPUtilityJson.buildMapJson(activityJsonMap));
 		
 		Map<String, String> resultsJsonMap = new LinkedHashMap<String, String>();
 		for(String resultName : this.m_results.keySet()) {
 			resultsJsonMap.put(resultName, this.m_results.get(resultName).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(RESULT, HAPJsonUtility.buildMapJson(resultsJsonMap));
+		jsonMap.put(RESULT, HAPUtilityJson.buildMapJson(resultsJsonMap));
 	
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildValueStructureInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
@@ -180,7 +180,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 		jsonMap.put(STARTACTIVITYID, this.m_startActivityId);
 		jsonMap.put(CONTEXT, this.m_context.toStringValue(HAPSerializationFormat.JSON));
 
-		jsonMap.put(RESULT, HAPJsonUtility.buildJson(this.m_results, HAPSerializationFormat.JSON));
-		jsonMap.put(ACTIVITY, HAPJsonUtility.buildJson(this.m_activities, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULT, HAPUtilityJson.buildJson(this.m_results, HAPSerializationFormat.JSON));
+		jsonMap.put(ACTIVITY, HAPUtilityJson.buildJson(this.m_activities, HAPSerializationFormat.JSON));
 	}
 }

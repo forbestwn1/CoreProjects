@@ -8,9 +8,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //id for entity in domain
@@ -49,7 +49,7 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	
 	public static HAPIdEntityInDomain newInstance(Object obj) {
 		HAPIdEntityInDomain out = null;
-		if(obj!=null) out = (HAPIdEntityInDomain)HAPSerializeUtility.buildObject(HAPIdEntityInDomain.class, obj);
+		if(obj!=null) out = (HAPIdEntityInDomain)HAPUtilitySerialize.buildObject(HAPIdEntityInDomain.class, obj);
 		return out;
 	}
 	
@@ -58,13 +58,9 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	public String getEntityType() {     return this.m_entityType;      }
 
 	public String getDomainId() {    return this.m_domainId;   }
-	
-	public HAPIdEntityInDomain cloneIdEntityInDomain() {
-		return new HAPIdEntityInDomain(this.m_domainId, this.m_entityId, this.m_entityType);
-	}
 
 	@Override
-	public HAPIdEntityInDomain clone() {     return this.cloneIdEntityInDomain();     }
+	public HAPIdEntityInDomain cloneValue() {	return new HAPIdEntityInDomain(this.m_domainId, this.m_entityId, this.m_entityType);	}
 	
 	@Override
 	public int hashCode() {
@@ -76,7 +72,7 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPIdEntityInDomain) {
 			HAPIdEntityInDomain entityId = (HAPIdEntityInDomain)obj;
-			out = HAPBasicUtility.isEquals(entityId.getEntityId(), this.getEntityId()) && HAPBasicUtility.isEquals(entityId.getEntityType(), this.getEntityType());
+			out = HAPUtilityBasic.isEquals(entityId.getEntityId(), this.getEntityId()) && HAPUtilityBasic.isEquals(entityId.getEntityType(), this.getEntityType());
 		}
 		return out;
 	}

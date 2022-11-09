@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
@@ -38,7 +38,7 @@ public class HAPCodeTable extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATASET, HAPJsonUtility.buildJson(this.m_dataSet, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASET, HAPUtilityJson.buildJson(this.m_dataSet, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

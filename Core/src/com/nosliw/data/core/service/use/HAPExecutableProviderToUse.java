@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -44,7 +44,7 @@ public class HAPExecutableProviderToUse extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PARMMAPPING, HAPJsonUtility.buildJson(this.m_parmMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(PARMMAPPING, HAPUtilityJson.buildJson(this.m_parmMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(RESULTMAPPING, HAPSerializeManager.getInstance().toStringValue(this.m_resultMapping, HAPSerializationFormat.JSON));
 	}
 
@@ -56,7 +56,7 @@ public class HAPExecutableProviderToUse extends HAPExecutableImp{
 		for(String name : this.m_resultMapping.keySet()) {
 			resultMapping.put(name, this.m_resultMapping.get(name).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(RESULTMAPPING, HAPJsonUtility.buildMapJson(resultMapping));
+		jsonMap.put(RESULTMAPPING, HAPUtilityJson.buildMapJson(resultMapping));
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -60,7 +60,7 @@ public class HAPReferenceElementInStructure extends HAPSerializableImp{
 	}
 	
 	public String[] getPathSegments(){
-		if(HAPBasicUtility.isStringEmpty(m_path))  return new String[0];
+		if(HAPUtilityBasic.isStringEmpty(m_path))  return new String[0];
 		else  return HAPUtilityNamingConversion.parseComponentPaths(m_path);     
 	}
 	

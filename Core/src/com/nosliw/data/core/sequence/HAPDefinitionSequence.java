@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.task.HAPDefinitionTask;
@@ -34,7 +34,7 @@ public class HAPDefinitionSequence extends HAPDefinitionTaskImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(STEP, HAPJsonUtility.buildJson(this.m_steps, HAPSerializationFormat.JSON));
+		jsonMap.put(STEP, HAPUtilityJson.buildJson(this.m_steps, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

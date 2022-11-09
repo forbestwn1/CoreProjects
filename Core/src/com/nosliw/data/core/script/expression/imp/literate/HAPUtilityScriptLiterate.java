@@ -3,7 +3,7 @@ package com.nosliw.data.core.script.expression.imp.literate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.HAPScript;
 
@@ -33,7 +33,7 @@ public class HAPUtilityScriptLiterate {
 			script=script.substring(end);
 			start = script.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		}
-		if(!HAPBasicUtility.isStringEmpty(script)){
+		if(!HAPUtilityBasic.isStringEmpty(script)){
 			out.add(HAPScript.newScript(script, HAPConstantShared.SCRIPT_TYPE_SEG_TEXT));
 		}
 		return out;

@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.story.HAPParserStory;
 import com.nosliw.data.core.story.HAPStory;
@@ -97,7 +97,7 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DIRECTORID, this.m_directorId);
 		jsonMap.put(STORY, this.m_story.toStringValue(HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(CHANGEHISTORY, HAPJsonUtility.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
+		jsonMap.put(CHANGEHISTORY, HAPUtilityJson.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -105,6 +105,6 @@ public class HAPDesignStory extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DIRECTORID, this.m_directorId);
 		jsonMap.put(STORY, this.m_story.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(CHANGEHISTORY, HAPJsonUtility.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
+		jsonMap.put(CHANGEHISTORY, HAPUtilityJson.buildJson(this.m_changeHistory, HAPSerializationFormat.JSON));
 	}
 }

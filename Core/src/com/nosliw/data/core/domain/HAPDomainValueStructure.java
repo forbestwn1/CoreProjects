@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
@@ -77,8 +77,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		for(String id : this.m_valueStructure.keySet()) {
 			valueStructureJson.put(id, this.m_valueStructure.get(id).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildMapJson(valueStructureJson));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildMapJson(valueStructureJson));
 		
-		jsonMap.put(DEFINITIONBYRUNTIME, HAPJsonUtility.buildMapJson(this.m_definitionIdByRuntimeId));
+		jsonMap.put(DEFINITIONBYRUNTIME, HAPUtilityJson.buildMapJson(this.m_definitionIdByRuntimeId));
 	}
 }

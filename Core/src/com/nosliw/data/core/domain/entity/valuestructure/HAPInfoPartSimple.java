@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 public class HAPInfoPartSimple {
@@ -27,6 +27,6 @@ public class HAPInfoPartSimple {
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(PART, this.m_simpleStructurePart.toExpandedString(valueStructureDomain));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 }

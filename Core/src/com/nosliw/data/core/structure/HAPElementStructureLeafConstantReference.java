@@ -3,7 +3,7 @@ package com.nosliw.data.core.structure;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -47,7 +47,7 @@ public class HAPElementStructureLeafConstantReference extends HAPElementStructur
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafConstantReference) {
 			HAPElementStructureLeafConstantReference ele = (HAPElementStructureLeafConstantReference)obj;
-			if(!HAPBasicUtility.isEquals(this.getConstantName(), ele.getConstantName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getConstantName(), ele.getConstantName()))  return false;
 			out = true;
 		}
 		return out;

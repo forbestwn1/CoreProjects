@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
@@ -92,7 +92,7 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXECUTABLEENTITYDOMAIN, HAPJsonUtility.buildJson(this.m_executableEntityDomain, HAPSerializationFormat.JSON));
+		jsonMap.put(EXECUTABLEENTITYDOMAIN, HAPUtilityJson.buildJson(this.m_executableEntityDomain, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

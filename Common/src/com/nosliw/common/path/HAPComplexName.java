@@ -1,6 +1,6 @@
 package com.nosliw.common.path;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -20,7 +20,7 @@ public class HAPComplexName {
 	}
 	
 	public HAPComplexName(String fullName){
-		if(HAPBasicUtility.isStringNotEmpty(fullName)){
+		if(HAPUtilityBasic.isStringNotEmpty(fullName)){
 			this.m_fullName = fullName;
 			
 			int index = this.m_fullName.lastIndexOf(HAPConstantShared.SEPERATOR_PATH);

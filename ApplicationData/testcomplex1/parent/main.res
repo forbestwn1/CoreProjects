@@ -7,7 +7,7 @@
 		"ignore_variable" : "parent_public",
 		"simplized1_none_testsimple1": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"scriptName": "testsimple1"
 		},
@@ -152,7 +152,7 @@
 		},
 		"normal1_set_testsimple1": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"element": [
 				{

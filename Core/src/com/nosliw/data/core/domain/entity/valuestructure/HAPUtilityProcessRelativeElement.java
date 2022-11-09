@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -64,7 +64,7 @@ public class HAPUtilityProcessRelativeElement {
 							String subPath = null;
 							String rulePath = rule.getPath();
 							String remainPath = resolveInfo.remainPath.getPath();
-							if(HAPBasicUtility.isEquals(rulePath, remainPath))  subPath = "";
+							if(HAPUtilityBasic.isEquals(rulePath, remainPath))  subPath = "";
 							else if(remainPath.contains(rulePath+"."))  subPath = remainPath.substring(rulePath.length()+1);
 
 							if(subPath!=null) {

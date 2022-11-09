@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class HAPBasicUtility {
+public class HAPUtilityBasic {
 
 	public static List toList(Map map){
 		List out = new ArrayList();
@@ -62,7 +62,7 @@ public class HAPBasicUtility {
 	   if (m1.size() != m2.size())	      return false;
 	   if (!m1.keySet().equals(m2.keySet()))  return false;
 	   for (Object key: m1.keySet()){
-		   if(!HAPBasicUtility.isEquals(m1.get(key), m2.get(key)))  return false;
+		   if(!HAPUtilityBasic.isEquals(m1.get(key), m2.get(key)))  return false;
 	   }
 	   return true;
 	}	
@@ -70,7 +70,7 @@ public class HAPBasicUtility {
 	public static boolean isEqualLists(List l1, List l2) {
 	   if (l1.size() != l2.size())	      return false;
 	   for (int i=0; i<l1.size(); i++){
-		   if(!HAPBasicUtility.isEquals(l1.get(i), l2.get(i)))  return false;
+		   if(!HAPUtilityBasic.isEquals(l1.get(i), l2.get(i)))  return false;
 	   }
 	   return true;
 	}	
@@ -166,7 +166,7 @@ public class HAPBasicUtility {
 	}	
 	
 	public static String upperCaseFirstLetter(String name){
-		if(HAPBasicUtility.isStringEmpty(name))  return name;
+		if(HAPUtilityBasic.isStringEmpty(name))  return name;
 		return name.substring(0, 1).toUpperCase() + name.substring(1);
 	}
 	

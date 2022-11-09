@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPData;
@@ -56,6 +56,6 @@ public class HAPResultService extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RESULTNAME, this.m_resultName);
-		jsonMap.put(RESULTVALUE, HAPJsonUtility.buildJson(m_resultValue, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULTVALUE, HAPUtilityJson.buildJson(m_resultValue, HAPSerializationFormat.JSON));
 	}
 }

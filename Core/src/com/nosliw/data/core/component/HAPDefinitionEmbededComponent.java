@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
@@ -68,7 +68,7 @@ public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp impl
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(IN, this.m_inDataAssociations.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(OUT, this.m_outDataAssociations.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTHANDLER, HAPJsonUtility.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTHANDLER, HAPUtilityJson.buildJson(this.m_eventHandlers, HAPSerializationFormat.JSON));
 	}
 
 	@Override

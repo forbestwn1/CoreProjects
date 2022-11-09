@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -93,7 +93,7 @@ public class HAPExecutableEntityComplexValueStructure extends HAPExecutableImp{
 		for(HAPExecutablePartComplexValueStructure part : this.m_parts) {
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(partArrayJson.toArray(new String[0])));
+		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partArrayJson.toArray(new String[0])));
 	}
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
@@ -104,9 +104,9 @@ public class HAPExecutableEntityComplexValueStructure extends HAPExecutableImp{
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			jsonArray.add(valueStructureInfo.toExpandedString(valueStructureDomain));
 		}
-		jsonMap.put(PART, HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0])));
+		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0])));
 		
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	@Override
@@ -116,6 +116,6 @@ public class HAPExecutableEntityComplexValueStructure extends HAPExecutableImp{
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			valueStructureIds.add(valueStructureInfo.getValueStructure().getValueStructureRuntimeId());
 		}
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureIds.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureIds.toArray(new String[0])));
 	}
 }

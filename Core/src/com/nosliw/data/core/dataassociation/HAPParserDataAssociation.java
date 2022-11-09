@@ -3,7 +3,7 @@ package com.nosliw.data.core.dataassociation;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
@@ -28,7 +28,7 @@ public class HAPParserDataAssociation {
 		if(asJson==null)   return null;
 		
 		String type = (String)asJson.opt(HAPDefinitionDataAssociation.TYPE);
-		if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
+		if(HAPUtilityBasic.isStringEmpty(type))  type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
 		
 		HAPExecutableDataAssociation out = null;
 		switch(type) {
@@ -59,7 +59,7 @@ public class HAPParserDataAssociation {
 		if(asJson==null)   return null;
 		
 		String type = (String)asJson.opt(HAPDefinitionDataAssociation.TYPE);
-		if(HAPBasicUtility.isStringEmpty(type))  type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
+		if(HAPUtilityBasic.isStringEmpty(type))  type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
 		
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:

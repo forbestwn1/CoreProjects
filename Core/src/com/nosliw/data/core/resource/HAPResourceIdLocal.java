@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPResourceIdLocal  extends HAPResourceId{
@@ -63,7 +63,7 @@ public class HAPResourceIdLocal  extends HAPResourceId{
 		if(super.equals(o)) {
 			if(o instanceof HAPResourceIdLocal){
 				HAPResourceIdLocal resourceId = (HAPResourceIdLocal)o;
-				return HAPBasicUtility.isEquals(this.getName(), resourceId.getName());
+				return HAPUtilityBasic.isEquals(this.getName(), resourceId.getName());
 			}
 		}
 		return out;

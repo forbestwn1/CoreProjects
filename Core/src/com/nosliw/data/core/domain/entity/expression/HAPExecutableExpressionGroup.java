@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -100,8 +100,8 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONS, HAPUtilityJson.buildJson(this.getExpressionItems(), HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEINFOS, HAPUtilityJson.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 		for(String id : this.m_expressionItem.keySet()) {
 			expressionsJson.put(id, this.m_expressionItem.get(id).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(EXPRESSIONS, HAPJsonUtility.buildMapJson(expressionsJson));
+		jsonMap.put(EXPRESSIONS, HAPUtilityJson.buildMapJson(expressionsJson));
 	}
 
 	@Override

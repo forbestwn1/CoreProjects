@@ -4,18 +4,18 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityEntityInfo {
 
 	public static void softMerge(HAPEntityInfo target, HAPEntityInfo source) {
-		if(HAPBasicUtility.isStringEmpty(target.getId()))  target.setId(source.getId());
-		if(HAPBasicUtility.isStringEmpty(target.getName()))  target.setName(source.getName());
-		if(HAPBasicUtility.isStringEmpty(target.getDescription()))  target.setDescription(source.getDescription());
-		if(HAPBasicUtility.isStringEmpty(target.getDisplayName()))  target.setDisplayName(source.getDisplayName());
+		if(HAPUtilityBasic.isStringEmpty(target.getId()))  target.setId(source.getId());
+		if(HAPUtilityBasic.isStringEmpty(target.getName()))  target.setName(source.getName());
+		if(HAPUtilityBasic.isStringEmpty(target.getDescription()))  target.setDescription(source.getDescription());
+		if(HAPUtilityBasic.isStringEmpty(target.getDisplayName()))  target.setDisplayName(source.getDisplayName());
 		HAPUtilityInfo.softMerge(target.getInfo(), source.getInfo());
 		enable(target, isEnabled(target) && isEnabled(source));
 	}
@@ -41,7 +41,7 @@ public class HAPUtilityEntityInfo {
 		jsonMap.put(HAPEntityInfo.STATUS, entityInfo.getStatus());
 		jsonMap.put(HAPEntityInfo.DISPLAYNAME, entityInfo.getDisplayName());
 		jsonMap.put(HAPEntityInfo.DESCRIPTION, entityInfo.getDescription());
-		jsonMap.put(HAPEntityInfo.INFO, HAPJsonUtility.buildJson(entityInfo.getInfo(), HAPSerializationFormat.JSON));
+		jsonMap.put(HAPEntityInfo.INFO, HAPUtilityJson.buildJson(entityInfo.getInfo(), HAPSerializationFormat.JSON));
 	}
 
 	public static boolean isEnabled(JSONObject entityInfoJsonObj) {
@@ -61,7 +61,7 @@ public class HAPUtilityEntityInfo {
 
 	public static void processEntityId(HAPEntityInfo entityInfo) {
 		String id = entityInfo.getId();
-		if(HAPBasicUtility.isStringEmpty(id)) id = HAPConstantShared.NAME_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(id)) id = HAPConstantShared.NAME_DEFAULT;
 		entityInfo.setId(id);
 	}
 

@@ -39,7 +39,7 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 		String out = "";
 		try{
 			out = this.toStringValue(HAPSerializationFormat.JSON);
-			out = HAPJsonUtility.formatJson(out);
+			out = HAPUtilityJson.formatJson(out);
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -59,7 +59,7 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 				this.buildFullJsonMap(outJsonMap, typeJsonMap);
-				out = HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
+				out = HAPUtilityJson.buildMapJson(outJsonMap, typeJsonMap);
 			}
 			break;
 		case JSON:
@@ -68,7 +68,7 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 				this.buildJsonMap(outJsonMap, typeJsonMap);
-				out = HAPJsonUtility.buildMapJson(outJsonMap, typeJsonMap);
+				out = HAPUtilityJson.buildMapJson(outJsonMap, typeJsonMap);
 			}
 			break;
 		case XML:
@@ -98,5 +98,8 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 		if(literateStr==null)   return super.hashCode();
 		return literateStr.hashCode();
 	}
+
+	@Override
+	public Object cloneValue() {    return this;     }
 
 }

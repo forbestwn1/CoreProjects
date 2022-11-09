@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
@@ -45,7 +45,7 @@ public class HAPDefinitionUICommand  extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PARM, this.m_parms.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(RESULT, HAPJsonUtility.buildJson(RESULT, HAPSerializationFormat.JSON));
+		jsonMap.put(RESULT, HAPUtilityJson.buildJson(RESULT, HAPSerializationFormat.JSON));
 	}
 
 	@Override

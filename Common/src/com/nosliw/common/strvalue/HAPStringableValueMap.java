@@ -6,11 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPStringableValueMap<T> extends HAPStringableValueComplex{
@@ -78,7 +78,7 @@ public class HAPStringableValueMap<T> extends HAPStringableValueComplex{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPStringableValueComplex.ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPStringableValueComplex.ELEMENTS, HAPUtilityJson.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
 	}
 	
 	@Override
@@ -117,7 +117,7 @@ public class HAPStringableValueMap<T> extends HAPStringableValueComplex{
 		boolean out = false;
 		if(obj instanceof HAPStringableValueMap){
 			HAPStringableValueMap value = (HAPStringableValueMap)obj;
-			out = HAPBasicUtility.isEqualMaps(value.m_elements, value.m_elements);
+			out = HAPUtilityBasic.isEqualMaps(value.m_elements, value.m_elements);
 		}
 		return out;
 	}

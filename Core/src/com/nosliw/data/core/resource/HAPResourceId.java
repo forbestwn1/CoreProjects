@@ -7,10 +7,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
@@ -72,7 +72,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 		jsonMapId.put(STRUCUTRE, this.getStructure());
 		if(this.m_supplement!=null && !this.m_supplement.isEmpty())   jsonMapId.put(SUP, this.m_supplement.toStringValue(HAPSerializationFormat.JSON_FULL));
 		this.buildCoreIdJsonMap(jsonMapId, typeJsonMapId);
-		jsonMap.put(ID, HAPJsonUtility.buildMapJson(jsonMapId, typeJsonMapId));
+		jsonMap.put(ID, HAPUtilityJson.buildMapJson(jsonMapId, typeJsonMapId));
 	}
 
 	@Override
@@ -86,8 +86,8 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 		boolean out = false;
 		if(o instanceof HAPResourceId){
 			HAPResourceId resourceId = (HAPResourceId)o;
-			if(HAPBasicUtility.isEquals(this.getResourceType(), resourceId.getResourceType())) {
-				return HAPBasicUtility.isEquals(this.m_supplement, resourceId.m_supplement);
+			if(HAPUtilityBasic.isEquals(this.getResourceType(), resourceId.getResourceType())) {
+				return HAPUtilityBasic.isEquals(this.m_supplement, resourceId.m_supplement);
 			}
 		}
 		return out;

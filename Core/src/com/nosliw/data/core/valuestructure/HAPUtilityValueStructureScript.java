@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
@@ -18,7 +18,7 @@ public class HAPUtilityValueStructureScript {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
 		JSONObject output = buildDefaultJsonObject(valueStructure);
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
+		templateParms.put("outputInit", HAPUtilityJson.formatJson(output.toString()));
 
 		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityValueStructureScript.class, "ValueStructureInitFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
@@ -34,7 +34,7 @@ public class HAPUtilityValueStructureScript {
 				jsonMap.put(root.getLocalId(), value.toString());
 			}
 		}
-		return new JSONObject(HAPJsonUtility.buildMapJson(jsonMap));
+		return new JSONObject(HAPUtilityJson.buildMapJson(jsonMap));
 	}
 
 }

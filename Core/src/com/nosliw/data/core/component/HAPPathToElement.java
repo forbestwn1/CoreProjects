@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -43,7 +43,7 @@ public class HAPPathToElement extends HAPSerializableImp{
 		for(HAPPathToChildElement seg : this.m_pathSegs) {
 			strArray.add(seg.toStringValue(HAPSerializationFormat.JSON));
 		}
-		return HAPJsonUtility.buildArrayJson(strArray.toArray(new String[0]));
+		return HAPUtilityJson.buildArrayJson(strArray.toArray(new String[0]));
 	}
 
 	

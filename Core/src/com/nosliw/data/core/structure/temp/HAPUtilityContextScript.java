@@ -8,8 +8,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -25,7 +25,7 @@ public class HAPUtilityContextScript {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object 
 		JSONObject output = HAPUtilityContextScript.buildDefaultJsonObject(valueStructure);
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
+		templateParms.put("outputInit", HAPUtilityJson.formatJson(output.toString()));
 
 		InputStream templateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityContextScript.class, "ContextInitFunction.temp");
 		String script = HAPStringTemplateUtil.getStringValue(templateStream, templateParms);
@@ -49,7 +49,7 @@ public class HAPUtilityContextScript {
 				jsonMap.put(contextEleName, value.toString());
 			}
 		}
-		return new JSONObject(HAPJsonUtility.buildMapJson(jsonMap));
+		return new JSONObject(HAPUtilityJson.buildMapJson(jsonMap));
 	}
 
 	//build skeleton, it is used for data mapping operation
@@ -70,7 +70,7 @@ public class HAPUtilityContextScript {
 						//not flat, parse categary and name from root name
 //						HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
 						String categary = rootId.getCategary();
-						if(HAPBasicUtility.isStringNotEmpty(categary)) {
+						if(HAPUtilityBasic.isStringNotEmpty(categary)) {
 							//ignore those that don't have categary
 							parentJsonObj = output.optJSONObject(categary);
 							if(parentJsonObj==null) {

@@ -12,11 +12,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.literate.HAPLiterateManager;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -49,7 +49,7 @@ public class HAPResourceDependency extends HAPSerializableImp{
 
 	public HAPResourceDependency(HAPResourceId resourceId, String alias){
 		this(resourceId);
-		if(HAPBasicUtility.isStringNotEmpty(alias))		this.m_alias.add(alias);
+		if(HAPUtilityBasic.isStringNotEmpty(alias))		this.m_alias.add(alias);
 	}
 
 	public HAPResourceId getId(){  return this.m_id;  }
@@ -65,7 +65,7 @@ public class HAPResourceDependency extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.m_id.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ALIAS, HAPJsonUtility.buildArrayJson(this.getAlias().toArray(new String[0])));
+		jsonMap.put(ALIAS, HAPUtilityJson.buildArrayJson(this.getAlias().toArray(new String[0])));
 	}
 
 	@Override

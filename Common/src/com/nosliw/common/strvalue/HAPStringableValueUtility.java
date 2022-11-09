@@ -13,10 +13,10 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.common.utils.HAPXMLUtility;
+import com.nosliw.common.utils.HAPUtilityXML;
 
 public class HAPStringableValueUtility {
 
@@ -52,14 +52,14 @@ public class HAPStringableValueUtility {
 	}
 	
 	public static void updateBasicProperty(Element element, HAPStringableValueEntity entity){
-		Map<String, String> propertyAttrs = HAPXMLUtility.getAllAttributes(element);
+		Map<String, String> propertyAttrs = HAPUtilityXML.getAllAttributes(element);
 		entity.updateAtomicChildrens(propertyAttrs);
 	}
 	
 	public static HAPStringableValue buildAncestorByPath(HAPStringableValueEntity entity, String path, HAPValueInfoEntity valueInfo){
 		HAPStringableValue out = entity;
 		try{
-			if(HAPBasicUtility.isStringNotEmpty(path)){
+			if(HAPUtilityBasic.isStringNotEmpty(path)){
 				String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path);
 				HAPStringableValueEntity parent = null;
 				HAPValueInfoEntity parentValueInfo = null;

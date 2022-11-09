@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -97,13 +97,13 @@ public class HAPProcessorScript {
 			HAPExecutableScriptEntity scriptExe = null;
 			HAPScript script = scriptDef.getScript();
 			//if script type not specified, discover it
-			if(HAPBasicUtility.isStringEmpty(script.getType())) {
+			if(HAPUtilityBasic.isStringEmpty(script.getType())) {
 				script = HAPUtilityScriptExpression.newScript(script.getScript());
 				scriptDef.setScript(script);
 			}
 			String type = script.getType();
 			String scriptId = scriptDef.getId();
-			if(HAPBasicUtility.isStringEmpty(scriptId))  scriptId = i+"";
+			if(HAPUtilityBasic.isStringEmpty(scriptId))  scriptId = i+"";
 			if(HAPConstantShared.SCRIPT_TYPE_EXPRESSION.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, name2IdUpdate, expressionGroupDef);
 			}

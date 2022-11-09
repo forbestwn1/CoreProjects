@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
@@ -64,7 +64,7 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 				}
 				List<String> tempNames = new ArrayList<String>();
 				String libUrl = "temp/libs/"+this.m_libraryTempFile;
-				String libUrlWithVersion = HAPBasicUtility.addVersionToUrl(libUrl, parmsJson.optString(HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY_VERSION));
+				String libUrlWithVersion = HAPUtilityBasic.addVersionToUrl(libUrl, parmsJson.optString(HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY_VERSION));
 				tempNames.add(libUrlWithVersion);
 				serviceData = HAPServiceData.createSuccessData(new HAPGatewayOutput(null, tempNames));
 			}

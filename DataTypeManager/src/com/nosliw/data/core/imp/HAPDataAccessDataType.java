@@ -9,7 +9,7 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPDBUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
@@ -111,7 +111,7 @@ public class HAPDataAccessDataType extends HAPDataAccess{
 	}
 	
 	public List<HAPRelationshipImp> getRelationships(HAPDataTypeId sourceDataTypeId, String targetType){
-		if(HAPBasicUtility.isStringEmpty(targetType)){
+		if(HAPUtilityBasic.isStringEmpty(targetType)){
 			return (List<HAPRelationshipImp>)this.queryEntitysFromDB(HAPRelationshipImp._VALUEINFO_NAME, "targetDataType_fullName=?", new Object[]{sourceDataTypeId.getFullName()}, this.getConnection());
 		}
 		else{

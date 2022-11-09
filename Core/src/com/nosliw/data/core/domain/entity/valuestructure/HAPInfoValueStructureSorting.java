@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 public class HAPInfoValueStructureSorting {
@@ -27,6 +27,6 @@ public class HAPInfoValueStructureSorting {
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(VALUESTRUCTURE, this.m_valueStructure.toExpandedString(valueStructureDomain));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 }

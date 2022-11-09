@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.complex.HAPExecutableEntityComplex;
@@ -68,6 +68,6 @@ public class HAPDomainEntityExecutableResourceComplex2 extends HAPSerializableIm
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toString());
 		jsonMap.put(COMPLEXENTITY, this.getEntityInfoExecutable(m_mainComplexEntityId).toExpandedJsonString(this));
 		
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 }

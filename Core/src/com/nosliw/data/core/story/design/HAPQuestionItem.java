@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.HAPReferenceElement;
@@ -57,7 +57,7 @@ public class HAPQuestionItem extends HAPQuestion{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TARGETREF, HAPJsonUtility.buildJson(this.m_targetRef, HAPSerializationFormat.JSON));
+		jsonMap.put(TARGETREF, HAPUtilityJson.buildJson(this.m_targetRef, HAPSerializationFormat.JSON));
 		jsonMap.put(ISMANDATORY, this.m_isMandatory+"");
 		typeJsonMap.put(ISMANDATORY, Boolean.class);
 	}

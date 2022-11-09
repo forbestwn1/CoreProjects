@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPElementGroupImp;
@@ -43,7 +43,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 			if(CHOICE.equals(path)) {
 //				if(value!=null)  value = value.toString();
 				out = new HAPChangeResult();
-				if(!HAPBasicUtility.isEquals(value, this.m_choice)) {
+				if(!HAPUtilityBasic.isEquals(value, this.m_choice)) {
 					out.addRevertChange(HAPUtilityChange.buildChangePatch(this, CHOICE, this.m_choice));
 					if(this.getElements().size()>=2) {
 						//multiple choice
@@ -65,7 +65,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 						//single choice
 						HAPInfoElement eleInfo = this.getElements().get(0);
 						HAPStoryElement ele = this.getStory().getElement(eleInfo.getElementId());
-						if(HAPBasicUtility.isEquals(value, true)) {
+						if(HAPUtilityBasic.isEquals(value, true)) {
 							out.addExtendChange(new HAPChangeItemPatch(ele.getElementId(), HAPStoryElement.ENABLE, true));
 						}
 						else {
@@ -101,7 +101,7 @@ public class HAPElementGroupSwitch extends HAPElementGroupImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_choice!=null) {
-			jsonMap.put(CHOICE, HAPJsonUtility.buildJson(this.m_choice+"", HAPSerializationFormat.JSON));
+			jsonMap.put(CHOICE, HAPUtilityJson.buildJson(this.m_choice+"", HAPSerializationFormat.JSON));
 			typeJsonMap.put(CHOICE, this.m_choice.getClass());
 		}
 	}

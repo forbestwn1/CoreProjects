@@ -3,11 +3,10 @@ package com.nosliw.data.core.domain.testing.testsimple1;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.HAPEmbededDefinitionWithValue;
 
 public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainSimple{
 
@@ -18,36 +17,27 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 
 	public static final String ATTR_SCRIPT = "script";
 
-	private String m_scriptName;
-
-	private Map<String, Object> m_parms;
-	
 	public HAPDefinitionEntityTestSimple1() {
 		super(ENTITY_TYPE);
-		this.m_parms = new LinkedHashMap<String, Object>();
+		this.setSimpleAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
 	}
 
-	public String getScriptName() {   return this.m_scriptName;     }
-	public void setScriptName(String scriptName) {    this.m_scriptName = scriptName;    }
+	public void setScriptName(String scriptName) {    this.setSimpleAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(scriptName));    }
+	public String getScriptName() {   return (String)this.getSimpleAttributeWithValue(ATTR_SCRIPTNAME).getValue().getValue();     }
 	
-	public void setParm(String name, Object value) {    this.m_parms.put(name, value);     }
-	public Object getParm(String name) {   return this.m_parms.get(name);    }
-	public Map<String, Object> getParms(){   return this.m_parms;    }
+	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getSimpleAttributeWithValue(ATTR_PARM).getValue();    }
+	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ATTR_SCRIPTNAME, this.m_scriptName);
-		jsonMap.put(ATTR_PARM, HAPSerializeManager.getInstance().toStringValue(this.m_parms, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityTestSimple1 out = new HAPDefinitionEntityTestSimple1();
 		out.cloneToDefinitionEntityInDomain(out);
-		out.setScriptName(this.getScriptName());
-		for(String parmName : this.m_parms.keySet())    out.setParm(parmName, this.m_parms.get(parmName));
 		return out;
 	}
-	
 }

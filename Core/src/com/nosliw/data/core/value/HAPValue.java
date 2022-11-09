@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -26,7 +26,7 @@ public class HAPValue extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUE, HAPJsonUtility.buildJson(this.m_value, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUE, HAPUtilityJson.buildJson(this.m_value, HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.m_type);
 	}
 	

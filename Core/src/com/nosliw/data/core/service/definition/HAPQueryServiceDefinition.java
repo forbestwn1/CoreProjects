@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 /*
@@ -51,6 +51,6 @@ public class HAPQueryServiceDefinition extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(KEYWORDS, HAPJsonUtility.buildArrayJson(this.m_keywords.toArray(new String[0])));
+		jsonMap.put(KEYWORDS, HAPUtilityJson.buildArrayJson(this.m_keywords.toArray(new String[0])));
 	}
 }

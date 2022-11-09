@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
@@ -127,8 +127,8 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp{
 		if(obj instanceof HAPRootStructure) {
 			HAPRootStructure root = (HAPRootStructure)obj;
 			if(!super.equals(obj))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_definition, root.m_definition)) return false;
+			if(!HAPUtilityBasic.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_definition, root.m_definition)) return false;
 			out = true;
 		}
 		return out;

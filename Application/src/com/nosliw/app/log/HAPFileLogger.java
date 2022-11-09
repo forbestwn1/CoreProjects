@@ -12,7 +12,7 @@ import java.util.Date;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.log.HAPLogger;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPFileLogger implements HAPLogger{
 
@@ -49,7 +49,7 @@ public class HAPFileLogger implements HAPLogger{
 	}
 
 	private String getLoggerPath(){
-		if(HAPBasicUtility.isStringEmpty(this.m_logPath)){
+		if(HAPUtilityBasic.isStringEmpty(this.m_logPath)){
 			this.m_logPath = this.m_configure.getConfigureValue("path").getStringValue();
 		}
 		return this.m_logPath;

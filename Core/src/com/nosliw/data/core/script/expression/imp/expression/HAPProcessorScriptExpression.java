@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
@@ -92,7 +92,7 @@ public class HAPProcessorScriptExpression {
 		List<HAPScript> out = new ArrayList<HAPScript>();
 		String content = script;
 		int i = 0;
-		while(HAPBasicUtility.isStringNotEmpty(content)){
+		while(HAPUtilityBasic.isStringNotEmpty(content)){
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression

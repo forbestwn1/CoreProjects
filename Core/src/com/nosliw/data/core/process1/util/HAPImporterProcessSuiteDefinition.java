@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
@@ -74,7 +74,7 @@ public class HAPImporterProcessSuiteDefinition {
 		HAPResourceDefinitionProcessSuite suite = null;
 		try{
 			String content = HAPUtilityFile.readFile(inputStream);
-			JSONObject contentJson = HAPJsonUtility.newJsonObject(content);
+			JSONObject contentJson = HAPUtilityJson.newJsonObject(content);
 			suite = HAPParserProcessDefinition.parsePocessSuite(contentJson, activityPluginMan);
 		}
 		catch(Exception e){

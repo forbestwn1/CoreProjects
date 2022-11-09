@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implements HAPDataTypeSubCriteriaGroup{
 
@@ -92,7 +92,7 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 		boolean out = false;
 		if(obj instanceof HAPDataTypeSubCriteriaGroupImp){
 			HAPDataTypeSubCriteriaGroupImp group = (HAPDataTypeSubCriteriaGroupImp)obj;
-			if(HAPBasicUtility.isEqualMaps(this.m_subCriterias, group.m_subCriterias)){
+			if(HAPUtilityBasic.isEqualMaps(this.m_subCriterias, group.m_subCriterias)){
 				if(this.isOpen()==group.isOpen()){
 					out = true;
 				}

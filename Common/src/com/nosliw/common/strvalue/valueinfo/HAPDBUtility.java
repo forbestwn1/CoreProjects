@@ -20,7 +20,7 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueUtility;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 
@@ -32,7 +32,7 @@ public class HAPDBUtility {
 	
 	public static String buildEntityQuerySql(String tableName, String query){
 		String out = "SELECT * FROM " + tableName;
-		if(HAPBasicUtility.isStringNotEmpty(query)){
+		if(HAPUtilityBasic.isStringNotEmpty(query)){
 			out = "SELECT * FROM " + tableName + " WHERE " + query;
 		}
 		return out;
@@ -194,7 +194,7 @@ public class HAPDBUtility {
 				for(HAPDBColumnInfo column : columns){
 					
 					String setterMethodName = column.getSetter();
-					if(HAPBasicUtility.isStringNotEmpty(setterMethodName)){
+					if(HAPUtilityBasic.isStringNotEmpty(setterMethodName)){
 						String setterPath = column.getSetterPath();
 						HAPStringableValue columnStrableValue = HAPStringableValueUtility.buildAncestorByPath(entity, setterPath, valueInfo);
 						Object obj = HAPValueInfoUtility.getObjectFromStringableValue(columnStrableValue);

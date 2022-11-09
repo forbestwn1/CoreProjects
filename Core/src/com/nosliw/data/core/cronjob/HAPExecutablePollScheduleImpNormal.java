@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPExecutablePollScheduleImpNormal extends HAPSerializableImp implements HAPExecutablePollSchedule {
 
@@ -48,7 +48,7 @@ public class HAPExecutablePollScheduleImpNormal extends HAPSerializableImp imple
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		String startStr = jsonObj.optString(START);
-		if(HAPBasicUtility.isStringEmpty(startStr)) {
+		if(HAPUtilityBasic.isStringEmpty(startStr)) {
 			this.m_start = Instant.now();
 		}
 		else {

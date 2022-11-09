@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -55,7 +55,7 @@ public class HAPAttachmentReferenceExternal extends HAPAttachmentReference{
 		if(obj instanceof HAPAttachmentReferenceExternal) {
 			HAPAttachmentReferenceExternal ele = (HAPAttachmentReferenceExternal)obj;
 			if(super.equals(ele)) {
-				if(HAPBasicUtility.isEquals(this.m_adaptor, ele.m_adaptor))  out = true;
+				if(HAPUtilityBasic.isEquals(this.m_adaptor, ele.m_adaptor))  out = true;
 			}
 		}
 		return out;

@@ -98,7 +98,7 @@ public class HAPProcessorElementRelative {
 			if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
 		}
 		else {
-			switch(resolveInfo.referredRoot.getDefinition().getType()) {
+			switch(resolveInfo.referredRoot.getDefinition().getEntityType()) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 			{
 				//if refer to a constant element

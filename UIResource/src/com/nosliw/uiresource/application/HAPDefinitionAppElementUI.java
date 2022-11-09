@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPInfoChildResource;
@@ -57,7 +57,7 @@ public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(MODULE, HAPJsonUtility.buildJson(this.m_modules, HAPSerializationFormat.JSON));
+		jsonMap.put(MODULE, HAPUtilityJson.buildJson(this.m_modules, HAPSerializationFormat.JSON));
 	}
 
 	public HAPDefinitionAppElementUI cloneAppUIElementDefinition() {

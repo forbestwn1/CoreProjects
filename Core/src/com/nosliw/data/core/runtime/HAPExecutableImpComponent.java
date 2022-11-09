@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
@@ -61,7 +61,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		this.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	}

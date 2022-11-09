@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -55,8 +55,8 @@ public class HAPDefinitionGroupDataAssociationForTask extends HAPSerializableImp
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(OUT, HAPJsonUtility.buildJson(this.m_outDataAssociation, HAPSerializationFormat.JSON));
-		jsonMap.put(IN, HAPJsonUtility.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
+		jsonMap.put(OUT, HAPUtilityJson.buildJson(this.m_outDataAssociation, HAPSerializationFormat.JSON));
+		jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
 	}
 
 	protected void cloneToTaskDataMappingDefinition(HAPDefinitionGroupDataAssociationForTask def) {

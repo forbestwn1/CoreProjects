@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.servlet.core.HAPInitServlet;
@@ -38,7 +38,7 @@ public class HAPBaseServlet  extends HttpServlet{
 			try {
 				String content = serviceData.toStringValue(HAPSerializationFormat.JSON_FULL);
 //			    System.out.println(HAPJsonUtility.formatJson(content));
-			    writer.println(HAPJsonUtility.formatJson(content));		
+			    writer.println(HAPUtilityJson.formatJson(content));		
 //			    writer.println(content);		
 			}
 			catch(Throwable e) {

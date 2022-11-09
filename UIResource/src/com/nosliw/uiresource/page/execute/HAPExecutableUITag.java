@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -97,12 +97,12 @@ public class HAPExecutableUITag extends HAPExecutableComponent{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TAGNAME, this.getUIUnitTagDefinition().getTagName());
-		jsonMap.put(CONTEXTMAPPING, HAPJsonUtility.buildMapJson(m_contextMapping));
+		jsonMap.put(CONTEXTMAPPING, HAPUtilityJson.buildMapJson(m_contextMapping));
 		jsonMap.put(TAGVALUESTRUCTURE, this.getTagValueStructureExe().toStringValue(HAPSerializationFormat.JSON_FULL));
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EVENTMAPPING, HAPJsonUtility.buildMapJson(m_eventMapping));
-		jsonMap.put(COMMANDMAPPING, HAPJsonUtility.buildMapJson(m_commandMapping));
-		jsonMap.put(SERVICEMAPPING, HAPJsonUtility.buildMapJson(m_serviceMapping));
+		jsonMap.put(EVENTMAPPING, HAPUtilityJson.buildMapJson(m_eventMapping));
+		jsonMap.put(COMMANDMAPPING, HAPUtilityJson.buildMapJson(m_commandMapping));
+		jsonMap.put(SERVICEMAPPING, HAPUtilityJson.buildMapJson(m_serviceMapping));
 	}
 	
 	@Override

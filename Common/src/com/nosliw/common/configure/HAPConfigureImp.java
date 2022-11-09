@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
 
@@ -70,7 +70,7 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	
 	HAPConfigureItem getConfigureItemByPath(String path, String type){
 		HAPConfigureItem out = this;
-		if(HAPBasicUtility.isStringNotEmpty(path)){
+		if(HAPUtilityBasic.isStringNotEmpty(path)){
 			int index = path.indexOf(HAPConstantShared.SEPERATOR_PATH);
 			if(index==-1){
 				//single
@@ -264,16 +264,16 @@ public class HAPConfigureImp extends HAPConfigureItem implements HAPConfigure{
 	}
 	
 	@Override
-	public String toString(){ return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
+	public String toString(){ return HAPUtilityJson.formatJson(this.toStringValue(HAPSerializationFormat.JSON));}
 
 	@Override
 	public String toStringValue(HAPSerializationFormat format) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
-		jsonMap.put("variables", HAPJsonUtility.buildJson(this.m_variables, format));
-		jsonMap.put("childValues", HAPJsonUtility.buildJson(this.getChildConfigureValues(), format));
-		jsonMap.put("childConfigurables", HAPJsonUtility.buildJson(this.getChildConfigurables(), format));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		jsonMap.put("variables", HAPUtilityJson.buildJson(this.m_variables, format));
+		jsonMap.put("childValues", HAPUtilityJson.buildJson(this.getChildConfigureValues(), format));
+		jsonMap.put("childConfigurables", HAPUtilityJson.buildJson(this.getChildConfigurables(), format));
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	@Override

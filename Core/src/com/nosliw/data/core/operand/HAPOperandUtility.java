@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -183,7 +183,7 @@ public class HAPOperandUtility {
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 						HAPOperandConstant constantChild = (HAPOperandConstant)operand.getOperand();
-						if(HAPBasicUtility.isStringNotEmpty(constantChild.getName())){
+						if(HAPUtilityBasic.isStringNotEmpty(constantChild.getName())){
 							String newName = nameUpdate.getUpdatedName(constantChild.getName()); 
 							constantChild.setName(newName);
 						}
@@ -357,7 +357,7 @@ public class HAPOperandUtility {
 			for(int i=0; i<operands.size(); i++) {
 				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, dataTypeHelper));
 			}
-		}while(!HAPBasicUtility.isEqualMaps(varsInfo.getVariableCriteriaInfos(), oldVarsInfo.getVariableCriteriaInfos()) && processTracker.isSuccess());
+		}while(!HAPUtilityBasic.isEqualMaps(varsInfo.getVariableCriteriaInfos(), oldVarsInfo.getVariableCriteriaInfos()) && processTracker.isSuccess());
 		return varsInfo;
 	}
 

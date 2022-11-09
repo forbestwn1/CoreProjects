@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
@@ -50,6 +50,6 @@ public class HAPInfoElement extends HAPEntityInfoImp implements HAPWithAlias{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENTREF, HAPJsonUtility.buildJson(this.m_eleRef, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTREF, HAPUtilityJson.buildJson(this.m_eleRef, HAPSerializationFormat.JSON));
 	}
 }

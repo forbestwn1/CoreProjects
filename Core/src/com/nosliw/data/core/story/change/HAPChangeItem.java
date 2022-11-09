@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
@@ -85,7 +85,7 @@ public abstract class HAPChangeItem extends HAPEntityInfoImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CHANGETYPE, this.m_changeType);
-		if(this.m_revertChanges!=null)   jsonMap.put(REVERTCHANGES, HAPJsonUtility.buildJson(this.m_revertChanges, HAPSerializationFormat.JSON));
+		if(this.m_revertChanges!=null)   jsonMap.put(REVERTCHANGES, HAPUtilityJson.buildJson(this.m_revertChanges, HAPSerializationFormat.JSON));
 		jsonMap.put(REVERTABLE, this.m_revertable+"");
 		typeJsonMap.put(REVERTABLE, Boolean.class);
 		jsonMap.put(EXTENDFROM, this.m_extendedFrom);

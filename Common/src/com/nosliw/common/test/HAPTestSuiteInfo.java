@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
 
@@ -50,7 +50,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	public String getType(){ return HAPConstantShared.TEST_TYPE_SUITE; }
 
 	public void setParentName(String name){ 
-		if(HAPBasicUtility.isStringNotEmpty(name)) this.getTestDescription().updateAtomicChildStrValue(DESCRIPTION_PARENTNAME, name); 
+		if(HAPUtilityBasic.isStringNotEmpty(name)) this.getTestDescription().updateAtomicChildStrValue(DESCRIPTION_PARENTNAME, name); 
 	}
 	public String getParentName(){  return (String)this.getTestDescription().getAtomicAncestorValue(DESCRIPTION_PARENTNAME); }
 	
@@ -106,7 +106,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 				String testSuiteParentName = testSuite.getParentName();
 				
 				HAPTestSuiteInfo currentSuiteInfo = this;
-				if(HAPBasicUtility.isStringNotEmpty(testSuiteParentName)){
+				if(HAPUtilityBasic.isStringNotEmpty(testSuiteParentName)){
 					HAPSegmentParser segments = new HAPSegmentParser(testSuiteParentName, HAPConstantShared.SEPERATOR_PATH);
 					while(segments.hasNext()){
 						String name = segments.next();
@@ -143,7 +143,7 @@ public class HAPTestSuiteInfo extends HAPTestInfo{
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> jsonTypeMap){
 		super.buildFullJsonMap(jsonMap, jsonTypeMap);
 		jsonMap.put("isSolid", String.valueOf(m_isSolid));
-		HAPJsonUtility.buildJson(this.m_testCasesInfos.toArray(new HAPTestInfo[0]), HAPSerializationFormat.JSON_FULL);
-		HAPJsonUtility.buildJson(this.m_testSuitesInfos, HAPSerializationFormat.JSON_FULL);
+		HAPUtilityJson.buildJson(this.m_testCasesInfos.toArray(new HAPTestInfo[0]), HAPSerializationFormat.JSON_FULL);
+		HAPUtilityJson.buildJson(this.m_testSuitesInfos, HAPSerializationFormat.JSON_FULL);
 	}
 }

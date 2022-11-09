@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -65,7 +65,7 @@ public class HAPQuestionnaire extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(QUESTIONS, HAPJsonUtility.buildJson(this.m_questions, HAPSerializationFormat.JSON));
-		jsonMap.put(ANSWERS, HAPJsonUtility.buildJson(this.m_answers, HAPSerializationFormat.JSON));
+		jsonMap.put(QUESTIONS, HAPUtilityJson.buildJson(this.m_questions, HAPSerializationFormat.JSON));
+		jsonMap.put(ANSWERS, HAPUtilityJson.buildJson(this.m_answers, HAPSerializationFormat.JSON));
 	}
 }

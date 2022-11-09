@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -58,7 +58,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 
-		templateParms.put("variables", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
+		templateParms.put("variables", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
 		HAPScriptFunctionInfo scriptFunctionInfo = taskInfo.getScriptFunction();
@@ -74,7 +74,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 				funScriptMap.put(childFun.getName(), childFun.getScript());
 				funScriptTypeMap.put(childFun.getName(), HAPJsonTypeAsItIs.class);
 			}
-			functionParmValue = HAPJsonUtility.buildMapJson(funScriptMap, funScriptTypeMap);
+			functionParmValue = HAPUtilityJson.buildMapJson(funScriptMap, funScriptTypeMap);
 		}
 		templateParms.put("functions", functionParmValue);
 		
@@ -82,9 +82,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
-		templateParms.put("expressions", HAPJsonUtility.formatJson(HAPJsonUtility.buildJson(taskInfo.getExpressionItems(), HAPSerializationFormat.JSON)));
+		templateParms.put("expressions", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(taskInfo.getExpressionItems(), HAPSerializationFormat.JSON)));
 		templateParms.put("taskId", task.getTaskId());
-		templateParms.put("constants", HAPJsonUtility.buildJson(taskInfo.getConstantsValue(), HAPSerializationFormat.JSON));
+		templateParms.put("constants", HAPUtilityJson.buildJson(taskInfo.getConstantsValue(), HAPSerializationFormat.JSON));
 
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);

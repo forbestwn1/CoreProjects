@@ -11,7 +11,7 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataTypePicture;
@@ -135,7 +135,7 @@ public class HAPDataTypeImporter {
 		}
 		else{
 			for(HAPDataTypeOperationImp op : currentDataTypeOperations){
-				if(HAPBasicUtility.isStringEmpty(op.getType())){
+				if(HAPUtilityBasic.isStringEmpty(op.getType())){
 					out.put(op.getName(), op);
 				}
 			}
@@ -165,7 +165,7 @@ public class HAPDataTypeImporter {
 			for(HAPOperationParmInfo p : parmsInfo){
 				HAPOperationVarInfoImp parmInfo = (HAPOperationVarInfoImp)p;
 				//set default name for base parm if no name is provided
-				if(parmInfo.getIsBase() && HAPBasicUtility.isStringEmpty(parmInfo.getName())){
+				if(parmInfo.getIsBase() && HAPUtilityBasic.isStringEmpty(parmInfo.getName())){
 					parmInfo.setName(HAPConstantShared.DATAOPERATION_PARM_BASENAME);
 				}
 				

@@ -9,9 +9,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 
 @HAPEntityWithAttribute
 public class HAPInfoPage extends HAPEntityInfoImp{
@@ -47,7 +47,7 @@ public class HAPInfoPage extends HAPEntityInfoImp{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
 			this.m_pageId = jsonObj.getString(ID);
-			this.m_decoration = HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), jsonObj.optJSONArray(DECORATION));
+			this.m_decoration = HAPUtilitySerialize.buildListFromJsonArray(HAPInfoDecoration.class.getName(), jsonObj.optJSONArray(DECORATION));
 			return true;  
 		}
 		catch(Exception e){
@@ -60,6 +60,6 @@ public class HAPInfoPage extends HAPEntityInfoImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_pageId);
-		jsonMap.put(DECORATION, HAPJsonUtility.buildJson(this.m_decoration, HAPSerializationFormat.JSON));
+		jsonMap.put(DECORATION, HAPUtilityJson.buildJson(this.m_decoration, HAPSerializationFormat.JSON));
 	}
 }

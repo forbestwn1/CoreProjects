@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
@@ -119,7 +119,7 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
-		if(HAPBasicUtility.isStringNotEmpty(literateValue)) {
+		if(HAPUtilityBasic.isStringNotEmpty(literateValue)) {
 			String[] segs = HAPUtilityNamingConversion.splitTextByComponents(literateValue, m_seperator1);
 			for(String seg : segs) {
 				String[] eles = HAPUtilityNamingConversion.splitTextByComponents(seg, this.m_seperator2);
@@ -133,9 +133,9 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPInfo) {
 			HAPInfo info = (HAPInfo)obj;
-			if(!HAPBasicUtility.isEqualSets(info.getNames(), this.getNames()))  return false;
+			if(!HAPUtilityBasic.isEqualSets(info.getNames(), this.getNames()))  return false;
 			for(String name : info.getNames()) {
-				if(!HAPBasicUtility.isEquals(info.getValue(name), this.getValue(name)))  return false;
+				if(!HAPUtilityBasic.isEquals(info.getValue(name), this.getValue(name)))  return false;
 			}
 			return true;
 		}

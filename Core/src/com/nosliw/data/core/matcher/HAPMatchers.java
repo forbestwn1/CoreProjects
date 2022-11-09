@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -112,7 +112,7 @@ public class HAPMatchers extends HAPExecutableImp{
 		boolean out = false;
 		if(obj instanceof HAPMatchers) {
 			HAPMatchers matchers = (HAPMatchers)obj;
-			if(!HAPBasicUtility.isEqualMaps(this.m_matchers, matchers.m_matchers))  return false;
+			if(!HAPUtilityBasic.isEqualMaps(this.m_matchers, matchers.m_matchers))  return false;
 			out = true;
 		}
 		

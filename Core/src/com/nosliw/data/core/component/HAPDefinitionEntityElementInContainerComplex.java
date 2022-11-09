@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPUtilityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPDefinitionEntityInDomainComplex;
@@ -87,9 +87,9 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.getInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTID, this.m_elementId);
-		jsonMap.put(CONTAINER, HAPJsonUtility.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
+		jsonMap.put(CONTAINER, HAPUtilityJson.buildJson(this.m_componentContainer, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

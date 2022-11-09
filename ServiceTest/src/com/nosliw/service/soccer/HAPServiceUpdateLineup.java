@@ -17,7 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
@@ -95,7 +95,7 @@ public class HAPServiceUpdateLineup implements HAPExecutableService{
 			Set<HAPPlayerInfo> playerInfos = HAPPlayerManager.getInstance().getPlayerInfo(player);
 			for(HAPPlayerInfo playerInfo : playerInfos) {
 				String email = playerInfo.getEmail();
-				if(HAPBasicUtility.isStringNotEmpty(email)) {
+				if(HAPUtilityBasic.isStringNotEmpty(email)) {
 					emailTo.add(email);
 				}
 			}

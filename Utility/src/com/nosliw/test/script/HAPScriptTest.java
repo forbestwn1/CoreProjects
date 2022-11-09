@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.value.HAPJsonValueUtility;
+import com.nosliw.common.value.HAPUtilityJsonValue;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
@@ -39,7 +39,7 @@ public class HAPScriptTest {
 			
 			Map<String, Object> varInput = new LinkedHashMap<String, Object>();
 			for(String varName : scriptExe.discoverVariables()) {
-				Object varValue = HAPJsonValueUtility.getValue(inputById, new HAPComplexPath(varName));
+				Object varValue = HAPUtilityJsonValue.getValue(inputById, new HAPComplexPath(varName));
 				if(varValue!=null)   varInput.put(varName, varValue);					
 			}
 

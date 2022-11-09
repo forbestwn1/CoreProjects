@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
@@ -79,7 +79,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 		for(String taskId : this.m_tasks.keySet()) {
 			activityJsonMap.put(taskId, this.m_tasks.get(taskId).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(TASK, HAPJsonUtility.buildMapJson(activityJsonMap));
+		jsonMap.put(TASK, HAPUtilityJson.buildMapJson(activityJsonMap));
 
 		jsonMap.put(INITSCRIPT, HAPUtilityValueStructureScript.buildValueStructureInitScript(this.getValueStructureExe()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
@@ -89,7 +89,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_tasks, HAPSerializationFormat.JSON));
+		jsonMap.put(TASK, HAPUtilityJson.buildJson(this.m_tasks, HAPSerializationFormat.JSON));
 	}
 
 }

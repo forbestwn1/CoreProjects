@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.change.HAPChangeResult;
@@ -85,7 +85,7 @@ public abstract class HAPStoryNodeUITag extends HAPStoryNodeUI{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TAGNAME, m_tagName);
-		jsonMap.put(ATTRIBUTES, HAPJsonUtility.buildMapJson(m_attributes));
+		jsonMap.put(ATTRIBUTES, HAPUtilityJson.buildMapJson(m_attributes));
 	}
 
 }

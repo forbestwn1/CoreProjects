@@ -7,7 +7,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
@@ -59,7 +59,7 @@ public abstract class HAPExecutableActivityBranch extends HAPExecutableActivity{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_inputMapping!=null)		jsonMap.put(INPUTMAPPING, this.m_inputMapping.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(BRANCH, HAPJsonUtility.buildJson(this.m_branchs, HAPSerializationFormat.JSON));
+		jsonMap.put(BRANCH, HAPUtilityJson.buildJson(this.m_branchs, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

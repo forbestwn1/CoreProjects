@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -47,6 +47,6 @@ public class HAPResourceNodeContainerByType extends HAPSerializableImp{
 				return arg0.getName().compareToIgnoreCase(arg1.getName());
 			}
 		});
-		jsonMap.put(ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTS, HAPUtilityJson.buildJson(this.m_elements, HAPSerializationFormat.JSON));
 	}
 }

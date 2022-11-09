@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -117,8 +117,8 @@ public class HAPOperandReference extends HAPOperandImp{
 		jsonMap.put(REFERENCE, m_reference);
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
 		if(this.m_referredExpressionExeId!=null)  jsonMap.put(EXPRESSION, this.m_referredExpressionExeId.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(VARMAPPING, HAPJsonUtility.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
-		jsonMap.put(VARMATCHERS, HAPJsonUtility.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
+		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
+		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
 
 	@Override

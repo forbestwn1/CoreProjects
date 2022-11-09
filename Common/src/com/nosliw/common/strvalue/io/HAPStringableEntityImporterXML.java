@@ -28,9 +28,9 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoMap;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoObject;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoUtility;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPXMLUtility;
+import com.nosliw.common.utils.HAPUtilityXML;
 
 public class HAPStringableEntityImporterXML {
 
@@ -49,7 +49,7 @@ public class HAPStringableEntityImporterXML {
 			Document doc = DOMbuilder.parse(xmlStream);
 
 			Element rootEle = doc.getDocumentElement();
-			Element[] eles = HAPXMLUtility.getChildElements(rootEle);
+			Element[] eles = HAPUtilityXML.getChildElements(rootEle);
 			for(Element ele : eles){
 				out.add(readRootEntity(ele, valueInfoName));
 			}
@@ -87,7 +87,7 @@ public class HAPStringableEntityImporterXML {
 
 	public static HAPStringableValueEntity readRootEntity(Element entityEle, String valueInfoName){
 		String valueInfo = valueInfoName;
-		if(HAPBasicUtility.isStringEmpty(valueInfoName)){
+		if(HAPUtilityBasic.isStringEmpty(valueInfoName)){
 			valueInfo = entityEle.getTagName();
 		}
 		HAPStringableValueEntity out = processEntityValue(entityEle, (HAPValueInfoEntity)HAPValueInfoManager.getInstance().getValueInfo(valueInfo).getSolidValueInfo());
@@ -102,26 +102,26 @@ public class HAPStringableEntityImporterXML {
 			HAPValueInfo propertyInfo = propertyValueInfo.getSolidValueInfo();
 			String propertyCategary = propertyInfo.getValueInfoType();
 			if(HAPConstantShared.STRINGALBE_VALUEINFO_LIST.equals(propertyCategary)){
-				Element listEle = HAPXMLUtility.getFirstChildElementByName(propertyContainerEle, propertyName);
+				Element listEle = HAPUtilityXML.getFirstChildElementByName(propertyContainerEle, propertyName);
 				out = processListValue(listEle, (HAPValueInfoList)propertyInfo);
 			}
 			else if(HAPConstantShared.STRINGALBE_VALUEINFO_MAP.equals(propertyCategary)){
-				Element mapEle = HAPXMLUtility.getFirstChildElementByName(propertyContainerEle, propertyName);
+				Element mapEle = HAPUtilityXML.getFirstChildElementByName(propertyContainerEle, propertyName);
 				out = processMapValue(mapEle, (HAPValueInfoMap)propertyInfo);
 			}
 			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITY.equals(propertyCategary)){
-				Element entityEle = HAPXMLUtility.getFirstChildElementByName(propertyContainerEle, propertyName);
+				Element entityEle = HAPUtilityXML.getFirstChildElementByName(propertyContainerEle, propertyName);
 				out = processEntityValue(entityEle, (HAPValueInfoEntity)propertyInfo);
 			}
 			else if(HAPConstantShared.STRINGALBE_VALUEINFO_ENTITYOPTIONS.equals(propertyCategary)){
 				out = processEntityOptionsValue(propertyContainerEle, (HAPValueInfoEntityOptions)propertyInfo);
 			}
 			else if(HAPConstantShared.STRINGABLE_VALUESTRUCTURE_OBJECT.equals(propertyCategary)){
-				String value = HAPXMLUtility.getChildContent(propertyContainerEle, propertyName);
+				String value = HAPUtilityXML.getChildContent(propertyContainerEle, propertyName);
 				if(value!=null)			out = processObjectValue(value, (HAPValueInfoObject)propertyInfo);
 			}
 			else{
-				String value = HAPXMLUtility.getChildContent(propertyContainerEle, propertyName);
+				String value = HAPUtilityXML.getChildContent(propertyContainerEle, propertyName);
 				out = processAtomicValue(value, (HAPValueInfoAtomic)propertyInfo);
 			}
 		}
@@ -161,16 +161,16 @@ public class HAPStringableEntityImporterXML {
 		String propertyName = entityOptionsValueInfo.getName();
 
 		String optionsKey = entityOptionsValueInfo.getAtomicAncestorValueString(HAPValueInfoEntityOptions.KEY);
-		String keyValue = HAPXMLUtility.getAttributeValue(containerEle, optionsKey);
+		String keyValue = HAPUtilityXML.getAttributeValue(containerEle, optionsKey);
 		HAPValueInfo optionValueInfo = entityOptionsValueInfo.getOptionsValueInfo(keyValue).getSolidValueInfo();
 		String optionValueInfoType = optionValueInfo.getValueInfoType();
 		HAPStringableValue out = null;
 		if(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC.equals(optionValueInfoType)){
-			String value = HAPXMLUtility.getAttributeValue(containerEle, propertyName); 
+			String value = HAPUtilityXML.getAttributeValue(containerEle, propertyName); 
 			out = processAtomicValue(value, (HAPValueInfoAtomic)optionValueInfo);
 		}
 		else{
-			Element optionEle = HAPXMLUtility.getFirstChildElementByName(containerEle, propertyName);
+			Element optionEle = HAPUtilityXML.getFirstChildElementByName(containerEle, propertyName);
 			out = processComplexValue(optionEle, optionValueInfo);
 		}
 		return out;
@@ -186,12 +186,12 @@ public class HAPStringableEntityImporterXML {
 			String mapKey = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoMap.KEY);
 
 			String childElementTag = mapValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ELEMENTTAG);
-			if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
+			if(HAPUtilityBasic.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
 			
-			Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(mapEle, childElementTag);
+			Element[] eleEles = HAPUtilityXML.getMultiChildElementByName(mapEle, childElementTag);
 			for(Element eleEle : eleEles){
 				HAPStringableValue mapElementValue = null;
-				String keyValue = HAPXMLUtility.getAttributeValue(eleEle, mapKey);
+				String keyValue = HAPUtilityXML.getAttributeValue(eleEle, mapKey);
 				if(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC.equals(childValueInfoType)){
 					String basicValue = eleEle.getTextContent();
 					mapElementValue = processAtomicValue(basicValue, (HAPValueInfoAtomic)childInfo);
@@ -214,8 +214,8 @@ public class HAPStringableEntityImporterXML {
 			String childValueInfoType = childInfo.getValueInfoType();
 
 			String childElementTag = listValueInfo.getAtomicAncestorValueString(HAPValueInfoContainer.ELEMENTTAG);
-			if(HAPBasicUtility.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
-			Element[] eleEles = HAPXMLUtility.getMultiChildElementByName(listEle, childElementTag);
+			if(HAPUtilityBasic.isStringEmpty(childElementTag))  childElementTag = TAG_CONTAINERCHILD; 
+			Element[] eleEles = HAPUtilityXML.getMultiChildElementByName(listEle, childElementTag);
 			for(Element eleEle : eleEles){
 				HAPStringableValue listElementValue = null;
 				if(HAPConstantShared.STRINGALBE_VALUEINFO_ATOMIC.equals(childValueInfoType)){

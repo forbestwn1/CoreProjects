@@ -78,31 +78,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_simpleTest1Atts = {};
 	
 	var loc_init = function(complexEntityDef, variableGroupId, bundleCore, configure){
-		var attrs = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
-		_.each(attrs, function(attr, attrName){
-			var attrType = node_packageUtility.getAttributeType(attr);
-			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE){
-				var entityType = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE];
-				//simple attribute
-				if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-					//test_simple attribute
-					loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(node_createTestSimple1(attr[node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
-				}
-			}
-			else if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER){
-				//container attribute
-				var entityType = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE];
-				if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-					//test_simple container attribute
-					var containerAttr = loc_createContainerAttribute();
-					var eles = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
-					_.each(eles, function(ele, i){
-						containerAttr.addElement(node_createTestSimple1(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
-					});
-					loc_simpleTest1Atts[attrName] = containerAttr;
-				}
-			}
-		});
 	};
 	
 	var loc_simpleTest1AttrsInvoke = function(funName, parm1, parm2){
@@ -121,6 +96,44 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 
+			var attrs = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
+			_.each(attrs, function(attr, attrName){
+				var attrType = node_packageUtility.getAttributeType(attr);
+				if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE){
+					var entityType = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE];
+					var isComplex = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_ISCOMPLEX];
+					if(isComplex==true){ 
+						var complexEntityId = attr[1][node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
+						var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
+						loc_children[attrName] = attrEntity;
+						out.addRequest(attrEntity.getPreInitRequest());
+					}
+					else{
+						//simple attribute
+						if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+							//test_simple attribute
+							loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(node_createTestSimple1(attr[node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
+						}
+					}
+				}
+				else if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER){
+					//container attribute
+					var entityType = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE];
+					if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+						//test_simple container attribute
+						var containerAttr = loc_createContainerAttribute();
+						var eles = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
+						_.each(eles, function(ele, i){
+							containerAttr.addElement(node_createTestSimple1(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
+						});
+						loc_simpleTest1Atts[attrName] = containerAttr;
+					}
+				}
+			});
+			
+			
+			
+			
 //			//process attributes
 //			var attributes = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
 //			_.each(attributes, function(attribute, attrName){

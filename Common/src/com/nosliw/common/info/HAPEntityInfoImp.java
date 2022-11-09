@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInfo{
 
@@ -133,12 +133,12 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPEntityInfoImp) {
 			HAPEntityInfoImp infoEntity = (HAPEntityInfoImp)obj;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_id, this.m_id))   return false;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_name, this.m_name))   return false;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_displayName, this.m_displayName))   return false;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_status, this.m_status))   return false;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_description, this.m_description))   return false;;
-			if(!HAPBasicUtility.isEquals(infoEntity.m_info, this.m_info))  return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_id, this.m_id))   return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_name, this.m_name))   return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_displayName, this.m_displayName))   return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_status, this.m_status))   return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_description, this.m_description))   return false;;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_info, this.m_info))  return false;
 			return true;
 		}
 		return false;

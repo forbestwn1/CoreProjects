@@ -16,7 +16,7 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.configure.HAPConfigure;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPGeneratorId;
@@ -145,7 +145,7 @@ public class HAPParserPage implements HAPParserResourceEntity{
 		List<Element> removes = new ArrayList<Element>();
 		Elements eles = ele.children();
 		for(Element e : eles){
-			if(HAPBasicUtility.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
+			if(HAPUtilityBasic.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
 				//if tag have no ui id, then create ui id for it
 				String id = this.m_idGenerator.generateId();
 				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);

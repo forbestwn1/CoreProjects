@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
@@ -81,7 +81,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.m_operation = operation;
 		
 		for(HAPParmInOperationOperand opParm : parms){
-			if(HAPBasicUtility.isStringEmpty(opParm.getName()))			this.m_base = this.createOperandWrapper(opParm.getOperand());
+			if(HAPUtilityBasic.isStringEmpty(opParm.getName()))			this.m_base = this.createOperandWrapper(opParm.getOperand());
 			else			this.m_parms.put(opParm.getName(), this.createOperandWrapper(opParm.getOperand()));
 		}
 		
@@ -148,8 +148,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
 		if(this.m_base!=null)	jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
 
-		jsonMap.put(PARMS, HAPJsonUtility.buildJson(this.m_parms, HAPSerializationFormat.JSON));
-		jsonMap.put(MATCHERSPARMS, HAPJsonUtility.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));
+		jsonMap.put(PARMS, HAPUtilityJson.buildJson(this.m_parms, HAPSerializationFormat.JSON));
+		jsonMap.put(MATCHERSPARMS, HAPUtilityJson.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));
 	}
 
 	private void resetMatchers(){

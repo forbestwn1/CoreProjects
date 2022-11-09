@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDefinitionEntityInDomain;
@@ -33,7 +33,7 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
 			valueStructureJsonArray.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
 			valueStructureJsonArray.add(part.toExpandedJsonString(entityDefDomain));
 		}
-		jsonMap.put(VALUESTRUCTURE, HAPJsonUtility.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
 
 	@Override

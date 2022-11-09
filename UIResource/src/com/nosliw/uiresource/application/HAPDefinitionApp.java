@@ -6,9 +6,9 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
@@ -46,7 +46,7 @@ public class HAPDefinitionApp extends HAPDefinitionEntityContainer<HAPDefinition
 
 	public void addEntry(HAPDefinitionAppElementUI entry) {
 		String id = entry.getId();
-		if(HAPBasicUtility.isStringEmpty(id)) {
+		if(HAPUtilityBasic.isStringEmpty(id)) {
 			id = HAPUtilityApp.ENTRY_DEFAULT;
 			entry.setName(id);
 		}
@@ -70,7 +70,7 @@ public class HAPDefinitionApp extends HAPDefinitionEntityContainer<HAPDefinition
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(APPLICATIONDATA, HAPJsonUtility.buildJson(this.m_applicationData, HAPSerializationFormat.JSON));
+		jsonMap.put(APPLICATIONDATA, HAPUtilityJson.buildJson(this.m_applicationData, HAPSerializationFormat.JSON));
 	}
 
 	@Override

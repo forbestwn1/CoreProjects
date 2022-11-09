@@ -6,10 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
-public class HAPJsonValueUtility {
+public class HAPUtilityJsonValue {
 
 	public static Object getValue(Map<String, Object> valueSet, HAPComplexPath complexPath) {
 		Object rootValue = valueSet.get(complexPath.getRoot());
@@ -18,7 +18,7 @@ public class HAPJsonValueUtility {
 	
 	public static Object getValue(Object value, String path) {
 		Object out = value;
-		if(HAPBasicUtility.isStringEmpty(path))   return out;
+		if(HAPUtilityBasic.isStringEmpty(path))   return out;
 		String[] pathSegs = HAPUtilityNamingConversion.parseComponentPaths(path);
 		for(String seg : pathSegs) {
 			out = getChild(out, seg);

@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -104,9 +104,9 @@ public class HAPDataTypeCriteriaRange extends HAPDataTypeCriteriaImp implements 
 		boolean out = false;
 		if(obj instanceof HAPDataTypeCriteriaRange){
 			HAPDataTypeCriteriaRange criteria = (HAPDataTypeCriteriaRange)obj;
-			boolean out1 = HAPBasicUtility.isEquals(this.m_from, criteria.m_from) && HAPBasicUtility.isEquals(this.m_to, criteria.m_to);
+			boolean out1 = HAPUtilityBasic.isEquals(this.m_from, criteria.m_from) && HAPUtilityBasic.isEquals(this.m_to, criteria.m_to);
 			if(out1){
-				out = HAPBasicUtility.isEquals(this.m_subCriteriaGroup, criteria.m_subCriteriaGroup);
+				out = HAPUtilityBasic.isEquals(this.m_subCriteriaGroup, criteria.m_subCriteriaGroup);
 			}
 		}
 		return out;

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -22,7 +22,7 @@ public class HAPParserValueStructure {
 		HAPValueStructure out = new HAPValueStructureDefinitionEmpty();
 		if(jsonObj!=null) {
 			String type = jsonObj.optString(HAPValueStructure.TYPE);
-			if(HAPBasicUtility.isStringEmpty(type)) {
+			if(HAPUtilityBasic.isStringEmpty(type)) {
 				if(jsonObj.optJSONObject(HAPValueStructureDefinitionGroup.GROUP)!=null) {
 					type = HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP;
 				}

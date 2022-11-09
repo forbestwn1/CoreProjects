@@ -6,10 +6,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializableImp{
@@ -23,7 +23,7 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 	public List<HAPDefinitionDataAssociation> getDataAssociations(){  return this.m_dataAssociations;   }
 	public void addDataAssociation(HAPDefinitionDataAssociation dataAssociation) 
 	{
-		if(HAPBasicUtility.isStringEmpty(dataAssociation.getName()))   dataAssociation.setName(getDefaultName());
+		if(HAPUtilityBasic.isStringEmpty(dataAssociation.getName()))   dataAssociation.setName(getDefaultName());
 		this.m_dataAssociations.add(dataAssociation);
 	}
 
@@ -33,7 +33,7 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 		for(HAPDefinitionDataAssociation dataAssociation : this.m_dataAssociations) {
 			jsonArray.add(dataAssociation.toStringValue(HAPSerializationFormat.JSON));
 		}
-		return HAPJsonUtility.buildArrayJson(jsonArray.toArray(new String[0]));
+		return HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0]));
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class HAPDefinitionGroupDataAssociationForComponent extends HAPSerializab
 	private HAPDefinitionDataAssociation buildDataAssociatioinByJson(JSONObject jsonObj) {
 		HAPDefinitionDataAssociation out = HAPParserDataAssociation.buildDefinitionByJson(jsonObj); 
 		String daName = out.getName();
-		if(HAPBasicUtility.isStringEmpty(daName))  daName = this.getDefaultName();
+		if(HAPUtilityBasic.isStringEmpty(daName))  daName = this.getDefaultName();
 		out.setName(daName);
 		return out;
 	}

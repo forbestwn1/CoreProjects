@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
@@ -74,7 +74,7 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafConstant) {
 			HAPElementStructureLeafConstant ele = (HAPElementStructureLeafConstant)obj;
-			if(!HAPBasicUtility.isEquals(this.m_value, ele.m_value))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_value, ele.m_value))  return false;
 			out = true;
 		}
 		return out;

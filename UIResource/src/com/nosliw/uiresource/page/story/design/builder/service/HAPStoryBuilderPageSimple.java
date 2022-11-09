@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.displayresource.HAPDisplayValueInfo;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
@@ -151,7 +151,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		this.applyAnswer(story, answerRequest);
 		
 		HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_SERVICE).iterator().next();
-		if(!HAPBasicUtility.isStringEmpty(serviceStoryNode.getReferenceId())){
+		if(!HAPUtilityBasic.isStringEmpty(serviceStoryNode.getReferenceId())){
 			//valid
 			//add answer to step
 			HAPDesignStep latestStep = design.getLatestStep();
@@ -402,12 +402,12 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 		HAPAliasElement dataUIGroupAlias = changeRequest.addNewChange(new HAPElementGroupBatch()).getAlias();
 		
 		String layoutTemplate = null;
-		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) layoutTemplate = "uiDataWithTitle.tmp";
+		if(HAPUtilityBasic.isStringNotEmpty(out.displayLabel)) layoutTemplate = "uiDataWithTitle.tmp";
 		else layoutTemplate = "uiDataWithoutTitle.tmp";
 		
 		HAPUINode layoutUINode = parent.newChildNode(new HAPStoryNodeUIHtml(HAPUtilityFile.readFile(HAPStoryBuilderPageSimple.class, layoutTemplate)), null, childId, changeRequest, this.m_runtimeEnv, m_uiTagManager);
 		changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(layoutUINode.getStoryNodeRef()));
-		if(HAPBasicUtility.isStringNotEmpty(out.displayLabel)) {
+		if(HAPUtilityBasic.isStringNotEmpty(out.displayLabel)) {
 			out.labelUINode = layoutUINode.newChildNode(new HAPStoryNodeUIHtml(this.wrappWithContainer(out.displayLabel, "span")), null, "label", changeRequest, this.m_runtimeEnv, m_uiTagManager);
 			changeRequest.addPatchChange(out.labelUINode.getStoryNodeRef(), HAPStoryElement.DISPLAYRESOURCE, lableInfo.getDisplayResource());
 			changeRequest.addPatchChangeGroupAppendElement(dataUIGroupAlias, new HAPInfoElement(out.labelUINode.getStoryNodeRef()));

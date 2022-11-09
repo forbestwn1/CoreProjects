@@ -14,7 +14,7 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.configure.HAPConfigurableImp;
 import com.nosliw.common.configure.HAPConfigureImp;
 import com.nosliw.common.configure.HAPConfigureUtility;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPPatternManager extends HAPConfigurableImp{
 
@@ -84,7 +84,7 @@ public class HAPPatternManager extends HAPConfigurableImp{
 	private void init(){	
 		try {
 			String loadMode = this.getConfigureValue("loadMode").getStringValue();
-			if(HAPBasicUtility.isStringEmpty(loadMode)){
+			if(HAPUtilityBasic.isStringEmpty(loadMode)){
 				loadMode = "scan";
 			}
 			

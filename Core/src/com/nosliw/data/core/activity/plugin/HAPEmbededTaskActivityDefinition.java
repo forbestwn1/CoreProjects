@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
@@ -47,8 +47,8 @@ public class HAPEmbededTaskActivityDefinition extends HAPDefinitionActivityNorma
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TASK, HAPJsonUtility.buildJson(this.m_task, HAPSerializationFormat.JSON));
-		jsonMap.put(DATAMAPPING, HAPJsonUtility.buildJson(this.m_dataMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(TASK, HAPUtilityJson.buildJson(this.m_task, HAPSerializationFormat.JSON));
+		jsonMap.put(DATAMAPPING, HAPUtilityJson.buildJson(this.m_dataMapping, HAPSerializationFormat.JSON));
 	}
 
 	@Override

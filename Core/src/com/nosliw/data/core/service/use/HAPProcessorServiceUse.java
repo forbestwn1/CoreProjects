@@ -1,6 +1,6 @@
 package com.nosliw.data.core.service.use;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableTask;
@@ -28,7 +28,7 @@ public class HAPProcessorServiceUse {
 	public static boolean isEnhanceContextByService(HAPDefinitionServiceUse definition) {
 		boolean out = false;
 		String value = (String)definition.getInfoValue(ENHANCECONTEXT);
-		if(HAPBasicUtility.isStringNotEmpty(value))  out = Boolean.valueOf(value);
+		if(HAPUtilityBasic.isStringNotEmpty(value))  out = Boolean.valueOf(value);
 		return out;
 	}
 	

@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.testing;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
@@ -76,7 +76,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		String str = attrName;
 		
 		{
-			if(HAPBasicUtility.isStringNotEmpty(str)) {
+			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
 				out.attirbuteName = pair.getLeft();
 				str = pair.getRight();
@@ -84,7 +84,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		}
 
 		{
-			if(HAPBasicUtility.isStringNotEmpty(str)) {
+			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
 				String container = pair.getLeft();
 				if(container.equals("none"))  out.isContainer = false;
@@ -98,7 +98,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		}
 
 		{
-			if(HAPBasicUtility.isStringNotEmpty(str)) {
+			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
 				out.entityType = pair.getLeft();
 				str = pair.getRight();
@@ -106,7 +106,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		}
 
 		{
-			if(HAPBasicUtility.isStringNotEmpty(str)) {
+			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
 				out.adapterType = pair.getLeft();
 				str = pair.getRight();

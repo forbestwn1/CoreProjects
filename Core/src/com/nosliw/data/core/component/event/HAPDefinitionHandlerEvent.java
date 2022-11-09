@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
@@ -61,8 +61,8 @@ public class HAPDefinitionHandlerEvent extends HAPEntityInfoImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EVENTNAME, this.getEventName());
-		jsonMap.put(HANDLER, HAPJsonUtility.buildJson(this.m_hander, HAPSerializationFormat.JSON));
-		jsonMap.put(IN, HAPJsonUtility.buildJson(this.m_dataAssociation, HAPSerializationFormat.JSON));
+		jsonMap.put(HANDLER, HAPUtilityJson.buildJson(this.m_hander, HAPSerializationFormat.JSON));
+		jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_dataAssociation, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

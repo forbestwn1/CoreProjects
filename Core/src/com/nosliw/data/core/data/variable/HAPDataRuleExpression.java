@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
@@ -63,8 +63,8 @@ public class HAPDataRuleExpression extends HAPDataRuleImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.getExpressionDefinition(), HAPSerializationFormat.JSON));
-		jsonMap.put(EXPRESSIONEXECUTE, HAPJsonUtility.buildJson(this.getExpressionExecutable(), HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSION, HAPUtilityJson.buildJson(this.getExpressionDefinition(), HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONEXECUTE, HAPUtilityJson.buildJson(this.getExpressionExecutable(), HAPSerializationFormat.JSON));
 	}
 	
 	@Override

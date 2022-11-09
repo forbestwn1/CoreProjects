@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -128,14 +128,14 @@ public class HAPServiceData extends HAPSerializableImp{
 		jsonMap.put(SERVICEDATA_DATA, dataString);
 		
 		//parms
-		jsonMap.put(SERVICEDATA_METADATA, HAPJsonUtility.buildMapJson(this.m_metaDatas));
+		jsonMap.put(SERVICEDATA_METADATA, HAPUtilityJson.buildMapJson(this.m_metaDatas));
 		
-		return HAPJsonUtility.buildMapJson(jsonMap, jsonTypeMap);
+		return HAPUtilityJson.buildMapJson(jsonMap, jsonTypeMap);
 	}
 	
 	@Override
 	public String toString(){
-		return HAPJsonUtility.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
+		return HAPUtilityJson.formatJson(this.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override

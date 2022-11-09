@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
@@ -82,13 +82,13 @@ public class HAPDataAccess {
 				//create
 				String id = this.generateId();
 				PreparedStatement statement = this.getConnection().prepareStatement("INSERT INTO CRONJOB_STATE (ID,CRONJOBID,POLLTIME,STATE) VALUES ('"+
-							id+"', '"+state.getCronJobId()+"', '"+getTimeStr(state.getSchedule().getPollTime())+"', '"+HAPJsonUtility.buildJson(state.getState(), HAPSerializationFormat.JSON)+"');");
+							id+"', '"+state.getCronJobId()+"', '"+getTimeStr(state.getSchedule().getPollTime())+"', '"+HAPUtilityJson.buildJson(state.getState(), HAPSerializationFormat.JSON)+"');");
 				statement.execute();
 				state.setId(id);
 			}
 			else {
 				//update
-				PreparedStatement statement = this.getConnection().prepareStatement("UPDATE CRONJOB_STATE SET POLLTIME='"+getTimeStr(state.getSchedule().getPollTime())+ "' STATE='"+HAPJsonUtility.buildJson(state.getState(), HAPSerializationFormat.JSON)+"'  WHERE ID='"+state.getId()+"'");
+				PreparedStatement statement = this.getConnection().prepareStatement("UPDATE CRONJOB_STATE SET POLLTIME='"+getTimeStr(state.getSchedule().getPollTime())+ "' STATE='"+HAPUtilityJson.buildJson(state.getState(), HAPSerializationFormat.JSON)+"'  WHERE ID='"+state.getId()+"'");
 				statement.execute();
 			}
 		} catch (Exception e) {

@@ -9,7 +9,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.resolve.HAPResolvableString;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 /*
@@ -206,9 +206,9 @@ public class HAPStringableValueAtomic extends HAPStringableValue{
 		boolean out = false;
 		if(obj instanceof HAPStringableValueAtomic){
 			HAPStringableValueAtomic value = (HAPStringableValueAtomic)obj;
-			if(HAPBasicUtility.isEquals(value.m_strValue, this.m_strValue)){
+			if(HAPUtilityBasic.isEquals(value.m_strValue, this.m_strValue)){
 				if(value.m_type==null || this.m_type==null)  out = true;
-				else  out = HAPBasicUtility.isEquals(value.m_type, this.m_type);
+				else  out = HAPUtilityBasic.isEquals(value.m_type, this.m_type);
 			}
 		}
 		return out;

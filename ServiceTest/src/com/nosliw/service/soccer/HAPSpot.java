@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 @HAPEntityWithAttribute
@@ -42,7 +42,7 @@ public class HAPSpot extends HAPExecutableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(PLAYERS, HAPJsonUtility.buildArrayJson(m_players.toArray(new String[0])));
+		jsonMap.put(PLAYERS, HAPUtilityJson.buildArrayJson(m_players.toArray(new String[0])));
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.common.value.HAPRhinoValueUtility;
+import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -35,7 +35,7 @@ public class HAPRhinoRuntimeUtility {
 			NativeObject handlersObj = (NativeObject)handlers;
 			if(serviceData.isSuccess()){
 				Function successFun = (Function)handlersObj.get("success");
-				successFun.call(context, scope, null, new Object[]{null, HAPRhinoValueUtility.toRhinoScriptableObjectFromObject(serviceData.getData())});
+				successFun.call(context, scope, null, new Object[]{null, HAPUtilityRhinoValue.toRhinoScriptableObjectFromObject(serviceData.getData())});
 			}
 			else{
 				Function errorFun = (Function)handlersObj.get("error");
@@ -55,7 +55,7 @@ public class HAPRhinoRuntimeUtility {
 		for(int i=0; i<rhinoResourceInfoArray.size(); i++){
 			try{
 				NativeObject resourceInfoObject = (NativeObject)rhinoResourceInfoArray.get(i);
-				JSONObject jsonObj = (JSONObject)HAPRhinoValueUtility.toJson(resourceInfoObject);
+				JSONObject jsonObj = (JSONObject)HAPUtilityRhinoValue.toJson(resourceInfoObject);
 				
 				HAPResourceInfo resourceInfo = new HAPResourceInfo();
 				resourceInfo.buildObject(jsonObj, HAPSerializationFormat.JSON);
@@ -74,7 +74,7 @@ public class HAPRhinoRuntimeUtility {
 		for(int i=0; i<rhinoResourceIdArray.size(); i++){
 			try{
 				NativeObject resourceIdObject = (NativeObject)rhinoResourceIdArray.get(i);
-				String jsonString = HAPRhinoValueUtility.toJson(resourceIdObject).toString();
+				String jsonString = HAPUtilityRhinoValue.toJson(resourceIdObject).toString();
 
 				HAPResourceId resourceId = HAPFactoryResourceId.newInstance(new JSONObject(jsonString));
 				resourceIds.add(resourceId);

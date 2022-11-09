@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPDefinitionWrapperTask<T> extends HAPDefinitionGroupDataAssociationForTask{
@@ -31,7 +31,7 @@ public class HAPDefinitionWrapperTask<T> extends HAPDefinitionGroupDataAssociati
 	}
 	
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, String taskAttName) {
-		jsonMap.put(taskAttName, HAPJsonUtility.buildJson(this.m_taskDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(taskAttName, HAPUtilityJson.buildJson(this.m_taskDefinition, HAPSerializationFormat.JSON));
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	

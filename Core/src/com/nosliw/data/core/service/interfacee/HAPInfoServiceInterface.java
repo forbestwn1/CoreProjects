@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -85,8 +85,8 @@ public class HAPInfoServiceInterface extends HAPResourceDefinition{
 	@Override
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INTERFACE, HAPJsonUtility.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
-		jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
-		jsonMap.put(DISPLAY, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
+		jsonMap.put(INTERFACE, HAPUtilityJson.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
+		jsonMap.put(TAG, HAPUtilityJson.buildJson(this.m_tags, HAPSerializationFormat.JSON));
+		jsonMap.put(DISPLAY, HAPUtilityJson.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
 	}
 }

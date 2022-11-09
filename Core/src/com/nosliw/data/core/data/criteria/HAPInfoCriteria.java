@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPInfoCriteria extends HAPSerializableImp{
@@ -71,7 +71,7 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPInfoCriteria){
 			HAPInfoCriteria criteriaInfo = (HAPInfoCriteria)obj;
-			if(HAPBasicUtility.isEquals(m_status, criteriaInfo.m_status) && HAPBasicUtility.isEquals(this.getCriteria(), criteriaInfo.getCriteria())){
+			if(HAPUtilityBasic.isEquals(m_status, criteriaInfo.m_status) && HAPUtilityBasic.isEquals(this.getCriteria(), criteriaInfo.getCriteria())){
 				out = true;
 			}
 		}

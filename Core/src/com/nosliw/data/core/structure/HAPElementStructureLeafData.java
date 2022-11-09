@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
@@ -65,7 +65,7 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafData) {
 			HAPElementStructureLeafData ele = (HAPElementStructureLeafData)obj;
-			if(!HAPBasicUtility.isEquals(this.m_dataInfo, ele.m_dataInfo))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_dataInfo, ele.m_dataInfo))  return false;
 			out = true;
 		}
 		return out;

@@ -6,10 +6,10 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 //supplement information used in resource id
 public class HAPSupplementResourceId  extends HAPSerializableImp{
@@ -78,7 +78,7 @@ public class HAPSupplementResourceId  extends HAPSerializableImp{
 			for(String name : byName.keySet()) {
 				byNameMap.put(name, byName.get(name).toStringValue(HAPSerializationFormat.JSON_FULL));
 			}
-			jsonMap.put(type, HAPJsonUtility.buildMapJson(byNameMap));
+			jsonMap.put(type, HAPUtilityJson.buildMapJson(byNameMap));
 		}
 	}
 
@@ -90,7 +90,7 @@ public class HAPSupplementResourceId  extends HAPSerializableImp{
 			for(String name : byName.keySet()) {
 				byNameMap.put(name, byName.get(name).toStringValue(HAPSerializationFormat.JSON));
 			}
-			jsonMap.put(type, HAPJsonUtility.buildMapJson(byNameMap));
+			jsonMap.put(type, HAPUtilityJson.buildMapJson(byNameMap));
 		}
 	}
 
@@ -140,7 +140,7 @@ public class HAPSupplementResourceId  extends HAPSerializableImp{
 						break;
 					}
 					else {
-						if(!HAPBasicUtility.isEqualMaps(byName, this.m_resources.get(type))) {
+						if(!HAPUtilityBasic.isEqualMaps(byName, this.m_resources.get(type))) {
 							out = false;
 							break;
 						}

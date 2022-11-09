@@ -3,7 +3,7 @@ package com.nosliw.data.core.activity.plugin;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPExecutableActivity;
@@ -27,7 +27,7 @@ public class HAPEventTrigueActivityExecutable extends HAPExecutableActivity{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EVENT, HAPJsonUtility.buildJson(this.m_eventExe, HAPSerializationFormat.JSON));
+		jsonMap.put(EVENT, HAPUtilityJson.buildJson(this.m_eventExe, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

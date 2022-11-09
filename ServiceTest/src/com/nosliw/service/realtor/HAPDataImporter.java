@@ -9,7 +9,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPDataImporter {
@@ -47,7 +47,7 @@ public class HAPDataImporter {
 		}
 		
 		out.append("]");
-		HAPUtilityFile.writeFile("homesArray.js", HAPJsonUtility.formatJson(out.toString()));
+		HAPUtilityFile.writeFile("homesArray.js", HAPUtilityJson.formatJson(out.toString()));
 	}
 	
 	

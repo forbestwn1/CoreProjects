@@ -1,6 +1,6 @@
 package com.nosliw.data.core.dataassociation.mapping;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
@@ -26,7 +26,7 @@ public class HAPTarget {
 	}
 
 	private void init() {
-		if(HAPBasicUtility.isStringEmpty(this.m_valueStructure)) {
+		if(HAPUtilityBasic.isStringEmpty(this.m_valueStructure)) {
 			this.m_valueStructure = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		}
 	}

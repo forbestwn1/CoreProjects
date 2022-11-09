@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableEmbededComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -48,8 +48,8 @@ public class HAPExecutableModuleUI extends HAPExecutableEmbededComponent{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PAGE, HAPJsonUtility.buildJson(this.m_page, HAPSerializationFormat.JSON));
-		jsonMap.put(UIDECORATION, HAPJsonUtility.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
+		jsonMap.put(PAGE, HAPUtilityJson.buildJson(this.m_page, HAPSerializationFormat.JSON));
+		jsonMap.put(UIDECORATION, HAPUtilityJson.buildJson(this.m_uiDecoration, HAPSerializationFormat.JSON));
 		jsonMap.put(PAGENAME, this.m_moduleUIDefinition.getPage());
 	}
 	

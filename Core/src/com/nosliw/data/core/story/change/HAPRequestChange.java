@@ -3,7 +3,7 @@ package com.nosliw.data.core.story.change;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.story.HAPStory;
 
 public class HAPRequestChange {
@@ -27,7 +27,7 @@ public class HAPRequestChange {
 
 	public List<HAPChangeItem> getChanges(){   return this.m_changes;    }
 	public void addChange(HAPChangeItem change) {
-		if(HAPBasicUtility.isStringEmpty(change.getId())) {
+		if(HAPUtilityBasic.isStringEmpty(change.getId())) {
 			change.setId(this.m_story.getNextId());
 		}
 		this.m_changes.add(change);     

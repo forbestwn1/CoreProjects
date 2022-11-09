@@ -7,9 +7,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 
@@ -28,7 +28,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;  }
 
 	public void addAssociation(String targetName, HAPValueMapping mapping) {	
-		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_mappings.put(targetName, mapping);
 	}
 	
@@ -36,7 +36,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	
 	public HAPValueMapping getMapping(String targetName, boolean createIfNotExist) {
 		HAPValueMapping out = null;
-		if(HAPBasicUtility.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		out = this.m_mappings.get(targetName);
 		if(out==null&&createIfNotExist) {
 			out = new HAPValueMapping();
@@ -62,7 +62,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(TARGET, HAPJsonUtility.buildJson(this.m_mappings, HAPSerializationFormat.JSON));
+		jsonMap.put(TARGET, HAPUtilityJson.buildJson(this.m_mappings, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

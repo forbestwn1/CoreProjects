@@ -10,7 +10,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -79,7 +79,7 @@ public class HAPUtilityUIResourceParser {
 			String t1 = textNode.text();
 			String t = t1.replaceAll("\\n+\\t+", "");
 			t = StringUtils.stripToEmpty(t);
-			if(HAPBasicUtility.isStringNotEmpty(t)){
+			if(HAPUtilityBasic.isStringNotEmpty(t)){
 				String text = spanText(t1);
 				textNode.after(text);
 				textNode.remove();

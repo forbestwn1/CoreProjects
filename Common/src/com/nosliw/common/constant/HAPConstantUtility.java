@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.clss.HAPClassProcessor;
-import com.nosliw.common.utils.HAPBasicUtility;
-import com.nosliw.common.utils.HAPNosliwUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.utils.HAPUtilityNosliw;
 
 public class HAPConstantUtility {
 
@@ -15,11 +15,11 @@ public class HAPConstantUtility {
 		if(cs.isAnnotationPresent(HAPEntityWithAttribute.class)){
 			HAPEntityWithAttribute entityWithAttr = (HAPEntityWithAttribute)cs.getAnnotation(HAPEntityWithAttribute.class);
 			String parent = entityWithAttr.parent();
-			if(HAPBasicUtility.isStringEmpty(parent)){
+			if(HAPUtilityBasic.isStringEmpty(parent)){
 				out = entityWithAttr.baseName();
-				if(HAPBasicUtility.isStringEmpty(out)){
+				if(HAPUtilityBasic.isStringEmpty(out)){
 					//if not defined, then use class name as base name
-					out = HAPNosliwUtility.getHAPBaseClassName(cs);
+					out = HAPUtilityNosliw.getHAPBaseClassName(cs);
 				}
 			}
 			else{
@@ -36,12 +36,12 @@ public class HAPConstantUtility {
 			Class superCs = cs.getSuperclass();
 			if(superCs!=null){
 				out = getBaseName(superCs);
-				if(HAPBasicUtility.isStringEmpty(out)){
+				if(HAPUtilityBasic.isStringEmpty(out)){
 					//if not found, then get from interface
 					Class[] infs = cs.getInterfaces();
 					for(Class inf : infs){
 						out = getBaseName(inf);
-						if(HAPBasicUtility.isStringNotEmpty(out))  break;
+						if(HAPUtilityBasic.isStringNotEmpty(out))  break;
 					}
 				}
 			}

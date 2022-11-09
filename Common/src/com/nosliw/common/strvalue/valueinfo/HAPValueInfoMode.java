@@ -3,7 +3,7 @@ package com.nosliw.common.strvalue.valueinfo;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.mode.HAPStringableValueModeEntity;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPValueInfoMode extends HAPValueInfo{
@@ -43,7 +43,7 @@ public class HAPValueInfoMode extends HAPValueInfo{
 		if(this.m_solidValueInfo==null){
 			HAPValueInfoEntity templateValueInfo = this.getTemplateValueInfo();
 			this.m_solidValueInfo = buildModeValueInfo(templateValueInfo);
-			if(HAPBasicUtility.isStringEmpty(this.m_solidValueInfo.getClassName())){
+			if(HAPUtilityBasic.isStringEmpty(this.m_solidValueInfo.getClassName())){
 				this.m_solidValueInfo.setClassName(HAPStringableValueModeEntity.class.getName());
 			}
 		}

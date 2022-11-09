@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -55,7 +55,7 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_children!=null)		jsonMap.put(CHILD, HAPJsonUtility.buildJson(m_children, HAPSerializationFormat.JSON));
+		if(this.m_children!=null)		jsonMap.put(CHILD, HAPUtilityJson.buildJson(m_children, HAPSerializationFormat.JSON));
 	}
 
 	@Override

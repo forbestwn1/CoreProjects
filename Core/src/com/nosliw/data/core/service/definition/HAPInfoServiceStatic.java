@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -86,7 +86,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_interface.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
 			jsonMap.put(INTERFACE, ((HAPResourceId)this.m_interface).getCoreIdLiterate());
-			jsonMap.put(TAG, HAPJsonUtility.buildJson(this.m_tags, HAPSerializationFormat.JSON));
+			jsonMap.put(TAG, HAPUtilityJson.buildJson(this.m_tags, HAPSerializationFormat.JSON));
 		}
 		else {
 			HAPInfoServiceInterface serviceInterfaceInfo = (HAPInfoServiceInterface)this.m_interface;

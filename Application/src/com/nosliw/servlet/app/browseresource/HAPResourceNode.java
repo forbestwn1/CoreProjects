@@ -3,7 +3,7 @@ package com.nosliw.servlet.app.browseresource;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -62,7 +62,7 @@ public class HAPResourceNode extends HAPSerializableImp{
 		if(this.m_resourceId!=null) jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON_FULL));
 		jsonMap.put(ISVALID, Boolean.toString(this.m_isValid));
 		typeJsonMap.put(ISVALID, Boolean.class);
-		if(!this.m_children.isEmpty())	jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.m_children, HAPSerializationFormat.JSON));
+		if(!this.m_children.isEmpty())	jsonMap.put(CHILDREN, HAPUtilityJson.buildJson(this.m_children, HAPSerializationFormat.JSON));
 	}
 
 }

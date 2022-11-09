@@ -16,7 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class HAPJsonUtility {
+public class HAPUtilityJson {
 
 	final private static String TOKEN_UNCHANGED_START = "AAAAAAAA";
 	final private static String TOKEN_UNCHANGED_END = "EEEEEEEE";
@@ -173,7 +173,7 @@ public class HAPJsonUtility {
 
 		if (type != null && HAPJsonTypeUnchange.class.isAssignableFrom(type)) {
 			// treat the value as it is
-			out.append("\"" + attr + "\"" + ":\"" + TOKEN_UNCHANGED_START + HAPJsonUtility.escape(value)
+			out.append("\"" + attr + "\"" + ":\"" + TOKEN_UNCHANGED_START + HAPUtilityJson.escape(value)
 					+ TOKEN_UNCHANGED_END + "\"" + lastString);
 		} else if (type != null && HAPJsonTypeAsItIs.class.isAssignableFrom(type)) {
 			// treat the value as it is

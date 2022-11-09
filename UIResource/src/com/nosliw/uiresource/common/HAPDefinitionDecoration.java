@@ -10,10 +10,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeUtility;
+import com.nosliw.common.serialization.HAPUtilitySerialize;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionDecoration extends HAPSerializableImp{
@@ -43,7 +43,7 @@ public class HAPDefinitionDecoration extends HAPSerializableImp{
 			
 			JSONArray shareArray = jsonObj.optJSONArray(SHARE);
 			if(shareArray!=null) {
-				this.m_share = HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), shareArray);
+				this.m_share = HAPUtilitySerialize.buildListFromJsonArray(HAPInfoDecoration.class.getName(), shareArray);
 			}
 
 			JSONObject partsObj = jsonObj.optJSONObject(PARTS);
@@ -51,7 +51,7 @@ public class HAPDefinitionDecoration extends HAPSerializableImp{
 				for(Object key : partsObj.keySet()) {
 					String partName = (String)key;
 					JSONArray decArray = partsObj.getJSONArray(partName);
-					this.m_parts.put(partName, HAPSerializeUtility.buildListFromJsonArray(HAPInfoDecoration.class.getName(), decArray));
+					this.m_parts.put(partName, HAPUtilitySerialize.buildListFromJsonArray(HAPInfoDecoration.class.getName(), decArray));
 				}
 			}
 			return true;  
@@ -65,7 +65,7 @@ public class HAPDefinitionDecoration extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(SHARE, HAPJsonUtility.buildJson(this.m_share, HAPSerializationFormat.JSON));
-		jsonMap.put(PARTS, HAPJsonUtility.buildJson(this.m_parts, HAPSerializationFormat.JSON));
+		jsonMap.put(SHARE, HAPUtilityJson.buildJson(this.m_share, HAPSerializationFormat.JSON));
+		jsonMap.put(PARTS, HAPUtilityJson.buildJson(this.m_parts, HAPSerializationFormat.JSON));
 	}
 }

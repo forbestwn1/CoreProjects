@@ -17,11 +17,11 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.common.value.HAPRhinoValueUtility;
+import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataTypeVersion;
@@ -238,8 +238,8 @@ public class HAPJSImporter {
 			break;
 		case HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER:
 			try {
-				String helperScript = new HAPRhinoValueUtility().toJson(resourceObjJS)+""; 
-				helperScript = HAPJsonUtility.unescape(helperScript);
+				String helperScript = new HAPUtilityRhinoValue().toJson(resourceObjJS)+""; 
+				helperScript = HAPUtilityJson.unescape(helperScript);
 				HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 				helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
 				resourceId = new HAPResourceIdJSHelper(helperResource.getId());

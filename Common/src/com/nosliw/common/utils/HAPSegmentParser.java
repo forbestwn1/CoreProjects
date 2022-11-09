@@ -11,7 +11,7 @@ public class HAPSegmentParser {
 	private boolean m_isEmpty = false;
 	
 	public HAPSegmentParser(String path, String seperator){
-		if(HAPBasicUtility.isStringEmpty(path))  this.m_isEmpty = true;
+		if(HAPUtilityBasic.isStringEmpty(path))  this.m_isEmpty = true;
 		else{
 			this.m_seperator = seperator;
 			if(seperator.equals("."))  seperator="\\.";

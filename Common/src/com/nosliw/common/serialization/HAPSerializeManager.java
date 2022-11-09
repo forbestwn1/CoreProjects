@@ -51,7 +51,7 @@ public class HAPSerializeManager {
 			return HAPLiterateManager.getInstance().valueToString(obj);
 		case JSON:
 		case JSON_FULL:
-			return HAPJsonUtility.buildJson(obj, format);
+			return HAPUtilityJson.buildJson(obj, format);
 		default:
 			return obj.toString();
 		}

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -64,9 +64,9 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
-		jsonMap.put(SERVICEUSE, HAPJsonUtility.buildJson(this.m_serviceUse, HAPSerializationFormat.JSON));
-		jsonMap.put(PROVIDERMAPPING, HAPJsonUtility.buildJson(this.m_providerMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(SERVICEUSE, HAPUtilityJson.buildJson(this.m_serviceUse, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDERMAPPING, HAPUtilityJson.buildJson(this.m_providerMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(PROVIDERID, this.m_providerId);
 	}
 

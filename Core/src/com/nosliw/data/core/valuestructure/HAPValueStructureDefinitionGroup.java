@@ -13,10 +13,10 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
@@ -179,8 +179,8 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 
 	public HAPRootStructure addRootToCategary(String categary, HAPRootStructure root){
 		root = root.cloneRoot();
-		if(HAPBasicUtility.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
-		if(HAPBasicUtility.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
+		if(HAPUtilityBasic.isStringEmpty(categary))   categary = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+		if(HAPUtilityBasic.isStringEmpty(root.getLocalId()))  root.setLocalId(new HAPReferenceRootInGroup(categary, root.getName()).getFullName());
 		this.m_categaryById.put(root.getLocalId(), categary);
 		return this.getFlat(categary).addRoot(root);
 	}
@@ -198,7 +198,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 		
 		//candidate categary
 		List<String> categaryCandidates = new ArrayList<String>();
-		if(HAPBasicUtility.isStringNotEmpty(groupReference.getCategary()))  categaryCandidates.add(groupReference.getCategary());  //check path first
+		if(HAPUtilityBasic.isStringNotEmpty(groupReference.getCategary()))  categaryCandidates.add(groupReference.getCategary());  //check path first
 		else categaryCandidates.addAll(Arrays.asList(HAPValueStructureDefinitionGroup.getVisibleCategaries()));               //otherwise, use visible context
 		
 		List<HAPRootStructure> out = new ArrayList<HAPRootStructure>();
@@ -304,7 +304,7 @@ public class HAPValueStructureDefinitionGroup extends HAPValueStructureDefinitio
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(GROUP, HAPJsonUtility.buildJson(this.m_flatStructureByCategary, HAPSerializationFormat.JSON));
+		jsonMap.put(GROUP, HAPUtilityJson.buildJson(this.m_flatStructureByCategary, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

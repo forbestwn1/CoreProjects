@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.data.HAPRelationshipImp;
@@ -132,9 +132,9 @@ public class HAPMatcher extends HAPExecutableImp{
 		if(obj instanceof HAPMatcher) {
 			HAPMatcher matcher  = (HAPMatcher)obj;
 			if(!this.m_reverse!=matcher.m_reverse)  return false;
-			if(!HAPBasicUtility.isEquals(this.m_dataTypeId, matcher.m_dataTypeId))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_relationship, matcher.m_relationship))  return false;
-			if(!HAPBasicUtility.isEqualMaps(this.m_subMatchers, matcher.m_subMatchers))    return false;
+			if(!HAPUtilityBasic.isEquals(this.m_dataTypeId, matcher.m_dataTypeId))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_relationship, matcher.m_relationship))  return false;
+			if(!HAPUtilityBasic.isEqualMaps(this.m_subMatchers, matcher.m_subMatchers))    return false;
 		}
 		return out;
 	}

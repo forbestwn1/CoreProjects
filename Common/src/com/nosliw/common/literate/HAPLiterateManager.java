@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPLiterateManager {
@@ -100,7 +100,7 @@ public class HAPLiterateManager {
 	}
 
 	public HAPLiterateType getLiterateTypeByType(Type type){
-		String rawTypeName = HAPBasicUtility.getRawTypeName(type);
+		String rawTypeName = HAPUtilityBasic.getRawTypeName(type);
 		HAPLiterateDef literateDef = this.getLiterateDefByClassName(rawTypeName);
 		String subType = literateDef.getSubTypeByType(type);
 		return new HAPLiterateType(literateDef.getName(), subType);
@@ -113,7 +113,7 @@ public class HAPLiterateManager {
 	}
 	
 	public boolean isValidType(String type){
-		if(HAPBasicUtility.isStringEmpty(type))  return false;
+		if(HAPUtilityBasic.isStringEmpty(type))  return false;
 		else   return m_typesByName.keySet().contains(type);
 	}
 	

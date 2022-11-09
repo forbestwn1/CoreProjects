@@ -8,7 +8,7 @@ import com.nosliw.common.interpolate.HAPInterpolateProcessor;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.interpolate.HAPInterpolateOutput;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public abstract class HAPStringableValueComplex<T extends HAPStringableValue> extends HAPStringableValue{
@@ -137,7 +137,7 @@ public abstract class HAPStringableValueComplex<T extends HAPStringableValue> ex
 
 	public HAPStringableValue getAncestorByPath(String path){
 		HAPStringableValue out = this;
-		if(HAPBasicUtility.isStringNotEmpty(path)){
+		if(HAPUtilityBasic.isStringNotEmpty(path)){
 			String[] pathSegs = HAPUtilityNamingConversion.parsePaths(path);
 			if(pathSegs!=null){
 				for(String pathSeg : pathSegs){

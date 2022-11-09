@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -57,7 +57,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
-		jsonMap.put(DATAASSOCIATION, HAPJsonUtility.buildJson(this.m_dataAssociations, HAPSerializationFormat.JSON));
+		jsonMap.put(DATAASSOCIATION, HAPUtilityJson.buildJson(this.m_dataAssociations, HAPSerializationFormat.JSON));
 		jsonMap.put(INTERFACE, HAPSerializeManager.getInstance().toStringValue(this.m_interfaceId, HAPSerializationFormat.JSON));
 	}
 

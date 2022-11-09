@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -181,10 +181,10 @@ public abstract class HAPStoryElementImp extends HAPEntityInfoImp implements HAP
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(CATEGARY, this.m_categary);
 		jsonMap.put(TYPE, this.m_type);
-		jsonMap.put(ELEMENTSTATUS, HAPJsonUtility.buildJson(this.m_status, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTSTATUS, HAPUtilityJson.buildJson(this.m_status, HAPSerializationFormat.JSON));
 		jsonMap.put(ENABLE, this.m_enable+"");
 		typeJsonMap.put(ENABLE, Boolean.class);
-		jsonMap.put(EXTRA, HAPJsonUtility.buildJson(this.m_extra, HAPSerializationFormat.JSON));
-		jsonMap.put(DISPLAYRESOURCE, HAPJsonUtility.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
+		jsonMap.put(EXTRA, HAPUtilityJson.buildJson(this.m_extra, HAPSerializationFormat.JSON));
+		jsonMap.put(DISPLAYRESOURCE, HAPUtilityJson.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
 	}
 }

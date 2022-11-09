@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
@@ -61,7 +61,7 @@ public class HAPExecutableModule extends HAPExecutableComponent{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(UI, HAPJsonUtility.buildJson(this.m_uis, HAPSerializationFormat.JSON));
+		jsonMap.put(UI, HAPUtilityJson.buildJson(this.m_uis, HAPSerializationFormat.JSON));
 //		jsonMap.put(PROCESS, HAPJsonUtility.buildJson(this.m_processes, HAPSerializationFormat.JSON));
 //		jsonMap.put(LIFECYCLE, HAPJsonUtility.buildJson(this.m_lifecycle, HAPSerializationFormat.JSON));
 	}
@@ -74,7 +74,7 @@ public class HAPExecutableModule extends HAPExecutableComponent{
 		for(HAPExecutableModuleUI ui :this.m_uis) {
 			uiJsonList.add(ui.toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(UI, HAPJsonUtility.buildArrayJson(uiJsonList.toArray(new String[0])));
+		jsonMap.put(UI, HAPUtilityJson.buildArrayJson(uiJsonList.toArray(new String[0])));
 		
 //		Map<String, String> processJsonMap = new LinkedHashMap<String, String>();
 //		for(String processName :this.m_processes.keySet()) {

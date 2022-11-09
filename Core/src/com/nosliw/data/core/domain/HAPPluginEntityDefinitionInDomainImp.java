@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
@@ -80,7 +80,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	protected JSONObject convertToJsonObject(Object obj) {
 		JSONObject out = null;
 		if(obj instanceof JSONObject) out = (JSONObject)obj;
-		else if(obj instanceof String)  out = new JSONObject(HAPJsonUtility.formatJson((String)obj));
+		else if(obj instanceof String)  out = new JSONObject(HAPUtilityJson.formatJson((String)obj));
 		return out;
 	}
 

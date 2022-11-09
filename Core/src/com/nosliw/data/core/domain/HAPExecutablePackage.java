@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -46,6 +46,6 @@ public class HAPExecutablePackage extends HAPExecutableImp{
 		for(HAPResourceIdSimple resourceId : this.m_dependency) {
 			dependencyArray.add(resourceId.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(DEPENDENCY, HAPJsonUtility.buildArrayJson(dependencyArray.toArray(new String[0])));
+		jsonMap.put(DEPENDENCY, HAPUtilityJson.buildArrayJson(dependencyArray.toArray(new String[0])));
 	}
 }

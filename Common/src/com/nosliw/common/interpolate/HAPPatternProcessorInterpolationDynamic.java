@@ -2,7 +2,7 @@ package com.nosliw.common.interpolate;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 /*
  * process method call or attribute
@@ -13,7 +13,7 @@ public abstract class HAPPatternProcessorInterpolationDynamic extends HAPPattern
 		super(new HAPInterpolateProcessor(startToken, endToken){
 			@Override
 			public String processIterpolate(String expression, Object object) {
-				if(HAPBasicUtility.isStringEmpty(expression) || object==null)  return null;
+				if(HAPUtilityBasic.isStringEmpty(expression) || object==null)  return null;
 				Object out = null;
 				int index = expression.indexOf(".");
 				if(index!=-1){

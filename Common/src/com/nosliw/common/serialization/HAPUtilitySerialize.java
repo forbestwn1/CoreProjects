@@ -8,7 +8,7 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class HAPSerializeUtility {
+public class HAPUtilitySerialize {
 
 	public static HAPSerializable buildObject(Class cls, Object value) {
 		HAPSerializable out = null;

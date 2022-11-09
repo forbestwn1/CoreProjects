@@ -2,7 +2,7 @@ package com.nosliw.common.test;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPTestCaseInfo extends HAPTestInfo{
@@ -29,7 +29,7 @@ public class HAPTestCaseInfo extends HAPTestInfo{
 	}
 
 	private void afterInit(){
-		if(HAPBasicUtility.isStringEmpty(this.getName())){
+		if(HAPUtilityBasic.isStringEmpty(this.getName())){
 			//for empty name, use method name instead
 			this.setName(this.m_testCaseRuntime.getMethodName());
 		}

@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -115,7 +115,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		for(HAPExecutableScriptEntity script : this.m_elements) {
 			eleMap.put(script.getId(), script.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(elementJsonMap));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildMapJson(elementJsonMap));
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 		for(HAPExecutableScriptEntity ele : this.m_elements) {
 			elementJsonMap.put(ele.getId(), ele.toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(ELEMENT, HAPJsonUtility.buildMapJson(elementJsonMap));
+		jsonMap.put(ELEMENT, HAPUtilityJson.buildMapJson(elementJsonMap));
 	}
 	
 	@Override

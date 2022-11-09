@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 
@@ -69,7 +69,7 @@ public class HAPPlayerLineupManager {
 	}
 	
 	private void writeLineUp(HAPPlayerLineup lineup) {
-		HAPUtilityFile.writeFile(HAPUtility.getLineupFile(), HAPJsonUtility.formatJson(lineup.toStringValue(HAPSerializationFormat.JSON)));
+		HAPUtilityFile.writeFile(HAPUtility.getLineupFile(), HAPUtilityJson.formatJson(lineup.toStringValue(HAPSerializationFormat.JSON)));
 	}
 	
 }

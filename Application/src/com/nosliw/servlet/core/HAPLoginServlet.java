@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.user.HAPUser;
 import com.nosliw.common.user.HAPUserInfo;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.miniapp.HAPAppManager;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.user.HAPManagerUser;
@@ -38,7 +38,7 @@ public class HAPLoginServlet  extends HAPServiceServlet{
 			}
 			
 			HAPUserInfo userInfo = null;
-			if(HAPBasicUtility.isStringEmpty(userId)) {
+			if(HAPUtilityBasic.isStringEmpty(userId)) {
 				userInfo = HAPManagerUser.getInstance().createUser();
 			}
 			else {

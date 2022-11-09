@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 /*
@@ -98,10 +98,10 @@ public class HAPTestCaseRuntime extends HAPSerializableImp{
 		
 		List<String> beforeJson = new ArrayList<String>();
 		for(Method m : this.m_testCaseBeforeMethods)	beforeJson.add(m.getName());
-		jsonMap.put("beforeMethods", HAPJsonUtility.buildArrayJson(beforeJson.toArray(new String[0])));
+		jsonMap.put("beforeMethods", HAPUtilityJson.buildArrayJson(beforeJson.toArray(new String[0])));
 		
 		List<String> afterJson = new ArrayList<String>();
 		for(Method m : this.m_testCaseAfterMethods)	afterJson.add(m.getName());
-		jsonMap.put("afterMethods", HAPJsonUtility.buildArrayJson(afterJson.toArray(new String[0])));
+		jsonMap.put("afterMethods", HAPUtilityJson.buildArrayJson(afterJson.toArray(new String[0])));
 	}
 }

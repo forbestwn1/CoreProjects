@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.page.definition;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPDefinitionStyle {
 
@@ -17,6 +17,6 @@ public class HAPDefinitionStyle {
 	public void setDefinition(String def) {    this.m_definition = def;     }
 
 	public boolean isEmpty() {
-		return HAPBasicUtility.isStringEmpty(m_definition);
+		return HAPUtilityBasic.isStringEmpty(m_definition);
 	}
 }

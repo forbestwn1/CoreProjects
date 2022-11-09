@@ -16,10 +16,10 @@ import org.mozilla.javascript.tools.debugger.Main;
 import com.google.common.util.concurrent.SettableFuture;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
@@ -275,7 +275,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
-			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPJsonUtility.buildMapJson(jsonMap)), this.getRuntimeInfo());
+			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPUtilityJson.buildMapJson(jsonMap)), this.getRuntimeInfo());
 
 			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
 			List<HAPJSScriptInfo> scripts = output.getScripts();
@@ -291,7 +291,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 
 	private void loadScript(HAPJSScriptInfo scriptInfo, Scriptable scope){
 		String file = scriptInfo.isFile(); 
-		if(HAPBasicUtility.isStringEmpty(file)){
+		if(HAPUtilityBasic.isStringEmpty(file)){
 			//for script
 			this.m_sciprtTracker.addScript(scriptInfo.getScript());
 		}

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -32,7 +32,7 @@ public class HAPUITagQueryResult  extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(UITAGINFO, HAPJsonUtility.buildJson(this.m_uiTagInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(UITAGINFO, HAPUtilityJson.buildJson(this.m_uiTagInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(SCORE, this.m_score+"");
 		typeJsonMap.put(SCORE, Double.class);
 	}

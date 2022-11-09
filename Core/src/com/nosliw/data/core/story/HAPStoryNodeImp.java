@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
@@ -45,6 +45,6 @@ public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPS
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(CONNECTIONS, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
+		jsonMap.put(CONNECTIONS, HAPUtilityJson.buildJson(this.m_connections, HAPSerializationFormat.JSON));
 	}
 }

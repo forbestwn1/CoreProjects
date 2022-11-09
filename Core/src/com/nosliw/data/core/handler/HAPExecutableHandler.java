@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 
@@ -26,7 +26,7 @@ public class HAPExecutableHandler extends HAPExecutableImpEntityInfo{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(STEPS, HAPJsonUtility.buildJson(this.m_steps, HAPSerializationFormat.JSON));
+		jsonMap.put(STEPS, HAPUtilityJson.buildJson(this.m_steps, HAPSerializationFormat.JSON));
 	}
 
 }

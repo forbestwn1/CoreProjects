@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -81,8 +81,8 @@ public class HAPIdElement extends HAPSerializableImp implements HAPReferenceElem
 		boolean out = false;
 		if(obj instanceof HAPIdElement) {
 			HAPIdElement eleId = (HAPIdElement)obj;
-			if(HAPBasicUtility.isEquals(this.m_categary, eleId.m_categary)) {
-				if(HAPBasicUtility.isEquals(this.m_id, eleId.m_id)) {
+			if(HAPUtilityBasic.isEquals(this.m_categary, eleId.m_categary)) {
+				if(HAPUtilityBasic.isEquals(this.m_id, eleId.m_id)) {
 					out = true;
 				}
 			}

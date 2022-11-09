@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.path.HAPComplexName;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -43,7 +43,7 @@ public class HAPDBTableInfo {
 	public void addColumnInfo(HAPDBColumnInfo columnInfo, String attrPath, String property, String relativePath){
 		
 		//if no column name specified, use property name
-		if(HAPBasicUtility.isStringEmpty(columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN))){
+		if(HAPUtilityBasic.isStringEmpty(columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.COLUMN))){
 			columnInfo.updateAtomicChildStrValue(HAPDBColumnInfo.COLUMN, property);
 		}
 
@@ -61,7 +61,7 @@ public class HAPDBTableInfo {
 		String setter = this.buildGetSetMethod(columnInfo, HAPDBColumnInfo.SETTER, attrPath, property, methodProperty, relativePath);
 		
 		String type = columnInfo.getAtomicAncestorValueString(HAPDBColumnInfo.DATATYPE);
-		if(HAPBasicUtility.isStringEmpty(type)){
+		if(HAPUtilityBasic.isStringEmpty(type)){
 			//if data type is not specify, try to get from return type of getter method
 			try {
 				HAPComplexName getterPath = new HAPComplexName(getter);
@@ -91,7 +91,7 @@ public class HAPDBTableInfo {
 		else{
 			String methodPath = null;
 			String methodMethod = null;
-			if(HAPBasicUtility.isStringNotEmpty(methodName)){
+			if(HAPUtilityBasic.isStringNotEmpty(methodName)){
 				HAPComplexName complexName = new HAPComplexName(methodName);
 				methodMethod= complexName.getSimpleName();
 				methodPath = complexName.getPath();
@@ -106,7 +106,7 @@ public class HAPDBTableInfo {
 					op = "set";
 					break;
 				}
-				methodMethod = op + HAPBasicUtility.upperCaseFirstLetter(opProperty);
+				methodMethod = op + HAPUtilityBasic.upperCaseFirstLetter(opProperty);
 			}
 
 			switch(pathType){

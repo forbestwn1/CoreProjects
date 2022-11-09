@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
@@ -45,7 +45,7 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 				String file = script.isFile();
 				if(file!=null){
 					String scriptUrl = HAPRuntimeBrowserUtility.getBrowserScriptPath(file);
-					String scriptUrlWithVersion = HAPBasicUtility.addVersionToUrl(scriptUrl, version);
+					String scriptUrlWithVersion = HAPUtilityBasic.addVersionToUrl(scriptUrl, version);
 					fileNames.add(scriptUrlWithVersion);
 				}
 			}

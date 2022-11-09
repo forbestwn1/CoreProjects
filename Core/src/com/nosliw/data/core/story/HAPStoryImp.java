@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
@@ -126,7 +126,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	@Override
 	public HAPStoryElement addElement(HAPStoryElement element, HAPAliasElement alias) {
 		HAPStoryElement out = null;
-		if(HAPBasicUtility.isStringEmpty(element.getId())) 	element.setId(HAPUtilityStory.buildStoryElementId(element, this.getNextId()));
+		if(HAPUtilityBasic.isStringEmpty(element.getId())) 	element.setId(HAPUtilityStory.buildStoryElementId(element, this.getNextId()));
 		element.appendToStory(this);
 		
 		String categary = element.getCategary();
@@ -302,20 +302,20 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStory{
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SHOWTYPE, this.m_showType);
-		jsonMap.put(NODE, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_nodes), HAPSerializationFormat.JSON));
-		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_connections), HAPSerializationFormat.JSON));
-		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(HAPBasicUtility.toList(this.m_elementGroups), HAPSerializationFormat.JSON));
-		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
+		jsonMap.put(NODE, HAPUtilityJson.buildJson(HAPUtilityBasic.toList(this.m_nodes), HAPSerializationFormat.JSON));
+		jsonMap.put(CONNECTION, HAPUtilityJson.buildJson(HAPUtilityBasic.toList(this.m_connections), HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTGROUP, HAPUtilityJson.buildJson(HAPUtilityBasic.toList(this.m_elementGroups), HAPSerializationFormat.JSON));
+		jsonMap.put(ALIAS, HAPUtilityJson.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	public void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SHOWTYPE, this.m_showType);
-		jsonMap.put(NODE, HAPJsonUtility.buildJson(this.m_nodes, HAPSerializationFormat.JSON));
-		jsonMap.put(CONNECTION, HAPJsonUtility.buildJson(this.m_connections, HAPSerializationFormat.JSON));
-		jsonMap.put(ELEMENTGROUP, HAPJsonUtility.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
-		jsonMap.put(ALIAS, HAPJsonUtility.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
+		jsonMap.put(NODE, HAPUtilityJson.buildJson(this.m_nodes, HAPSerializationFormat.JSON));
+		jsonMap.put(CONNECTION, HAPUtilityJson.buildJson(this.m_connections, HAPSerializationFormat.JSON));
+		jsonMap.put(ELEMENTGROUP, HAPUtilityJson.buildJson(this.m_elementGroups, HAPSerializationFormat.JSON));
+		jsonMap.put(ALIAS, HAPUtilityJson.buildJson(this.m_aliases, HAPSerializationFormat.JSON));
 	}
 
 }

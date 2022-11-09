@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -42,7 +42,7 @@ public class HAPInfoDecoration extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(CONFIGURE, HAPJsonUtility.buildJson(this.m_configure, HAPSerializationFormat.JSON));
+		jsonMap.put(CONFIGURE, HAPUtilityJson.buildJson(this.m_configure, HAPSerializationFormat.JSON));
 	}
 	
 	public HAPInfoDecoration cloneDecorationInfo() {

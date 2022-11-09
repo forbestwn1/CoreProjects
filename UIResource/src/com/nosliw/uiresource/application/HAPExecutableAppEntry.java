@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
@@ -121,18 +121,18 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 		for(String name : this.m_modules.keySet()) {
 			jsonModuleMap.put(name, this.m_modules.get(name).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(MODULE, HAPJsonUtility.buildMapJson(jsonModuleMap)); 
+		jsonMap.put(MODULE, HAPUtilityJson.buildMapJson(jsonModuleMap)); 
 
 		Map<String, String> jsonProcessMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_processes.keySet()) {
 			jsonProcessMap.put(name, this.m_processes.get(name).toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(PROCESS, HAPJsonUtility.buildMapJson(jsonProcessMap)); 
+		jsonMap.put(PROCESS, HAPUtilityJson.buildMapJson(jsonProcessMap)); 
 
 		jsonMap.put(INITSCRIPT, HAPUtilityContextScript.buildValueStructureInitScript(this.getContext()).getScript());
 		typeJsonMap.put(INITSCRIPT, HAPJsonTypeScript.class);
 
-		return HAPResourceDataFactory.createJSValueResourceData(HAPJsonUtility.buildMapJson(jsonMap, typeJsonMap));
+		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 
 	@Override

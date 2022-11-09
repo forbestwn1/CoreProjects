@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterJSON;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfo;
@@ -17,7 +17,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoAtomic;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntity;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoEntityable;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 /*
@@ -210,7 +210,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PROPERTIES, HAPJsonUtility.buildJson(this.m_childrens, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(PROPERTIES, HAPUtilityJson.buildJson(this.m_childrens, HAPSerializationFormat.JSON_FULL));
 	}
 
 	@Override
@@ -235,7 +235,7 @@ public class HAPStringableValueEntity extends HAPStringableValueComplex{
 		boolean out = false;
 		if(obj instanceof HAPStringableValueEntity){
 			HAPStringableValueEntity value = (HAPStringableValueEntity)obj;
-			out = HAPBasicUtility.isEqualMaps(value.m_childrens, this.m_childrens);
+			out = HAPUtilityBasic.isEqualMaps(value.m_childrens, this.m_childrens);
 		}
 		return out;
 	}

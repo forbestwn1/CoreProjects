@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
@@ -56,7 +56,7 @@ public abstract class HAPAttachmentReference extends HAPAttachmentImp{
 		if(obj instanceof HAPAttachmentReference) {
 			HAPAttachmentReference ele = (HAPAttachmentReference)obj;
 			if(super.equals(ele)) {
-				if(HAPBasicUtility.isEquals(ele.m_referenceId, this.m_referenceId)) {
+				if(HAPUtilityBasic.isEquals(ele.m_referenceId, this.m_referenceId)) {
 					out = true;
 				}
 			}

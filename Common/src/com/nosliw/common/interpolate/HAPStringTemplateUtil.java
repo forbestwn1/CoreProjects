@@ -3,7 +3,7 @@ package com.nosliw.common.interpolate;
 import java.io.InputStream;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPStringTemplateUtil {
@@ -18,7 +18,7 @@ public class HAPStringTemplateUtil {
 	}
 	
 	public static String getStringValue(String template, Map<String, String> parms){
-		if(HAPBasicUtility.isStringNotEmpty(template)){
+		if(HAPUtilityBasic.isStringNotEmpty(template)){
 			for(String key : parms.keySet()){
 				String fill = parms.get(key);
 				if(fill==null)  fill = "";

@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPGeneratorId;
@@ -65,6 +65,6 @@ public class HAPDomainEntityExecutableGlobal extends HAPSerializableImp implemen
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		jsonMap.put(MAINENTITYID, this.m_mainComplexEntityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ROOTENTITYID, this.getEntityInfoExecutable(m_mainComplexEntityId).toExpandedJsonString(this));
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 }

@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
@@ -42,13 +42,13 @@ public class HAPResourceIdDynamic extends HAPResourceId{
 	public String getCoreIdLiterate() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		this.buildCoreIdJsonMap(jsonMap, null);
-		return HAPJsonUtility.buildMapJson(jsonMap);
+		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	@Override
 	protected void buildCoreIdJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(BUILDER, this.m_builderId);
-		jsonMap.put(PARMS, HAPJsonUtility.buildJson(m_parms, HAPSerializationFormat.JSON));
+		jsonMap.put(PARMS, HAPUtilityJson.buildJson(m_parms, HAPSerializationFormat.JSON));
 	}
 
 	@Override

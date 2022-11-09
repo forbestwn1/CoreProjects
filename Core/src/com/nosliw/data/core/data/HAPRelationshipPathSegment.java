@@ -3,7 +3,7 @@ package com.nosliw.data.core.data;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -37,8 +37,8 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPRelationshipPathSegment){
 			HAPRelationshipPathSegment seg = (HAPRelationshipPathSegment)obj;
-			if(!HAPBasicUtility.isEquals(this.m_id, seg.m_id))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_type, seg.m_type))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_id, seg.m_id))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_type, seg.m_type))  return false;
 			out = true;
 		}
 		return out;

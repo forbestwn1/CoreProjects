@@ -5,10 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoList;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPStringableValueList<T> extends HAPStringableValueComplex{
@@ -68,12 +68,12 @@ public class HAPStringableValueList<T> extends HAPStringableValueComplex{
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildFullJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPStringableValueComplex.ELEMENTS, HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(HAPStringableValueComplex.ELEMENTS, HAPUtilityJson.buildJson(this.m_elements, HAPSerializationFormat.JSON_FULL));
 	}
 	
 	@Override
 	protected String buildJson(){
-		return HAPJsonUtility.buildJson(this.m_elements, HAPSerializationFormat.JSON);
+		return HAPUtilityJson.buildJson(this.m_elements, HAPSerializationFormat.JSON);
 	}
 	
 	@Override
@@ -102,7 +102,7 @@ public class HAPStringableValueList<T> extends HAPStringableValueComplex{
 		boolean out = false;
 		if(obj instanceof HAPStringableValueList){
 			HAPStringableValueList value = (HAPStringableValueList)obj;
-			out = HAPBasicUtility.isEqualLists(value.m_elements, value.m_elements);
+			out = HAPUtilityBasic.isEqualLists(value.m_elements, value.m_elements);
 		}
 		return out;
 	}

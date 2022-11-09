@@ -2,7 +2,7 @@ package com.nosliw.common.updatename;
 
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPUpdateNameMap implements HAPUpdateName{
 
@@ -15,7 +15,7 @@ public class HAPUpdateNameMap implements HAPUpdateName{
 	@Override
 	public String getUpdatedName(String varName) {
 		String out = this.m_map.get(varName);
-		if(HAPBasicUtility.isStringEmpty(out))  out = varName;
+		if(HAPUtilityBasic.isStringEmpty(out))  out = varName;
 		return out;
 	}
 

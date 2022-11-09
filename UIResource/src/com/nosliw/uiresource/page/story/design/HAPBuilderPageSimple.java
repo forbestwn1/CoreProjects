@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -78,11 +78,11 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		
 		//service provider
 		List<HAPAttachment> servicesAttachment = this.buildService();
-		templateParms.put("serviceProvider", HAPJsonUtility.buildJson(servicesAttachment, HAPSerializationFormat.JSON));
+		templateParms.put("serviceProvider", HAPUtilityJson.buildJson(servicesAttachment, HAPSerializationFormat.JSON));
 
 		//service use
 		List<HAPDefinitionServiceUse> servciesUse = buildServiceUse();
-		templateParms.put("serviceUse", HAPJsonUtility.buildJson(servciesUse, HAPSerializationFormat.JSON));
+		templateParms.put("serviceUse", HAPUtilityJson.buildJson(servciesUse, HAPSerializationFormat.JSON));
 
 		//constants
 		List<HAPAttachment> constantAttachment = this.buildConstant();

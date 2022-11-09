@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpression;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -94,7 +94,7 @@ public class HAPExpressionParserImp implements HAPParserExpression{
 		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
-			  if(aheadOperand!=null && HAPBasicUtility.isEquals(aheadOperand.getType(), HAPConstantShared.EXPRESSION_OPERAND_REFERENCE) && HAPBasicUtility.isEquals(name, "with")) {
+			  if(aheadOperand!=null && HAPUtilityBasic.isEquals(aheadOperand.getType(), HAPConstantShared.EXPRESSION_OPERAND_REFERENCE) && HAPUtilityBasic.isEquals(name, "with")) {
 				  //reference
 				  for(Parm parm : expressionEles.expressionNodes){
 					  ((HAPOperandReference)aheadOperand).addMapping(parm.name, processExpressionNode(parm.valuNode));

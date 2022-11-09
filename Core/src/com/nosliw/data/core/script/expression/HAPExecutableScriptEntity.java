@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -129,7 +129,7 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 				funScriptMap.put(childFun.getName(), childFun.getScript());
 				funScriptTypeMap.put(childFun.getName(), HAPJsonTypeAsItIs.class);
 			}
-			functionParmValue = HAPJsonUtility.buildMapJson(funScriptMap, funScriptTypeMap);
+			functionParmValue = HAPUtilityJson.buildMapJson(funScriptMap, funScriptTypeMap);
 		}
 		jsonMap.put(SUPPORTFUNCTION, functionParmValue);
 		typeJsonMap.put(SUPPORTFUNCTION, HAPJsonTypeScript.class);
@@ -137,10 +137,10 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 		jsonMap.put(SCRIPTFUNCTION, new HAPJsonTypeScript(scriptFunctionInfo.getMainScript().getScript()).toStringValue(HAPSerializationFormat.JSON_FULL));
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeScript.class);
 
-		jsonMap.put(EXPRESSIONREF, HAPJsonUtility.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONREF, HAPUtilityJson.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
 		
 		Set<String> vars = this.discoverVariables(null);
-		jsonMap.put(VARIABLES, HAPJsonUtility.buildJson(vars, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLES, HAPUtilityJson.buildJson(vars, HAPSerializationFormat.JSON));
 	}
 
 	@Override

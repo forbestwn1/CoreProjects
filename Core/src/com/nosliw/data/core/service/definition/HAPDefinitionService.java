@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -81,8 +81,8 @@ public class HAPDefinitionService extends HAPResourceDefinition{
 	@Override
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(STATIC, HAPJsonUtility.buildJson(this.m_staticInfo, HAPSerializationFormat.JSON));
-		jsonMap.put(RUNTIME, HAPJsonUtility.buildJson(this.m_runtimeInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(STATIC, HAPUtilityJson.buildJson(this.m_staticInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(RUNTIME, HAPUtilityJson.buildJson(this.m_runtimeInfo, HAPSerializationFormat.JSON));
 	}
 
 }

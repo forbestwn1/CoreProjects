@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -48,10 +48,10 @@ public class HAPExecutableValueStructure extends HAPSerializableImp
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for(String varId : this.m_roots.keySet()) {
-			map.put(varId, HAPJsonUtility.buildJson(this.m_roots.get(varId), HAPSerializationFormat.JSON));
+			map.put(varId, HAPUtilityJson.buildJson(this.m_roots.get(varId), HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ROOT, HAPJsonUtility.buildMapJson(map));
-		jsonMap.put(NAME2ID, HAPJsonUtility.buildMapJson(m_name2Id));
+		jsonMap.put(ROOT, HAPUtilityJson.buildMapJson(map));
+		jsonMap.put(NAME2ID, HAPUtilityJson.buildMapJson(m_name2Id));
 	}
 
 	public HAPExecutableValueStructure cloneExecutableStructure() {

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
 
@@ -42,7 +42,7 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(CHILDREN, HAPJsonUtility.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
+		jsonMap.put(CHILDREN, HAPUtilityJson.buildJson(this.getChildren(), HAPSerializationFormat.JSON));
 	}
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){	this.buildJsonMap(jsonMap, typeJsonMap);	}
@@ -56,7 +56,7 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 		if(obj instanceof HAPDataTypeCriteriaImp){
 			HAPDataTypeCriteriaImp criteria = (HAPDataTypeCriteriaImp)obj;
 			if(criteria.getType().equals(this.getType())){
-				out = HAPBasicUtility.isEqualLists(this.m_children, criteria.m_children);
+				out = HAPUtilityBasic.isEqualLists(this.m_children, criteria.m_children);
 			}
 		}
 		return out;

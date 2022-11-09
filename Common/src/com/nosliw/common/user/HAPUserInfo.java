@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
@@ -37,13 +37,13 @@ public class HAPUserInfo extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(USER, HAPJsonUtility.buildJson(m_user, HAPSerializationFormat.JSON));
+		jsonMap.put(USER, HAPUtilityJson.buildJson(m_user, HAPSerializationFormat.JSON));
 		
 		Map<String, String> entitiesMap = new LinkedHashMap<String, String>();
 		for(String name : this.m_relatedEntities.keySet()) {
-			entitiesMap.put(name, HAPJsonUtility.buildJson(this.m_relatedEntities.get(name), HAPSerializationFormat.JSON));
+			entitiesMap.put(name, HAPUtilityJson.buildJson(this.m_relatedEntities.get(name), HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ENTITIES, HAPJsonUtility.buildMapJson(entitiesMap));
+		jsonMap.put(ENTITIES, HAPUtilityJson.buildMapJson(entitiesMap));
 	}
 	
 	@Override

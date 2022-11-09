@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelationship{
 
@@ -56,9 +56,9 @@ public class HAPRelationshipImp extends HAPSerializableImp implements HAPRelatio
 		boolean out = false;
 		if(obj instanceof HAPRelationshipImp) {
 			HAPRelationshipImp relationship = (HAPRelationshipImp)obj;
-			if(!HAPBasicUtility.isEquals(this.m_source, relationship.m_source))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_taget, relationship.m_taget))  return false;
-			if(!HAPBasicUtility.isEquals(this.m_path, relationship.m_path))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_source, relationship.m_source))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_taget, relationship.m_taget))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_path, relationship.m_path))  return false;
 			out = true;
 		}
 		return out;

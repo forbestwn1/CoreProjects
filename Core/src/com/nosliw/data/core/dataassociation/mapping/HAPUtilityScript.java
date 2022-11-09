@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -44,7 +44,7 @@ public class HAPUtilityScript {
 		//build init output object for mapped root
 		HAPValueMapping valueMappinig = association.getMapping();
 		JSONObject output = buildSkeletonJsonObject(valueMappinig);
-		templateParms.put("outputInit", HAPJsonUtility.formatJson(output.toString()));
+		templateParms.put("outputInit", HAPUtilityJson.formatJson(output.toString()));
 		
 		//build dynamic part 
 		StringBuffer dynamicScript = new StringBuffer();
@@ -61,7 +61,7 @@ public class HAPUtilityScript {
 		Map<String, Object> constantAssignments = association.getConstantAssignments();
 		for(String targePath : constantAssignments.keySet()) {
 			Object constantValue = constantAssignments.get(targePath);
-			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", "+ HAPJsonUtility.buildJsonStringValue(constantValue, HAPSerializationFormat.JSON) +");\n";
+			String script = "output = utilFunction(output, "+ buildJSArrayFromContextPath(targePath) +", "+ HAPUtilityJson.buildJsonStringValue(constantValue, HAPSerializationFormat.JSON) +");\n";
 			constantAssignmentScript.append(script);
 		}
 		templateParms.put("outputConstantValueBuild", constantAssignmentScript.toString());
@@ -77,7 +77,7 @@ public class HAPUtilityScript {
 		HAPComplexPath contextPath = new HAPComplexPath(path);
 		pathSegs.add(contextPath.getRoot());
 		pathSegs.addAll(Arrays.asList(contextPath.getPath().getPathSegments()));
-		String pathSegsStr = HAPJsonUtility.buildArrayJson(pathSegs.toArray(new String[0]));
+		String pathSegsStr = HAPUtilityJson.buildArrayJson(pathSegs.toArray(new String[0]));
 		return pathSegsStr;
 	}
 

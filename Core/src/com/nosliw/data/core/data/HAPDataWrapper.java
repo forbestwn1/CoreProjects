@@ -8,11 +8,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
@@ -121,7 +121,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 		JSONObject jsonObj = (JSONObject)json;
 		//data type id
 		String dataTypeIdLiterate = jsonObj.optString(DATATYPEID);
-		if(HAPBasicUtility.isStringEmpty(dataTypeIdLiterate))  return false;
+		if(HAPUtilityBasic.isStringEmpty(dataTypeIdLiterate))  return false;
 		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 
 		//value format
@@ -151,7 +151,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 		jsonMap.put(DATATYPEID, this.m_dataTypeId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(VALUEFORMAT, this.getValueFormat());
 		
-		HAPJsonUtility.buildJsonMap(VALUE, this.m_value, jsonMap, typeJsonMap, HAPSerializationFormat.JSON);
+		HAPUtilityJson.buildJsonMap(VALUE, this.m_value, jsonMap, typeJsonMap, HAPSerializationFormat.JSON);
 		
 //		if(this.m_value instanceof String || this.m_value instanceof Boolean || this.m_value instanceof Integer || this.m_value instanceof Double){
 //			jsonMap.put(VALUE, this.m_value+"");
@@ -161,7 +161,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 //			jsonMap.put(VALUE, this.m_value+"");
 //		}
 
-		jsonMap.put(INFO, HAPJsonUtility.buildJson(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.imp.criteria.parser.generated.HAPCriteriaParserGenerated;
 import com.nosliw.data.imp.criteria.parser.generated.HAPCriteriaParserGeneratedConstants;
@@ -41,7 +41,7 @@ public class HAPParserCriteria implements HAPCriteriaParserGeneratedConstants{
 	}
 	
 	  public HAPDataTypeCriteria parseCriteria(String criteria){
-		  if(HAPBasicUtility.isStringEmpty(criteria))  return HAPDataTypeCriteriaAny.getCriteria();
+		  if(HAPUtilityBasic.isStringEmpty(criteria))  return HAPDataTypeCriteriaAny.getCriteria();
 		  SimpleNode root = null;
 		  try{
 			  InputStream is = new ByteArrayInputStream(criteria.getBytes());

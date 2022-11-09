@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPJsonUtility;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.complex.HAPManagerComplexEntity;
@@ -29,7 +29,7 @@ public class HAPUtilityExport {
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
 		mainInfoJson.put(HAPExecutablePackage.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
-		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPJsonUtility.buildMapJson(mainInfoJson));
+		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPUtilityJson.buildMapJson(mainInfoJson));
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
@@ -55,7 +55,7 @@ public class HAPUtilityExport {
 			Set<HAPResourceIdSimple> dependency = bundle.getComplexResourceDependency();
 			List<String> dependencyArray = new ArrayList<String>();
 			for(HAPResourceIdSimple dependencyId : dependency)  dependencyArray.add(dependencyId.toStringValue(HAPSerializationFormat.LITERATE));
-			HAPUtilityFile.writeJsonFile(packageFolder, "dependency.json", HAPJsonUtility.buildArrayJson(dependencyArray.toArray(new String[0])));
+			HAPUtilityFile.writeJsonFile(packageFolder, "dependency.json", HAPUtilityJson.buildArrayJson(dependencyArray.toArray(new String[0])));
 		}
 	}
 	

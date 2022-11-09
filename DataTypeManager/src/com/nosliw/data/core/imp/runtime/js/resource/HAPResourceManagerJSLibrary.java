@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPBasicUtility;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -45,7 +45,7 @@ public class HAPResourceManagerJSLibrary extends HAPResourceManagerImp{
 	
 	private List<File> getLibraryFileName(HAPJSLibraryId libraryId){
 		String path = libraryId.getName().replace(".", "/");
-		String folder = HAPSystemFolderUtility.getJSLibraryFolder() + path + (HAPBasicUtility.isStringEmpty(libraryId.getVersion()) ? "" : "/" + libraryId.getVersion());
+		String folder = HAPSystemFolderUtility.getJSLibraryFolder() + path + (HAPUtilityBasic.isStringEmpty(libraryId.getVersion()) ? "" : "/" + libraryId.getVersion());
 		Set<File> files = HAPUtilityFile.getAllFiles(folder);
 		List<File> out = new ArrayList<File>(files);
 		//make file sorted by name
