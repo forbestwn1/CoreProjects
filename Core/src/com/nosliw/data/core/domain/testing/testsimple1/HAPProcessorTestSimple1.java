@@ -12,7 +12,7 @@ public class HAPProcessorTestSimple1 {
 		
 		HAPDefinitionEntityTestSimple1 testSimple1Def = (HAPDefinitionEntityTestSimple1)globalDomain.getEntityInfoDefinition(entityDefId).getEntity();
 		
-		HAPIdEntityInDomain scriptEntityId = testSimple1Def.getSimpleAttribute(HAPDefinitionEntityTestSimple1.ATTR_SCRIPT).getValue().getEntityId();
+		HAPIdEntityInDomain scriptEntityId = testSimple1Def.getNormalAttributeWithId(HAPDefinitionEntityTestSimple1.ATTR_SCRIPT).getValue().getEntityId();
 		HAPDefinitionEntityScript scriptDef = (HAPDefinitionEntityScript)globalDomain.getEntityInfoDefinition(scriptEntityId).getEntity();
 		
 		HAPExecutableTestSimple1 out = new HAPExecutableTestSimple1(scriptDef.getScript(), testSimple1Def.getParms());

@@ -53,7 +53,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
 					HAPExecutableTestSimple1 simpleTest1Exe = HAPProcessorTestSimple1.process(attrEntityInfo.getEntityId(), processContext);
-					executableEntity.setAttribute(attr.getName(), new HAPEmbededExecutableWithEntity(simpleTest1Exe, attrEntityInfo.getEntityType(), attrEntityInfo.isComplexEntity()));
+					executableEntity.setNormalAttribute(attr.getName(), new HAPEmbededExecutableWithEntity(simpleTest1Exe, attrEntityInfo.getEntityType(), attrEntityInfo.isComplexEntity()));
 				}
 			}
 			else if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
@@ -73,7 +73,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 						eleInfoExe.setEmbededElementEntity(embededExe);
 						conatinerEntityExe.addEntityElement(eleInfoExe);
 					}
-					executableEntity.setAttribute(attr.getName(), conatinerEntityExe);
+					executableEntity.setContainerAttribute(attr.getName(), conatinerEntityExe);
 				}
 			}
 		}
