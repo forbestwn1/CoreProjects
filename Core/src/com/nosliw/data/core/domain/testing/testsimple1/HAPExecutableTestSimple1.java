@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithValue;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
 
 @HAPEntityWithAttribute
@@ -18,7 +19,7 @@ public class HAPExecutableTestSimple1 extends HAPExecutableEntitySimple{
 	
 	public HAPExecutableTestSimple1(String script, Map<String, Object> parms) {
 		super(HAPDefinitionEntityTestSimple1.ENTITY_TYPE);
-		this.setAttribute(SCRIPT, new HAPJsonTypeScript(script));
-		this.setAttribute(PARM, parms);
+		this.setNormalAttribute(SCRIPT, new HAPEmbededExecutableWithValue(new HAPJsonTypeScript(script)));
+		this.setNormalAttribute(PARM, new HAPEmbededExecutableWithValue(parms));
 	}
 }

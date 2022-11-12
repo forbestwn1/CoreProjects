@@ -11,8 +11,6 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createConfigure;
 	var node_createErrorData;
-	var node_createTestSimple1;
-	var node_packageUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -96,14 +94,13 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 
-			var attrs = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
-			_.each(attrs, function(attr, attrName){
-				var attrType = node_packageUtility.getAttributeType(attr);
-				if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE){
-					var entityType = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE];
-					var isComplex = attr[node_COMMONATRIBUTECONSTANT.EMBEDED_ISCOMPLEX];
-					if(isComplex==true){ 
-						var complexEntityId = attr[1][node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
+			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
+				var attr = loc_complexEntityDef.getAttribute(attrName);
+				if(attr.isSimpleAttribute()){
+					var attrValue = attr.getValue();
+					var entityType = attr.getEntityType();
+					if(attr.isComplex()==true){ 
+						var complexEntityId = attrValue;
 						var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
 						loc_children[attrName] = attrEntity;
 						out.addRequest(attrEntity.getPreInitRequest());
@@ -112,24 +109,23 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 						//simple attribute
 						if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
 							//test_simple attribute
-							loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(node_createTestSimple1(attr[node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
+							loc_simpleTest1Atts[attrName] = nosliw.runtime.getPackageService().createSimpleEntity(attrValue);
 						}
 					}
 				}
-				else if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER){
+				else{
 					//container attribute
-					var entityType = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE];
-					if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+					if(attr.getElementEntityType()==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
 						//test_simple container attribute
 						var containerAttr = loc_createContainerAttribute();
-						var eles = attr[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
-						_.each(eles, function(ele, i){
-							containerAttr.addElement(node_createTestSimple1(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHENTITY_ENTITY]));
+						_.each(attr.getElements(), function(ele, i){
+							containerAttr.addElement(node_createTestSimple1(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE]));
 						});
 						loc_simpleTest1Atts[attrName] = containerAttr;
 					}
 				}
 			});
+			
 			
 			
 			
@@ -279,8 +275,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
-nosliw.registerSetNodeDataEvent("testcomponent.createTestSimple1", function(){node_createTestSimple1 = this.getData();	});
-nosliw.registerSetNodeDataEvent("package.packageUtility", function(){node_packageUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

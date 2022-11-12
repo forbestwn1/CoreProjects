@@ -6,24 +6,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.complex.HAPManagerComplexEntity;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
 
-	public static void exportExecutablePackage(HAPExecutablePackage executablePackage, HAPManagerComplexEntity complexEntityManager) {
+	public static void exportExecutablePackage(HAPExecutablePackage executablePackage, HAPManagerComplexEntity complexEntityManager, HAPRuntimeInfo runtimeInfo) {
 		String mainFolderUnique = getRootFolderUnique();
-		exportExecutablePackage(executablePackage, mainFolderUnique, complexEntityManager);
+		exportExecutablePackage(executablePackage, mainFolderUnique, complexEntityManager, runtimeInfo);
 
 		String mainFolderTemp = getRootFolderTemp();
-		exportExecutablePackage(executablePackage, mainFolderTemp, complexEntityManager);
+		exportExecutablePackage(executablePackage, mainFolderTemp, complexEntityManager, runtimeInfo);
 	}
 
-	private static void exportExecutablePackage(HAPExecutablePackage executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager) {
+	private static void exportExecutablePackage(HAPExecutablePackage executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager, HAPRuntimeInfo runtimeInfo) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info
@@ -49,7 +50,10 @@ public class HAPUtilityExport {
 			HAPUtilityFile.writeJsonFile(packageFolder, "definition.json", toExpandedJsonStringDefintionDomain(bundle));
 			
 			//write package executable
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toExpandedJsonStringExecutableDomain(bundle));
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", toResourceJsonStringExecutableDomain(bundle, runtimeInfo));
+			
+			//write package executable
+			HAPUtilityFile.writeJsonFile(packageFolder, "executableexpanded.json", toExpandedJsonStringExecutableDomain(bundle));
 			
 			//external complex entity dependency
 			Set<HAPResourceIdSimple> dependency = bundle.getComplexResourceDependency();
@@ -81,5 +85,10 @@ public class HAPUtilityExport {
 	private static String toExpandedJsonStringExecutableDomain(HAPExecutableBundle resourceBundle) {
 		HAPDomainEntityExecutableResourceComplex executableDomain = resourceBundle.getExecutableDomain();
 		return executableDomain.getEntityInfoExecutable(resourceBundle.getExecutableRootEntityId()).toExpandedJsonString(executableDomain);
+	}
+
+	private static String toResourceJsonStringExecutableDomain(HAPExecutableBundle resourceBundle, HAPRuntimeInfo runtimeInfo) {
+		HAPDomainEntityExecutableResourceComplex executableDomain = resourceBundle.getExecutableDomain();
+		return executableDomain.getEntityInfoExecutable(resourceBundle.getExecutableRootEntityId()).toResourceData(runtimeInfo).toString();
 	}
 }

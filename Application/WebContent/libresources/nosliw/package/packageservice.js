@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_createBundleCore;
 	var node_EntityIdInDomain;
 	var node_buildComplexEntityPlugInObject;
+	var node_buildSimpleEntityPlugInObject;
 	var node_createComponentRuntime;
 	var node_componentUtility;
 	var node_createPackageCore;
@@ -22,6 +23,7 @@ var packageObj = library;
 	var node_createLifeCycleRuntimeContext;
 	var node_buildComponentCore;
 	var node_makeObjectWithComponentManagementInterface;
+	var node_createEntityDefinition;
 	
 	var node_createTestComplex1Plugin;
 	var node_createTestDecoration1Plugin;
@@ -31,7 +33,14 @@ var packageObj = library;
 var node_createPackageRuntimeService = function() {
 	
 	var loc_complexEntityPlugins = {};
+	var loc_simpleEntityPlugins = {};
 
+	var loc_createComplexEntityCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
+		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
+		return complexEntityPlugin.createComplexEntityCore(node_createEntityDefinition(complexEntityDef), variableGroupId, bundleCore, configure);
+	};
+	
 	var loc_createComplexEntityRuntime = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, request){
 		complexEntityId = new node_EntityIdInDomain(complexEntityId);
 		
@@ -49,8 +58,7 @@ var node_createPackageRuntimeService = function() {
 			variableGroupId = variableDomain.creatVariableGroup(valueStructureComplexDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
 			
 			//new complexCore through complex plugin
-			var complexEntityPlugin = loc_complexEntityPlugins[complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]];
-			var componentCore = complexEntityPlugin.createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
+			var componentCore = loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
 			
 			//build decorationInfos
 			var decorationInfos = null;
@@ -70,6 +78,7 @@ var node_createPackageRuntimeService = function() {
 	var loc_init = function(){
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX1, node_createTestComplex1Plugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_DECORATION1, node_createTestDecoration1Plugin());
+		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, node_createTestSimple1Plugin());
 	};
 
 
@@ -151,13 +160,27 @@ var node_createPackageRuntimeService = function() {
 			return node_createComponentRuntime(node_createBundleCore(globalComplexEntitId, configure), undefined);
 		},
 
+		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){
+			return loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
+		},
+		
+		createSimpleEntity : function(entityDef){
+			var entityType = entityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];
+			var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
+			return simpleEntityPlugin.createEntity(node_createEntityDefinition(entityDef));
+		},
+		
 		createComplexEntityRuntime : function(complexEntityId, parentCore, bundleCore, configure, request){
 			return loc_createComplexEntityRuntime(complexEntityId, parentCore, bundleCore, configure, request);
 		},
 		
 		registerComplexEntityPlugin : function(entityType, complexEntityPlugin){
 			loc_complexEntityPlugins[entityType] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
-		}
+		},
+		
+		registerSimpleEntityPlugin : function(entityType, simpleEntityPlugin){
+			loc_simpleEntityPlugins[entityType] = node_buildSimpleEntityPlugInObject(simpleEntityPlugin);
+		},
 	};
 
 	loc_init();
@@ -179,6 +202,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("package.createBundleCore", function(){node_createBundleCore = this.getData();});
 nosliw.registerSetNodeDataEvent("package.entity.EntityIdInDomain", function(){node_EntityIdInDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("package.buildComplexEntityPlugInObject", function(){node_buildComplexEntityPlugInObject = this.getData();});
+nosliw.registerSetNodeDataEvent("package.buildSimpleEntityPlugInObject", function(){node_buildSimpleEntityPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("package.createPackageCore", function(){node_createPackageCore = this.getData();});
@@ -186,9 +210,11 @@ nosliw.registerSetNodeDataEvent("package.createApplication", function(){node_cre
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("package.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestDecoration1Plugin", function(){node_createTestDecoration1Plugin = this.getData();});
+nosliw.registerSetNodeDataEvent("testcomponent.createTestSimple1Plugin", function(){node_createTestSimple1Plugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createPackageRuntimeService", node_createPackageRuntimeService); 

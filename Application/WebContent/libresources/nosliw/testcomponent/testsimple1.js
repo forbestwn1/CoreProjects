@@ -6,22 +6,30 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
-	var node_createServiceRequestInfoSimple;
-	var node_createServiceRequestInfoSequence;
-	var node_ServiceInfo;
-	var node_createConfigure;
-	var node_createErrorData;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createTestSimple1Plugin = function(){
+	
+	var loc_out = {
+
+		createEntity : function(entityDef){
+			return node_createTestSimple1(entityDef);
+		},
+			
+	};
+
+	return loc_out;
+};
+
+	
 var node_createTestSimple1 = function(testSimple1Def){
 	
 	var loc_coreObject;
 	
 	var loc_init = function(testSimple1Def){
-		var attributes = testSimple1Def[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
-		var scriptFun = attributes[node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_SCRIPT];
-		var scriptParms = attributes[node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_PARM];
+		var scriptFun = testSimple1Def.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_SCRIPT);
+		var scriptParms = testSimple1Def.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_PARM);
 		loc_coreObject = scriptFun(scriptParms);
 	};
 	
@@ -45,13 +53,8 @@ var node_createTestSimple1 = function(testSimple1Def){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
-nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTestSimple1", node_createTestSimple1); 
+packageObj.createChildNode("createTestSimple1Plugin", node_createTestSimple1Plugin); 
 
 })(packageObj);

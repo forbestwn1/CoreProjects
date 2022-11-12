@@ -19,6 +19,15 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public static String EMBEDED = "embeded";
 
 	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String VALUE = "value";
+
+	@HAPAttribute
+	public static String VALUEEXPANDED = "valueExpanded";
+
+	@HAPAttribute
 	public static String ADAPTER = "adapter";
 
 	@HAPAttribute
@@ -52,6 +61,8 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public Object getAdapter() {	return m_adapter;	}
 	public void setAdapter(Object adapter) {	this.m_adapter = adapter;	}
 
+	abstract public String getType();
+	
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
@@ -61,18 +72,22 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
+	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {
+		if(this.getValue() instanceof HAPExpandable)   jsonMap.put(VALUEEXPANDED, ((HAPExpandable) this.getValue()).toExpandedJsonString(entityDomain));
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(VALUETYPE, this.m_entityType);
 		jsonMap.put(ISCOMPLEX, this.m_isComplex+"");
 		typeJsonMap.put(ISCOMPLEX, Boolean.class);
 		if(this.getAdapter()!=null) {
 			jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapter(), HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 	}
 	
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {}	
-
 	public abstract HAPEmbeded cloneEmbeded();
 
 	protected void cloneToEmbeded(HAPEmbeded embeded) {

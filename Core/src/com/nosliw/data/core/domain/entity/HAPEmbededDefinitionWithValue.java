@@ -1,17 +1,10 @@
 package com.nosliw.data.core.domain.entity;
 
-import java.util.Map;
-
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPEmbededDefinitionWithValue extends HAPEmbededDefinition{
-
-	@HAPAttribute
-	public static String VALUE = "value";
 
 	public HAPEmbededDefinitionWithValue() {}
 	
@@ -20,15 +13,12 @@ public class HAPEmbededDefinitionWithValue extends HAPEmbededDefinition{
 	}
 	
 	@Override
+	public String getType() {  return HAPConstantShared.EMBEDED_TYPE_DEFINITION_VALUE;  }
+
+	@Override
 	public HAPEmbededDefinitionWithValue cloneEmbeded() {
 		HAPEmbededDefinitionWithValue out = new HAPEmbededDefinitionWithValue(this.getValue());
 		this.cloneToEmbeded(out);
 		return out;
-	}
-	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUE,  HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 	}
 }

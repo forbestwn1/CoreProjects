@@ -21,7 +21,22 @@ var node_buildComplexEntityPlugInObject = function(rawPluginObj){
 		
 	return _.extend({}, interfaceDef, rawPluginObj);	
 };
-	
+
+var node_buildSimpleEntityPlugInObject = function(rawPluginObj){
+
+	var interfaceDef = {
+		//create component core object
+		createComplexEntityCore : function(id, complexEntityDef, variableGroupId, bundleCore, configure){
+			return {};
+		}
+	};
+		
+	return _.extend({}, interfaceDef, rawPluginObj);	
+};
+
+
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -30,5 +45,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 
 //Register Node by Name
 packageObj.createChildNode("buildComplexEntityPlugInObject", node_buildComplexEntityPlugInObject); 
+packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEntityPlugInObject); 
 
 })(packageObj);

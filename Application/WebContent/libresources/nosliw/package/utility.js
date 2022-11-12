@@ -13,11 +13,12 @@ var packageObj = library;
 var node_packageUtility = {
 	
 	getAttributeType : function(attributeObj){
-		if(attributeObj[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE]!=undefined){
-			return node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE;
-		}
-		else if(attributeObj[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE]!=undefined){
+		var embededValue = attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];
+		if(embededValue[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE]!=undefined){
 			return node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER;
+		}
+		else{
+			return node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE;
 		}
 	}
 

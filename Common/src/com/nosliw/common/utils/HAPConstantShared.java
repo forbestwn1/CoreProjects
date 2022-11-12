@@ -830,8 +830,16 @@ public class HAPConstantShared {
 
 
 
-		public static final String ENTITYATTRIBUTE_TYPE_NORMAL = "simple";
+		public static final String ENTITYATTRIBUTE_TYPE_NORMAL = "normal";
 		public static final String ENTITYATTRIBUTE_TYPE_CONTAINER = "container";
+
+
+
+		public static final String EMBEDED_TYPE_DEFINITION_ID = "id";
+		public static final String EMBEDED_TYPE_DEFINITION_VALUE = "value";
+		public static final String EMBEDED_TYPE_EXECUTABLE_ID = "id";
+		public static final String EMBEDED_TYPE_EXECUTABLE_ENTITY = "entity";
+		public static final String EMBEDED_TYPE_EXECUTABLE_VALUE = "value";
 
 
 }

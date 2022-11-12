@@ -506,8 +506,13 @@ var COMMONCONSTANT=
   "ENTITYCONTAINER_TYPE_DEFINITION_SET": "set",
   "ENTITYCONTAINER_TYPE_EXECUTABLE_LIST": "list",
   "ENTITYCONTAINER_TYPE_EXECUTABLE_SET": "set",
-  "ENTITYATTRIBUTE_TYPE_SIMPLE": "simple",
-  "ENTITYATTRIBUTE_TYPE_CONTAINER": "container"
+  "ENTITYATTRIBUTE_TYPE_NORMAL": "normal",
+  "ENTITYATTRIBUTE_TYPE_CONTAINER": "container",
+  "EMBEDED_TYPE_DEFINITION_ID": "id",
+  "EMBEDED_TYPE_DEFINITION_VALUE": "value",
+  "EMBEDED_TYPE_EXECUTABLE_ID": "id",
+  "EMBEDED_TYPE_EXECUTABLE_ENTITY": "entity",
+  "EMBEDED_TYPE_EXECUTABLE_VALUE": "value"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

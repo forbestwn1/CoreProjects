@@ -69,7 +69,7 @@ public class HAPManagerComplexEntity {
 			out.addDependency(bundleId);
 		}
 		
-		HAPUtilityExport.exportExecutablePackage(out, this);
+		HAPUtilityExport.exportExecutablePackage(out, this, this.m_runtimeEnv.getRuntime().getRuntimeInfo());
 		return out;
 	}
 

@@ -872,6 +872,14 @@
 			<definition type="space"/>
 			<definition name="ENTITYATTRIBUTE_TYPE_NORMAL" value="normal"/>
 			<definition name="ENTITYATTRIBUTE_TYPE_CONTAINER" value="container"/>
+
+			<definition type="space"/>
+			<definition name="EMBEDED_TYPE_DEFINITION_ID" value="id"/>
+			<definition name="EMBEDED_TYPE_DEFINITION_VALUE" value="value"/>
+			<definition name="EMBEDED_TYPE_EXECUTABLE_ID" value="id"/>
+			<definition name="EMBEDED_TYPE_EXECUTABLE_ENTITY" value="entity"/>
+			<definition name="EMBEDED_TYPE_EXECUTABLE_VALUE" value="value"/>
+
 		</definitions>
 	</constants>
 </root>

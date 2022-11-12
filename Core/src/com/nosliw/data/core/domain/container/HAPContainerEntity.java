@@ -10,9 +10,9 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 
@@ -30,6 +30,9 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	
 	@HAPAttribute
 	public static String EXTRA = "extra";
+
+	@HAPAttribute
+	public static String ISCOMPLEX = "isComplex";
 
 	private String m_elementType;
 	
@@ -99,6 +102,8 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		if(this.m_extraInfo!=null)  jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getContainerType());
 		jsonMap.put(ELEMENTTYPE, this.getElementType());
+		jsonMap.put(ISCOMPLEX, this.getIsComplex()+"");
+		typeJsonMap.put(ISCOMPLEX, Boolean.class);
 		
 		List<String> elesJsonArray = new ArrayList<String>();
 		for(T ele : this.getAllElements()) {

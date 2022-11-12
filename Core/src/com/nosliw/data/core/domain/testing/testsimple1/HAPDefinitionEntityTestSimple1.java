@@ -19,14 +19,14 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 
 	public HAPDefinitionEntityTestSimple1() {
 		super(ENTITY_TYPE);
-		this.setNormalAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
+		this.setNormalAttribute(ATTR_PARM, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
 	}
 
 	public void setScriptName(String scriptName) {    this.setNormalAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(scriptName));    }
 	public String getScriptName() {   return (String)this.getNormalAttributeWithValue(ATTR_SCRIPTNAME).getValue().getValue();     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
-	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeWithValue(ATTR_PARM).getValue();    }
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeWithValue(ATTR_PARM).getValue().getValue();    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override
