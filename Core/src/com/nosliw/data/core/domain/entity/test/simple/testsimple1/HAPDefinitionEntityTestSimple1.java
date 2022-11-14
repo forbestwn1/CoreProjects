@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testsimple1;
+package com.nosliw.data.core.domain.entity.test.simple.testsimple1;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,11 +29,6 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeWithValue(ATTR_PARM).getValue().getValue();    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-	}
-
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityTestSimple1 out = new HAPDefinitionEntityTestSimple1();

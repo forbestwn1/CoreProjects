@@ -35,6 +35,17 @@ var node_createPackageRuntimeService = function() {
 	var loc_complexEntityPlugins = {};
 	var loc_simpleEntityPlugins = {};
 
+	var loc_createContainerComplexEntityRuntime = function(containerDef, parentComplexEntityCore, bundleCore, configure, request){
+		var out = node_createComplexEntityRuntimeContainer();
+		var elements = containerDef[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
+		_.each(elements, function(ele, i){
+			var entityId = ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
+			var eleEntityRuntime = loc_createComplexEntityRuntime(entityId, parentComplexEntityCore, bundleCore, configure, request);
+			out.addElement(eleEntityRuntime);
+		});
+		return out;
+	};
+	
 	var loc_createComplexEntityCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
 		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
@@ -172,6 +183,10 @@ var node_createPackageRuntimeService = function() {
 		
 		createComplexEntityRuntime : function(complexEntityId, parentCore, bundleCore, configure, request){
 			return loc_createComplexEntityRuntime(complexEntityId, parentCore, bundleCore, configure, request);
+		},
+
+		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){
+			return loc_createContainerComplexEntityRuntime(containerDef, parentCore, bundleCore, configure, request);
 		},
 		
 		registerComplexEntityPlugin : function(entityType, complexEntityPlugin){

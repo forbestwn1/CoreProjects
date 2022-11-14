@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testsimple1;
+package com.nosliw.data.core.domain.entity.test.simple.testsimple1;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -18,6 +18,4 @@ public class HAPProcessorTestSimple1 {
 		HAPExecutableTestSimple1 out = new HAPExecutableTestSimple1(scriptDef.getScript(), testSimple1Def.getParms());
 		return out;
 	}
-	
-	
 }

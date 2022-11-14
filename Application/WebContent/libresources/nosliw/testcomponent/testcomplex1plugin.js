@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createConfigure;
 	var node_createErrorData;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -76,6 +77,47 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 	var loc_simpleTest1Atts = {};
 	
 	var loc_init = function(complexEntityDef, variableGroupId, bundleCore, configure){
+		_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
+			var attr = loc_complexEntityDef.getAttribute(attrName);
+			if(attr.isSimpleAttribute()){
+				//normal attribute
+				var attrValue = attr.getValue();
+				var entityType = attr.getEntityType();
+				if(attr.isComplex()==true){
+					//complex
+					var complexEntityId = attrValue;
+					var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
+					loc_children[attrName] = attrEntity;
+				}
+				else{
+					//simple attribute
+					if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+						//test_simple attribute
+						loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(nosliw.runtime.getPackageService().createSimpleEntity(attrValue));
+					}
+				}
+			}
+			else{
+				//container attribute
+				if(attr.isElementComplex()==true){
+					//complex
+					var attrEntity = nosliw.runtime.getPackageService().createContainerComplexEntityRuntime(attr.getContainer(), loc_out, loc_bundleCore, loc_configureValue[attrName]);
+					loc_children[attrName] = attrEntity;
+				}
+				else{
+					//simple
+					if(attr.getElementEntityType()==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
+						//test_simple container attribute
+						var containerAttr = loc_createContainerAttribute();
+						_.each(attr.getElements(), function(ele, i){
+							var eleEntity = nosliw.runtime.getPackageService().createSimpleEntity(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE]);
+							containerAttr.addElement(eleEntity);
+						});
+						loc_simpleTest1Atts[attrName] = containerAttr;
+					}
+				}
+			}
+		});
 	};
 	
 	var loc_simpleTest1AttrsInvoke = function(funName, parm1, parm2){
@@ -94,66 +136,13 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 
-			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
-				var attr = loc_complexEntityDef.getAttribute(attrName);
-				if(attr.isSimpleAttribute()){
-					var attrValue = attr.getValue();
-					var entityType = attr.getEntityType();
-					if(attr.isComplex()==true){ 
-						var complexEntityId = attrValue;
-						var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
-						loc_children[attrName] = attrEntity;
-						out.addRequest(attrEntity.getPreInitRequest());
-					}
-					else{
-						//simple attribute
-						if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-							//test_simple attribute
-							loc_simpleTest1Atts[attrName] = nosliw.runtime.getPackageService().createSimpleEntity(attrValue);
-						}
-					}
-				}
-				else{
-					//container attribute
-					if(attr.getElementEntityType()==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-						//test_simple container attribute
-						var containerAttr = loc_createContainerAttribute();
-						_.each(attr.getElements(), function(ele, i){
-							containerAttr.addElement(node_createTestSimple1(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE]));
-						});
-						loc_simpleTest1Atts[attrName] = containerAttr;
-					}
-				}
+			//complex attribute
+			_.each(loc_children, function(child, childName){
+				out.addRequest(child.getPreInitRequest());
 			});
-			
-			
-			
-			
-			
-//			//process attributes
-//			var attributes = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
-//			_.each(attributes, function(attribute, attrName){
-//				
-//				attribute[]
-//				
-//				var complexEntityId = childComplex[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
-//				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
-//				loc_children[attrName] = attrEntity;
-//				out.addRequest(attrEntity.getPreInitRequest());
-//			});
 
-			
-			//complex children
-			var childrenComplex = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_CHILDREN];
-			_.each(childrenComplex, function(childComplex, attrName){
-				var complexEntityId = childComplex[node_COMMONATRIBUTECONSTANT.EMBEDEDWITHID_ENTITYID];
-				var attrEntity = nosliw.runtime.getPackageService().createComplexEntityRuntime(complexEntityId, loc_out, loc_bundleCore, loc_configureValue[attrName]);
-				loc_children[attrName] = attrEntity;
-				out.addRequest(attrEntity.getPreInitRequest());
-			});
-			
 			//simpletest1 attribute
-			loc_simpleTest1AttrsInvoke("getPreInitRequest");
+			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_PREINIT);
 			
 			return out;
 		},		
@@ -179,7 +168,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			});
 			
 			//simpletest1 attribute
-			loc_simpleTest1AttrsInvoke("getUpdateRuntimeContextRequest", runtimeContext);
+//			node_componentUtility.
+			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT, runtimeContext);
 			
 			return out;
 		},
@@ -206,7 +196,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				var out = {};
 				_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
-					out[name] = simpleTest1Att.callBack("getGetStateDataRequest");
+					out[name] = simpleTest1Att.callBack(node_CONSTANT.COMPONENT_INTERFACE_GETSTATE);
 				});
 				return out;
 			}, handlers, request);
@@ -214,7 +204,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 		getRestoreStateDataRequest : function(stateData, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
-					simpleTest1Att.callBack("getRestoreStateDataRequest", stateData==undefined?undefined:stateData[name]);
+					simpleTest1Att.callBack(node_CONSTANT.COMPONENT_INTERFACE_RESTORESTATE, stateData==undefined?undefined:stateData[name]);
 				});
 			}, handlers, request);
 		},
@@ -275,6 +265,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

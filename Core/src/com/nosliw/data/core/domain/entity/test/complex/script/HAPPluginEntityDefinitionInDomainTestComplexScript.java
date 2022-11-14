@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testsimple1;
+package com.nosliw.data.core.domain.entity.test.complex.script;
 
 import org.json.JSONObject;
 
@@ -11,25 +11,25 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainTestComplexScript extends HAPPluginEntityDefinitionInDomainImp{
 
-	public HAPPluginEntityDefinitionInDomainTestSimple1(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityTestSimple1.class, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainTestComplexScript(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPDefinitionEntityTestComplexScript.class, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		HAPDefinitionEntityTestSimple1 entity = (HAPDefinitionEntityTestSimple1)this.getEntity(entityId, parserContext);
+		HAPDefinitionEntityTestComplexScript entity = (HAPDefinitionEntityTestComplexScript)this.getEntity(entityId, parserContext);
 		JSONObject jsonObj = (JSONObject)obj;
 
 		//script
-		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestSimple1.ATTR_SCRIPTNAME);
+		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestComplexScript.ATTR_SCRIPTNAME);
 		entity.setScriptName(scriptName);
 		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPDefinitionEntityTestSimple1.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
+		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPDefinitionEntityTestComplexScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
 		
 		//parms
-		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestSimple1.ATTR_PARM);
+		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestComplexScript.ATTR_PARM);
 		if(parms!=null) {
 			for(Object key : parms.keySet()) {
 				String parmName = (String)key;
@@ -39,5 +39,5 @@ public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntit
 	}
 
 	@Override
-	public boolean isComplexEntity() {	return false;	}
+	public boolean isComplexEntity() {	return true;	}
 }

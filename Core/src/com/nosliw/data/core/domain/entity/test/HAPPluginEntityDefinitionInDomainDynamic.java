@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing;
+package com.nosliw.data.core.domain.entity.test;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;

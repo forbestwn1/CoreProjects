@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testcomplex1;
+package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;

@@ -295,6 +295,15 @@ var node_CONSTANT=
 	  
 	  "ATTRIBUTE_TYPE_SIMPLE" : "simple",
 	  "ATTRIBUTE_TYPE_CONTAINER" : "container",
+	  
+	  "COMPONENT_INTERFACE_GETSTATE" : "getGetStateDataRequest",
+	  "COMPONENT_INTERFACE_RESTORESTATE" : "getRestoreStateDataRequest",
+	  "COMPONENT_INTERFACE_PREINIT" : "getPreInitRequest",
+	  "COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT" : "getUpdateRuntimeContextRequest",
+	  "COMPONENT_INTERFACE_UPDATERUNTIMEINTERFACE" : "getUpdateRuntimeInterfaceRequest",
+	  "COMPONENT_INTERFACE_POSTINIT" : "getPostInitRequest",
+	  "COMPONENT_INTERFACE_LIFECYCLE" : "getLifeCycleRequest",
+	  "COMPONENT_INTERFACE_" : "",
 };
 
 //*******************************************   End Node Definition  ************************************** 	

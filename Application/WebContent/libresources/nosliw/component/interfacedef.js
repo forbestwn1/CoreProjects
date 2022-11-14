@@ -167,7 +167,7 @@ var node_buildComponentCore = function(rawComponentCore){
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				if(loc_isDebugMode()){
-					loc_getDebugView().logMethodCalled("getGetStateDataRequest", {
+					loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_GETSTATE, {
 						"stateData" : stateData
 					});
 				}
@@ -185,7 +185,7 @@ var node_buildComponentCore = function(rawComponentCore){
 			
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				if(loc_isDebugMode()){
-					loc_getDebugView().logMethodCalled("getRestoreStateDataRequest", {
+					loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_RESTORESTATE, {
 						"stateData" : stateData
 					});
 				}
@@ -205,7 +205,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled("getPreInitRequest", {
+				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_PREINIT, {
 					"configure" : loc_configureValue
 				});
 			}
@@ -216,7 +216,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperUpdateRuntimeContextRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled("UpdateRuntimeContextRequest",
+				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT,
 						{
 							"runtimeContext" : runtimeContext
 						});
@@ -237,7 +237,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled("getUpdateRuntimeInterfaceRequest");
+				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMEINTERFACE);
 			}
 			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest());
 			return out;
@@ -247,7 +247,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		getPostInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPostInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled("getPostInitRequest");
+				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_POSTINIT);
 			}
 			if(loc_rawComponentCore.getPostInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPostInitRequest());
 			return out;
@@ -255,7 +255,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled("getLifeCycleRequest", {
+				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_LIFECYCLE, {
 					"transitName" : transitName
 				});
 			}

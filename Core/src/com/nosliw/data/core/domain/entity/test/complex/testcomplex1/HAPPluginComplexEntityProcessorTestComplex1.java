@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testcomplex1;
+package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormalId;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithEntity;
+import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPExecutableTestSimple1;
+import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPProcessorTestSimple1;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
-import com.nosliw.data.core.domain.testing.testsimple1.HAPExecutableTestSimple1;
-import com.nosliw.data.core.domain.testing.testsimple1.HAPProcessorTestSimple1;
 
 public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComplexEntityProcessorImp{
 
@@ -77,15 +77,6 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 				}
 			}
 		}
-		
-		
-		
-//		String variable = definitionEntity.getVariable();
-//		
-//		HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(new HAPReferenceElementInStructureComplex(variable), new HAPCandidatesValueStructureComplex(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
-//		
-//		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
-		
 	}
 
 }

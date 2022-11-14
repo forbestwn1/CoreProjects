@@ -6,8 +6,6 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 //entity that have data value structure and attachment
 public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
 
-	public static final String COMPLEX = "complex";
-	
 	protected HAPDefinitionEntityInDomainComplex() {}
 	
 	public HAPDefinitionEntityInDomainComplex (String entityType) {

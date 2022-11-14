@@ -23,106 +23,11 @@
 				"scriptName": "testsimple1"
 			}
 		},
-		"entity2_none_testcomplex1": {
+		"entity2_none_test.complex.1": {
 			"extra": {
 				"status": "disabled"
 			},
 			"entity":{
-			}
-		},
-		"entity3_none_testcomplex1": {
-			"extra": {
-				"status": "disabled"
-			},
-			"entity":{
-				"attribute2_none_testcomplex1": {
-				
-				}
-			}
-		},
-		"valueStructureInheritModeNone_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "none"
-					}
-				}
-			}
-		},
-		"valueStructureInheritModeDefinition_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "definition"
-					}
-				}
-			}
-		},
-		"valueStructureInheritModeRuntime_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "runtime"
-					}
-				}
-			}
-		},
-		"valueStructureInheritModeReference_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "reference"
-					}
-				}
-			}
-		},
-		"valueStructureInheritInfoExclude_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_inherit_mode",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "runtime",
-						"excludedInfo" : ["excluded1", "excluded2"]
-					}
-				}
-			}
-		},
-		"valueStructureRelative_none_testcomplex1": {
-			"resourceId": "testcomplex1|#valuestructure_relative",
-			"extra": {
-				"status": "disabled"
-			},
-			"parent": {
-				"valuestructure": {
-					"inherit": {
-						"mode" : "none"
-					}
-				}
-			}
-		},
-		"localresource1_none_testcomplex1": {
-			"resourceId": "testcomplex1|#localchild",
-			"extra": {
-				"status": "disabled"
 			}
 		},
 		"globalresource1_none_testsimple1": {
@@ -131,28 +36,11 @@
 			},
 			"resourceId": "testsimple1|*test1"
 		},
-		"globalresource2_none_testcomplex1": {
-			"extra": {
-				"status": "disabled"
-			},
-			"resourceId": "testcomplex1|*child",
-			"parent": {
-				"attachment": {
-					"mode": "none"
-				}
-			}
-		},
 		"reference1_none_testsimple1": { 
 			"extra": {
 				"status": "disabled"
 			},
 			"reference": "samename"
-		},
-		"reference2_none_testcomplex1": { 
-			"extra": {
-				"status": "disabled"
-			},
-			"reference": "data"
 		},
 		"normal1_set_testsimple1": {
 			"extra": {
@@ -267,7 +155,7 @@
 						}
 					}
 				],
-				"testcomplex1": [
+				"test.complex.1": [
 				
 				]
 			}

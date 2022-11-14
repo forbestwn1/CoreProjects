@@ -26,7 +26,7 @@
          	</div>
     	</div>
 
-		<div id="mainDiv"></div>
+		<div id="mainDiv" style="overflow-y: scroll; height:400px;"></div>
 	
 		<div class="panel panel-right panel-cover">
       		<div class="block" id="debugDiv2">
@@ -108,7 +108,7 @@ $(document).on("nosliwActive", function(){
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, "testcomplex1", "parent", undefined, "testcomplex1", undefined, {
+	}, "test.complex.1", "parent", undefined, "testcomplex1", undefined, {
 		success : function(request, componentObj){
 //			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
 //			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);

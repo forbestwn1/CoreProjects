@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.testing.testsimple1;
+package com.nosliw.data.core.domain.entity.test.simple.testsimple1;
 
 import java.util.Map;
 

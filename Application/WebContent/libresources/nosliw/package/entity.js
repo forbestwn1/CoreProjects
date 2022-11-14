@@ -58,7 +58,7 @@ var node_createEntityDefinition = function(original){
 			var attr = loc_getAttributeByName(attrName);
 			var attrType = node_packageUtility.getAttributeType(attr);
 			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE)	out = loc_createSimpleAttribute(attr);
-			else		out = loc_createComplexAttribute(attr);
+			else		out = loc_createContainerAttribute(attr);
 			return out;
 		},
 
