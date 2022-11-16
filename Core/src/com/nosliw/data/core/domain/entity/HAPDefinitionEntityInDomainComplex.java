@@ -13,7 +13,7 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	}
 	
 	@Override
-	public HAPEmbededDefinitionWithId getValueStructureComplexEntity() {  return this.getNormalAttributeWithId(HAPWithValueStructure.VALUESTRUCTURE).getValue();  }
+	public HAPEmbededDefinitionWithId getValueStructureComplexEntity() {  		return this.getNormalAttributeValueWithId(HAPWithValueStructure.VALUESTRUCTURE);	}
 
 	@Override
 	public void setValueStructureComplexEntity(HAPEmbededDefinitionWithId valueStructureComplexEntity) {    this.setNormalAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
@@ -22,7 +22,7 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public String getValueStructureTypeIfNotDefined() {  return null;  }
 
 	@Override
-	public HAPEmbededDefinitionWithId getAttachmentContainerEntity() {   return this.getNormalAttributeWithId(HAPWithAttachment.ATTACHMENT).getValue();  }
+	public HAPEmbededDefinitionWithId getAttachmentContainerEntity() {  return this.getNormalAttributeValueWithId(HAPWithAttachment.ATTACHMENT);  }
 
 	@Override
 	public void setAttachmentContainerEntity(HAPEmbededDefinitionWithId attachmentEntity) {    this.setNormalAttribute(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }

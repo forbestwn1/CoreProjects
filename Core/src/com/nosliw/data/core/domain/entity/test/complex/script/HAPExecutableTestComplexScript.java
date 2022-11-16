@@ -11,6 +11,8 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 @HAPEntityWithAttribute
 public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 
+	public static final String ENTITY_TYPE = HAPDefinitionEntityTestComplexScript.ENTITY_TYPE;
+
 	@HAPAttribute
 	public static String SCRIPT = "script";
 	

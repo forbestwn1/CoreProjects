@@ -98,11 +98,11 @@ public class HAPManagerComplexEntity {
 		this.getResourceDefinitionManager().getResourceDefinition(complexEntityResourceId, globalDefDomain);
 		//build executable
 		HAPContextProcessor processContext = new HAPContextProcessor(new HAPExecutableBundle(complexEntityResourceId, globalDefDomain), m_runtimeEnv);
-		this.process(processContext);
+		this.processBundle(processContext);
 		return processContext.getCurrentBundle();
 	}
 
-	private void process(HAPContextProcessor processContext) {
+	private void processBundle(HAPContextProcessor processContext) {
 		HAPExecutableBundle complexResourcePackage = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
 		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
@@ -116,14 +116,20 @@ public class HAPManagerComplexEntity {
 		//process value structure
 		HAPUtilityValueStructure.buildValueStructureDomain(rootEntityIdExe, processContext);
 		
-		//process entity
-		HAPPluginComplexEntityProcessor processPlugin = this.m_processorPlugins.get(processContext.getCurrentComplexResourceId().getResourceType());
-		processPlugin.process(complexResourcePackage.getExecutableRootEntityId(), processContext);
+		//process root entity
+		this.processComplexEntity(complexResourcePackage.getExecutableRootEntityId(), processContext);
 		
 		//process adapter
 		
 	}
 
+	public void processComplexEntity(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
+			HAPPluginComplexEntityProcessor processPlugin = this.m_processorPlugins.get(exeEntityId.getEntityType());
+			processPlugin.process(exeEntityId, processContext);
+		}
+	}
+	
 	private HAPManagerResourceDefinition getResourceDefinitionManager() {    return this.m_runtimeEnv.getResourceDefinitionManager();      }
 	private HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager() {     return this.m_runtimeEnv.getDomainEntityManager();      }
 	

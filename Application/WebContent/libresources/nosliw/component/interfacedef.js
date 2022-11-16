@@ -100,7 +100,7 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 
 
 //interface for component core 
-var node_buildComponentCore = function(rawComponentCore){
+var node_buildComponentCore = function(rawComponentCore, debugMode){
 	var loc_id;
 	var loc_rawComponentCore = rawComponentCore;
 	var loc_backupState;
@@ -109,11 +109,15 @@ var node_buildComponentCore = function(rawComponentCore){
 	var loc_debugMode = false;
 	var loc_debugView;
 	
-	var loc_init = function(){
-		var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug")];
-		if("true"==debugConf){
-			//debug mode
-			loc_debugMode = true;
+	var loc_init = function(rawComponentCore, debugMode){
+		if(debugMode!=undefined)  loc_debugMode = debugMode;
+		else{
+			//get debug mode from configure
+			var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug")];
+			if("true"==debugConf){
+				//debug mode
+				loc_debugMode = true;
+			}
 		}
 	};
 	
@@ -274,7 +278,7 @@ var node_buildComponentCore = function(rawComponentCore){
 		endLifecycleTask : function(){},
 		
 	};
-	loc_init();
+	loc_init(rawComponentCore, debugMode);
 	
 	return loc_out;
 };

@@ -53,6 +53,12 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return out;
 	}
 	public HAPAttributeEntityDefinitionNormalId getNormalAttributeWithId(String attrName) {    return (HAPAttributeEntityDefinitionNormalId)this.getAttribute(attrName);    }
+	public HAPEmbededDefinitionWithId getNormalAttributeValueWithId(String attrName) {
+		HAPAttributeEntityDefinitionNormalId att = this.getNormalAttributeWithId(attrName);
+		if(att!=null)  return att.getValue();
+		else return null;
+
+	}
 	public HAPAttributeEntityDefinitionNormalValue getNormalAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);    }
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	

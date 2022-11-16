@@ -5,13 +5,13 @@
 	},
 	"entity": {
 		"ignore_variable" : "parent_public",
-		"simplized1_none_testsimple1": {
+		"simplized1_none_test.complex.script": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
-			"scriptName": "testsimple1",
+			"scriptName": "testcomplexscript1",
 			"parm" : {
-				"name" : "simplized1_none_testsimple1",
+				"name" : "simplized1_none_test.complex.script",
 				"state" : "state1111"
 			}
 		},
@@ -42,7 +42,7 @@
 			},
 			"reference": "samename"
 		},
-		"normal1_set_testsimple1": {
+		"normal1_set_test.complex.script": {
 			"extra": {
 				"status": "disabled1"
 			},
@@ -53,9 +53,9 @@
 						"description": "element1"
 					},
 					"entity":{
-						"scriptName": "testsimple1",
+						"scriptName": "testcomplexscript1",
 						"parm" : {
-							"name" : "normal1_set_testsimple1_element1",
+							"name" : "normal1_set_test.complex.script_element1",
 							"state" : "element111"
 						}
 					}
@@ -66,9 +66,9 @@
 						"description": "element2"
 					},
 					"entity":{
-						"scriptName": "testsimple1",
+						"scriptName": "testcomplexscript1",
 						"parm" : {
-							"name" : "normal1_set_testsimple1_element2",
+							"name" : "normal1_set_test.complex.script_element2",
 							"state" : "element222"
 						}
 					}
@@ -77,7 +77,7 @@
 		},
 		"normal1_list_testsimple1": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"element": [
 				{
@@ -110,7 +110,7 @@
 		},
 		"attachment": {
 			"extra": {
-				"status": "disabled1",
+				"status": "disabled",
 				"name": "parent attachment" 
 			},
 			"entity": {
@@ -161,6 +161,9 @@
 			}
 		},
 		"valueStructure": {
+			"extra": {
+				"status": "disabled"
+			},
 			"entity": [
 				{
 					"groupType" : "public",

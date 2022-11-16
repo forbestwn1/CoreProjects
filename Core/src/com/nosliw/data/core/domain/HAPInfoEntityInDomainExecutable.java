@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -62,6 +62,8 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 	
 	public HAPExtraInfoEntityInDomainExecutable getExtraInfo() {    return this.m_extraInfo;    }
 	
+	public boolean isLocalEntity() {   return this.m_entity!=null;    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -78,7 +80,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString((HAPDomainEntityExecutableResourceComplex)entityDomain));
+		if(this.m_entity!=null)  jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDomain));
 		jsonMap.put(EXTERNALCOMPLEXENTITYID, this.m_externalComplexEntityId);
 		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);
 	}

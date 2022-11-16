@@ -168,7 +168,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			});
 			
 			//simpletest1 attribute
-//			node_componentUtility.
 			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT, runtimeContext);
 			
 			return out;

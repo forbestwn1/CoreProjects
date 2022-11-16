@@ -5,10 +5,10 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
 
-public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInDomainComplex{
 
 	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT;
 

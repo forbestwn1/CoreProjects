@@ -36,6 +36,13 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	public List<HAPAttributeEntityExecutable> getAttributes(){    return this.m_attributes;     }
 	
+	public HAPAttributeEntityExecutable getAttribute(String attrName) {
+		for(HAPAttributeEntityExecutable attr : this.m_attributes) {
+			if(attrName.equals(attr.getName()))  return attr;
+		}
+		return null;
+	}
+	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {    this.m_attributes.add(attrObj);    }
 	
 	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity) {

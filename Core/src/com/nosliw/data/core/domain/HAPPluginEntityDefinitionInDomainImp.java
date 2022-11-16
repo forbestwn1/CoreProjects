@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.container.HAPContainerEntity;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
@@ -153,7 +153,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			}
 
 			if(isEnable) {
-				HAPContainerEntity entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType, this.getRuntimeEnvironment().getDomainEntityManager());
+				HAPContainerEntityDefinition entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType, eleEntityType, this.getRuntimeEnvironment().getDomainEntityManager());
 				entityContainer.setExtraInfo(extraInfo);
 				for(int i=0; i<eleArrayObj.length(); i++) {
 					JSONObject eleObj = eleArrayObj.getJSONObject(i);
@@ -164,6 +164,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 					//element
 					entityContainer.addEntityElement(buildContainerElement(eleObj, embededEntity, parserContext));
 				}
+				entity.setContainerAttribute(attributeName, entityContainer);
 			}
 		}
 	}
