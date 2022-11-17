@@ -19,10 +19,10 @@ public class HAPUtilityContainerEntity {
 	public static HAPContainerEntityExecutable buildExecutionContainer(String containerType, String elementType, HAPManagerDomainEntityDefinition domainEntityDefMan) {
 		HAPContainerEntityExecutable out = null;
 		if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET.equals(containerType)) {
-			out = new HAPContainerEntityExecutableList(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityExecutableSet(elementType, domainEntityDefMan.isComplexEntity(elementType));
 		}
 		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST.equals(containerType)) {
-			out = new HAPContainerEntityExecutableSet(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityExecutableList(elementType, domainEntityDefMan.isComplexEntity(elementType));
 		}
 		return out;
 	}

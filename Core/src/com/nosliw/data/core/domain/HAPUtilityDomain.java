@@ -14,7 +14,6 @@ import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithId;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
@@ -82,7 +81,7 @@ public class HAPUtilityDomain {
 						if(containerAttrExe.getIsComplex()) {
 							List<HAPElementContainer> eleInfos = containerAttrExe.getAllElements();
 							for(HAPElementContainer eleInfo : eleInfos) {
-								HAPEmbededDefinitionWithId eleEntity = (HAPEmbededDefinitionWithId)eleInfo.getEmbededElementEntity();
+								HAPEmbededExecutableWithId eleEntity = (HAPEmbededExecutableWithId)eleInfo.getEmbededElementEntity();
 								HAPInfoEntityInDomainExecutable eleEntityInfo = exeDomain.getEntityInfoExecutable(eleEntity.getEntityId()); 
 								traverseExecutableComplexEntityTree(eleEntityInfo, eleEntity.getAdapter(), entityInfo, processor, processContext);
 							}

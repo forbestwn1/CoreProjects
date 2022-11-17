@@ -21,20 +21,27 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+var loc_createContainerElement = function(value, eleId){
+	return {
+		value : value,
+		id : eleId
+	};
+};
+	
 var node_createComplexEntityRuntimeContainer = function(){
 	
 	var loc_elements = [];
 	
 	var loc_out = {
 		
-		addElement : function(element){
-			loc_elements.push(element);
+		addElement : function(element, eleId){
+			loc_elements.push(loc_createContainerElement(element, eleId));
 		},
 		
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getPreInitRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				out.addRequest(ele.getPreInitRequest());
+				out.addRequest(ele.value.getPreInitRequest());
 			});
 			return out;
 		},
@@ -42,9 +49,8 @@ var node_createComplexEntityRuntimeContainer = function(){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getUpdateRuntimeContextRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				var eleId = ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ELEMENTID];
-				var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, eleId, ele); 
-				out.addRequest(ele.getUpdateRuntimeContextRequest(runtimeContext));
+				var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, ele.id, ele.value); 
+				out.addRequest(ele.value.getUpdateRuntimeContextRequest(eleRuntimeContext));
 			});
 			return out;
 		},
@@ -52,7 +58,7 @@ var node_createComplexEntityRuntimeContainer = function(){
 		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getUpdateRuntimeInterfaceRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				out.addRequest(ele.getUpdateRuntimeInterfaceRequest(runtimeInterface));
+				out.addRequest(ele.value.getUpdateRuntimeInterfaceRequest(runtimeInterface));
 			});
 			return out;
 		},
@@ -60,7 +66,7 @@ var node_createComplexEntityRuntimeContainer = function(){
 		getPostInitRequest : function(handlers, request){	
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getPostInitRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				out.addRequest(ele.getPostInitRequest());
+				out.addRequest(ele.value.getPostInitRequest());
 			});
 			return out;
 		},
@@ -68,7 +74,7 @@ var node_createComplexEntityRuntimeContainer = function(){
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getLifeCycleRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				out.addRequest(ele.getLifeCycleRequest(transitName));
+				out.addRequest(ele.value.getLifeCycleRequest(transitName));
 			});
 			return out;
 		},
@@ -162,6 +168,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
-//packageObj.createChildNode("createComponentRuntime", node_createComponentRuntime); 
+packageObj.createChildNode("createComplexEntityRuntimeContainer", node_createComplexEntityRuntimeContainer); 
+packageObj.createChildNode("createEntityContainer", node_createEntityContainer); 
 
 })(packageObj);
