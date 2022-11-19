@@ -161,9 +161,13 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 				loc_mainView.append(childView);
 				loc_childrenViews[childName] = childView;
 				
-				var childRuntimeContext = _.extend({}, runtimeContext, {
-					view : childView
-				});
+				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, childName, child, childView); 
+
+				
+//				var childRuntimeContext = _.extend({}, runtimeContext, {
+//					view : childView
+//				});
+
 				out.addRequest(child.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
 			

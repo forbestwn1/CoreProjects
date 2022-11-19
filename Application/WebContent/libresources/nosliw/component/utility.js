@@ -16,11 +16,14 @@ var node_componentUtility = {
 		return _.extend({}, oldRuntimeContext, override);
 	},
 
-	makeChildRuntimeContext : function(currentRuntimeContext, childPath, childComponent){
-		return this.makeNewRuntimeContext(currentRuntimeContext, {
+	makeChildRuntimeContext : function(currentRuntimeContext, childPath, childComponent, view){
+		var newRuntimeContext = {
 			backupState : currentRuntimeContext.backupState.createChildState(childPath),
 			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childComponent.getId())
-		}); 
+		};
+		if(view!=undefined)  newRuntimeContext.view = view;
+		
+		return this.makeNewRuntimeContext(currentRuntimeContext, newRuntimeContext); 
 	},
 
 	isActive : function(status){  return status==node_CONSTANT.LIFECYCLE_COMPONENT_STATUS_ACTIVE;    },

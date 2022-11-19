@@ -211,6 +211,8 @@ var node_createStateBackupService = function(componentType, id, version, storeSe
 			return loc_createChildState(loc_out, path); 
 		},
 		
+		getPath : function(){	return "root";	},
+
 		setVersion(version){  loc_version = version;  }
 	};
 	
@@ -252,6 +254,8 @@ var loc_createState = function(){
 			if(node_basicUtility.isStringEmpty(path))  return this;
 			return loc_createChildState(loc_out, path); 
 		},
+		
+		getPath : function(){	return "root";	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_STATE);
@@ -280,6 +284,11 @@ var loc_createChildState = function(parent, path){
 		createChildState : function(path){		
 			if(node_basicUtility.isStringEmpty(path))  return this;
 			return loc_createChildState(loc_out, path);	
+		},
+		
+		getPath : function(){
+			var parentPath = loc_parent.getPath();
+			return parentPath+"."+loc_path;	
 		},
 	};
 	

@@ -30,10 +30,14 @@ var loc_createContainerElement = function(value, eleId){
 	
 var node_createComplexEntityRuntimeContainer = function(){
 	
+	var loc_id = nosliw.generateId();
+
 	var loc_elements = [];
 	
 	var loc_out = {
 		
+		getId : function(){  return loc_id;  },
+			
 		addElement : function(element, eleId){
 			loc_elements.push(loc_createContainerElement(element, eleId));
 		},
