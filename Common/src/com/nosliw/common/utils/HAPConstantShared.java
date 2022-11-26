@@ -490,7 +490,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1 = "testsimple1";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1 = "test.complex.1";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT = "test.complex.script";
-		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION1 = "testdecoration1";
+		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION_1 = "test.decoration.1";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATION = "dataAssociation";
 		public static final String RUNTIME_RESOURCE_TYPE_UI = "ui";
 		public static final String RUNTIME_RESOURCE_TYPE_PAGE = "page";

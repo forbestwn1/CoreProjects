@@ -15,7 +15,7 @@ var node_createTestComplexScriptPlugin = function(){
 	var loc_out = {
 
 		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){
-			return node_createTestComplexScript(complexEntityDef, variableGroupId, bundleCore, configure);
+			return loc_createTestComplexScript(complexEntityDef, variableGroupId, bundleCore, configure);
 		},
 
 	};
@@ -24,14 +24,14 @@ var node_createTestComplexScriptPlugin = function(){
 };
 
 	
-var node_createTestComplexScript = function(testComplexScriptDef){
+var loc_createTestComplexScript = function(testComplexScriptDef, variableGroupId, bundleCore, configure){
 	
 	var loc_coreObject;
 	
 	var loc_init = function(testComplexScriptDef){
 		var scriptFun = testComplexScriptDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_SCRIPT);
 		var scriptParms = testComplexScriptDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTSIMPLE1_PARM);
-		loc_coreObject = scriptFun(scriptParms);
+		loc_coreObject = scriptFun(scriptParms, configure);
 	};
 	
 	loc_init(testComplexScriptDef);

@@ -12,15 +12,19 @@
 			"scriptName": "testcomplexscript1",
 			"parm" : {
 				"name" : "simplized1_none_test.complex.script",
-				"state" : "state1111"
+				"state" : "state1"
 			}
 		},
-		"entity1_none_testsimple1": {
+		"entity1_none_test.complex.script": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"entity":{
-				"scriptName": "testsimple1"
+				"scriptName": "testcomplexscript1",
+				"parm" : {
+					"name" : "simplized1_none_test.complex.script",
+					"state" : "state1"
+				}
 			}
 		},
 		"entity2_none_test.complex.1": {
@@ -44,7 +48,7 @@
 		},
 		"normal1_set_test.complex.script": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"element": [
 				{
@@ -56,7 +60,7 @@
 						"scriptName": "testcomplexscript1",
 						"parm" : {
 							"name" : "normal1_set_test.complex.script_element1",
-							"state" : "element111"
+							"state" : "element_set_1"
 						}
 					}
 				},
@@ -69,15 +73,15 @@
 						"scriptName": "testcomplexscript1",
 						"parm" : {
 							"name" : "normal1_set_test.complex.script_element2",
-							"state" : "element222"
+							"state" : "element_set_2"
 						}
 					}
 				}
 			]
 		},
-		"normal1_list_testsimple1": {
+		"normal1_list_test.complex.script": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"element": [
 				{
@@ -86,10 +90,10 @@
 						"description": "element1"
 					},
 					"entity":{
-						"scriptName": "testsimple1",
+						"scriptName": "testcomplexscript1",
 						"parm" : {
-							"name" : "normal1_list_testsimple1_element1",
-							"state" : "element111"
+							"name" : "normal1_list_test.complex.script_element1",
+							"state" : "element_list_1"
 						}
 					}
 				},
@@ -99,10 +103,10 @@
 						"description": "element2"
 					},
 					"entity":{
-						"scriptName": "testsimple1",
+						"scriptName": "testcomplexscript1",
 						"parm" : {
-							"name" : "normal1_list_testsimple1_element2",
-							"state" : "element222"
+							"name" : "normal1_list_test.complex.script_element2",
+							"state" : "element_list_2"
 						}
 					}
 				}

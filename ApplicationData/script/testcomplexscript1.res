@@ -1,10 +1,13 @@
-function(parms){
+function(parms, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 
 	var loc_stateValueView;
 	var loc_parmsView;
+	var loc_configureView;
+	
 	var loc_parms = parms;
+	var loc_configure = configure;
 
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
 		var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
@@ -12,8 +15,11 @@ function(parms){
 
 		loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');
 		rootViewWrapper.append(loc_parmsView);
+
+		loc_configureView =  $('<div>configures:' + JSON.stringify(loc_configure) + '</div>');
+		rootViewWrapper.append(loc_configureView);
 		
-		var stateValueViewWrapper = $('<div>state:</div>');
+		var stateValueViewWrapper = $('<div><span>state:</span></div>');
 		loc_stateValueView = $('<input type="text" style="background-color:pink">');
 		stateValueViewWrapper.append(loc_stateValueView);
 		rootViewWrapper.append(stateValueViewWrapper);

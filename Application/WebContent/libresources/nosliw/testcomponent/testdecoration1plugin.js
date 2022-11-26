@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSimple;
+	var node_buildComponentCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -23,7 +24,22 @@ var node_createTestDecoration1Plugin = function(){
 	return loc_out;
 };
 
+
 var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	
+	var loc_coreObject;
+	
+	var loc_init = function(complexEntityDef){
+		var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTDECORATION1_SCRIPT);
+		loc_coreObject = scriptFun(configure);
+	};
+	
+	loc_init(complexEntityDef);
+	return 	node_buildComponentCore(loc_coreObject, false);
+};
+
+
+var loc_createTestDecoration1ComponentCore1 = function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var loc_complexEntityDef = complexEntityDef;
 	
 	var loc_id;
@@ -75,6 +91,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestDecoration1Plugin", node_createTestDecoration1Plugin); 

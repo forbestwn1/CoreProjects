@@ -16,10 +16,10 @@ var node_componentUtility = {
 		return _.extend({}, oldRuntimeContext, override);
 	},
 
-	makeChildRuntimeContext : function(currentRuntimeContext, childPath, childComponent, view){
+	makeChildRuntimeContext : function(currentRuntimeContext, childId, childComponent, view){
 		var newRuntimeContext = {
-			backupState : currentRuntimeContext.backupState.createChildState(childPath),
-			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childComponent.getId())
+			backupState : currentRuntimeContext.backupState.createChildState(childId),
+			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childId)
 		};
 		if(view!=undefined)  newRuntimeContext.view = view;
 		

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.test.testdecoration1;
+package com.nosliw.data.core.domain.entity.test.decoration.testdecoration1;
 
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
