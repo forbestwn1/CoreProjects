@@ -44,6 +44,26 @@
 				}
 			}
 		},
+		"testlifecycle.rollback_none_test.complex.script": {
+			"extra": {
+				"status": "disabled"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_lifecycle_rollback",
+				"parm" : {
+				}
+			}
+		},
+		"testlifecycle.log_none_test.complex.script": {
+			"extra": {
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_lifecycle_log",
+				"parm" : {
+				}
+			}
+		},
 		"entity1_none_test.complex.script": {
 			"extra": {
 				"status": "disabled"

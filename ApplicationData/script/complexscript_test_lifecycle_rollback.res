@@ -17,8 +17,6 @@ function(parms, configure){
 		loc_stateValueView = $('<input type="text" style="background-color:pink">');
 		stateValueViewWrapper.append(loc_stateValueView);
 		rootViewWrapper.append(stateValueViewWrapper);
-
-		loc_updateStateData(parms.state);
 	};
 
 	var loc_out = {
@@ -31,7 +29,7 @@ function(parms, configure){
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
 //				return node_createErrorData("code", "message", "data");
-//				var k = aaa.bbb.ccc;
+				var k = aaa.bbb.ccc;
 			}
 		},
 		
