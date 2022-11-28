@@ -7,17 +7,46 @@
 		"ignore_variable" : "parent_public",
 		"simplized1_none_test.complex.script": {
 			"extra": {
-				"status": "disabled"
+				"status": "disabled1"
 			},
-			"scriptName": "testcomplexscript1",
-			"parm" : {
-				"name" : "simplized1_none_test.complex.script",
-				"state" : "state1"
+			"scriptName": "complexscript_test_exist"
+		},
+		"testparm_none_test.complex.script": {
+			"extra": {
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_printparms",
+				"parm" : {
+					"name" : "simplized1_none_test.complex.script"
+				}
+			}
+		},
+		"testconfigure_none_test.complex.script": {
+			"extra": {
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_printconfigure",
+				"parm" : {
+					"name" : "simplized1_none_test.complex.script"
+				}
+			}
+		},
+		"teststate_none_test.complex.script": {
+			"extra": {
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_state",
+				"parm" : {
+					"state" : "state1"
+				}
 			}
 		},
 		"entity1_none_test.complex.script": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "testcomplexscript1",
@@ -27,18 +56,24 @@
 				}
 			}
 		},
-		"entity2_none_test.complex.1": {
+		"localresource1_none_testcomplex1": {
 			"extra": {
 				"status": "disabled"
 			},
-			"entity":{
-			}
+			"resourceId": "testcomplex1|#localchild"
 		},
 		"globalresource1_none_testsimple1": {
 			"extra": {
 				"status": "disabled"
 			},
 			"resourceId": "testsimple1|*test1"
+		},
+		"entity2_none_test.complex.1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"entity":{
+			}
 		},
 		"reference1_none_testsimple1": { 
 			"extra": {
@@ -81,7 +116,7 @@
 		},
 		"normal1_list_test.complex.script": {
 			"extra": {
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"element": [
 				{

@@ -3,8 +3,9 @@ package com.nosliw.data.core.domain.entity.test;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
-import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.common.HAPWithValueStructure;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -47,26 +48,41 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				}
 				else {
 					Object entityObj = jsonObj.opt(attrName);
-					HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
-					if(entityInfo.isContainer) {
-						if(entityInfo.isComplex) {
-							parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
+					if(isAttributeEnabled(entityObj)) {
+						HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
+						if(entityInfo.isContainer) {
+							if(entityInfo.isComplex) {
+								parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
+							}
+							else {
+								parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
+							}
 						}
 						else {
-							parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
-						}
-					}
-					else {
-						if(entityInfo.isComplex) {
-							this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
-						}
-						else {
-							this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
+							if(entityInfo.isComplex) {
+								this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
+							}
+							else {
+								this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
+							}
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	private boolean isAttributeEnabled(Object entityObj) {
+		boolean out = true;
+		if(entityObj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)entityObj;
+			JSONObject extraJsonObj = jsonObj.optJSONObject("extra");
+			if(extraJsonObj!=null) {
+				return HAPUtilityEntityInfo.isEnabled(extraJsonObj);
+			}
+		}
+		
+		return out;
 	}
 	
 	//name_(none|set|list|container)_entitytype_adapterType

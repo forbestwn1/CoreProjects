@@ -10,7 +10,7 @@ function(configure){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createUIDecorationRequest = nosliw.getNodeData("uipage.createUIDecorationRequest");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
-	
+	 
 	var loc_parentView;
 	var loc_mainView;
 	var loc_wrapperView;

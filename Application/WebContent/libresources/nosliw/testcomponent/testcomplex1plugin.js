@@ -157,8 +157,12 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, variableGro
 			
 			//complex children
 			_.each(loc_children, function(child, childName){
-				var childView = $('<div>childAttr: '+childName+'</div>');
-				loc_mainView.append(childView);
+				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
+				var attributeView = $('<div>childAttr: '+childName+'</div>');
+				var childView = $('<div style="margin-left:10px;" />');
+				attributeView.append(childView);
+				rootViewWrapper.append(attributeView);
+				loc_mainView.append(rootViewWrapper);
 				loc_childrenViews[childName] = childView;
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, childName, child, childView); 
