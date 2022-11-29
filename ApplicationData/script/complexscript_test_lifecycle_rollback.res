@@ -1,22 +1,28 @@
 function(parms, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+	var node_createErrorData = nosliw.getNodeData("error.entity.createErrorData");
 
-	var loc_stateValueView;
-	var loc_parmsView;
-	var loc_configureView;
+	var loc_selectionView;
 	
 	var loc_parms = parms;
 	var loc_configure = configure;
+
+	var loc_OPTION_NONE = "None";
+	var loc_OPTION_ERROR = "Error";
+	var loc_OPTION_EXCEPTION = "Exception";
 
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
 		var rootViewWrapper = $('<div/>');
 		$(runtimeContext.view).append(rootViewWrapper);
 
-		var stateValueViewWrapper = $('<div><span>state:</span></div>');
-		loc_stateValueView = $('<input type="text" style="background-color:pink">');
-		stateValueViewWrapper.append(loc_stateValueView);
-		rootViewWrapper.append(stateValueViewWrapper);
+		loc_selectionView = $('<select/>');
+		rootViewWrapper.append(loc_selectionView);
+		
+		loc_selectionView.append($('<option>'+loc_OPTION_NONE+'</option>'));
+		loc_selectionView.append($('<option>'+loc_OPTION_ERROR+'</option>'));
+		loc_selectionView.append($('<option>'+loc_OPTION_EXCEPTION+'</option>'));
+
 	};
 
 	var loc_out = {
@@ -28,8 +34,13 @@ function(parms, configure){
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){
-//				return node_createErrorData("code", "message", "data");
-				var k = aaa.bbb.ccc;
+				var value = loc_selectionView.val();
+				if(value==loc_OPTION_ERROR){
+					return node_createErrorData("code", "message", "data");
+				}
+				else if(value==loc_OPTION_EXCEPTION){
+					var k = aaa.bbb.ccc;
+				}
 			}
 		},
 		
