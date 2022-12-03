@@ -1,8 +1,10 @@
 package com.nosliw.data.core.domain.entity.test;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -35,10 +37,61 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		JSONArray jsonArray = null;
+		if(obj instanceof JSONArray) jsonArray = (JSONArray)obj;
+		else if(obj instanceof String)  jsonArray = new JSONArray((String)obj);
+		
+		for(int i=0; i<jsonArray.length(); i++) {
+			JSONObject jsonObj = jsonArray.getJSONObject(i);
+			JSONObject infoJsonObj = jsonObj.getJSONObject("info");
+			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(infoJsonObj);
+
+			if(HAPUtilityEntityInfo.isEnabled(info)) {
+				String attrName = info.getName();
+				System.out.println(attrName);
+				if(!attrName.startsWith(PREFIX_IGNORE)) {
+					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
+						this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+					}
+					else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
+						this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, parserContext);
+					}
+					else {
+						Object entityObj = jsonObj.opt(attrName);
+						if(isAttributeEnabled(entityObj)) {
+							HAPAttributeEntityInfo attributeInfo = this.parseAttributeInfo(attrName);
+							if(attributeInfo.isContainer) {
+								if(attributeInfo.isComplex) {
+									parseContainerComplexAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, attributeInfo.containerType, null, parserContext);
+								}
+								else {
+									parseContainerSimpleAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, attributeInfo.containerType, parserContext);
+								}
+							}
+							else {
+								if(attributeInfo.isComplex) {
+									this.parseNormalComplexEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, null, parserContext);
+								}
+								else {
+									this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, parserContext);
+								}
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		
+		
+		/*
 		JSONObject jsonObj = this.convertToJsonObject(obj);
 
-		for(Object key : jsonObj.keySet()) {
+		Iterator keyIterator = jsonObj.keys();
+		while(keyIterator.hasNext()) {
+			Object key = keyIterator.next();
 			String attrName = (String)key;
+			System.out.println(attrName);
 			if(!attrName.startsWith(PREFIX_IGNORE)) {
 				if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
 					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
@@ -49,7 +102,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				else {
 					Object entityObj = jsonObj.opt(attrName);
 					if(isAttributeEnabled(entityObj)) {
-						HAPEntityInfo entityInfo = this.parseEntityInfo(attrName);
+						HAPAttributeEntityInfo entityInfo = this.parseEntityInfo(attrName);
 						if(entityInfo.isContainer) {
 							if(entityInfo.isComplex) {
 								parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
@@ -70,6 +123,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				}
 			}
 		}
+		*/
 	}
 	
 	private boolean isAttributeEnabled(Object entityObj) {
@@ -86,8 +140,8 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 	}
 	
 	//name_(none|set|list|container)_entitytype_adapterType
-	private HAPEntityInfo parseEntityInfo(String attrName) {
-		HAPEntityInfo out = new HAPEntityInfo();
+	private HAPAttributeEntityInfo parseAttributeInfo(String attrName) {
+		HAPAttributeEntityInfo out = new HAPAttributeEntityInfo();
 
 		String str = attrName;
 		
@@ -145,7 +199,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		}
 	}
 	
-	class HAPEntityInfo {
+	class HAPAttributeEntityInfo {
 		public String entityType;
 		public String attirbuteName;
 		public boolean isComplex;

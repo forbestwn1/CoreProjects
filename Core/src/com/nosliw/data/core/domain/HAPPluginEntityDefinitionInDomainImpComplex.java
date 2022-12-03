@@ -20,8 +20,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainEntityDefinitionLocal definitionDomain) {
 		JSONObject jsonObj = (JSONObject)obj;
-		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
-		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, definitionDomain);
+		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
+		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, definitionDomain);
 
 //		HAPUtilityParserComplex.parseValueStructureInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());
 //		HAPUtilityParserComplex.parseAttachmentInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());

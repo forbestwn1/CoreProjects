@@ -1,19 +1,18 @@
 {
-	"info": {
+	"extra": {
 		"name": "parent complex entity",
 		"description": "parent complex entity"
 	},
-	"entity": [
-		{
-			"info": {
-				"name" : "simplized1_none_test.complex.script", 
+	"entity": {
+		"ignore_variable" : "parent_public",
+		"simplized1_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"scriptName": "complexscript_test_exist"
 		},
-		{
-			"info": {
-				"name" : "testparm_none_test.complex.script",
+		"testparm_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"entity":{
@@ -23,9 +22,8 @@
 				}
 			}
 		},
-		{
-			"info": {
-				"name" : "testconfigure_none_test.complex.script",
+		"testconfigure_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"entity":{
@@ -35,9 +33,8 @@
 				}
 			}
 		},
-		{
-			"info": {
-				"name" : "teststate_none_test.complex.script",
+		"teststate_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"entity":{
@@ -47,9 +44,8 @@
 				}
 			}
 		},
-		{
-			"info": {
-				"name": "testlifecycle.log_none_test.complex.script",
+		"testlifecycle.log_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"entity":{
@@ -58,9 +54,8 @@
 				}
 			}
 		},
-		{
-			"info": {
-				"name": "testlifecycle.rollback_none_test.complex.script",
+		"testlifecycle.rollback_none_test.complex.script": {
+			"extra": {
 				"status": "disabled1"
 			},
 			"entity":{
@@ -69,14 +64,50 @@
 				}
 			}
 		},
-		{
-			"info": {
-				"name": "normal1_set_test.complex.script",
+		"entity1_none_test.complex.script": {
+			"extra": {
+				"status": "disabled"
+			},
+			"entity":{
+				"scriptName": "testcomplexscript1",
+				"parm" : {
+					"name" : "simplized1_none_test.complex.script",
+					"state" : "state1"
+				}
+			}
+		},
+		"localresource1_none_testcomplex1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"resourceId": "testcomplex1|#localchild"
+		},
+		"globalresource1_none_testsimple1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"resourceId": "testsimple1|*test1"
+		},
+		"entity2_none_test.complex.1": {
+			"extra": {
+				"status": "disabled"
+			},
+			"entity":{
+			}
+		},
+		"reference1_none_testsimple1": { 
+			"extra": {
+				"status": "disabled"
+			},
+			"reference": "samename"
+		},
+		"normal1_set_test.complex.script": {
+			"extra": {
 				"status": "disabled"
 			},
 			"element": [
 				{
-					"info": {
+					"extra": {
 						"name": "element1",
 						"description": "element1"
 					},
@@ -89,7 +120,7 @@
 					}
 				},
 				{
-					"info": {
+					"extra": {
 						"name": "element2",
 						"description": "element2"
 					},
@@ -103,14 +134,13 @@
 				}
 			]
 		},
-		{
-			"info": {
-				"name": "normal1_list_test.complex.script",
+		"normal1_list_test.complex.script": {
+			"extra": {
 				"status": "disabled"
 			},
 			"element": [
 				{
-					"info": {
+					"extra": {
 						"name": "element1",
 						"description": "element1"
 					},
@@ -123,7 +153,7 @@
 					}
 				},
 				{
-					"info": {
+					"extra": {
 						"name": "element2",
 						"description": "element2"
 					},
@@ -137,11 +167,10 @@
 				}
 			]
 		},
-		{
-			"info": {
-				"name": "attachment",
+		"attachment": {
+			"extra": {
 				"status": "disabled",
-				"description": "parent attachment" 
+				"name": "parent attachment" 
 			},
 			"entity": {
 				"valuestructure" : [
@@ -190,9 +219,8 @@
 				]
 			}
 		},
-		{
-			"info": {
-				"name": "valueStructure",
+		"valueStructure": {
+			"extra": {
 				"status": "disabled"
 			},
 			"entity": [
@@ -268,5 +296,5 @@
 				}
 			]
 		}
-	]
+	}
 }

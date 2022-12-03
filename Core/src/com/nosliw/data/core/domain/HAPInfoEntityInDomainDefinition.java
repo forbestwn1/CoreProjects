@@ -33,7 +33,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public static final String REFERENCE = "reference";
 
 	//extra info definition
-	public static final String EXTRA = "extra";
+	public static final String INFO = "info";
 	
 	//parent info definition
 	public static final String PARENT = "parent";
@@ -142,7 +142,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 		if(this.m_entityId!=null)   jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_resourceId!=null)  jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_reference!=null)   jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_extraInfo!=null)   jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_extraInfo!=null)   jsonMap.put(INFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

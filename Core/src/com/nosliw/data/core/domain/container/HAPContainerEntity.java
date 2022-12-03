@@ -29,7 +29,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	public static String ELEMENT = "element";
 	
 	@HAPAttribute
-	public static String EXTRA = "extra";
+	public static String INFO = "info";
 
 	@HAPAttribute
 	public static String ISCOMPLEX = "isComplex";
@@ -99,7 +99,7 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> byIdJsonMap = new LinkedHashMap<String, String>();
 		
-		if(this.m_extraInfo!=null)  jsonMap.put(EXTRA, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_extraInfo!=null)  jsonMap.put(INFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getContainerType());
 		jsonMap.put(ELEMENTTYPE, this.getElementType());
 		jsonMap.put(ISCOMPLEX, this.getIsComplex()+"");

@@ -144,7 +144,7 @@ public class HAPUtilityParserEntity {
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
 
-			JSONObject infoObj = jsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.EXTRA);
+			JSONObject infoObj = jsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.INFO);
 			if(infoObj==null)   infoObj = jsonObj;
 
 			if(HAPUtilityEntityInfo.isEnabled(infoObj)) {
