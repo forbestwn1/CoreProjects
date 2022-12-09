@@ -9,9 +9,4 @@ public class HAPPluginEntityDefinitionInDomainTestComplex1 extends HAPPluginEnti
 		super(HAPDefinitionEntityTestComplex1.class, true, runtimeEnv);
 	}
 	
-//	@Override
-//	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-//		JSONObject jsonObj = this.convertToJsonObject(obj);
-//		super.parseDefinitionContent(entityId, jsonObj, parserContext);
-//	}
 }

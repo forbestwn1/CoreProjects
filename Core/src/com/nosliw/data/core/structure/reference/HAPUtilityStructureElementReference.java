@@ -33,6 +33,7 @@ public class HAPUtilityStructureElementReference {
 		
 		//resolve targeted structure element
 		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), targetStructures, resolveConfigure, valueStructureDomain);
+		out.eleReference = reference;
 		
 		return out;
 	}

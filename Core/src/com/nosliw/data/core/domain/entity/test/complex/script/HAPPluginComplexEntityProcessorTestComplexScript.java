@@ -1,5 +1,12 @@
 package com.nosliw.data.core.domain.entity.test.complex.script;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -8,6 +15,11 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.script.HAPDefinitionEntityScript;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
+import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginComplexEntityProcessorImp{
 
@@ -33,6 +45,27 @@ public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginC
 		HAPDefinitionEntityScript scriptDef = (HAPDefinitionEntityScript)globalDomain.getEntityInfoDefinition(scriptEntityId).getEntity();
 		
 		executableEntity.setScript(scriptDef.getScript());
-		executableEntity.setParms(definitionEntity.getParms());
+		
+		Map<String, Object> parms = definitionEntity.getParms();
+		executableEntity.setParms(parms);
+	
+		Object variables = parms.get(HAPExecutableTestComplexScript.VARIABLE);
+		if(variables!=null) {
+			JSONArray varJsonArray = (JSONArray)variables;
+			List<HAPInfoReferenceResolve> resolvedVars = new ArrayList<HAPInfoReferenceResolve>();
+			for(int i=0; i<varJsonArray.length(); i++) {
+				HAPReferenceElementInStructureComplex ref = new HAPReferenceElementInStructureComplex();
+				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
+				
+				HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(ref, new HAPCandidatesValueStructureComplex(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
+				resolvedVars.add(resolve);
+			}
+			executableEntity.setVariables(resolvedVars);
+		}
+		
+//		
+//		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
+
+	
 	}
 }

@@ -18,17 +18,13 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	public boolean isComplexEntity() {    return true;   }
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPDomainEntityDefinitionLocal definitionDomain) {
-		JSONObject jsonObj = (JSONObject)obj;
-		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, definitionDomain);
-		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, definitionDomain);
-
-//		HAPUtilityParserComplex.parseValueStructureInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());
-//		HAPUtilityParserComplex.parseAttachmentInComplex(entityId, jsonObj, definitionDomain, this.getRuntimeEnvironment().getDomainEntityManager());
-
-		this.parseComplexDefinitionContent(entityId, jsonObj, definitionDomain);
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		JSONObject jsonObj = this.convertToJsonObject(obj);
+		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, parserContext);
+		this.parseComplexDefinitionContent(entityId, jsonObj, parserContext);
 	}
 	
-	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPDomainEntityDefinitionLocal definitionDomain);
+	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext);
 
 }

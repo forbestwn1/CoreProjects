@@ -6,10 +6,51 @@
 	"entity": [
 		{
 			"info": {
+				"name" : "value_none_test.complex.script", 
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["", ""]
+				},
+				"valueStructure" :{
+					"entity": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"parent_public": {
+									"definition":{
+										"criteria": "test.string"
+									},
+									"defaultValue": {
+										"dataTypeId": "test.string",
+										"value": "9876543210"
+									}
+								}
+							}
+						}
+					]
+				} 			
+			}
+		},
+		{
+			"info": {
 				"name" : "simplized1_none_test.complex.script", 
 				"status": "disabled1"
 			},
 			"scriptName": "complexscript_test_exist"
+		},
+		{
+			"info": {
+				"name": "testlifecycle.log_none_test.complex.script",
+				"status": "disabled1"
+			},
+			"entity":{
+				"scriptName": "complexscript_test_lifecycle_log",
+				"parm" : {
+				}
+			}
 		},
 		{
 			"info": {
@@ -44,17 +85,6 @@
 				"scriptName": "complexscript_test_state",
 				"parm" : {
 					"state" : "state1"
-				}
-			}
-		},
-		{
-			"info": {
-				"name": "testlifecycle.log_none_test.complex.script",
-				"status": "disabled1"
-			},
-			"entity":{
-				"scriptName": "complexscript_test_lifecycle_log",
-				"parm" : {
 				}
 			}
 		},

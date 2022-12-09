@@ -9,6 +9,8 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 //    data association
 public class HAPInfoReferenceResolve{
 	
+	public HAPReferenceElementInStructureComplex eleReference;
+	
 	//resolved structure runtime id
 	public String structureId;
 

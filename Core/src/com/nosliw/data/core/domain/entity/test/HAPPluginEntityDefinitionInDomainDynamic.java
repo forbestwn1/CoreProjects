@@ -80,50 +80,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 					}
 				}
 			}
-			
 		}
-		
-		
-		/*
-		JSONObject jsonObj = this.convertToJsonObject(obj);
-
-		Iterator keyIterator = jsonObj.keys();
-		while(keyIterator.hasNext()) {
-			Object key = keyIterator.next();
-			String attrName = (String)key;
-			System.out.println(attrName);
-			if(!attrName.startsWith(PREFIX_IGNORE)) {
-				if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
-				}
-				else if(attrName.equals(HAPWithValueStructure.VALUESTRUCTURE)) {
-					this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, null, parserContext);
-				}
-				else {
-					Object entityObj = jsonObj.opt(attrName);
-					if(isAttributeEnabled(entityObj)) {
-						HAPAttributeEntityInfo entityInfo = this.parseEntityInfo(attrName);
-						if(entityInfo.isContainer) {
-							if(entityInfo.isComplex) {
-								parseComplexContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, null, parserContext);
-							}
-							else {
-								parseSimpleContainerAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, entityInfo.containerType, parserContext);
-							}
-						}
-						else {
-							if(entityInfo.isComplex) {
-								this.parseComplexEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, null, parserContext);
-							}
-							else {
-								this.parseSimpleEntityAttribute(jsonObj, entityId, attrName, entityInfo.entityType, entityInfo.adapterType, parserContext);
-							}
-						}
-					}
-				}
-			}
-		}
-		*/
 	}
 	
 	private boolean isAttributeEnabled(Object entityObj) {
