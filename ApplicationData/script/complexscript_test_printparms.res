@@ -1,11 +1,12 @@
-function(parms, configure){
+function(complexEntityDef, variableGroupId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 
 	var loc_parmsView;
 	
-	var loc_parms = parms;
 	var loc_configure = configure;
+
+	var loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
 		loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');

@@ -1,11 +1,10 @@
-function(parms, configure){
+function(complexEntityDef, variableGroupId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_createErrorData = nosliw.getNodeData("error.entity.createErrorData");
 
 	var loc_selectionView;
 	
-	var loc_parms = parms;
 	var loc_configure = configure;
 
 	var loc_OPTION_NONE = "None";

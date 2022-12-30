@@ -32,6 +32,6 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 
 	public void setParms(Map<String, Object> parms) {	this.setNormalAttribute(PARM, new HAPEmbededExecutableWithValue(parms));	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttribute(PARM, new HAPEmbededExecutableWithValue(vars));	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttribute(VARIABLE, new HAPEmbededExecutableWithValue(vars));	}
 	
 }

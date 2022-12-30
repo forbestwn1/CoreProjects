@@ -22,6 +22,9 @@ var nod_createVariableDomain = function(variableDomainDef){
 
 	var loc_groupIdIndex = 0;
 	
+	//variable pool
+	var loc_variablePool;
+	
 	var loc_out = {
 		//create variable group according to
 		//value structure complex

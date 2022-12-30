@@ -12,20 +12,42 @@
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable" : ["", ""]
+					"variable" : ["normal", ""]
 				},
 				"valueStructure" :{
 					"entity": [
 						{
 							"groupType" : "public",
 							"valueStructure" : {
-								"parent_public": {
+								"normal": {
 									"definition":{
 										"criteria": "test.string"
 									},
 									"defaultValue": {
 										"dataTypeId": "test.string",
 										"value": "9876543210"
+									}
+								},
+								"override_parent": {
+									"definition":{
+										"criteria": "test.string"
+									},
+									"defaultValue": {
+										"dataTypeId": "test.string",
+										"value": "9876543210"
+									}
+								},
+								"relative_reference": {
+									"definition": {
+										"reference" : "parent_public"
+									}
+								},
+								"relative_link": {
+									"definition": {
+										"link" : "parent_public",
+										"definition": {
+											"criteria":"test.string;1.0.0"
+										}
 									}
 								}
 							}

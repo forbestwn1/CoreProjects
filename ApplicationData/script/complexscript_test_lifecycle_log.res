@@ -1,8 +1,7 @@
-function(parms, configure){
+function(complexEntityDef, variableGroupId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 
-	var loc_parms = parms;
 	var loc_configure = configure;
 
 	var loc_logView;
