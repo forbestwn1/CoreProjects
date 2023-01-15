@@ -31,7 +31,7 @@ var node_createVariableGroup;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
- * elementInfosArray : an array of element info describing context element
+ * elementInfosArray : an array of element info describing value structure element
  * 
  */
 var node_createValueStructure = function(id, elementInfosArray, request){
@@ -163,9 +163,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		});
 		
 		//process refer to parent first
-		var flatedelEmentInfosArray = [];
-		loc_flatArray(elementInfosArray, flatedelEmentInfosArray);
-		_.each(flatedelEmentInfosArray, function(elementInfo, key){
+		_.each(elementInfosArray, function(elementInfo, key){
 			loc_addContextElement(elementInfo, request);
 		});
 		loc_out.prv_valueChangeEventEnable = true;
@@ -293,6 +291,40 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	return loc_out;
 };
 
+/*
+ * create real value structure element based on element info 
+ * it contains following attribute:
+ * 		name
+ * 		variable
+ * 		info
+ */
+var node_createValueStructureElement = function(elementInfo, requestInfo){
+	var names = elementInfo.alias;
+
+	var loc_out = {
+		name : elementInfo.name,
+		info : elementInfo.info,
+	};
+
+	var adapterInfo = elementInfo.adapterInfo;
+	//get variable
+	if(elementInfo.valueStructure!=undefined){
+		//element by context
+		var eleVariable = elementInfo.valueStructure.createVariable(elementInfo.valueStructureVariable, adapterInfo, requestInfo);
+		//cannot create context element variable
+		if(eleVariable==undefined)   return;
+		loc_out.variable = eleVariable;
+	}
+	else if(elementInfo.variable!=undefined){
+		//element by variable
+		loc_out.variable= node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
+	}
+	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
+	
+	return loc_out;
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -324,6 +356,6 @@ nosliw.registerSetNodeDataEvent("uidata.context.createVariableGroup", function()
 
 
 //Register Node by Name
-packageObj.createChildNode("createContext", node_createContext); 
+packageObj.createChildNode("createValueStructure", node_createValueStructure); 
 
 })(packageObj);
