@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 
 //
 public class HAPResultExecutableEntityInDomain {
@@ -19,7 +19,7 @@ public class HAPResultExecutableEntityInDomain {
 	}
 	
 	public HAPInfoEntityComplex getComplexEntityInfoByExecutableId(){
-		Triple<HAPDefinitionEntityInDomainComplex, HAPExecutableEntityComplex, HAPDefinitionEntityComplexValueStructure> triple = this.m_domainContext.getComplexEntityInfoByExecutableId(this.m_executableEntityId);
+		Triple<HAPDefinitionEntityInDomainComplex, HAPExecutableEntityComplex, HAPDefinitionEntityValueContext> triple = this.m_domainContext.getComplexEntityInfoByExecutableId(this.m_executableEntityId);
 		return triple;
 	}
 

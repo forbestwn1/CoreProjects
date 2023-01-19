@@ -10,15 +10,15 @@ import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainValueStructureComplex extends HAPPluginEntityDefinitionInDomainImpSimple{
+public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEntityDefinitionInDomainImpSimple{
 
-	public HAPPluginEntityDefinitionInDomainValueStructureComplex(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityComplexValueStructure.class, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainValueContext(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPDefinitionEntityValueContext.class, runtimeEnv);
 	}
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPContextParser parserContext) {
-		HAPDefinitionEntityComplexValueStructure valueStructureComplex = (HAPDefinitionEntityComplexValueStructure)this.getEntity(entityId, parserContext);
+		HAPDefinitionEntityValueContext valueStructureComplex = (HAPDefinitionEntityValueContext)this.getEntity(entityId, parserContext);
 
 		if(obj instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)obj;

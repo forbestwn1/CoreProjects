@@ -7,11 +7,11 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 
-public class HAPContextProcessExpressionScript implements HAPWithValueStructure, HAPWithConstantDefinition{
+public class HAPContextProcessExpressionScript implements HAPWithValueContext, HAPWithConstantDefinition{
 
 	//all expression container
 	private HAPDefinitionExpressionSuite1 m_expressionSuiteDefinition;

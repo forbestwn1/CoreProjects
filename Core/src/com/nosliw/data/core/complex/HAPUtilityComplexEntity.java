@@ -15,9 +15,9 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartComplexValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartComplexValueStructureGroupWithEntity;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContext;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextGroupWithEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.resource.HAPEntityResourceDefinition;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -91,7 +91,7 @@ public class HAPUtilityComplexEntity {
 		try {
 			HAPExecutableEntityComplex complexEntityExe = HAPExecutableEntityComplex.class.newInstance();
 			//exe share the same value structure complex with definition
-			complexEntityExe.setValueStructureComplexEntity(processContext.getComplexDefinitionDomain().getEntity(definitionEntityId).getValueStructureComplexEntity());
+			complexEntityExe.setValueContextEntity(processContext.getComplexDefinitionDomain().getEntity(definitionEntityId).getValueContextEntity());
 			out = processContext.getDomainContext().addExecutableEntity(complexEntityExe, definitionEntityId);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,24 +114,24 @@ public class HAPUtilityComplexEntity {
 		
 		 //inheritance
 		if(valueStructureRelation.isInheritable()) {
-			HAPDefinitionEntityComplexValueStructure parentValueStructureComplex = parentEntity.getValueStructureComplex();
-			List<HAPExecutablePartComplexValueStructure> parts = parentValueStructureComplex.getValueStructures();
+			HAPDefinitionEntityValueContext parentValueStructureComplex = parentEntity.getValueContext();
+			List<HAPExecutablePartValueContext> parts = parentValueStructureComplex.getValueStructures();
 			
 			if(valueStructureRelation.isShareRuntimeData()) {
 				//share runtime data with parent
-				HAPExecutablePartComplexValueStructureGroupWithEntity part = new HAPExecutablePartComplexValueStructureGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
-				for(HAPExecutablePartComplexValueStructure parentPart : parts) {
+				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
+				for(HAPExecutablePartValueContext parentPart : parts) {
 					part.addChild(parentPart.cloneComplexValueStructurePart());
 				}
-				complexEntity.getValueStructureComplex().addValueStructure(part);
+				complexEntity.getValueContext().addValueStructure(part);
 			}
 			else {
 				//child has own data
-				HAPExecutablePartComplexValueStructureGroupWithEntity part = new HAPExecutablePartComplexValueStructureGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
-				for(HAPExecutablePartComplexValueStructure parentPart : parts) {
+				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
+				for(HAPExecutablePartValueContext parentPart : parts) {
 					part.addChild(parentPart.cloneComplexValueStructurePart());
 				}
-				complexEntity.getValueStructureComplex().addValueStructure(part);
+				complexEntity.getValueContext().addValueStructure(part);
 			}
 		}
 		

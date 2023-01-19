@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //component that defined as element of another container component
@@ -52,9 +52,9 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	}
 
 	@Override
-	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {	return this.m_componentEntity.getValueStructureComplex();	}
+	public HAPDefinitionEntityValueContext getValueStructureComplex() {	return this.m_componentEntity.getValueContext();	}
 
-	public HAPDefinitionEntityComplexValueStructure getContainerValueStructureComplex() {	return this.m_componentContainer.getValueStructureComplex();	}
+	public HAPDefinitionEntityValueContext getContainerValueStructureComplex() {	return this.m_componentContainer.getValueContext();	}
 	
 	
 	public HAPDefinitionEntityContainer getResourceContainer() {   return this.m_componentContainer;    }

@@ -10,10 +10,10 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartComplexValueStructureSimple;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoValueStructureSorting;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
@@ -92,7 +92,7 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	//find all value structure which meet criteria from value structure complex
-	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPExecutableEntityValueContext valueStructureComplex, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		List<HAPWrapperExecutableValueStructure> out = new ArrayList<HAPWrapperExecutableValueStructure>();
 		
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityComplexValueStructure.getAllValueStructuresSorted(valueStructureComplex);
@@ -167,14 +167,14 @@ public class HAPUtilityStructureElementReference {
 		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
 	}
 
-	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityValueContext parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
 		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
 	}
 	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityComplexValueStructure parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityValueContext parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
 		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
 		for(HAPInfoPartSimple candidate : candidates) {
-			HAPExecutablePartComplexValueStructureSimple simplePart = candidate.getSimpleValueStructurePart();
+			HAPExecutablePartValueContextSimple simplePart = candidate.getSimpleValueStructurePart();
 			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
 			HAPInfoReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getElementPath()), valueStructure, mode, elementTypes);
 			resolve.structureId = simplePart.getRuntimeId();

@@ -30,15 +30,17 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//value structure complex
 		//parent group
 		//return group id
-		creatValueContext : function(valueStructureComplex, parentValueContextId){
+		creatValueContext : function(valueContextDef, parentValueContextId){
 			loc_valueContextIdIndex++;
-			var valueContext = loc_createValueContext(loc_valueContextIdIndex+"", valueStructureComplex, loc_variableDomainDefinition, parentValueContextId, loc_out);
+			var valueContext = loc_createValueContext(loc_valueContextIdIndex+"", valueContextDef, loc_variableDomainDefinition, parentValueContextId, loc_variableMan);
 			loc_valueContextById[valueContext.getId()] = valueContext;
 			return valueContext;
 		},
 		
 		getValueContext : function(valueContextId){   return loc_valueContextById[valueContextId];  },
-		
+
+		getVariableDomainDefinition : function(){   return loc_variableDomainDefinition;	},
+
 		getVariableValue : function(contextId, variableId){
 			
 		},
@@ -47,7 +49,6 @@ var nod_createVariableDomain = function(variableDomainDef){
 			
 		},
 		
-		getVariableDomainDefinition : function(){   return loc_variableDomainDefinition;	}
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VAIRABLEDOMAIN);
@@ -59,7 +60,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 //valueStructureComplex value structure complex definition under complex entity
 //
 //it has parent group, so that some variable is from parent
-var loc_createValueContext = function(id, valueStructureComplexDef, variableDomainDef, parentValueContext, variableMan){
+var loc_createValueContext = function(id, valueContextDef, variableDomainDef, parentValueContext, variableMan){
 	
 	var loc_variableMan;
 		
@@ -72,12 +73,77 @@ var loc_createValueContext = function(id, valueStructureComplexDef, variableDoma
 	//valueStructures in the context
 	var loc_valueStructures = {};
 	
-	var loc_init = function(id, valueStructureComplexDef, variableDomainDef, parentValueContext, variableDomain){
+	var loc_createSolidValueStructure = function(valueStructureRuntimeId, parentValueContext, variableDomain){
+
+		var variableDomainDef = variableDomain.getVariableDomainDefinition();
+		
+		//build context element first
+		var valueStructureElementInfosArray = [];
+		
+		loc_runtimeId = valueStructureRuntimeId;
+		var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
+		var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURE][valueStructureDefId];
+		_.each(valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURE_VALUESTRUCTURE], function(valueStructureDefRootObj, rootName){
+			var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFINITION];
+			
+			var info = {
+				matchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS],
+				reverseMatchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS]
+			};
+			var type = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
+			var valueStructureInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
+			//if context.info.instantiate===manual, context does not need to create in the framework
+			if(valueStructureInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+				if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE && 
+						valueStructureInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL){
+					//physical relative
+					if(valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_PATH][node_COMMONATRIBUTECONSTANT.INFOPATHREFERENCE_PARENT]==node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT){
+//							if(contextDefRootEle[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_ISTOPARENT]==true){
+						//process relative that  refer to element in parent context
+						
+						var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.RESOLVEDINFO];
+
+						var parentValueStructureRuntimeId = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
+						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
+						
+						var pathObj = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
+						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
+						var path = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
+						
+						valueStructureElementInfosArray.push(node_createValueStructureElementInfo(eleName, parentValueStructure, node_createValueStructureVariableInfo(rootName, path), undefined, info));
+					}
+				}
+				else{
+					//not relative or logical relative variable
+					var defaultValue = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
+					
+					var criteria;
+					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_CRITERIA];
+					else  criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_CRITERIA]; 
+					if(criteria!=undefined){
+						//app data, if no default, empty variable with wrapper type
+						if(defaultValue!=undefined) 	valueStructureElementInfosArray.push(node_createContextElementInfo(eleName, node_dataUtility.createDataOfAppData(defaultValue), "", undefined, info));
+						else  valueStructureElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, undefined, info));
+					}
+					else{
+						//object, if no default, empty variable with wrapper type
+						if(defaultValue!=undefined)		valueStructureElementInfosArray.push(node_createContextElementInfo(eleName, defaultValue, "", undefined, info));
+						else valueStructureElementInfosArray.push(node_createContextElementInfo(eleName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, undefined, info));
+					}
+				}
+			}
+		});
+		
+		return node_createValueStructure(id, valueStructureElementInfosArray, requestInfo);
+	};	
+	
+	
+	var loc_init = function(id, valueContextDef, variableDomainDef, parentValueContext, variableDomain){
 		loc_id = id;
 		loc_parentValueContext = parentValueContext;
 		loc_variableMan = variableMan;
 
-		var valueStructureRuntimeIds = valueStructureComplexDef==undefined?[] : valueStructureComplexDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
+		var valueStructureRuntimeIds = valueStructureComplexDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
 		_.each(valueStructureRuntimeIds, function(valueStructureRuntimeId){
 			if(loc_parentValueContext==undefined || loc_parentValueContext.getVariableInfosByValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
@@ -111,13 +177,13 @@ var loc_createValueContext = function(id, valueStructureComplexDef, variableDoma
 			
 		},
 			
+		getValueStructure : function(valueStructureId){      },
+		
 		
 		
 		
 			
 		getId : function(){  return loc_id;   },
-		
-		getValueStructure : function(valueStructureId){      },
 		
 		getVariableInfosByValueStructure : function(valueStructureId){   return loc_variablesByValueStructure[valueStructureId];  },
 		
@@ -127,42 +193,10 @@ var loc_createValueContext = function(id, valueStructureComplexDef, variableDoma
 		
 	};
 	
-	loc_init(id, valueStructureComplex, variableDomainDef, parentVariableGroup, variableMan);
+	loc_init(id, valueContextDef, variableDomainDef, parentVariableGroup, variableMan);
 	return loc_out;
 };
 
-var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, parentValueContext){
-	
-	var loc_runtimeId;
-	
-	var loc_variables = {};
-
-	var loc_addVariable = function(varInfo){   
-		loc_variables[varInfo.getName()] = varInfo;    
-	};
-
-	var loc_init = function(valueStructureRuntimeId, variableDomainDef, parentVariableGroup){
-		loc_runtimeId = runtimeId;
-		var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
-		var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURE][valueStructureDefId];
-		_.each(valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURE_VALUESTRUCTURE], function(rootDef, rootName){
-			loc_addVariable(loc_createVariableInfo(rootName, rootDef));
-		});
-		
-	};
-	
-	var loc_out = {
-		
-		getRuntimeId : function(){   return loc_runtimeId;    },
-		
-		isSolid : function(){   return true;   },
-
-		
-	};
-	
-	loc_init(valueStructureRuntimeId, variableDomainDef, parentVariableGroup);
-	return loc_out;
-};
 
 var loc_createSoftValueStructure = function(valueStructureRuntimeId, parentValueContext){
 	

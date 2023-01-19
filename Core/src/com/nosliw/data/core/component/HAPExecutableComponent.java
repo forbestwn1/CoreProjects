@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
@@ -46,7 +46,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public static final String SERVICE = "service";
 
 	// hook up with real data during runtime
-	private HAPDefinitionEntityComplexValueStructure m_valueStructure;
+	private HAPDefinitionEntityValueContext m_valueStructure;
 	
 	private HAPExecutableTaskSuite m_taskSuite;
 
@@ -61,7 +61,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 		super(componentDefinition);
 		this.setId(id);
 		this.m_valueStructureNode = new HAPTreeNodeValueStructure();
-		this.m_valueStructureNode.setValueStructureComplex(componentDefinition.getValueStructureComplex());
+		this.m_valueStructureNode.setValueContext(componentDefinition.getValueContext());
 		this.m_services = new LinkedHashMap<String, HAPExecutableServiceUse>();
 		this.m_events = new LinkedHashMap<String, HAPExecutableEvent>();
 		this.m_commands = new LinkedHashMap<String, HAPExecutableCommand>();
@@ -72,7 +72,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
 
 	public HAPTreeNodeValueStructure getValueStructureDefinitionNode() {   return this.m_valueStructureNode;   }
-	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {     return this.m_valueStructureNode.getValueStructureComplex();   }
+	public HAPDefinitionEntityValueContext getValueStructureComplex() {     return this.m_valueStructureNode.getValueContext();   }
 	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructure());}
 
 	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }

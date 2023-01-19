@@ -299,8 +299,6 @@ var node_createValueStructure = function(id, elementInfosArray, request){
  * 		info
  */
 var node_createValueStructureElement = function(elementInfo, requestInfo){
-	var names = elementInfo.alias;
-
 	var loc_out = {
 		name : elementInfo.name,
 		info : elementInfo.info,

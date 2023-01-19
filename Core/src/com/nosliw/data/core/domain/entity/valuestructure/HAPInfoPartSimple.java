@@ -11,15 +11,15 @@ public class HAPInfoPartSimple {
 
 	public static final String PART = "part";
 	
-	private HAPExecutablePartComplexValueStructureSimple m_simpleStructurePart;
+	private HAPExecutablePartValueContextSimple m_simpleStructurePart;
 	
 	private List<Integer> m_priority;
 	
-	public HAPInfoPartSimple(HAPExecutablePartComplexValueStructureSimple simpleStructurePart) {
+	public HAPInfoPartSimple(HAPExecutablePartValueContextSimple simpleStructurePart) {
 		this.m_simpleStructurePart = simpleStructurePart;
 	}
 
-	public HAPExecutablePartComplexValueStructureSimple getSimpleValueStructurePart() {	return this.m_simpleStructurePart;	}
+	public HAPExecutablePartValueContextSimple getSimpleValueStructurePart() {	return this.m_simpleStructurePart;	}
 	
 	public List<Integer> getPriority(){   return this.m_priority;    }
 	public void setPriority(List<Integer> priority) {     this.m_priority = priority;     }

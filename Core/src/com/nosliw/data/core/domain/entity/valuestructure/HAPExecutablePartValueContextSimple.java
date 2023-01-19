@@ -11,18 +11,18 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
-public class HAPExecutablePartComplexValueStructureSimple extends HAPExecutablePartComplexValueStructure{
+public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueContext{
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
 	private List<HAPWrapperExecutableValueStructure> m_valueStructures;
 	
-	public HAPExecutablePartComplexValueStructureSimple(HAPInfoPartValueStructure partInfo) {
+	public HAPExecutablePartValueContextSimple(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
 		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
 
-	public HAPExecutablePartComplexValueStructureSimple() {
+	public HAPExecutablePartValueContextSimple() {
 		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
 	
@@ -34,8 +34,8 @@ public class HAPExecutablePartComplexValueStructureSimple extends HAPExecutableP
 		if(valueStructure!=null) this.m_valueStructures.add(valueStructure);   
 	}
 	
-	public HAPExecutablePartComplexValueStructureSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		HAPExecutablePartComplexValueStructureSimple out = new HAPExecutablePartComplexValueStructureSimple(this.getPartInfo());
+	public HAPExecutablePartValueContextSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo());
 		this.cloneToPartComplexValueStructure(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
@@ -61,13 +61,13 @@ public class HAPExecutablePartComplexValueStructureSimple extends HAPExecutableP
 	}
 
 	@Override
-	public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+	public HAPExecutablePartValueContext cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		return this.cloneValueStructureComplexPartSimple(valueStructureDomain, mode, groupTypeCandidates);  
 	}
 	
 	@Override
-	public HAPExecutablePartComplexValueStructure cloneComplexValueStructurePart() {
-		HAPExecutablePartComplexValueStructureSimple out = new HAPExecutablePartComplexValueStructureSimple();
+	public HAPExecutablePartValueContext cloneComplexValueStructurePart() {
+		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple();
 		this.cloneToPartComplexValueStructure(out);
 		for(HAPWrapperExecutableValueStructure valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());

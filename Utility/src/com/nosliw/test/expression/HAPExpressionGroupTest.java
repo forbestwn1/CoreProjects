@@ -19,7 +19,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContaine
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionResource;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -56,7 +56,7 @@ public class HAPExpressionGroupTest {
 				HAPInfoEntityComplex entityInfo = expressionInDomain.getComplexEntityInfoByExecutableId();
 				HAPExecutableExpressionGroup expresionExecutable = (HAPExecutableExpressionGroup)entityInfo.getExecutable();
 				HAPDefinitionEntityInDomainComplex expressionDef = entityInfo.getDefinition();
-				HAPDefinitionEntityComplexValueStructure valueStructureComplex = entityInfo.getValueStructureComplex();
+				HAPDefinitionEntityValueContext valueStructureComplex = entityInfo.getValueStructureComplex();
 				HAPDefinitionEntityContainerAttachment attachmentContainer = entityInfo.getAttachmentContainer();
 
 				//print out in json

@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
@@ -23,10 +23,10 @@ public class HAPUtilityParserComplex {
 		HAPInfoEntityInDomainDefinition complexEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityId);
 		
 		//parse value structure
-		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
+		JSONObject valueStructureJsonObj = entityJsonObj.optJSONObject(HAPWithValueContext.VALUECONTEXT);
 		HAPEmbededDefinitionWithId valueStructureEntity = HAPUtilityParserEntity.parseEmbededEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX, new HAPContextParser(definitionDomain, complexEntityInfo.getBaseLocationPath()), domainEntityManager);
 		
-		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setValueStructureComplexEntity(valueStructureEntity);
+		((HAPDefinitionEntityInDomainComplex)complexEntityInfo.getEntity()).setValueContextEntity(valueStructureEntity);
 	}
 	
 	//parse attachment in complex

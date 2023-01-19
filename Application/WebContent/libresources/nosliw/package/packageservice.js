@@ -68,8 +68,8 @@ var node_createPackageRuntimeService = function() {
 			//build variableGroup
 			var variableGroupId = null;
 			var variableDomain = bundleCore.getVariableDomain();
-			var valueStructureComplexDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUESTRUCTURECOMPLEX];
-			variableGroupId = variableDomain.creatVariableGroup(valueStructureComplexDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
+			var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
+			variableGroupId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
 			
 			//new complexCore through complex plugin
 			var componentCore = loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);

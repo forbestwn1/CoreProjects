@@ -15,7 +15,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -78,7 +78,7 @@ public class HAPContextProcessor {
 
 	public HAPProcessTracker getProcessTracker() {    return this.m_processTracker;    }
 	
-	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueStructureComplex();     }
+	public HAPDefinitionEntityValueContext getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueContext();     }
 	
 	public HAPDefinitionEntityContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
 	

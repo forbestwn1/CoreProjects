@@ -15,7 +15,7 @@ public class HAPPoolValueStructure {
 	private Map<String, HAPDefinitionWrapperValueStructure> m_valueStructure;
 	
 	//all value structure complex by id
-	private Map<String, HAPDefinitionEntityComplexValueStructure> m_valueStructureComplex;
+	private Map<String, HAPDefinitionEntityValueContext> m_valueStructureComplex;
 	
 	//value structure complex tree
 	private Map<String, String> m_parents;
@@ -28,10 +28,10 @@ public class HAPPoolValueStructure {
 		this.m_idIndex = 0;
 	}
 	
-	public String addValueStructureComplex(HAPDefinitionEntityComplexValueStructure valueStructureComplex, String parentId) {
+	public String addValueStructureComplex(HAPDefinitionEntityValueContext valueStructureComplex, String parentId) {
 		String id = this.generateId();
 		valueStructureComplex.setId(id);
-		for(HAPExecutablePartComplexValueStructure part : valueStructureComplex.getValueStructures()) {
+		for(HAPExecutablePartValueContext part : valueStructureComplex.getValueStructures()) {
 			extractSimpleValueStructure(part);
 		}
 		this.m_valueStructureComplex.put(id, valueStructureComplex);
@@ -84,16 +84,16 @@ public class HAPPoolValueStructure {
 	}
 	
 	//extract value structure from complex and add to pool
-	private void extractSimpleValueStructure(HAPExecutablePartComplexValueStructure part) {
+	private void extractSimpleValueStructure(HAPExecutablePartValueContext part) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
-			HAPExecutablePartComplexValueStructureSimple simplePart = (HAPExecutablePartComplexValueStructureSimple)part;
+			HAPExecutablePartValueContextSimple simplePart = (HAPExecutablePartValueContextSimple)part;
 			String valueStructureId = this.addValueStructure(simplePart.getValueStructure());
 			simplePart.setValueStructureDefinitionId(valueStructureId);
 		}
 		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
-			HAPExecutablePartComplexValueStructureGroupWithEntity entityGroup = (HAPExecutablePartComplexValueStructureGroupWithEntity)part;
-			for(HAPExecutablePartComplexValueStructure child : entityGroup.getChildren()) {
+			HAPExecutablePartValueContextGroupWithEntity entityGroup = (HAPExecutablePartValueContextGroupWithEntity)part;
+			for(HAPExecutablePartValueContext child : entityGroup.getChildren()) {
 				extractSimpleValueStructure(child);
 			}
 		}

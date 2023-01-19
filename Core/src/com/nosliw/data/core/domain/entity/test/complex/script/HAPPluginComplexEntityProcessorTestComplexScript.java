@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.script.HAPDefinitionEntityScript;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
@@ -36,7 +36,7 @@ public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginC
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
 		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
-		HAPExecutableEntityComplexValueStructure valueStructureComplex = executableEntity.getValueStructureComplex();
+		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		HAPDefinitionEntityTestComplexScript definitionEntity = (HAPDefinitionEntityTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();

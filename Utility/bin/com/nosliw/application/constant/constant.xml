@@ -572,7 +572,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEMPLATE" value="template"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CODETABLE" value="codeTable"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE" value="valuestructure"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX" value="valuestructurecomplex"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_VALUECONTEXT" value="valuecontext"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ATTACHMENT" value="attachment"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONFIGURE" value="configure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPT" value="script"/>

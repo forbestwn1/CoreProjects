@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPWithComplexEntity;
@@ -37,7 +37,7 @@ public class HAPProcessorValueStructureInComponent {
 	}
 	
 	//add complex to pool
-	private static String buildValueStructureComplex(HAPWithValueStructure withValueStructure, String parentComplexId, HAPPoolValueStructure valueStructurePool) {
+	private static String buildValueStructureComplex(HAPWithValueContext withValueStructure, String parentComplexId, HAPPoolValueStructure valueStructurePool) {
 		String out = null;
 		if(withValueStructure instanceof HAPDefinitionEntityElementInContainerComponent) {
 			HAPDefinitionEntityElementInContainerComponent containerEle = (HAPDefinitionEntityElementInContainerComponent)withValueStructure;
@@ -45,7 +45,7 @@ public class HAPProcessorValueStructureInComponent {
 			out = valueStructurePool.addValueStructureComplex(containerEle.getValueStructureComplex(), containerComplexId);
 		}
 		else {
-			out = valueStructurePool.addValueStructureComplex(withValueStructure.getValueStructureComplex(), parentComplexId);
+			out = valueStructurePool.addValueStructureComplex(withValueStructure.getValueContext(), parentComplexId);
 		}
 		return out;
 	}

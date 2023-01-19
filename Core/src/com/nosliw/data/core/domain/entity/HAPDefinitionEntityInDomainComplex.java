@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity;
 
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 
 //entity that have data value structure and attachment
-public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueStructure, HAPWithAttachment{
+public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueContext, HAPWithAttachment{
 
 	protected HAPDefinitionEntityInDomainComplex() {}
 	
@@ -13,10 +13,10 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	}
 	
 	@Override
-	public HAPEmbededDefinitionWithId getValueStructureComplexEntity() {  		return this.getNormalAttributeValueWithId(HAPWithValueStructure.VALUESTRUCTURE);	}
+	public HAPEmbededDefinitionWithId getValueContextEntity() {  		return this.getNormalAttributeValueWithId(HAPWithValueContext.VALUECONTEXT);	}
 
 	@Override
-	public void setValueStructureComplexEntity(HAPEmbededDefinitionWithId valueStructureComplexEntity) {    this.setNormalAttribute(HAPWithValueStructure.VALUESTRUCTURE, valueStructureComplexEntity);      }
+	public void setValueContextEntity(HAPEmbededDefinitionWithId valueContextEntity) {    this.setNormalAttribute(HAPWithValueContext.VALUECONTEXT, valueContextEntity);      }
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return null;  }

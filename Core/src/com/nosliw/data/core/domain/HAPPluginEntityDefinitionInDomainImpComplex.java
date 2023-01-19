@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -21,7 +21,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		JSONObject jsonObj = this.convertToJsonObject(obj);
 		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
-		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithValueStructure.VALUESTRUCTURE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, parserContext);
+		this.parseNormalSimpleEntityAttribute(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, null, parserContext);
 		this.parseComplexDefinitionContent(entityId, jsonObj, parserContext);
 	}
 	

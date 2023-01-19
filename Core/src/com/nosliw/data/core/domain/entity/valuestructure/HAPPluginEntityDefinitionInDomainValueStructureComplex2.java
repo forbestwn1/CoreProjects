@@ -16,12 +16,12 @@ import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 public class HAPPluginEntityDefinitionInDomainValueStructureComplex2 extends HAPPluginEntityDefinitionInDomainImp{
 
 	public HAPPluginEntityDefinitionInDomainValueStructureComplex2(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityComplexValueStructure.class, runtimeEnv);
+		super(HAPDefinitionEntityValueContext.class, runtimeEnv);
 	}
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPDomainEntityDefinitionLocal definitionDomain) {
-		HAPDefinitionEntityComplexValueStructure valueStructureComplex = (HAPDefinitionEntityComplexValueStructure)this.getEntity(entityId, definitionDomain);
+		HAPDefinitionEntityValueContext valueStructureComplex = (HAPDefinitionEntityValueContext)this.getEntity(entityId, definitionDomain);
 
 		HAPValueStructureInComplex valueStructureInComplex = new HAPValueStructureInComplexEmpty();
 

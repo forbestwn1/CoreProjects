@@ -20,18 +20,18 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 	
 	private int m_idIndex;
 	
-	private List<HAPExecutablePartComplexValueStructure> m_parts;
+	private List<HAPExecutablePartValueContext> m_parts;
 	
 	private HAPGeneratorId m_idGenerator;
 	 
 	public HAPDefinitionEntityComplexValueStructure3() {
-		this.m_parts = new ArrayList<HAPExecutablePartComplexValueStructure>();
+		this.m_parts = new ArrayList<HAPExecutablePartValueContext>();
 	}
 	
-	public List<HAPExecutablePartComplexValueStructure> getParts(){   return this.m_parts;  }
+	public List<HAPExecutablePartValueContext> getParts(){   return this.m_parts;  }
 	
-	public List<HAPExecutablePartComplexValueStructure> getPart(String name) {
-		List<HAPExecutablePartComplexValueStructure> out = new ArrayList<HAPExecutablePartComplexValueStructure>();
+	public List<HAPExecutablePartValueContext> getPart(String name) {
+		List<HAPExecutablePartValueContext> out = new ArrayList<HAPExecutablePartValueContext>();
 		for(int i : this.findPartByName(name)) {
 			out.add(this.m_parts.get(i));
 		}
@@ -40,32 +40,32 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 
 	public void addPartSimple(HAPValueStructure valueStructure, HAPInfoPartValueStructure partInfo) {
 		partInfo.setId(this.generateId(partInfo));
-		HAPExecutablePartComplexValueStructureSimple part = new HAPExecutablePartComplexValueStructureSimple(valueStructure.cloneValueStructure(), partInfo);
+		HAPExecutablePartValueContextSimple part = new HAPExecutablePartValueContextSimple(valueStructure.cloneValueStructure(), partInfo);
 		this.addPart(part);
 	}
 	
-	public void addPartGroup(List<HAPExecutablePartComplexValueStructure> children, HAPInfoPartValueStructure partInfo) {
+	public void addPartGroup(List<HAPExecutablePartValueContext> children, HAPInfoPartValueStructure partInfo) {
 		partInfo.setId(this.generateId(partInfo));
-		HAPExecutablePartComplexValueStructureGroupWithEntity part = new HAPExecutablePartComplexValueStructureGroupWithEntity(partInfo);
-		for(HAPExecutablePartComplexValueStructure child : children) {
+		HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(partInfo);
+		for(HAPExecutablePartValueContext child : children) {
 			part.addChild(child.cloneComplexValueStructurePart());
 		}
 		this.addPart(part);
 	}
 	
-	public void addPart(HAPExecutablePartComplexValueStructure part) {
+	public void addPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
 		HAPUtilityComplexValueStructure.sortParts(m_parts);
 	}
 	
-	public void copyPart(HAPExecutablePartComplexValueStructure part) {
+	public void copyPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
 		HAPUtilityComplexValueStructure.sortParts(m_parts);
 	}
 	
 	public HAPDefinitionEntityComplexValueStructure3 cloneValueStructureComplex() {
 		HAPDefinitionEntityComplexValueStructure3 out = new HAPDefinitionEntityComplexValueStructure3();
-		for(HAPExecutablePartComplexValueStructure part : this.m_parts) {
+		for(HAPExecutablePartValueContext part : this.m_parts) {
 			this.m_parts.add(part.cloneComplexValueStructurePart());
 		}
 		return out;
@@ -74,7 +74,7 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 	private List<Integer> findPartByName(String name) {
 		List<Integer> out = new ArrayList<Integer>();
 		for(int i=0; i<this.m_parts.size(); i++) {
-			HAPExecutablePartComplexValueStructure part = this.m_parts.get(i);
+			HAPExecutablePartValueContext part = this.m_parts.get(i);
 			if(name.equals(part.getName())) {
 				out.add(i);
 			}
@@ -90,7 +90,7 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionLocal entityDefDomain){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> partJsonArray = new ArrayList<String>();
-		for(HAPExecutablePartComplexValueStructure part : this.m_parts) {
+		for(HAPExecutablePartValueContext part : this.m_parts) {
 			partJsonArray.add(part.toExpandedJsonString(entityDefDomain));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partJsonArray.toArray(new String[0])));

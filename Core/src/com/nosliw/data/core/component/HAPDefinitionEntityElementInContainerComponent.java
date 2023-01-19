@@ -15,7 +15,7 @@ import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;
@@ -53,10 +53,10 @@ public abstract class HAPDefinitionEntityElementInContainerComponent extends HAP
 	}
 
 	@Override
-	public HAPDefinitionEntityComplexValueStructure getValueStructureComplex() {	return this.m_componentEntity.getValueStructureComplex();	}
+	public HAPDefinitionEntityValueContext getValueStructureComplex() {	return this.m_componentEntity.getValueContext();	}
 
 	@Override
-	public HAPDefinitionEntityComplexValueStructure getContainerValueStructureComplex() {	return this.m_componentContainer.getValueStructureComplex();	}
+	public HAPDefinitionEntityValueContext getContainerValueStructureComplex() {	return this.m_componentContainer.getValueContext();	}
 	
 	@Override
 	public HAPDefinitionEntityContainer getResourceContainer() {   return this.m_componentContainer;    }

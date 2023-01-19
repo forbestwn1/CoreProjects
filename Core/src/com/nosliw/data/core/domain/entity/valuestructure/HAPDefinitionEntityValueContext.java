@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 
-public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityValueContext extends HAPDefinitionEntityInDomainSimple{
 
-	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
+	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT;
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
 	private List<HAPDefinitionWrapperValueStructure> m_valueStructures;
 	
-	public HAPDefinitionEntityComplexValueStructure() {
+	public HAPDefinitionEntityValueContext() {
 		this.m_valueStructures = new ArrayList<HAPDefinitionWrapperValueStructure>();
 	}
 	
@@ -48,7 +48,7 @@ public class HAPDefinitionEntityComplexValueStructure extends HAPDefinitionEntit
 
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityComplexValueStructure out = new HAPDefinitionEntityComplexValueStructure();
+		HAPDefinitionEntityValueContext out = new HAPDefinitionEntityValueContext();
 		for(HAPDefinitionWrapperValueStructure valueStructure : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructure.cloneValueStructureWrapper());
 		}

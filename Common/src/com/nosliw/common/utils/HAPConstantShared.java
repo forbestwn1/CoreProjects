@@ -483,7 +483,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEMPLATE = "template";
 		public static final String RUNTIME_RESOURCE_TYPE_CODETABLE = "codeTable";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE = "valuestructure";
-		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX = "valuestructurecomplex";
+		public static final String RUNTIME_RESOURCE_TYPE_VALUECONTEXT = "valuecontext";
 		public static final String RUNTIME_RESOURCE_TYPE_ATTACHMENT = "attachment";
 		public static final String RUNTIME_RESOURCE_TYPE_CONFIGURE = "configure";
 		public static final String RUNTIME_RESOURCE_TYPE_SCRIPT = "script";

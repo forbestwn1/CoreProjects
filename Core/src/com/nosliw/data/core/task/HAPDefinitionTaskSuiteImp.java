@@ -6,16 +6,16 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 
 public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDefinitionTaskSuite{
 
 	private Map<String, HAPDefinitionTask> m_tasks;
 	
-	private HAPWithValueStructure m_withValueStructure;
+	private HAPWithValueContext m_withValueStructure;
 	
-	public HAPDefinitionTaskSuiteImp(HAPWithValueStructure withValueStructure) {
+	public HAPDefinitionTaskSuiteImp(HAPWithValueContext withValueStructure) {
 		this.m_tasks = new LinkedHashMap<String, HAPDefinitionTask>();
 		this.m_withValueStructure = withValueStructure;
 	}

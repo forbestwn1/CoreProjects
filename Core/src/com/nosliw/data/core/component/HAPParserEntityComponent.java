@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.common.HAPWithValueStructure;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
@@ -52,7 +52,7 @@ public class HAPParserEntityComponent {
 		}
 		
 		//value structure
-		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPWithValueStructure.VALUESTRUCTURE);
+		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPWithValueContext.VALUECONTEXT);
 		HAPUtilityComplexValueStructure.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	

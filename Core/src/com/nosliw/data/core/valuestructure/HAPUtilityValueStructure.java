@@ -11,9 +11,9 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
@@ -67,7 +67,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static Map<String, Object> replaceValueNameWithId(HAPDefinitionEntityComplexValueStructure valueStructureComplex, Map<String, Object> values){
+	public static Map<String, Object> replaceValueNameWithId(HAPDefinitionEntityValueContext valueStructureComplex, Map<String, Object> values){
 
 	}
 	
@@ -105,7 +105,7 @@ public class HAPUtilityValueStructure {
 	}
 
 	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
-		HAPDefinitionEntityComplexValueStructure valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+		HAPDefinitionEntityValueContext valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
@@ -121,7 +121,7 @@ public class HAPUtilityValueStructure {
 		}
 	}
 
-	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableEntityComplexValueStructure valueStructureComplex, HAPDomainValueStructure valueStructureDomain) {
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableEntityValueContext valueStructureComplex, HAPDomainValueStructure valueStructureDomain) {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		
 		

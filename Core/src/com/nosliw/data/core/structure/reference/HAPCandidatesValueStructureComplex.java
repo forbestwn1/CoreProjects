@@ -4,29 +4,29 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 
 //a group of value structure complex for element reference
 public class HAPCandidatesValueStructureComplex {
 
-	private Map<String, HAPExecutableEntityComplexValueStructure> m_valueStructureComplexByName;
+	private Map<String, HAPExecutableEntityValueContext> m_valueStructureComplexByName;
 
 	public HAPCandidatesValueStructureComplex() {
-		this.m_valueStructureComplexByName = new LinkedHashMap<String, HAPExecutableEntityComplexValueStructure>();
+		this.m_valueStructureComplexByName = new LinkedHashMap<String, HAPExecutableEntityValueContext>();
 	}
 	
-	public HAPCandidatesValueStructureComplex(HAPExecutableEntityComplexValueStructure selfComplex, HAPExecutableEntityComplexValueStructure defaultComplex) {
+	public HAPCandidatesValueStructureComplex(HAPExecutableEntityValueContext selfComplex, HAPExecutableEntityValueContext defaultComplex) {
 		this();
 		this.addSelf(selfComplex);
 		this.addDefault(defaultComplex);
 	}
 	
-	public void addSelf(HAPExecutableEntityComplexValueStructure valueStructureComplex) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF, valueStructureComplex);    }
+	public void addSelf(HAPExecutableEntityValueContext valueStructureComplex) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF, valueStructureComplex);    }
 
-	public void addDefault(HAPExecutableEntityComplexValueStructure valueStructureComplex) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, valueStructureComplex);    }
+	public void addDefault(HAPExecutableEntityValueContext valueStructureComplex) {   this.m_valueStructureComplexByName.put(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT, valueStructureComplex);    }
 
-	public void addValueStructureComplex(String valueStructureComplexName, HAPExecutableEntityComplexValueStructure valueStructureComplex) {    this.m_valueStructureComplexByName.put(valueStructureComplexName, valueStructureComplex);     }
+	public void addValueStructureComplex(String valueStructureComplexName, HAPExecutableEntityValueContext valueStructureComplex) {    this.m_valueStructureComplexByName.put(valueStructureComplexName, valueStructureComplex);     }
 
-	public HAPExecutableEntityComplexValueStructure getValueStructureComplex(String name) {   return this.m_valueStructureComplexByName.get(name);    }
+	public HAPExecutableEntityValueContext getValueStructureComplex(String name) {   return this.m_valueStructureComplexByName.get(name);    }
 
 }
