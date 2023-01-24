@@ -8,9 +8,9 @@ import java.util.Set;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
@@ -117,7 +117,7 @@ public class HAPUtilityProcessRelativeElement {
 			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getParentValueContextName());
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, parentValueContexts, valueStructureDomain, relativeEleProcessConfigure, errors, runtimeEnv);
-				processRelativeStructureElementForValue(structureEleInfo, relativeEleProcessConfigure, errors);
+				out = processRelativeStructureElementForValue(structureEleInfo, relativeEleProcessConfigure, errors, runtimeEnv);
 			}
 			break;
 		}
@@ -177,7 +177,7 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	private static HAPElementStructure processRelativeStructureElementForValue(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, List<HAPServiceData> errors){
+	private static HAPElementStructure processRelativeStructureElementForValue(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv){
 		HAPElementStructureLeafRelativeForValue defStructureElementRelative = (HAPElementStructureLeafRelativeForValue)structureEleInfo.getElement();
 		HAPElementStructure out = defStructureElementRelative;
 

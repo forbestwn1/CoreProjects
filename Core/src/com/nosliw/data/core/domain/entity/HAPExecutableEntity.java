@@ -42,6 +42,11 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		}
 		return null;
 	}
+
+	public HAPEmbededExecutableWithValue getNormalAttributeContentWithValue(String attrName) {	return (HAPEmbededExecutableWithValue)this.getAttribute(attrName).getValue();	}
+	public HAPEmbededExecutableWithId getNormalAttributeContentWithId(String attrName) {	return (HAPEmbededExecutableWithId)this.getAttribute(attrName).getValue();	}
+	public HAPEmbededExecutableWithEntity getNormalAttributeContentWithEntity(String attrName) {	return (HAPEmbededExecutableWithEntity)this.getAttribute(attrName).getValue();	}
+
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {    this.m_attributes.add(attrObj);    }
 	

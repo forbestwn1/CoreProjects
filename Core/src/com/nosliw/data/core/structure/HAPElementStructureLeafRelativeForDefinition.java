@@ -25,7 +25,7 @@ public class HAPElementStructureLeafRelativeForDefinition extends HAPElementStru
 	}
 	
 	@Override
-	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE;	}
+	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION;	}
 
 	@Override
 	public HAPElementStructure getSolidStructureElement() {	return this.getResolveInfo().getSolidElement();	}

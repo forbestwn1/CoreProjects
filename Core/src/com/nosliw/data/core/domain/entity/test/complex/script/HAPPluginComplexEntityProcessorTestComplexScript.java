@@ -46,6 +46,8 @@ public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginC
 		
 		executableEntity.setScript(scriptDef.getScript());
 		
+		executableEntity.setScriptName(definitionEntity.getScriptName());
+		
 		Map<String, Object> parms = definitionEntity.getParms();
 		executableEntity.setParms(parms);
 	

@@ -187,9 +187,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createContextVariableInfo", node_createContextVariableInfo); 
-packageObj.createChildNode("createContextElementInfo", node_createContextElementInfo); 
-packageObj.createChildNode("createContextElement", node_createContextElement); 
-packageObj.createChildNode("createExtendedContext", node_createExtendedContext); 
+packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
+packageObj.createChildNode("createValueStructureVariableInfo", node_createValueStructureVariableInfo); 
 
 })(packageObj);

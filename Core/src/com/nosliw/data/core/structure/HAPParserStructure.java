@@ -81,7 +81,7 @@ public class HAPParserStructure {
 			//relative for value link
 			HAPElementStructureLeafRelativeForValue relativeEle = new HAPElementStructureLeafRelativeForValue();
 			out = relativeEle;
-			parseRelativeElement(relativeEle, defRefObj, eleDefJson);
+			parseRelativeElement(relativeEle, linkRefObj, eleDefJson);
 			
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelativeForValue.DEFINITION);
 			if(definitionJsonObj!=null) 	relativeEle.setDefinition(parseStructureElement(definitionJsonObj));
