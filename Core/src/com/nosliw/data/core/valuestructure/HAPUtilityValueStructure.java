@@ -15,7 +15,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -105,9 +105,9 @@ public class HAPUtilityValueStructure {
 	}
 
 	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
-		HAPDefinitionEntityValueContext valueStructureComplex = valueStructureDomain.getValueStructureComplex(valueStructureComplexId);
+		HAPDefinitionEntityValueContext valueStructureComplex = valueStructureDomain.getValueContext(valueStructureComplexId);
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
 			discoverDataVariablesInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
 		}
@@ -125,7 +125,7 @@ public class HAPUtilityValueStructure {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		
 		
-		List<HAPInfoPartSimple> partsInfo = HAPUtilityComplexValueStructure.getAllSimpleParts(valueStructureComplex);
+		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
 			discoverDataVariablesDefinitionInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
 		}

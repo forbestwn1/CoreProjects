@@ -55,12 +55,12 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 	
 	public void addPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
-		HAPUtilityComplexValueStructure.sortParts(m_parts);
+		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
 	public void copyPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
-		HAPUtilityComplexValueStructure.sortParts(m_parts);
+		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
 	public HAPDefinitionEntityComplexValueStructure3 cloneValueStructureComplex() {

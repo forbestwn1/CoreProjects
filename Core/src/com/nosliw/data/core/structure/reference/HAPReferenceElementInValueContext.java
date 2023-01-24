@@ -8,13 +8,13 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 
 //criteria for reference
 @HAPEntityWithAttribute
-public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
+public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
@@ -23,10 +23,10 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 	public static final String VALUESTRUCTUREREFERENCE = "valueStructureReference";
 
 	@HAPAttribute
-	public static final String PARENTCOMPLEX = "parentComplex";
+	public static final String PARENTVALUECONTEXT = "parentValueContext";
 
 	//parent complex name for referred complex, for instance, self, external context
-	private String m_parentComplex;
+	private String m_parentValueContext;
 	
 	//criteria for value structure candidate
 	private HAPReferenceValueStructure m_valueStructureReference;
@@ -34,23 +34,23 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 	//path to element (root name + path)
 	private String m_elementPath;
 
-	public HAPReferenceElementInStructureComplex() {}
+	public HAPReferenceElementInValueContext() {}
 	
-	public HAPReferenceElementInStructureComplex(String refPath) {
+	public HAPReferenceElementInValueContext(String refPath) {
 		this.m_elementPath = refPath;
 	}
 
-	public HAPReferenceElementInStructureComplex(String parent, String refPath) {
+	public HAPReferenceElementInValueContext(String parent, String refPath) {
 		this(refPath);
-		this.m_parentComplex = parent;
+		this.m_parentValueContext = parent;
 	}
 	
-	public String getParentComplexName() {
-		if(HAPUtilityBasic.isStringNotEmpty(this.m_parentComplex))   return this.m_parentComplex;
+	public String getParentValueContextName() {
+		if(HAPUtilityBasic.isStringNotEmpty(this.m_parentValueContext))   return this.m_parentValueContext;
 		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
 	
-	public void setParentComplexName(String parent) {		this.m_parentComplex = parent;	}
+	public void setParentValueContextName(String parent) {		this.m_parentValueContext = parent;	}
 	
 	public String getElementPath() {   return this.m_elementPath;    }
 	public void setElementPath(String path) {  this.m_elementPath = path;	}
@@ -64,7 +64,7 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
-			this.m_parentComplex = (String)jsonValue.opt(PARENTCOMPLEX);
+			this.m_parentValueContext = (String)jsonValue.opt(PARENTVALUECONTEXT);
 			Object referencePathObj = jsonValue.get(ELEMENTPATH);
 			
 			if(referencePathObj instanceof String)	this.setElementPath((String)referencePathObj);
@@ -81,12 +81,12 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ELEMENTPATH, this.getElementPath());
-		jsonMap.put(PARENTCOMPLEX, this.getParentComplexName());
+		jsonMap.put(PARENTVALUECONTEXT, this.getParentValueContextName());
 	}
 	
-	public HAPReferenceElementInStructureComplex cloneReferencePathInfo() {
-		HAPReferenceElementInStructureComplex out = new HAPReferenceElementInStructureComplex();
-		out.m_parentComplex = this.getParentComplexName();
+	public HAPReferenceElementInValueContext cloneReferencePathInfo() {
+		HAPReferenceElementInValueContext out = new HAPReferenceElementInValueContext();
+		out.m_parentValueContext = this.getParentValueContextName();
 		out.m_elementPath = this.getElementPath();
 		return out;
 	}
@@ -96,10 +96,10 @@ public class HAPReferenceElementInStructureComplex extends HAPSerializableImp{
 		if(!super.equals(obj))  return false;
 
 		boolean out = false;
-		if(obj instanceof HAPReferenceElementInStructureComplex) {
-			HAPReferenceElementInStructureComplex ele = (HAPReferenceElementInStructureComplex)obj;
+		if(obj instanceof HAPReferenceElementInValueContext) {
+			HAPReferenceElementInValueContext ele = (HAPReferenceElementInValueContext)obj;
 			if(!HAPUtilityBasic.isEquals(this.getElementPath(), ele.getElementPath()))  return false;
-			if(!HAPUtilityBasic.isEquals(this.getParentComplexName(), ele.getParentComplexName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getParentValueContextName(), ele.getParentValueContextName()))  return false;
 			out = true;
 		}
 		return out;

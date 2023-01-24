@@ -1,4 +1,4 @@
-function(complexEntityDef, variableGroupId, bundleCore, configure){
+function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 
@@ -7,15 +7,20 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var variableGroup;
 
 	var loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
-    var loc_scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
+    var loc_scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_VARIABLE);
 	var loc_configure = configure;
 
 	var loc_variableInfos = [];
 
 	var loc_init(){
+		
+		var varDomain = bundleCore.getVariableDomain();
+		var valueContext = varDomain.getValueContext();
+	
 		_.each(loc_scriptVars[EMBEDEDEXECUTABLEWITHVALUE_VALUE], function(varResolve, i){
 			var varInfo = {
-				resolve : varResolve
+				resolve : varResolve,
+				variable : valueContext.createVariable(varResolve),
 			};
 			loc_variableInfos.push(varInfo);
 		});

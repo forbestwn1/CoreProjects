@@ -11,7 +11,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 
 public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDomainComplex{
 
@@ -63,7 +63,7 @@ public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDom
 	public String getValueStructureTypeIfNotDefined() {  return HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT;  }
 
 	private void setElementParentPart(HAPDefinitionExpressionGroup1 expressionGroup) {
-		HAPUtilityComplexValueStructure.setParentPart(expressionGroup, this);
+		HAPUtilityValueContext.setParentPart(expressionGroup, this);
 	}
 	
 }

@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 //a element refer to another element (on another tree or same tree)
 //it can be use in define value structure by reference to another element
@@ -22,7 +22,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	public static final String RESOLVEDINFO = "resolvedInfo";
 
 	//reference definition
-	private HAPReferenceElementInStructureComplex m_reference;
+	private HAPReferenceElementInValueContext m_reference;
 
 	//resolved info (referred structure, element path, remain path, element)
 	private HAPInfoRelativeResolve m_resolvedInfo;
@@ -33,11 +33,11 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	
 	public HAPElementStructureLeafRelative(String path) {
 		this();
-		this.m_reference = new HAPReferenceElementInStructureComplex(path);
+		this.m_reference = new HAPReferenceElementInValueContext(path);
 	}
 	
-	public HAPReferenceElementInStructureComplex getReference() {    return this.m_reference;    }
-	public void setReference(HAPReferenceElementInStructureComplex path) {   this.m_reference = path;     }
+	public HAPReferenceElementInValueContext getReference() {    return this.m_reference;    }
+	public void setReference(HAPReferenceElementInValueContext path) {   this.m_reference = path;     }
 
 	public HAPInfoRelativeResolve getResolveInfo() {   return this.m_resolvedInfo;     }
 	public void setResolvedInfo(HAPInfoRelativeResolve resolvedInfo) {    this.m_resolvedInfo = resolvedInfo;      }
@@ -59,7 +59,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	protected void solidateConstantScript(HAPElementStructureLeafRelative relativeElement, Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructureLeafRelative out = (HAPElementStructureLeafRelative)this.cloneStructureElement();
 		out.getReference().setElementPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getElementPath(), constants, runtimeEnv));
-		out.getReference().setParentComplexName(this.getReference().getParentComplexName());
+		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
 	}
 	
 	@Override

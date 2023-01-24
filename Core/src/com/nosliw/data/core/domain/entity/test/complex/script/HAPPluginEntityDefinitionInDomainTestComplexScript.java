@@ -18,27 +18,6 @@ public class HAPPluginEntityDefinitionInDomainTestComplexScript extends HAPPlugi
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		HAPDefinitionEntityTestComplexScript entity = (HAPDefinitionEntityTestComplexScript)this.getEntity(entityId, parserContext);
-		JSONObject jsonObj = (JSONObject)obj;
-
-		//script
-		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestComplexScript.ATTR_SCRIPTNAME);
-		entity.setScriptName(scriptName);
-		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPDefinitionEntityTestComplexScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
-		
-		//parms
-		JSONObject parms =  jsonObj.optJSONObject(HAPDefinitionEntityTestComplexScript.ATTR_PARM);
-		if(parms!=null) {
-			for(Object key : parms.keySet()) {
-				String parmName = (String)key;
-				entity.setParm(parmName, parms.opt(parmName));
-			}
-		}
-	}
-
-	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityTestComplexScript entity = (HAPDefinitionEntityTestComplexScript)this.getEntity(entityId, parserContext);
 

@@ -15,10 +15,10 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.script.HAPDefinitionEntityScript;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
-import com.nosliw.data.core.structure.reference.HAPCandidatesValueStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginComplexEntityProcessorImp{
@@ -54,10 +54,10 @@ public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginC
 			JSONArray varJsonArray = (JSONArray)variables;
 			List<HAPInfoReferenceResolve> resolvedVars = new ArrayList<HAPInfoReferenceResolve>();
 			for(int i=0; i<varJsonArray.length(); i++) {
-				HAPReferenceElementInStructureComplex ref = new HAPReferenceElementInStructureComplex();
+				HAPReferenceElementInValueContext ref = new HAPReferenceElementInValueContext();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				
-				HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(ref, new HAPCandidatesValueStructureComplex(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
+				HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(ref, new HAPCandidatesValueContext(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
 				resolvedVars.add(resolve);
 			}
 			executableEntity.setVariables(resolvedVars);

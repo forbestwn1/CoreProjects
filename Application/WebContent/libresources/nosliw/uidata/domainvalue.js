@@ -64,7 +64,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 	
 	var loc_variableMan;
 		
-	//var group id
+	//value context id
 	var loc_id;
 	
 	//parent context which some variable can get from
@@ -174,10 +174,11 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 
 		//
 		createVariable : function(varResolve){
-			
+			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID]);
+			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH]));
 		},
 			
-		getValueStructure : function(valueStructureId){      },
+		getValueStructure : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
 		
 		
 		
@@ -200,12 +201,18 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 
 var loc_createSoftValueStructure = function(valueStructureRuntimeId, parentValueContext){
 	
-	var loc_runtimeId = runtimeId;
+	var loc_runtimeId = valueStructureRuntimeId;
+	
+	var loc_parentValueContext = parentValueContext;
 	
 	var loc_usedCount = 1;
 	
 	var loc_out = {
 		
+		createVariable : function(valueStructureVariableInfo){
+			return loc_parentValueContext.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
+		},
+			
 		getRuntimeId : function(){   return loc_runtimeId;    },
 		
 		isSolid : function(){   return false;   },

@@ -12,7 +12,7 @@ import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.component.event.HAPWithEvent;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAParserComponentValueStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
@@ -53,7 +53,7 @@ public class HAPParserEntityComponent {
 		
 		//value structure
 		JSONObject contextJsonObj = jsonObj.optJSONObject(HAPWithValueContext.VALUECONTEXT);
-		HAPUtilityComplexValueStructure.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
+		HAPUtilityValueContext.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	
 	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityInDomainComplex complexEntity, HAPManagerTask taskMan) {

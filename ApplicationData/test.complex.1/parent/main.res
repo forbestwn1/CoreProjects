@@ -12,9 +12,9 @@
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable" : ["normal", ""]
+					"variable" : ["normal"]
 				},
-				"valueStructure" :{
+				"valueContext" :{
 					"entity": [
 						{
 							"groupType" : "public",
@@ -59,14 +59,14 @@
 		{
 			"info": {
 				"name" : "simplized1_none_test.complex.script", 
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"scriptName": "complexscript_test_exist"
 		},
 		{
 			"info": {
 				"name": "testlifecycle.log_none_test.complex.script",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_lifecycle_log",
@@ -77,7 +77,7 @@
 		{
 			"info": {
 				"name" : "testparm_none_test.complex.script",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_printparms",
@@ -101,7 +101,7 @@
 		{
 			"info": {
 				"name" : "teststate_none_test.complex.script",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_state",
@@ -113,7 +113,7 @@
 		{
 			"info": {
 				"name": "testlifecycle.rollback_none_test.complex.script",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_lifecycle_rollback",
@@ -192,7 +192,7 @@
 		{
 			"info": {
 				"name": "attachment",
-				"status": "disabled",
+				"status": "disabled1",
 				"description": "parent attachment" 
 			},
 			"entity": {
@@ -244,8 +244,8 @@
 		},
 		{
 			"info": {
-				"name": "valueStructure",
-				"status": "disabled"
+				"name": "valueContext",
+				"status": "disabled1"
 			},
 			"entity": [
 				{

@@ -48,7 +48,7 @@ public class HAPElementStructureLeafRelativeForDefinition extends HAPElementStru
 		HAPElementStructureLeafRelativeForDefinition out = (HAPElementStructureLeafRelativeForDefinition)this.cloneStructureElement();
 		this.solidateConstantScript(this, constants, runtimeEnv);
 		out.getReference().setElementPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getElementPath(), constants, runtimeEnv));
-		out.getReference().setParentComplexName(this.getReference().getParentComplexName());
+		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
 		return out;
 	}
 }

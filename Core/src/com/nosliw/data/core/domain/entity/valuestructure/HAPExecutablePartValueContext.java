@@ -30,7 +30,7 @@ public abstract class HAPExecutablePartValueContext extends HAPEntityInfoImp{
 	
 	private HAPInfoPartValueStructure processPartInfo(HAPInfoPartValueStructure partInfo) {
 		HAPInfoPartValueStructure out = partInfo;
-		if(out==null)  out = HAPUtilityComplexValueStructure.createPartInfoDefault();  
+		if(out==null)  out = HAPUtilityValueContext.createPartInfoDefault();  
 		return out;
 	}
 }

@@ -18,7 +18,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentR
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextGroupWithEntity;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.resource.HAPEntityResourceDefinition;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -119,7 +119,7 @@ public class HAPUtilityComplexEntity {
 			
 			if(valueStructureRelation.isShareRuntimeData()) {
 				//share runtime data with parent
-				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
+				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityValueContext.createPartInfoFromParent());
 				for(HAPExecutablePartValueContext parentPart : parts) {
 					part.addChild(parentPart.cloneComplexValueStructurePart());
 				}
@@ -127,7 +127,7 @@ public class HAPUtilityComplexEntity {
 			}
 			else {
 				//child has own data
-				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityComplexValueStructure.createPartInfoFromParent());
+				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityValueContext.createPartInfoFromParent());
 				for(HAPExecutablePartValueContext parentPart : parts) {
 					part.addChild(parentPart.cloneComplexValueStructurePart());
 				}

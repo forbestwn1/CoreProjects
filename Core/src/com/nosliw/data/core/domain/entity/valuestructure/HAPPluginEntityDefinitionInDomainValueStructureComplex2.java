@@ -68,7 +68,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructureComplex2 extends HAP
 			valueStructureInComplex = group;
 		}
 		
-		HAPUtilityComplexValueStructure.setValueStructureDefault(valueStructureComplex, valueStructureInComplex);
+		HAPUtilityValueContext.setValueStructureDefault(valueStructureComplex, valueStructureInComplex);
 
 	}
 

@@ -34,10 +34,10 @@ public class HAPUtilityDataAssociationnMapping {
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-							String parent = relativeEle.getParentComplexName();
+							String parent = relativeEle.getParentValueContextName();
 							
 							HAPElementStructureLeafRelative reverseEle = new HAPElementStructureLeafRelative(eleInfo.getElementPath().getFullName());
-							reverseEle.setParentComplexName(targetName);
+							reverseEle.setParentValueContextName(targetName);
 							HAPValueMapping reverseValueMapping = out.getMapping(parent, true);
 							reverseValueMapping.addMapping(eleInfo.getElementPath().getFullName(), reverseEle);
 						}

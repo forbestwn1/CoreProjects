@@ -16,7 +16,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoValueStructureSorting;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityComplexValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
@@ -27,9 +27,9 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityStructureElementReference {
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPCandidatesValueStructureComplex valueStructureComplexs, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPCandidatesValueContext valueContexts, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		//find all candidate value structure 
-		List<HAPWrapperExecutableValueStructure> targetStructures = discoverCandidateValueStructure(valueStructureComplexs.getValueStructureComplex(reference.getParentComplexName()), reference.getValueStructureReference(), resolveConfigure, valueStructureDomain);
+		List<HAPWrapperExecutableValueStructure> targetStructures = discoverCandidateValueStructure(valueContexts.getValueContext(reference.getParentValueContextName()), reference.getValueStructureReference(), resolveConfigure, valueStructureDomain);
 		
 		//resolve targeted structure element
 		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), targetStructures, resolveConfigure, valueStructureDomain);
@@ -95,7 +95,7 @@ public class HAPUtilityStructureElementReference {
 	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPExecutableEntityValueContext valueStructureComplex, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		List<HAPWrapperExecutableValueStructure> out = new ArrayList<HAPWrapperExecutableValueStructure>();
 		
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityComplexValueStructure.getAllValueStructuresSorted(valueStructureComplex);
+		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(valueStructureComplex);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			HAPWrapperExecutableValueStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
@@ -152,8 +152,8 @@ public class HAPUtilityStructureElementReference {
 		else return parents.getStructure(name);
 	}
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
-		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentComplexName()), mode, relativeInheritRule, elementTypes);
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+		return resolveElementReference(reference.getElementPath(), parentStructures.getStructure(reference.getParentValueContextName()), mode, relativeInheritRule, elementTypes);
 	}
 	
 	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
@@ -168,11 +168,11 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	public static HAPInfoReferenceResolve resolveElementReference(String reference, HAPDefinitionEntityValueContext parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		return resolveElementReference(new HAPReferenceElementInStructureComplex(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
+		return resolveElementReference(new HAPReferenceElementInValueContext(reference), parentValueStructureComplex, valueStructureDomain, mode, elementTypes);
 	}
 	
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInStructureComplex reference, HAPDefinitionEntityValueContext parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
-		List<HAPInfoPartSimple> candidates = HAPUtilityComplexValueStructure.findCandidateSimplePart(reference.getParentComplexName(), parentValueStructureComplex);
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPDefinitionEntityValueContext parentValueStructureComplex, HAPDomainValueStructure valueStructureDomain, String mode, Set<String> elementTypes) {
+		List<HAPInfoPartSimple> candidates = HAPUtilityValueContext.findCandidateSimplePart(reference.getParentValueContextName(), parentValueStructureComplex);
 		for(HAPInfoPartSimple candidate : candidates) {
 			HAPExecutablePartValueContextSimple simplePart = candidate.getSimpleValueStructurePart();
 			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());

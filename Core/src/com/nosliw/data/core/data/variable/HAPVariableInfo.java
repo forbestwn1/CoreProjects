@@ -14,7 +14,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInStructureComplex;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 /**
  * This is variable info for expression 
@@ -33,7 +33,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 	private HAPVariableDataInfo m_dataInfo;
 	
-	private HAPReferenceElementInStructureComplex m_reference;
+	private HAPReferenceElementInValueContext m_reference;
 
 	private HAPData m_defaultValue;
 	
@@ -62,7 +62,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 		this.m_dataInfo = new HAPVariableDataInfo();
 	}
 	
-	public HAPReferenceElementInStructureComplex getReferenceInfo() {    return this.m_reference;     }
+	public HAPReferenceElementInValueContext getReferenceInfo() {    return this.m_reference;     }
 	
 	public HAPVariableDataInfo getDataInfo(){		return this.m_dataInfo;	}
 	
@@ -108,7 +108,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 			Object referenceObj = jsonValue.opt(REFERENCE);
 			if(referenceObj!=null) {
-				this.m_reference = new HAPReferenceElementInStructureComplex();
+				this.m_reference = new HAPReferenceElementInValueContext();
 				this.m_reference.buildObject(referenceObj, HAPSerializationFormat.JSON);
 			}
 		}

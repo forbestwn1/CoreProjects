@@ -60,12 +60,12 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	
 	public void addPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
-		HAPUtilityComplexValueStructure.sortParts(m_parts);
+		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
 	public void copyPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
-		HAPUtilityComplexValueStructure.sortParts(m_parts);
+		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
 	public HAPExecutableEntityValueContext cloneValueStructureComplex() {
@@ -100,7 +100,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		
 		List<String> jsonArray = new ArrayList<String>();
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityComplexValueStructure.getAllValueStructures(this);
+		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(this);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			jsonArray.add(valueStructureInfo.toExpandedString(valueStructureDomain));
 		}
@@ -112,7 +112,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		List<String> valueStructureIds = new ArrayList<String>();
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityComplexValueStructure.getAllValueStructuresSorted(this);
+		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(this);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			valueStructureIds.add(valueStructureInfo.getValueStructure().getValueStructureRuntimeId());
 		}

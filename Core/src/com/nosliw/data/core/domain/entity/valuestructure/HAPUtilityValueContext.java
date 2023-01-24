@@ -13,7 +13,7 @@ import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
-public class HAPUtilityComplexValueStructure {
+public class HAPUtilityValueContext {
 
 	public static void processValueStructureInheritance(String valueStructureComplexId, String parentValueStructureComplexId, HAPConfigureComplexRelationValueStructure configure, HAPDomainValueStructure valueStructureDomain) {
 		
@@ -175,13 +175,13 @@ public class HAPUtilityComplexValueStructure {
 	public static HAPInfoPartValueStructure createPartInfoFromParent() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
 	public static void setValueStructureDefault(HAPDefinitionEntityValueContext valueStructureComplex, HAPValueStructure valueStructure) {
-		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityComplexValueStructure.createPartInfoDefault());
+		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityValueContext.createPartInfoDefault());
 	}
 	
 
 	public static void setValueStructureFromParent(HAPWithValueContext withValueStructure, List<HAPExecutablePartValueContext> partsFromParent) {
 		HAPDefinitionEntityValueContext valueStructureComplex = withValueStructure.getValueContext();
-		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityComplexValueStructure.createPartInfoFromParent());
+		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityValueContext.createPartInfoFromParent());
 	}
 	
 	public static void setParentPart(HAPWithValueContext child, HAPWithValueContext parent) {	setValueStructureFromParent(child, parent.getValueContext().getValueStructures());	}

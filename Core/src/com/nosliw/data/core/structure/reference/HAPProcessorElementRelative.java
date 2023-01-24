@@ -44,7 +44,7 @@ public class HAPProcessorElementRelative {
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-						String parent = relativeEle.getReference().getParentComplexName();
+						String parent = relativeEle.getReference().getParentValueContextName();
 						if(dependency!=null)   dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
 							HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, structure);
@@ -72,7 +72,7 @@ public class HAPProcessorElementRelative {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-					String parent = relativeEle.getReference().getParentComplexName();
+					String parent = relativeEle.getReference().getParentValueContextName();
 					if(dependency!=null)   dependency.add(parent);
 					if(!relativeEle.isProcessed()) {
 						HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, null);
