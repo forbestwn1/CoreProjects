@@ -38,24 +38,36 @@ var node_createPackageRuntimeService = function() {
 	var loc_complexEntityPlugins = {};
 	var loc_simpleEntityPlugins = {};
 
-	var loc_createContainerComplexEntityRuntime = function(containerDef, parentComplexEntityCore, bundleCore, configure, request){
-		var out = node_createComplexEntityRuntimeContainer();
+	var loc_getCreateContainerComplexEntityRuntimeRequest = function(containerDef, parentComplexEntityCore, bundleCore, configure, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
+		var container = node_createComplexEntityRuntimeContainer();
 		var elements = containerDef[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
 		_.each(elements, function(ele, i){
 			var entityId = ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
-			var eleEntityRuntime = loc_createComplexEntityRuntime(entityId, parentComplexEntityCore, bundleCore, configure, request);
-			out.addElement(eleEntityRuntime, ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ELEMENTID]);
+			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(entityId, parentComplexEntityCore, bundleCore, configure, {
+				success : function(request, eleRuntime){
+					container.addElement(eleEntityRuntime, ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ELEMENTID]);
+				}
+			}));
 		});
+		
+		out.addRequest(node_createServiceRequestInfoSimple({}, function(requestInfo){
+			return container;
+		}));
 		return out;
 	};
 	
-	var loc_createComplexEntityCore = function(complexEntityDef, variableGroupId, bundleCore, configure){
+	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, variableGroupId, bundleCore, configure, handlers, request){
 		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
-		return complexEntityPlugin.createComplexEntityCore(node_createEntityDefinition(complexEntityDef), variableGroupId, bundleCore, configure);
+		return complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), variableGroupId, bundleCore, configure, handlers, request);
 	};
 	
-	var loc_createComplexEntityRuntime = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, request){
+	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, handlers, request){
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
 		complexEntityId = new node_EntityIdInDomain(complexEntityId);
 		
 		//get component definition
@@ -72,21 +84,28 @@ var node_createPackageRuntimeService = function() {
 			variableGroupId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
 			
 			//new complexCore through complex plugin
-			var componentCore = loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
+			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, variableGroupId, bundleCore, configure, {
+				success : function(request, componentCore){
+					//build decorationInfos
+					var decorationInfos = null;
+					
+					//create runtime
+					return node_createComponentRuntime(componentCore, decorationInfos, request);
+				}
+			}));
 			
-			//build decorationInfos
-			var decorationInfos = null;
-			
-			//create runtime
-			return node_createComponentRuntime(componentCore, decorationInfos, request);
 		}
 		else{
-			//refer to external Entity (bundle)
-			var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_EXTERNALCOMPLEXENTITYID];
-			var globalId = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_EXTERNALENTITY][externalEntityId];
-			//create bundle runtime
-			return loc_out.createBundleRuntime(globalId, configure, request);
+			out.addRequest(node_createServiceRequestInfoSimple({}, function(request){
+				//refer to external Entity (bundle)
+				var externalEntityId = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_EXTERNALCOMPLEXENTITYID];
+				var globalId = entityDefDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_EXTERNALENTITY][externalEntityId];
+				//create bundle runtime
+				return loc_out.createBundleRuntime(globalId, configure, request);
+			}));
 		}
+		
+		return out;
 	};
 
 	var loc_init = function(){

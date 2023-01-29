@@ -14,7 +14,7 @@ var node_createTestComplexScriptPlugin = function(){
 	
 	var loc_out = {
 
-		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, variableGroupId, bundleCore, configure, handlers, request){
 			return loc_createTestComplexScript(complexEntityDef, variableGroupId, bundleCore, configure);
 		},
 
