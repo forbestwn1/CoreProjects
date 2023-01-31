@@ -1,6 +1,6 @@
 {
 	"parts" : {
-		"nosliw_decoration" :{
+		"nosliw_decoration1" :{
 			"parts" : [
 				{
 					"parts" : {

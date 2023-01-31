@@ -204,8 +204,8 @@ var node_createPackageRuntimeService = function() {
 			return simpleEntityPlugin.createEntity(node_createEntityDefinition(entityDef));
 		},
 		
-		createComplexEntityRuntime : function(complexEntityId, parentCore, bundleCore, configure, request){
-			return loc_createComplexEntityRuntime(complexEntityId, parentCore, bundleCore, configure, request);
+		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, handlers, request){
+			return loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, handlers, request);
 		},
 
 		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){

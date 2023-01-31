@@ -34,6 +34,7 @@ import com.nosliw.data.core.domain.entity.expression.HAPProcessorAttachmentEntit
 import com.nosliw.data.core.domain.entity.expression.resource.HAPPluginResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.domain.entity.script.HAPPluginEntityDefinitionInDomainScript;
+import com.nosliw.data.core.domain.entity.script.HAPResourceManagerImpScript;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginComplexEntityProcessorTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginComplexEntityProcessorTestComplex1;
@@ -211,6 +212,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_DECORATION_1, new HAPResourceManagerImpComplex(this.m_complexEntityManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, new HAPResourceManagerImpComplex(this.m_complexEntityManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, new HAPResourceManagerImpConfigure(this.m_domainEntityManager, this.m_resourceDefinitionManager, this.m_resourceManager));
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, new HAPResourceManagerImpScript(this.m_domainEntityManager, this.m_resourceDefinitionManager, this.m_resourceManager));
+		
 		
 //		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
 //		this.getTaskManager().registerTaskManager(HAPConstant.DATATASK_TYPE_DATASOURCE, new HAPManagerTaskDatasource(this.getDataSourceManager().getDataSourceDefinitionManager(), this.getDataSourceManager(), runtime));

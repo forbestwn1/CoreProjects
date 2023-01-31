@@ -7,6 +7,7 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_makeObjectWithType;
+	var node_createVariableManager;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -143,7 +144,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		loc_parentValueContext = parentValueContext;
 		loc_variableMan = variableMan;
 
-		var valueStructureRuntimeIds = valueStructureComplexDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
+		var valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXVALUESTRUCTURE_VALUESTRUCTURE];
 		_.each(valueStructureRuntimeIds, function(valueStructureRuntimeId){
 			if(loc_parentValueContext==undefined || loc_parentValueContext.getVariableInfosByValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
@@ -194,7 +195,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		
 	};
 	
-	loc_init(id, valueContextDef, variableDomainDef, parentVariableGroup, variableMan);
+	loc_init(id, valueContextDef, variableDomainDef, parentValueContext, variableMan);
 	return loc_out;
 };
 
@@ -259,6 +260,8 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createVariableDomain", nod_createVariableDomain); 
