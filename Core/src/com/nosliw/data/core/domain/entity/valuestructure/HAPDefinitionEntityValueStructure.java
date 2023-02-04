@@ -9,11 +9,10 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 @HAPEntityWithAttribute
@@ -24,24 +23,26 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	@HAPAttribute
 	public static final String VALUE = "value";
 
-	private Map<String, HAPRootStructure> m_rootByName;
-	
 	public HAPDefinitionEntityValueStructure() {
-		this.m_rootByName = new LinkedHashMap<String, HAPRootStructure>();
+		this.setNormalAttribute(VALUE, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, HAPRootStructure>()));
 	}
-	
+
 	public HAPRootStructure addRoot(HAPRootStructure root) {
 		root = root.cloneRoot();
 		String name = root.getName();
-		this.m_rootByName.put(name, root);
+		this.getRoots().put(name, root);
 		return root;
 	}
 
-	public Set<String> getRootNames(){   return this.m_rootByName.keySet();    }
+	public Map<String, HAPRootStructure> getRoots(){  
+		return (Map<String, HAPRootStructure>)this.getValueOfNormalAttributeValueWithValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
+	}
+
+	public Set<String> getRootNames(){   return this.getRoots().keySet();    }
 	
-	public HAPRootStructure getRootByName(String rootName) {   return this.m_rootByName.get(rootName);  }
+	public HAPRootStructure getRootByName(String rootName) {   return this.getRoots().get(rootName);  }
 	
-	public Set<HAPRootStructure> getAllRoots(){   return new HashSet<HAPRootStructure>(this.m_rootByName.values());      }
+	public Set<HAPRootStructure> getAllRoots(){   return new HashSet<HAPRootStructure>(this.getRoots().values());      }
 
 	public List<HAPRootStructure> resolveRoot(String rootName, boolean createIfNotExist) {
 		HAPRootStructure root = this.getRootByName(rootName);
@@ -56,24 +57,6 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 		return this.addRoot(root);  
 	}
 
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		this.buildCommonJsonMap(jsonMap, typeJsonMap);
-	}
-	
-	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
-		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
-		this.buildCommonJsonMap(jsonMap, typeJsonMap);
-	}
-
-	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		for(String rootName : this.m_rootByName.keySet()) {
-			jsonMap.put(rootName, this.m_rootByName.get(rootName).toStringValue(HAPSerializationFormat.JSON));
-		}
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
@@ -95,9 +78,6 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityValueStructure out = new HAPDefinitionEntityValueStructure();
 		this.cloneToDefinitionEntityInDomain(out);
-		for(HAPRootStructure root : this.m_rootByName.values()) {
-			out.addRoot(root.cloneRoot());
-		}
 		return out;
 	}
 

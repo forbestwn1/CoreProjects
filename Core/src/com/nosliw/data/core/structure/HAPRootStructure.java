@@ -6,8 +6,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
 public class HAPRootStructure extends HAPEntityInfoWritableImp{
@@ -106,6 +106,9 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp{
 		HAPRootStructure out = this.cloneExceptElement();
 		return out;
 	}
+
+	@Override
+	public Object cloneValue() {    return this.cloneRoot();     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

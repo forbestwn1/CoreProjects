@@ -43,4 +43,8 @@ public class HAPPath {
 		return out;
 	}
 
+	@Override
+	public String toString() {
+		return this.getPath();
+	}
 }

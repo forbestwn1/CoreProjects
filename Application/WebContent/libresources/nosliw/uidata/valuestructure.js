@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("context");    
+var packageObj = library.getChildPackage("valuestructure");    
 
 (function(packageObj){
 //get used node
@@ -164,39 +164,40 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 		//process refer to parent first
 		_.each(elementInfosArray, function(elementInfo, key){
-			loc_addContextElement(elementInfo, request);
+			loc_addValueStructureElement(elementInfo, request);
 		});
 		loc_out.prv_valueChangeEventEnable = true;
 	};
 
-	var loc_addContextElement = function(elementInfo, request){
+	var loc_addValueStructureElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
-		var contextElesInfo = node_createContextElement(elementInfo, request);
+		var contextEleVarInfo = node_createValueStructureElement(elementInfo, request);
 
-		if(contextElesInfo!=undefined){
-			_.each(contextElesInfo.variables, function(contextEleVarInfo, i){
-				var contextEle = {
-					name : contextEleVarInfo.name,
-					info : elementInfo.info,
-					variable : contextEleVarInfo.variable
-				};
-				loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
-				loc_out.prv_elements[contextEle.name] = contextEle;
-				
-				var eleVar = contextEle.variable;
-				nosliw.logging.info("************************  Named variable creation  ************************");
-				nosliw.logging.info("Name: " + contextEle.name);
-				nosliw.logging.info("ID: " + eleVar.prv_id);
-				nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
+		if(contextEleVarInfo!=undefined){
+			var contextEle = {
+				name : contextEleVarInfo.name,
+				info : elementInfo.info,
+				variable : contextEleVarInfo.variable
+			};
+			loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
+			loc_out.prv_elements[contextEle.name] = contextEle;
+			
+			var eleVar = contextEle.variable;
+			nosliw.logging.info("************************  Named variable creation  ************************");
+			nosliw.logging.info("Name: " + contextEle.name);
+			nosliw.logging.info("ID: " + eleVar.prv_id);
+			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
 //					nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
 //					nosliw.logging.info("ParentPath: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().path)); 
-				nosliw.logging.info("***************************************************************");
-				
-				//get all adapters from elementInfo
-				_.each(elementInfo.info.matchers, function(matchers, path){
-					loc_out.prv_adapters[node_dataUtility.combinePath(contextEle.name, path)] = loc_buildAdapterVariableFromMatchers(contextEle.name, path, matchers, elementInfo.info.reverseMatchers[path]);
-				});
+			nosliw.logging.info("***************************************************************");
+			
+			//get all adapters from elementInfo
+			_.each(elementInfo.info.matchers, function(matchers, path){
+				loc_out.prv_adapters[node_dataUtility.combinePath(contextEle.name, path)] = loc_buildAdapterVariableFromMatchers(contextEle.name, path, matchers, elementInfo.info.reverseMatchers[path]);
 			});
+
+//			_.each(contextElesInfo.variables, function(contextEleVarInfo, i){
+//			});
 			
 		}
 		
@@ -212,7 +213,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 			var flatedelEmentInfosArray = [];
 			loc_flatArray(elementInfo, flatedelEmentInfosArray);
 			_.each(flatedelEmentInfosArray, function(elementInfo, key){
-				loc_addContextElement(elementInfo, request);
+				loc_addValueStructureElement(elementInfo, request);
 			});
 		},	
 			

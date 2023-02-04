@@ -2,12 +2,16 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
 
 	var loc_parms;
     var loc_scriptVars;
 	var loc_configure;
 
+	var loc_valueContext;
+
 	var loc_variableInfos = [];
+	
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		
@@ -16,12 +20,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();
-		var valueContext = varDomain.getValueContext();
+		loc_valueContext = varDomain.getValueContext(valueContextId);
 
-		_.each(loc_scriptVars[node_COMMONATRIBUTECONSTANT.EMBEDEDEXECUTABLEWITHVALUE_VALUE], function(varResolve, i){
+		_.each(loc_scriptVars, function(varResolve, i){
 			var varInfo = {
 				resolve : varResolve,
-				variable : valueContext.createVariable(varResolve),
+				variable : loc_valueContext.createVariable(varResolve),
 			};
 			loc_variableInfos.push(varInfo);
 		});
@@ -37,13 +41,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			rootView.append(containerView);	
 				
 			_.each(loc_variableInfos, function(varInfo, i){
-				//create variable
-				varInfo.variable = variableGroup.createVariable(varInfo.resolve);
-			
 				varInfo.view = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
 				containerView.append(varInfo.view);	
 				varInfo.view.bind('change', function(){
-				
 					var value = varInfo.view.val();
 					if(value==undefined || value==""){}
 					else {
@@ -53,12 +53,19 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						};
 					}
 				
-					varInfo.variable.setValue(value);
-				
+//					varInfo.variable.setValue(value);
+					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", value));
 				});					
 
+				varInfo.displayView = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
+				containerView.append(varInfo.displayView);	
+
 				varInfo.variable.registerDataChangeEventListener(undefined, function(eventName, eventData){
-					varInfo.view.val(eventData.value);
+					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							varInfo.displayView.val(data.value.value);
+						}	
+					});
 				});
 			});
 			

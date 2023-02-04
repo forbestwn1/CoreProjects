@@ -39,11 +39,11 @@ public class HAPUtilityClone {
 				((Map)out).put(key, cloneValue(mapObj.get(key)));
 			}
 		}
-		else if(obj instanceof HAPSerializable) {
-			out = HAPSerializeManager.getInstance().buildObject(obj.getClass().toString(), HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON), HAPSerializationFormat.JSON);
-		}
 		else if(obj instanceof HAPCloneable) {
 			out = ((HAPCloneable)obj).cloneValue();
+		}
+		else if(obj instanceof HAPSerializable) {
+			out = HAPSerializeManager.getInstance().buildObject(obj.getClass().toString(), HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON), HAPSerializationFormat.JSON);
 		}
 		else {
 			out = obj;

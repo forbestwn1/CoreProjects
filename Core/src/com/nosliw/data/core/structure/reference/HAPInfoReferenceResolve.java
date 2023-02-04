@@ -1,5 +1,11 @@
 package com.nosliw.data.core.structure.reference;
 
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPElementStructure;
 
 //store result for resolve structure element reference path
@@ -7,7 +13,27 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 //    variable using
 //    variable definition
 //    data association
-public class HAPInfoReferenceResolve{
+@HAPEntityWithAttribute
+public class HAPInfoReferenceResolve extends HAPSerializableImp{
+	
+	@HAPAttribute
+	public static final String ELEREFERENCE = "eleReference";
+	
+	@HAPAttribute
+	public static final String STRUCTUREID = "structureId";
+	
+	@HAPAttribute
+	public static final String ROOTNAME = "rootName";
+	
+	@HAPAttribute
+	public static final String ELEMENTINFOORIGINAL = "elementInfoOriginal";
+	
+	@HAPAttribute
+	public static final String ELEMENTINFOSOLID = "elementInfoSolid";
+	
+	@HAPAttribute
+	public static final String FINALELEMENT = "finalElement";
+	
 	
 	public HAPReferenceElementInValueContext eleReference;
 	
@@ -26,15 +52,14 @@ public class HAPInfoReferenceResolve{
 	//final element, solid (maybe logic element which embeded in real element)
 	public HAPElementStructure finalElement;
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ELEREFERENCE, this.eleReference.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(STRUCTUREID, this.structureId);
+		jsonMap.put(ROOTNAME, this.rootName);
+		if(this.elementInfoOriginal!=null)  jsonMap.put(ELEMENTINFOORIGINAL, this.elementInfoOriginal.toStringValue(HAPSerializationFormat.JSON));
+		if(this.elementInfoSolid!=null)  jsonMap.put(ELEMENTINFOSOLID, this.elementInfoSolid.toStringValue(HAPSerializationFormat.JSON));
+		if(this.finalElement!=null)  jsonMap.put(FINALELEMENT, this.finalElement.toStringValue(HAPSerializationFormat.JSON));
+	}
 	
-/////////// below part may not need	
-	//path to element (root id + path)
-//	public HAPComplexPath path;
-
-	//resolved root node
-//	public HAPRootStructure referredRoot;
-	
-	//unique reference to root
-//	public HAPReferenceRootInStrucutre rootReference;
-
 }

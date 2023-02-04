@@ -17,6 +17,6 @@ public abstract class HAPAttributeEntityDefinitionNormal<T extends HAPEmbededDef
 
 	protected void cloneToEntityAttribute(HAPAttributeEntityDefinitionNormal attr) {
 		super.cloneToEntityAttribute(attr);
-		this.setValue((T)this.getValue().cloneEmbeded());
+		attr.setValue(this.getValue().cloneEmbeded());
 	}
 }

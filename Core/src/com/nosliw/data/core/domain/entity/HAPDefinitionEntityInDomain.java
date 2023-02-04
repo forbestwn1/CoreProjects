@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -19,8 +21,10 @@ import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 
+@HAPEntityWithAttribute
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
 
+	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 	
 	//all attributes, two types, simple and container
@@ -59,6 +63,14 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		else return null;
 
 	}
+	public Object getValueOfNormalAttributeValueWithValue(String attrName, Object defaultValue) {
+		HAPAttributeEntityDefinitionNormalValue attr = (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);
+		if(attr==null) {
+			this.setNormalAttribute(attrName, new HAPEmbededDefinitionWithValue(defaultValue));
+		}
+		return attr.getValue().getValue();
+	}
+	
 	public HAPAttributeEntityDefinitionNormalValue getNormalAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);    }
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	
@@ -83,11 +95,11 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		List<String> attrArray = new ArrayList<String>();
+		Map<String, String> attrMap = new LinkedHashMap<String, String>();
 		for(HAPAttributeEntity attribute : this.getAttributes()) {
-			attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
+			attrMap.put(attribute.getName(),  attribute.toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrMap));
 	}
 
 	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
@@ -106,6 +118,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	protected void cloneToDefinitionEntityInDomain(HAPDefinitionEntityInDomain entityDefinitionInDomain) {
 		entityDefinitionInDomain.m_entityType = this.m_entityType;
+		entityDefinitionInDomain.m_attributes = new ArrayList<HAPAttributeEntityDefinition>();
 		for(HAPAttributeEntityDefinition attribute : this.getAttributes()) {
 			entityDefinitionInDomain.setAttribute((HAPAttributeEntityDefinition)attribute.cloneEntityAttribute());
 		}

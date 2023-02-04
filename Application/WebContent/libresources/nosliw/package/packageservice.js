@@ -58,10 +58,10 @@ var node_createPackageRuntimeService = function() {
 		return out;
 	};
 	
-	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, variableGroupId, bundleCore, configure, handlers, request){
+	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
-		return complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), variableGroupId, bundleCore, configure, handlers, request);
+		return complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), valueContextId, bundleCore, configure, handlers, request);
 	};
 	
 	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, handlers, request){
@@ -78,13 +78,13 @@ var node_createPackageRuntimeService = function() {
 		if(complexEntityDef!=undefined){
 			//internal entity
 			//build variableGroup
-			var variableGroupId = null;
+			var valueContextId = null;
 			var variableDomain = bundleCore.getVariableDomain();
 			var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-			variableGroupId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableGroupId());
+			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableContextId());
 			
 			//new complexCore through complex plugin
-			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, variableGroupId, bundleCore, configure, {
+			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
 				success : function(request, componentCore){
 					//build decorationInfos
 					var decorationInfos = null;

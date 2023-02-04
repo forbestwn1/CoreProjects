@@ -110,6 +110,38 @@ var node_createValueStructureVariableInfo = function(n, p){
 	return loc_out;
 };
 
+/*
+ * create real context element based on element info 
+ * it contains following attribute:
+ * 		name
+ * 		variable
+ * 		info
+ */
+var node_createValueStructureElement = function(elementInfo, requestInfo){
+	var loc_out = {
+		info : elementInfo.info,
+	};
+
+	//if have mutiple name, use the first one in array as main variable
+	var adapterInfo = elementInfo.adapterInfo;
+	//get variable
+	if(elementInfo.valueStructure!=undefined){
+		var valueStructure = elementInfo.valueStructure;
+		var valueStructureVar = elementInfo.valueStructureVariable;
+		var eleVariable = valueStructure.createVariable(valueStructureVar, adapterInfo, requestInfo);
+		//cannot create context element variable
+		if(eleVariable==undefined)   return;
+		loc_out.variable = {
+			name : elementInfo.name,
+			variable : eleVariable,
+		};
+	}
+	else if(elementInfo.variable!=undefined)		loc_out.variable = {name:elementInfo.name, variable:node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo)};
+	else		loc_out.variable = {name:elementInfo.name, variable:node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo)};
+	
+	return loc_out;
+};
+
 
 
 
@@ -132,48 +164,6 @@ var node_createExtendedContext = function(context, exVars){
 };
 
 
-/*
- * create real context element based on element info 
- * it contains following attribute:
- * 		name
- * 		variable
- * 		info
- */
-var node_createContextElement = function(elementInfo, requestInfo){
-	var names = elementInfo.alias;
-
-	var loc_out = {
-		variables : [],
-		info : elementInfo.info,
-	};
-
-	//if have mutiple name, use the first one in array as main variable
-	var adapterInfo = elementInfo.adapterInfo;
-	//get variable
-	if(elementInfo.context!=undefined){
-		var context = elementInfo.context;
-		var contextVar = elementInfo.contextVariable;
-		var eleVariable = context.createVariable(contextVar, adapterInfo, requestInfo);
-		//cannot create context element variable
-		if(eleVariable==undefined)   return;
-		loc_out.variables.push({
-			name : names[0],
-			variable : eleVariable,
-		});
-	}
-	else if(elementInfo.variable!=undefined)		loc_out.variables.push({name:names[0], variable:node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo)});
-	else		loc_out.variables.push({name:names[0], variable:node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo)});
-	
-	_.each(names, function(name, i){
-		if(i!=0){
-			//make variable except the first one
-			loc_out.variables.push({name:names[i], variable:node_createVariableWrapper(loc_out.variables[0].variable, undefined, undefined, requestInfo)});
-		}
-	});
-	
-	return loc_out;
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -189,5 +179,6 @@ nosliw.registerSetNodeDataEvent("uidata.variable.createVariableWrapper", functio
 //Register Node by Name
 packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
 packageObj.createChildNode("createValueStructureVariableInfo", node_createValueStructureVariableInfo); 
+packageObj.createChildNode("createValueStructureElement", node_createValueStructureElement); 
 
 })(packageObj);
