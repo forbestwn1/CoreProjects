@@ -1,6 +1,7 @@
-function(complexEntityDef, variableGroupId, bundleCore, configure){
+function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 
 	var loc_stateValueView;
 	var loc_parmsView;
@@ -19,7 +20,7 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 		stateValueViewWrapper.append(loc_stateValueView);
 		rootViewWrapper.append(stateValueViewWrapper);
 
-		loc_updateStateData(parms.state);
+		loc_updateStateData(loc_parms.state);
 	};
 
 	var loc_getStateData = function(){

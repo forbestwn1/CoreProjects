@@ -1,4 +1,4 @@
-function(complexEntityDef, variableGroupId, bundleCore, configure){
+function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 

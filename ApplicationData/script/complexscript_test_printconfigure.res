@@ -1,4 +1,4 @@
-function(complexEntityDef, variableGroupId, bundleCore, configure){
+function(complexEntityDef, variableContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 
@@ -9,7 +9,7 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var loc_configure = configure;
 
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-		loc_configureView =  $('<div>configures:' + JSON.stringify(loc_configure) + '</div>');
+		loc_configureView =  $('<div>configures:' + JSON.stringify(loc_configure.getConfigureValue()) + '</div>');
 		$(runtimeContext.view).append(loc_configureView);
 	};
 
