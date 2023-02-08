@@ -3,6 +3,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -41,8 +42,17 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			rootView.append(containerView);	
 				
 			_.each(loc_variableInfos, function(varInfo, i){
-				varInfo.view = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
-				containerView.append(varInfo.view);	
+
+				var varContainerViewWrapper =  $('<div style="border:solid 3px;"></div>');
+				containerView.append(varContainerViewWrapper);	
+
+				var varViewWrapper = $('<div>Variable:'+node_basicUtility.stringify(varInfo.resolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE])+'</div>');
+				varContainerViewWrapper.append(varViewWrapper);	
+
+				var viewWrapper = $('<div>Value:</div>');
+				varInfo.view = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+				viewWrapper.append(varInfo.view);
+				varContainerViewWrapper.append(viewWrapper);	
 				varInfo.view.bind('change', function(){
 					var value = varInfo.view.val();
 					if(value==undefined || value==""){}
@@ -53,17 +63,18 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						};
 					}
 				
-//					varInfo.variable.setValue(value);
 					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", value));
 				});					
 
-				varInfo.displayView = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
-				containerView.append(varInfo.displayView);	
+				varInfo.displayView = $('<span/>');
+				var displayViewWrapper = $('<div>ValueDisplay:</div>');
+				displayViewWrapper.append(varInfo.displayView);
+				varContainerViewWrapper.append(displayViewWrapper);	
 
 				varInfo.variable.registerDataChangeEventListener(undefined, function(eventName, eventData){
 					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){
-							varInfo.displayView.val(data.value.value);
+							varInfo.displayView.text(data.value.value);
 						}	
 					});
 				});

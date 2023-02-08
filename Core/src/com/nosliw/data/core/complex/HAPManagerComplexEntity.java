@@ -85,11 +85,13 @@ public class HAPManagerComplexEntity {
 	}
 	
 	public HAPExecutableBundle getComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {
-		HAPExecutableBundle out = this.m_complexResourceBundles.get(complexEntityResourceId);
-		if(out==null) {
-			out = buildComplexEntityResourceBundle(complexEntityResourceId);
-		}
-		return out;
+		return buildComplexEntityResourceBundle(complexEntityResourceId);
+
+//		HAPExecutableBundle out = this.m_complexResourceBundles.get(complexEntityResourceId);
+//		if(out==null) {
+//			out = buildComplexEntityResourceBundle(complexEntityResourceId);
+//		}
+//		return out;
 	}
 	
 	private HAPExecutableBundle buildComplexEntityResourceBundle(HAPResourceIdSimple complexEntityResourceId) {

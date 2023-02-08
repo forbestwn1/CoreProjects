@@ -41,6 +41,8 @@ public class HAPUtilityStructureElementReference {
 	//find best resolved element from structure 
 	public static HAPInfoReferenceResolve analyzeElementReference(String elementPath, List<HAPWrapperExecutableValueStructure> targetStructures, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		if(targetStructures==null)   return null;
+
+		if(resolveConfigure==null)	resolveConfigure = new HAPConfigureResolveStructureElementReference();
 		
 		List<HAPInfoReferenceResolve> resolveCandidates = new ArrayList<HAPInfoReferenceResolve>();
 		for(HAPWrapperExecutableValueStructure structureWrapper : targetStructures) {
@@ -104,7 +106,7 @@ public class HAPUtilityStructureElementReference {
 
 			//check group type
 			if(isValid) {
-				Set<String> groupTypes = resolveConfigure.valueStructureGroupTypes;
+				Set<String> groupTypes = resolveConfigure==null?null:resolveConfigure.valueStructureGroupTypes;
 				if(groupTypes!=null&&!groupTypes.isEmpty()) {
 					if(!groupTypes.contains(wraper.getGroupType())) {
 						isValid = false;

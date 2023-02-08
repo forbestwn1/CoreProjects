@@ -7,6 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
@@ -22,8 +23,10 @@ public class HAPParserStructure {
 				String eleName = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
 				HAPRootStructure root = HAPParserStructure.parseStructureRootFromJson(eleDefJson);
-				root.setName(eleName);
-				out.add(root);
+				if(root!=null) {
+					root.setName(eleName);
+					out.add(root);
+				}
 			}
 		}
 		else if(rootsObj instanceof JSONArray) {
@@ -43,6 +46,7 @@ public class HAPParserStructure {
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
+		if(!HAPUtilityEntityInfo.isEnabled(out))   return null;
 
 		//local id
 		out.setLocalId((String)eleDefJson.opt(HAPRootStructure.LOCALID));
