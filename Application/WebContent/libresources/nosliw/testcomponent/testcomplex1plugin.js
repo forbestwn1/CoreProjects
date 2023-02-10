@@ -19,8 +19,10 @@ var node_createTestComplex1Plugin = function(){
 	
 	var loc_out = {
 
-		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){
-			return loc_createTestComplex1ComponentCore(complexEntityDef, variableGroupId, bundleCore, configure);
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+			return node_createServiceRequestInfoSimple({}, function(requestInfo){
+				return loc_createTestComplex1ComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+			}, handlers, request);
 		},
 			
 	};

@@ -119,7 +119,7 @@ public class HAPUtilityProcessRelativeElement {
 			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getParentValueContextName());
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, parentValueContexts, valueStructureDomain, relativeEleProcessConfigure, errors, runtimeEnv);
-				out = processRelativeStructureElementForValue(structureEleInfo, relativeEleProcessConfigure, errors, runtimeEnv);
+				out = processRelativeStructureElementForValue((HAPElementStructureLeafRelativeForValue)out, relativeEleProcessConfigure, errors, runtimeEnv);
 			}
 			break;
 		}
@@ -179,8 +179,7 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	private static HAPElementStructure processRelativeStructureElementForValue(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv){
-		HAPElementStructureLeafRelativeForValue defStructureElementRelative = (HAPElementStructureLeafRelativeForValue)structureEleInfo.getElement();
+	private static HAPElementStructure processRelativeStructureElementForValue(HAPElementStructureLeafRelativeForValue defStructureElementRelative, HAPConfigureProcessorRelative relativeEleProcessConfigure, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv){
 		HAPElementStructure out = defStructureElementRelative;
 
 		HAPElementStructure resolvedSolidElement = defStructureElementRelative.getResolveInfo().getSolidElement();

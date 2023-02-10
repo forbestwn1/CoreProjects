@@ -36,7 +36,7 @@
 						"reference_local": {
 							"status": "disabled1",
 							"definition": {
-								"reference" : {
+								"link" : {
 									"parentValueContext": "self",
 									"elementPath": "normal"
 								}

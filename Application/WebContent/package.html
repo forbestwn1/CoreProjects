@@ -102,21 +102,21 @@ $(document).on("nosliwActive", function(){
 
 	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
 
-/*
+
 	var debugTool = node_createDebugTool({
 		mainView : $('#mainDiv').get(),
 		lifecycleView : $('#lifecycleDebug').get(),
 		dataView : $('#dataDebug').get(),
 		eventView : $('#eventDebug').get(),
 		resetView : $('#resetDebug').get(), 
-	}, "test.complex.1", "parent", undefined, "testcomplex1", undefined, {
+	}, "test.complex.1", "testvalue", undefined, "testcomplex1", undefined, {
 		success : function(request, componentObj){
 //			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
 //			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
 		}
 	});
-*/
 
+/*
 	var debugTool = node_createDebugTool({
 		mainView : $('#mainDiv').get(),
 		lifecycleView : $('#lifecycleDebug').get(),
@@ -129,7 +129,7 @@ $(document).on("nosliwActive", function(){
 //			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
 		}
 	});
-
+*/
 	//ui indicator
 	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
 

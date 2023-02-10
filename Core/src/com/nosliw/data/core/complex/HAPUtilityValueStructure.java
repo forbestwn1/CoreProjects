@@ -115,6 +115,8 @@ public class HAPUtilityValueStructure {
 				
 				HAPConfigureProcessorValueStructure valueStructureConfig = null; 
 //						definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef).getParentRelationConfigure().getValueStructureRelationMode();
+				valueStructureConfig = valueStructureConfig!=null?valueStructureConfig:new HAPConfigureProcessorValueStructure();
+				
 				
 				//process static
 				
