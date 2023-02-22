@@ -20,7 +20,8 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_MAIN_NAME = "main";
-	
+
+//bundle is executable resource unit
 var node_createBundleCore = function(globalComplexEntitId, configure){
 
 	var loc_id;
@@ -32,18 +33,11 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	var loc_configure = configure;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	
-	var loc_lifecycleEntity;
-	var loc_backupState;
-	
 	//variable domain for this bundle
 	var loc_variableDomain;
 
 	var loc_mainComplexEntity;
 	
-	var loc_runtimeContext;
-	
-	var loc_runtimeContextForMain;
-
 	var loc_debugMode;
 	var loc_debugView;
 
@@ -104,19 +98,16 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreBundle", {}), handlers, request);
-			loc_runtimeContext = runtimeContext;
-			loc_backupState= loc_runtimeContext.backupState;
-			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
 			
 			loc_parentView = runtimeContext.view;
 			
-			loc_runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_MAIN_NAME, loc_mainComplexEntity); 
+			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME, loc_mainComplexEntity); 
 
 			if(loc_isDebugMode()){
-				loc_runtimeContextForMain = loc_getDebugView().updateRuntimeContext(loc_runtimeContextForMain);
+				runtimeContextForMain = loc_getDebugView().updateRuntimeContext(runtimeContextForMain);
 			}
 
-			out.addRequest(loc_mainComplexEntity.getUpdateRuntimeContextRequest(loc_runtimeContextForMain));
+			out.addRequest(loc_mainComplexEntity.getUpdateRuntimeContextRequest(runtimeContextForMain));
 			return out;
 
 		},

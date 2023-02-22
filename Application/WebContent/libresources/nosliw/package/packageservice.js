@@ -61,7 +61,14 @@ var node_createPackageRuntimeService = function() {
 	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
-		return complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), valueContextId, bundleCore, configure, handlers, request);
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), valueContextId, bundleCore, configure, {
+			success : function(request, complexEntityCore){
+				return complexEntityCore;
+			}
+		}));
+		return out;
 	};
 	
 	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityId, parentComplexEntityCore, bundleCore, configure, handlers, request){
@@ -81,7 +88,7 @@ var node_createPackageRuntimeService = function() {
 			var valueContextId = null;
 			var variableDomain = bundleCore.getVariableDomain();
 			var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getVariableContextId());
+			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getValueContextId());
 			
 			//new complexCore through complex plugin
 			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
@@ -161,7 +168,8 @@ var node_createPackageRuntimeService = function() {
 			//get runtime configure & decoration info from configure
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			//create runtime object
-			return node_createComponentRuntime(node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure), runtimeConfigureInfo.decorations, request); 
+			var packageCore = node_buildComponentCore(node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure));
+			return node_createComponentRuntime(packageCore, runtimeConfigureInfo.decorations, request); 
 		},
 				
 		//create package runtime object and init request
@@ -191,7 +199,8 @@ var node_createPackageRuntimeService = function() {
 		},		
 
 		createBundleRuntime : function(globalComplexEntitId, configure, request){
-			return node_createComponentRuntime(node_createBundleCore(globalComplexEntitId, configure), undefined);
+			var bundleCore = node_buildComponentCore(node_createBundleCore(globalComplexEntitId, configure));
+			return node_createComponentRuntime(bundleCore, undefined);
 		},
 
 		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){

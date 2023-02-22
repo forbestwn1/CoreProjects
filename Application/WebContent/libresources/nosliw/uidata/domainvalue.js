@@ -37,7 +37,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//return value context id
 		creatValueContext : function(valueContextDef, parentValueContextId){
 			loc_valueContextIdIndex++;
-			var valueContext = loc_createValueContext(loc_valueContextIdIndex+"", valueContextDef, loc_variableDomainDefinition, parentValueContextId, loc_variableMan);
+			var valueContext = loc_createValueContext(loc_valueContextIdIndex+"", valueContextDef, loc_variableDomainDefinition, this.getValueContext(parentValueContextId), loc_variableMan);
 			loc_valueContextById[valueContext.getId()] = valueContext;
 			return valueContext.getId();
 		},
@@ -114,11 +114,11 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 						var parentValueStructureRuntimeId = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
 						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
 						
-						var pathObj = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
+						var pathObj = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO][node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
 						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
 						var path = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
 						
-						valueStructureElementInfosArray.push(node_createValueStructureElementInfo(eleName, parentValueStructure, node_createValueStructureVariableInfo(rootName, path), undefined, info));
+						valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableInfo(rootName, path), undefined, info));
 					}
 				}
 				else{

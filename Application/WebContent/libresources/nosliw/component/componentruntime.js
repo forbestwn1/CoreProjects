@@ -25,6 +25,7 @@ var packageObj = library;
 //        expose lifecycle and interface inteface
 //        manage backup
 //        manage roll back
+//		  have one core and multiple decorations
 //parms:
 //    componentCore core object
 //    decoration

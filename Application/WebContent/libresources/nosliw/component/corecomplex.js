@@ -46,7 +46,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 
 	var loc_init = function(componentCore, decorationInfos){
-		var coreLayer = node_buildComponentCore(componentCore);
+//		var coreLayer = node_buildComponentCore(componentCore);
+		var coreLayer = componentCore;
 		coreLayer.setId(loc_id + "." + nosliw.generateId());
 		loc_addLayer(coreLayer);	
 

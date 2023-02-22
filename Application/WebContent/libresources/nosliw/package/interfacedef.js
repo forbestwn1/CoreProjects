@@ -34,7 +34,18 @@ var node_buildSimpleEntityPlugInObject = function(rawPluginObj){
 	return _.extend({}, interfaceDef, rawPluginObj);	
 };
 
+var node_buildComplexEntityCoreObject = function(rawComplexEntityCore, valueContextId, bundleCore){
+	
+	var loc_valueContextId = valueContextId;
+	
+	var interfaceDef = {
 
+		getValueContextId : function(){   return loc_valueContextId;   }
+			
+	};
+		
+	return _.extend({}, interfaceDef, rawComplexEntityCore);	
+};
 
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -46,5 +57,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 //Register Node by Name
 packageObj.createChildNode("buildComplexEntityPlugInObject", node_buildComplexEntityPlugInObject); 
 packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEntityPlugInObject); 
+packageObj.createChildNode("buildComplexEntityCoreObject", node_buildComplexEntityCoreObject); 
 
 })(packageObj);

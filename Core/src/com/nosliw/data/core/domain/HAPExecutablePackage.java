@@ -8,12 +8,12 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
-//executable package
+//a package is all information for a resource runtime, it include resource id and all resource bundles required
 @HAPEntityWithAttribute
 public class HAPExecutablePackage extends HAPExecutableImp{
 

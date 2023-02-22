@@ -39,21 +39,6 @@ var node_createTestComplexScriptPlugin = function(){
 };
 
 
-var loc_createTestComplexScript = function(complexEntityDef, variableGroupId, bundleCore, configure){
-	
-	var loc_coreObject;
-	
-	var loc_init = function(complexEntityDef, variableGroupId, bundleCore, configure){
-		var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_SCRIPT);
-		var scriptParms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
-		var scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_VARIABLE);
-		loc_coreObject = scriptFun(scriptParms, configure, bundleCore);
-	};
-	
-	loc_init(complexEntityDef, variableGroupId, bundleCore, configure);
-	return 	node_buildComponentCore(loc_coreObject, false);
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data

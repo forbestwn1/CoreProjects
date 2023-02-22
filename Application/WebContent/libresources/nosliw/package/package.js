@@ -18,7 +18,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_BUNDLE_NAME = "bundle";	
-	
+
+//package is runtime unit.
+//
 var node_createPackageCore = function(resourceId, configure){
 
 	var loc_id;
@@ -27,12 +29,6 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_configure = configure;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
-	
-	var loc_runtimeContext;
-	var loc_runtimeContextForBundle;
-	
-	var loc_lifecycleEntity;
-	var loc_backupState;
 	
 	var loc_runtimeEnv;
 
@@ -103,19 +99,16 @@ var node_createPackageCore = function(resourceId, configure){
 			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCorePackage", {}), handlers, request);
-			loc_runtimeContext = runtimeContext;
-			loc_backupState = loc_runtimeContext.backupState;
-			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
 			
 			loc_parentView = runtimeContext.view;
 
-			loc_runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_BUNDLE_NAME, loc_mainBundleRuntime); 
+			var runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_BUNDLE_NAME, loc_mainBundleRuntime); 
 			
 			if(loc_isDebugMode()){
-				loc_runtimeContextForBundle = loc_getDebugView().updateRuntimeContext(loc_runtimeContextForBundle);
+				runtimeContextForBundle = loc_getDebugView().updateRuntimeContext(runtimeContextForBundle);
 			}
 			
-			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(loc_runtimeContextForBundle));
+			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(runtimeContextForBundle));
 			return out;
 		},
 

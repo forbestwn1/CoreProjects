@@ -18,7 +18,9 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_PACKAGE_NAME = "package";	
-	
+
+//application is main object for application
+//it may multiple package (one is main package, each decoration is package as well)
 var node_createApplication = function(resourceId, configure){
 
 	var loc_id;
@@ -30,11 +32,6 @@ var node_createApplication = function(resourceId, configure){
 	
 	var loc_packageRuntime;
 	
-	var loc_runtimeContext;
-	var loc_runtimeContextForPackage;
-	
-	var loc_lifecycleEntity;
-	var loc_backupState;
 	var loc_parentView;
 
 	var loc_out = {
@@ -50,13 +47,10 @@ var node_createApplication = function(resourceId, configure){
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreApplication", {}), handlers, request);
-			loc_runtimeContext = runtimeContext;
-			loc_backupState = loc_runtimeContext.backupState;
-			loc_lifecycleEntity = loc_runtimeContext.lifecycleEntity;
-			loc_parentView = loc_runtimeContext.view;
+			loc_parentView = runtimeContext.view;
 
-			loc_runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(loc_runtimeContext, loc_PACKAGE_NAME, loc_packageRuntime); 
-			out.addRequest(loc_packageRuntime.getUpdateRuntimeContextRequest(loc_runtimeContextForPackage));
+			var runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_PACKAGE_NAME, loc_packageRuntime); 
+			out.addRequest(loc_packageRuntime.getUpdateRuntimeContextRequest(runtimeContextForPackage));
 			return out;
 		},
 
