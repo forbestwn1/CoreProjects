@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.value.HAPUtilityClone;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 @HAPEntityWithAttribute
 public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpandable{
@@ -74,6 +75,7 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {
 		if(this.getValue() instanceof HAPExpandable)   jsonMap.put(VALUEEXPANDED, ((HAPExpandable) this.getValue()).toExpandedJsonString(entityDomain));
+		else if(this.getValue() instanceof HAPIdEntityInDomain) jsonMap.put(VALUEEXPANDED, entityDomain.getEntityInfo((HAPIdEntityInDomain)this.getValue()).toExpandedJsonString(entityDomain));
 	}
 
 	@Override

@@ -109,16 +109,16 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 					{
 						//process relative that  refer to element in parent context
 						
-						var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.RESOLVEDINFO];
+						var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
 
 						var parentValueStructureRuntimeId = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
 						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
 						
-						var pathObj = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO][node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
-						var rootName = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
-						var path = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
+						var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
+						var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
+						var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
 						
-						valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableInfo(rootName, path), undefined, info));
+						valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableInfo(resolveRootName, resolvePath), undefined, info));
 					}
 				}
 				else{

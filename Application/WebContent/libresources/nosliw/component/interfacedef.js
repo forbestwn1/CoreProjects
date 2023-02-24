@@ -108,6 +108,7 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
 	var loc_debugView;
+	var loc_envInterface = {};
 	
 	var loc_init = function(rawComponentCore, debugMode){
 		if(debugMode!=undefined)  loc_debugMode = debugMode;
@@ -239,6 +240,11 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
 			return out;
 		},
+
+		setEnvironmentInterface : function(envInterface){  
+			loc_envInterface = _.extend({}, loc_envInterface, envInterface);
+			if(loc_rawComponentCore.setEnvironmentInterface!=undefined)   loc_rawComponentCore.setEnvironmentInterface(loc_envInterface);  
+		},
 		
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
@@ -284,6 +290,20 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 	
 	return loc_out;
 };
+
+var node_buildComplexEntityCoreObject = function(rawComplexEntityCore, valueContextId, bundleCore){
+	
+	var loc_valueContextId = valueContextId;
+	
+	var interfaceDef = {
+
+		getValueContextId : function(){   return loc_valueContextId;   }
+			
+	};
+		
+	return _.extend({}, interfaceDef, rawComplexEntityCore);	
+};
+
 
 //interface for component external env
 var node_buildComponentEnv = function(rawComponentEnv){
@@ -333,6 +353,7 @@ nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", func
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
 packageObj.createChildNode("buildComponentCore", node_buildComponentCore); 
+packageObj.createChildNode("buildComplexEntityCoreObject", node_buildComplexEntityCoreObject); 
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
 

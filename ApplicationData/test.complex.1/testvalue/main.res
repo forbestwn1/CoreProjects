@@ -12,7 +12,7 @@
 				"scriptName": "complexscript_test_value",
 				"parm" : {
 					"variable1" : ["reference_local", "normal", "override_parent"],
-					"variable" : ["reference_local", "normal"]
+					"variable" : ["reference_local"]
 				},
 				"valueContext" :{
 					"entity": [
@@ -20,7 +20,7 @@
 							"groupType" : "public",
 							"valueStructure" : {
 								"normal": {
-									"status": "disabled1",
+									"status": "disabled",
 									"definition":{
 										"criteria": "test.string"
 									},

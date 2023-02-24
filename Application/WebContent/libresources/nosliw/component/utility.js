@@ -7,11 +7,42 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createConfigure;
 	var node_basicUtility;
+	var node_buildComponentCore;
+	var node_buildComplexEntityCoreObject;
 
 //*******************************************   Start Node Definition  ************************************** 	
-
+var node_createComplexEntityEnvInterface = function(complexEntityCore, valueContextId, bundleCore){
+	
+	var loc_complexEntityCore = complexEntityCore;
+	
+	var loc_bundleCore = bundleCore;
+	
+	var loc_valueContextId = valueContextId;
+	
+	var loc_out = {
+		complexUtility : {
+			createChildComplexRuntimeRequest : function(complexEntityId, configure, handlers, request){
+				return nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_complexEntityCore, loc_bundleCore, configure, handlers, request);
+			},
+		}	
+	};
+	
+	return loc_out;
+};
+		
+	
 var node_componentUtility = {
 	
+	makeComplexEntityCored : function(rawComplexEntityCore, valueContextId, bundleCore){
+		var complexEntityCore = node_buildComponentCore(rawComplexEntityCore, false);
+		
+		complexEntityCore = node_buildComplexEntityCoreObject(complexEntityCore, valueContextId, bundleCore);
+		
+		var envInterface = node_createComplexEntityEnvInterface(complexEntityCore, valueContextId, bundleCore);
+		complexEntityCore.setEnvironmentInterface(envInterface);
+		return complexEntityCore;
+	},
+		
 	makeNewRuntimeContext : function(oldRuntimeContext, override){
 		return _.extend({}, oldRuntimeContext, override);
 	},
@@ -110,6 +141,8 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComplexEntityCoreObject", function(){node_buildComplexEntityCoreObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("componentUtility", node_componentUtility); 

@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_ResourceId;
 	var node_resourceUtility;
+	var node_componentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,7 +28,9 @@ var node_createTestComplexScriptPlugin = function(){
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
-					return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);					
+					var rawComplexEntityCore = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
+					return node_componentUtility.makeComplexEntityCored(rawComplexEntityCore, valueContextId, bundleCore);
+					
 	 			}
 			}));
 			
@@ -50,6 +53,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplexScriptPlugin", node_createTestComplexScriptPlugin); 
