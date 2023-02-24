@@ -97,6 +97,10 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		});
 	};
 	
+	var loc_setComplexAttribute = function(attrName, attrEntity){
+		loc_children[attrName] = attrEntity;
+	};
+	
 	var loc_out = {
 
 		getDataType: function(){    return  "testComplex1";   },
@@ -118,7 +122,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						
 						out.addRequest(loc_envInterface.complexUtility.createChildComplexRuntimeRequest(complexEntityId, configure.getConfigureValue()[attrName], {
 							success : function(request, attrEntity){
-								complexEntityCore.setComplexAttribute(attrName, attrEntity);
+								loc_setComplexAttribute(attrName, attrEntity);
 							}
 						}));
 					}
@@ -151,6 +155,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 					}
 				}
 			});
+			return out;
 		},
 		
 		getPreInitRequest : function(handlers, request){
@@ -240,10 +245,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			}, handlers, request);
 		},
 
-		setComplexAttribute : function(attrName, attrEntity){
-			loc_children[attrName] = attrEntity;
-		},
-		
 		
 		
 		

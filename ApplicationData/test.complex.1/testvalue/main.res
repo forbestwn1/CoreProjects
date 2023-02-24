@@ -6,13 +6,13 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "value_none_test.complex.script" 
+				"name" : "value1_none_test.complex.script" 
 			},
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable1" : ["reference_local", "normal", "override_parent"],
-					"variable" : ["reference_local"]
+					"variable1" : ["reference_local1", "normal", "override_parent"],
+					"variable" : ["reference_local1"]
 				},
 				"valueContext" :{
 					"entity": [
@@ -39,7 +39,37 @@
 										"value": "123456666"
 									}
 								},
-								"reference_local": {
+								"reference_local1": {
+									"status": "disabled1",
+									"definition": {
+										"link" : {
+											"parentValueContext1": "self",
+											"elementPath": "parent_public"
+										}
+									}
+								}
+							}
+						}
+					]
+				} 			
+			}
+		},
+		{
+			"info": {
+				"name" : "value2_none_test.complex.script" 
+			},
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["reference_local2"],
+					"variable" : ["reference_local2"]
+				},
+				"valueContext" :{
+					"entity": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"reference_local2": {
 									"status": "disabled1",
 									"definition": {
 										"link" : {
