@@ -24,7 +24,7 @@ var packageObj = library;
 	var node_createRequestServiceProcessor;
 	var node_createErrorManager;
 	var node_createStoreService;
-	var node_createPackageRuntimeService;
+	var node_createComplexEntityRuntimeService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -69,7 +69,7 @@ var node_createRuntime = function(name){
 	
 	var loc_storeService;
 	
-	var loc_packageService;
+	var loc_complexEntityService;
 	
 	var loc_out = {
 		
@@ -107,7 +107,7 @@ var node_createRuntime = function(name){
 		
 		getStoreService(){   return loc_storeService;   },
 		
-		getPackageService(){    return loc_packageService;    }
+		getComplexEntityService(){    return loc_complexEntityService;    }
 	};
 	
 	var lifecycleCallback = {};
@@ -129,7 +129,7 @@ var node_createRuntime = function(name){
 		loc_uiVariableManager = node_createVariableManager();
 		loc_errorManager = node_createErrorManager();
 		loc_storeService = node_createStoreService();
-		loc_packageService = node_createPackageRuntimeService();
+		loc_complexEntityService = node_createComplexEntityRuntimeService();
 		
 		loc_requestProcessor = node_createRequestServiceProcessor();
 		nosliw.createNode("request.requestServiceProcessor", loc_requestProcessor); 
@@ -176,7 +176,7 @@ nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", functio
 nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
 nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_createErrorManager = this.getData();});
 nosliw.registerSetNodeDataEvent("common.createStoreService", function(){ node_createStoreService = this.getData();});
-nosliw.registerSetNodeDataEvent("package.createPackageRuntimeService", function(){ node_createPackageRuntimeService = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.createComplexEntityRuntimeService", function(){ node_createComplexEntityRuntimeService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

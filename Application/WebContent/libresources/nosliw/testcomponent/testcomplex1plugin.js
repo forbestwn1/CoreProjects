@@ -21,19 +21,24 @@ var node_createTestComplex1Plugin = function(){
 
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 
-			var rawComplexEntityCore = loc_createTestComplex1ComponentCore(complexEntityDef, configure);
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				return loc_createTestComplex1ComponentCore(complexEntityDef, configure);
+			}, handlers, request);
 			
-			var complexEntityCore = node_componentUtility.makeComplexEntityCored(rawComplexEntityCore, valueContextId, bundleCore);
 			
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-			out.addRequest(rawComplexEntityCore.getInitAttributeRequest());
-			
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return complexEntityCore;
-			}));
-			
-			return out;
+//			var rawComplexEntityCore = loc_createTestComplex1ComponentCore(complexEntityDef, configure);
+//			
+//			var complexEntityCore = node_componentUtility.makeComplexEntityCored(rawComplexEntityCore, valueContextId, bundleCore);
+//			
+//			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+//
+//			out.addRequest(rawComplexEntityCore.getInitAttributeRequest());
+//			
+//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+//				return complexEntityCore;
+//			}));
+//			
+//			return out;
 		},
 			
 	};
@@ -46,7 +51,7 @@ var loc_createSimpleAttribute = function(entity, adapter){
 	var loc_adapter = adapter;
 	
 	var loc_out = {
-		getType : function(){   return node_COMMONCONSTANT.ATTRIBUTE_TYPE_SIMPLE;    },
+		getType : function(){   return node_COMMONCONSTANT.ATTRIBUTE_TYPE_NORMAL;    },
 		callBack : function(){
 			loc_entity.callBack.apply(this, arguments);
 		},
@@ -107,12 +112,12 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
 		
-		getInitAttributeRequest : function(handlers, request){
+		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
 				var attr = loc_complexEntityDef.getAttribute(attrName);
-				if(attr.isSimpleAttribute()){
+				if(attr.isNormalAttribute()){
 					//normal attribute
 					var attrValue = attr.getValue();
 					var entityType = attr.getEntityType();

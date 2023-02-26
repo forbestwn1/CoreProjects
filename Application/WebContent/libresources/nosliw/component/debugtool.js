@@ -93,7 +93,7 @@ var node_createDebugTool = function(views, resourceType, resourceId, inputValue,
 		loc_configure = configure;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		out.addRequest(nosliw.runtime.getPackageService().executeCreateApplicationRequest(new node_ResourceId(resourceType, resourctId), configure, runtimeContext, undefined, {
+		out.addRequest(nosliw.runtime.getComplexEntityService().executeCreateApplicationRequest(new node_ResourceId(resourceType, resourctId), configure, runtimeContext, undefined, {
 			success : function(request, application){
 				loc_setComponent(request, application);
 				return application;

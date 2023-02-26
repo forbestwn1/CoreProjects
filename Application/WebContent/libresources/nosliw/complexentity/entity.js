@@ -57,8 +57,8 @@ var node_createEntityDefinition = function(original){
 			var out;
 			var attr = loc_getAttributeByName(attrName);
 			var attrType = node_packageUtility.getAttributeType(attr);
-			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE)	out = loc_createSimpleAttribute(attr);
-			else		out = loc_createContainerAttribute(attr);
+			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_NORMAL)	out = loc_createNormalAttributeDefinition(attr);
+			else		out = loc_createContainerAttributeDefinition(attr);
 			return out;
 		},
 
@@ -73,12 +73,12 @@ var node_createEntityDefinition = function(original){
 	return loc_out;
 };
 
-var loc_createSimpleAttribute = function(attrDef){
+var loc_createNormalAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
 	
 	var loc_out = {
 		
-		isSimpleAttribute : function(){    return true;    },	
+		isNormalAttribute : function(){    return true;    },	
 		
 		getEmbeded : function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];		},
 		
@@ -94,12 +94,12 @@ var loc_createSimpleAttribute = function(attrDef){
 	return loc_out;
 };
 
-var loc_createContainerAttribute = function(attrDef){
+var loc_createContainerAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
 	
 	var loc_out = {
 			
-		isSimpleAttribute : function(){    return false;    },	
+		isNormalAttribute : function(){    return false;    },	
 		
 		getContainer : function(){    return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];    },
 		
@@ -111,6 +111,15 @@ var loc_createContainerAttribute = function(attrDef){
 	};
 	
 	return loc_out;
+};
+
+
+var loc_createNormalComplexEntityAttribute = function(){
+	
+};
+
+var loc_createContainerComplexEntityAttribute = function(){
+	
 };
 
 

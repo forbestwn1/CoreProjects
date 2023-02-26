@@ -18,7 +18,7 @@ var node_packageUtility = {
 			return node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER;
 		}
 		else{
-			return node_CONSTANT.ATTRIBUTE_TYPE_SIMPLE;
+			return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;
 		}
 	}
 

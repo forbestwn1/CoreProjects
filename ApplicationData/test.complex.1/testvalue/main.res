@@ -6,7 +6,8 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "value1_none_test.complex.script" 
+				"name" : "value1_none_test.complex.script", 
+				"status": "disabled1"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_value",
@@ -56,7 +57,8 @@
 		},
 		{
 			"info": {
-				"name" : "value2_none_test.complex.script" 
+				"name" : "value2_none_test.complex.script", 
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_value",

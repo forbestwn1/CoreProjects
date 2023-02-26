@@ -11,38 +11,9 @@ var packageObj = library;
 	var node_buildComplexEntityCoreObject;
 
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createComplexEntityEnvInterface = function(complexEntityCore, valueContextId, bundleCore){
-	
-	var loc_complexEntityCore = complexEntityCore;
-	
-	var loc_bundleCore = bundleCore;
-	
-	var loc_valueContextId = valueContextId;
-	
-	var loc_out = {
-		complexUtility : {
-			createChildComplexRuntimeRequest : function(complexEntityId, configure, handlers, request){
-				return nosliw.runtime.getPackageService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_complexEntityCore, loc_bundleCore, configure, handlers, request);
-			},
-		}	
-	};
-	
-	return loc_out;
-};
-		
 	
 var node_componentUtility = {
 	
-	makeComplexEntityCored : function(rawComplexEntityCore, valueContextId, bundleCore){
-		var complexEntityCore = node_buildComponentCore(rawComplexEntityCore, false);
-		
-		complexEntityCore = node_buildComplexEntityCoreObject(complexEntityCore, valueContextId, bundleCore);
-		
-		var envInterface = node_createComplexEntityEnvInterface(complexEntityCore, valueContextId, bundleCore);
-		complexEntityCore.setEnvironmentInterface(envInterface);
-		return complexEntityCore;
-	},
-		
 	makeNewRuntimeContext : function(oldRuntimeContext, override){
 		return _.extend({}, oldRuntimeContext, override);
 	},

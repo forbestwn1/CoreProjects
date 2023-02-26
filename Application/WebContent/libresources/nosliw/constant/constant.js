@@ -295,7 +295,7 @@ var node_CONSTANT=
 	  
 	  "INTERFACE_GETCOREINTERFACE" : "getCoreInterface",
 	  
-	  "ATTRIBUTE_TYPE_SIMPLE" : "simple",
+	  "ATTRIBUTE_TYPE_NORMAL" : "normal",
 	  "ATTRIBUTE_TYPE_CONTAINER" : "container",
 	  
 	  "COMPONENT_INTERFACE_GETSTATE" : "getGetStateDataRequest",

@@ -146,7 +146,7 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 		getValue : function(name){},
 		setValue : function(name, value){},
 		
-		
+		getRawComponentCore : function(){   return loc_rawComponentCore;    },
 		
 		//************************* for debugging
 		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },
@@ -291,19 +291,6 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 	return loc_out;
 };
 
-var node_buildComplexEntityCoreObject = function(rawComplexEntityCore, valueContextId, bundleCore){
-	
-	var loc_valueContextId = valueContextId;
-	
-	var interfaceDef = {
-
-		getValueContextId : function(){   return loc_valueContextId;   }
-			
-	};
-		
-	return _.extend({}, interfaceDef, rawComplexEntityCore);	
-};
-
 
 //interface for component external env
 var node_buildComponentEnv = function(rawComponentEnv){
@@ -353,7 +340,6 @@ nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", func
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
 packageObj.createChildNode("buildComponentCore", node_buildComponentCore); 
-packageObj.createChildNode("buildComplexEntityCoreObject", node_buildComplexEntityCoreObject); 
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
 
