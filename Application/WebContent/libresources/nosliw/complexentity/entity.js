@@ -7,7 +7,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_makeObjectWithType;
-	var node_packageUtility;
+	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -56,7 +56,7 @@ var node_createEntityDefinition = function(original){
 		getAttribute : function(attrName){
 			var out;
 			var attr = loc_getAttributeByName(attrName);
-			var attrType = node_packageUtility.getAttributeType(attr);
+			var attrType = node_complexEntityUtility.getAttributeType(attr);
 			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_NORMAL)	out = loc_createNormalAttributeDefinition(attr);
 			else		out = loc_createContainerAttributeDefinition(attr);
 			return out;
@@ -130,7 +130,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-nosliw.registerSetNodeDataEvent("package.packageUtility", function(){node_packageUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 

@@ -146,7 +146,7 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 		getValue : function(name){},
 		setValue : function(name, value){},
 		
-		getRawComponentCore : function(){   return loc_rawComponentCore;    },
+		getRawEntity : function(){   return loc_rawComponentCore.getRawEntity==undefined?loc_rawComponentCore:loc_rawComponentCore.getRawEntity();    },
 		
 		//************************* for debugging
 		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },

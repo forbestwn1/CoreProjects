@@ -75,14 +75,17 @@ var node_createComplexEntityRuntimeService = function() {
 				var complexEntityCore = node_buildComplexEntityCoreObject(componentEntityCore, valueContextId, bundleCore);
 				
 				//runtime env for complex entity
-				var envInterface = node_createComplexEntityEnvInterface(complexEntityCore, valueContextId, bundleCore);
-				componentEntityCore.setEnvironmentInterface(envInterface);
+				componentEntityCore.setEnvironmentInterface(complexEntityCore.getComplexEntityEnvInterface());
 				
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				var out = node_createServiceRequestInfoSequence(undefined, {
+					success : function(request){
+						return complexEntityCore;
+					}
+				}, request);
 
 				out.addRequest(complexEntityCore.getComplexEntityInitRequest());
 				
-				return complexEntityCore;
+				return out;
 			}
 		}));
 		return out;

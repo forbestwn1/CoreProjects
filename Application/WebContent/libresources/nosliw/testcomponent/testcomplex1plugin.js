@@ -125,11 +125,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						//complex
 						var complexEntityId = attrValue;
 						
-						out.addRequest(loc_envInterface.complexUtility.createChildComplexRuntimeRequest(complexEntityId, configure.getConfigureValue()[attrName], {
-							success : function(request, attrEntity){
-								loc_setComplexAttribute(attrName, attrEntity);
-							}
-						}));
+						out.addRequest(loc_envInterface.complexUtility.createComplexAttributeRequest(attrName, complexEntityId, configure.getConfigureValue()[attrName]));
 					}
 					else{
 						//simple attribute
@@ -186,21 +182,21 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_parentView.append(loc_mainView);
 			
 			//complex children
-			_.each(loc_children, function(child, childName){
+			var attrNames = loc_envInterface.complexUtility.getAttributesName();
+			
+			
+			_.each(attrNames, function(attrName, i){
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
-				var attributeView = $('<div>childAttr: '+childName+'</div>');
+				var attributeView = $('<div>childAttr: '+attrName+'</div>');
 				var childView = $('<div style="margin-left:10px;" />');
 				attributeView.append(childView);
 				rootViewWrapper.append(attributeView);
 				loc_mainView.append(rootViewWrapper);
-				loc_childrenViews[childName] = childView;
+				loc_childrenViews[attrName] = childView;
 				
-				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, childName, child, childView); 
-
+				var child = loc_envInterface.complexUtility.getAttribute(attrName).getAttributeValue(attrName);
 				
-//				var childRuntimeContext = _.extend({}, runtimeContext, {
-//					view : childView
-//				});
+				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, child, childView); 
 
 				out.addRequest(child.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});

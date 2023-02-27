@@ -10,7 +10,7 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_packageUtility = {
+var node_complexEntityUtility = {
 	
 	getAttributeType : function(attributeObj){
 		var embededValue = attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];
@@ -33,6 +33,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("packageUtility", node_packageUtility); 
+packageObj.createChildNode("complexEntityUtility", node_complexEntityUtility); 
 
 })(packageObj);
