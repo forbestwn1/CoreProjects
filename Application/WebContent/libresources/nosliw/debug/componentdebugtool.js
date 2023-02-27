@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("debug");    
+var packageObj = library.getChildPackage();    
 
 (function(packageObj){
 	//get used node
@@ -24,7 +24,7 @@ var packageObj = library.getChildPackage("debug");
 	var node_createComponentResetView;
 	
 //*******************************************   Start Node Definition  ************************************** 	
-var node_createDebugTool = function(views, resourceType, resourceId, inputValue, configure, configureParms, handlers, request){
+var node_createComponentDebugTool = function(views, resourceType, resourceId, inputValue, configure, configureParms, handlers, request){
 	
 	//changable
 	var loc_resourceType;
@@ -172,12 +172,12 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 
 
-nosliw.registerSetNodeDataEvent("component.debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});
-nosliw.registerSetNodeDataEvent("component.debug.createComponentDataView", function(){node_createComponentDataView = this.getData();});
-nosliw.registerSetNodeDataEvent("component.debug.createComponentEventView", function(){node_createComponentEventView = this.getData();});
-nosliw.registerSetNodeDataEvent("component.debug.createComponentResetView", function(){node_createComponentResetView = this.getData();});
+nosliw.registerSetNodeDataEvent("debug.createComponentLifeCycleDebugView", function(){node_createComponentLifeCycleDebugView = this.getData();});
+nosliw.registerSetNodeDataEvent("debug.createComponentDataView", function(){node_createComponentDataView = this.getData();});
+nosliw.registerSetNodeDataEvent("debug.createComponentEventView", function(){node_createComponentEventView = this.getData();});
+nosliw.registerSetNodeDataEvent("debug.createComponentResetView", function(){node_createComponentResetView = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createDebugTool", node_createDebugTool); 
+packageObj.createChildNode("createComponentDebugTool", node_createComponentDebugTool); 
 
 })(packageObj);
