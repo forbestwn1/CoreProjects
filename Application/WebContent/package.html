@@ -111,6 +111,14 @@ $(document).on("nosliwActive", function(){
 		resetView : $('#resetDebug').get(), 
 	}, "test.complex.1", "testvalue", undefined, "testcomplex1", undefined, {
 		success : function(request, componentObj){
+			
+			document.application = componentObj;
+			
+			var event = new Event("appActive", {
+		        bubbles: true
+		      });
+		    window.dispatchEvent(event);
+			
 //			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
 //			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
 		}

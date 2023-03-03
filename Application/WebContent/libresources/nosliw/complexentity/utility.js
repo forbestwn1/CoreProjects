@@ -20,8 +20,32 @@ var node_complexEntityUtility = {
 		else{
 			return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;
 		}
-	}
+	},
 
+	getConfigureRequest : function(configure, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		if(typeof configure === 'object'){
+			loc_configure = node_createConfigure(configure, undefined, loc_configureParms);
+		}
+		else if(typeof configure === 'string'){
+			var configureName = configure;
+			var settingName;
+			var index = configure.indexOf("_");
+			if(index!=-1){
+				configureName = configure.subString(0, index);
+				settingName = configure.subString(index+1);
+			}
+			
+			var configureResourceId = new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONFIGURE, configureName);
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(configureResourceId, {
+				success : function(requestInfo, resourceTree){
+					loc_configure = node_resourceUtility.getResourceFromTree(resourceTree, configureResourceId).resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLECONFIGURE_SCRIPT];
+					if(settingName!=undefined)   loc_configure = loc_configure[settingName];
+				}
+			}));
+		}
+		return out;
+	},
 	
 };
 
