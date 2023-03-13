@@ -295,6 +295,11 @@ var node_CONSTANT=
 	  
 	  "INTERFACE_GETCOREINTERFACE" : "getCoreInterface",
 	  
+	  "INTERFACE_EMBEDEDENTITY" : "embededEntity",
+	  "INTERFACE_TREENODEENTITY" : "treeNodeEntity",
+	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
+	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
+	  
 	  "ATTRIBUTE_TYPE_NORMAL" : "normal",
 	  "ATTRIBUTE_TYPE_CONTAINER" : "container",
 	  

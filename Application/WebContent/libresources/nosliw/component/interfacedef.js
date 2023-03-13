@@ -100,15 +100,14 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 
 
 //interface for component core 
-var node_buildComponentCore = function(rawComponentCore, debugMode){
+var node_makeObjectWithComponentInterface = function(rawEntity, debugMode){
 	var loc_id;
-	var loc_rawComponentCore = rawComponentCore;
+	var loc_rawComponentCore = rawEntity;
 	var loc_backupState;
 	var loc_lifecycleEntity;
 	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
 	var loc_debugView;
-	var loc_envInterface = {};
 	
 	var loc_init = function(rawComponentCore, debugMode){
 		if(debugMode!=undefined)  loc_debugMode = debugMode;
@@ -133,7 +132,7 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 		return loc_debugView;
 	};
 	
-	var loc_out = {
+	var loc_interfaceEntity = {
 
 		//execute command
 		getExecuteCommandRequest : function(commandName, parm, handlers, requestInfo){},
@@ -241,11 +240,6 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 			return out;
 		},
 
-		setEnvironmentInterface : function(envInterface){  
-			loc_envInterface = _.extend({}, loc_envInterface, envInterface);
-			if(loc_rawComponentCore.setEnvironmentInterface!=undefined)   loc_rawComponentCore.setEnvironmentInterface(loc_envInterface);  
-		},
-		
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
@@ -288,7 +282,11 @@ var node_buildComponentCore = function(rawComponentCore, debugMode){
 	};
 	loc_init(rawComponentCore, debugMode);
 	
-	return loc_out;
+	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPONENTENTITY, loc_interfaceEntity);
+};
+
+var node_getComponentInterface = function(baseObject){
+	return node_getInterface(baseObject, INTERFACENAME);
 };
 
 
@@ -339,8 +337,9 @@ nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", func
 
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
-packageObj.createChildNode("buildComponentCore", node_buildComponentCore); 
+packageObj.createChildNode("buildComponentCore", node_buildComponentInterface); 
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
-packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
+packageObj.createChildNode("makeObjectWithComponentInterface", node_makeObjectWithComponentInterface); 
+packageObj.createChildNode("getComponentInterface", node_getComponentInterface); 
 
 })(packageObj);

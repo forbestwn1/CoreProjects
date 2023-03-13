@@ -83,6 +83,10 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		
 		getBackupState : function(){  return loc_componentCoreComplex.getBackupState();	},
 		
+		getCoreEntity : function(){   return loc_componentCoreComplex.getCore();   },
+		
+		getDecorations : function(){   return loc_componentCoreComplex.getDecorations();   },
+		
 		//combo request(preinit, runtimeContext, runtimeInterface, postInit)
 		getInitRequest : function(runtimeContext, runtimeInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);

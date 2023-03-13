@@ -40,6 +40,8 @@ var node_createApplication = function(resourceId, configure){
 		getId : function(){  return loc_id;   },
 		setId : function(id){   loc_id = id;    },
 
+		getPackageRuntime : function(){   return loc_packageRuntime;   },
+		
 		getPreInitRequest : function(handlers, request){   
 			loc_packageRuntime = nosliw.runtime.getComplexEntityService().createPackageRuntime(loc_resourceId, configure, request);
 			return loc_packageRuntime.getPreInitRequest(handlers, request);

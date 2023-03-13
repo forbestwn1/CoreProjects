@@ -12,7 +12,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_createEventObject;
-	var node_buildComponentCore;
+	var node_buildComponentInterface;
 	var node_createDecoration;
 	var node_componentUtility;
 	
@@ -46,7 +46,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 
 	var loc_init = function(componentCore, decorationInfos){
-//		var coreLayer = node_buildComponentCore(componentCore);
+//		var coreLayer = node_buildComponentInterface(componentCore);
 		var coreLayer = componentCore;
 		coreLayer.setId(loc_id + "." + nosliw.generateId());
 		loc_addLayer(coreLayer);	
@@ -328,7 +328,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_createDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 

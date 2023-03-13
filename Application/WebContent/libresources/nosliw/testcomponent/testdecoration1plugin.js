@@ -7,7 +7,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSimple;
-	var node_buildComponentCore;
+	var node_buildComponentInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,7 +35,7 @@ var loc_createTestDecoration1ComponentCore = function(complexEntityDef, variable
 	};
 	
 	loc_init(complexEntityDef);
-	return 	node_buildComponentCore(loc_coreObject, false);
+	return 	node_buildComponentInterface(loc_coreObject, false);
 };
 
 
@@ -91,7 +91,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestDecoration1Plugin", node_createTestDecoration1Plugin); 

@@ -21,7 +21,7 @@ var packageObj = library;
 	var node_createPackageCore;
 	var node_createApplication;
 	var node_createLifeCycleRuntimeContext;
-	var node_buildComponentCore;
+	var node_buildComponentInterface;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_createEntityDefinition;
 	var node_createComplexEntityRuntimeContainer;
@@ -66,16 +66,15 @@ var node_createComplexEntityRuntimeService = function() {
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), valueContextId, bundleCore, configure, {
-			success : function(request, rawComplexEntityCore){
+			success : function(request, complexEntityCore){
 				
-				//component wrapper
-				var componentEntityCore = node_buildComponentCore(rawComplexEntityCore, false);
+				complexEntityCore = node_makeObjectWithEmbededEntityInterface(complexEntityCore);
 				
-				//complex entity wrapper
-				var complexEntityCore = node_buildComplexEntityCoreObject(componentEntityCore, valueContextId, bundleCore);
+				complexEntityCore = node_makeObjectEntityTreeNodeInterface(complexEntityCore);
 				
-				//runtime env for complex entity
-				componentEntityCore.setEnvironmentInterface(complexEntityCore.getComplexEntityEnvInterface());
+				complexEntityCore = node_makeObjectComplexEntityObject(complexEntityCore, valueContextId, bundleCore);
+				
+				complexEntityCore = node_makeObjectWithComponentInterface(complexEntityCore, false);
 				
 				var out = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
@@ -83,7 +82,7 @@ var node_createComplexEntityRuntimeService = function() {
 					}
 				}, request);
 
-				out.addRequest(complexEntityCore.getComplexEntityInitRequest());
+				out.addRequest(node_getComplexEntityInterface(complexEntityCore).getComplexEntityInitRequest());
 				
 				return out;
 			}
@@ -143,13 +142,24 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 
+	var loc_buildOtherObject = function(entity){
+		entity = node_makeObjectWithEmbededEntityInterface(entity);
+		
+		entity = node_makeObjectEntityTreeNodeInterface(entity);
+		
+		entity = node_makeObjectWithComponentInterface(entity, false);
+		return entity;
+	};
+	
 	var loc_out = {
 
 		getCreateApplicationRequest : function(resourceId, configure, runtimeContext, runtimeInterface, handlers, request){
 			var application = node_createApplication(resourceId, configure);
-			application = node_buildComponentCore(application);
-			application = node_makeObjectWithComponentManagementInterface(application, application, application);
 
+			application = loc_buildOtherObject(application);
+			
+			var applicationMan = node_makeObjectWithComponentManagementInterface(applicationComponent, application, application);
+			
 			//build backup state if not provided
 			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
 
@@ -188,7 +198,8 @@ var node_createComplexEntityRuntimeService = function() {
 			//get runtime configure & decoration info from configure
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			//create runtime object
-			var packageCore = node_buildComponentCore(node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure));
+			var packageCore = node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure);
+			packageCore = loc_buildOtherObject(packageCore);
 			return node_createComponentRuntime(packageCore, runtimeConfigureInfo.decorations, request); 
 		},
 				
@@ -219,7 +230,8 @@ var node_createComplexEntityRuntimeService = function() {
 		},		
 
 		createBundleRuntime : function(globalComplexEntitId, configure, request){
-			var bundleCore = node_buildComponentCore(node_createBundleCore(globalComplexEntitId, configure));
+			var bundleCore = node_createBundleCore(globalComplexEntitId, configure);
+			bundleCore = loc_buildOtherObject(bundleCore);
 			return node_createComponentRuntime(bundleCore, undefined);
 		},
 
@@ -274,7 +286,7 @@ nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){n
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createPackageCore", function(){node_createPackageCore = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createApplication", function(){node_createApplication = this.getData();});
-nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});

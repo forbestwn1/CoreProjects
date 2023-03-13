@@ -4,13 +4,16 @@
         <meta charset="utf-8" />
         <title>Nosliw Go Go !!</title>
 
-    	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
-        <script src="libresources/external/framework7/4.3.1/framework7.bundle.js"></script>
         <script src="libresources/external/jQuery/3.4.1/jquery.js"></script>
         
         <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
         <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
         <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+    	<!--link rel="stylesheet" href="libresources/external/framework7/7.1.5/framework7-bundle.min.css"-->
+	    <link rel="stylesheet" href="libresources/external/framework7/5.4.0/css/framework7.bundle.min.css">
+		<link rel="stylesheet" href="libresources/external/framework7/5.4.0/css/framework7-icons.css">
+		<script type="text/javascript" src="libresources/external/vue/vue.js"></script>
 
 		<script src="libresources/nosliw/core/nosliw.js"></script>
         
@@ -19,23 +22,42 @@
 </head>
 
 <body>
-		<div id="mainDiv">
-			<button onclick="myFunction()">Click me</button>
-		
-		</div>
 
-   		<div class="view panel-view block" id="debugDiv1">
-			<div id="lifecycleDebug"></div>
-			<div id="dataDebug"></div>
-			<div id="eventDebug"></div>
-			<div id="resetDebug"></div>
-       	</div>
+
+  <div id="app" >
+		<div class="view view-main">
+			<div data-name="home" class="page">
+				<div class="page-content">
+					<div id="selectResourceDiv">
+						<button onclick="myFunction()">Click me111</button>
+					</div>
+				
+			   		<div class="view" id="debugDiv">
+						<div id="lifecycleDebug">aaaaaaaaaaaa</div>
+						<div id="complextreeDebug">bbbbbbbbbbbb</div>
+						<div id="dataDebug"></div>
+						<div id="eventDebug"></div>
+						<div id="resetDebug"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+           	
+
+  <div id="test"></div>
+
+
+  	
 </body>
 
 <script>
 
 
 var loc_lifecycleView;
+var loc_complexTreeView;
+
+
 var loc_dataView;
 var loc_eventView;
 var loc_resetView;
@@ -46,7 +68,8 @@ function myFunction() {
 	var resourceType = "test.complex.1";
 	var resourceId = "testvalue";
 	var configure = "testcomplex1";
-	var appWin = window.open ("http://localhost:8082/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,resourceType+"_"+resourceId);
+//	var appWin = window.open ("http://localhost:8082/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,resourceType+"_"+resourceId);
+	var appWin = window.open ("http://localhost:8082/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,"_blank");
 
 	appWin.addEventListener("nosliwApplicationActive", function(event) {
 		loc_application = event.detail;
@@ -55,12 +78,36 @@ function myFunction() {
 };
 
 var init = function(){
+	
+//	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
+//	var framework7App = node_framework7Utility.createTypicalFramework7App($("#app").get()); 
+
+	var framework7App = new Framework7({
+		  // App root element
+//		  el: '#app',
+		  root: "#app",
+		  name: 'Menu',
+		  id: 'com.nowliw.menu',
+	});
+
+	var mainView = framework7App.views.create('.view-main');
+
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("debug.createComponentLifeCycleDebugView");
+//	loc_lifecycleView = node_createComponentLifeCycleDebugView();
+//	$('#lifecycleDebug').append(loc_lifecycleView.getView());
+
+	
+	var node_createComplexTreeDebugView = nosliw.getNodeData("debug.createComplexTreeDebugView");
+	loc_complexTreeView = node_createComplexTreeDebugView(document.getElementById("complextreeDebug"));
+//	$('#complextreeDebug').append(loc_complexTreeView.getView());
+	
+	
+	
 	var node_createComponentDataView = nosliw.getNodeData("debug.createComponentDataView");
 	var node_createComponentEventView = nosliw.getNodeData("debug.createComponentEventView");
 
-	loc_lifecycleView = node_createComponentLifeCycleDebugView();
-	$('#lifecycleDebug').append(loc_lifecycleView.getView());
+	
+	
 
 //	loc_dataView = node_createComponentDataView(); 
 //	$('#dataDebug').append(loc_dataView.getView());
@@ -71,7 +118,8 @@ var init = function(){
 };
 
 var updateApplication = function(application){
-	loc_lifecycleView.setComponent(application);
+//	loc_lifecycleView.setComponent(application);
+	loc_complexTreeView.setApplication(application);
 //	loc_dataView.setComponent(application);
 //	loc_eventView.setComponent(application);
 };
@@ -84,8 +132,22 @@ $(document).on("nosliwActive", function(){
 
 </script>
 
+<script src="libresources/external/framework7/5.4.0/js/framework7.bundle.min.js"></script>
+<!--script src="libresources/external/framework7/7.1.5/framework7-bundle.js"></script-->
 <script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
 <script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
 <script src="init_runtime.js"></script>
+
+<script>
+loc_vue = new Vue({
+	el: document.getElementById("test"),
+	template : `
+		<div>
+		HaHaHa
+		</div>
+	`
+});
+
+</script>
 
 </html>

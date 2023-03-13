@@ -7,8 +7,7 @@ var packageObj = library;
 	var node_getComponentLifecycleInterface;
 	var node_createConfigure;
 	var node_basicUtility;
-	var node_buildComponentCore;
-	var node_buildComplexEntityCoreObject;
+	var node_buildComponentInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -112,8 +111,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentCore = this.getData();});
-nosliw.registerSetNodeDataEvent("component.buildComplexEntityCoreObject", function(){node_buildComplexEntityCoreObject = this.getData();});
+nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("componentUtility", node_componentUtility); 
