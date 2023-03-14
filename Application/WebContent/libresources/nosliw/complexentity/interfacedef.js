@@ -66,7 +66,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {
 					success : function(request, complexEntityRuntime){
-						treeNodeEntityInterface.addNormalChildNode(attrName, complexEntityRuntime);
+						treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime);
 					}
 				}));
 				return out;
@@ -90,13 +90,15 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 
 	var loc_interfaceEntity = {
 
-		getChildren : function(){   return loc_children;   },
+		getChildrenName : function(){   return loc_children.getAllKeys();   },
+		
+		getChild : function(childName){   return loc_children.getElement(childName);	},
 
-		addNormalChildNode : function(childName, entityRuntime){
+		addNormalChild : function(childName, entityRuntime){
 			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime));
 		},
 		
-		addContainerChildNode : function(childName, containerValue){
+		addContainerChild : function(childName, containerValue){
 			
 		}
 	};
@@ -104,9 +106,12 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_TREENODEENTITY, {
-			getChildrenName : function(){   return loc_children.getAllKeys();   },
 			
-			getChild : function(childName){   return loc_children.getElement(childName);	}
+			getChildrenName : function(){   return loc_interfaceEntity.getChildrenName();   },
+			
+			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
+			
+			addNormalChild : function(childName, entityRuntime){   loc_interfaceEntity.addNormalChild(childName, entityRuntime);  }
 		});
 	}
 	
