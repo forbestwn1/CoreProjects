@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_buildComponentInterface;
 	var node_createDecoration;
 	var node_componentUtility;
+	var node_getComponentInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -48,7 +49,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	var loc_init = function(componentCore, decorationInfos){
 //		var coreLayer = node_buildComponentInterface(componentCore);
 		var coreLayer = componentCore;
-		coreLayer.setId(loc_id + "." + nosliw.generateId());
+		node_getComponentInterface(coreLayer).setId(loc_id + "." + nosliw.generateId());
 		loc_addLayer(coreLayer);	
 
 		for(var i in decorationInfos){  
@@ -130,8 +131,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_getPostInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
-		_.each(loc_layers, function(layer){
-			out.addRequest(layer.getPostInitRequest());
+		_.each(loc_layers, function(layer, i){
+			out.addRequest(loc_getLayerInterfaceObj(i).getPostInitRequest());
 		});
 		return out;
 	};
@@ -176,17 +177,24 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		return out;
 	};
 
-
+	var loc_getLayerInterfaceObj = function(layerNum){
+		if(layerNum==0){
+			return node_getComponentInterface(loc_layers[layerNum]);
+		}
+		else{
+			return loc_layers[layerNum];
+		}
+	};
 	
 	var loc_registerLayerEvent = function(layerNum){
-		loc_layers[layerNum].registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
+		loc_getLayerInterfaceObj(layerNum).registerEventListener(loc_eventListener, function(event, eventData, requestInfo){
 			var processedEvent = event;
 			var processedEventData = eventData;
 			var processedRequest = requestInfo;
 			//when one layer trigue a event, the event will be processed by all upper layer
 			//every layer may have three choice: propagate the same event, propagate different event, not propagate
 			for(var i=layerNum+1; i<loc_layers.length; i++){
-				var eventResult = loc_layers[i].processComponentCoreEvent(processedEvent, processedEventData, processedRequest);
+				var eventResult = loc_getLayerInterfaceObj(i).processComponentCoreEvent(processedEvent, processedEventData, processedRequest);
 				if(eventResult==true || eventResult==undefined){
 					//propagate the same event
 				}
@@ -206,11 +214,11 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			if(processedEvent!=undefined)	loc_eventSource.triggerEvent(processedEvent, processedEventData, processedRequest);
 		});
 
-		loc_layers[layerNum].registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
+		loc_getLayerInterfaceObj(layerNum).registerValueChangeEventListener(loc_valueChangeEventListener, function(event, eventData, requestInfo){
 			//for value change event, the event will be processed by all upper layer
 			//but upper layer won't modify the event
 			for(var i=layerNum+1; i<loc_layers.length; i++){
-				loc_layers[i].processComponentCoreValueChangeEvent(event, eventData, requestInfo);
+				loc_getLayerInterfaceObj(i).processComponentCoreValueChangeEvent(event, eventData, requestInfo);
 			}
 			loc_valueChangeEventSource.triggerEvent(event, eventData, requestInfo);
 		});
@@ -311,7 +319,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	loc_init(componentCore, decorationInfos);
 
 	loc_out.id = nosliw.generateId();
-	loc_out.dataType = loc_out.getCore().getDataType();
+	loc_out.dataType = node_getComponentInterface(loc_out.getCore()).getDataType();
 	
 	return loc_out;
 };
@@ -331,6 +339,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_createDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

@@ -24,9 +24,17 @@ var packageObj = library;
 	var node_buildComponentInterface;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_createEntityDefinition;
-	var node_createComplexEntityRuntimeContainer;
-	var node_buildComplexEntityCoreObject;
-	var node_createComplexEntityEnvInterface;
+	
+    var node_makeObjectWithEmbededEntityInterface;
+    var node_getEmbededEntityInterface;
+
+    var node_makeObjectWithComponentInterface;
+    var node_getComponentInterface;
+
+    var node_makeObjectComplexEntityObjectInterface; 
+    var node_getComplexEntityObjectInterface;
+    var node_makeObjectEntityTreeNodeInterface;
+    var node_getEntityTreeNodeInterface;
 	
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
@@ -72,7 +80,7 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				complexEntityCore = node_makeObjectEntityTreeNodeInterface(complexEntityCore);
 				
-				complexEntityCore = node_makeObjectComplexEntityObject(complexEntityCore, valueContextId, bundleCore);
+				complexEntityCore = node_makeObjectComplexEntityObjectInterface(complexEntityCore, valueContextId, bundleCore);
 				
 				complexEntityCore = node_makeObjectWithComponentInterface(complexEntityCore, false);
 				
@@ -82,7 +90,7 @@ var node_createComplexEntityRuntimeService = function() {
 					}
 				}, request);
 
-				out.addRequest(node_getComplexEntityInterface(complexEntityCore).getComplexEntityInitRequest());
+				out.addRequest(node_getComplexEntityObjectInterface(complexEntityCore).getComplexEntityInitRequest());
 				
 				return out;
 			}
@@ -107,7 +115,8 @@ var node_createComplexEntityRuntimeService = function() {
 			var valueContextId = null;
 			var variableDomain = bundleCore.getVariableDomain();
 			var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityCore.getValueContextId());
+			var parentComplexEntityInterface = node_getComplexEntityObjectInterface(parentComplexEntityCore);
+			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityInterface.getValueContextId());
 			
 			//new complexCore through complex plugin
 			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
@@ -158,7 +167,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 			application = loc_buildOtherObject(application);
 			
-			var applicationMan = node_makeObjectWithComponentManagementInterface(applicationComponent, application, application);
+			var applicationMan = node_makeObjectWithComponentManagementInterface(application, application, application);
 			
 			//build backup state if not provided
 			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
@@ -169,11 +178,11 @@ var node_createComplexEntityRuntimeService = function() {
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitApplication", {}), handlers, request);
 			out.addRequest(application.getPreInitRequest({
 				success : function(request){
-					return application.getUpdateRuntimeInterfaceRequest(runtimeInterface, {
+					return node_getComponentInterface(application).getUpdateRuntimeInterfaceRequest(runtimeInterface, {
 						success : function(request){
-							return application.getUpdateRuntimeContextRequest(runtimeContext, {
+							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
-									return application.getPostInitRequest({
+									return node_getComponentInterface(application).getPostInitRequest({
 										success : function(){
 											return application;
 										}
@@ -290,9 +299,18 @@ nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_
 nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createComplexEntityRuntimeContainer", function(){node_createComplexEntityRuntimeContainer = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityCoreObject", function(){node_buildComplexEntityCoreObject = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.createComplexEntityEnvInterface", function(){node_createComplexEntityEnvInterface = this.getData();});
+
+nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
+
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
+
+nosliw.registerSetNodeDataEvent("complexentity.makeObjectComplexEntityObjectInterface", function(){node_makeObjectComplexEntityObjectInterface = this.getData();}); 
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});

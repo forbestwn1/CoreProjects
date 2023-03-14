@@ -9,6 +9,9 @@ var packageObj = library;
 	var node_newOrderedContainer;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
+	var node_buildInterface;
+	var node_getInterface;
+	var node_getEmbededEntityInterface;
 
 //*******************************************   Start Node Definition  **************************************
 	
@@ -39,46 +42,7 @@ var node_buildSimpleEntityPlugInObject = function(rawPluginObj){
 };
 
 
-var node_buildOtherCoreObject = function(rawEntityCore){
-	
-	var loc_rawComplexEntityCore = rawEntityCore.getRawEntity==undefined?rawEntityCore:rawEntityCore.getRawEntity();
-	
-	var loc_attributes = loc_createAttributeContainer();
-
-	var interfaceDef = {
-
-		getRawEntity : function(){   return loc_rawComplexEntityCore;    },
-		
-		getComplexEntityEnvInterface : function(){
-			return {
-				complexUtility : {
-					createComplexAttributeRequest : function(attrName, complexEntityId, configure, handlers, request){
-						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
-						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {
-							success : function(request, complexEntityRuntime){
-								loc_addChildComplexEntity(attrName, complexEntityRuntime);
-							}
-						}));
-						return out;
-					},
-					
-					getAttributes : function(){    return loc_attributes;    },
-					
-				}	
-			};
-		},
-
-		getAttributes : function(){   return loc_attributes;   },
-
-	};
-		
-	var loc_out = _.extend({}, interfaceDef, rawEntityCore);
-	return loc_out;
-};
-
-
-
-var node_makeObjectComplexEntityObject = function(rawEntity, valueContextId, bundleCore){
+var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueContextId, bundleCore){
 	
 	var loc_rawEntity = rawEntity;
 	
@@ -110,10 +74,11 @@ var node_makeObjectComplexEntityObject = function(rawEntity, valueContextId, bun
 		});
 	}
 	
-	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPLEXENTITY, loc_interfaceEntity);
+	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPLEXENTITY, loc_interfaceEntity);
+	return loc_out;
 };
 
-var node_getComplexEntityInterface = function(baseObject){
+var node_getComplexEntityObjectInterface = function(baseObject){
 	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
 };
 
@@ -128,7 +93,7 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		getChildren : function(){   return loc_children;   },
 
 		addNormalChildNode : function(childName, entityRuntime){
-			loc_attributes.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime));
+			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime));
 		},
 		
 		addContainerChildNode : function(childName, containerValue){
@@ -139,6 +104,9 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_TREENODEENTITY, {
+			getChildrenName : function(){   return loc_children.getAllKeys();   },
+			
+			getChild : function(childName){   return loc_children.getElement(childName);	}
 		});
 	}
 	
@@ -195,12 +163,17 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.newOrderedContainer", function(){node_newOrderedContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 
 
 //Register Node by Name
 packageObj.createChildNode("buildComplexEntityPlugInObject", node_buildComplexEntityPlugInObject); 
 packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEntityPlugInObject); 
-packageObj.createChildNode("buildComplexEntityCoreObject", node_buildComplexEntityCoreObject); 
-packageObj.createChildNode("buildOtherCoreObject", node_buildOtherCoreObject); 
+packageObj.createChildNode("makeObjectComplexEntityObjectInterface", node_makeObjectComplexEntityObjectInterface); 
+packageObj.createChildNode("getComplexEntityObjectInterface", node_getComplexEntityObjectInterface); 
+packageObj.createChildNode("makeObjectEntityTreeNodeInterface", node_makeObjectEntityTreeNodeInterface); 
+packageObj.createChildNode("getEntityTreeNodeInterface", node_getEntityTreeNodeInterface); 
 
 })(packageObj);

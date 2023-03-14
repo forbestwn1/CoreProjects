@@ -10,7 +10,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_makeObjectWithComponentLifecycle;
 	var node_makeObjectWithComponentManagementInterface;
-	var node_getComponentManagementInterface;
+	var node_getComponentInterface;
 	var node_createComponentCoreComplex;
 	var node_componentUtility;
 	var node_getComponentLifecycleInterface;
@@ -180,7 +180,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 	
 	loc_out = node_makeObjectWithComponentManagementInterface(loc_out, loc_out, loc_out);
 
-	loc_out.dataType = loc_componentCoreComplex.getCore().getDataType();
+	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();
 	loc_out.id = nosliw.generateId();
 	return loc_out;
 };
@@ -197,7 +197,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentLifecycle", function(){node_makeObjectWithComponentLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentManagementInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentCoreComplex", function(){node_createComponentCoreComplex = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});

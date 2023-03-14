@@ -5,6 +5,8 @@ var packageObj = library.getChildPackage("embeded");
 	//get used node
 	var node_basicUtility;
 	var node_CONSTANT;
+	var node_buildInterface;
+	var node_getInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_makeObjectWithEmbededEntityInterface = function(rawEntity){
@@ -23,11 +25,11 @@ var node_makeObjectWithEmbededEntityInterface = function(rawEntity){
 		
 	};
 	
-	return node_buildInterface(rawEntity, node_CONSTANT,INTERFACE_EMBEDEDENTITY, loc_interfaceEntity);
+	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_EMBEDEDENTITY, loc_interfaceEntity);
 };
 	
 var node_getEmbededEntityInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT,INTERFACE_EMBEDEDENTITY);
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_EMBEDEDENTITY);
 };
 
 	
@@ -35,6 +37,8 @@ var node_getEmbededEntityInterface = function(baseObject){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithEmbededEntityInterface", node_makeObjectWithEmbededEntityInterface); 

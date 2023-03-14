@@ -16,6 +16,8 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_basicUtility;
 	var node_createComponentDebugView;
+	var node_buildInterface;
+	var node_getInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -280,13 +282,13 @@ var node_makeObjectWithComponentInterface = function(rawEntity, debugMode){
 		endLifecycleTask : function(){},
 		
 	};
-	loc_init(rawComponentCore, debugMode);
+	loc_init(rawEntity, debugMode);
 	
 	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPONENTENTITY, loc_interfaceEntity);
 };
 
 var node_getComponentInterface = function(baseObject){
-	return node_getInterface(baseObject, INTERFACENAME);
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPONENTENTITY);
 };
 
 
@@ -334,12 +336,14 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", function(){node_createComponentDebugView = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 
-packageObj.createChildNode("buildComponentCore", node_buildComponentInterface); 
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("makeObjectWithComponentInterface", node_makeObjectWithComponentInterface); 
 packageObj.createChildNode("getComponentInterface", node_getComponentInterface); 
+packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
 
 })(packageObj);

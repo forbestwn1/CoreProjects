@@ -125,7 +125,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						//complex
 						var complexEntityId = attrValue;
 						
-						out.addRequest(loc_envInterface.complexUtility.createComplexAttributeRequest(attrName, complexEntityId, configure.getConfigureValue()[attrName]));
+						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, configure.getConfigureValue()[attrName]));
 					}
 					else{
 						//simple attribute
@@ -182,7 +182,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_parentView.append(loc_mainView);
 			
 			//complex children
-			var attrNames = loc_envInterface.complexUtility.getAttributesName();
+			var attrNames = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChildrenName();
 			
 			
 			_.each(attrNames, function(attrName, i){
@@ -194,7 +194,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				loc_mainView.append(rootViewWrapper);
 				loc_childrenViews[attrName] = childView;
 				
-				var child = loc_envInterface.complexUtility.getAttribute(attrName).getAttributeValue(attrName);
+				var child = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(attrName).getChildValue();
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, child, childView); 
 
