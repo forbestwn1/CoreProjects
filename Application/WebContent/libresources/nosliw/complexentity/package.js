@@ -32,11 +32,11 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_runtimeEnv;
 
+	var loc_envInterface;
+	
 	var loc_parentView;
 	
 	var loc_packageDef;
-	
-	var loc_mainBundleRuntime;
 	
 	var loc_debugMode;
 	var loc_debugView;
@@ -60,6 +60,17 @@ var node_createPackageCore = function(resourceId, configure){
 		return loc_debugMode == true;
 	};
 
+	var loc_createMainBundleRuntime = function(request){
+		var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, request);
+		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_BUNDLE_NAME, mainBundleRuntime);
+		return mainBundleRuntime;
+	};
+	
+	var loc_getMainBundleRuntime = function(){
+		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_BUNDLE_NAME).getChildValue();
+	};
+
+	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
 		//load resource first
@@ -77,8 +88,8 @@ var node_createPackageCore = function(resourceId, configure){
 						//load all related resources first
 						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
-								loc_mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, requestInfo);
-								return loc_mainBundleRuntime.getPreInitRequest();
+								var mainBundleRuntime = loc_createMainBundleRuntime(requestInfo);
+								return mainBundleRuntime.getPreInitRequest();
 							}
 						}));
 						
@@ -95,6 +106,8 @@ var node_createPackageCore = function(resourceId, configure){
 		getId : function(){  return loc_id;   },
 		setId : function(id){   loc_id = id;    },
 
+		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
+		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
@@ -102,13 +115,13 @@ var node_createPackageCore = function(resourceId, configure){
 			
 			loc_parentView = runtimeContext.view;
 
-			var runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_BUNDLE_NAME, loc_mainBundleRuntime); 
+			var runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_BUNDLE_NAME, loc_getMainBundleRuntime()); 
 			
 			if(loc_isDebugMode()){
 				runtimeContextForBundle = loc_getDebugView().updateRuntimeContext(runtimeContextForBundle);
 			}
 			
-			out.addRequest(loc_mainBundleRuntime.getUpdateRuntimeContextRequest(runtimeContextForBundle));
+			out.addRequest(loc_getMainBundleRuntime().getUpdateRuntimeContextRequest(runtimeContextForBundle));
 			return out;
 		},
 
@@ -126,7 +139,7 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 		
-		getPostInitRequest : function(handlers, request){	return loc_mainBundleRuntime.getPostInitRequest(handlers, request);	},
+		getPostInitRequest : function(handlers, request){	return loc_getMainBundleRuntime().getPostInitRequest(handlers, request);	},
 		
 		
 		
