@@ -124,10 +124,29 @@ var updateApplication = function(application){
 //	loc_eventView.setComponent(application);
 };
 
+
+var loc_loadApplication = function(){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+
+	var out = node_createServiceRequestInfoSequence(undefined);
+	
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("test.complex.1", "testvalue"), undefined, {}, undefined, {
+		success : function(request, application){
+			updateApplication(application);
+			return application;
+		}
+	}));
+	node_requestServiceProcessor.processRequest(out);
+	
+};
+
 $(document).on("nosliwActive", function(){
 
 	init();
 	
+	loc_loadApplication();
 });
 
 </script>

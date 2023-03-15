@@ -36,7 +36,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	//variable domain for this bundle
 	var loc_variableDomain;
 
-	var loc_mainComplexEntity;
+	var loc_envInterface;
 	
 	var loc_debugMode;
 	var loc_debugView;
@@ -79,13 +79,17 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 				//build complex entity runtime
 				return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, {
 					success : function(request, mainCoplexEntity){
-						loc_mainComplexEntity = mainCoplexEntity;
-						return loc_mainComplexEntity.getPreInitRequest();
+						loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_MAIN_NAME, mainCoplexEntity);
+						return mainCoplexEntity.getPreInitRequest();
 					}
 				});
  			}
 		}));
 		return out;
+	};
+
+	var loc_getMainEntity = function(){
+		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME).getChildValue();
 	};
 
 	var loc_out = {
@@ -94,6 +98,8 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		getId : function(){  return loc_id;   },
 		setId : function(id){   loc_id = id;    },
 
+		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
+		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
@@ -101,13 +107,13 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 			
 			loc_parentView = runtimeContext.view;
 			
-			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME, loc_mainComplexEntity); 
+			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME, loc_getMainEntity()); 
 
 			if(loc_isDebugMode()){
 				runtimeContextForMain = loc_getDebugView().updateRuntimeContext(runtimeContextForMain);
 			}
 
-			out.addRequest(loc_mainComplexEntity.getUpdateRuntimeContextRequest(runtimeContextForMain));
+			out.addRequest(loc_getMainEntity().getUpdateRuntimeContextRequest(runtimeContextForMain));
 			return out;
 
 		},
