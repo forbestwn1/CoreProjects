@@ -137,9 +137,8 @@ var node_createComplexTreeDebugView = function(view){
 
 	var loc_componentData = {
 		application : {},
-		selection : {
-			
-		}
+		currentEntityType : "",
+		currentEntity : ""
 	};
 	
 	var loc_vue;
@@ -161,18 +160,26 @@ var node_createComplexTreeDebugView = function(view){
 				},
 				
 				onSelectEntity : function(entity) {
-					this.selection.entity = entity;
+					this.currentEntity = entity;
+					if(entity!=undefined){
+						this.currentEntityType = node_getComponentInterface(entity.getCoreEntity()).getDataType();
+					}
+					else{
+						this.currentEntityType = undefined;
+					}
 				},
 				
-				getSelectionEntityType : function(){
-					var out = this.selection.entity==undefined?undefined:node_getComponentInterface(this.selection.entity.getCoreEntity()).getDataType();
-					return out;
+			},
+			computed : {
+				isPackage : function(){
+					return "package"== this.currentEntityType;
 				},
-				
-				getSelectionEntity : function(){
-					return this.selection.entity;
+				isBundle : function(){
+					return "bundle"== this.currentEntityType;
 				},
-				
+				isComplexEntity : function(){
+					return this.currentEntityType!=""&&this.currentEntityType!="package"&&this.currentEntityType!="bundle"
+				},
 			},
 			template : `
 				<div class="row">
@@ -189,23 +196,20 @@ var node_createComplexTreeDebugView = function(view){
 				    </div>
 				    <div id="infoDiv" class="col col-50 resizable">
 				    	<div>
-							<complexinfo-package v-if="getSelectionEntityType()=='package'" v-bind:data="selection.data" />
-							<complexinfo-bundle v-else-if="getSelectionEntityType()=='bundle'" v-bind:data="selection.data" />
-							<complexinfo-complexentity v-else v-bind:data="selection.data" />
+				    		<complexinfo-package v-if="isPackage" v-bind:data="currentEntity"/>
+				    		<complexinfo-bundle v-else-if="isBundle" v-bind:data="currentEntity"/>
+				    		<complexinfo-complexentity v-else-if v-show="isComplexEntity" v-bind:data="currentEntity"/>
 				    	</div>
 				    </div>
 				</div>
 			`
 		});
-		
-
 	};
 
 	var loc_setup = function(entity){
 		loc_entity = entity;
 		
 		loc_createEntityView(loc_entity);
-		
 	};
 	
 	var loc_out = {
