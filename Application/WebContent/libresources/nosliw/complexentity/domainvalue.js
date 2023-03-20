@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_createValueStructureVariableInfo;
 	var node_createValueStructureElementInfo;
 	var node_dataUtility;
+	var node_complexEntityUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -142,7 +143,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			}
 		});
 		
-		return node_createValueStructure(id, valueStructureElementInfosArray);
+		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
 	
 	
@@ -160,7 +161,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			}
 			else{
 				//value structure from parent
-				valueStructure = loc_createSoftValueStructure(valueStructureRuntimeId, parentValueContext);
+				valueStructure = loc_createSoftValueStructureWrapper(valueStructureRuntimeId, parentValueContext);
 			}
 			loc_valueStructures[valueStructureRuntimeId] = valueStructure;
 		});
@@ -185,7 +186,20 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_STRUCTUREID]);
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEELEMENTINVALUECONTEXT_ELEMENTPATH]));
 		},
-			
+		
+		getValueStructureRuntimeIds : function(){
+			var solid = [];
+			var soft = [];
+			_.each(loc_valueStructures, function(valueStructure, runtimeId){
+				if(valueStructure.isSolid())  solid.push(runtimeId);
+				else soft.push(runtimeId);
+			});
+			return {
+				solid : solid,
+				soft : soft
+			};
+		},
+		
 		getValueStructure : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
 		
 		
@@ -207,7 +221,30 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 };
 
 
-var loc_createSoftValueStructure = function(valueStructureRuntimeId, parentValueContext){
+var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, valueStrucutre){
+	
+	var loc_runtimeId = valueStructureRuntimeId;
+
+	var loc_valueStrucutre = valueStrucutre;
+	
+	var loc_out = {
+			
+		isSolid : function(){   return true;   },
+
+		getRuntimeId : function(){   return loc_runtimeId;    },
+
+		getValueStructure : function(){   return loc_valueStrucutre;   },
+		
+		createVariable : function(valueStructureVariableInfo){
+			return loc_out.getValueStructure().createVariable(valueStructureVariableInfo);
+		},
+			
+	};
+	
+	return loc_out;
+};
+
+var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, parentValueContext){
 	
 	var loc_runtimeId = valueStructureRuntimeId;
 	
@@ -217,14 +254,16 @@ var loc_createSoftValueStructure = function(valueStructureRuntimeId, parentValue
 	
 	var loc_out = {
 		
+		isSolid : function(){   return false;   },
+
+		getRuntimeId : function(){   return loc_runtimeId;    },
+		
+		getValueStructure : function(){   return loc_parentValueContext.getValueStructure(loc_runtimeId);   },
+		
 		createVariable : function(valueStructureVariableInfo){
 			return loc_parentValueContext.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
 		},
 			
-		getRuntimeId : function(){   return loc_runtimeId;    },
-		
-		isSolid : function(){   return false;   },
-
 	};
 	
 	return loc_out;
@@ -272,6 +311,7 @@ nosliw.registerSetNodeDataEvent("uidata.valuestructure.createValueStructure", fu
 nosliw.registerSetNodeDataEvent("uidata.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 
 
 //Register Node by Name

@@ -15,6 +15,8 @@ var packageObj = library.getChildPackage();
 	var node_getComponentManagementInterface;
 	var node_componentUtility;
 	var node_getStateMachineDefinition;
+	var node_getComplexEntityObjectInterface;
+	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -22,6 +24,8 @@ var loc_createComponentNodeRuntime = function(){
 	var loc_vueComponent = {
 		data : function(){
 			return {};
+		},
+		watch: {
 		},
 		methods : {
 			
@@ -40,7 +44,7 @@ var loc_createComponentNodeRuntime = function(){
 			},
 			
 			onSelectEntity : function(){
-				this.$emit("selectEntity", this.data);
+				this.$emit("selectEntity", this.data.getCoreEntity());
 			},
 
 			onChildSelectEntity : function(entity){
@@ -118,16 +122,185 @@ var loc_createComponentInfoComplexEntity = function(){
 			return {};
 		},
 		methods : {
+			getValueContext : function(){
+				return node_getComplexEntityObjectInterface(this.data).getValueContext();
+			},
 		},
 		props : ['data'],
 		template : `
 			<div>
-				ComplexEntity
+				<div>
+					ComplexEntity
+			    </div>
+				<div v-if="data!=undefined">
+					<complexinfo-valuecontext v-bind:data="getValueContext()"/>
+			    </div>
 		    </div>
 		`
 	};
 	return loc_vueComponent;
 };
+
+var loc_createComponentValueContext = function(){
+	var loc_vueComponent = {
+		data : function(){
+			return {};
+		},
+		methods : {
+		},
+		props : ['data'],
+		template : `
+			<div>
+				<div>
+					SolidValueStructure
+					<complexinfo-valuestructure 
+						v-for="vsId in data.getValueStructureRuntimeIds().solid" 
+						v-bind:key="vsId"
+						v-bind:data="data.getValueStructure(vsId)"
+					/>
+			    </div>
+				<div>
+					SoftValueStructure
+					<complexinfo-valuestructure 
+						v-for="vs in data.getValueStructureRuntimeIds().soft" 
+						v-bind:key="vsId"
+						v-bind:data="data.getValueStructure(vsId)"
+					/>
+			    </div>
+		    </div>
+		`
+	};
+	return loc_vueComponent;
+};
+
+var loc_createComponentValueStructure = function(){
+	
+	var loc_contextVariableGroup;
+	
+	var loc_getVariableTreeInfo = function(eleVar, childInfo){
+		var out = {};
+		out.id = eleVar.prv_id;
+		out.usage = nosliw.runtime.getUIVariableManager().getVariableInfo(eleVar.prv_id).usage;
+
+		out.wrapperId = eleVar.prv_wrapper!=undefined ? eleVar.prv_wrapper.prv_id : "NO WRAPPER"; 
+		if(childInfo!=undefined){
+			out.path = childInfo.path;
+			out.normal = childInfo.isNormal;
+		}
+		
+		out.children = [];
+		var childrenInfo = eleVar.prv_getChildren();
+		if(childrenInfo!=undefined){
+			_.each(childrenInfo, function(childVarInfo, id){
+				out.children.push(loc_getVariableTreeInfo(childVarInfo.variable, childVarInfo));
+			});
+		}
+		return out;
+	};
+
+	var loc_updateView = function(thisContext, requestInfo){
+		//variable tree
+		var varTree = {};
+		var eleVars = loc_contextVariableGroup.getVariables();
+		_.each(eleVars, function(eleVar, eleName){
+			varTree[eleName] = loc_getVariableTreeInfo(eleVar.prv_getVariable());
+		});
+		thisContext.dataStr = JSON.stringify(varTree, null, 4);
+	};
+
+	var loc_updateView1 = function(thisContext, requestInfo){
+		//context data
+		var contextContent = {};
+		var setRequest = node_createServiceRequestInfoSet({}, {
+			success : function(requestInfo, result){
+				_.each(result.getResults(), function(contextData, name){
+					contextContent[name] = contextData!=undefined?node_dataUtility.getValueOfData(contextData):"EMPTY VARIABLE";
+				});
+				loc_viewData.val(JSON.stringify(contextContent, null, 4));
+			}
+		}, requestInfo);
+		var eleVars = loc_contextVariableGroup.getVariables();
+		_.each(eleVars, function(eleVar, eleName){
+			setRequest.addRequest(eleName, loc_env.getDataOperationRequestGet(eleVar));
+		});
+		node_requestProcessor.processRequest(setRequest, false);
+	};
+
+	var loc_vueComponent = {
+		data : function(){
+			return {
+				dataStr : "",
+			};
+		},
+		props : ['data'],
+		methods : {
+			isSolid : function(){	return this.data.isSolid(); },
+			runtimeId : function(){    return this.data.getRuntimeId();   },
+		},
+		watch: {
+		},
+		mounted : function(){
+			var valueStructure = this.data.getValueStructure();
+			loc_contextVariableGroup = node_createContextVariablesGroup(valueStructure, undefined, function(request){
+				loc_updateView(this, request);
+			});
+			_.each(valueStructure.getElementsName(), function(eleName, index){
+				loc_contextVariableGroup.addVariable(node_createContextVariableInfo(eleName));
+			});
+			loc_updateView(this);
+		},
+		
+		template : `
+			<div>
+				ValueStructure
+				<p>isSolid : {{isSolid()}}</p>
+				<p>runtimeId : {{runtimeId()}}</p>
+				<p>data : {{dataStr}}</p>
+				<textarea v-model="dataStr"></textarea>
+		    </div>
+		`
+	};
+	return loc_vueComponent;
+};
+
+
+var loc_createComponentVariable = function(){
+	var loc_vueComponent = {
+		data : function(){
+			return {
+				variableId : "",
+				variableValue : "",
+			};
+		},
+		methods : {
+			getVariableValue : function(event){
+				var that = this;
+				var varInfo = nosliw.runtime.getUIVariableManager().getVariableInfo(eleVar.prv_id);
+				if(varInfo!=undefined){
+					var request = varInfo.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							that.variableValue = JSON.stringify(data, null, 4);
+						}
+					});
+					node_requestProcessor.processRequest(setRequest, false);
+					
+				}
+			},
+		},
+		props : ['data'],
+		template : `
+			<div>
+				<div">
+				  <input v-model="variableId" placeholder="variable id">
+				  <button v-on:click="getVariableValue">GetValue</button>
+				  <textarea v-model="variableValue"></textarea>
+				</div>
+		    </div>
+		`
+	};
+	return loc_vueComponent;
+};
+
 
 
 var node_createComplexTreeDebugView = function(view){
@@ -145,10 +318,13 @@ var node_createComplexTreeDebugView = function(view){
 	
 	var loc_init = function(){
 		Vue.component('complextree-runtime', loc_createComponentNodeRuntime());
+
 		Vue.component('complexinfo-package', loc_createComponentInfoPackage());
 		Vue.component('complexinfo-bundle', loc_createComponentInfoBundle());
 		Vue.component('complexinfo-complexentity', loc_createComponentInfoComplexEntity());
-		
+		Vue.component('complexinfo-valuecontext', loc_createComponentValueContext());
+		Vue.component('complexinfo-valuestructure', loc_createComponentValueStructure());
+
 		loc_vue = new Vue({
 			el: document.getElementById("complextreeDebug"),
 //    		  root: "#complextreeDebug",
@@ -162,13 +338,15 @@ var node_createComplexTreeDebugView = function(view){
 				onSelectEntity : function(entity) {
 					this.currentEntity = entity;
 					if(entity!=undefined){
-						this.currentEntityType = node_getComponentInterface(entity.getCoreEntity()).getDataType();
+						this.currentEntityType = node_getComponentInterface(entity).getDataType();
 					}
 					else{
 						this.currentEntityType = undefined;
 					}
 				},
 				
+			},
+			watch: {
 			},
 			computed : {
 				isPackage : function(){
@@ -183,7 +361,6 @@ var node_createComplexTreeDebugView = function(view){
 			},
 			template : `
 				<div class="row">
-					Hello Candada
 				    <!-- Each "cell" has col-[width in percents] class -->
 				    <div class="col col-50 resizable">
 						<div class="treeview" style="overflow-y: scroll; height:400px;">
@@ -198,7 +375,7 @@ var node_createComplexTreeDebugView = function(view){
 				    	<div>
 				    		<complexinfo-package v-if="isPackage" v-bind:data="currentEntity"/>
 				    		<complexinfo-bundle v-else-if="isBundle" v-bind:data="currentEntity"/>
-				    		<complexinfo-complexentity v-else-if v-show="isComplexEntity" v-bind:data="currentEntity"/>
+				    		<complexinfo-complexentity v-else-if="isComplexEntity" v-bind:data="currentEntity"/>
 				    	</div>
 				    </div>
 				</div>
@@ -240,6 +417,12 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", function(){node_getComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
+
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){  node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){  node_dataUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexTreeDebugView", node_createComplexTreeDebugView); 

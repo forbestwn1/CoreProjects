@@ -55,6 +55,8 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 		getComplexEntityInitRequest : function(handlers, request){   return loc_rawEntity.getComplexEntityInitRequest==undefined?undefined:loc_rawEntity.getComplexEntityInitRequest(handlers, request);     },
 
 		getValueContextId : function(){   return loc_valueContextId;   },
+		
+		getValueContext : function(){    return loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);   },
 
 	};
 
