@@ -130,9 +130,6 @@ var loc_createComponentInfoComplexEntity = function(){
 		props : ['data'],
 		template : `
 			<div style="overflow-y: scroll; height:400px;">
-				<div>
-					ComplexEntity
-			    </div>
 				<div v-if="data!=undefined">
 					<complexinfo-valuecontext v-bind:data="getValueContext()"/>
 			    </div>
@@ -153,19 +150,17 @@ var loc_createComponentValueContext = function(){
 		template : `
 			<div>
 				<div>
-					SolidValueStructure
 					<complexinfo-valuestructure 
 						v-for="vsId in data.getValueStructureRuntimeIds().solid" 
 						v-bind:key="vsId"
-						v-bind:data="data.getValueStructure(vsId)"
+						v-bind:data="data.getValueStructureWrapper(vsId)"
 					/>
 			    </div>
 				<div>
-					SoftValueStructure
 					<complexinfo-valuestructure 
-						v-for="vs in data.getValueStructureRuntimeIds().soft" 
+						v-for="vsId in data.getValueStructureRuntimeIds().soft" 
 						v-bind:key="vsId"
-						v-bind:data="data.getValueStructure(vsId)"
+						v-bind:data="data.getValueStructureWrapper(vsId)"
 					/>
 			    </div>
 		    </div>
@@ -235,11 +230,12 @@ var loc_createComponentValueStructure = function(){
 		
 		template : `
 			<div>
-				ValueStructure
+				<p>----------------------------------------------------------------------</p>
 				<p>isSolid : {{isSolid()}}</p>
 				<p>runtimeId : {{runtimeId()}}</p>
 				<p>data : {{dataStr}}</p>
 				<textarea  rows="15" cols="150" v-model="dataStr"></textarea>
+				<p>----------------------------------------------------------------------</p>
 		    </div>
 		`
 	};

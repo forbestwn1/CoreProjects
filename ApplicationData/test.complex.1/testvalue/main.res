@@ -58,7 +58,7 @@
 		{
 			"info": {
 				"name" : "value2_none_test.complex.script", 
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_value",
@@ -84,6 +84,26 @@
 						}
 					]
 				} 			
+			}
+		},
+		{
+			"info": {
+				"name" : "value3_none_test.complex.script", 
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["parent_public"],
+					"variable" : ["parent_public"]
+				}
 			}
 		},
 		{

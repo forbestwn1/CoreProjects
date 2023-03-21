@@ -29,5 +29,5 @@ public class HAPExecutablePartValueContextGroupWithReference extends HAPExecutab
 	}
 
 	@Override
-	public HAPExecutablePartValueContext cloneComplexValueStructurePart() {   return this.cloneValueStructureComplexPartGroup();  }
+	public HAPExecutablePartValueContext cloneValueContextPart() {   return this.cloneValueStructureComplexPartGroup();  }
 }

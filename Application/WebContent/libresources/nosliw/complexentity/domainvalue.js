@@ -113,7 +113,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 						var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
 
 						var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
-						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId).getValueStructure();
+						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
 						
 						var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
 						var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
@@ -200,7 +200,12 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			};
 		},
 		
-		getValueStructure : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
+		getValueStructure : function(valueStructureRuntimeId){
+			var wrapper = this.getValueStructureWrapper(valueStructureRuntimeId);
+			if(wrapper!=undefined)  return wrapper.getValueStructure();
+		},
+		
+		getValueStructureWrapper : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
 		
 		
 		

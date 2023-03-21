@@ -121,7 +121,7 @@ public class HAPUtilityComplexEntity {
 				//share runtime data with parent
 				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityValueContext.createPartInfoFromParent());
 				for(HAPExecutablePartValueContext parentPart : parts) {
-					part.addChild(parentPart.cloneComplexValueStructurePart());
+					part.addChild(parentPart.cloneValueContextPart());
 				}
 				complexEntity.getValueContext().addValueStructure(part);
 			}
@@ -129,7 +129,7 @@ public class HAPUtilityComplexEntity {
 				//child has own data
 				HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(HAPUtilityValueContext.createPartInfoFromParent());
 				for(HAPExecutablePartValueContext parentPart : parts) {
-					part.addChild(parentPart.cloneComplexValueStructurePart());
+					part.addChild(parentPart.cloneValueContextPart());
 				}
 				complexEntity.getValueContext().addValueStructure(part);
 			}

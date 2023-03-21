@@ -115,8 +115,8 @@ var init = function(){
 	var mainView = framework7App.views.create('.view-main');
 
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("debug.createComponentLifeCycleDebugView");
-//	loc_lifecycleView = node_createComponentLifeCycleDebugView();
-//	$('#lifecycleDebug').append(loc_lifecycleView.getView());
+	loc_lifecycleView = node_createComponentLifeCycleDebugView();
+	$('#lifecycleDebug').append(loc_lifecycleView.getView());
 
 	
 	var node_createComplexTreeDebugView = nosliw.getNodeData("debug.createComplexTreeDebugView");

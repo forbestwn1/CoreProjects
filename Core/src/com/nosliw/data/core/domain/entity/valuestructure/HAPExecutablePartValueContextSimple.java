@@ -34,9 +34,9 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 		if(valueStructure!=null) this.m_valueStructures.add(valueStructure);   
 	}
 	
-	public HAPExecutablePartValueContextSimple cloneValueStructureComplexPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+	public HAPExecutablePartValueContextSimple cloneValueContextPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo());
-		this.cloneToPartComplexValueStructure(out);
+		this.cloneToPartValueContext(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
 
@@ -61,14 +61,14 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 	}
 
 	@Override
-	public HAPExecutablePartValueContext cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		return this.cloneValueStructureComplexPartSimple(valueStructureDomain, mode, groupTypeCandidates);  
+	public HAPExecutablePartValueContext cloneValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		return this.cloneValueContextPartSimple(valueStructureDomain, mode, groupTypeCandidates);  
 	}
 	
 	@Override
-	public HAPExecutablePartValueContext cloneComplexValueStructurePart() {
+	public HAPExecutablePartValueContext cloneValueContextPart() {
 		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple();
-		this.cloneToPartComplexValueStructure(out);
+		this.cloneToPartValueContext(out);
 		for(HAPWrapperExecutableValueStructure valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
 		}

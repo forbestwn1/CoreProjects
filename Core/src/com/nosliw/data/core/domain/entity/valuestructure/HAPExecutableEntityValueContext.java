@@ -53,7 +53,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	public void addPartGroup(List<HAPExecutablePartValueContext> children, HAPInfoPartValueStructure partInfo) {
 		HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(partInfo);
 		for(HAPExecutablePartValueContext child : children) {
-			part.addChild(child.cloneComplexValueStructurePart());
+			part.addChild(child.cloneValueContextPart());
 		}
 		this.addPart(part);
 	}
@@ -71,7 +71,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	public HAPExecutableEntityValueContext cloneValueStructureComplex() {
 		HAPExecutableEntityValueContext out = new HAPExecutableEntityValueContext();
 		for(HAPExecutablePartValueContext part : this.m_parts) {
-			this.m_parts.add(part.cloneComplexValueStructurePart());
+			this.m_parts.add(part.cloneValueContextPart());
 		}
 		return out;
 	}

@@ -34,22 +34,22 @@ public class HAPExecutablePartValueContextGroupWithEntity extends HAPExecutableP
 	
 	public HAPExecutablePartValueContextGroupWithEntity cloneValueStructureComplexPartGroup() {
 		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity();
-		this.cloneToPartComplexValueStructure(out);
+		this.cloneToPartValueContext(out);
 		for(HAPExecutablePartValueContext child : this.m_children) {
-			out.addChild(child.cloneComplexValueStructurePart());
+			out.addChild(child.cloneValueContextPart());
 		}
 		return out;
 	}
 
 	@Override
-	public HAPExecutablePartValueContext cloneComplexValueStructurePart() {   return this.cloneValueStructureComplexPartGroup();  }
+	public HAPExecutablePartValueContext cloneValueContextPart() {   return this.cloneValueStructureComplexPartGroup();  }
 
 	@Override
-	public HAPExecutablePartValueContext cloneComplexValueStructurePart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+	public HAPExecutablePartValueContext cloneValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity();
-		this.cloneToPartComplexValueStructure(out);
+		this.cloneToPartValueContext(out);
 		for(HAPExecutablePartValueContext child : this.m_children) {
-			out.addChild(child.cloneComplexValueStructurePart(valueStructureDomain, mode, groupTypeCandidates));
+			out.addChild(child.cloneValueContextPart(valueStructureDomain, mode, groupTypeCandidates));
 		}
 		return out;
 	}

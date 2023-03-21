@@ -48,7 +48,7 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 		partInfo.setId(this.generateId(partInfo));
 		HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(partInfo);
 		for(HAPExecutablePartValueContext child : children) {
-			part.addChild(child.cloneComplexValueStructurePart());
+			part.addChild(child.cloneValueContextPart());
 		}
 		this.addPart(part);
 	}
@@ -66,7 +66,7 @@ public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEnti
 	public HAPDefinitionEntityComplexValueStructure3 cloneValueStructureComplex() {
 		HAPDefinitionEntityComplexValueStructure3 out = new HAPDefinitionEntityComplexValueStructure3();
 		for(HAPExecutablePartValueContext part : this.m_parts) {
-			this.m_parts.add(part.cloneComplexValueStructurePart());
+			this.m_parts.add(part.cloneValueContextPart());
 		}
 		return out;
 	}
