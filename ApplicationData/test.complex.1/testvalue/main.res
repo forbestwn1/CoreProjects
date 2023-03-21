@@ -58,7 +58,7 @@
 		{
 			"info": {
 				"name" : "value2_none_test.complex.script", 
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_value",

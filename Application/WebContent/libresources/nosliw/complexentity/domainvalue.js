@@ -112,8 +112,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 						
 						var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
 
-						var parentValueStructureRuntimeId = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
-						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
+						var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
+						var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId).getValueStructure();
 						
 						var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
 						var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];

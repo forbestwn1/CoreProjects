@@ -32,14 +32,33 @@
 						<button onclick="openApplication()">Click me111</button>
 					</div>
 				
-			   		<div class="view" id="debugDiv">
-						<div id="lifecycleDebug">aaaaaaaaaaaa</div>
-						<div id="complextreeDebug">bbbbbbbbbbbb</div>
+    <div class="toolbar tabbar toolbar-bottom">
+      <div class="toolbar-inner">
+        <a href="#tab-complexentitytree" class="tab-link tab-link-active">ComplexEntityTree</a>
+        <a href="#tab-variable" class="tab-link">Variable</a>
+        <a href="#tab-lifecycle" class="tab-link">Lifecycle</a>
+      </div>
+    </div>				
+					<div class="tabs">
+					  <div class="tab tab-active" id="tab-complexentitytree">
+						<div id="complextreeDebug"></div>
+					  </div>
+					  <!-- Second tab, should have "tab" class and unique id attribute -->
+					  <div class="tab" id="tab-variable">
 						<div id="variableDebug"></div>
+					  </div>
+					  <!-- Third tab, should have "tab" class and unique id attribute -->
+					  <div class="tab" id="tab-lifecycle">
+						<div id="lifecycleDebug"></div>
+					  </div>
+					</div>				
+
+
+			   		<!--  div class="view" id="debugDiv">
 						<div id="dataDebug"></div>
 						<div id="eventDebug"></div>
 						<div id="resetDebug"></div>
-					</div>
+					</div-->
 				</div>
 			</div>
 		</div>

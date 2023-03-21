@@ -52,13 +52,13 @@ var loc_createComponentNodeRuntime = function(){
 			},
 			
 		},
-		props : ['data'],
+		props : ['data', 'name'],
 		template : `
 			<div class="treeview-item">
-				    <a class="treeview-item-root treeview-item-selectable" v-on:click.prevent="onSelectEntity">
+				    <a class="treeview-item-root treeview-item-selectable treeview-item-toggle1" v-on:click.prevent="onSelectEntity">
 					      <div class="treeview-item-content">
 								<i class="icon f7-icons">doc</i>
-								<div class="treeview-item-label">{{getDataType()}}</div>
+								<div class="treeview-item-label">{{name}}</div>
 					      </div>
 				    </a>
 			        <div class="treeview-toggle"></div>
@@ -72,6 +72,7 @@ var loc_createComponentNodeRuntime = function(){
 							v-for="childName in getCoreChildrenName()"
 							v-bind:key="childName"
 					  		v-bind:data="getChild(childName)"
+					  		v-bind:name="childName"
 							v-on:selectEntity="onChildSelectEntity"
 						/>
 					</div>
@@ -128,7 +129,7 @@ var loc_createComponentInfoComplexEntity = function(){
 		},
 		props : ['data'],
 		template : `
-			<div>
+			<div style="overflow-y: scroll; height:400px;">
 				<div>
 					ComplexEntity
 			    </div>
@@ -208,24 +209,6 @@ var loc_createComponentValueStructure = function(){
 		thisContext.dataStr = JSON.stringify(varTree, null, 4);
 	};
 
-	var loc_updateView1 = function(thisContext, requestInfo){
-		//context data
-		var contextContent = {};
-		var setRequest = node_createServiceRequestInfoSet({}, {
-			success : function(requestInfo, result){
-				_.each(result.getResults(), function(contextData, name){
-					contextContent[name] = contextData!=undefined?node_dataUtility.getValueOfData(contextData):"EMPTY VARIABLE";
-				});
-				loc_viewData.val(JSON.stringify(contextContent, null, 4));
-			}
-		}, requestInfo);
-		var eleVars = loc_contextVariableGroup.getVariables();
-		_.each(eleVars, function(eleVar, eleName){
-			setRequest.addRequest(eleName, loc_env.getDataOperationRequestGet(eleVar));
-		});
-		node_requestProcessor.processRequest(setRequest, false);
-	};
-
 	var loc_vueComponent = {
 		data : function(){
 			return {
@@ -256,51 +239,12 @@ var loc_createComponentValueStructure = function(){
 				<p>isSolid : {{isSolid()}}</p>
 				<p>runtimeId : {{runtimeId()}}</p>
 				<p>data : {{dataStr}}</p>
-				<textarea v-model="dataStr"></textarea>
+				<textarea  rows="15" cols="150" v-model="dataStr"></textarea>
 		    </div>
 		`
 	};
 	return loc_vueComponent;
 };
-
-
-var loc_createComponentVariable = function(){
-	var loc_vueComponent = {
-		data : function(){
-			return {
-				variableId : "",
-				variableValue : "",
-			};
-		},
-		methods : {
-			getVariableValue : function(event){
-				var that = this;
-				var varInfo = nosliw.runtime.getUIVariableManager().getVariableInfo(eleVar.prv_id);
-				if(varInfo!=undefined){
-					var request = varInfo.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
-						success : function(request, data){
-							that.variableValue = JSON.stringify(data, null, 4);
-						}
-					});
-					node_requestProcessor.processRequest(setRequest, false);
-					
-				}
-			},
-		},
-		props : ['data'],
-		template : `
-			<div>
-				<div">
-				  <input v-model="variableId" placeholder="variable id">
-				  <button v-on:click="getVariableValue">GetValue</button>
-				  <textarea v-model="variableValue"></textarea>
-				</div>
-		    </div>
-		`
-	};
-	return loc_vueComponent;
-};
-
 
 
 var node_createComplexTreeDebugView = function(view){
@@ -366,6 +310,7 @@ var node_createComplexTreeDebugView = function(view){
 						<div class="treeview" style="overflow-y: scroll; height:400px;">
 						  	<complextree-runtime 
 						  		v-bind:data="getPackageRuntime()"
+						  		name="package"
 								v-on:selectEntity="onSelectEntity"
 						  	/>
 						</div>
