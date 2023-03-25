@@ -14,6 +14,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
@@ -32,6 +33,9 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 	@HAPAttribute
 	public static String VARIABLE = "variable";
 	
+	@HAPAttribute
+	public static String UNKNOWNVARIABLE = "unknownVariable";
+	
 	public HAPExecutableTestComplexScript() {
 		super(HAPDefinitionEntityTestComplexScript.ENTITY_TYPE);
 	}
@@ -45,6 +49,7 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 
 	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttribute(VARIABLE, new HAPEmbededExecutableWithValue(vars));	}
 	
+	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttribute(UNKNOWNVARIABLE, new HAPEmbededExecutableWithValue(unknowns));   }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

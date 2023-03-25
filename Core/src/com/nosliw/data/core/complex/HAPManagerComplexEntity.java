@@ -160,7 +160,7 @@ public class HAPManagerComplexEntity {
 						HAPIdEntityInDomain attrEntityDefId = embededAttributeDef.getEntityId();
 						HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
 						complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutableWithId(attrEntityExeId, true));
-					}
+					} 
 					else if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
 						HAPAttributeEntityDefinitionContainer containerAttrDef = (HAPAttributeEntityDefinitionContainer)attrDef;
 						HAPContainerEntityDefinition defContainer = containerAttrDef.getValue();

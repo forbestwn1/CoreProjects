@@ -24,8 +24,6 @@ var loc_MAIN_NAME = "main";
 //bundle is executable resource unit
 var node_createBundleCore = function(globalComplexEntitId, configure){
 
-	var loc_id;
-	
 	var loc_globalComplexEntitId = globalComplexEntitId;
 	
 	var loc_bundleDef;
@@ -95,8 +93,6 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	var loc_out = {
 
 		getDataType: function(){    return  "bundle";   },
-		getId : function(){  return loc_id;   },
-		setId : function(id){   loc_id = id;    },
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
@@ -146,7 +142,6 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
-	loc_out.id = nosliw.generateId();
 
 	loc_init();
 	return loc_out;

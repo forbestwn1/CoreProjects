@@ -16,13 +16,14 @@ var packageObj = library;
 	var node_createDecoration;
 	var node_componentUtility;
 	var node_getComponentInterface;
+	var node_getObjectId;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
 var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
-	var loc_id = nosliw.generateId();
+	var loc_id = node_getObjectId(componentCore);
 
 	var loc_runtimeContext;
 	
@@ -47,9 +48,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 
 	var loc_init = function(componentCore, decorationInfos){
-//		var coreLayer = node_buildComponentInterface(componentCore);
 		var coreLayer = componentCore;
-		node_getComponentInterface(coreLayer).setId(loc_id + "." + nosliw.generateId());
 		loc_addLayer(coreLayer);	
 
 		for(var i in decorationInfos){  
@@ -340,6 +339,7 @@ nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_
 nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_createDecoration = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

@@ -101,9 +101,19 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 };
 
 
+node_makeComponentWithDebugInterface = function(rawEntity){
+
+	
+	var loc_interfaceEntity = {
+
+	};
+	
+	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPONENTENTITY, loc_interfaceEntity);
+};
+
 //interface for component core 
 var node_makeObjectWithComponentInterface = function(rawEntity, debugMode){
-	var loc_id;
+//	var loc_id;
 	var loc_rawComponentCore = rawEntity;
 	var loc_backupState;
 	var loc_lifecycleEntity;
@@ -151,8 +161,8 @@ var node_makeObjectWithComponentInterface = function(rawEntity, debugMode){
 		
 		//************************* for debugging
 		getDataType: function(){  return loc_rawComponentCore.getDataType!=undefined?loc_rawComponentCore.getDataType():node_CONSTANT.VALUE_UNKNOW;    },
-		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId() : loc_id;    },
-		setId : function(id){  loc_rawComponentCore.setId!=undefined?loc_rawComponentCore.setId(id): loc_id = id;   },
+//		getId: function(){   return loc_rawComponentCore.getId!=undefined?loc_rawComponentCore.getId() : loc_id;    },
+//		setId : function(id){  loc_rawComponentCore.setId!=undefined?loc_rawComponentCore.setId(id): loc_id = id;   },
 		
 		//************************* interface exposed by the core external
 		getAllInterfaceInfo : function(){  return loc_rawComponentCore.getAllInterfaceInfo!=undefined?loc_rawComponentCore.getAllInterfaceInfo():[];	},

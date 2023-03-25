@@ -23,8 +23,6 @@ var loc_BUNDLE_NAME = "bundle";
 //
 var node_createPackageCore = function(resourceId, configure){
 
-	var loc_id;
-	
 	var loc_resourceId = resourceId;
 	
 	var loc_configure = configure;
@@ -103,8 +101,6 @@ var node_createPackageCore = function(resourceId, configure){
 	var loc_out = {
 
 		getDataType: function(){    return  "package";   },
-		getId : function(){  return loc_id;   },
-		setId : function(id){   loc_id = id;    },
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
@@ -151,7 +147,6 @@ var node_createPackageCore = function(resourceId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
-	loc_out.id = loc_id;
 	
 	loc_init();
 	

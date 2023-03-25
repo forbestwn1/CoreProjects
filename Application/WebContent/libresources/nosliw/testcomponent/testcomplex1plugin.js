@@ -178,7 +178,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreTextComplex", {}), handlers, request);
 
 			loc_parentView = $(runtimeContext.view);
-			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
+//			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
+			loc_mainView = $('<div style="border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_parentView.append(loc_mainView);
 			
 			//complex children

@@ -23,8 +23,6 @@ var loc_PACKAGE_NAME = "package";
 //it may multiple package (one is main package, each decoration is package as well)
 var node_createApplication = function(resourceId, configure){
 
-	var loc_id;
-	
 	var loc_resourceId = resourceId;
 	
 	var loc_configure = configure;
@@ -47,8 +45,6 @@ var node_createApplication = function(resourceId, configure){
 	var loc_out = {
 
 		getDataType: function(){    return  "application";   },
-		getId : function(){  return loc_id;   },
-		setId : function(id){   loc_id = id;    },
 
 		getPackageRuntime : function(){   return loc_getPackageRuntime();   },
 		
@@ -73,7 +69,6 @@ var node_createApplication = function(resourceId, configure){
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION);
-	loc_out.id = loc_id;
 	
 	return loc_out;
 };

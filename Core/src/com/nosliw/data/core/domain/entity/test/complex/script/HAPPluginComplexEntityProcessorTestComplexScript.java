@@ -53,14 +53,17 @@ public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginC
 		if(variables!=null) {
 			JSONArray varJsonArray = (JSONArray)variables;
 			List<HAPInfoReferenceResolve> resolvedVars = new ArrayList<HAPInfoReferenceResolve>();
+			List<HAPReferenceElementInValueContext> unknownVars = new ArrayList<HAPReferenceElementInValueContext>();
 			for(int i=0; i<varJsonArray.length(); i++) {
 				HAPReferenceElementInValueContext ref = new HAPReferenceElementInValueContext();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				
 				HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.resolveElementReference(ref, new HAPCandidatesValueContext(valueStructureComplex, valueStructureComplex), new HAPConfigureResolveStructureElementReference(), valueStructureDomain);
-				resolvedVars.add(resolve);
+				if(resolve!=null)		resolvedVars.add(resolve);
+				else unknownVars.add(ref);
 			}
 			executableEntity.setVariables(resolvedVars);
+			executableEntity.setUnknowVariable(unknownVars);
 		}
 		
 //		

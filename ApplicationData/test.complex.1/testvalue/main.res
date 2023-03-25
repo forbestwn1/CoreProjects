@@ -6,76 +6,39 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "value1_none_test.complex.script", 
-				"status": "disabled1"
-			},
-			"entity":{
-				"scriptName": "complexscript_test_value",
-				"parm" : {
-					"variable1" : ["reference_local1", "normal", "override_parent"],
-					"variable" : ["reference_local1"]
-				},
-				"valueContext" :{
-					"entity": [
-						{
-							"groupType" : "public",
-							"valueStructure" : {
-								"normal": {
-									"status": "disabled",
-									"definition":{
-										"criteria": "test.string"
-									},
-									"defaultValue": {
-										"dataTypeId": "test.string",
-										"value": "9876543210"
-									}
-								},
-								"override_parent": {
-									"status": "disabled",
-									"definition":{
-										"criteria": "test.string"
-									},
-									"defaultValue": {
-										"dataTypeId": "test.string",
-										"value": "123456666"
-									}
-								},
-								"reference_local1": {
-									"status": "disabled1",
-									"definition": {
-										"link" : {
-											"parentValueContext1": "self",
-											"elementPath": "parent_public"
-										}
-									}
-								}
-							}
-						}
-					]
-				} 			
-			}
-		},
-		{
-			"info": {
-				"name" : "value2_none_test.complex.script", 
+				"name" : "localresource.reference_none_test.complex.script",
 				"status": "disabled"
 			},
+			"resourceId": "test.complex.script|#reference"
+		},
+		{
+			"info": {
+				"name" : "reference_none_test.complex.script", 
+				"status": "disabled1"
+			},
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable1" : ["reference_local2"],
-					"variable" : ["reference_local2"]
+					"variable1" : ["reference_link_1", "reference_definition_1"],
+					"variable" : ["reference_link_1", "reference_definition_1"]
 				},
 				"valueContext" :{
 					"entity": [
 						{
 							"groupType" : "public",
 							"valueStructure" : {
-								"reference_local2": {
+								"reference_link_1": {
+									"status": "disabled1",
+									"definition": {
+										"definition" : {
+											"elementPath": "parent_public"
+										}
+									}
+								},
+								"reference_definition_1": {
 									"status": "disabled1",
 									"definition": {
 										"link" : {
-											"parentValueContext1": "self",
 											"elementPath": "parent_public"
 										}
 									}
@@ -88,13 +51,53 @@
 		},
 		{
 			"info": {
-				"name" : "value3_none_test.complex.script", 
-				"status": "disabled1"
+				"name" : "merge.runtime_none_test.complex.script", 
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
 					"inherit":{
 						"mode" : "runtime"
+					}
+				}
+			},
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["parent_public"],
+					"variable" : ["parent_public", "parent_protected", "parent_private", "parent_internal"]
+				}
+			}
+		},
+		{
+			"info": {
+				"name" : "merge.definition_none_test.complex.script", 
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "definition"
+					}
+				}
+			},
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["parent_public"],
+					"variable" : ["parent_public"]
+				}
+			}
+		},
+		{
+			"info": {
+				"name" : "merge.none_none_test.complex.script", 
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "none"
 					}
 				}
 			},
@@ -121,7 +124,49 @@
 							},
 							"defaultValue": {
 								"dataTypeId": "test.string",
-								"value": "9876543210"
+								"value": "default value of parent_public"
+							}
+						}
+					}
+				},
+				{
+					"groupType" : "protected",
+					"valueStructure" : {
+						"parent_protected": {
+							"definition":{
+								"criteria": "test.string"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string",
+								"value": "default value of parent_protected"
+							}
+						}
+					}
+				},
+				{
+					"groupType" : "private",
+					"valueStructure" : {
+						"parent_private": {
+							"definition":{
+								"criteria": "test.string"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string",
+								"value": "default value of parent_private"
+							}
+						}
+					}
+				},
+				{
+					"groupType" : "internal",
+					"valueStructure" : {
+						"parent_public": {
+							"definition":{
+								"criteria": "test.string"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string",
+								"value": "default value of parent_internal"
 							}
 						}
 					}

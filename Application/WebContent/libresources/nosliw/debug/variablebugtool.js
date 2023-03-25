@@ -50,7 +50,7 @@ var loc_createComponentVariableInspection = function(){
 				<div>
 				  <input v-model="variableId" placeholder="variable id"/>
 				  <button v-on:click="getVariableValue">GetValue</button>
-				  <textarea v-model="variableValue"></textarea>
+				  <textarea v-model="variableValue"  rows="30" cols="150"></textarea>
 				</div>
 		    </div>
 		`

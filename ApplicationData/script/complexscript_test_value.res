@@ -18,6 +18,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		
 		loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
     	loc_scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_VARIABLE);
+    	loc_unknownVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_UNKNOWNVARIABLE);
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();
@@ -29,6 +30,15 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				variable : loc_valueContext.createVariable(varResolve),
 			};
 			loc_variableInfos.push(varInfo);
+		});
+	};
+
+	var loc_updateDataDisplay = function(varInfo){
+		varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+			success : function(request, data){
+				var value = data==undefined?"":data.value.value;
+				varInfo.displayView.text(value);
+			}	
 		});
 	};
 
@@ -72,15 +82,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				varContainerViewWrapper.append(displayViewWrapper);	
 
 				varInfo.variable.registerDataChangeEventListener(undefined, function(eventName, eventData){
-					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
-						success : function(request, data){
-							varInfo.displayView.text(data.value.value);
-						}	
-					});
+					loc_updateDataDisplay(varInfo);
 				});
+				loc_updateDataDisplay(varInfo);
 			});
 			
-		
+			var unknowVarStr = JSON.stringify(loc_unknownVars, null, 4);
+			var unknownView =  $('<div>Unknow Variables : '+unknowVarStr+'</div>');
+			rootView.append(unknownView);	
 		},
 		
 	};

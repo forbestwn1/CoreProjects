@@ -299,6 +299,10 @@ var node_CONSTANT=
 	  "INTERFACE_TREENODEENTITY" : "treeNodeEntity",
 	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
 	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
+	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",
+	  
+	  "INTERFACE_WITHID" : "withId",
+	  
 	  
 	  "ATTRIBUTE_TYPE_NORMAL" : "normal",
 	  "ATTRIBUTE_TYPE_CONTAINER" : "container",

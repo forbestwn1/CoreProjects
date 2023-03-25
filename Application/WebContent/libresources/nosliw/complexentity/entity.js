@@ -56,6 +56,7 @@ var node_createEntityDefinition = function(original){
 		getAttribute : function(attrName){
 			var out;
 			var attr = loc_getAttributeByName(attrName);
+			if(attr==undefined)  return;
 			var attrType = node_complexEntityUtility.getAttributeType(attr);
 			if(attrType==node_CONSTANT.ATTRIBUTE_TYPE_NORMAL)	out = loc_createNormalAttributeDefinition(attr);
 			else		out = loc_createContainerAttributeDefinition(attr);
