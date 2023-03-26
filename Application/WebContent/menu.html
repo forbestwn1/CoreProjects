@@ -150,6 +150,13 @@ var updateApplication = function(application){
 };
 
 
+$(document).on("nosliwActive", function(){
+
+	init();
+	
+	loc_loadApplication();
+});
+
 var loc_loadApplication = function(){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
@@ -167,13 +174,6 @@ var loc_loadApplication = function(){
 	
 };
 
-$(document).on("nosliwActive", function(){
-
-	init();
-	
-	loc_loadApplication();
-});
-
 </script>
 
 <script src="libresources/external/framework7/5.4.0/js/framework7.bundle.min.js"></script>
@@ -187,11 +187,8 @@ loc_vue = new Vue({
 	el: document.getElementById("test"),
 	template : `
 		<div>
-		HaHaHa
 		</div>
 	`
 });
-
 </script>
-
 </html>

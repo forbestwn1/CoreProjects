@@ -289,6 +289,9 @@ var node_createComplexTreeDebugView = function(view){
 			watch: {
 			},
 			computed : {
+				packageRuntime : function(){
+					return this.application.getPackageRuntime==undefined?undefined:this.application.getPackageRuntime();    
+				},
 				isPackage : function(){
 					return "package"== this.currentEntityType;
 				},
@@ -303,9 +306,9 @@ var node_createComplexTreeDebugView = function(view){
 				<div class="row">
 				    <!-- Each "cell" has col-[width in percents] class -->
 				    <div class="col col-50 resizable">
-						<div class="treeview" style="overflow-y: scroll; height:400px;">
+						<div v-if="packageRuntime!=undefined" class="treeview" style="overflow-y: scroll; height:400px;">
 						  	<complextree-runtime 
-						  		v-bind:data="getPackageRuntime()"
+						  		v-bind:data="packageRuntime"
 						  		name="package"
 								v-on:selectEntity="onSelectEntity"
 						  	/>
