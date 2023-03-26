@@ -6,53 +6,8 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "localresource.reference_none_test.complex.script",
-				"status": "disabled"
-			},
-			"resourceId": "test.complex.script|#reference"
-		},
-		{
-			"info": {
-				"name" : "reference_none_test.complex.script", 
+				"name" : "normal.none_none_test.complex.script", 
 				"status": "disabled1"
-			},
-			"entity":{
-				"scriptName": "complexscript_test_value",
-				"parm" : {
-					"variable1" : ["reference_link_1", "reference_definition_1"],
-					"variable" : ["reference_link_1", "reference_definition_1"]
-				},
-				"valueContext" :{
-					"entity": [
-						{
-							"groupType" : "public",
-							"valueStructure" : {
-								"reference_link_1": {
-									"status": "disabled1",
-									"definition": {
-										"definition" : {
-											"elementPath": "parent_public"
-										}
-									}
-								},
-								"reference_definition_1": {
-									"status": "disabled1",
-									"definition": {
-										"link" : {
-											"elementPath": "parent_public"
-										}
-									}
-								}
-							}
-						}
-					]
-				} 			
-			}
-		},
-		{
-			"info": {
-				"name" : "merge.runtime_none_test.complex.script", 
-				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
@@ -64,14 +19,35 @@
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable1" : ["parent_public"],
-					"variable" : ["parent_public", "parent_protected", "parent_private", "parent_internal"]
+					"variable1" : ["parent_public", "parent_protected", "parent_private", "parent_internal"],
+					"variable2" : ["parent_public", "parent_protected", "parent_private", "parent_internal"]
 				}
 			}
 		},
 		{
 			"info": {
-				"name" : "merge.definition_none_test.complex.script", 
+				"name" : "localresource.reference_none_test.complex.script",
+				"status": "disabled1"
+			},
+			"resourceId": "test.complex.script|#reference"
+		},
+		{
+			"info": {
+				"name" : "localresource.merge.runtime_none_test.complex.script",
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},			
+			"resourceId": "test.complex.script|#merge"
+		},
+		{
+			"info": {
+				"name" : "localresource.merge.definition_none_test.complex.script", 
 				"status": "disabled"
 			},
 			"parent": {
@@ -81,17 +57,11 @@
 					}
 				}
 			},
-			"entity":{
-				"scriptName": "complexscript_test_value",
-				"parm" : {
-					"variable1" : ["parent_public"],
-					"variable" : ["parent_public"]
-				}
-			}
+			"resourceId": "test.complex.script|#merge"
 		},
 		{
 			"info": {
-				"name" : "merge.none_none_test.complex.script", 
+				"name" : "localresource.merge.none_none_test.complex.script", 
 				"status": "disabled"
 			},
 			"parent": {
@@ -101,13 +71,7 @@
 					}
 				}
 			},
-			"entity":{
-				"scriptName": "complexscript_test_value",
-				"parm" : {
-					"variable1" : ["parent_public"],
-					"variable" : ["parent_public"]
-				}
-			}
+			"resourceId": "test.complex.script|#merge"
 		},
 		{
 			"info": {
@@ -125,6 +89,25 @@
 							"defaultValue": {
 								"dataTypeId": "test.string",
 								"value": "default value of parent_public"
+							}
+						},
+						"parent_public_withchildren": {
+							"definition": {
+								"child" : {
+									"a" : {
+										"child" : {
+											"aa" : {"criteria":"test.string;1.0.0"}
+										}
+									}
+								}
+							},
+							"defaultValue": {
+								"a": {
+									"aa" : {
+										"dataTypeId": "test.string",
+										"value": "default value of a.aa"
+									}
+								}
 							}
 						}
 					}

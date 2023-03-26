@@ -24,19 +24,50 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getVariableDomain();
 		loc_valueContext = varDomain.getValueContext(valueContextId);
 
-		_.each(loc_scriptVars, function(varResolve, i){
-			var varInfo = {
-				resolve : varResolve,
-				variable : loc_valueContext.createVariable(varResolve),
-			};
-			loc_variableInfos.push(varInfo);
-		});
+		if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
+			_.each(loc_scriptVars, function(varResolve, i){
+				var varInfo = {
+					reference : varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE],
+					variable : loc_valueContext.createResolvedVariable(varResolve),
+				};
+				loc_variableInfos.push(varInfo);
+			});
+		}
+		else{
+			var vsIds = loc_valueContext.getValueStructureRuntimeIds();
+			_.each(vsIds.solid, function(vsId, i){
+				var vs = loc_valueContext.getValueStructure(vsId);
+				var rootNames = vs.getElementsName();
+				_.each(rootNames, function(rootName, i){
+					var varInfo = {
+						reference : rootName,
+						variable : loc_valueContext.createVariable(vsId, rootName),
+					};
+					loc_variableInfos.push(varInfo);
+				});
+			});		
+
+			_.each(vsIds.soft, function(vsId, i){
+				var vs = loc_valueContext.getValueStructure(vsId);
+				var rootNames = vs.getElementsName();
+				_.each(rootNames, function(rootName, i){
+					var varInfo = {
+						reference : rootName,
+						variable : loc_valueContext.createVariable(vsId, rootName),
+					};
+					loc_variableInfos.push(varInfo);
+				});
+			});		
+		}
 	};
 
 	var loc_updateDataDisplay = function(varInfo){
 		varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 			success : function(request, data){
-				var value = data==undefined?"":data.value.value;
+				var value;
+				if(data!=undefined&&data.value!=undefined){
+				    value = JSON.stringify(data.value, null, 4);
+				}
 				varInfo.displayView.text(value);
 			}	
 		});
@@ -56,7 +87,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				var varContainerViewWrapper =  $('<div style="border:solid 3px;"></div>');
 				containerView.append(varContainerViewWrapper);	
 
-				var varViewWrapper = $('<div>Variable:'+node_basicUtility.stringify(varInfo.resolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE])+'</div>');
+				var varViewWrapper = $('<div></div>');
+				var varNameView = $('<p>Variable:'+node_basicUtility.stringify(varInfo.reference)+'</p>');
+				var varIdView = $('<p>Id:'+varInfo.variable.prv_id+'</p>');
+				varViewWrapper.append(varNameView);	
+				varViewWrapper.append(varIdView);	
+				
 				varContainerViewWrapper.append(varViewWrapper);	
 
 				var viewWrapper = $('<div>Value:</div>');

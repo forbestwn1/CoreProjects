@@ -181,8 +181,13 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			return out;
 		},
 
+		createVariable : function(structureRuntimeId, varPath){
+			var valueStructure = this.getValueStructure(structureRuntimeId);
+			return valueStructure.createVariable(node_createValueStructureVariableInfo(varPath));
+		},
+		
 		//
-		createVariable : function(varResolve){
+		createResolvedVariable : function(varResolve){
 			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_STRUCTUREID]);
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEELEMENTINVALUECONTEXT_ELEMENTPATH]));
 		},
