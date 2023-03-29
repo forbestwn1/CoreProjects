@@ -63,8 +63,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInit", {}), handlers, request);
-		_.each(loc_layers, function(layer){
-			out.addRequest(layer.getPreInitRequest());
+		_.each(loc_layers, function(layer, i){
+			out.addRequest(loc_getLayerInterfaceObj(i).getPreInitRequest());
 		});
 		return out;
 	};
@@ -88,7 +88,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		var runtimeContext = node_componentUtility.makeChildRuntimeContext(upperRuntimeContext, layerId, loc_layers[index]); 
 
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
-		out.addRequest(loc_layers[index].getUpdateRuntimeContextRequest(runtimeContext, {
+		out.addRequest(loc_getLayerInterfaceObj(index).getUpdateRuntimeContextRequest(runtimeContext, {
 			success : function(request, newRuntimeContext){
 				if(newRuntimeContext==undefined) newRuntimeContext = runtimeContext;
 				if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});

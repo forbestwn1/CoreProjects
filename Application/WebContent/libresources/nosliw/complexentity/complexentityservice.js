@@ -174,7 +174,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 			application = loc_buildOtherObject(application);
 			
-			var applicationMan = node_makeObjectWithComponentManagementInterface(application, application, application);
+			node_makeObjectWithComponentManagementInterface(application, application);
 			
 			//build backup state if not provided
 			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			

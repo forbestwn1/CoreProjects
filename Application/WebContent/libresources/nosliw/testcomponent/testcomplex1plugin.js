@@ -102,10 +102,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		});
 	};
 	
-	var loc_setComplexAttribute = function(attrName, attrEntity){
-		loc_children[attrName] = attrEntity;
-	};
-	
 	var loc_out = {
 
 		getDataType: function(){    return  "testComplex1";   },
@@ -163,8 +159,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 
 			//complex attribute
-			_.each(loc_children, function(child, childName){
-				out.addRequest(child.getPreInitRequest());
+			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
+				out.addRequest(child.getChildValue().getPreInitRequest());
 			});
 
 			//simpletest1 attribute
@@ -183,10 +179,9 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_parentView.append(loc_mainView);
 			
 			//complex children
-			var attrNames = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChildrenName();
-			
-			
-			_.each(attrNames, function(attrName, i){
+
+			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
+				var attrName = child.getChildName();
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
 				var childView = $('<div style="margin-left:10px;" />');
@@ -195,12 +190,32 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				loc_mainView.append(rootViewWrapper);
 				loc_childrenViews[attrName] = childView;
 				
-				var child = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(attrName).getChildValue();
+				var childValue = child.getChildValue();
 				
-				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, child, childView); 
+				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childValue, childView); 
 
-				out.addRequest(child.getUpdateRuntimeContextRequest(childRuntimeContext));
+				out.addRequest(childValue.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
+			
+			
+			
+			
+//			var attrNames = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChildrenName();
+//			_.each(attrNames, function(attrName, i){
+//				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
+//				var attributeView = $('<div>childAttr: '+attrName+'</div>');
+//				var childView = $('<div style="margin-left:10px;" />');
+//				attributeView.append(childView);
+//				rootViewWrapper.append(attributeView);
+//				loc_mainView.append(rootViewWrapper);
+//				loc_childrenViews[attrName] = childView;
+//				
+//				var child = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(attrName).getChildValue();
+//				
+//				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, child, childView); 
+//
+//				out.addRequest(child.getUpdateRuntimeContextRequest(childRuntimeContext));
+//			});
 			
 			//simpletest1 attribute
 			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT, runtimeContext);

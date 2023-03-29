@@ -243,11 +243,8 @@ var loc_createComponentValueStructure = function(){
 };
 
 
-var node_createComplexTreeDebugView = function(view){
+var node_createComplexTreeDebugView = function(containerViewId){
 	
-	var loc_view = $('<div></div>');
-	loc_view = view;
-
 	var loc_componentData = {
 		application : {},
 		currentEntityType : "",
@@ -266,9 +263,7 @@ var node_createComplexTreeDebugView = function(view){
 		Vue.component('complexinfo-valuestructure', loc_createComponentValueStructure());
 
 		loc_vue = new Vue({
-			el: document.getElementById("complextreeDebug"),
-//    		  root: "#complextreeDebug",
-//			el: loc_view,
+			el : "#"+containerViewId,
 			data: loc_componentData,
 			methods : {
 				getPackageRuntime : function(){
@@ -334,8 +329,6 @@ var node_createComplexTreeDebugView = function(view){
 	};
 	
 	var loc_out = {
-		
-		getView : function(){   return loc_view;   },
 		
 		setApplication : function(application){
 			loc_componentData.application = application;

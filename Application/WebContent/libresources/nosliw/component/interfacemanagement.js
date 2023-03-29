@@ -18,26 +18,17 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 //interface for manage component by debug tool
 	
-var INTERFACENAME = "componentInterface";
+var node_getComponentManagementInterface = function(baseObject){	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPONENTENTITYMANAGE);	};
 
-var node_getComponentManagementInterface = function(baseObject){	return node_getInterface(baseObject, INTERFACENAME);	};
-
-//baseObject : object that interface attached to
-//delegateObj: object that provide information so that management interface would work 
-var node_makeObjectWithComponentManagementInterface = function(baseObject, delegateObj, thisContext){
-	var newDelegateObject = node_createComponentManagementInterfaceDelegateObject(delegateObj);
-	return node_buildInterface(baseObject, INTERFACENAME, loc_createComponentManagementInterfaceObj(thisContext==undefined?baseObject:thisContext, newDelegateObject));
-};
-	
 //component's generic interface
 // command, inputIO, lifecycle, 
-var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
+var node_makeObjectWithComponentManagementInterface = function(thisContext, rawObject){
 
 	//for method's this
 	var loc_thisContext = thisContext;
 
 	//object that define behavior
-	var loc_agentObj = agentObj;
+	var loc_agentObj = node_getComponentInterface(rawObject);
 	
 	//IODataSet for component context
 //	var loc_componentContextIODataSet = loc_agentObj.getContextIODataSet();
@@ -52,20 +43,19 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 			return node_createLifecycleTask(next, loc_agentObj, request);
 		},
 		
-			
 		//execute command on component
 		getExecuteCommandRequest : function(command, parms, handlers, request){
-			return loc_agentObj.getExecuteCommandRequest(command, parms, handlers, request);
+			return loc_agentObj.getExecuteCommandRequest==undefined?undefined:loc_agentObj.getExecuteCommandRequest(command, parms, handlers, request);
 		},
 
-		getContextIODataSet :  function(){  return loc_agentObj.getContextIODataSet();  },
+		getContextIODataSet :  function(){  return loc_agentObj.getContextIODataSet==undefined?undefined:loc_agentObj.getContextIODataSet();  },
 
 		//component's context data set value
-		getContextDataSetValueRequest : function(handlers, request){		return loc_out.getContextIODataSet().getGetDataSetValueRequest(handlers, request);		},
+		getContextDataSetValueRequest : function(handlers, request){		return loc_out.getContextIODataSet==undefined?undefined:loc_out.getContextIODataSet().getGetDataSetValueRequest(handlers, request);		},
 		
 		//listener to context data change event
 		registerContextDataChangeEventListener : function(listener, handler){	
-			return loc_out.getContextIODataSet().registerEventListener(listener, 
+			return loc_out.getContextIODataSet==undefined?undefined:loc_out.getContextIODataSet().registerEventListener(listener, 
 				function(eventName, eventData, request){
 					var dataRequest = loc_out.getContextIODataSet().getGetDataSetValueRequest({
 						success : function(request, dataSet){
@@ -75,14 +65,16 @@ var loc_createComponentManagementInterfaceObj = function(thisContext, agentObj){
 					node_requestServiceProcessor.processRequest(dataRequest);
 				}, loc_thisContext);	
 		},
-		unregisterContextDataChangeEventListener : function(listener){  loc_out.getContextIODataSet().unregisterEventListener(listener);  },
+		unregisterContextDataChangeEventListener : function(listener){  loc_out.getContextIODataSet==undefined?undefined:loc_out.getContextIODataSet().unregisterEventListener(listener);  },
 		
-		registerEventListener : function(listener, handler){	return loc_agentObj.registerEventListener(listener, handler, loc_thisContext);	},
-		unregisterEventListener : function(listener){  loc_agentObj.unregisterEventListener(listener);  },
+		registerEventListener : function(listener, handler){	return loc_agentObj.registerEventListener==undefined?undefined:loc_agentObj.registerEventListener(listener, handler, loc_thisContext);	},
+		unregisterEventListener : function(listener){  loc_agentObj.unregisterEventListener==undefined?undefined:loc_agentObj.unregisterEventListener(listener);  },
 
-		registerValueChangeEventListener : function(listener, handler){	return loc_agentObj.registerValueChangeEventListener(listener, handler, loc_thisContext);	},
-		unregisterValueChangeEventListener : function(listener){  loc_agentObj.unregisterValueChangeEventListener(listener);  },
+		registerValueChangeEventListener : function(listener, handler){	return loc_agentObj.registerValueChangeEventListener==undefined?undefined:loc_agentObj.registerValueChangeEventListener(listener, handler, loc_thisContext);	},
+		unregisterValueChangeEventListener : function(listener){  loc_agentObj.unregisterValueChangeEventListener==undefined?undefined:loc_agentObj.unregisterValueChangeEventListener(listener);  },
 	};
+
+	return node_buildInterface(rawObject, node_CONSTANT.INTERFACE_COMPONENTENTITYMANAGE, loc_out);
 
 	return loc_out;
 };
@@ -100,6 +92,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", func
 nosliw.registerSetNodeDataEvent("component.createComponentManagementInterfaceDelegateObject", function(){node_createComponentManagementInterfaceDelegateObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createLifecycleTask", function(){node_createLifecycleTask = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithComponentManagementInterface", node_makeObjectWithComponentManagementInterface); 

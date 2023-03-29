@@ -300,6 +300,8 @@ var node_CONSTANT=
 	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
 	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
 	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",
+
+	  "INTERFACE_COMPONENTENTITYMANAGE" : "componentEntityManage",
 	  
 	  "INTERFACE_WITHID" : "withId",
 	  

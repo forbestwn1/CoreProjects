@@ -101,7 +101,7 @@ var node_buildInterfaceEnv = function(rawInterfaceEnv){
 };
 
 
-node_makeComponentWithDebugInterface = function(rawEntity){
+var node_makeComponentWithDebugInterface = function(rawEntity){
 
 	
 	var loc_interfaceEntity = {
@@ -315,20 +315,6 @@ var node_buildComponentEnv = function(rawComponentEnv){
 	return _.extend({}, interfaceDef, rawComponentEnv);
 };
 
-//interface for component management interface delegate object
-var node_createComponentManagementInterfaceDelegateObject = function(delegateObj){
-	var loc_interface = {
-		getContextIODataSet :  function(){    },
-		getExecuteCommandRequest : function(command, parms, handlers, request){      },
-		getExecuteNosliwCommandRequest : function(commandName, parm, handlers, requestInfo){   this.getExecuteCommandRequest(node_basicUtility.buildNosliwFullName(commandName), parm, handlers, requestInfo);    },
-		registerEventListener : function(listener, handler, thisContext){     },
-		unregisterEventListener : function(listener){     },
-		registerValueChangeEventListener : function(listener, handler, thisContext){    },
-		unregisterValueChangeEventListener : function(listener){       }
-	};
-	return _.extend({}, loc_interface, delegateObj);
-};
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -354,6 +340,5 @@ packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPl
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("makeObjectWithComponentInterface", node_makeObjectWithComponentInterface); 
 packageObj.createChildNode("getComponentInterface", node_getComponentInterface); 
-packageObj.createChildNode("createComponentManagementInterfaceDelegateObject", node_createComponentManagementInterfaceDelegateObject); 
 
 })(packageObj);

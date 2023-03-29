@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "normal.none_none_test.complex.script", 
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
@@ -19,15 +19,20 @@
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
-					"variable1" : ["parent_public", "parent_protected", "parent_private", "parent_internal"],
-					"variable2" : ["parent_public", "parent_protected", "parent_private", "parent_internal"]
 				}
 			}
 		},
 		{
 			"info": {
-				"name" : "localresource.reference_none_test.complex.script",
+				"name" : "globalresource.reference_none_test.complex.script",
 				"status": "disabled1"
+			},
+			"resourceId": "test.complex.script|*value"
+		},
+		{
+			"info": {
+				"name" : "localresource.reference_none_test.complex.script",
+				"status": "disabled"
 			},
 			"resourceId": "test.complex.script|#reference"
 		},

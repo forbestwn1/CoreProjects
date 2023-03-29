@@ -113,7 +113,16 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			
 			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
 			
-			addNormalChild : function(childName, entityRuntime){   loc_interfaceEntity.addNormalChild(childName, entityRuntime);  }
+			addNormalChild : function(childName, entityRuntime){   loc_interfaceEntity.addNormalChild(childName, entityRuntime);  },
+			
+			processChildren : function(processFun){
+				var that = this;
+				_.each(this.getChildrenName(), function(childName){
+					var child = that.getChild(childName);
+					processFun.call(child, child);
+				});
+			}
+			
 		});
 	}
 	
