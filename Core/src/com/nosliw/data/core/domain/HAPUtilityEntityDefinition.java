@@ -8,8 +8,8 @@ import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 
 public class HAPUtilityEntityDefinition {
 
-	public static HAPEmbededDefinitionWithId newEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
-		return new HAPEmbededDefinitionWithId(entityId, entityDefDomainMan.isComplexEntity(entityId.getEntityType()));
+	public static HAPEmbededDefinitionWithId newEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPIdEntityInDomain adapterEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
+		return new HAPEmbededDefinitionWithId(entityId, adapterEntityId, entityDefDomainMan.isComplexEntity(entityId.getEntityType()));
 	}
 	
 	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPDefinitionEntityInDomain entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {

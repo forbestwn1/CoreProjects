@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionWrapperTask;
 
 public class HAPEmbededProcessTask extends HAPSerializableImp{
 

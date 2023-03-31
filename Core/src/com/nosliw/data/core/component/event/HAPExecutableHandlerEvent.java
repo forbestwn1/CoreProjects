@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.handler.HAPExecutableHandler;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;

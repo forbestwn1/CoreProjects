@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 

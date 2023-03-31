@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.HAPProcessResultHandler;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;

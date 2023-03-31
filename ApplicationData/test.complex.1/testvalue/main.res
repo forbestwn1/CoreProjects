@@ -23,11 +23,25 @@
 			}
 		},
 		{
-			"info": {
-				"name" : "globalresource.reference_none_test.complex.script",
-				"status": "disabled1"
+			"embeded": {
+				"info": {
+					"name" : "globalresource.reference_none_test.complex.script",
+					"status": "disabled1"
+				},
+				"resourceId": "test.complex.script|*value"
 			},
-			"resourceId": "test.complex.script|*value"
+			"adapter": {
+				"entityType" : "dataAssociation",
+				"entity" : {
+					"mapping" : {
+						"aaa_module" : {
+							"definition" : {
+								"path" : "simpleOutput2"
+							}
+						}
+					}
+				}
+			}
 		},
 		{
 			"info": {

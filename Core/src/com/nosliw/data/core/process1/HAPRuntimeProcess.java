@@ -1,7 +1,7 @@
 package com.nosliw.data.core.process1;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.structure.data.HAPContextData;
 

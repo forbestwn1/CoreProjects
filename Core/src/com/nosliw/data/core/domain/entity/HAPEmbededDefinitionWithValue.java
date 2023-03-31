@@ -9,7 +9,7 @@ public class HAPEmbededDefinitionWithValue extends HAPEmbededDefinition{
 	public HAPEmbededDefinitionWithValue() {}
 	
 	public HAPEmbededDefinitionWithValue(Object value) {
-		super(value, null, false);
+		super(value, null, null, false);
 	}
 	
 	@Override

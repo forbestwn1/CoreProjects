@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.process1.HAPUtilityProcess;
 
 public abstract class HAPDefinitionActivityTask extends HAPDefinitionActivityNormal{

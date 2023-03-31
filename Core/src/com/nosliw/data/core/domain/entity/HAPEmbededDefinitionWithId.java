@@ -9,8 +9,8 @@ public class HAPEmbededDefinitionWithId extends HAPEmbededDefinition{
 
 	public HAPEmbededDefinitionWithId() {}
 	
-	public HAPEmbededDefinitionWithId(HAPIdEntityInDomain entityId, boolean isComplex) {
-		super(entityId, entityId.getEntityType(), isComplex);
+	public HAPEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPIdEntityInDomain adapterEntityId, boolean isComplex) {
+		super(entityId, entityId.getEntityType(), adapterEntityId, isComplex);
 	}
 	
 	@Override

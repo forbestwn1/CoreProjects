@@ -8,10 +8,10 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPParserDataAssociation;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionMappingService extends HAPSerializableImp{

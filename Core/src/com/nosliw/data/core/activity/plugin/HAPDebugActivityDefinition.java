@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.domain.entity.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 
 public class HAPDebugActivityDefinition extends HAPDefinitionActivityNormal{
 

@@ -47,9 +47,10 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	
 	public HAPEmbeded() {}
 	
-	public HAPEmbeded(Object value, String entityType, boolean isComplex) {
+	public HAPEmbeded(Object value, String entityType, Object adapter, boolean isComplex) {
 		this.m_value = value;
 		this.m_entityType = entityType;
+		this.m_adapter = adapter;
 		this.m_isComplex = isComplex;
 	}
 	

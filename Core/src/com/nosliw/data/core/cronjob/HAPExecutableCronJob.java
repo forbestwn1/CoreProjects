@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataable.HAPExecutableDataable;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.runtime.HAPExecutableImpComponent;
 

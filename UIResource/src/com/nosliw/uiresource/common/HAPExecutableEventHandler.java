@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;

@@ -12,7 +12,9 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
+import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -43,7 +45,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		
 		for(int i=0; i<jsonArray.length(); i++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			JSONObject infoJsonObj = jsonObj.getJSONObject("info");
+			JSONObject infoJsonObj = ((JSONObject)HAPUtilityParserEntity.getEntityObject(jsonObj)).getJSONObject(HAPInfoEntityInDomainDefinition.INFO);
 			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(infoJsonObj);
 
 			if(HAPUtilityEntityInfo.isEnabled(info)) {

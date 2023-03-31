@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPContextProcessor;
