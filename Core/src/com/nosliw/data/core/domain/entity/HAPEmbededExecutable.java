@@ -13,12 +13,12 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public abstract class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
+public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 
 	public HAPEmbededExecutable() {}
 	
-	public HAPEmbededExecutable(Object entity, String entityType, Object adapter, boolean isComplex) {
-		super(entity, entityType, adapter, isComplex);
+	public HAPEmbededExecutable(Object entity, Object adapter) {
+		super(entity, adapter);
 	}
 
 	@Override
@@ -26,8 +26,17 @@ public abstract class HAPEmbededExecutable extends HAPEmbeded implements HAPExec
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.getValue() instanceof HAPExecutable) jsonMap.put(VALUE, ((HAPExecutable)this.getValue()).toResourceData(runtimeInfo).toString());
-		typeJsonMap.put(VALUE, this.getValue().getClass());
+		Object valueObj = this.getValue();
+		if(valueObj!=null) {
+			if(valueObj instanceof HAPExecutable) jsonMap.put(VALUE, ((HAPExecutable)valueObj).toResourceData(runtimeInfo).toString());
+			typeJsonMap.put(VALUE, valueObj.getClass());
+		}
+		
+		Object adapterObj = this.getAdapter();
+		if(adapterObj!=null) {
+			if(adapterObj instanceof HAPExecutable) jsonMap.put(ADAPTER, ((HAPExecutable)adapterObj).toResourceData(runtimeInfo).toString());
+			typeJsonMap.put(ADAPTER, adapterObj.getClass());
+		}
 		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 	
@@ -35,6 +44,13 @@ public abstract class HAPEmbededExecutable extends HAPEmbeded implements HAPExec
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		if(this.getValue() instanceof HAPExecutable)  out.addAll(((HAPExecutable)this.getValue()).getResourceDependency(runtimeInfo, resourceManager));
+		return out;
+	}
+
+	@Override
+	public HAPEmbeded cloneEmbeded() {
+		HAPEmbededExecutable out = new HAPEmbededExecutable();
+		this.cloneToEmbeded(out);
 		return out;
 	}
 	

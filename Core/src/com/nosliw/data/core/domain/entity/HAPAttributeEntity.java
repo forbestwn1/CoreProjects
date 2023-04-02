@@ -5,12 +5,12 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.HAPDomainEntity;
-import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.HAPDomainEntity;
+import com.nosliw.data.core.domain.HAPExpandable;
 
 @HAPEntityWithAttribute
 public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implements HAPExpandable{
@@ -30,14 +30,17 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	
 	private T m_value;
 	
+	private boolean m_isComplex;
+	
 	public HAPAttributeEntity() {}
 
 	public HAPAttributeEntity(String type) {
 		this.m_entityType = type;
 	}
 
-	public HAPAttributeEntity(String entityType, String name, T value) {
+	public HAPAttributeEntity(String entityType, String name, T value, boolean isComplex) {
 		this.m_entityType = entityType;
+		this.m_isComplex = isComplex;
 		this.m_name = name;
 		this.m_value = value;
 	}
@@ -50,7 +53,7 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	public T getValue() {    return this.m_value;    }
 	public void setValue(T value) {   this.m_value = value;   }
 	
-	public abstract boolean getIsComplex();
+	public boolean getIsComplex() {     return this.m_isComplex;       }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	

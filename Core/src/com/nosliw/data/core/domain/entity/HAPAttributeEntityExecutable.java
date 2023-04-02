@@ -15,8 +15,8 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 public abstract class HAPAttributeEntityExecutable<T> extends HAPAttributeEntity<T> implements HAPExecutable{
 
-	public HAPAttributeEntityExecutable(String type, String name, T value) {
-		super(type, name, value);
+	public HAPAttributeEntityExecutable(String type, String name, T value, boolean isComplex) {
+		super(type, name, value, isComplex);
 	}
 
 	public HAPAttributeEntityExecutable(String type) {

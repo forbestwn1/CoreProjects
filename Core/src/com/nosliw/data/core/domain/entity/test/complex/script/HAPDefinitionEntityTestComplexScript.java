@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInDomainComplex{
 
@@ -19,14 +19,14 @@ public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInD
 
 	public HAPDefinitionEntityTestComplexScript() {
 		super(ENTITY_TYPE);
-		this.setNormalAttribute(ATTR_PARM, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
+		this.setNormalAttributeSimple(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
 	}
 
-	public void setScriptName(String scriptName) {    this.setNormalAttribute(ATTR_SCRIPTNAME, new HAPEmbededDefinitionWithValue(scriptName));    }
-	public String getScriptName() {   return (String)this.getNormalAttributeWithValue(ATTR_SCRIPTNAME).getValue().getValue();     }
+	public void setScriptName(String scriptName) {    this.setNormalAttributeSimple(ATTR_SCRIPTNAME, new HAPEmbededDefinition(scriptName));    }
+	public String getScriptName() {   return (String)this.getNormalAttributeValue(ATTR_SCRIPTNAME);     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
-	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeWithValue(ATTR_PARM).getValue().getValue();    }
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeValue(ATTR_PARM);    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override

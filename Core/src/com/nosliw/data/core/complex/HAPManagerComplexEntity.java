@@ -27,10 +27,10 @@ import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionContainer;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormalId;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormal;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -155,11 +155,11 @@ public class HAPManagerComplexEntity {
 			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
 				if(attrDef.getIsComplex()) {
 					if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)){
-						HAPAttributeEntityDefinitionNormalId simpleAttrDef = (HAPAttributeEntityDefinitionNormalId)attrDef;
-						HAPEmbededDefinitionWithId embededAttributeDef = simpleAttrDef.getValue();
-						HAPIdEntityInDomain attrEntityDefId = embededAttributeDef.getEntityId();
+						HAPAttributeEntityDefinitionNormal simpleAttrDef = (HAPAttributeEntityDefinitionNormal)attrDef;
+						HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
+						HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
 						HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-						complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutableWithId(attrEntityExeId, true));
+						complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId, null));
 					} 
 					else if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
 						HAPAttributeEntityDefinitionContainer containerAttrDef = (HAPAttributeEntityDefinitionContainer)attrDef;
@@ -167,11 +167,11 @@ public class HAPManagerComplexEntity {
 						HAPContainerEntityExecutable exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType(), this.getDomainEntityDefinitionManager());
 						List<HAPElementContainerDefinition> defEles = defContainer.getAllElements();
 						for(HAPElementContainerDefinition defEle : defEles) {
-							HAPIdEntityInDomain defEleId = ((HAPEmbededDefinitionWithId)defEle.getEmbededElementEntity()).getEntityId();
+							HAPIdEntityInDomain defEleId = (HAPIdEntityInDomain)((HAPEmbededDefinition)defEle.getEmbededElementEntity()).getValue();
 							HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
 							HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
 							HAPElementContainerExecutable eleExe = HAPUtilityContainerEntity.buildExecutableContainerElement(defEle, defEleId.getEntityId());
-							eleExe.setEmbededElementEntity(new HAPEmbededExecutableWithId(eleEntityExeId, true));
+							eleExe.setEmbededElementEntity(new HAPEmbededExecutable(eleEntityExeId, null));
 							exeContainer.addEntityElement(eleExe);
 						}
 						complexEntityExe.setContainerAttribute(attrDef.getName(), exeContainer);

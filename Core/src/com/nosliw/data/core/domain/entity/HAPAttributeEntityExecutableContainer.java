@@ -6,8 +6,8 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPAttributeEntityExecutableContainer extends HAPAttributeEntityExecutable<HAPContainerEntityExecutable> implements HAPExecutable{
 
-	public HAPAttributeEntityExecutableContainer(String name, HAPContainerEntityExecutable value) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER, name, value);
+	public HAPAttributeEntityExecutableContainer(String name, HAPContainerEntityExecutable value, boolean isComplex) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER, name, value, isComplex);
 	}
 
 	public HAPAttributeEntityExecutableContainer() {

@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.container.HAPElementContainer;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinitionInDomain{
@@ -119,8 +119,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	
 	protected void parseNormalSimpleEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPContextParser parserContext) {
 		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		HAPEmbededDefinitionWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-		entity.setNormalAttribute(attributeName, attributeEntity);
+		HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+		entity.setNormalAttribute(attributeName, attributeEntity, false);
 	}
 
 	protected void parseNormalComplexEntityAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
@@ -132,8 +132,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 
 	protected void parseNormalComplexEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
 		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		HAPEmbededDefinitionWithId attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-		entity.setNormalAttribute(attributeName, attributeEntity);
+		HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+		entity.setNormalAttribute(attributeName, attributeEntity, true);
 	}
 	
 	protected void parseContainerAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {

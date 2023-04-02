@@ -5,8 +5,8 @@ import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 
 public class HAPAttributeEntityDefinitionContainer extends HAPAttributeEntityDefinition<HAPContainerEntityDefinition>{
 
-	public HAPAttributeEntityDefinitionContainer(String name, HAPContainerEntityDefinition value) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER, name, value);
+	public HAPAttributeEntityDefinitionContainer(String name, HAPContainerEntityDefinition value, boolean isComplex) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER, name, value, isComplex);
 	}
 
 	public HAPAttributeEntityDefinitionContainer() {

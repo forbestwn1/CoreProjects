@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainExecutable;
 import com.nosliw.data.core.domain.HAPInfoParentComplex;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 public class HAPUtilityAttachment {
@@ -45,7 +45,7 @@ public class HAPUtilityAttachment {
 				HAPInfoEntityInDomainDefinition complexEntityDefInfo = definitionGlobalDomain.getSolidEntityInfoDefinition(entityIdDef, null);
 				
 				HAPDefinitionEntityContainerAttachment attachmentContainerEntity = null;
-				HAPEmbededDefinitionWithId attachmentContainerAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
+				HAPEmbededDefinition attachmentContainerAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
 				if(attachmentContainerAttribute!=null) {
 					attachmentContainerEntity = (HAPDefinitionEntityContainerAttachment)definitionGlobalDomain.getEntityInfoDefinition(attachmentContainerAttribute.getEntityId()).getEntity();
 				}

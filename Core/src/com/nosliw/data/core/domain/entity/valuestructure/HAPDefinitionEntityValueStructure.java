@@ -12,7 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.structure.HAPRootStructure;
 
 @HAPEntityWithAttribute
@@ -24,7 +24,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	public static final String VALUE = "value";
 
 	public HAPDefinitionEntityValueStructure() {
-		this.setNormalAttribute(VALUE, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, HAPRootStructure>()));
+		this.setNormalAttributeSimple(VALUE, new HAPEmbededDefinition(new LinkedHashMap<String, HAPRootStructure>()));
 	}
 
 	public HAPRootStructure addRoot(HAPRootStructure root) {
@@ -35,7 +35,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	}
 
 	public Map<String, HAPRootStructure> getRoots(){  
-		return (Map<String, HAPRootStructure>)this.getValueOfNormalAttributeValueWithValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
+		return (Map<String, HAPRootStructure>)this.getNormalAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
 	}
 
 	public Set<String> getRootNames(){   return this.getRoots().keySet();    }

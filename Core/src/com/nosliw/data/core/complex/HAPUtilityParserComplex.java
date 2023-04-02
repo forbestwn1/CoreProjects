@@ -14,7 +14,6 @@ import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityComplexContainer;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
 
 public class HAPUtilityParserComplex {
 

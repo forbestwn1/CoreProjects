@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithId;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 public class HAPUtilityEntityDefinition {
 
 	public static HAPEmbededDefinitionWithId newEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPIdEntityInDomain adapterEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
-		return new HAPEmbededDefinitionWithId(entityId, adapterEntityId, entityDefDomainMan.isComplexEntity(entityId.getEntityType()));
+		return new HAPEmbededDefinition(entityId, adapterEntityId);
 	}
 	
 	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPDefinitionEntityInDomain entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {

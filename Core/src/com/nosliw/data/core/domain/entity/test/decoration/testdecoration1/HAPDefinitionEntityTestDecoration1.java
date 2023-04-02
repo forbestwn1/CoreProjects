@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.entity.test.decoration.testdecoration1;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
 
 public class HAPDefinitionEntityTestDecoration1 extends HAPDefinitionEntityInDomainComplex{
 

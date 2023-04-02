@@ -6,7 +6,6 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinitionWithValue;
 
 public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainSimple{
 

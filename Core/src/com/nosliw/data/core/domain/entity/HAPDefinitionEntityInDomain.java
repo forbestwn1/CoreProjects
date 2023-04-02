@@ -56,38 +56,51 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		}
 		return out;
 	}
-	public HAPAttributeEntityDefinitionNormalId getNormalAttributeWithId(String attrName) {    return (HAPAttributeEntityDefinitionNormalId)this.getAttribute(attrName);    }
-	public HAPEmbededDefinitionWithId getNormalAttributeValueWithId(String attrName) {
-		HAPAttributeEntityDefinitionNormalId att = this.getNormalAttributeWithId(attrName);
+	
+	public HAPAttributeEntityDefinitionNormal getNormalAttribute(String attrName) {   return (HAPAttributeEntityDefinitionNormal)this.getAttribute(attrName);    }
+	
+	public HAPEmbededDefinition getNormalAttributeEmbeded(String attrName) {
+		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
 		if(att!=null)  return att.getValue();
 		else return null;
-
-	}
-	public Object getValueOfNormalAttributeValueWithValue(String attrName, Object defaultValue) {
-		HAPAttributeEntityDefinitionNormalValue attr = (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);
-		if(attr==null) {
-			this.setNormalAttribute(attrName, new HAPEmbededDefinitionWithValue(defaultValue));
-		}
-		return attr.getValue().getValue();
 	}
 	
-	public HAPAttributeEntityDefinitionNormalValue getNormalAttributeWithValue(String attrName) {    return (HAPAttributeEntityDefinitionNormalValue)this.getAttribute(attrName);    }
+	public Object getNormalAttributeValue(String attrName) {
+		Object out = null;
+		HAPEmbededDefinition embeded = this.getNormalAttributeEmbeded(attrName);
+		if(embeded!=null) {
+			out = embeded.getValue();
+		}
+		return out;
+	}
+
+	public Object getNormalAttributeValue(String attrName, Object defaultValue) {
+		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
+		if(att==null) {
+			this.setNormalAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue));
+		}
+		return att.getValue().getValue();
+		
+	}	
+	
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	
-	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container) {
-		if(container!=null)		this.setAttribute(new HAPAttributeEntityDefinitionContainer(attributeName, container));    
+	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container, boolean isComplex) {
+		if(container!=null)		this.setAttribute(new HAPAttributeEntityDefinitionContainer(attributeName, container, isComplex));    
 	}
 	
-	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity) {
+	public void setNormalAttributeValue(String attributeName, Object attrValue, boolean isComplex) {	this.setNormalAttribute(attributeName, new HAPEmbededDefinition(attrValue), isComplex);	}
+	public void setNormalAttributeValueSimple(String attributeName, Object attrValue) {setNormalAttributeValue(attributeName, attrValue, false);}
+	public void setNormalAttributeValueComplex(String attributeName, Object attrValue) {setNormalAttributeValue(attributeName, attrValue, true);}
+	
+	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity, boolean isComplex) {
 		if(embededEntity!=null) {
-			if(embededEntity instanceof HAPEmbededDefinitionWithId) {
-				this.setAttribute(new HAPAttributeEntityDefinitionNormalId(attributeName, (HAPEmbededDefinitionWithId)embededEntity));    
-			}
-			else if(embededEntity instanceof HAPEmbededDefinitionWithValue) {
-				this.setAttribute(new HAPAttributeEntityDefinitionNormalValue(attributeName, (HAPEmbededDefinitionWithValue)embededEntity));    
-			}
+			this.setAttribute(new HAPAttributeEntityDefinitionNormal(attributeName, embededEntity, isComplex));
 		}
 	}
+	
+	public void setNormalAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity) {setNormalAttribute(attributeName, embededEntity, false);}
+	public void setNormalAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity) {setNormalAttribute(attributeName, embededEntity, true);}
 
 	public void setAttribute(HAPAttributeEntityDefinition attribute) {    this.m_attributes.add(attribute);    }
 
