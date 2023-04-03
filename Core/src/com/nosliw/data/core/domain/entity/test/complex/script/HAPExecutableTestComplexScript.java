@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithValue;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -40,16 +40,16 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 		super(HAPDefinitionEntityTestComplexScript.ENTITY_TYPE);
 	}
 	
-	public void setScript(String script) {		this.setNormalAttribute(SCRIPT, new HAPEmbededExecutableWithValue(new HAPJsonTypeScript(script)));	}
+	public void setScript(String script) {		this.setNormalAttributeSimple(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
 
-	public void setScriptName(String scriptName) {		this.setNormalAttribute(SCRIPTNAME, new HAPEmbededExecutableWithValue(scriptName));	}
-	public String getScriptName() {		return (String)this.getNormalAttributeContentWithValue(SCRIPTNAME).getValue();	}
+	public void setScriptName(String scriptName) {		this.setNormalAttributeSimple(SCRIPTNAME, new HAPEmbededExecutable(scriptName));	}
+	public String getScriptName() {		return (String)this.getNormalAttributeValue(SCRIPTNAME);	}
 
-	public void setParms(Map<String, Object> parms) {	this.setNormalAttribute(PARM, new HAPEmbededExecutableWithValue(parms));	}
+	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeSimple(PARM, new HAPEmbededExecutable(parms));	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttribute(VARIABLE, new HAPEmbededExecutableWithValue(vars));	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeSimple(VARIABLE, new HAPEmbededExecutable(vars));	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttribute(UNKNOWNVARIABLE, new HAPEmbededExecutableWithValue(unknowns));   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeSimple(UNKNOWNVARIABLE, new HAPEmbededExecutable(unknowns));   }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

@@ -159,7 +159,7 @@ public class HAPManagerComplexEntity {
 						HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
 						HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
 						HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-						complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId, null));
+						complexEntityExe.setNormalAttributeComplex(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId, null));
 					} 
 					else if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
 						HAPAttributeEntityDefinitionContainer containerAttrDef = (HAPAttributeEntityDefinitionContainer)attrDef;
@@ -174,7 +174,7 @@ public class HAPManagerComplexEntity {
 							eleExe.setEmbededElementEntity(new HAPEmbededExecutable(eleEntityExeId, null));
 							exeContainer.addEntityElement(eleExe);
 						}
-						complexEntityExe.setContainerAttribute(attrDef.getName(), exeContainer);
+						complexEntityExe.setContainerAttributeComplex(attrDef.getName(), exeContainer);
 					}
 				}
 			}

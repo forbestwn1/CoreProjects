@@ -43,30 +43,28 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return null;
 	}
 
-	public HAPEmbededExecutableWithValue getNormalAttributeContentWithValue(String attrName) {	return (HAPEmbededExecutableWithValue)this.getAttribute(attrName).getValue();	}
-	public HAPEmbededExecutableWithId getNormalAttributeContentWithId(String attrName) {	return (HAPEmbededExecutableWithId)this.getAttribute(attrName).getValue();	}
-	public HAPEmbededExecutableWithEntity getNormalAttributeContentWithEntity(String attrName) {	return (HAPEmbededExecutableWithEntity)this.getAttribute(attrName).getValue();	}
+	public HAPEmbededExecutable getNormalAttributeEmbeded(String attrName) { return (HAPEmbededExecutable)this.getAttribute(attrName).getValue(); }
 
+	public Object getNormalAttributeValue(String attrName) {
+		Object out = null;
+		HAPEmbededExecutable embeded = this.getNormalAttributeEmbeded(attrName);
+		if(embeded!=null) {
+			out = embeded.getValue();
+		}
+		return out;
+	}
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {    this.m_attributes.add(attrObj);    }
 	
-	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity) {
-		if(embededEntity!=null) {
-			if(embededEntity instanceof HAPEmbededExecutableWithId) {
-				this.setAttribute(new HAPAttributeEntityExecutableNormalId(attributeName, (HAPEmbededExecutableWithId)embededEntity));    
-			}
-			else if(embededEntity instanceof HAPEmbededExecutableWithValue) {
-				this.setAttribute(new HAPAttributeEntityExecutableNormalValue(attributeName, (HAPEmbededExecutableWithValue)embededEntity));    
-			}
-			else if(embededEntity instanceof HAPEmbededExecutableWithEntity) {
-				this.setAttribute(new HAPAttributeEntityExecutableNormalEntity(attributeName, (HAPEmbededExecutableWithEntity)embededEntity));    
-			}
-		}
-	}
+	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity, boolean isComplex) {	this.setAttribute(new HAPAttributeEntityExecutableNormal(attributeName, embededEntity, isComplex));	}
+	public void setNormalAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity) {  setNormalAttribute(attributeName, embededEntity, false); }
+	public void setNormalAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity) {  setNormalAttribute(attributeName, embededEntity, true); }
 
-	public void setContainerAttribute(String attributeName, HAPContainerEntityExecutable container) {
-		if(container!=null)		this.setAttribute(new HAPAttributeEntityExecutableContainer(attributeName, container));    
+	public void setContainerAttribute(String attributeName, HAPContainerEntityExecutable container, boolean isComplex) {
+		if(container!=null)		this.setAttribute(new HAPAttributeEntityExecutableContainer(attributeName, container, isComplex));    
 	}
+	public void setContainerAttributeSimple(String attributeName, HAPContainerEntityExecutable container) { setContainerAttribute(attributeName, container, false);  }
+	public void setContainerAttributeComplex(String attributeName, HAPContainerEntityExecutable container) { setContainerAttribute(attributeName, container, true);  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

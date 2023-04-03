@@ -17,6 +17,10 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 
 	public HAPEmbededExecutable() {}
 	
+	public HAPEmbededExecutable(Object entity) {
+		this(entity, null);
+	}
+	
 	public HAPEmbededExecutable(Object entity, Object adapter) {
 		super(entity, adapter);
 	}

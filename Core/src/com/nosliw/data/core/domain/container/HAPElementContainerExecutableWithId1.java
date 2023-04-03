@@ -1,7 +1,5 @@
 package com.nosliw.data.core.domain.container;
 
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithId;
-
 public class HAPElementContainerExecutableWithId1 extends HAPElementContainerExecutable<HAPEmbededExecutableWithId>{
 
 	public HAPElementContainerExecutableWithId1(HAPEmbededExecutableWithId embededEntity, String elementId) {

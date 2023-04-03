@@ -61,9 +61,9 @@ public class HAPUtilityValueStructure {
 				HAPInfoEntityInDomainDefinition complexEntityInfoDef = definitionGlobalDomain.getSolidEntityInfoDefinition(entityIdDef, attachmentContainer);
 				
 				HAPDefinitionEntityValueContext valueContextEntityDef = null;
-				HAPEmbededDefinitionWithId valueStructureComplexAttribute = ((HAPDefinitionEntityInDomainComplex)complexEntityInfoDef.getEntity()).getValueContextEntity();
-				if(valueStructureComplexAttribute!=null) {
-					valueContextEntityDef = (HAPDefinitionEntityValueContext)definitionGlobalDomain.getSolidEntityInfoDefinition(valueStructureComplexAttribute.getEntityId(), attachmentContainer).getEntity();
+				HAPIdEntityInDomain valueContextEntityId = ((HAPDefinitionEntityInDomainComplex)complexEntityInfoDef.getEntity()).getValueContextEntity();
+				if(valueContextEntityId!=null) {
+					valueContextEntityDef = (HAPDefinitionEntityValueContext)definitionGlobalDomain.getSolidEntityInfoDefinition(valueContextEntityId, attachmentContainer).getEntity();
 				}
 
 				//value context

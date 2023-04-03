@@ -9,8 +9,8 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableContainer;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormalId;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutableWithId;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormal;
+import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginComplexEntityProcessor{
@@ -50,15 +50,15 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 		HAPAttributeEntityExecutable attrExe = complexEntityExe.getAttribute(attrName);
 		if(attrExe.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)) {
 			//normal attribute
-			HAPAttributeEntityExecutableNormalId attrNormalExe = (HAPAttributeEntityExecutableNormalId)attrExe;
-			processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity(attrNormalExe.getValue().getEntityId(), processContext);
+			HAPAttributeEntityExecutableNormal attrNormalExe = (HAPAttributeEntityExecutableNormal)attrExe;
+			processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity((HAPIdEntityInDomain)attrNormalExe.getValue().getValue(), processContext);
 		}
 		else {
 			//container attribute
 			HAPAttributeEntityExecutableContainer attrContainerExe = (HAPAttributeEntityExecutableContainer)attrExe;
 			List<HAPElementContainerExecutable> eles = attrContainerExe.getValue().getAllElements();
 			for(HAPElementContainerExecutable ele : eles) {
-				processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity(((HAPEmbededExecutableWithId)ele.getEmbededElementEntity()).getEntityId(), processContext);
+				processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity((HAPIdEntityInDomain)((HAPEmbededExecutable)ele.getEmbededElementEntity()).getValue(), processContext);
 			}
 		}
 	}
