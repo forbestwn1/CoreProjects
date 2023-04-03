@@ -5,8 +5,8 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPAttributeEntityExecutableNormal extends HAPAttributeEntityExecutable<HAPEmbededExecutable> implements HAPExecutable{
 
-	public HAPAttributeEntityExecutableNormal(String name, HAPEmbededExecutable value, boolean isComplex) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL, name, value, isComplex);
+	public HAPAttributeEntityExecutableNormal(String name, HAPEmbededExecutable value, HAPInfoValueType valueTypeInfo) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL, name, value, valueTypeInfo);
 	}
 
 	public HAPAttributeEntityExecutableNormal() {

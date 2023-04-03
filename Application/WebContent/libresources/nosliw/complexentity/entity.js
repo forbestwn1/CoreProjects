@@ -83,9 +83,9 @@ var loc_createNormalAttributeDefinition = function(attrDef){
 		
 		getEmbeded : function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];		},
 		
-		getEntityType : function(){  return this.getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE];   },
+		getEntityType : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_VALUETYPE];  },
 		
-		isComplex : function(){  return this.getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ISCOMPLEX];   },
+		isComplex : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_ISCOMPLEX];  },
 		
 		getValue : function(){
 			return this.getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
@@ -104,9 +104,9 @@ var loc_createContainerAttributeDefinition = function(attrDef){
 		
 		getContainer : function(){    return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];    },
 		
-		getElementEntityType : function(){  return this.getContainer()[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE];   },
+		getElementEntityType : function(){  loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_VALUETYPE];  },
 		
-		isElementComplex : function(){   return this.getContainer()[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ISCOMPLEX];    },
+		isElementComplex : function(){   return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_ISCOMPLEX];  },
 		
 		getElements : function(){    return this.getContainer()[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];     }
 	};

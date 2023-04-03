@@ -4,8 +4,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPAttributeEntityDefinitionNormal extends HAPAttributeEntityDefinition<HAPEmbededDefinition>{
 
-	public HAPAttributeEntityDefinitionNormal(String name, HAPEmbededDefinition embeded, boolean isComplex) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL, name, embeded, isComplex);
+	public HAPAttributeEntityDefinitionNormal(String name, HAPEmbededDefinition embeded, HAPInfoValueType valueTypeInfo) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL, name, embeded, valueTypeInfo);
 	}
 
 	public HAPAttributeEntityDefinitionNormal() {

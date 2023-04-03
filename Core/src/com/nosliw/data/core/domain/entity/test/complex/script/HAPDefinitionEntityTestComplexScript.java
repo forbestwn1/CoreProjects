@@ -19,10 +19,10 @@ public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInD
 
 	public HAPDefinitionEntityTestComplexScript() {
 		super(ENTITY_TYPE);
-		this.setNormalAttributeSimple(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
+		this.setNormalAttributeObject(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
 	}
 
-	public void setScriptName(String scriptName) {    this.setNormalAttributeSimple(ATTR_SCRIPTNAME, new HAPEmbededDefinition(scriptName));    }
+	public void setScriptName(String scriptName) {    this.setNormalAttributeObject(ATTR_SCRIPTNAME, new HAPEmbededDefinition(scriptName));    }
 	public String getScriptName() {   return (String)this.getNormalAttributeValue(ATTR_SCRIPTNAME);     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}

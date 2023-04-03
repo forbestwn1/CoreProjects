@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "normal.none_none_test.complex.script", 
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"parent": {
 				"valuestructure":{
@@ -26,11 +26,11 @@
 			"embeded": {
 				"info": {
 					"name" : "globalresource.reference_none_test.complex.script",
-					"status": "disabled1"
+					"status": "disabled"
 				},
 				"resourceId": "test.complex.script|*value"
 			},
-			"adapter": {
+			"adapter1": {
 				"entityType" : "dataAssociation",
 				"entity" : {
 					"mapping" : {

@@ -40,16 +40,16 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 		super(HAPDefinitionEntityTestComplexScript.ENTITY_TYPE);
 	}
 	
-	public void setScript(String script) {		this.setNormalAttributeSimple(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
+	public void setScript(String script) {		this.setNormalAttributeObject(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
 
-	public void setScriptName(String scriptName) {		this.setNormalAttributeSimple(SCRIPTNAME, new HAPEmbededExecutable(scriptName));	}
+	public void setScriptName(String scriptName) {		this.setNormalAttributeObject(SCRIPTNAME, new HAPEmbededExecutable(scriptName));	}
 	public String getScriptName() {		return (String)this.getNormalAttributeValue(SCRIPTNAME);	}
 
-	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeSimple(PARM, new HAPEmbededExecutable(parms));	}
+	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeObject(PARM, new HAPEmbededExecutable(parms));	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeSimple(VARIABLE, new HAPEmbededExecutable(vars));	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeObject(VARIABLE, new HAPEmbededExecutable(vars));	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeSimple(UNKNOWNVARIABLE, new HAPEmbededExecutable(unknowns));   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeObject(UNKNOWNVARIABLE, new HAPEmbededExecutable(unknowns));   }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

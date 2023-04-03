@@ -80,7 +80,7 @@ public class HAPUtilityDomain {
 		if(complexEntity!=null) {
 			List<HAPAttributeEntityExecutable> attrsExe = complexEntity.getAttributes();
 			for(HAPAttributeEntityExecutable attrExe : attrsExe) {
-				if(attrExe.getIsComplex()) {
+				if(attrExe.getValueTypeInfo().getIsComplex()) {
 					Object attrObj = attrExe.getValue();
 					if(attrObj instanceof HAPContainerEntityExecutable) {
 						//process container complex attribute

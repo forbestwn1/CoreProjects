@@ -77,7 +77,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public Object getNormalAttributeValue(String attrName, Object defaultValue) {
 		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
 		if(att==null) {
-			this.setNormalAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue));
+			this.setNormalAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue), null);
 		}
 		return att.getValue().getValue();
 		
@@ -85,22 +85,23 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	
 	public HAPAttributeEntityDefinitionContainer getContainerAttribute(String attrName) {    return (HAPAttributeEntityDefinitionContainer)this.getAttribute(attrName);    }
 	
-	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container, boolean isComplex) {
-		if(container!=null)		this.setAttribute(new HAPAttributeEntityDefinitionContainer(attributeName, container, isComplex));    
+	public void setContainerAttribute(String attributeName, HAPContainerEntityDefinition container, HAPInfoValueType valueTypeInfo) {
+		if(container!=null)		this.setAttribute(new HAPAttributeEntityDefinitionContainer(attributeName, container, valueTypeInfo));    
 	}
 	
-	public void setNormalAttributeValue(String attributeName, Object attrValue, boolean isComplex) {	this.setNormalAttribute(attributeName, new HAPEmbededDefinition(attrValue), isComplex);	}
-	public void setNormalAttributeValueSimple(String attributeName, Object attrValue) {setNormalAttributeValue(attributeName, attrValue, false);}
-	public void setNormalAttributeValueComplex(String attributeName, Object attrValue) {setNormalAttributeValue(attributeName, attrValue, true);}
+	public void setNormalAttributeValue(String attributeName, Object attrValue, HAPInfoValueType valueTypeInfo) {	this.setNormalAttribute(attributeName, new HAPEmbededDefinition(attrValue), valueTypeInfo);	}
+	public void setNormalAttributeValueSimple(String attributeName, Object attrValue, String valueType) {setNormalAttributeValue(attributeName, attrValue, new HAPInfoValueType(valueType, false));}
+	public void setNormalAttributeValueComplex(String attributeName, Object attrValue, String valueType) {setNormalAttributeValue(attributeName, attrValue, new HAPInfoValueType(valueType, true));}
 	
-	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity, boolean isComplex) {
+	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity, HAPInfoValueType valueTypeInfo) {
 		if(embededEntity!=null) {
-			this.setAttribute(new HAPAttributeEntityDefinitionNormal(attributeName, embededEntity, isComplex));
+			this.setAttribute(new HAPAttributeEntityDefinitionNormal(attributeName, embededEntity, valueTypeInfo));
 		}
 	}
 	
-	public void setNormalAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity) {setNormalAttribute(attributeName, embededEntity, false);}
-	public void setNormalAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity) {setNormalAttribute(attributeName, embededEntity, true);}
+	public void setNormalAttributeObject(String attributeName, HAPEmbededDefinition embededEntity) {setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType());}
+	public void setNormalAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false));}
+	public void setNormalAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true));}
 
 	public void setAttribute(HAPAttributeEntityDefinition attribute) {    this.m_attributes.add(attribute);    }
 

@@ -24,13 +24,16 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	@HAPAttribute
 	public final static String VALUE = "value"; 
 
+	@HAPAttribute
+	public final static String VALUETYPEINFO = "valueTypeInfo"; 
+
 	private String m_entityType;
 	
 	private String m_name;
 	
 	private T m_value;
 	
-	private boolean m_isComplex;
+	private HAPInfoValueType m_valueTypeInfo;
 	
 	public HAPAttributeEntity() {}
 
@@ -38,9 +41,9 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 		this.m_entityType = type;
 	}
 
-	public HAPAttributeEntity(String entityType, String name, T value, boolean isComplex) {
+	public HAPAttributeEntity(String entityType, String name, T value, HAPInfoValueType valueTypeInfo) {
 		this.m_entityType = entityType;
-		this.m_isComplex = isComplex;
+		this.m_valueTypeInfo = valueTypeInfo;
 		this.m_name = name;
 		this.m_value = value;
 	}
@@ -53,12 +56,13 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	public T getValue() {    return this.m_value;    }
 	public void setValue(T value) {   this.m_value = value;   }
 	
-	public boolean getIsComplex() {     return this.m_isComplex;       }
+	public HAPInfoValueType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
+		jsonMap.put(VALUETYPEINFO, HAPSerializeManager.getInstance().toStringValue(this.m_valueTypeInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JSON));
 	}
