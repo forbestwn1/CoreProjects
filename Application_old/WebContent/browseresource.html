@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar (Android only) -->
+    <meta name="theme-color" content="#2196f3">
+    <!-- Your app title -->
+    <title>My App</title>
+    
+    <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+    <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+    <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+    <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+    <!-- Path to Framework7 Library CSS Bundle -->
+    <link rel="stylesheet" href="libresources/external/framework7/5.4.0/css/framework7.bundle.min.css">
+	<link rel="stylesheet" href="libresources/external/framework7/5.4.0/css/framework7-icons.css">
+	<script type="text/javascript" src="libresources/external/vue/vue.js"></script>
+
+	<script src="libresources/nosliw/core/nosliw.js"></script>
+  </head>
+
+  <body>
+  
+  <div id="appDiv" >
+		<div class="view view-main">
+			<div data-name="home" class="page">
+				<div class="page-content">
+					<div id="groupDiv">
+					</div>
+				</div>
+			</div>
+		</div>
+  </div>
+
+  <div id="test"></div>
+  
+  </body>
+
+<script>
+$(document).on("nosliwActive", function(){
+	var currentSearchString = window.location.search;
+	
+	var node_createService = nosliw.getNodeData("browseresource.createService");
+	var node_createResourceTreeApp = nosliw.getNodeData("browseresource.createResourceTreeApp");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+
+	var frameworkApp = new Framework7({
+		  // App root element
+		  root: "#appDiv",
+		  name: 'My App',
+		  id: 'com.myapp.test',
+		  panel: {
+			    swipe: 'both',
+		  },				
+	});
+	var mainView = frameworkApp.views.create('.view-main');
+	
+	node_createService().executeResourceTreeRequest({
+		success : function(request, resourceTree){
+			node_createResourceTreeApp(document.getElementById("groupDiv"), resourceTree);
+		}
+	});
+	
+});
+</script>
+
+<script src="libresources/external/framework7/5.4.0/js/framework7.bundle.min.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/0_package_service.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/app.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/info.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/children.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/group.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/resource.js"></script>
+<script type="text/javascript" src="libresources/tools/browseresource/service.js"></script>
+  
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+
+<script>
+loc_vue = new Vue({
+	el: document.getElementById("test"),
+	template : `
+		<div/>
+	`
+});
+
+</script>
+
+</html>

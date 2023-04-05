@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+
+        <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+		<script src="libresources/nosliw/core/nosliw.js"></script>
+</head>
+
+<body>
+	<div id="testDiv">
+	</div>
+
+</body>
+
+<script>
+
+$(document).on("nosliwActive", function(){
+	
+	var env = {
+		getExecuteProcessRequest : function(process, input, extraInputDataSet, handlers, request){
+			return nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime().getExecuteWrappedProcessRequest(process, input, extraInputDataSet, handlers, request);
+		}
+	};
+	
+	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;embeded", 
+//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;expression", 
+//	nosliw.runtime.getProcessRuntimeFactory().createProcessRuntime(env).executeProcessResourceRequest("main;loop", 
+	{
+		"fromVar": {
+			"dataTypeId": "test.integer;1.0.0",
+			"value": 1
+		},
+		"toVar": {
+			"dataTypeId": "test.integer;1.0.0",
+			"value": 7
+		}
+	}, 
+	undefined, 
+	{
+		success : function(request, output){
+			alert(JSON.stringify(output));
+		}
+	});
+});
+</script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+
+</html>

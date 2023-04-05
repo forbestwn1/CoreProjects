@@ -5,20 +5,15 @@
 	<projects>
 		<project>DataTypeManager</project>
 		<project>ExpressionParser</project>
-		<project>Common</project>
-		<project>Core</project>
-		<project>DataTypeTest</project>
 		<project>CriteriaParser</project>
 		<project>UIResource</project>
-		<project>ServiceTest</project>
+		<project>DataTypeTest</project>
+		<project>Common</project>
 		<project>MiniApp</project>
+		<project>Core</project>
+		<project>ServiceTest</project>
 	</projects>
 	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
