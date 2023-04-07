@@ -23,21 +23,11 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	public static String TYPE = "type";
 
 	@HAPAttribute
-	public static String ELEMENTTYPE = "elementType";
-
-	@HAPAttribute
 	public static String ELEMENT = "element";
 	
 	@HAPAttribute
 	public static String INFO = "info";
 
-	@HAPAttribute
-	public static String ISCOMPLEX = "isComplex";
-
-	private String m_elementType;
-	
-	private boolean m_isComplex;
-	
 	//extra info for container
 	private HAPEntityInfo m_extraInfo;
 	
@@ -45,23 +35,11 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	
 	protected Map<String, T> m_eleById;
 
-	public HAPContainerEntity(String elementType, boolean isComplex) {
-		this();
-		this.m_elementType = elementType;
-		this.m_isComplex = isComplex;
-		this.m_eleArray = new ArrayList<T>();
-	}
-	
 	public HAPContainerEntity() {
 		this.m_eleById = new LinkedHashMap<String, T>();
 		this.m_eleArray = new ArrayList<T>();
 	}
 
-	public boolean getIsComplex() {    return this.m_isComplex;   }
-
-	public String getElementType() {    return this.m_elementType;     }
-	public void setElementType(String eleType) {     this.m_elementType = eleType;      }
-	
 	public HAPEntityInfo getExtraInfo() {    return this.m_extraInfo;     }
 	public void setExtraInfo(HAPEntityInfo extraInfo) {    this.m_extraInfo = extraInfo;     }
 	
@@ -87,8 +65,6 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 	public abstract HAPContainerEntity cloneContainerEntity();
 	
 	protected void cloneToContainer(HAPContainerEntity<T> container) {
-		container.m_elementType = this.m_elementType;
-		container.m_isComplex = this.m_isComplex;
 		container.m_extraInfo = this.m_extraInfo.cloneEntityInfo();
 		for(T eleInfo : this.getAllElements()) {
 			container.addEntityElement((T)eleInfo.cloneContainerElement());
@@ -101,9 +77,6 @@ public abstract class HAPContainerEntity<T extends HAPElementContainer>  extends
 		
 		if(this.m_extraInfo!=null)  jsonMap.put(INFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TYPE, this.getContainerType());
-		jsonMap.put(ELEMENTTYPE, this.getElementType());
-		jsonMap.put(ISCOMPLEX, this.getIsComplex()+"");
-		typeJsonMap.put(ISCOMPLEX, Boolean.class);
 		
 		List<String> elesJsonArray = new ArrayList<String>();
 		for(T ele : this.getAllElements()) {

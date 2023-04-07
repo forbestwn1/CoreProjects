@@ -6,10 +6,6 @@ public class HAPContainerEntityExecutableSet<T extends HAPElementContainerExecut
 
 	public HAPContainerEntityExecutableSet() {	}
 
-	public HAPContainerEntityExecutableSet(String eleType, boolean isComplex) {
-		super(eleType, isComplex);
-	}
-
 	@Override
 	public String getContainerType() {   return HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET;  }
 

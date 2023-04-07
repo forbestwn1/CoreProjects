@@ -63,7 +63,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 				//container attribute
 				HAPAttributeEntityDefinitionContainer containerAttrDef = (HAPAttributeEntityDefinitionContainer)attr;
 				HAPContainerEntityDefinition containerEntityDef = containerAttrDef.getValue();
-				String eleType = containerEntityDef.getElementType();
+				String eleType = attr.getValueTypeInfo().getValueType();
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT.equals(eleType)) {
 					this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
 				}

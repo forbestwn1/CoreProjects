@@ -157,7 +157,7 @@ public class HAPUtilityParserEntity {
 		if(obj!=null) {
 			if(obj instanceof JSONObject) {
 				JSONObject jsonObj = (JSONObject)obj;
-				parseEntity(jsonObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
+				out = parseEntity(jsonObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
 			}
 		}
 		return out;

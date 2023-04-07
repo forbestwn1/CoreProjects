@@ -17,10 +17,6 @@ public abstract class HAPContainerEntityExecutable<T extends HAPElementContainer
 
 	public HAPContainerEntityExecutable() {	}
 
-	public HAPContainerEntityExecutable(String eleType, boolean isComplex) {
-		super(eleType, isComplex);
-	}
-
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

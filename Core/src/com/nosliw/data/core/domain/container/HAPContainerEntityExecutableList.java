@@ -6,10 +6,6 @@ public class HAPContainerEntityExecutableList<T extends HAPElementContainerExecu
 
 	public HAPContainerEntityExecutableList() {	}
 
-	public HAPContainerEntityExecutableList(String eleType, boolean isComplex) {
-		super(eleType, isComplex);
-	}
-
 	public void addEntityElement(T ele, int index) {
 		this.m_eleById.put(ele.getElementId(), ele);
 		this.m_eleArray.add(index, ele);

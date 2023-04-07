@@ -11,7 +11,7 @@ public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDoma
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	
-	public void setDataAssciation(HAPDefinitionDataAssociation dataAssciation) {    this.setNormalAttributeSimple(ATTR_DATAASSOCIATION, new HAPEmbededDefinition(dataAssciation));    }
+	public void setDataAssciation(HAPDefinitionDataAssociation dataAssciation) {    this.setNormalAttributeObject(ATTR_DATAASSOCIATION, new HAPEmbededDefinition(dataAssciation));    }
 	public HAPDefinitionDataAssociation getDataAssociation() {   return (HAPDefinitionDataAssociation)this.getNormalAttributeValue(ATTR_DATAASSOCIATION);     }
 
 	

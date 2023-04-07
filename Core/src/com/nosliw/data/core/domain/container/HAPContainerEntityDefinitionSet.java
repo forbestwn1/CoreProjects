@@ -6,10 +6,6 @@ public class HAPContainerEntityDefinitionSet<T extends HAPElementContainerDefini
 
 	public HAPContainerEntityDefinitionSet() {}
 
-	public HAPContainerEntityDefinitionSet(String eleType, boolean isComplex) {
-		super(eleType, isComplex);
-	}
-
 	@Override
 	public String getContainerType() {  return HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET; }
 

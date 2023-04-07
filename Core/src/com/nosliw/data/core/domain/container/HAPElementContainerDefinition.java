@@ -2,9 +2,9 @@ package com.nosliw.data.core.domain.container;
 
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
-public class HAPElementContainerDefinition<T extends HAPEmbededDefinition> extends HAPElementContainer<T>{
+public class HAPElementContainerDefinition extends HAPElementContainer<HAPEmbededDefinition>{
 
-	public HAPElementContainerDefinition(T embeded, String elementId) {
+	public HAPElementContainerDefinition(HAPEmbededDefinition embeded, String elementId) {
 		super(embeded, elementId);
 	}
 

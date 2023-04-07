@@ -135,7 +135,7 @@ var node_getEntityTreeNodeInterface = function(baseObject){
 
 
 
-var loc_createContainerTreeChild = function(){
+var loc_createContainerTreeChild = function(childName){
 	
 	var loc_attributes = node_newOrderedContainer();
 	

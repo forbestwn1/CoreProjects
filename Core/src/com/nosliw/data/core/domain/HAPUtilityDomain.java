@@ -85,7 +85,7 @@ public class HAPUtilityDomain {
 					if(attrObj instanceof HAPContainerEntityExecutable) {
 						//process container complex attribute
 						HAPContainerEntityExecutable containerAttrExe = (HAPContainerEntityExecutable)attrObj;
-						if(containerAttrExe.getIsComplex()) {
+						if(attrExe.getValueTypeInfo().getIsComplex()) {
 							List<HAPElementContainer> eleInfos = containerAttrExe.getAllElements();
 							for(HAPElementContainer eleInfo : eleInfos) {
 								HAPEmbededExecutable eleEntity = (HAPEmbededExecutable)eleInfo.getEmbededElementEntity();

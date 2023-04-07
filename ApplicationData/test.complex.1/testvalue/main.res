@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "normal.none_none_test.complex.script", 
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
@@ -23,14 +23,34 @@
 			}
 		},
 		{
+			"info": {
+				"name": "container1_list_test.complex.script",
+				"status": "disabled"
+			},
+			"element": [
+				{
+					"info": {
+						"name": "element1",
+						"description": "element1"
+					},
+					"entity":{
+						"scriptName": "complexscript_test_exist",
+						"parm" : {
+						}
+					}
+				}
+			]
+		},
+
+		{
 			"embeded": {
 				"info": {
 					"name" : "globalresource.reference_none_test.complex.script",
-					"status": "disabled"
+					"status": "disabled1"
 				},
 				"resourceId": "test.complex.script|*value"
 			},
-			"adapter1": {
+			"adapter": {
 				"entityType" : "dataAssociation",
 				"entity" : {
 					"mapping" : {

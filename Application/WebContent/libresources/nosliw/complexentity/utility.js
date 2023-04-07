@@ -13,13 +13,7 @@ var packageObj = library;
 var node_complexEntityUtility = {
 	
 	getAttributeType : function(attributeObj){
-		var embededValue = attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];
-		if(embededValue[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENTTYPE]!=undefined){
-			return node_CONSTANT.ATTRIBUTE_TYPE_CONTAINER;
-		}
-		else{
-			return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;
-		}
+		return attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_ENTITYTYPE];
 	},
 
 	getConfigureRequest : function(configure, handlers, request){

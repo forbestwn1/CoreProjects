@@ -16,24 +16,24 @@ public class HAPUtilityContainerEntity {
 		return buildExecutionContainer(defContainer.getContainerType(), defContainer.getElementType(), domainEntityDefMan);
 	}
 	
-	public static HAPContainerEntityExecutable buildExecutionContainer(String containerType, String elementType, HAPManagerDomainEntityDefinition domainEntityDefMan) {
+	public static HAPContainerEntityExecutable buildExecutionContainer(String containerType) {
 		HAPContainerEntityExecutable out = null;
 		if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_SET.equals(containerType)) {
-			out = new HAPContainerEntityExecutableSet(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityExecutableSet();
 		}
 		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_EXECUTABLE_LIST.equals(containerType)) {
-			out = new HAPContainerEntityExecutableList(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityExecutableList();
 		}
 		return out;
 	}
 
-	public static HAPContainerEntityDefinition buildDefinitionContainer(String containerType, String elementType, HAPManagerDomainEntityDefinition domainEntityDefMan) {
+	public static HAPContainerEntityDefinition buildDefinitionContainer(String containerType) {
 		HAPContainerEntityDefinition out = null;
 		if(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_SET.equals(containerType)) {
-			out = new HAPContainerEntityDefinitionSet(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityDefinitionSet();
 		}
 		else if(HAPConstantShared.ENTITYCONTAINER_TYPE_DEFINITION_LIST.equals(containerType)) {
-			out = new HAPContainerEntityDefinitionList(elementType, domainEntityDefMan.isComplexEntity(elementType));
+			out = new HAPContainerEntityDefinitionList();
 		}
 		return out;
 	}
