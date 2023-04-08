@@ -5,6 +5,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPIdRootElement extends HAPSerializableImp{
@@ -19,6 +21,12 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	
 	private String m_rootName;
 	
+	public HAPIdRootElement(String reference) {
+		String[] parts = HAPUtilityNamingConversion.splitTextByTwoPart(reference, HAPConstantShared.SEPERATOR_LEVEL1);
+		this.m_rootName = parts[0];
+		if(parts.length>1){   this.m_valueStructureId = 
+	}
+	
 	public HAPIdRootElement(String valueStructureId, String rootName) {
 		this.m_valueStructureId = valueStructureId;
 		this.m_rootName = rootName;
@@ -27,6 +35,11 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	public String getValueStructureId() {    return this.m_valueStructureId;     }
 	
 	public String getRootName() {    return this.m_rootName;   }
+
+	@Override
+	protected String buildLiterate(){  
+		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_rootName, this.m_valueStructureId}, HAPConstantShared.SEPERATOR_LEVEL1); 
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

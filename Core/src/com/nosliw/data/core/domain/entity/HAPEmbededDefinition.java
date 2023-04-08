@@ -4,7 +4,7 @@ public class HAPEmbededDefinition extends HAPEmbeded{
 
 	public HAPEmbededDefinition() {}
 	
-	public HAPEmbededDefinition(Object value, Object adapter) {
+	public HAPEmbededDefinition(Object value, HAPDefinitionAdapter adapter) {
 		super(value, adapter);
 	}
 
@@ -12,6 +12,8 @@ public class HAPEmbededDefinition extends HAPEmbeded{
 		super(value, null);
 	}
 
+	public HAPDefinitionAdapter getAdapterEntity() {    return (HAPDefinitionAdapter)this.getAdapter();     }
+	
 	@Override
 	public HAPEmbeded cloneEmbeded() {
 		HAPEmbededDefinition out = new HAPEmbededDefinition();

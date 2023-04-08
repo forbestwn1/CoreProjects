@@ -22,7 +22,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReferenceExternal;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPValueMapping;
+import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionValueMapping;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
@@ -179,7 +179,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//input
-				HAPValueMapping serviceParmMapping = new HAPValueMapping();
+				HAPDefinitionValueMapping serviceParmMapping = new HAPDefinitionValueMapping();
 				List<HAPStoryNode> serviceInputNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_INPUT, this.m_story);
 				if(!serviceInputNodes.isEmpty()) {
 					HAPStoryNode serviceInputNode = serviceInputNodes.get(0); 
@@ -215,7 +215,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			
 			{
 				//output
-				HAPValueMapping serviceParmMapping = new HAPValueMapping();
+				HAPDefinitionValueMapping serviceParmMapping = new HAPDefinitionValueMapping();
 				List<HAPStoryNode> serviceResultNodes = HAPUtilityStory.getChildNode(serviceNode, HAPConstantShared.SERVICE_CHILD_RESULT, this.m_story);
 				if(!serviceResultNodes.isEmpty()) {
 					HAPStoryNode serviceResultNode = serviceResultNodes.get(0);

@@ -8,8 +8,9 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -18,9 +19,10 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPRootStructure;
 
 @HAPEntityWithAttribute
-public class HAPExecutableMapping extends HAPExecutableImp{
+public class HAPExecutableValueMapping extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String OUTPUTMATCHERS = "outputMatchers";
@@ -29,7 +31,7 @@ public class HAPExecutableMapping extends HAPExecutableImp{
 	public static String CONVERTFUNCTION = "convertFunction";
 	
 	//data association output context
-	private HAPValueMapping m_mapping;
+	private Map<HAPIdRootElement, HAPRootStructure> m_items;
 	
 	//path mapping for relative node (output path in context - input path in context) during runtime
 	private Map<String, String> m_relativePathMapping;
@@ -39,13 +41,13 @@ public class HAPExecutableMapping extends HAPExecutableImp{
 	//match from data association output to target context variable
 	private Map<String, HAPMatchers> m_outputMatchers;
 
-	public HAPExecutableMapping() {
+	public HAPExecutableValueMapping() {
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_relativePathMapping = new LinkedHashMap<String, String>();
 	}
 
-	public void setMapping(HAPValueMapping mapping) {   this.m_mapping = mapping.cloneValueMapping();   }
-	public HAPValueMapping getMapping() {   return this.m_mapping;   }
+	public void setMapping(HAPDefinitionValueMapping mapping) {   this.m_mapping = mapping.cloneValueMapping();   }
+	public HAPDefinitionValueMapping getMapping() {   return this.m_mapping;   }
 	
 	public void setConstantAssignments(Map<String, Object> constantAssignment) {     this.m_constantAssignment = constantAssignment;      }
 	public Map<String, Object> getConstantAssignments(){    return this.m_constantAssignment;   }

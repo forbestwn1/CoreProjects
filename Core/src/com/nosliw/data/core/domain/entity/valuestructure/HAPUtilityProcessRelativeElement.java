@@ -16,6 +16,7 @@ import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPValueMapping;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -99,7 +100,16 @@ public class HAPUtilityProcessRelativeElement {
 			rootStructure.setDefinition(rootElement);
 		}
 	}
-	
+
+	public static void processRelativeInValueMapping(HAPValueMapping valueMapping, HAPCandidatesValueContext parentValueContexts, HAPDomainValueStructure valueStructureDomain, HAPConfigureProcessorRelative processRelativeConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
+		if(processRelativeConfigure==null)  processRelativeConfigure = new HAPConfigureProcessorRelative(); 
+		
+		for(HAPRootStructure rootStructure : valueMapping.getItems().values()) {
+			HAPElementStructure rootElement = processRelativeInStructureElement(new HAPInfoElement(rootStructure.getDefinition(), new HAPComplexPath(rootStructure.getName())), parentValueContexts, valueStructureDomain, processRelativeConfigure, dependency, errors, runtimeEnv);
+			rootStructure.setDefinition(rootElement);
+		}
+	}
+
 	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPCandidatesValueContext parentValueContexts, HAPDomainValueStructure valueStructureDomain, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure defStructureElement = structureEleInfo.getElement();
 		HAPElementStructure out = defStructureElement;

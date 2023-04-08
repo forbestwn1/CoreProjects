@@ -79,7 +79,8 @@ public class HAPIdEntityInDomain extends HAPSerializableImp{
 	
 	@Override
 	protected String buildLiterate(){  
-		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_entityId, this.m_entityType, this.m_domainId}, HAPConstantShared.SEPERATOR_LEVEL1); }
+		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_entityId, this.m_entityType, this.m_domainId}, HAPConstantShared.SEPERATOR_LEVEL1); 
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

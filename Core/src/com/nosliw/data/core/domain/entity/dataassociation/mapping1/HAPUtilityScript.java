@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.dataassociation.mapping;
+package com.nosliw.data.core.domain.entity.dataassociation.mapping1;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class HAPUtilityScript {
 
 	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
-		Map<String, HAPExecutableValueMapping> associations = dataAssociation.getMappings();
+		Map<String, HAPExecutableMapping> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			String associationScript = buildAssociationConvertFunction(associations.get(targetName)).getScript();
 			assocationScripts.append("output."+targetName+"="+associationScript+"(input, utilFunction);\n");
@@ -39,10 +39,10 @@ public class HAPUtilityScript {
 		return new HAPJsonTypeScript(script);
 	}
 	
-	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableValueMapping association) {
+	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableMapping association) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		//build init output object for mapped root
-		HAPDefinitionValueMapping valueMappinig = association.getMapping();
+		HAPValueMapping valueMappinig = association.getMapping();
 		JSONObject output = buildSkeletonJsonObject(valueMappinig);
 		templateParms.put("outputInit", HAPUtilityJson.formatJson(output.toString()));
 		
@@ -82,7 +82,7 @@ public class HAPUtilityScript {
 	}
 
 	//build skeleton, it is used for data mapping operation
-	public static JSONObject buildSkeletonJsonObject(HAPDefinitionValueMapping valueMapping) {
+	public static JSONObject buildSkeletonJsonObject(HAPValueMapping valueMapping) {
 		JSONObject output = new JSONObject();
 		Map<String, HAPRootStructure> elements = valueMapping.getItems();
 		for(String targetId : elements.keySet()) {

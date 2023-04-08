@@ -25,7 +25,7 @@ public class HAPUtilityScript2 {
 
 	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
-		Map<String, HAPExecutableMapping> associations = dataAssociation.getMappings();
+		Map<String, HAPExecutableValueMapping> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {
 			String associationScript = buildAssociationConvertFunction(associations.get(targetName)).getScript();
 			assocationScripts.append("output."+targetName+"="+associationScript+"(input, utilFunction);\n");
@@ -37,7 +37,7 @@ public class HAPUtilityScript2 {
 		return new HAPJsonTypeScript(script);
 	}
 	
-	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableMapping association) {
+	public static HAPJsonTypeScript buildAssociationConvertFunction(HAPExecutableValueMapping association) {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("isFlatOutput", association.isFlatOutput()+"");
 		templateParms.put("isFlatInput", association.isFlatInput()+"");
@@ -46,7 +46,7 @@ public class HAPUtilityScript2 {
 		
 		//build init output object for mapped root
 		HAPValueStructureDefinitionFlat context = new HAPValueStructureDefinitionFlat();
-		HAPValueMapping daCotnext = association.getMapping();
+		HAPDefinitionValueMapping daCotnext = association.getMapping();
 		for(String eleName : daCotnext.getRootNames()) {
 			context.addRootToCategary(eleName, daCotnext.getRoot(eleName));
 		}

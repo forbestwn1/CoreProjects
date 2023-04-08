@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.dataassociation.mapping;
+package com.nosliw.data.core.domain.entity.dataassociation.mapping1;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,34 +18,34 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	@HAPAttribute
 	public static String TARGET = "target";
 
-	private Map<String, HAPDefinitionValueMapping> m_mappings;
+	private Map<String, HAPValueMapping> m_mappings;
 	
 	public HAPDefinitionDataAssociationMapping() {
-		this.m_mappings = new LinkedHashMap<String, HAPDefinitionValueMapping>();
+		this.m_mappings = new LinkedHashMap<String, HAPValueMapping>();
 	}
  
 	@Override
 	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;  }
 
-	public void addAssociation(String targetName, HAPDefinitionValueMapping mapping) {	
+	public void addAssociation(String targetName, HAPValueMapping mapping) {	
 		if(HAPUtilityBasic.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_mappings.put(targetName, mapping);
 	}
 	
-	public Map<String, HAPDefinitionValueMapping> getMappings(){   return this.m_mappings;  }
+	public Map<String, HAPValueMapping> getMappings(){   return this.m_mappings;  }
 	
-	public HAPDefinitionValueMapping getMapping(String targetName, boolean createIfNotExist) {
-		HAPDefinitionValueMapping out = null;
+	public HAPValueMapping getMapping(String targetName, boolean createIfNotExist) {
+		HAPValueMapping out = null;
 		if(HAPUtilityBasic.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		out = this.m_mappings.get(targetName);
 		if(out==null&&createIfNotExist) {
-			out = new HAPDefinitionValueMapping();
+			out = new HAPValueMapping();
 			this.addAssociation(targetName, out);
 		}
 		return out;
 	}
-	public HAPDefinitionValueMapping getMapping(String targetName) {   return this.getMapping(targetName, false);    }
-	public HAPDefinitionValueMapping getMapping() {   return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
+	public HAPValueMapping getMapping(String targetName) {   return this.getMapping(targetName, false);    }
+	public HAPValueMapping getMapping() {   return this.m_mappings.get(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT);    }
  
 	@Override
 	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {
@@ -71,7 +71,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 			JSONObject daJsonObj = (JSONObject)json;
 			this.buildEntityInfoByJson(daJsonObj);
 			
-			JSONObject elesJson = daJsonObj.optJSONObject(HAPDefinitionValueMapping.MAPPING);
+			JSONObject elesJson = daJsonObj.optJSONObject(HAPValueMapping.MAPPING);
 			if(elesJson!=null) {
 				//seperate by target name
 				Map<String, JSONObject> jsonMapByTarget = new LinkedHashMap<String, JSONObject>();
@@ -87,9 +87,9 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 				}
 				
 				for(String targetName : jsonMapByTarget.keySet()) {
-					HAPDefinitionValueMapping mapping = new HAPDefinitionValueMapping();
+					HAPValueMapping mapping = new HAPValueMapping();
 					JSONObject targetAssociationJson = new JSONObject();
-					targetAssociationJson.put(HAPDefinitionValueMapping.MAPPING, jsonMapByTarget.get(targetName));
+					targetAssociationJson.put(HAPValueMapping.MAPPING, jsonMapByTarget.get(targetName));
 					mapping.buildObject(targetAssociationJson, HAPSerializationFormat.JSON);
 					this.addAssociation(targetName, mapping);
 				}
@@ -99,7 +99,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 				if(associationsJson!=null) {
 					for(Object key : associationsJson.keySet()) {
 						String targetName = (String)key;
-						HAPDefinitionValueMapping association = new HAPDefinitionValueMapping();
+						HAPValueMapping association = new HAPValueMapping();
 						association.buildObject(associationsJson.getJSONObject(targetName), HAPSerializationFormat.JSON);
 						this.addAssociation(targetName, association);
 					}

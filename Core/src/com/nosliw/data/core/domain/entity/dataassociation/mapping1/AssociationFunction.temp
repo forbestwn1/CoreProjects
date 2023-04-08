@@ -1,0 +1,17 @@
+function(input, utilFunction){
+
+	var output = {};
+
+	//build skeleton first
+	_.each(||outputInit||, function(value, name){
+		output[name] = value;
+	});
+	
+	//asign mapped element, leaf data
+	||outputDyanimicValueBuild||
+
+	//assign constant data
+	||outputConstantValueBuild||
+	
+	return output;
+}

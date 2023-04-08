@@ -13,7 +13,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPValueMapping;
+import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionValueMapping;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -63,7 +63,7 @@ public class HAPUtilityInteractive {
 		HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
 			HAPReferenceElementInValueContext reference = parm.getReferenceInfo();
-			HAPValueMapping mapping = inputMapping.getMapping(reference.getParentValueContextName(), true);
+			HAPDefinitionValueMapping mapping = inputMapping.getMapping(reference.getParentValueContextName(), true);
 			mapping.addMapping(reference.getElementPath(), new HAPElementStructureLeafRelative(parm.getName()));
 		}
 		out.setInDataAssociation(inputMapping);
@@ -79,7 +79,7 @@ public class HAPUtilityInteractive {
 	public static HAPDefinitionDataAssociationMapping buildDataAssociationForResult(HAPResultInteractive result) {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
 		for(HAPOutputInteractive output : result.getOutput()) {
-			HAPValueMapping mapping = out.getMapping(null, true);
+			HAPDefinitionValueMapping mapping = out.getMapping(null, true);
 			HAPReferenceElementInValueContext reference = output.getReferenceInfo();
 			HAPData constantData = output.getConstantData();
 			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getElementPath()));

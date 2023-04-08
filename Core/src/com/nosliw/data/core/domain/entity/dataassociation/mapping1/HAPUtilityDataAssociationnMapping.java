@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.dataassociation.mapping;
+package com.nosliw.data.core.domain.entity.dataassociation.mapping1;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,40 +7,25 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorRelative;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
 public class HAPUtilityDataAssociationnMapping {
 
-	public static void processRelativeInValueMapping(HAPDefinitionValueMapping valueMapping, HAPCandidatesValueContext parentValueContexts, HAPDomainValueStructure valueStructureDomain, HAPConfigureProcessorRelative processRelativeConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
-		if(processRelativeConfigure==null)  processRelativeConfigure = new HAPConfigureProcessorRelative(); 
-		
-		for(HAPRootStructure rootStructure : valueMapping.getItems().values()) {
-			HAPElementStructure rootElement = processRelativeInStructureElement(new HAPInfoElement(rootStructure.getDefinition(), new HAPComplexPath(rootStructure.getName())), parentValueContexts, valueStructureDomain, processRelativeConfigure, dependency, errors, runtimeEnv);
-			rootStructure.setDefinition(rootElement);
-		}
-	}
-
-
 	public static HAPDefinitionDataAssociationMapping reverseMapping(HAPDefinitionDataAssociationMapping mappinigDataAssociation) {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
-		Map<String, HAPDefinitionValueMapping> mappings = mappinigDataAssociation.getMappings();
+		Map<String, HAPValueMapping> mappings = mappinigDataAssociation.getMappings();
 		for(String targetName : mappings.keySet()) {
-			HAPDefinitionValueMapping mapping = mappings.get(targetName);
+			HAPValueMapping mapping = mappings.get(targetName);
 			Map<String, HAPRootStructure> items = mapping.getItems();
 			for(String rootName : items.keySet()) {
 				HAPUtilityStructure.traverseElement(items.get(rootName), rootName, new HAPProcessorContextDefinitionElement() {
@@ -53,7 +38,7 @@ public class HAPUtilityDataAssociationnMapping {
 							
 							HAPElementStructureLeafRelative reverseEle = new HAPElementStructureLeafRelative(eleInfo.getElementPath().getFullName());
 							reverseEle.setParentValueContextName(targetName);
-							HAPDefinitionValueMapping reverseValueMapping = out.getMapping(parent, true);
+							HAPValueMapping reverseValueMapping = out.getMapping(parent, true);
 							reverseValueMapping.addMapping(eleInfo.getElementPath().getFullName(), reverseEle);
 						}
 						return null;
@@ -71,9 +56,9 @@ public class HAPUtilityDataAssociationnMapping {
 	
 	
 	//automatic enhance mapping so that all the variables are mapped as target
-	public static HAPDefinitionValueMapping expandMappingByTargetVariable(HAPDefinitionValueMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
+	public static HAPValueMapping expandMappingByTargetVariable(HAPValueMapping mapping, HAPVariableInfoInStructure targetVarsContainer) {
 		
-		HAPDefinitionValueMapping out = new HAPDefinitionValueMapping();
+		HAPValueMapping out = new HAPValueMapping();
 		
 		Map<String, HAPRootStructure> outMappingRoots = new LinkedHashMap<String, HAPRootStructure>();   //all roots for output mapping
 		for(HAPInfoVariable varInfo : targetVarsContainer.getAllVariables()) {

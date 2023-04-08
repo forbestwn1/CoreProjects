@@ -5,11 +5,16 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionAdapter;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
@@ -52,6 +57,16 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 			//normal attribute
 			HAPAttributeEntityExecutableNormal attrNormalExe = (HAPAttributeEntityExecutableNormal)attrExe;
 			processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity((HAPIdEntityInDomain)attrNormalExe.getValue().getValue(), processContext);
+			
+			
+			HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+			HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
+			
+			HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+			HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
+			HAPDefinitionAdapter adapter = ((HAPEmbededDefinition)attrDef.getValue()).getAdapterEntity();
+
+			processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, (HAPIdEntityInDomain)attrNormalExe.getValue().getValue(), processContext);
 		}
 		else {
 			//container attribute
