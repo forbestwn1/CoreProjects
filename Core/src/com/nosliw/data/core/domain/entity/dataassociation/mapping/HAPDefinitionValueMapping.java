@@ -14,6 +14,7 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPReferenceValueStructure;
 
 public class HAPDefinitionValueMapping extends HAPSerializableImp{
@@ -21,10 +22,10 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 	
-	private Map<HAPReferenceValueStructure, HAPRootStructure> m_items;
+	private Map<HAPReferenceElementInValueContext, HAPRootStructure> m_items;
 
 	public HAPDefinitionValueMapping() {
-		this.m_items = new LinkedHashMap<HAPReferenceValueStructure, HAPRootStructure>();
+		this.m_items = new LinkedHashMap<HAPReferenceElementInValueContext, HAPRootStructure>();
 	}
 	
 	public void addMapping(String path, HAPElementStructure structureEle) {
@@ -38,11 +39,11 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
 	}
 	
-	public void addItem(String targetName, HAPRootStructure item) {
-		this.m_items.put(targetName, item);
+	public void addItem(HAPReferenceValueStructure targetRef, HAPRootStructure item) {
+		this.m_items.put(targetRef, item);
 	}
 	
-	public Map<String, HAPRootStructure> getItems(){   return this.m_items;    }
+	public Map<HAPReferenceElementInValueContext, HAPRootStructure> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 	

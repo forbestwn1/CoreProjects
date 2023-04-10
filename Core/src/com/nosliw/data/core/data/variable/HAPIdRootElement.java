@@ -24,7 +24,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	public HAPIdRootElement(String reference) {
 		String[] parts = HAPUtilityNamingConversion.splitTextByTwoPart(reference, HAPConstantShared.SEPERATOR_LEVEL1);
 		this.m_rootName = parts[0];
-		if(parts.length>1){   this.m_valueStructureId = 
+		if(parts.length>1)   this.m_valueStructureId = parts[1];
 	}
 	
 	public HAPIdRootElement(String valueStructureId, String rootName) {

@@ -8,6 +8,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
@@ -29,13 +30,28 @@ public class HAPUtilityStructureElementReference {
 
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPCandidatesValueContext valueContexts, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
 		//find all candidate value structure 
-		List<HAPWrapperExecutableValueStructure> targetStructures = discoverCandidateValueStructure(valueContexts.getValueContext(reference.getParentValueContextName()), reference.getValueStructureReference(), resolveConfigure, valueStructureDomain);
+		List<HAPWrapperExecutableValueStructure> targetStructures = discoverCandidateValueStructure(reference.getValueStructureReference(), valueContexts.getValueContext(reference.getParentValueContextName()), resolveConfigure==null?null:resolveConfigure.getGroupTypes(), valueStructureDomain);
 		
 		//resolve targeted structure element
 		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), targetStructures, resolveConfigure, valueStructureDomain);
 		if(out!=null)  out.eleReference = reference;
 		
 		return out;
+	}
+
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceElementInValueContext rootEleCriteria, HAPExecutableEntityValueContext valueContext, Set<String> groupTypes, HAPDomainValueStructure valueStructureDomain){
+		List<HAPWrapperExecutableValueStructure> candidates = discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference(), valueContext, groupTypes, valueStructureDomain);
+		if(candidates==null||candidates.size()==0)  return null;
+		for(HAPWrapperExecutableValueStructure structureWrapper : candidates) {
+			String valueStructureExeId = structureWrapper.getValueStructureRuntimeId();
+			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureExeId);
+			HAPComplexPath complexPath = new HAPComplexPath(rootEleCriteria.getElementPath());
+			String rootName = complexPath.getRoot();
+			if(valueStructure.getRootByName(rootName)!=null) {
+				return new HAPIdRootElement(valueStructureExeId, rootName);
+			}
+		}
+		return null;
 	}
 	
 	//find best resolved element from structure 
@@ -94,19 +110,28 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	//find all value structure which meet criteria from value structure complex
-	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPExecutableEntityValueContext valueStructureComplex, HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPExecutableEntityValueContext valueContext, Set<String> groupTypes, HAPDomainValueStructure valueStructureDomain){
 		List<HAPWrapperExecutableValueStructure> out = new ArrayList<HAPWrapperExecutableValueStructure>();
 		
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(valueStructureComplex);
+		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(valueContext);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			HAPWrapperExecutableValueStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
 
 			HAPInfoValueStructure valueStructureDefInfo = valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
 
+			//check runtime id
+			if(isValid) {
+				String valueStructueDefId = valueStructureCriteria==null? null : valueStructureCriteria.getId();
+				if(valueStructueDefId!=null) {
+					if(!valueStructueDefId.equals(wraper.getValueStructureRuntimeId())){
+						isValid = false;
+					}
+				}
+			}
+			
 			//check group type
 			if(isValid) {
-				Set<String> groupTypes = resolveConfigure==null?null:resolveConfigure.valueStructureGroupTypes;
 				if(groupTypes!=null&&!groupTypes.isEmpty()) {
 					if(!groupTypes.contains(wraper.getGroupType())) {
 						isValid = false;
@@ -114,16 +139,6 @@ public class HAPUtilityStructureElementReference {
 				}
 			}
 
-			//check definition id
-			if(isValid) {
-				String valueStructueDefId = valueStructureCriteria==null? null : valueStructureCriteria.getDefinitionId();
-				if(valueStructueDefId!=null) {
-					if(!valueStructueDefId.equals(valueStructureDomain.getValueStructureDefinitionIdByRuntimeId(wraper.getValueStructureRuntimeId()))){
-						isValid = false;
-					}
-				}
-			}
-			
 			//check name
 			if(isValid) {
 				String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
