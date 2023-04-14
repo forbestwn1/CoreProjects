@@ -56,9 +56,10 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 		if(attrExe.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)) {
 			//normal attribute
 			HAPAttributeEntityExecutableNormal attrNormalExe = (HAPAttributeEntityExecutableNormal)attrExe;
+			//process attribute entity
 			processContext.getRuntimeEnvironment().getComplexEntityManager().processComplexEntity((HAPIdEntityInDomain)attrNormalExe.getValue().getValue(), processContext);
 			
-			
+			//process attribute adapter
 			HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 			HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 			
@@ -66,7 +67,7 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 			HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
 			HAPDefinitionAdapter adapter = ((HAPEmbededDefinition)attrDef.getValue()).getAdapterEntity();
 
-			processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, (HAPIdEntityInDomain)attrNormalExe.getValue().getValue(), processContext);
+			processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, attrNormalExe.getValue().getValue(), processContext);
 		}
 		else {
 			//container attribute

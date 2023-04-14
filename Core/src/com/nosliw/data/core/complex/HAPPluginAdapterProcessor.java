@@ -1,12 +1,12 @@
 package com.nosliw.data.core.complex;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.runtime.HAPExecutable;
 
 public interface HAPPluginAdapterProcessor {
 
 	String getAdapterType();
 
-	Object process(Object adapter, HAPExecutableImp parentEntityExecutable, HAPContextProcessor parentContext, HAPExecutableImp entityExecutable, HAPContextProcessor childContext);
+	Object process(Object adapter, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutable parentEntityExecutable, HAPContextProcessor parentContext);
 	
 }

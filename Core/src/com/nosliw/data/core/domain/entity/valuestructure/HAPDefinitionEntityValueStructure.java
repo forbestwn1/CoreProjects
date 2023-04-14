@@ -13,7 +13,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.structure.HAPRootStructure;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple{

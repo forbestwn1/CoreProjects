@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
@@ -46,5 +47,17 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
 		jsonMap.put(ROOTNAME, this.m_rootName);
+	}
+	
+	@Override
+	public int hashCode() {		return this.buildLiterate().hashCode();	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPIdRootElement) {
+			HAPIdRootElement rootEleId = (HAPIdRootElement)obj;
+			return HAPUtilityBasic.isEquals(this.m_rootName, rootEleId.m_rootName) && HAPUtilityBasic.isEquals(this.m_valueStructureId, rootEleId.m_valueStructureId);
+		}
+		return false;
 	}
 }

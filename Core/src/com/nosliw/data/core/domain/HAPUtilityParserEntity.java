@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionAdapter;
 import com.nosliw.data.core.domain.entity.HAPEmbeded;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
@@ -58,7 +59,7 @@ public class HAPUtilityParserEntity {
 				JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
 				HAPIdEntityInDomain adpaterEntityId = parseAdapter(adapterJsonObj, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
 				
-				out = new HAPEmbededDefinition(entityId, adpaterEntityId);
+				out = new HAPEmbededDefinition(entityId, new HAPDefinitionAdapter(adpaterEntityId.getEntityType(), adpaterEntityId));
 			}
 		}
 		return out;

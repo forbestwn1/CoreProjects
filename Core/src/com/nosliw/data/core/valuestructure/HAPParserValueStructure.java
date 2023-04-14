@@ -9,8 +9,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPParserStructure;
-import com.nosliw.data.core.structure.HAPRootStructure;
 
 public class HAPParserValueStructure {
 

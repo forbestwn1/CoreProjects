@@ -10,22 +10,21 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPParserStructure;
-import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
-import com.nosliw.data.core.structure.reference.HAPReferenceValueStructure;
 
 public class HAPDefinitionValueMapping extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 	
-	private Map<HAPReferenceElementInValueContext, HAPRootStructure> m_items;
+	private Map<HAPReferenceElementInValueContext, HAPRootValueMapping> m_items;
 
 	public HAPDefinitionValueMapping() {
-		this.m_items = new LinkedHashMap<HAPReferenceElementInValueContext, HAPRootStructure>();
+		this.m_items = new LinkedHashMap<HAPReferenceElementInValueContext, HAPRootValueMapping>();
 	}
 	
 	public void addMapping(String path, HAPElementStructure structureEle) {
@@ -39,17 +38,17 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
 	}
 	
-	public void addItem(HAPReferenceValueStructure targetRef, HAPRootStructure item) {
+	public void addItem(HAPReferenceElementInValueContext targetRef, HAPRootValueMapping item) {
 		this.m_items.put(targetRef, item);
 	}
 	
-	public Map<HAPReferenceElementInValueContext, HAPRootStructure> getItems(){   return this.m_items;    }
+	public Map<HAPReferenceElementInValueContext, HAPRootValueMapping> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 	
 	public HAPDefinitionValueMapping cloneValueMapping() {
 		HAPDefinitionValueMapping out = new HAPDefinitionValueMapping();
-		for(String targetName : this.m_items.keySet()) {
+		for(HAPReferenceElementInValueContext targetName : this.m_items.keySet()) {
 			out.addItem(targetName, this.m_items.get(targetName).cloneRoot());
 		}
 		return out;

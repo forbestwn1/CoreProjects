@@ -17,10 +17,10 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoValueStructureSorting;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
-import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;

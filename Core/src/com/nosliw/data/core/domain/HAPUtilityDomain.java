@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializable;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationInfo;
@@ -13,7 +15,6 @@ import com.nosliw.data.core.complex.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
-import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
@@ -25,6 +26,26 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static <T> T getEntity(Object entityObj, HAPContextProcessor processContext, Class<T> entityClass) {
+		Object out = null;
+		if(entityClass.isInstance(entityObj))  out = entityObj;    
+		else if(entityObj instanceof HAPIdEntityInDomain) {
+			HAPIdEntityInDomain entityId = (HAPIdEntityInDomain)entityObj;
+			out = processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(entityId).getEntity();
+		}
+		else if(entityObj instanceof JSONObject) {
+			if(HAPSerializable.class.isAssignableFrom(entityClass)) {
+				try {
+					HAPSerializable serializableEntity = (HAPSerializable)entityClass.newInstance();
+					out = serializableEntity.buildObject(entityObj, HAPSerializationFormat.JSON);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return (T)out;
+	}
+	
 	public static void buildExpandedJsonMap(Object value, String valueName, Map<String, String> jsonMap, HAPDomainEntity entityDomain) {
 		if(value!=null) {
 			if(value instanceof HAPExpandable)   jsonMap.put(valueName, ((HAPExpandable) value).toExpandedJsonString(entityDomain));

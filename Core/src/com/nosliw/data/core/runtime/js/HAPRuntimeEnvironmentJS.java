@@ -287,11 +287,11 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociation(this));
 
 		//complex entity
-		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplex1());
-		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplexScript());
-		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
-		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorTestDecoration1());
-		this.getComplexEntityManager().registerProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplex1());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplexScript());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestDecoration1());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
 		
 		//runtime
 		this.m_runtime = runtime;

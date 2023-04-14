@@ -9,8 +9,8 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -71,6 +71,10 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return this.getEntityInfoExecutable(entityId);     }
 	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPIdEntityInDomain entityId) {	return this.m_executableEntity.get(entityId);	}
 
+	public HAPIdComplexEntityInGlobal getExternalEntityGlobalId(HAPIdEntityInDomain entityId) {
+		return this.m_externalComplexEntityDpendency.get(this.getEntityInfoExecutable(entityId).getExternalComplexEntityId());
+	}
+	
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();
 		for(String id : this.m_externalComplexEntityDpendency.keySet()) {

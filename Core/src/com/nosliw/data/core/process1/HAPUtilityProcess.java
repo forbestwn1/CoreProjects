@@ -19,6 +19,7 @@ import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssoc
 import com.nosliw.data.core.domain.entity.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.domain.entity.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.domain.entity.dataassociation.none.HAPDefinitionDataAssociationNone;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.process1.resource.HAPIdProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -28,7 +29,6 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
-import com.nosliw.data.core.structure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
