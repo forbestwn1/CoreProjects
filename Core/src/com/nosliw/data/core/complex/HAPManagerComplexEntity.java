@@ -112,7 +112,7 @@ public class HAPManagerComplexEntity {
 			else {
 				HAPIdComplexEntityInGlobal globalEntityId = processContext.getCurrentExecutableDomain().getExternalEntityGlobalId(childEntityId);
 				HAPExecutableBundle childBundle = this.getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceIdSimple());
-				childExe = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain());
+				childExe = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getEntity();
 				childProcessorContext = new HAPContextProcessor(childBundle, processContext.getRuntimeEnvironment());
 			}
 		}

@@ -32,7 +32,7 @@ public class HAPUtilityParserEntity {
 				JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
 				HAPIdEntityInDomain adpaterEntityId = parseAdapter(adapterJsonObj, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
 
-				out = new HAPEmbededDefinition(entityId, adpaterEntityId); 
+				out = new HAPEmbededDefinition(entityId, adpaterEntityId==null?null:new HAPDefinitionAdapter(adpaterEntityId.getEntityType(), adpaterEntityId)); 
 			}
 		}
 		return out;

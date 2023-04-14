@@ -52,7 +52,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
 		HAPElementStructureLeafRelative that = (HAPElementStructureLeafRelative)out;
-		that.m_reference = this.m_reference.cloneReferencePathInfo(); 
+		that.m_reference = this.m_reference.cloneReferenceInfo(); 
 		if(this.m_solidNodeRef!=null)   that.m_solidNodeRef = this.m_solidNodeRef.cloneContextNodeReference();
 	}
 	

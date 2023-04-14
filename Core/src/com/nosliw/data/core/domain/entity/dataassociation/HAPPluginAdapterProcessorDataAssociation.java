@@ -13,22 +13,15 @@ import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPExecutableD
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPExecutableValueMapping;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.domain.entity.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapterProcessor{
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
-	public HAPPluginAdapterProcessorDataAssociation(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_runtimeEnv = runtimeEnv;
-	}
-	
 	@Override
 	public String getAdapterType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION;  }
 
 	@Override
-	public Object process(Object adpaterObj, HAPExecutableImp childEntityExecutable, HAPContextProcessor childContext, HAPExecutableImp parentEntityExecutable, HAPContextProcessor parentContext) {
+	public Object process(Object adpaterObj, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutable parentEntityExecutable, HAPContextProcessor parentContext) {
 		HAPExecutableDataAssociation out = null;
 		
 		HAPDefinitionDataAssociation dataAssociation = null;
@@ -55,7 +48,7 @@ public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapte
 						valueMappings.get(targetName), 
 						childComplexEntityExe.getValueContext(), 
 						childContext.getCurrentValueStructureDomain(), 
-						this.m_runtimeEnv);
+						parentContext.getRuntimeEnvironment());
 				
 				daMappingExe.addMapping(targetName, valueMappingExe);
 			}

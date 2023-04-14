@@ -84,7 +84,7 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 		jsonMap.put(PARENTVALUECONTEXT, this.getParentValueContextName());
 	}
 	
-	public HAPReferenceElementInValueContext cloneReferencePathInfo() {
+	public HAPReferenceElementInValueContext cloneReferenceInfo() {
 		HAPReferenceElementInValueContext out = new HAPReferenceElementInValueContext();
 		out.m_parentValueContext = this.getParentValueContextName();
 		out.m_elementPath = this.getElementPath();

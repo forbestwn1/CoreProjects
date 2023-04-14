@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.dataassociation.mapping;
 
-import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -12,7 +13,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
@@ -21,10 +21,10 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 	
-	private Map<HAPReferenceElementInValueContext, HAPRootValueMapping> m_items;
+	private List<HAPItemValueMapping<HAPReferenceElementInValueContext>> m_items;
 
 	public HAPDefinitionValueMapping() {
-		this.m_items = new LinkedHashMap<HAPReferenceElementInValueContext, HAPRootValueMapping>();
+		this.m_items = new LinkedList<HAPItemValueMapping<HAPReferenceElementInValueContext>>();
 	}
 	
 	public void addMapping(String path, HAPElementStructure structureEle) {
@@ -38,18 +38,16 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
 	}
 	
-	public void addItem(HAPReferenceElementInValueContext targetRef, HAPRootValueMapping item) {
-		this.m_items.put(targetRef, item);
-	}
+	public void addItem(HAPItemValueMapping<HAPReferenceElementInValueContext> item) { 	this.m_items.add(item); 	}
 	
-	public Map<HAPReferenceElementInValueContext, HAPRootValueMapping> getItems(){   return this.m_items;    }
+	public List<HAPItemValueMapping<HAPReferenceElementInValueContext>> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 	
 	public HAPDefinitionValueMapping cloneValueMapping() {
 		HAPDefinitionValueMapping out = new HAPDefinitionValueMapping();
-		for(HAPReferenceElementInValueContext targetName : this.m_items.keySet()) {
-			out.addItem(targetName, this.m_items.get(targetName).cloneRoot());
+		for(HAPItemValueMapping item : this.m_items) {
+			out.addItem(item.cloneValueMappingItem());
 		}
 		return out;
 	}
@@ -59,13 +57,11 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 		try{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
-			JSONObject jsonMapping = jsonObj.optJSONObject(MAPPING);
-			if(jsonMapping==null)  jsonMapping = jsonObj;
-			for(Object key : jsonMapping.keySet()) {
-				String name = (String)key;
-				HAPRootStructure root = HAPParserStructure.parseStructureRootFromJson(jsonMapping.getJSONObject(name));
-				this.addItem(name, root);
-			}
+			Object mappingObj = jsonObj.opt(MAPPING);
+			if(mappingObj==null)   mappingObj = jsonObj;
+			
+			List<HAPItemValueMapping<HAPReferenceElementInValueContext>> items = HAPParserValueMapping.parses(mappingObj);
+			this.m_items.addAll(items);
 			return true;  
 		}
 		catch(Exception e){

@@ -53,15 +53,16 @@ public class HAPProcessorDataAssociationMapping {
 		
 		HAPExecutableValueMapping out = new HAPExecutableValueMapping();
 		
-		Map<HAPReferenceElementInValueContext, HAPRootValueMapping> mappingItems = valueMapping.getItems();
-		for(HAPReferenceElementInValueContext targetRef : mappingItems.keySet()) {
+		List<HAPItemValueMapping<HAPReferenceElementInValueContext>> mappingItems = valueMapping.getItems();
+		for(HAPItemValueMapping<HAPReferenceElementInValueContext> mappingItem : mappingItems) {
 			
+			HAPReferenceElementInValueContext targetRef = (HAPReferenceElementInValueContext)mappingItem.getTarget();
 			//process out reference (root name)
 			HAPIdRootElement rootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueContext, null, outValueStructureDomain);
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processRelativeInStructureElement(mappingItems.get(targetRef).getDefinition(), new HAPCandidatesValueContext(null, inValueContext), inValueStructureDomain, null, null, null, runtimeEnv);
-			out.addValueMapping(rootEleId, new HAPRootValueMapping(processedItem));
+			HAPElementStructure processedItem = processRelativeInStructureElement(mappingItem.getDefinition(), new HAPCandidatesValueContext(null, inValueContext), inValueStructureDomain, null, null, null, runtimeEnv);
+			out.addItem(new HAPItemValueMapping<HAPIdRootElement>(processedItem, rootEleId));
 		}
 		return out;
 	}

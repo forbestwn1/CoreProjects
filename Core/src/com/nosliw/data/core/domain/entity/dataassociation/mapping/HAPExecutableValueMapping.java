@@ -30,7 +30,7 @@ public class HAPExecutableValueMapping extends HAPExecutableImp{
 	public static String CONVERTFUNCTION = "convertFunction";
 	
 	//data association output context
-	private Map<HAPIdRootElement, HAPRootValueMapping> m_items;
+	private List<HAPItemValueMapping<HAPIdRootElement>> m_items;
 	
 	//path mapping for relative node (output path in context - input path in context) during runtime
 	private Map<String, String> m_relativePathMapping;
@@ -41,12 +41,12 @@ public class HAPExecutableValueMapping extends HAPExecutableImp{
 	private Map<String, HAPMatchers> m_outputMatchers;
 
 	public HAPExecutableValueMapping() {
-		this.m_items = new LinkedHashMap<HAPIdRootElement, HAPRootValueMapping>();
+		this.m_items = new ArrayList<HAPItemValueMapping<HAPIdRootElement>>();
 		this.m_outputMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_relativePathMapping = new LinkedHashMap<String, String>();
 	}
 	
-	public void addValueMapping(HAPIdRootElement rootId, HAPRootValueMapping valueMapping) {	this.m_items.put(rootId, valueMapping);	}
+	public void addItem(HAPItemValueMapping<HAPIdRootElement> valueMapping) {	this.m_items.add(valueMapping);	}
 	
 	public void setConstantAssignments(Map<String, Object> constantAssignment) {     this.m_constantAssignment = constantAssignment;      }
 	public Map<String, Object> getConstantAssignments(){    return this.m_constantAssignment;   }

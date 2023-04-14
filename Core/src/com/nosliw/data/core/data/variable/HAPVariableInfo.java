@@ -119,14 +119,14 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 		HAPVariableInfo out = new HAPVariableInfo();
 		this.cloneToEntityInfo(out);
 		this.cloneToVariableInfo(out);
-		if(this.m_reference!=null)  out.m_reference = this.m_reference.cloneReferencePathInfo(); 
+		if(this.m_reference!=null)  out.m_reference = this.m_reference.cloneReferenceInfo(); 
 		return out;
 	}
 	
 	public void cloneToVariableInfo(HAPVariableInfo varInfo) {
 		varInfo.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
 		if(this.m_defaultValue!=null)   varInfo.m_defaultValue = this.m_defaultValue.cloneData();
-		if(this.m_reference!=null)  varInfo.m_reference = this.m_reference.cloneReferencePathInfo(); 
+		if(this.m_reference!=null)  varInfo.m_reference = this.m_reference.cloneReferenceInfo(); 
 	}
 	
 	@Override

@@ -8,7 +8,6 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPParserStructure;
 
 public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEntityDefinitionInDomainImpSimple{
 
@@ -23,7 +22,7 @@ public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEn
 			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)this.getEntity(entityId, parserContext);
 			Object elementsObj = structureJson.opt(HAPDefinitionEntityValueStructure.VALUE);
 			if(elementsObj==null)  elementsObj = structureJson;
-			List<HAPRootStructure> roots = HAPParserStructure.parseStructureRoots(elementsObj);
+			List<HAPRootStructure> roots = HAPParserValueStructure.parseStructureRoots(elementsObj);
 			for(HAPRootStructure root : roots)  valueStructure.addRoot(root);
 		}
 	}

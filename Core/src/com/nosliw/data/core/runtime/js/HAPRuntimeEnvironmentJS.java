@@ -25,6 +25,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionInDomainAttachment;
 import com.nosliw.data.core.domain.entity.configure.HAPPluginEntityDefinitionInDomainConfigure;
 import com.nosliw.data.core.domain.entity.configure.HAPResourceManagerImpConfigure;
+import com.nosliw.data.core.domain.entity.dataassociation.HAPPluginAdapterProcessorDataAssociation;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPPluginEntityDefinitionInDomainDataAssociation;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpression;
@@ -292,6 +293,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestDecoration1());
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
+		
+		//adapter entity
+		this.getComplexEntityManager().registerAdapterProcessorPlugin(new HAPPluginAdapterProcessorDataAssociation());
 		
 		//runtime
 		this.m_runtime = runtime;
