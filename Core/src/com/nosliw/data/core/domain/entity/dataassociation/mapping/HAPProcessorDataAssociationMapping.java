@@ -50,19 +50,22 @@ public class HAPProcessorDataAssociationMapping {
 			HAPDomainValueStructure outValueStructureDomain,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
-		
 		HAPExecutableValueMapping out = new HAPExecutableValueMapping();
-		
+
 		List<HAPItemValueMapping<HAPReferenceElementInValueContext>> mappingItems = valueMapping.getItems();
 		for(HAPItemValueMapping<HAPReferenceElementInValueContext> mappingItem : mappingItems) {
 			
-			HAPReferenceElementInValueContext targetRef = (HAPReferenceElementInValueContext)mappingItem.getTarget();
+			HAPReferenceElementInValueContext targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement rootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueContext, null, outValueStructureDomain);
+			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueContext, null, outValueStructureDomain);
 			
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processRelativeInStructureElement(mappingItem.getDefinition(), new HAPCandidatesValueContext(null, inValueContext), inValueStructureDomain, null, null, null, runtimeEnv);
-			out.addItem(new HAPItemValueMapping<HAPIdRootElement>(processedItem, rootEleId));
+			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
+			out.addItem(valueMappingItem);
+			
+			//build assignment path mapping according to relative node
+			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem));
 		}
 		return out;
 	}
@@ -103,6 +106,13 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -256,7 +266,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 
 	//build assignment path mapping according to relative node
-	private static Map<String, String> buildRelativePathMappingInDataAssociation(HAPDefinitionValueMapping valueMapping) {
+	private static Map<String, String> buildRelativePathMappingInDataAssociation1(HAPDefinitionValueMapping valueMapping) {
 		//build path mapping according for mapped element only
 		Map<String, String> pathMapping = new LinkedHashMap<String, String>();
 		Map<String, HAPRootStructure> items = valueMapping.getItems();

@@ -54,9 +54,9 @@
 				"entityType" : "dataAssociation",
 				"entity" : {
 					"mapping" : {
-						"aaa_module" : {
+						"element_public" : {
 							"definition" : {
-								"path" : "simpleOutput2"
+								"path" : "parent_public"
 							}
 						}
 					}

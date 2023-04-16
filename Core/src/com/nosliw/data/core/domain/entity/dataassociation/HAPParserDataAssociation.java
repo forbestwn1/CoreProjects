@@ -3,8 +3,8 @@ package com.nosliw.data.core.domain.entity.dataassociation;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.domain.entity.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
@@ -60,7 +60,7 @@ public class HAPParserDataAssociation {
 		
 		String type = (String)asJson.opt(HAPDefinitionDataAssociation.TYPE);
 		if(HAPUtilityBasic.isStringEmpty(type))  type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
-		
+
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 		{

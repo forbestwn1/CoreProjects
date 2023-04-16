@@ -13,7 +13,7 @@ var node_createContextVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //create request for data operation
-var node_createUIDataOperationRequest = function(context, uiDataOperation, handlers, requester_parent){
+var node_createUIDataOperationRequest = function(valueStructure, uiDataOperation, handlers, requester_parent){
 	var target = uiDataOperation.target;
 	var targetType = node_getObjectType(target);
 	var operationService = uiDataOperation.operationService;
@@ -31,13 +31,13 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
 		break;
 	case node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE:
 		operationService.parms.path = node_dataUtility.combinePath(target.path, operationService.parms.path);
-		request = context.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
+		request = valueStructure.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
 		break;
 	default : 
 		//target is context element name
 		var targeContextVar = node_createContextVariableInfo(target);
 		operationService.parms.path = node_dataUtility.combinePath(targeContextVar.path, operationService.parms.path);
-		request = context.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
+		request = valueStructure.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
 	}
 	return request;
 };
@@ -47,20 +47,20 @@ var node_createUIDataOperationRequest = function(context, uiDataOperation, handl
  * It contains a set of data operation service, so that this request is a batch of data operation as a whole
  * 
  */
-var node_createBatchUIDataOperationRequest = function(context, handlers, requester_parent){
+var node_createBatchUIDataOperationRequest = function(valueStructure, handlers, requester_parent){
 
 	//all the child requests service  
 	var loc_uiDataOperations = [];
 	
 	//data context
-	var loc_context = context;
+	var loc_valueStructure = valueStructure;
 	
 	var loc_index = 0;
 	
-	var loc_out = node_createServiceRequestInfoSet(new node_ServiceInfo("BatchUIDataOperation", {}), handlers, requester_parent)
+	var loc_out = node_createServiceRequestInfoSet(new node_ServiceInfo("BatchUIDataOperation", {}), handlers, requester_parent);
 	
 	loc_out.addUIDataOperation = function(uiDataOperation){
-		this.addRequest(loc_index+"", node_createUIDataOperationRequest(loc_context, uiDataOperation));
+		this.addRequest(loc_index+"", node_createUIDataOperationRequest(loc_valueStructure, uiDataOperation));
 		loc_index++;
 
 		//for debugging purpose

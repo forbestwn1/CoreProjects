@@ -605,6 +605,11 @@ public class HAPConstantShared {
 
 
 
+		public static final String DATAASSOCIATION_DIRECTION_DOWNSTREAM = "downStream";
+		public static final String DATAASSOCIATION_DIRECTION_UPSTREAM = "upStream";
+
+
+
 		public static final String MINIAPP_DATAOWNER_APP = "app";
 		public static final String MINIAPP_DATAOWNER_GROUP = "group";
 

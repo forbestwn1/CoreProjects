@@ -30,11 +30,11 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	private Object m_value;
 	
-	private Object m_adapter;
+	private HAPInfoAdapter m_adapter;
 	
 	public HAPEmbeded() {}
 	
-	public HAPEmbeded(Object value, Object adapter) {
+	public HAPEmbeded(Object value, HAPInfoAdapter adapter) {
 		this.m_value = value;
 		this.m_adapter = adapter;
 	}
@@ -42,8 +42,8 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public Object getValue() {   return this.m_value;   }
 	public void setValue(Object value) {    this.m_value = value;    }
 	
-	public Object getAdapter() {	return m_adapter;	}
-	public void setAdapter(Object adapter) {	this.m_adapter = adapter;	}
+	public HAPInfoAdapter getAdapter() {	return m_adapter;	}
+	public void setAdapter(HAPInfoAdapter adapter) {	this.m_adapter = adapter;	}
 
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
@@ -70,7 +70,7 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public abstract HAPEmbeded cloneEmbeded();
 
 	protected void cloneToEmbeded(HAPEmbeded embeded) {
-		embeded.setAdapter(HAPUtilityClone.cloneValue(this.getAdapter()));
+		embeded.setAdapter((HAPInfoAdapter)HAPUtilityClone.cloneValue(this.getAdapter()));
 		embeded.setValue(HAPUtilityClone.cloneValue(this.getValue()));	
 	}
 }

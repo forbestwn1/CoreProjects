@@ -679,6 +679,10 @@
 			<definition name="DATAASSOCIATION_TYPE_NONE" value="none"/>
 
 			<definition type="space"/>
+			<definition name="DATAASSOCIATION_DIRECTION_DOWNSTREAM" value="downStream"/>
+			<definition name="DATAASSOCIATION_DIRECTION_UPSTREAM" value="upStream"/>
+
+			<definition type="space"/>
 			<definition name="MINIAPP_DATAOWNER_APP" value="app"/>
 			<definition name="MINIAPP_DATAOWNER_GROUP" value="group"/>
 

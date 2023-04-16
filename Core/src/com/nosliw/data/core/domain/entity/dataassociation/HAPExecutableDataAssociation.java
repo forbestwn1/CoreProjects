@@ -13,6 +13,9 @@ public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityIn
 	public static String TYPE = "type";
 
 	@HAPAttribute
+	public static String DIRECTION = "direction";
+
+	@HAPAttribute
 	public static String INPUT = "input";
 
 	@HAPAttribute
@@ -20,6 +23,8 @@ public interface HAPExecutableDataAssociation extends HAPExecutable, HAPEntityIn
 
 	String getType();
 
+	String getDireciton();
+	
 	HAPContainerStructure getInput();
 	
 	HAPOutputStructure getOutput();

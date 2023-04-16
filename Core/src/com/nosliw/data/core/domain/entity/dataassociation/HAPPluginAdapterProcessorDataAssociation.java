@@ -36,19 +36,33 @@ public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapte
 		
 		
 		String type = dataAssociation.getType();
+		String direction = dataAssociation.getDirection();
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 			HAPDefinitionDataAssociationMapping valueMappingDA = (HAPDefinitionDataAssociationMapping)dataAssociation;
 			Map<String, HAPDefinitionValueMapping> valueMappings = valueMappingDA.getMappings();
 			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA, null, null);
 			for(String targetName : valueMappings.keySet()) {
-				HAPExecutableValueMapping valueMappingExe = HAPProcessorDataAssociationMapping.processValueMapping(
-						parentComplexEntityExe.getValueContext(), 
-						parentContext.getCurrentValueStructureDomain(), 
-						valueMappings.get(targetName), 
-						childComplexEntityExe.getValueContext(), 
-						childContext.getCurrentValueStructureDomain(), 
-						parentContext.getRuntimeEnvironment());
+				HAPExecutableValueMapping valueMappingExe;
+				if(direction.equals(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM)) {
+					valueMappingExe = HAPProcessorDataAssociationMapping.processValueMapping(
+							parentComplexEntityExe.getValueContext(), 
+							parentContext.getCurrentValueStructureDomain(), 
+							valueMappings.get(targetName), 
+							childComplexEntityExe.getValueContext(), 
+							childContext.getCurrentValueStructureDomain(), 
+							parentContext.getRuntimeEnvironment());
+				}
+				else {
+					valueMappingExe = HAPProcessorDataAssociationMapping.processValueMapping(
+							childComplexEntityExe.getValueContext(), 
+							childContext.getCurrentValueStructureDomain(), 
+							valueMappings.get(targetName), 
+							parentComplexEntityExe.getValueContext(), 
+							parentContext.getCurrentValueStructureDomain(), 
+							parentContext.getRuntimeEnvironment());
+				}
+				
 				
 				daMappingExe.addMapping(targetName, valueMappingExe);
 			}

@@ -30,7 +30,7 @@ public class HAPItemValueMapping<T> extends HAPEntityInfoWritableImp{
 		this.m_target = target;
 	}
 	
-	public Object getTarget() {   return this.m_target;   }
+	public T getTarget() {   return this.m_target;   }
 	
 	public void setTarget(T target) {    this.m_target = target;    }
 	

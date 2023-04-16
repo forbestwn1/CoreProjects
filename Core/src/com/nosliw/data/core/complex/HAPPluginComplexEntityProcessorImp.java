@@ -13,10 +13,11 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormal;
-import com.nosliw.data.core.domain.entity.HAPDefinitionAdapter;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
+import com.nosliw.data.core.domain.entity.HAPExecutableAdapter;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
 
 public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginComplexEntityProcessor{
 
@@ -65,9 +66,10 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 			
 			HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 			HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
-			HAPDefinitionAdapter adapter = ((HAPEmbededDefinition)attrDef.getValue()).getAdapterEntity();
+			HAPInfoAdapter adapter = ((HAPEmbededDefinition)attrDef.getValue()).getAdapterEntity();
 
-			processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, attrNormalExe.getValue().getValue(), processContext);
+			Object adapterExe = processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, attrNormalExe.getValue().getValue(), processContext);
+			attrNormalExe.getValue().setAdapter(new HAPExecutableAdapter(adapter.getValueType(), adapterExe));
 		}
 		else {
 			//container attribute

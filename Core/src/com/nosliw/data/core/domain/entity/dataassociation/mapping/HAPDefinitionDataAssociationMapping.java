@@ -6,14 +6,13 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableImp implements HAPDefinitionDataAssociation{
+public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssociation{
 
 	@HAPAttribute
 	public static String TARGET = "target";
@@ -21,12 +20,10 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	private Map<String, HAPDefinitionValueMapping> m_mappings;
 	
 	public HAPDefinitionDataAssociationMapping() {
+		super(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING);
 		this.m_mappings = new LinkedHashMap<String, HAPDefinitionValueMapping>();
 	}
  
-	@Override
-	public String getType() {  return HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;  }
-
 	public void addAssociation(String targetName, HAPDefinitionValueMapping mapping) {	
 		if(HAPUtilityBasic.isStringEmpty(targetName))  targetName = HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;
 		this.m_mappings.put(targetName, mapping);
@@ -50,26 +47,28 @@ public class HAPDefinitionDataAssociationMapping extends HAPEntityInfoWritableIm
 	@Override
 	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
-		this.cloneToEntityInfo(out);
-		for(String name : this.m_mappings.keySet()) {
-			out.m_mappings.put(name, this.m_mappings.get(name).cloneValueMapping());
-		}
-		
+		this.cloneToDataAssociation(out);
 		return out;
+	}
+	
+	protected void cloneToDataAssociation(HAPDefinitionDataAssociationMapping dataAssociation) {
+		super.cloneToDataAssociation(dataAssociation);
+		for(String name : this.m_mappings.keySet()) {
+			dataAssociation.m_mappings.put(name, this.m_mappings.get(name).cloneValueMapping());
+		}
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(TARGET, HAPUtilityJson.buildJson(this.m_mappings, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
+		super.buildObjectByJson(json);
 		try{
 			JSONObject daJsonObj = (JSONObject)json;
-			this.buildEntityInfoByJson(daJsonObj);
 			
 			JSONObject elesJson = daJsonObj.optJSONObject(HAPDefinitionValueMapping.MAPPING);
 			if(elesJson!=null) {
