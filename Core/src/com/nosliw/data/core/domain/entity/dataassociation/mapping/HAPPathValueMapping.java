@@ -50,13 +50,19 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(m_matchers, HAPSerializationFormat.JSON));
 		jsonMap.put(TOVALUESTRUCTUREID, m_toValueStructureId);
 		jsonMap.put(TOITEMPATH, this.m_toItemPath);
+	}
+	
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+		this.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
 	@Override

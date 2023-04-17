@@ -30,7 +30,7 @@ public class HAPUtilityDataAssociation {
 		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_LINK)) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 					
 					String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
@@ -57,7 +57,7 @@ public class HAPUtilityDataAssociation {
 		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getPath().getFullName(), new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_LINK)) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 					HAPComplexPath sourcePath = new HAPComplexPath(relativeEle.getResolveInfo().getResolvedStructureId(), relativeEle.getResolveInfo().getResolvedElementPath().getFullName());
 					out.put(eleInfo.getElementPath().getFullName(), sourcePath.getFullName());

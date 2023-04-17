@@ -11,10 +11,10 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
 
-public class HAPElementStructureLeafRelativeForLink extends HAPElementStructureLeafRelative{
+public class HAPElementStructureLeafRelativeForMapping extends HAPElementStructureLeafRelative{
 
 	@HAPAttribute
-	public static final String LINK = "link";
+	public static final String MAPPING = "mapping";
 	
 	@HAPAttribute
 	public static final String MATCHERS = "matchers";
@@ -23,33 +23,33 @@ public class HAPElementStructureLeafRelativeForLink extends HAPElementStructureL
 	//used to convert data from parent to data within uiTag
 	private HAPMatchers m_matchers;
 
-	public HAPElementStructureLeafRelativeForLink() {
+	public HAPElementStructureLeafRelativeForMapping() {
 	}
 	
-	public HAPElementStructureLeafRelativeForLink(String path) {
+	public HAPElementStructureLeafRelativeForMapping(String path) {
 		super(path);
 	}
 	
 	@Override
-	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_LINK;	}
+	public String getType() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING;	}
 
 	public void setMatchers(HAPMatchers matchers){	this.m_matchers = matchers;	}
 
-	public void toStructureElement(HAPElementStructureLeafRelativeForLink out) {
+	public void toStructureElement(HAPElementStructureLeafRelativeForMapping out) {
 		super.toStructureElement(out);
 		out.m_matchers = this.m_matchers.cloneMatchers();
 	}
 	
 	@Override
 	public HAPElementStructure cloneStructureElement() {
-		HAPElementStructureLeafRelativeForLink out = new HAPElementStructureLeafRelativeForLink();
+		HAPElementStructureLeafRelativeForMapping out = new HAPElementStructureLeafRelativeForMapping();
 		this.toStructureElement(out);
 		return out;
 	}
 
 	@Override
 	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		HAPElementStructureLeafRelativeForLink out = (HAPElementStructureLeafRelativeForLink)this.cloneStructureElement();
+		HAPElementStructureLeafRelativeForMapping out = (HAPElementStructureLeafRelativeForMapping)this.cloneStructureElement();
 		this.solidateConstantScript(this, constants, runtimeEnv);
 		out.getReference().setElementPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getElementPath(), constants, runtimeEnv));
 		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
@@ -59,7 +59,7 @@ public class HAPElementStructureLeafRelativeForLink extends HAPElementStructureL
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(LINK, this.getReference().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(MAPPING, this.getReference().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
 
@@ -68,8 +68,8 @@ public class HAPElementStructureLeafRelativeForLink extends HAPElementStructureL
 		if(!super.equals(obj))  return false;
 
 		boolean out = false;
-		if(obj instanceof HAPElementStructureLeafRelativeForLink) {
-			HAPElementStructureLeafRelativeForLink ele = (HAPElementStructureLeafRelativeForLink)obj;
+		if(obj instanceof HAPElementStructureLeafRelativeForMapping) {
+			HAPElementStructureLeafRelativeForMapping ele = (HAPElementStructureLeafRelativeForMapping)obj;
 			if(!HAPUtilityBasic.isEquals(this.getReference(), ele.getReference()))  return false;
 			if(!HAPUtilityBasic.isEquals(ele.m_matchers, this.m_matchers)) 	return false;
 			out = true;

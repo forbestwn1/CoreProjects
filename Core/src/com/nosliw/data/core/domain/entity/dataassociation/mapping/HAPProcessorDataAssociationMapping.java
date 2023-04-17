@@ -26,9 +26,10 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForLink;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForMapping;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
@@ -73,9 +74,9 @@ public class HAPProcessorDataAssociationMapping {
 	private static HAPElementStructure processRelativeInStructureElement(HAPElementStructure defStructureElement, HAPCandidatesValueContext parentValueContexts, HAPDomainValueStructure valueStructureDomain, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
-		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_LINK:
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
 		{
-			HAPElementStructureLeafRelativeForLink relativeStructureElement = (HAPElementStructureLeafRelativeForLink)defStructureElement;
+			HAPElementStructureLeafRelativeForMapping relativeStructureElement = (HAPElementStructureLeafRelativeForMapping)defStructureElement;
 			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getParentValueContextName());
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
@@ -89,6 +90,7 @@ public class HAPProcessorDataAssociationMapping {
 				else {
 					resolveInfo.finalElement = HAPUtilityProcessRelativeElement.resolveFinalElement(resolveInfo.elementInfoSolid, false);
 				}
+				relativeStructureElement.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
 			}
 			break;
 		}

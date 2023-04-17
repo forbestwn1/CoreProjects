@@ -56,7 +56,9 @@
 					"mapping" : {
 						"element_public" : {
 							"definition" : {
-								"path" : "parent_public"
+								"mapping" : {
+									"elementPath": "parent_public"
+								}
 							}
 						}
 					}
