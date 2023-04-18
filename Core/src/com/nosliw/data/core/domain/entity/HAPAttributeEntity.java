@@ -27,6 +27,7 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	@HAPAttribute
 	public final static String VALUETYPEINFO = "valueTypeInfo"; 
 
+	//normal or container
 	private String m_entityType;
 	
 	private String m_name;

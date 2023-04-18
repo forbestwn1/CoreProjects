@@ -29,6 +29,24 @@ var node_buildComplexEntityPlugInObject = function(rawPluginObj){
 	return _.extend({}, interfaceDef, rawPluginObj);	
 };
 
+var node_buildAdapterPlugInObject = function(rawPluginObj){
+
+	var interfaceDef = {
+		//create component core object
+		getNewAdapterRequest : function(adapterDefinition, handlers, request){
+			return node_createServiceRequestInfoSimple({}, function(request){
+				return {
+					getExecuteRequest : function(parent, child, handlers, request){
+						return;
+					}
+				};
+			}, handlers, request);
+		}
+	};
+		
+	return _.extend({}, interfaceDef, rawPluginObj);	
+};
+
 var node_buildSimpleEntityPlugInObject = function(rawPluginObj){
 
 	var interfaceDef = {
@@ -64,11 +82,15 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_COMPLEXENTITY, {
-			createComplexAttributeRequest : function(attrName, complexEntityId, configure, handlers, request){
+			createComplexAttributeRequest : function(attrName, complexEntityId, adapterInfo, configure, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {
 					success : function(request, complexEntityRuntime){
-						treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime);
+						return nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value, {
+							success : function(request, adapter){
+								treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime, adapter);
+							}							
+						}, request);
 					}
 				}));
 				return out;
@@ -96,8 +118,8 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		
 		getChild : function(childName){   return loc_children.getElement(childName);	},
 
-		addNormalChild : function(childName, entityRuntime){
-			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime));
+		addNormalChild : function(childName, entityRuntime, adapter){
+			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime, adapter));
 		},
 		
 		addContainerChild : function(childName, containerValue){
@@ -150,11 +172,13 @@ var loc_createContainerTreeChild = function(childName){
 	return loc_out;
 };
 
-var loc_createNormalTreeChild = function(childName, entityRuntime){
+var loc_createNormalTreeChild = function(childName, entityRuntime, adapter){
 	
 	var loc_childName = childName;
 	
 	var loc_entityRuntime = entityRuntime;
+	
+	var loc_adapter = adapter;
 	
 	var loc_out = {
 		
@@ -163,6 +187,8 @@ var loc_createNormalTreeChild = function(childName, entityRuntime){
 		getChildValue : function(){    return loc_entityRuntime;   },
 		
 		getChildType : function(){   return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;   },
+		
+		getAdapter : function(){   return loc_adapter;    }
 		
 	};
 	
@@ -187,6 +213,7 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 //Register Node by Name
 packageObj.createChildNode("buildComplexEntityPlugInObject", node_buildComplexEntityPlugInObject); 
 packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEntityPlugInObject); 
+packageObj.createChildNode("buildAdapterPlugInObject", node_buildAdapterPlugInObject); 
 packageObj.createChildNode("makeObjectComplexEntityObjectInterface", node_makeObjectComplexEntityObjectInterface); 
 packageObj.createChildNode("getComplexEntityObjectInterface", node_getComplexEntityObjectInterface); 
 packageObj.createChildNode("makeObjectEntityTreeNodeInterface", node_makeObjectEntityTreeNodeInterface); 

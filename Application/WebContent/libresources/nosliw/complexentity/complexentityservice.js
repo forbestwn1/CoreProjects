@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_EntityIdInDomain;
 	var node_buildComplexEntityPlugInObject;
 	var node_buildSimpleEntityPlugInObject;
+	var node_buildAdapterPlugInObject;
 	var node_createComponentRuntime;
 	var node_componentUtility;
 	var node_createPackageCore;
@@ -47,6 +48,19 @@ var node_createComplexEntityRuntimeService = function() {
 	
 	var loc_complexEntityPlugins = {};
 	var loc_simpleEntityPlugins = {};
+
+	var loc_adapterPlugins = {};
+
+	var loc_getCreateAdapterRequest = function(adapterType, adapterDefinition, handlers, request){
+		if(adapterDefinition==undefined){
+			return node_createServiceRequestInfoSimple({}, function(requestInfo){
+				return;
+			});		
+		}
+		else{
+			return loc_adapterPlugins[adapterType].getNewAdapterRequest(adapterDefinition, handlers, request);
+		}
+	};
 
 	var loc_getCreateContainerComplexEntityRuntimeRequest = function(containerDef, parentComplexEntityCore, bundleCore, configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -268,6 +282,10 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_createContainerComplexEntityRuntime(containerDef, parentCore, bundleCore, configure, request);
 		},
 		
+		getCreateAdapterRequest : function(adapterType, adapterDefinition, handlers, request){
+			return loc_getCreateAdapterRequest(adapterType, adapterDefinition, handlers, request);
+		},
+		
 		registerComplexEntityPlugin : function(entityType, complexEntityPlugin){
 			loc_complexEntityPlugins[entityType] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
 		},
@@ -275,6 +293,11 @@ var node_createComplexEntityRuntimeService = function() {
 		registerSimpleEntityPlugin : function(entityType, simpleEntityPlugin){
 			loc_simpleEntityPlugins[entityType] = node_buildSimpleEntityPlugInObject(simpleEntityPlugin);
 		},
+		
+		registerAdapterPlugin : function(adapterType, adapterPlugin){
+			loc_adapterPlugins[adapterType] = node_buildAdapterPlugInObject(adapterPlugin);
+		},
+		
 	};
 
 	loc_init();
@@ -296,6 +319,7 @@ nosliw.registerSetNodeDataEvent("complexentity.createBundleCore", function(){nod
 nosliw.registerSetNodeDataEvent("complexentity.entity.EntityIdInDomain", function(){node_EntityIdInDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityPlugInObject", function(){node_buildComplexEntityPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.buildSimpleEntityPlugInObject", function(){node_buildSimpleEntityPlugInObject = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.buildAdapterPlugInObject", function(){node_buildAdapterPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createPackageCore", function(){node_createPackageCore = this.getData();});

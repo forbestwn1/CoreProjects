@@ -48,6 +48,11 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		if(this.getValue() instanceof HAPExecutable)  out.addAll(((HAPExecutable)this.getValue()).getResourceDependency(runtimeInfo, resourceManager));
+		if(this.getAdapter()!=null) {
+			if(this.getAdapter().getValue() instanceof HAPExecutable) {
+				out.addAll(((HAPExecutable)this.getAdapter().getValue()).getResourceDependency(runtimeInfo, resourceManager));
+			}
+		}
 		return out;
 	}
 
@@ -57,5 +62,4 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 		this.cloneToEmbeded(out);
 		return out;
 	}
-	
 }

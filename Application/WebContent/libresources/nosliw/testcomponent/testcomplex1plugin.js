@@ -120,8 +120,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 					if(attr.isComplex()==true){
 						//complex
 						var complexEntityId = attrValue;
-						
-						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, configure.getConfigureValue()[attrName]));
+						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, attr.getAdapterInfo(), configure.getConfigureValue()[attrName]));
 					}
 					else{
 						//simple attribute

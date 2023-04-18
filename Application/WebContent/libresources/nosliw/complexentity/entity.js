@@ -76,20 +76,26 @@ var node_createEntityDefinition = function(original){
 
 var loc_createNormalAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
+
+	var loc_getEmbeded = function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];	};
+	var loc_getAdapter = function(){   return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ADAPTER];   };
 	
 	var loc_out = {
 		
 		isNormalAttribute : function(){    return true;    },	
 		
-		getEmbeded : function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];		},
-		
 		getEntityType : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_VALUETYPE];  },
 		
 		isComplex : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_ISCOMPLEX];  },
 		
-		getValue : function(){
-			return this.getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
-		}
+		getValue : function(){		return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];	},
+
+		getAdapterInfo : function(){    return loc_getAdapter();     },
+		
+		getAdapterType : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUETYPE];     },
+		
+		getAdapterValue : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUE];     },
+		
 	};
 	
 	return loc_out;
