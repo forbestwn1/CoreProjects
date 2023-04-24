@@ -41,12 +41,61 @@
 				}
 			]
 		},
-
 		{
 			"embeded": {
 				"info": {
-					"name" : "globalresource.reference_none_test.complex.script",
+					"name" : "localresource.adapter_none_test.complex.script",
 					"status": "disabled1"
+				},
+				"parent": {
+					"valuestructure":{
+						"inherit":{
+							"mode" : "none"
+						}
+					}
+				},
+				"entity": {
+					"scriptName": "complexscript_test_value",
+					"valueContext" :{
+						"entity": [
+							{
+								"groupType" : "public",
+								"valueStructure" : {
+									"embeded_public": {
+										"definition":{
+											"criteria": "test.string"
+										},
+										"defaultValue": {
+											"dataTypeId": "test.string",
+											"value": "default value of embeded_public"
+										}
+									}
+								}
+							}
+						]
+					} 			
+				}
+			},
+			"adapter": {
+				"entityType" : "dataAssociation",
+				"entity" : {
+					"mapping" : {
+						"embeded_public" : {
+							"definition" : {
+								"mapping" : {
+									"elementPath": "parent_public"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"embeded": {
+				"info": {
+					"name" : "globalresource.adapter_none_test.complex.script",
+					"status": "disabled"
 				},
 				"resourceId": "test.complex.script|*value"
 			},

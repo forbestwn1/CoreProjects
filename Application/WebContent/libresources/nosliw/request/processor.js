@@ -359,6 +359,8 @@ var node_createRequestServiceProcessor = function(){
 	
 	var loc_out = {
 		processRequest : function(request, configure){
+			if(request==undefined)   return;
+			
 			var loc_moduleName = "requestManager";
 			nosliw.logging.info(loc_moduleName, request.getInnerId(), "Start Request");
 			

@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_createErrorData;
 	var node_componentUtility;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -183,6 +184,17 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var attrName = child.getChildName();
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
+
+				//adapter view
+				if(child.getAdapter!=undefined){
+					var adapterView = $('<button>Execute Adapter</button>');
+					attributeView.append(adapterView);
+					adapterView.click(function() {
+						var adapterExecuteRequest = child.getAdapter().getExecuteRequest(loc_out, child.getChildValue());
+						node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+					});
+				}
+
 				var childView = $('<div style="margin-left:10px;" />');
 				attributeView.append(childView);
 				rootViewWrapper.append(attributeView);
@@ -192,7 +204,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var childValue = child.getChildValue();
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childValue, childView); 
-
 				out.addRequest(childValue.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
 			
@@ -318,6 +329,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

@@ -39,7 +39,7 @@ public class HAPUtilityDataAssociation {
 					String fromValueStructureId = relativeEle.getResolveInfo().getResolvedStructureId();
 					String fromItemPath = relativeEle.getResolveInfo().getResolvedElementPath().getFullName();
 					
-					out.add(new HAPPathValueMapping(fromValueStructureId, fromItemPath, null, toValueStructureId, toItemPath));
+					out.add(new HAPPathValueMapping(relativeEle.getReference().getParentValueContextName(), fromValueStructureId, fromItemPath, null, valueMappingItem.getTarget().getDomainId(), toValueStructureId, toItemPath));
 					return Pair.of(false, null);
 				}
 				return null;

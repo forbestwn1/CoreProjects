@@ -32,16 +32,37 @@ var node_IOTaskInfo = function(taskRequestFun, taskName, inIO, outIO){
 	this.outIO = outIO;
 };
 
+
 //dynamic io data which read and write through function
 //dynamic io data inform the data change through listen to eventObj
-var node_createDynamicIOData = function(getValueRequestFun, setValueRequestFun, eventObj){
+var node_createDynamicIOData = function(dataOperationRequestFun, eventObj){
+	var loc_dataOperationRequestFun = dataOperationRequestFun;
+	var loc_eventObj = eventObj;
+	
+	var loc_out = {
+		getDataOperationRequest : function(dataOperationService, handlers, request){     return loc_dataOperationRequestFun(dataOperationService, handlers, request);      },
+		
+		registerEventListener : function(listener, handler, thisContext){   if(loc_eventObj!=undefined) loc_eventObj.registerListener(undefined, listener, handler, thisContext);   },
+		unregisterEventListener : function(listener){    if(loc_eventObj!=undefined) loc_eventObj.unregister(listener);   },
+	};
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA);
+	return loc_out;
+};
+
+
+//dynamic io data which read and write through function
+//dynamic io data inform the data change through listen to eventObj
+var node_createDynamicIOData1 = function(getValueRequestFun, setValueRequestFun, dataOperationRequestFun, eventObj){
 	var loc_getValueRequestFun = getValueRequestFun;
 	var loc_setValueRequestFun = setValueRequestFun;
+	var loc_dataOperationRequestFun = dataOperationRequestFun;
 	var loc_eventObj = eventObj;
 	
 	var loc_out = {
 		getGetValueRequest : function(handlers, request){		return loc_getValueRequestFun(handlers, request);		},
 		getSetValueRequest : function(value, handlers, request){		return loc_setValueRequestFun(value, handlers, request);	},
+		
+		getDataOperationRequest : function(dataOperationService, handlers, request){     return loc_dataOperationRequestFun(dataOperationService, handlers, request);      },
 		
 		registerEventListener : function(listener, handler, thisContext){   if(loc_eventObj!=undefined) loc_eventObj.registerListener(undefined, listener, handler, thisContext);   },
 		unregisterEventListener : function(listener){    if(loc_eventObj!=undefined) loc_eventObj.unregister(listener);   },
@@ -78,6 +99,19 @@ var node_createIODataSet = function(value){
 		prv_id : nosliw.generateId(),
 		
 		getDataSet : function(){   return loc_out.prv_dataSet;   },
+
+		getDataOperationRequest : function(name, dataOperationService, handlers, request){
+			var data = this.getData(name);
+			var dataEleType = node_getObjectType(data);
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				return data.getDataOperationRequest(dataOperationService, handlers, request);
+			}
+			else{
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					return node_objectOperationUtility.dataOperation(data, dataOperationService);
+				}, handlers, request);
+			}
+		},
 		
 		//directly set data element
 		setData : function(name, data, request){ 

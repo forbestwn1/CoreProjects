@@ -41,6 +41,7 @@ var packageObj = library;
 	var node_createTestComplexScriptPlugin;
 	var node_createTestSimple1Plugin;
 	var node_createTestDecoration1Plugin;
+	var node_createDataAssociationAdapterPlugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -160,10 +161,14 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 	var loc_init = function(){
+		//complex entity plugin
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, node_createTestComplex1Plugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, node_createTestComplexScriptPlugin());
 		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, node_createTestSimple1Plugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_DECORATION_1, node_createTestDecoration1Plugin());
+
+		//adapter plugin
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, node_createDataAssociationAdapterPlugin());
 	};
 
 
@@ -346,6 +351,7 @@ nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", functi
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestSimple1Plugin", function(){node_createTestSimple1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestDecoration1Plugin", function(){node_createTestDecoration1Plugin = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexEntityRuntimeService", node_createComplexEntityRuntimeService); 

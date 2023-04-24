@@ -21,6 +21,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPPathValueMapping extends HAPExecutableImp{
 
 	@HAPAttribute
+	public static String FROMDOMAINNAME = "fromDomainName";
+	@HAPAttribute
 	public static String FROMVALUESTRUCTUREID = "fromValueStructureId";
 	@HAPAttribute
 	public static String FROMITEMPATH = "fromItemPath";
@@ -29,22 +31,28 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	public static String MATCHERS = "matchers";
 
 	@HAPAttribute
+	public static String TODOMAINNAME = "toDomainName";
+	@HAPAttribute
 	public static String TOVALUESTRUCTUREID = "toValueStructureId";
 	@HAPAttribute
 	public static String TOITEMPATH = "toItemPath";
 
+	private String m_fromDomainName;
 	private String m_fromValueStructureId;
 	private String m_fromItemPath;
 	
 	private HAPMatchers m_matchers;
 	
+	private String m_toDomainName;
 	private String m_toValueStructureId;
 	private String m_toItemPath;
 	
-	public HAPPathValueMapping(String fromValueStructureId, String fromItemPath, HAPMatchers matchers, String toValueStructureId, String toItemPath) {
+	public HAPPathValueMapping(String fromDomainName, String fromValueStructureId, String fromItemPath, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
+		this.m_fromDomainName = fromDomainName;
 		this.m_fromValueStructureId = fromValueStructureId;
 		this.m_fromItemPath = fromItemPath;
 		this.m_matchers = matchers;
+		this.m_toDomainName = toDomainName;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
@@ -52,9 +60,11 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(FROMDOMAINNAME, this.m_fromDomainName);
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(m_matchers, HAPSerializationFormat.JSON));
+		jsonMap.put(TODOMAINNAME, this.m_toDomainName);
 		jsonMap.put(TOVALUESTRUCTUREID, m_toValueStructureId);
 		jsonMap.put(TOITEMPATH, this.m_toItemPath);
 	}

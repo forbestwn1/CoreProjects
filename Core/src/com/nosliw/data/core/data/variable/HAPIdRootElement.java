@@ -14,10 +14,15 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 public class HAPIdRootElement extends HAPSerializableImp{
 
 	@HAPAttribute
+	public static final String DOMAINID = "domainId";
+	
+	@HAPAttribute
 	public static final String VALUESTRUCTUREID = "valueStructureId";
 	
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
+	
+	private String m_domainId = HAPConstantShared.NAME_DEFAULT;
 	
 	private String m_valueStructureId;
 	
@@ -27,12 +32,19 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		String[] parts = HAPUtilityNamingConversion.splitTextByTwoPart(reference, HAPConstantShared.SEPERATOR_LEVEL1);
 		this.m_rootName = parts[0];
 		if(parts.length>1)   this.m_valueStructureId = parts[1];
+		if(parts.length>2)   this.m_domainId = parts[2];
 	}
 	
-	public HAPIdRootElement(String valueStructureId, String rootName) {
+	public HAPIdRootElement(String domainId, String valueStructureId, String rootName) {
 		this.m_valueStructureId = valueStructureId;
 		this.m_rootName = rootName;
 	}
+	
+	public HAPIdRootElement(String valueStructureId, String rootName) {
+		this(null, valueStructureId, rootName);
+	}
+
+	public String getDomainId() {    return this.m_domainId;    }
 	
 	public String getValueStructureId() {    return this.m_valueStructureId;     }
 	
@@ -48,6 +60,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DOMAINID, this.m_domainId);
 		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
 		jsonMap.put(ROOTNAME, this.m_rootName);
 	}

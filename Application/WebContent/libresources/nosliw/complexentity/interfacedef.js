@@ -76,12 +76,15 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 		
 		getValueContext : function(){    return loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);   },
 
+		getBundle : function(){   return loc_bundleCore;  },
+			
 	};
 
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_COMPLEXENTITY, {
+			
 			createComplexAttributeRequest : function(attrName, complexEntityId, adapterInfo, configure, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {

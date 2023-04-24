@@ -17,6 +17,60 @@ var packageObj = library;
 var node_getExecuteMappingRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
+	var getDataSetRequest = node_createServiceRequestInfoSet(undefined, {
+		success : function(request, getDataSet){
+			var setDataSetRequest = node_createServiceRequestInfoSequence({});
+			var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUEMAPPING_MAPPINGPATH];
+			_.each(mappingPaths, function(mappingPath, i){
+
+				var toDomainName = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TODOMAINNAME];
+				var toValueStructureId = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TOVALUESTRUCTUREID];
+				var toItemPath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TOITEMPATH];
+
+				var value = getDataSet.getItem(i+"");
+				var dataOperationService = node_uiDataOperationServiceUtility.createSetOperationService(node_namingConvensionUtility.cascadePath(toValueStructureId, toItemPath), value);
+				setDataSetRequest.addRequest(inputDataSet.getDataOperationRequest(toDomainName, dataOperationService));
+			});
+			return setDataSetRequest;
+		}
+	});
+
+	var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUEMAPPING_MAPPINGPATH];
+	_.each(mappingPaths, function(mappingPath, i){
+		var mappingRequest = node_createServiceRequestInfoSequence({});
+		
+		var fromDomainName = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMDOMAINNAME];
+		var fromValueStructureId = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMVALUESTRUCTUREID];
+		var fromItemPath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMITEMPATH];
+		
+		var matchers = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_MATCHERS];
+		
+		var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
+		mappingRequest.addRequest(inputDataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
+			success : function(request, value){
+				if(matchers==undefined)   return value;
+				else{
+					return node_ioTaskUtility.processMatchersRequest(value, matchers, {
+						success :function(request, value){
+							return value;
+						}
+					});
+				}
+			}
+		}));
+		getDataSetRequest.addRequest(i+"", mappingRequest);
+	});
+
+	out.addRequest(getDataSetRequest);
+
+	return out;
+};
+	
+
+
+var node_getExecuteMappingRequest1 = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
+
 	//use convert function to calculate output
 	var dataAssociationOutput;
 	if(association!=undefined && association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_CONVERTFUNCTION]!=undefined){
