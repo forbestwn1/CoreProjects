@@ -16,6 +16,9 @@ var packageObj = library;
 	var node_getComplexEntityObjectInterface;
 	var node_createDynamicIOData;
 	var node_createDataAssociation;
+	var node_createIODataSet;
+	var node_createUIDataOperationRequest;
+	var node_UIDataOperation;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,26 +42,35 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 	var loc_dataAssociation = dataAssociation;
 	
 	
-	var loc_createDataSetIOByComplexEntity = function(complexEntityCore){
-		var complexInterface = node_getComplexEntityObjectInterface(complexEntityCore);
-		var bundle = complexInterface.getBundle();
-		var varDomain = bundle.getVariableDomain();
-		var valueContext = complexInterface.getValueContext();
+	var loc_createDataIOByComplexEntity = function(complexEntityCore){
 		
 		return node_createDynamicIOData(function(dataOpService, handlers, request){
-			var fullPath = dataOpService.data.path;
+			var complexInterface = node_getComplexEntityObjectInterface(this);
+			var bundle = complexInterface.getBundle();
+			var varDomain = bundle.getVariableDomain();
+			var valueContext = complexInterface.getValueContext();
+
+			var fullPath = dataOpService.parms.path;
 			var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-			var valueStrcutureRuntimeId = fullPath.subString(0, index);
-			var eleFullPath = fullPath.subString(index+1);
+			var valueStrcutureRuntimeId = fullPath.substring(0, index);
+			var eleFullPath = fullPath.substring(index+1);
+			var rootName;
+			var elePath;
 			index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-			var rootName = eleFullPath.subString(0, index);
-			var elePath = eleFullPath.subString(index+1);
+			if(index!=-1){
+				rootName = eleFullPath.substring(0, index);
+				elePath = eleFullPath.substring(index+1);
+			}
+			else{
+				rootName = eleFullPath;
+				elePath = undefined;
+			}
 			
-			dataOpService.data.path = elePath;
+			dataOpService.parms.path = elePath;
 			var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
-			
+		
 			return node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), handlers, request);
-		});
+		}, undefined, complexEntityCore);
 	};
 	
 	var loc_out = {
@@ -73,16 +85,16 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 			//output data set
 			var outDataSet;
 
-			var parentDataSetIo = loc_createDataSetIOByComplexEntity(parentCore);
-			var childDataSetIo = loc_createDataSetIOByComplexEntity(childRuntime.getCoreEntity());
+			var parentDataIoSet = node_createIODataSet(loc_createDataIOByComplexEntity(parentCore));
+			var childDataIoSet = node_createIODataSet(loc_createDataIOByComplexEntity(childRuntime.getCoreEntity()));
 
 			if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
-				inDataSet = parentDataSetIo;
-				outDataSet = childDataSetIo;
+				inDataSet = parentDataIoSet;
+				outDataSet = childDataIoSet;
 			}
 			else if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_UPSTREAM){
-				inDataSet = childDataSetIo;
-				outDataSet = parentDataSetIo;
+				inDataSet = childDataIoSet;
+				outDataSet = parentDataIoSet;
 			}
 			
 			var da = node_createDataAssociation(inDataSet, loc_dataAssociation, outDataSet, name);
@@ -110,6 +122,9 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociationAdapterPlugin", node_createDataAssociationAdapterPlugin); 

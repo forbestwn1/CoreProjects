@@ -35,12 +35,13 @@ var node_IOTaskInfo = function(taskRequestFun, taskName, inIO, outIO){
 
 //dynamic io data which read and write through function
 //dynamic io data inform the data change through listen to eventObj
-var node_createDynamicIOData = function(dataOperationRequestFun, eventObj){
+var node_createDynamicIOData = function(dataOperationRequestFun, eventObj, thisContext){
 	var loc_dataOperationRequestFun = dataOperationRequestFun;
 	var loc_eventObj = eventObj;
+	var loc_thisContext = thisContext;
 	
 	var loc_out = {
-		getDataOperationRequest : function(dataOperationService, handlers, request){     return loc_dataOperationRequestFun(dataOperationService, handlers, request);      },
+		getDataOperationRequest : function(dataOperationService, handlers, request){     return loc_dataOperationRequestFun.call(loc_thisContext, dataOperationService, handlers, request);      },
 		
 		registerEventListener : function(listener, handler, thisContext){   if(loc_eventObj!=undefined) loc_eventObj.registerListener(undefined, listener, handler, thisContext);   },
 		unregisterEventListener : function(listener){    if(loc_eventObj!=undefined) loc_eventObj.unregister(listener);   },

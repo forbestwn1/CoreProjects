@@ -11,6 +11,8 @@ var packageObj = library;
 	var node_ioTaskUtility;
 	var node_ServiceInfo;
 	var node_objectOperationUtility;
+	var node_uiDataOperationServiceUtility;
+	var node_namingConvensionUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,9 +29,9 @@ var node_getExecuteMappingRequest = function(inputDataSet, association, outputIO
 				var toValueStructureId = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TOVALUESTRUCTUREID];
 				var toItemPath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TOITEMPATH];
 
-				var value = getDataSet.getItem(i+"");
+				var value = getDataSet.getResult(i+"");
 				var dataOperationService = node_uiDataOperationServiceUtility.createSetOperationService(node_namingConvensionUtility.cascadePath(toValueStructureId, toItemPath), value);
-				setDataSetRequest.addRequest(inputDataSet.getDataOperationRequest(toDomainName, dataOperationService));
+				setDataSetRequest.addRequest(outputIODataSet.getDataOperationRequest(toDomainName, dataOperationService));
 			});
 			return setDataSetRequest;
 		}
@@ -115,6 +117,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

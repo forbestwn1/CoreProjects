@@ -86,7 +86,8 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 		},
 			
 		getExecuteRequest : function(handlers, request){
-			return this.getExecuteWithExtraDataRequest(undefined, handlers, request);
+			return loc_getExecuteDataAssociationRequest(loc_inputIO, handlers, request);
+//			return this.getExecuteWithExtraDataRequest(undefined, handlers, request);
 		},
 
 		executeRequest : function(handlers, request){
