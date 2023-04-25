@@ -84,6 +84,12 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_COMPLEXENTITY, {
+
+/*			
+			getExecuteAdapterRequest : function(attrName){
+				treeNodeEntityInterface.getChild(attrName).getAdapter().getExecuteRequest(loc_out, child.getChildValue());
+			},
+*/
 			
 			createComplexAttributeRequest : function(attrName, complexEntityId, adapterInfo, configure, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);

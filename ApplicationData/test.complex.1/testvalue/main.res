@@ -45,7 +45,7 @@
 			"embeded": {
 				"info": {
 					"name" : "localresource.adapter_none_test.complex.script",
-					"status": "disabled1"
+					"status": "disabled"
 				},
 				"parent": {
 					"valuestructure":{
@@ -95,7 +95,7 @@
 			"embeded": {
 				"info": {
 					"name" : "globalresource.adapter_none_test.complex.script",
-					"status": "disabled"
+					"status": "disabled1"
 				},
 				"resourceId": "test.complex.script|*value"
 			},
