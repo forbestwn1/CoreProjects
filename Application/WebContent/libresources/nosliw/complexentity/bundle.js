@@ -95,6 +95,8 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 
 		getDataType: function(){    return  "bundle";   },
 
+		getMainEntity : function(){    return loc_getMainEntity();     },
+
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},

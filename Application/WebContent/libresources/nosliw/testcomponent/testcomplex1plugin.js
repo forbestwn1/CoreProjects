@@ -13,6 +13,8 @@ var packageObj = library;
 	var node_createErrorData;
 	var node_componentUtility;
 	var node_requestServiceProcessor;
+	var node_getObjectType;
+	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -190,7 +192,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 					var adapterView = $('<button>Execute Adapter</button>');
 					attributeView.append(adapterView);
 					adapterView.click(function() {
-						var adapterExecuteRequest = child.getAdapter().getExecuteRequest(loc_out, child.getChildValue());
+						var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child);
 						node_requestServiceProcessor.processRequest(adapterExecuteRequest);
 					});
 				}
@@ -330,6 +332,7 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

@@ -7,10 +7,29 @@ var packageObj = library;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_basicUtility;
+	var node_getObjectType;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_complexEntityUtility = {
+	
+	getAdapterExecuteRequest : function(parentCoreEntity, childNode){
+		var childInput;
+		var childRuntime = childNode.getChildValue();
+		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
+		if(childCore==undefined)   childInput = childRuntime;
+		else{
+			var childCoreType = node_getObjectType(childCore);
+			if(childCoreType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				childInput = childCore.getMainEntity();
+			}
+			else{
+				childInput = childRuntime;
+			}
+		}
+		
+		return childNode.getAdapter().getExecuteRequest(parentCoreEntity, childInput);
+	},
 	
 	getAttributeType : function(attributeObj){
 		return attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_ENTITYTYPE];
@@ -49,6 +68,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("complexEntityUtility", node_complexEntityUtility); 

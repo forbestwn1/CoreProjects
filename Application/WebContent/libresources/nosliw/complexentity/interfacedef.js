@@ -77,7 +77,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 		getValueContext : function(){    return loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);   },
 
 		getBundle : function(){   return loc_bundleCore;  },
-			
+		
 	};
 
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
