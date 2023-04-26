@@ -13,9 +13,9 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public class HAPExecutableAdapter extends HAPInfoAdapter implements HAPExecutable{
+public class HAPInfoAdapterExecutable extends HAPInfoAdapter implements HAPExecutable{
 
-	public HAPExecutableAdapter(String valueType, Object value) {
+	public HAPInfoAdapterExecutable(String valueType, Object value) {
 		super(valueType, value);
 	}
 

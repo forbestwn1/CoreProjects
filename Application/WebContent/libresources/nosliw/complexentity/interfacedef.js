@@ -91,15 +91,21 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 			},
 */
 			
-			createComplexAttributeRequest : function(attrName, complexEntityId, adapterInfo, configure, handlers, request){
+			createComplexAttributeRequest : function(attrName, complexEntityId, adaptersInfo, configure, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {
 					success : function(request, complexEntityRuntime){
-						return nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value, {
-							success : function(request, adapter){
-								treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime, adapter);
-							}							
-						}, request);
+						
+						var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+							success : function(request, adaptersResult){
+								treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime, adaptersResult.getResults());
+							}	
+						});
+						
+						_.each(adaptersInfo, function(adapterInfo){
+							adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+						});
+						return adaptersRequest;
 					}
 				}));
 				return out;
@@ -127,8 +133,8 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		
 		getChild : function(childName){   return loc_children.getElement(childName);	},
 
-		addNormalChild : function(childName, entityRuntime, adapter){
-			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime, adapter));
+		addNormalChild : function(childName, entityRuntime, adapters){
+			loc_children.addElement(childName, loc_createNormalTreeChild(childName, entityRuntime, adapters));
 		},
 		
 		addContainerChild : function(childName, containerValue){
@@ -144,7 +150,7 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			
 			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
 			
-			addNormalChild : function(childName, entityRuntime){   loc_interfaceEntity.addNormalChild(childName, entityRuntime);  },
+			addNormalChild : function(childName, entityRuntime, adapters){   loc_interfaceEntity.addNormalChild(childName, entityRuntime, adapters);  },
 			
 			processChildren : function(processFun){
 				var that = this;
@@ -181,13 +187,13 @@ var loc_createContainerTreeChild = function(childName){
 	return loc_out;
 };
 
-var loc_createNormalTreeChild = function(childName, entityRuntime, adapter){
+var loc_createNormalTreeChild = function(childName, entityRuntime, adapters){
 	
 	var loc_childName = childName;
 	
 	var loc_entityRuntime = entityRuntime;
 	
-	var loc_adapter = adapter;
+	var loc_adapters = adapters;
 	
 	var loc_out = {
 		
@@ -197,7 +203,7 @@ var loc_createNormalTreeChild = function(childName, entityRuntime, adapter){
 		
 		getChildType : function(){   return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;   },
 		
-		getAdapter : function(){   return loc_adapter;    }
+		getAdapters : function(){   return loc_adapters;    }
 		
 	};
 	

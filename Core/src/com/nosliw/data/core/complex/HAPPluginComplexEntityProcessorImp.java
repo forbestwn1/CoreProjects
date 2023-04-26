@@ -2,6 +2,7 @@ package com.nosliw.data.core.complex;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
@@ -15,7 +16,7 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormal;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
-import com.nosliw.data.core.domain.entity.HAPExecutableAdapter;
+import com.nosliw.data.core.domain.entity.HAPInfoAdapterExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
 
@@ -66,10 +67,14 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 			
 			HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 			HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
-			HAPInfoAdapter adapter = ((HAPEmbededDefinition)attrDef.getValue()).getAdapterEntity();
+			Set<HAPInfoAdapter> adapters = ((HAPEmbededDefinition)attrDef.getValue()).getAdapters();
 
-			Object adapterExe = processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, attrNormalExe.getValue().getValue(), processContext);
-			attrNormalExe.getValue().setAdapter(new HAPExecutableAdapter(adapter.getValueType(), adapterExe));
+			for(HAPInfoAdapter adapter : adapters) {
+				Object adapterExeObj = processContext.getRuntimeEnvironment().getComplexEntityManager().processEmbededAdapter(adapter, complexEntityExe, attrNormalExe.getValue().getValue(), processContext);
+				HAPInfoAdapterExecutable adapterExe = new HAPInfoAdapterExecutable(adapter.getValueType(), adapterExeObj);
+				adapter.cloneToEntityInfo(adapterExe);
+				attrNormalExe.getValue().addAdapter(adapterExe);
+			}
 		}
 		else {
 			//container attribute

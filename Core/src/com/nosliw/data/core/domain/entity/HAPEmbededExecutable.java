@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.resource.HAPResourceData;
@@ -18,11 +19,7 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 	public HAPEmbededExecutable() {}
 	
 	public HAPEmbededExecutable(Object entity) {
-		this(entity, null);
-	}
-	
-	public HAPEmbededExecutable(Object entity, HAPExecutableAdapter adapter) {
-		super(entity, adapter);
+		super(entity);
 	}
 
 	@Override
@@ -36,11 +33,12 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 			typeJsonMap.put(VALUE, valueObj.getClass());
 		}
 		
-		Object adapterObj = this.getAdapter();
-		if(adapterObj!=null) {
-			if(adapterObj instanceof HAPExecutable) jsonMap.put(ADAPTER, ((HAPExecutable)adapterObj).toResourceData(runtimeInfo).toString());
-			typeJsonMap.put(ADAPTER, adapterObj.getClass());
+		Map<String, String> adaptersMap = new LinkedHashMap<String, String>();
+		Set<HAPInfoAdapter> adapters = this.getAdapters();
+		for(HAPInfoAdapter adapter : adapters) {
+			if(adapter instanceof HAPExecutable) adaptersMap.put(adapter.getName(), ((HAPExecutable)adapter).toResourceData(runtimeInfo).toString());
 		}
+		jsonMap.put(ADAPTER, HAPUtilityJson.buildMapJson(adaptersMap));
 		return HAPResourceDataFactory.createJSValueResourceData(HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap));
 	}
 	
@@ -48,10 +46,10 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		if(this.getValue() instanceof HAPExecutable)  out.addAll(((HAPExecutable)this.getValue()).getResourceDependency(runtimeInfo, resourceManager));
-		if(this.getAdapter()!=null) {
-			if(this.getAdapter().getValue() instanceof HAPExecutable) {
-				out.addAll(((HAPExecutable)this.getAdapter().getValue()).getResourceDependency(runtimeInfo, resourceManager));
-			}
+
+		Set<HAPInfoAdapter> adapters = this.getAdapters();
+		for(HAPInfoAdapter adapter : adapters) {
+			if(adapter instanceof HAPExecutable) out.addAll(((HAPExecutable)adapter).getResourceDependency(runtimeInfo, resourceManager));
 		}
 		return out;
 	}

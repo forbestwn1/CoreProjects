@@ -13,7 +13,24 @@ var packageObj = library;
 
 var node_complexEntityUtility = {
 	
-	getAdapterExecuteRequest : function(parentCoreEntity, childNode){
+	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter){
+		var childInput;
+		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
+		if(childCore==undefined)   childInput = childRuntime;
+		else{
+			var childCoreType = node_getObjectType(childCore);
+			if(childCoreType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				childInput = childCore.getMainEntity();
+			}
+			else{
+				childInput = childRuntime;
+			}
+		}
+		
+		return adapter.getExecuteRequest(parentCoreEntity, childInput);
+	},
+
+	getAdapterExecuteRequest1 : function(parentCoreEntity, childNode){
 		var childInput;
 		var childRuntime = childNode.getChildValue();
 		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();

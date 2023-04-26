@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 
 @HAPEntityWithAttribute
-public class HAPInfoAdapter extends HAPSerializableImp implements HAPExpandable{
+public class HAPInfoAdapter extends HAPEntityInfoImp implements HAPExpandable{
 
 	@HAPAttribute
 	public static String VALUETYPE = "valueType";
@@ -46,6 +46,7 @@ public class HAPInfoAdapter extends HAPSerializableImp implements HAPExpandable{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUETYPE, this.m_valueType);
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 	}

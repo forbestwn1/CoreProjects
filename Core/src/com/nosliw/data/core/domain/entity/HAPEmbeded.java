@@ -1,7 +1,9 @@
 package com.nosliw.data.core.domain.entity;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -30,20 +32,27 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	private Object m_value;
 	
-	private HAPInfoAdapter m_adapter;
+	//multiple adapters by name
+	private Map<String, HAPInfoAdapter> m_adapters;
 	
-	public HAPEmbeded() {}
+	public HAPEmbeded() {
+		this.m_adapters = new LinkedHashMap<String, HAPInfoAdapter>();
+	}
 	
-	public HAPEmbeded(Object value, HAPInfoAdapter adapter) {
+	public HAPEmbeded(Object value) {
+		this();
 		this.m_value = value;
-		this.m_adapter = adapter;
 	}
 	
 	public Object getValue() {   return this.m_value;   }
 	public void setValue(Object value) {    this.m_value = value;    }
 	
-	public HAPInfoAdapter getAdapter() {	return m_adapter;	}
-	public void setAdapter(HAPInfoAdapter adapter) {	this.m_adapter = adapter;	}
+	public Set<HAPInfoAdapter> getAdapters(){   return new HashSet(this.m_adapters.values());     }
+	public HAPInfoAdapter getAdapter(String name) {	return m_adapters.get(name);	}
+	public void addAdapter(HAPInfoAdapter adapter) {
+		String name = adapter.getName();
+		this.m_adapters.put(name, adapter);	
+	}
 
 	@Override
 	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
@@ -56,21 +65,27 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntity entityDomain) {
 		HAPUtilityDomain.buildExpandedJsonMap(this.getValue(), VALUEEXPANDED, jsonMap, entityDomain);
-		HAPUtilityDomain.buildExpandedJsonMap(this.getAdapter(), ADAPTER, jsonMap, entityDomain);
+		
+		Map<String, String> adaptersJson = new LinkedHashMap<String, String>();
+		for(String name : this.m_adapters.keySet()) {
+			adaptersJson.put(name, m_adapters.get(name).toExpandedJsonString(entityDomain));
+		}
+		jsonMap.put(ADAPTER, HAPUtilityJson.buildMapJson(adaptersJson));
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		if(this.getAdapter()!=null) {
-			jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapter(), HAPSerializationFormat.JSON));
-		}
+		jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapters(), HAPSerializationFormat.JSON));
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 	}
 	
 	public abstract HAPEmbeded cloneEmbeded();
 
 	protected void cloneToEmbeded(HAPEmbeded embeded) {
-		embeded.setAdapter((HAPInfoAdapter)HAPUtilityClone.cloneValue(this.getAdapter()));
 		embeded.setValue(HAPUtilityClone.cloneValue(this.getValue()));	
+		
+		for(HAPInfoAdapter adapterInfo : this.m_adapters.values()) {
+			embeded.addAdapter((HAPInfoAdapter)HAPUtilityClone.cloneValue(adapterInfo));
+		}
 	}
 }

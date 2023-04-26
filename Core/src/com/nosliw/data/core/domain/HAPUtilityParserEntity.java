@@ -1,13 +1,18 @@
 package com.nosliw.data.core.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
 import com.nosliw.data.core.domain.entity.HAPEmbeded;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -28,11 +33,10 @@ public class HAPUtilityParserEntity {
 			HAPIdEntityInDomain entityId = parseEntity(getEntityObject(jsonObj), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 
 			if(entityId!=null) {
+				out = new HAPEmbededDefinition(entityId); 
 				//adapter
-				JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
-				HAPIdEntityInDomain adpaterEntityId = parseAdapter(adapterJsonObj, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-
-				out = new HAPEmbededDefinition(entityId, adpaterEntityId==null?null:new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId)); 
+				List<HAPInfoAdapter> adapters = parseAdapter(jsonObj.optJSONObject(HAPEmbeded.ADAPTER), entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+				for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
 			}
 		}
 		return out;
@@ -55,16 +59,44 @@ public class HAPUtilityParserEntity {
 			HAPIdEntityInDomain entityId = parseComplexEntity(getEntityObject(jsonObj), entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
 			
 			if(entityId!=null) {
+				out = new HAPEmbededDefinition(entityId);
 				//adapter
-				JSONObject adapterJsonObj = jsonObj.optJSONObject(HAPEmbeded.ADAPTER);
-				HAPIdEntityInDomain adpaterEntityId = parseAdapter(adapterJsonObj, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-				
-				out = new HAPEmbededDefinition(entityId, new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId));
+				List<HAPInfoAdapter> adapters = parseAdapter(jsonObj.optJSONObject(HAPEmbeded.ADAPTER), entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+				for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
 			}
 		}
 		return out;
 	}
-	
+
+	private static List<HAPInfoAdapter> parseAdapter(Object adaptersObj, String embededEntityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager){
+		List<HAPInfoAdapter> out = new ArrayList<HAPInfoAdapter>();
+		
+		if(adaptersObj instanceof JSONArray) {
+			JSONArray adaptersArray = (JSONArray)adaptersObj;
+			for(int i=0; i<adaptersArray.length(); i++) {
+				JSONObject adapterObj = adaptersArray.getJSONObject(i);
+				if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
+					HAPIdEntityInDomain adpaterEntityId = parseEntity(adapterObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
+					HAPInfoAdapter adapterInfo = new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId);
+					adapterInfo.buildEntityInfoByJson(adapterObj);
+					if(adapterInfo.getName()==null)   adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
+					out.add(adapterInfo);
+				}
+			}
+		}
+		else if(adaptersObj instanceof JSONObject) {
+			JSONObject adapterObj = (JSONObject)adaptersObj;
+			if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
+				HAPIdEntityInDomain adpaterEntityId = parseEntity(adapterObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
+				HAPInfoAdapter adapterInfo = new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId);
+				adapterInfo.buildEntityInfoByJson(adapterObj);
+				if(adapterInfo.getName()==null)   adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
+				out.add(adapterInfo);
+			}
+		}
+		
+		return out;
+	}
 	
 	//parse entity into domain
 	public static HAPIdEntityInDomain parseEntity(Object obj, String entityTypeIfNotProvided, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
@@ -150,17 +182,6 @@ public class HAPUtilityParserEntity {
 			((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(out, parentInfo);
 		}
 		
-		return out;
-	}
-	
-	private static HAPIdEntityInDomain parseAdapter(Object obj, String embededEntityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPIdEntityInDomain out = null;
-		if(obj!=null) {
-			if(obj instanceof JSONObject) {
-				JSONObject jsonObj = (JSONObject)obj;
-				out = parseEntity(jsonObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
-			}
-		}
 		return out;
 	}
 	

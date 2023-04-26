@@ -78,7 +78,7 @@ var loc_createNormalAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
 
 	var loc_getEmbeded = function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE];	};
-	var loc_getAdapter = function(){   return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ADAPTER];   };
+	var loc_getAdapters = function(){   return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ADAPTER];   };
 	
 	var loc_out = {
 		
@@ -90,11 +90,13 @@ var loc_createNormalAttributeDefinition = function(attrDef){
 		
 		getValue : function(){		return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];	},
 
-		getAdapterInfo : function(){    return loc_getAdapter();     },
+		getAdaptersInfo : function(){    return loc_getAdapters();     },
 		
-		getAdapterType : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUETYPE];     },
+		getAdapterInfo : function(name){    return loc_getAdapters()[name];     },
 		
-		getAdapterValue : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUE];     },
+//		getAdapterType : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUETYPE];     },
+		
+//		getAdapterValue : function(){    return loc_getAdapter()[node_COMMONATRIBUTECONSTANT.INFOADAPTER_VALUE];     },
 		
 	};
 	

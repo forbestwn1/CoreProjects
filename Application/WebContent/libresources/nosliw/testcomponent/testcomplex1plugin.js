@@ -123,7 +123,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 					if(attr.isComplex()==true){
 						//complex
 						var complexEntityId = attrValue;
-						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, attr.getAdapterInfo(), configure.getConfigureValue()[attrName]));
+						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, attr.getAdaptersInfo(), configure.getConfigureValue()[attrName]));
 					}
 					else{
 						//simple attribute
@@ -188,12 +188,14 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
 
 				//adapter view
-				if(child.getAdapter!=undefined){
-					var adapterView = $('<button>Execute Adapter</button>');
-					attributeView.append(adapterView);
-					adapterView.click(function() {
-						var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child);
-						node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+				if(child.getAdapters!=undefined){
+					_.each(child.getAdapters(), function(adapter, adapterName){
+						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
+						attributeView.append(adapterView);
+						adapterView.click(function() {
+							var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
+							node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+						});
 					});
 				}
 
