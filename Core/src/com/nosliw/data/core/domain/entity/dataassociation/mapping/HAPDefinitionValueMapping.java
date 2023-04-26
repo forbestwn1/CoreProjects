@@ -7,13 +7,9 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 public class HAPDefinitionValueMapping extends HAPSerializableImp{
@@ -27,16 +23,16 @@ public class HAPDefinitionValueMapping extends HAPSerializableImp{
 		this.m_items = new LinkedList<HAPItemValueMapping<HAPReferenceElementInValueContext>>();
 	}
 	
-	public void addMapping(String path, HAPElementStructure structureEle) {
-		HAPRootStructure root = null;
-		HAPComplexPath cPath = new HAPComplexPath(path);
-		root = this.m_items.get(cPath.getRoot());
-		if(root==null) {
-			root = new HAPRootStructure();
-			this.m_items.put(cPath.getRoot(), root);
-		}
-		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
-	}
+//	public void addMapping(String path, HAPElementStructure structureEle) {
+//		HAPRootStructure root = null;
+//		HAPComplexPath cPath = new HAPComplexPath(path);
+//		root = this.m_items.get(cPath.getRoot());
+//		if(root==null) {
+//			root = new HAPRootStructure();
+//			this.m_items.put(cPath.getRoot(), root);
+//		}
+//		HAPUtilityStructure.setDescendant(root, cPath.getPath(), structureEle);
+//	}
 	
 	public void addItem(HAPItemValueMapping<HAPReferenceElementInValueContext> item) { 	this.m_items.add(item); 	}
 	

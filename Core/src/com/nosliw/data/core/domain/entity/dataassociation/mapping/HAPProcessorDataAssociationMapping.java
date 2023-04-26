@@ -43,16 +43,15 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPProcessorDataAssociationMapping {
 
-	public static HAPExecutableValueMapping processValueMapping(
+	public static void processValueMapping(
+			HAPExecutableDataAssociationMapping out,
 			HAPExecutableEntityValueContext inValueContext, 
 			HAPDomainValueStructure inValueStructureDomain,
-			HAPDefinitionValueMapping valueMapping,
+			HAPDefinitionDataAssociationMapping valueMapping,
 			HAPExecutableEntityValueContext outValueContext, 
 			HAPDomainValueStructure outValueStructureDomain,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
-		HAPExecutableValueMapping out = new HAPExecutableValueMapping();
-
 		List<HAPItemValueMapping<HAPReferenceElementInValueContext>> mappingItems = valueMapping.getItems();
 		for(HAPItemValueMapping<HAPReferenceElementInValueContext> mappingItem : mappingItems) {
 			
@@ -68,7 +67,6 @@ public class HAPProcessorDataAssociationMapping {
 			//build assignment path mapping according to relative node
 			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem));
 		}
-		return out;
 	}
 	
 	private static HAPElementStructure processRelativeInStructureElement(HAPElementStructure defStructureElement, HAPCandidatesValueContext parentValueContexts, HAPDomainValueStructure valueStructureDomain, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {

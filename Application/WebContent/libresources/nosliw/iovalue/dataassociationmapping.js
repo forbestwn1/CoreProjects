@@ -16,13 +16,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_getExecuteMappingRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
+var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	var getDataSetRequest = node_createServiceRequestInfoSet(undefined, {
 		success : function(request, getDataSet){
 			var setDataSetRequest = node_createServiceRequestInfoSequence({});
-			var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUEMAPPING_MAPPINGPATH];
+			var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONMAPPING_MAPPINGPATH];
 			_.each(mappingPaths, function(mappingPath, i){
 
 				var toDomainName = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TODOMAINNAME];
@@ -37,7 +37,7 @@ var node_getExecuteMappingRequest = function(inputDataSet, association, outputIO
 		}
 	});
 
-	var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEVALUEMAPPING_MAPPINGPATH];
+	var mappingPaths = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATIONMAPPING_MAPPINGPATH];
 	_.each(mappingPaths, function(mappingPath, i){
 		var mappingRequest = node_createServiceRequestInfoSequence({});
 		
@@ -68,44 +68,6 @@ var node_getExecuteMappingRequest = function(inputDataSet, association, outputIO
 	return out;
 };
 	
-
-
-var node_getExecuteMappingRequest1 = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
-
-	//use convert function to calculate output
-	var dataAssociationOutput;
-	if(association!=undefined && association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_CONVERTFUNCTION]!=undefined){
-		dataAssociationOutput = association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_CONVERTFUNCTION](inputDataSet, node_objectOperationUtility.assignObjectAttributeByPath);
-	}
-
-	//matchers
-	out.addRequest(node_ioTaskUtility.processMatchersRequest(dataAssociationOutput, association[node_COMMONATRIBUTECONSTANT.EXECUTABLEMAPPING_OUTPUTMATCHERS], {
-		success :function(request, value){
-			//to output dataSetIO
-			return node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, value, targetName, true);
-		}
-	}));
-	return out;
-};
-	
-//execute data association of mapping type
-var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, dataAssociationDef, outputIODataSet, handlers, request){
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteMappingDataAssociation", {}), handlers, request);
-	var executeAssociationsRequest = node_createServiceRequestInfoSet(undefined, {
-		success : function(request, resultSet){
-			return outputIODataSet;
-		}
-	});
-	
-	_.each(dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_ASSOCIATION], function(association, targetName){
-		executeAssociationsRequest.addRequest(targetName, node_getExecuteMappingRequest(inputDataSet, association, outputIODataSet, targetName));
-	});
-	out.addRequest(executeAssociationsRequest);
-
-	return out;
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -122,6 +84,5 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 
-packageObj.createChildNode("getExecuteMappingRequest", node_getExecuteMappingRequest); 
 
 })(packageObj);
