@@ -13,12 +13,9 @@ var packageObj = library;
 	var node_createErrorData;
 	var node_componentUtility;
 	var node_requestServiceProcessor;
-	var node_getComplexEntityObjectInterface;
-	var node_createDynamicIOData;
 	var node_createDataAssociation;
 	var node_createIODataSet;
-	var node_createUIDataOperationRequest;
-	var node_UIDataOperation;
+	var node_ioTaskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -42,37 +39,6 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 	var loc_dataAssociation = dataAssociation;
 	
 	
-	var loc_createDataIOByComplexEntity = function(complexEntityCore){
-		
-		return node_createDynamicIOData(function(dataOpService, handlers, request){
-			var complexInterface = node_getComplexEntityObjectInterface(this);
-			var bundle = complexInterface.getBundle();
-			var varDomain = bundle.getVariableDomain();
-			var valueContext = complexInterface.getValueContext();
-
-			var fullPath = dataOpService.parms.path;
-			var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-			var valueStrcutureRuntimeId = fullPath.substring(0, index);
-			var eleFullPath = fullPath.substring(index+1);
-			var rootName;
-			var elePath;
-			index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-			if(index!=-1){
-				rootName = eleFullPath.substring(0, index);
-				elePath = eleFullPath.substring(index+1);
-			}
-			else{
-				rootName = eleFullPath;
-				elePath = undefined;
-			}
-			
-			dataOpService.parms.path = elePath;
-			var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
-		
-			return node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), handlers, request);
-		}, undefined, complexEntityCore);
-	};
-	
 	var loc_out = {
 		
 		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
@@ -85,8 +51,8 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 			//output data set
 			var outDataSet;
 
-			var parentDataIoSet = node_createIODataSet(loc_createDataIOByComplexEntity(parentCore));
-			var childDataIoSet = node_createIODataSet(loc_createDataIOByComplexEntity(childRuntime.getCoreEntity()));
+			var parentDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(parentCore));
+			var childDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(childRuntime.getCoreEntity()));
 
 			if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
 				inDataSet = parentDataIoSet;
@@ -119,12 +85,9 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){ioTaskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociationAdapterPlugin", node_createDataAssociationAdapterPlugin); 

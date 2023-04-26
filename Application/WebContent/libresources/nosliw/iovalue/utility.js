@@ -11,11 +11,46 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_getObjectType;
 	var node_createIODataSet;
+	var node_createDynamicIOData;
+	var node_getComplexEntityObjectInterface;
+	var node_createUIDataOperationRequest;
+	var node_UIDataOperation;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
 	
 	var loc_out = {
+
+		createDataIOByComplexEntity : function(complexEntityCore){
+			
+			return node_createDynamicIOData(function(dataOpService, handlers, request){
+				var complexInterface = node_getComplexEntityObjectInterface(this);
+				var bundle = complexInterface.getBundle();
+				var varDomain = bundle.getVariableDomain();
+				var valueContext = complexInterface.getValueContext();
+	
+				var fullPath = dataOpService.parms.path;
+				var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+				var valueStrcutureRuntimeId = fullPath.substring(0, index);
+				var eleFullPath = fullPath.substring(index+1);
+				var rootName;
+				var elePath;
+				index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+				if(index!=-1){
+					rootName = eleFullPath.substring(0, index);
+					elePath = eleFullPath.substring(index+1);
+				}
+				else{
+					rootName = eleFullPath;
+					elePath = undefined;
+				}
+				
+				dataOpService.parms.path = elePath;
+				var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
+			
+				return node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), handlers, request);
+			}, undefined, complexEntityCore);
+		},
 
 		createTransparentDataAssocationDefinition : function(){
 			var out = {};
@@ -143,6 +178,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ioTaskUtility", node_utility); 
