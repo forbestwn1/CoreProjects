@@ -99,20 +99,81 @@
 				},
 				"resourceId": "test.complex.script|*value"
 			},
-			"adapter": {
-				"entityType" : "dataAssociation",
-				"entity" : {
-					"mapping" : {
-						"element_public" : {
-							"definition" : {
-								"mapping" : {
-									"elementPath": "parent_public"
+			"adapter":[ 
+				{
+					"name" : "parentToChild",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"root_public" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "parent_public"
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "parentToChildTreeNode",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"aa" : {
+													"mapping" : {
+														"elementPath": "parent_public"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "parentToChildMatcher",
+					"status": "disabled1",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"root_public" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "parent_matchers_public"
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "childToParent",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"direction": "upStream",
+						"mapping" : {
+							"parent_public" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "root_public"
+									}
 								}
 							}
 						}
 					}
 				}
-			}
+			]
 		},
 		{
 			"info": {
@@ -124,7 +185,7 @@
 		{
 			"info": {
 				"name" : "localresource.merge.runtime_none_test.complex.script",
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"parent": {
 				"valuestructure":{
@@ -179,6 +240,15 @@
 							"defaultValue": {
 								"dataTypeId": "test.string",
 								"value": "default value of parent_public"
+							}
+						},
+						"parent_matchers_public": {
+							"definition":{
+								"criteria": "test.url"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.url",
+								"value": "default value of parent_matchers_public"
 							}
 						},
 						"parent_public_withchildren": {

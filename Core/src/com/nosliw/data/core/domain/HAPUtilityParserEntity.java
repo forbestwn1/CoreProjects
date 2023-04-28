@@ -35,8 +35,11 @@ public class HAPUtilityParserEntity {
 			if(entityId!=null) {
 				out = new HAPEmbededDefinition(entityId); 
 				//adapter
-				List<HAPInfoAdapter> adapters = parseAdapter(jsonObj.optJSONObject(HAPEmbeded.ADAPTER), entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-				for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+				Object adapterObjs = jsonObj.opt(HAPEmbeded.ADAPTER);
+				if(adapterObjs!=null) {
+					List<HAPInfoAdapter> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+					for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+				}
 			}
 		}
 		return out;
@@ -61,8 +64,11 @@ public class HAPUtilityParserEntity {
 			if(entityId!=null) {
 				out = new HAPEmbededDefinition(entityId);
 				//adapter
-				List<HAPInfoAdapter> adapters = parseAdapter(jsonObj.optJSONObject(HAPEmbeded.ADAPTER), entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-				for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+				Object adapterObjs = jsonObj.opt(HAPEmbeded.ADAPTER);
+				if(adapterObjs!=null) {
+					List<HAPInfoAdapter> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+					for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+				}
 			}
 		}
 		return out;
