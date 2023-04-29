@@ -64,8 +64,11 @@ public class HAPProcessorDataAssociationMapping {
 			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
-			//build assignment path mapping according to relative node
+			//build relative assignment path mapping according to relative node
 			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, outValueStructureDomain, runtimeEnv));
+			
+			//build constant assignment
+			
 		}
 	}
 	

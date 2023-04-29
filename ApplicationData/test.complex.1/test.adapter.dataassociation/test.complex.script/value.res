@@ -1,0 +1,47 @@
+{
+	"info": {
+		"name" : "value",
+		"status": "disabled1"
+	},
+	"entity":{
+		"scriptName": "complexscript_test_value",
+		"parm" : {
+			"variable" : []
+		},
+		"valueContext" :{
+			"entity": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"child_tree_public" : {
+							"definition": {
+								"child" : {
+									"a" : {
+										"child" : {
+											"aa" : {"criteria":"test.string;1.0.0"},
+											"ab" : {"criteria":"test.url;1.0.0"},
+											"ac" : {}
+										}
+									}
+								}
+							},
+							"defaultValue": {
+								"a" : {
+									"aa" : {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_tree_public.a.aa"
+									},
+									"ab" : {
+										"dataTypeId": "test.url;1.0.0",
+										"value": "default value of child_tree_public.a.ab"
+									},
+									"ac" : "default value of child_tree_public.a.ac"
+								}
+							}
+						}
+					}
+				}
+			]
+		} 			
+	}
+}

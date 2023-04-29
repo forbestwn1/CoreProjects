@@ -321,7 +321,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataFrom.getDataValue().getDataTypeId(), null)), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				if(!matcher.isVoid())  matchers.put(path, matcher);
+				matchers.put(path, matcher);
 				break;
 			}
 			default:
@@ -338,7 +338,7 @@ public class HAPUtilityStructure {
 				 HAPElementStructureLeafConstant dataTo = (HAPElementStructureLeafConstant)toDef.getSolidStructureElement();
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), new HAPDataTypeCriteriaId(dataTo.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
-				if(!matcher.isVoid())  matchers.put(path, matcher);
+				matchers.put(path, matcher);
 				break;
 			}
 			}
@@ -352,7 +352,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				if(matcher!=null&&!matcher.isVoid())  matchers.put(path, matcher);
+				matchers.put(path, matcher==null?new HAPMatchers():matcher);
 				break;
 			}
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
