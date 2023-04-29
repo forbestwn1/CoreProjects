@@ -235,19 +235,19 @@
 					"valueStructure" : {
 						"parent_public": {
 							"definition":{
-								"criteria": "test.string"
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.string",
+								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
 							}
 						},
 						"parent_matchers_public": {
 							"definition":{
-								"criteria": "test.url"
+								"criteria": "test.url;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.url",
+								"dataTypeId": "test.url;1.0.0",
 								"value": "default value of parent_matchers_public"
 							}
 						},
@@ -264,7 +264,7 @@
 							"defaultValue": {
 								"a": {
 									"aa" : {
-										"dataTypeId": "test.string",
+										"dataTypeId": "test.string;1.0.0",
 										"value": "default value of a.aa"
 									}
 								}
@@ -277,10 +277,10 @@
 					"valueStructure" : {
 						"parent_protected": {
 							"definition":{
-								"criteria": "test.string"
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.string",
+								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_protected"
 							}
 						}
@@ -291,10 +291,10 @@
 					"valueStructure" : {
 						"parent_private": {
 							"definition":{
-								"criteria": "test.string"
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.string",
+								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_private"
 							}
 						}
@@ -305,10 +305,10 @@
 					"valueStructure" : {
 						"parent_public": {
 							"definition":{
-								"criteria": "test.string"
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.string",
+								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_internal"
 							}
 						}

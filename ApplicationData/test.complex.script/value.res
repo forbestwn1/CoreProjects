@@ -15,19 +15,19 @@
 					"valueStructure" : {
 						"root_public": {
 							"definition":{
-								"criteria": "test.string"
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.string",
+								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of root_public"
 							}
 						},
 						"matchers_public": {
 							"definition":{
-								"criteria": "test.url"
+								"criteria": "test.url;1.0.0"
 							},
 							"defaultValue": {
-								"dataTypeId": "test.url",
+								"dataTypeId": "test.url;1.0.0",
 								"value": "default value of url_public"
 							}
 						},

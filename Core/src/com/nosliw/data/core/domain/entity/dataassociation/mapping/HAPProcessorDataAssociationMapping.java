@@ -65,7 +65,7 @@ public class HAPProcessorDataAssociationMapping {
 			out.addItem(valueMappingItem);
 			
 			//build assignment path mapping according to relative node
-			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem));
+			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, outValueStructureDomain, runtimeEnv));
 		}
 	}
 	
