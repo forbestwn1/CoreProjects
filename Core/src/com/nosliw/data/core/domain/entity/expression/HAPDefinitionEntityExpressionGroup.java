@@ -8,18 +8,19 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDomainComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
 
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;
+	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP;
 
 	private Map<String, HAPDefinitionExpression> m_elements;
 	
@@ -86,4 +87,10 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDom
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT;  }
+
+	@Override
+	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

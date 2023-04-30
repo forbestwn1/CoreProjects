@@ -60,7 +60,7 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpression.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
@@ -71,7 +71,7 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpression.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

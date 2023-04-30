@@ -543,6 +543,7 @@
 
 			<definition type="space"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSION" value="dataexpression"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP" value="dataexpressiongroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE" value="dataexpressionsuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION" value="scriptexpression"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_OPERATION" value="operation"/>

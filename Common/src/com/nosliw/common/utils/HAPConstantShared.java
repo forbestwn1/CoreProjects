@@ -454,6 +454,7 @@ public class HAPConstantShared {
 
 
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSION = "dataexpression";
+		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP = "dataexpressiongroup";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE = "dataexpressionsuite";
 		public static final String RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION = "scriptexpression";
 		public static final String RUNTIME_RESOURCE_TYPE_OPERATION = "operation";

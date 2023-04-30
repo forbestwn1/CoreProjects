@@ -6,13 +6,6 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "reference.localresource_none_test.complex.script",
-				"status": "disabled"
-			},
-			"resourceId": "test.complex.script|#reference"
-		},
-		{
-			"info": {
 				"name" : "merge.runtime.localresource_none_test.complex.script",
 				"status": "disabled1"
 			},

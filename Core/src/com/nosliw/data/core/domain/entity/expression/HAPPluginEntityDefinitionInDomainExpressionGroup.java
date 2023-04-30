@@ -8,9 +8,9 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainExpression extends HAPPluginEntityDefinitionInDomainImpComplex{
+public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
 
-	public HAPPluginEntityDefinitionInDomainExpression(HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginEntityDefinitionInDomainExpressionGroup(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPDefinitionEntityExpressionGroup.class, runtimeEnv);
 	}
 

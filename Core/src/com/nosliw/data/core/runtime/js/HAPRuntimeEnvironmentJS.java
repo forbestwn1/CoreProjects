@@ -30,7 +30,7 @@ import com.nosliw.data.core.domain.entity.dataassociation.HAPPluginEntityDefinit
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpressionSuite;
-import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpression;
+import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPProcessorAttachmentEntityExpression;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPPluginResourceDefinitionExpressionGroup;
@@ -282,7 +282,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueContext(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructure(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionSuite(this));
-		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpression(this));
+		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionGroup(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainConfigure(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainScript(this));
 		this.getDomainEntityManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociation(this));
