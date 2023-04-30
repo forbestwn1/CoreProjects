@@ -24,6 +24,7 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPPathElementMapping;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
@@ -34,27 +35,48 @@ public class HAPUtilityDataAssociation {
 		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorContextDefinitionElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+				String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
+				HAPComplexPath toItemPath = new HAPComplexPath(eleInfo.getElementPath().getFullName());
+				
+				HAPDefinitionEntityValueStructure toValueStructure = inValueStructureDomain.getValueStructureDefInfoByRuntimeId(toValueStructureId).getValueStructure();
+				HAPElementStructure toElement = HAPUtilityStructure.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
+				
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-					
-					String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
-					HAPComplexPath toItemPath = new HAPComplexPath(eleInfo.getElementPath().getFullName());
 					
 					String fromValueStructureId = relativeEle.getResolveInfo().getResolvedStructureId();
 					String fromItemPath = relativeEle.getResolveInfo().getResolvedElementPath().getFullName();
 					
-					HAPDefinitionEntityValueStructure toValueStructure = inValueStructureDomain.getValueStructureDefInfoByRuntimeId(toValueStructureId).getValueStructure();
-					HAPElementStructure toElement = HAPUtilityStructure.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
+					List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
+					HAPUtilityStructure.mergeElement(relativeEle.getResolveInfo().getSolidElement(),  toElement, false, mappingPaths, null, runtimeEnv);
 					
-					Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-					HAPUtilityStructure.mergeElement(relativeEle.getResolveInfo().getSolidElement(),  toElement, false, matchers, null, runtimeEnv);
-					
-					for(String path : matchers.keySet()) {
-						HAPMatchers matcher = matchers.get(path);
-						out.add(new HAPPathValueMapping(relativeEle.getReference().getParentValueContextName(), fromValueStructureId, HAPUtilityNamingConversion.cascadePath(fromItemPath, path), matcher.isVoid()?null:matcher, valueMappingItem.getTarget().getDomainId(), toValueStructureId, HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), path)));
+					for(HAPPathElementMapping mappingPath : mappingPaths) {
+						HAPMatchers matchers = mappingPath.getMatcher();
+						if(matchers.isVoid())  matchers = null;
+						String fromItemFullPath = HAPUtilityNamingConversion.cascadePath(fromItemPath, mappingPath.getPath());
+						String toItemFullPath = HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), mappingPath.getPath());
+						if(mappingPath.getFromConstant()!=null) {
+							//from constant
+							out.add(new HAPPathValueMapping(mappingPath.getFromConstant(), matchers, valueMappingItem.getTarget().getDomainId(), toValueStructureId, toItemFullPath));
+						}
+						else {
+							//from variable
+							out.add(new HAPPathValueMapping(relativeEle.getReference().getParentValueContextName(), fromValueStructureId, fromItemFullPath, matchers, valueMappingItem.getTarget().getDomainId(), toValueStructureId, toItemFullPath));
+						}
 					}
 					
 					return Pair.of(false, null);
+				}
+				else if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
+					HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
+					List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
+					HAPUtilityStructure.mergeElement(eleInfo.getElement(),  toElement, false, mappingPaths, null, runtimeEnv);
+					for(HAPPathElementMapping mappingPath : mappingPaths) {
+						HAPMatchers matchers = mappingPath.getMatcher();
+						if(matchers.isVoid())  matchers = null;
+						String toItemFullPath = HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), mappingPath.getPath());
+						out.add(new HAPPathValueMapping(mappingPath.getFromConstant(), matchers, valueMappingItem.getTarget().getDomainId(), toValueStructureId, toItemFullPath));
+					}
 				}
 				return null;
 			}
@@ -63,7 +85,6 @@ public class HAPUtilityDataAssociation {
 			public void postProcess(HAPInfoElement eleInfo, Object value) {	}}, null);
 		return out;
 	}
-
 	
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping1(HAPItemValueMapping<HAPIdRootElement> valueMappingItem){

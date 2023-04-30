@@ -10,19 +10,19 @@
 					"name" : "adapter_none_test.complex.script",
 					"status": "disabled1"
 				},
-				"resourceId": "test.complex.script|#value",
+				"resourceId": "test.complex.script|#child",
 				"parent": {
 					"valuestructure":{
 						"inherit":{
 							"mode" : "none"
 						}
 					}
-				},
+				}
 			},
 			"adapter":[
 				{
 					"name" : "parent.child.data",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {
@@ -46,7 +46,7 @@
 				},
 				{
 					"name" : "parent.child.data.matcher",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {
@@ -69,8 +69,33 @@
 					}
 				},
 				{
-					"name" : "parent.child.node",
+					"name" : "parent.child.data.constant",
 					"status": "disabled1",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"child_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"aa" : {
+													"value" : {
+														"dataTypeId": "test.url;1.0.0",
+														"value": "constant value"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "parent.child.node",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {
@@ -90,7 +115,7 @@
 				},
 				{
 					"name" : "child.parent.data",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"direction": "upStream",
@@ -112,6 +137,52 @@
 							}
 						}
 					}
+				},
+				{
+					"name" : "child.parent.data.matcher",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"direction": "upStream",
+						"mapping" : {
+							"parent_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"aa" : {
+													"mapping" : {
+														"elementPath": "child_tree_public.a.ab"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "child.parent.node",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"direction": "upStream",
+						"mapping" : {
+							"parent_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"mapping" : {
+												"elementPath": "child_tree_public.a"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
 				}
 			]
 		},
@@ -120,6 +191,13 @@
 				"name" : "debug.parent.valuestructure_none_test.complex.script",
 				"status": "disabled1"
 			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},			
 			"entity":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {

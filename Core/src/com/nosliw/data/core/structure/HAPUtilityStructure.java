@@ -306,7 +306,7 @@ public class HAPUtilityStructure {
 	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
-	public static void mergeElement(HAPElementStructure fromDef1, HAPElementStructure toDef1, boolean modifyStructure, Map<String, HAPMatchers> matchers, String path, HAPRuntimeEnvironment runtimeEnv){
+	public static void mergeElement(HAPElementStructure fromDef1, HAPElementStructure toDef1, boolean modifyStructure, List<HAPPathElementMapping> mappingPaths, String path, HAPRuntimeEnvironment runtimeEnv){
 		if(path==null)  path = "";
 		//merge is about solid
 		HAPElementStructure fromDef = fromDef1.getSolidStructureElement();
@@ -321,7 +321,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataFrom.getDataValue().getDataTypeId(), null)), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				matchers.put(path, matcher);
+				mappingPaths.add(new HAPPathElementMapping(dataFrom.getValue(), matcher));
 				break;
 			}
 			default:
@@ -331,17 +331,18 @@ public class HAPUtilityStructure {
 			}
 		}
 		else if(toDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
-			switch(fromDef.getType()) {
-			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
-			{
-				HAPElementStructureLeafData dataFrom = (HAPElementStructureLeafData)fromDef;
-				 HAPElementStructureLeafConstant dataTo = (HAPElementStructureLeafConstant)toDef.getSolidStructureElement();
-				//cal matchers
-				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), new HAPDataTypeCriteriaId(dataTo.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
-				matchers.put(path, matcher);
-				break;
-			}
-			}
+			HAPErrorUtility.invalid("");
+//			switch(fromDef.getType()) {
+//			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
+//			{
+//				HAPElementStructureLeafData dataFrom = (HAPElementStructureLeafData)fromDef;
+//				 HAPElementStructureLeafConstant dataTo = (HAPElementStructureLeafConstant)toDef.getSolidStructureElement();
+//				//cal matchers
+//				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), new HAPDataTypeCriteriaId(dataTo.getDataValue().getDataTypeId(), null), runtimeEnv.getDataTypeHelper()); 
+//				mappingPaths.put(path, matcher);
+//				break;
+//			}
+//			}
 		}
 		else {
 			if(!fromDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
@@ -352,7 +353,7 @@ public class HAPUtilityStructure {
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				matchers.put(path, matcher==null?new HAPMatchers():matcher);
+				mappingPaths.add(new HAPPathElementMapping(path, matcher==null?new HAPMatchers():matcher));
 				break;
 			}
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
@@ -371,7 +372,7 @@ public class HAPUtilityStructure {
 								childNodeFrom = new HAPElementStructureLeafData();
 								nodeFrom.addChild(nodeName, childNodeFrom);
 							}
-							mergeElement(childNodeFrom, childNodeTo, modifyStructure, matchers, childPath, runtimeEnv);
+							mergeElement(childNodeFrom, childNodeTo, modifyStructure, mappingPaths, childPath, runtimeEnv);
 							break;
 						}
 						case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
@@ -380,7 +381,7 @@ public class HAPUtilityStructure {
 								childNodeFrom = new HAPElementStructureNode();
 								nodeFrom.addChild(nodeName, childNodeFrom);
 							}
-							mergeElement(childNodeFrom, childNodeTo, modifyStructure, matchers, childPath, runtimeEnv);
+							mergeElement(childNodeFrom, childNodeTo, modifyStructure, mappingPaths, childPath, runtimeEnv);
 							break;
 						}
 						default :
@@ -398,7 +399,7 @@ public class HAPUtilityStructure {
 			}
 			default : 
 			{
-				matchers.put(path, new HAPMatchers());
+				mappingPaths.add(new HAPPathElementMapping(path, new HAPMatchers()));
 			}
 			}
 		}

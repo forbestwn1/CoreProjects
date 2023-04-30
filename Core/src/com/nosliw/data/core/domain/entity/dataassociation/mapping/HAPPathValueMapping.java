@@ -28,6 +28,9 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	public static String FROMITEMPATH = "fromItemPath";
 
 	@HAPAttribute
+	public static String FROMCONSTANT = "fromConstant";
+	
+	@HAPAttribute
 	public static String MATCHERS = "matchers";
 
 	@HAPAttribute
@@ -40,6 +43,8 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	private String m_fromDomainName;
 	private String m_fromValueStructureId;
 	private String m_fromItemPath;
+	
+	private Object m_fromConstant;
 	
 	private HAPMatchers m_matchers;
 	
@@ -56,10 +61,19 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
-	
+
+	public HAPPathValueMapping(Object fromConstant, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
+		this.m_fromConstant = fromConstant;
+		this.m_matchers = matchers;
+		this.m_toDomainName = toDomainName;
+		this.m_toValueStructureId = toValueStructureId;
+		this.m_toItemPath = toItemPath;
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(FROMCONSTANT, HAPUtilityJson.buildJson(m_fromConstant, HAPSerializationFormat.JSON));
 		jsonMap.put(FROMDOMAINNAME, this.m_fromDomainName);
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);

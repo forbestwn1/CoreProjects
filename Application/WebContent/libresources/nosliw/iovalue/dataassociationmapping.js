@@ -44,19 +44,32 @@ var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, associ
 		var fromDomainName = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMDOMAINNAME];
 		var fromValueStructureId = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMVALUESTRUCTUREID];
 		var fromItemPath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMITEMPATH];
+
+		var fromConstant = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMCONSTANT];
 		
 		var matchers = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_MATCHERS];
 		
-		var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
-		mappingRequest.addRequest(inputDataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
-			success : function(request, value){
-				value = value.value
-				if(matchers==undefined)   return value;
-				else{
-					return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers)
-				}
+		if(fromConstant!=undefined){
+			//from constant
+			if(matchers==undefined)   return mappingRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){  return fromConstant;  }));
+			else{
+				mappingRequest.addRequest(nosliw.runtime.getExpressionService().getMatchDataRequest(fromConstant, matchers));
 			}
-		}));
+		}
+		else{
+			//from variable
+			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
+			mappingRequest.addRequest(inputDataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
+				success : function(request, value){
+					value = value.value
+					if(matchers==undefined)   return value;
+					else{
+						return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers)
+					}
+				}
+			}));
+		}
+		
 		getDataSetRequest.addRequest(i+"", mappingRequest);
 	});
 
