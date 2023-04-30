@@ -40,16 +40,17 @@ import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementRefere
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 
-public class HAPPluginComplexEntityProcessorExpression extends HAPPluginComplexEntityProcessorImp{
+public class HAPPluginComplexEntityProcessorExpressionGroup extends HAPPluginComplexEntityProcessorImp{
 
-	public HAPPluginComplexEntityProcessorExpression() {
+	public HAPPluginComplexEntityProcessorExpressionGroup() {
 		super(HAPExecutableExpressionGroup.class);
 	}
 
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 
-		HAPIdEntityInDomain exeEntityId = processContext.getDomainContext().getExecutableIdByDefinitionId(complexEntityDefinitionId);
+		HAPIdEntityInDomain complexEntityDefinitionId;
+		HAPIdEntityInDomain exeEntityId = processContext.getCurrentBundle().getExecutableEntityIdByDefinitionEntityId(complexEntityDefinitionId);
 		
 //		Triple<HAPDefinitionExpressionGroup1, HAPExecutableExpressionGroup, HAPComplexValueStructure> entityInfo = getComplexEntityByExecutableId(out, processContext);
 //		HAPExecutableExpressionGroup expressionGroupExe = entityInfo.getMiddle();

@@ -6,24 +6,23 @@
 	"entity":{
 		"scriptName": "complexscript_test_value",
 		"parm" : {
-			"variable1" : ["reference_link_1", "reference_definition_1"],
-			"variable" : ["reference_link_1", "reference_definition_1", "reference_link_child"]
+			"variable" : []
 		},
 		"valueContext" :{
 			"entity": [
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"reference_link_1": {
-							"status": "disabled",
+						"reference_definition": {
+							"status": "disabled1",
 							"definition": {
 								"definition" : {
 									"elementPath": "parent_public"
 								}
 							}
 						},
-						"reference_definition_1": {
-							"status": "disabled",
+						"reference_link": {
+							"status": "disabled1",
 							"definition": {
 								"link" : {
 									"elementPath": "parent_public"
@@ -31,9 +30,21 @@
 							}
 						},
 						"reference_link_child": {
+							"status": "disabled1",
 							"definition": {
 								"link" : {
 									"elementPath": "parent_public_withchildren.a.aa"
+								}
+							}
+						},
+						"reference_link_matchers": {
+							"status": "disabled1",
+							"definition": {
+								"link" : {
+									"elementPath": "parent_public",
+									definition : {
+										criteria : "test.url;1.0.0"
+									}
 								}
 							}
 						}

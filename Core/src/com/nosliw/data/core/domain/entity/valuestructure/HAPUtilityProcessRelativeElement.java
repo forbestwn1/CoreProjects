@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.entity.valuestructure;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
+import com.nosliw.data.core.structure.HAPPathElementMapping;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
@@ -188,14 +190,14 @@ public class HAPUtilityProcessRelativeElement {
 		}
 		else {
 			//figure out matchers
-			Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
-			HAPUtilityStructure.mergeElement(defStructureElementRelative.getResolveInfo().getSolidElement(), relativeContextEle, false, matchers, null, runtimeEnv);
+			List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
+			HAPUtilityStructure.mergeElement(defStructureElementRelative.getResolveInfo().getSolidElement(), relativeContextEle, false, mappingPaths, null, runtimeEnv);
 			//remove all the void matchers
 			Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
-			for(String p : matchers.keySet()){
-				HAPMatchers match = matchers.get(p);
+			for(HAPPathElementMapping mappingPath : mappingPaths){
+				HAPMatchers match = mappingPath.getMatcher();
 				if(!match.isVoid()){
-					noVoidMatchers.put(p, match);
+					noVoidMatchers.put(mappingPath.getPath(), match);
 				}
 			}
 			defStructureElementRelative.setMatchers(noVoidMatchers);

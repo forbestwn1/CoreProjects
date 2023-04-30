@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -16,13 +16,13 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
-			HAPDomainEntityDefinitionLocal definitionDomain) {
-		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)definitionDomain.getEntityInfoDefinition(entityId).getEntity();
+			HAPContextParser parserContext) {
+		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)this.getEntity(entityId, parserContext);
 		
 		//parse expression items
 		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj);
 	}
-	
+
 	private void parseExpressionDefinitionList(HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj){
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionGroup.ELEMENT);
 		if(eleArrayJson!=null) {
@@ -51,6 +51,4 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 			}
 		}
 	}
-
-
 }

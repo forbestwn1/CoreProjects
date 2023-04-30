@@ -7,7 +7,14 @@
 		{
 			"info": {
 				"name" : "reference.localresource_none_test.complex.script",
-				"status": "disabled"
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "none"
+					}
+				}
 			},
 			"resourceId": "test.complex.script|#reference"
 		},
@@ -52,7 +59,7 @@
 								"a": {
 									"aa" : {
 										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of a.aa"
+										"value": "default value of parent_public_withchildren.a.aa"
 									}
 								}
 							}

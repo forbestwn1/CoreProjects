@@ -6,10 +6,8 @@ import java.util.Map;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
-import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
@@ -98,21 +96,13 @@ public class HAPManagerResourceDefinition {
 		return out;
 	}
 	
-	public HAPIdEntityInDomain parseEntityDefinition(Object obj, String entityType, HAPDomainEntityDefinitionLocal entityDomain, HAPPathLocationBase localRefBase) {
-		return this.m_plugins.get(entityType).parseResourceEntity(obj, entityDomain, localRefBase);
+	public void registerPlugin(HAPPluginResourceDefinition plugin) {
+		this.m_plugins.put(plugin.getResourceType(), plugin);
 	}
 	
 	public HAPDefinitionResourceComplex getAdjustedComplextResourceDefinition(HAPResourceId resourceId, HAPDefinitionEntityContainerAttachment parentAttachment) {
 		HAPDefinitionResourceComplex out = (HAPDefinitionResourceComplex)this.getLocalResourceDefinition(resourceId);
 		HAPUtilityComponent.mergeWithParentAttachment(out, parentAttachment);
 		return out;
-	}
-	
-	public HAPEntityResourceDefinition parseResourceEntity(String type, Object content) {
-		return this.m_plugins.get(type).parseResourceEntity(content);
-	}
-	
-	public void registerPlugin(HAPPluginResourceDefinition plugin) {
-		this.m_plugins.put(plugin.getResourceType(), plugin);
 	}
 }

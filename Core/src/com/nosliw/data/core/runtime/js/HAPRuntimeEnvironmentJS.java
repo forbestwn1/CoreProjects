@@ -28,12 +28,11 @@ import com.nosliw.data.core.domain.entity.configure.HAPResourceManagerImpConfigu
 import com.nosliw.data.core.domain.entity.dataassociation.HAPPluginAdapterProcessorDataAssociation;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPPluginEntityDefinitionInDomainDataAssociation;
 import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpression;
+import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginComplexEntityProcessorExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.HAPProcessorAttachmentEntityExpression;
-import com.nosliw.data.core.domain.entity.expression.resource.HAPPluginResourceDefinitionExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.domain.entity.script.HAPPluginEntityDefinitionInDomainScript;
 import com.nosliw.data.core.domain.entity.script.HAPResourceManagerImpScript;
@@ -244,6 +243,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		
 		//component
 
+		//resource
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, this));
@@ -254,7 +254,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, new HAPParserResourceValue()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, this));
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionExpressionGroup(this.getResourceDefinitionManager()));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, this));
 //		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION, new HAPParserResourceDefinitionScriptGroup()));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
@@ -290,8 +290,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		//complex entity
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplex1());
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestComplexScript());
-		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpression());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionGroup());
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorTestDecoration1());
+		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionGroup());
 		this.getComplexEntityManager().registerComplexEntityProcessorPlugin(new HAPPluginComplexEntityProcessorExpressionSuite());
 		
 		//adapter entity
