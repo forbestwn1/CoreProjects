@@ -34,7 +34,6 @@ var node_componentUtility = {
 	//    decoration configure
 	processRuntimeConfigure : function(configure){
 		configure = node_createConfigure(configure);
-		var packageConfigure;
 		var decorationInfos = [];
 		var decorationConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION);
 		var coreConfigureName = node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_CORE);
@@ -42,10 +41,9 @@ var node_componentUtility = {
 			var coreConfigure = configure.getChildConfigure(coreConfigureName);
 			var decsConfigure = configure.getChildConfigure(decorationConfigureName);
 
-			var idSet = decsConfigure.getChildrenIdSet();
-			_.each(idSet, function(id, index){
-				var decConfigure = decsConfigure.getChildConfigure(id);
-				
+			var childConfigureSet = decsConfigure.getChildConfigureSet();
+			_.each(childConfigureSet, function(childConfigureInfo, index){
+				var decConfigure = childConfigureInfo.configure;
 				var decInfoConfigureValue = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_INFO)).getConfigureValue();
 				var decCoreConfigure = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_CORE));
 				decorationInfos.push(new node_DecorationInfo(decInfoConfigureValue.name, decInfoConfigureValue.type, decInfoConfigureValue.id, decCoreConfigure));

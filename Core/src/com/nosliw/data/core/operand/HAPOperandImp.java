@@ -60,7 +60,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	public void setStatusInvalid(){  this.setStatus(HAPConstantShared.EXPRESSION_OPERAND_STATUS_INVALID); }
 	
 	@Override
-	public List<HAPOperandWrapper> getChildren(){		return new ArrayList<HAPOperandWrapper>();	}
+	public List<HAPWrapperOperand> getChildren(){		return new ArrayList<HAPWrapperOperand>();	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -112,7 +112,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 		
 	}
 	
-	protected HAPOperandWrapper createOperandWrapper(HAPOperand operand){
-		return new HAPOperandWrapper(operand);
+	protected HAPWrapperOperand createOperandWrapper(HAPOperand operand){
+		return new HAPWrapperOperand(operand);
 	}
 }

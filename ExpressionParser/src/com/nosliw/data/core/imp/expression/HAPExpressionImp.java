@@ -17,10 +17,10 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandTask;
-import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPOperandVariable;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 
 /**
  * Parsed expression 

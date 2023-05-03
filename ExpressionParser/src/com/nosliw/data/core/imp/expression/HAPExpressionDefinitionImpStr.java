@@ -10,7 +10,7 @@ import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaWrapperLiterate;
 import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 
 public class HAPExpressionDefinitionImpStr{ 
 /*

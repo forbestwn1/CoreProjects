@@ -59,6 +59,32 @@ var node_buildSimpleEntityPlugInObject = function(rawPluginObj){
 	return _.extend({}, interfaceDef, rawPluginObj);	
 };
 
+var node_makeObjectBasicEntityObjectInterface = function(rawEntity, entityDefinition, configure){
+
+	var loc_rawEntity = rawEntity;
+	
+	var loc_entityDefinition = entityDefinition;
+	
+	var loc_configure = configure;
+	
+	var loc_interfaceEntity = {
+		getConfigure : function(){    return loc_configure;     },
+		getEntityDefinition : function(){   return loc_entityDefinition;    }
+	};
+
+	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
+	if(embededEntityInterface!=null){
+		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_BASICENTITY, {});
+	}
+
+	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_BASICENTITY, loc_interfaceEntity);
+	return loc_out;
+};
+
+var node_getBasicEntityObjectInterface = function(baseObject){
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_BASICENTITY);
+};
+
 
 var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueContextId, bundleCore){
 	
@@ -82,6 +108,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
+	var basicEntityInterface = node_getBasicEntityObjectInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_COMPLEXENTITY, {
 
@@ -90,26 +117,42 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				treeNodeEntityInterface.getChild(attrName).getAdapter().getExecuteRequest(loc_out, child.getChildValue());
 			},
 */
-			
-			createComplexAttributeRequest : function(attrName, complexEntityId, adaptersInfo, configure, handlers, request){
+
+			createAttributeRequest : function(attrName, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
-				out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(complexEntityId, loc_out, loc_bundleCore, configure, {
-					success : function(request, complexEntityRuntime){
-						
-						var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-							success : function(request, adaptersResult){
-								treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime, adaptersResult.getResults());
-							}	
-						});
-						
-						_.each(adaptersInfo, function(adapterInfo){
-							adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
-						});
-						return adaptersRequest;
+				
+				var complexEntityDef = basicEntityInterface.getEntityDefinition();
+				var configure = basicEntityInterface.getConfigure();
+				var attr = complexEntityDef.getAttribute(attrName);
+				
+				if(attr.isNormalAttribute()){
+					//normal attribute
+					var attrValue = attr.getValue();
+					var entityType = attr.getEntityType();
+					if(attr.isComplex()==true){
+						//complex
+						var childEntitId = attrValue;
+						var childConfigure = configure.getChildConfigure(attrName);
+
+						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, {
+							success : function(request, complexEntityRuntime){
+								
+								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+									success : function(request, adaptersResult){
+										treeNodeEntityInterface.addNormalChild(attrName, complexEntityRuntime, adaptersResult.getResults());
+									}	
+								});
+								
+								_.each(adaptersInfo, function(adapterInfo){
+									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+								});
+								return adaptersRequest;
+							}
+						}));
 					}
-				}));
+				}
 				return out;
-			},
+			}
 		});
 	}
 	
@@ -120,8 +163,6 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 var node_getComplexEntityObjectInterface = function(baseObject){
 	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
 };
-
-
 
 var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	
@@ -231,7 +272,10 @@ packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEnti
 packageObj.createChildNode("buildAdapterPlugInObject", node_buildAdapterPlugInObject); 
 packageObj.createChildNode("makeObjectComplexEntityObjectInterface", node_makeObjectComplexEntityObjectInterface); 
 packageObj.createChildNode("getComplexEntityObjectInterface", node_getComplexEntityObjectInterface); 
+packageObj.createChildNode("makeObjectBasicEntityObjectInterface", node_makeObjectBasicEntityObjectInterface); 
+packageObj.createChildNode("getBasicEntityObjectInterface", node_getBasicEntityObjectInterface); 
 packageObj.createChildNode("makeObjectEntityTreeNodeInterface", node_makeObjectEntityTreeNodeInterface); 
 packageObj.createChildNode("getEntityTreeNodeInterface", node_getEntityTreeNodeInterface); 
+
 
 })(packageObj);

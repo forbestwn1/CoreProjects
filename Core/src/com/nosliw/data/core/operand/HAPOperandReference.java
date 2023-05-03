@@ -45,7 +45,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	private String m_reference;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
-	protected Map<String, HAPOperandWrapper> m_mapping = new LinkedHashMap<String, HAPOperandWrapper>();
+	protected Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
 
 	//referenced expression
 	private HAPIdEntityInDomain m_referredExpressionExeId;
@@ -58,7 +58,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	private HAPOperandReference(){
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
-		this.m_mapping = new LinkedHashMap<String, HAPOperandWrapper>();
+		this.m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
 		this.setElementName(null);
 	}
 	
@@ -70,8 +70,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	public String getReference(){  return this.m_reference;  }
 	
 	public void addMapping(String varName, HAPOperand operand) {	this.m_mapping.put(varName, this.createOperandWrapper(operand));	}
-	public Map<String, HAPOperandWrapper> getMapping(){    return this.m_mapping;      }
-	public void setMapping(Map<String, HAPOperandWrapper> mapping) {    
+	public Map<String, HAPWrapperOperand> getMapping(){    return this.m_mapping;      }
+	public void setMapping(Map<String, HAPWrapperOperand> mapping) {    
 		this.m_mapping.clear();
 		this.m_mapping.putAll(mapping);
 	}
@@ -86,8 +86,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 	
 	@Override
-	public List<HAPOperandWrapper> getChildren(){
-		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+	public List<HAPWrapperOperand> getChildren(){
+		List<HAPWrapperOperand> out = new ArrayList<HAPWrapperOperand>();
 		out.addAll(this.m_mapping.values());
 		return out;
 	}

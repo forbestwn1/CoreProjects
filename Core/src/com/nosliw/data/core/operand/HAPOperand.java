@@ -40,7 +40,7 @@ public interface HAPOperand extends HAPSerializable{
 	String getType();
 
 	//children operand
-	List<HAPOperandWrapper> getChildren();
+	List<HAPWrapperOperand> getChildren();
 
 	/**
 	 * Try best to process operand in order to discovery

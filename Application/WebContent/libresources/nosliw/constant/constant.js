@@ -297,6 +297,7 @@ var node_CONSTANT=
 	  
 	  "INTERFACE_EMBEDEDENTITY" : "embededEntity",
 	  "INTERFACE_TREENODEENTITY" : "treeNodeEntity",
+	  "INTERFACE_BASICENTITY" : "basicEntity",
 	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
 	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
 	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",

@@ -53,13 +53,13 @@ public class HAPOperandOperation extends HAPOperandImp{
 	protected HAPDataTypeId m_dataTypeId;
 	
 	//base data
-	protected HAPOperandWrapper m_base;
+	protected HAPWrapperOperand m_base;
 
 	//operation name
 	protected String m_operation;
 	
 	//operation parms
-	protected Map<String, HAPOperandWrapper> m_parms = new LinkedHashMap<String, HAPOperandWrapper>();
+	protected Map<String, HAPWrapperOperand> m_parms = new LinkedHashMap<String, HAPWrapperOperand>();
 
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
@@ -95,19 +95,19 @@ public class HAPOperandOperation extends HAPOperandImp{
 		}
 	}
 	
-	public HAPOperandWrapper getBase(){  return this.m_base;  }
+	public HAPWrapperOperand getBase(){  return this.m_base;  }
 	
-	public Map<String, HAPOperandWrapper> getParms(){   return this.m_parms;   }
+	public Map<String, HAPWrapperOperand> getParms(){   return this.m_parms;   }
 	
-	public HAPOperandWrapper addParm(String name, HAPOperand parmOperand){
-		HAPOperandWrapper out = this.createOperandWrapper(parmOperand);
+	public HAPWrapperOperand addParm(String name, HAPOperand parmOperand){
+		HAPWrapperOperand out = this.createOperandWrapper(parmOperand);
 		this.m_parms.put(name, out);
 		return out;
 	}
 	
 	public void setParms(Map<String, HAPOperand> parms){
 		for(String name : parms.keySet()){
-			HAPOperandWrapper parmWrapper = this.addParm(name, parms.get(name));
+			HAPWrapperOperand parmWrapper = this.addParm(name, parms.get(name));
 		}
 	}
 	
@@ -124,8 +124,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 	
 	@Override
-	public List<HAPOperandWrapper> getChildren(){
-		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+	public List<HAPWrapperOperand> getChildren(){
+		List<HAPWrapperOperand> out = new ArrayList<HAPWrapperOperand>();
 		if(this.m_base!=null)	out.add(this.m_base);
 		out.addAll(this.m_parms.values());
 		return out;
@@ -185,7 +185,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 			
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
-				HAPOperandWrapper parmOperandWrapper = this.m_parms.get(parmInfo.getName());
+				HAPWrapperOperand parmOperandWrapper = this.m_parms.get(parmInfo.getName());
 				if(parmOperandWrapper==null && this.m_base!=null && parmInfo.getIsBase()){
 					//if parm does not exist, then try to use base
 					parmOperandWrapper = this.createOperandWrapper(this.m_base.getOperand());
@@ -245,7 +245,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 
 		operand.m_operation = this.m_operation;
 		
-		operand.m_parms = new LinkedHashMap<String, HAPOperandWrapper>();
+		operand.m_parms = new LinkedHashMap<String, HAPWrapperOperand>();
 		for(String name : this.m_parms.keySet()){
 			operand.m_parms.put(name, this.m_parms.get(name).cloneWrapper());
 		}

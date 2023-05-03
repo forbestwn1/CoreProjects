@@ -18,8 +18,8 @@ import com.nosliw.data.core.datasource.HAPDefinition;
 import com.nosliw.data.core.expression.HAPExpressionManager;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPExecutableExpression;
 import com.nosliw.data.core.runtime.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
@@ -30,7 +30,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 
 	private HAPDefinition m_dataSourceDefinition;
 	
-	private Map<String, HAPOperandWrapper> m_parmsOperand;
+	private Map<String, HAPWrapperOperand> m_parmsOperand;
 
 	private String m_id;
 	
@@ -39,12 +39,12 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public HAPExecutableTaskDataSource(HAPDefinition dataSourceDefinition) {
 		this.m_dataSourceDefinition = dataSourceDefinition;
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
-		this.m_parmsOperand = new LinkedHashMap<String, HAPOperandWrapper>();
+		this.m_parmsOperand = new LinkedHashMap<String, HAPWrapperOperand>();
 	}
 	
-	public Map<String, HAPOperandWrapper> getParmsOperand(){   return this.m_parmsOperand;   }
+	public Map<String, HAPWrapperOperand> getParmsOperand(){   return this.m_parmsOperand;   }
 	public void addParmOperand(String parmName, HAPOperand operand) {		
-		this.m_parmsOperand.put(parmName, new HAPOperandWrapper(operand));	
+		this.m_parmsOperand.put(parmName, new HAPWrapperOperand(operand));	
 	}
 	
 	public HAPDefinition getDataSourceDefinition() {   return this.m_dataSourceDefinition;   }
@@ -61,7 +61,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	@Override
 	public void updateVariable(HAPUpdateName updateVar) {
 		for(String parmName : this.m_parmsOperand.keySet()) {
-			HAPOperandUtility.updateVariableName(this.m_parmsOperand.get(parmName), updateVar);
+			HAPUtilityOperand.updateVariableName(this.m_parmsOperand.get(parmName), updateVar);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public Set<String> getReferences() {
 		Set<String> out = new HashSet<String>();
 		for(String parm : this.m_parmsOperand.keySet()) {
-			out.addAll(HAPOperandUtility.discoverReferences(this.m_parmsOperand.get(parm)));
+			out.addAll(HAPUtilityOperand.discoverReferences(this.m_parmsOperand.get(parm)));
 		}
 		return out;
 	}
@@ -131,7 +131,7 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	public Set<String> getVariables() {
 		Set<String> out = new HashSet<String>();
 		for(String parm : this.m_parmsOperand.keySet()) {
-			out.addAll(HAPOperandUtility.discoverVariables(this.m_parmsOperand.get(parm)));
+			out.addAll(HAPUtilityOperand.discoverVariables(this.m_parmsOperand.get(parm)));
 		}
 		return out;
 	}

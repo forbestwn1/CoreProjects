@@ -19,13 +19,14 @@ var packageObj = library;
 //parts is visible to particular part
 //for particular part, the configure is merge between global and share and part, part overwrite share overwrite global
 var node_createConfigure = function(definition, global, parms){
+
+	if(node_getObjectType(definition)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE)	return definition;
 	
 	//global configure, it will apply to child configure
 	var loc_global;
 	//current configure data, including global value
-	var loc_configure = {};
+	var loc_configureValue = {};
 	
-
 	//apply global configure to value
 	var loc_applyGlobalConfigure = function(value){
 		var out = {};
@@ -62,61 +63,75 @@ var node_createConfigure = function(definition, global, parms){
 		//global value
 		loc_global = parms==undefined? global : loc_processConfigure(global, parms);
 
-		var configure;
+		var configureValue;
 		var valueType = node_getObjectType(definition);
-		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE)	configure = definition.getConfigureValue();
-		else if(parms==undefined)   configure = definition;
-		else	configure = loc_processConfigure(definition, parms);
-		
-		//build configure data
-		if(configure!=undefined)	loc_configure = loc_applyGlobalConfigure(configure); 
+		if(valueType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTCONFIGURE)	configureValue = definition.getConfigureValue();
+		else if(parms==undefined)   configureValue = definition;
+		else	configureValue = loc_processConfigure(definition, parms);
+
+		loc_configureValue = configureValue;
 	};
 	
-	var loc_getChildConfigureValue = function(path, childId){
-	    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configure, path);
+	var loc_getChildConfigureValue = function(path, partId){
+	    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configureValue, path);
 		var childValue = {};
 		if(childBase!=undefined){
-			//merge share with part
-			_.extend(childValue, childBase.share, childBase.parts==undefined?undefined : childBase.parts[childId]);
+			if(partId==undefined){
+				childValue = childBase;
+			}
+			else{
+				//merge share with part
+				_.extend(childValue, childBase.share, childBase.parts==undefined?undefined : childBase.parts[partId]);
+			}
 		}
 		return childValue;
 	}; 
 	
 	var loc_out = {
 		
-		isChildExist : function(childId){
-			return loc_configure.parts!=undefined && loc_configure.parts[childId]!=undefined;
+		isChildExist : function(path, partId){
+		    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configureValue, path);
+		    if(childBase==undefined)  return false;
+		    if(partId==undefined)  return true;
+			return childBase.parts!=undefined && childBase.parts[partId]!=undefined;
 		},
 		
-		getConfigureValue : function(){		return loc_configure;	},
+		getConfigureValue : function(){  return loc_applyGlobalConfigure(loc_configureValue);   },
 		
 		//get children configure value
 		//path : path to child definition
 		//childId : child Id
-		getChildConfigureValue : function(path, childId){
-			return loc_applyGlobalConfigure(loc_getChildConfigureValue(path, childId));
+		getChildConfigureValue : function(path, partId){
+			return loc_applyGlobalConfigure(loc_getChildConfigureValue(path, partId));
 		},
 		
-		//get children configure options
-		getChildrenIdSet : function(path){
+		getChildConfigure : function(path, partId){
+			return node_createConfigure(loc_getChildConfigureValue(path, partId), loc_global);
+		},
+
+		getChildConfigureSet : function(path){
 			var out = [];
-		    var segs = path==undefined?[] : path.split('.');
-		    var childBase = node_objectOperationUtility.getObjectAttributeByPathSegs(loc_configure, segs);
+		    var childBase = node_objectOperationUtility.getObjectAttributeByPath(loc_configureValue, path);
 			if(childBase!=undefined){
-				_.each(childBase.parts, function(part, id){
-					out.push(id);
-				});
+				if(childBase.parts!=null){
+					_.each(childBase.parts, function(part, id){
+						out.push({
+							name : id,
+							configure : loc_out.getChildConfigure(path, id)
+						});
+					});
+				}
+				else{
+					_.each(childBase, function(obj, id){
+						out.push({
+							name : id,
+							configure : loc_out.getChildConfigure(node_namingConvensionUtility.cascadePath(path, id))
+						});
+					});
+				}
 			}
 			return out;
 		},
-		
-		getChildConfigure : function(path, childId){
-			if(childId==undefined){
-				childId = path;
-				path = undefined;
-			}
-			return node_createConfigure(loc_getChildConfigureValue(path, childId), loc_global);
-		}
 	};
 	
 	loc_init(definition, global, parms);

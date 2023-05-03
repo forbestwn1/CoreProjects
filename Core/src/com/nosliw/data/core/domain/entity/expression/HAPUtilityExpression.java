@@ -9,7 +9,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
-import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
@@ -36,7 +36,7 @@ public class HAPUtilityExpression {
 
 		Map<String, HAPInfoVariable> allVarInfosInExpression = new LinkedHashMap<String, HAPInfoVariable>(); 
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
-			for(String varName : HAPOperandUtility.discoverVariableNames(expression.getOperand())) {
+			for(String varName : HAPUtilityOperand.discoverVariableNames(expression.getOperand())) {
 				HAPInfoVariable varInfo = allVarInfosInStructure.getVariableInfoByAlias(varName);
 				if(allVarInfosInExpression.get(varInfo.getIdPath().getFullName())==null) {
 					allVarInfosInExpression.put(varInfo.getIdPath().getFullName(), varInfo);
@@ -54,7 +54,7 @@ public class HAPUtilityExpression {
 	public static Set<String> discoverDataVariablesNameInExpression(HAPExecutableExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
-			out.addAll(HAPOperandUtility.discoverVariableNames(expression.getOperand()));
+			out.addAll(HAPUtilityOperand.discoverVariableNames(expression.getOperand()));
 		}
 		return out;
 	}
@@ -62,7 +62,7 @@ public class HAPUtilityExpression {
 	public static Set<String> discoverDataVariablesIdInExpression(HAPExecutableExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
-			out.addAll(HAPOperandUtility.discoverVariableIds(expression.getOperand()));
+			out.addAll(HAPUtilityOperand.discoverVariableIds(expression.getOperand()));
 		}
 		return out;
 	}

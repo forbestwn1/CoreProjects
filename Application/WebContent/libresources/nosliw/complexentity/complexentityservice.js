@@ -88,12 +88,15 @@ var node_createComplexEntityRuntimeService = function() {
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(complexEntityPlugin.getCreateComplexEntityCoreRequest(node_createEntityDefinition(complexEntityDef), valueContextId, bundleCore, configure, {
+		var complexEntityDef = node_createEntityDefinition(complexEntityDef);
+		out.addRequest(complexEntityPlugin.getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
 			success : function(request, complexEntityCore){
 				
 				complexEntityCore = node_makeObjectWithEmbededEntityInterface(complexEntityCore);
 				
 				complexEntityCore = node_makeObjectEntityTreeNodeInterface(complexEntityCore);
+				
+				complexEntityCore = node_makeObjectBasicEntityObjectInterface(complexEntityCore, complexEntityDef, configure);
 				
 				complexEntityCore = node_makeObjectComplexEntityObjectInterface(complexEntityCore, valueContextId, bundleCore);
 				
@@ -135,14 +138,15 @@ var node_createComplexEntityRuntimeService = function() {
 			var parentComplexEntityInterface = node_getComplexEntityObjectInterface(parentComplexEntityCore);
 			valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityInterface.getValueContextId());
 			
+			//process raw configure			
+			//get runtime configure & decoration info from configure
+			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
+			
 			//new complexCore through complex plugin
-			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
+			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
 				success : function(request, componentCore){
-					//build decorationInfos
-					var decorationInfos = null;
-					
 					//create runtime
-					return node_createComponentRuntime(componentCore, decorationInfos, request);
+					return node_createComponentRuntime(componentCore, runtimeConfigureInfo.decorations, request);
 				}
 			}));
 			
@@ -229,12 +233,10 @@ var node_createComplexEntityRuntimeService = function() {
 
 		//create package runtime object
 		createPackageRuntime : function(packageResourceId, configure, request){
-			//get runtime configure & decoration info from configure
-			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			//create runtime object
-			var packageCore = node_createPackageCore(packageResourceId, runtimeConfigureInfo.coreConfigure);
+			var packageCore = node_createPackageCore(packageResourceId, configure);
 			packageCore = loc_buildOtherObject(packageCore);
-			return node_createComponentRuntime(packageCore, runtimeConfigureInfo.decorations, request); 
+			return node_createComponentRuntime(packageCore, undefined, request); 
 		},
 				
 		//create package runtime object and init request
@@ -340,6 +342,7 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
+nosliw.registerSetNodeDataEvent("complexentity.makeObjectBasicEntityObjectInterface", function(){node_makeObjectBasicEntityObjectInterface = this.getData();}); 
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectComplexEntityObjectInterface", function(){node_makeObjectComplexEntityObjectInterface = this.getData();}); 
 nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});

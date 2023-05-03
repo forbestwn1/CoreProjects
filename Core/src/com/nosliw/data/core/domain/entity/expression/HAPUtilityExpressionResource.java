@@ -12,9 +12,9 @@ import com.nosliw.data.core.data.HAPOperationId;
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceIdExpression;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPOperandTask;
-import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -53,9 +53,9 @@ public class HAPUtilityExpressionResource {
 				result.addAll(HAPMatcherUtility.getMatchersResourceId(matchers));
 			}
 			
-			HAPOperandUtility.processAllOperand(expression.getOperand(), result, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expression.getOperand(), result, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					Set<HAPResourceIdSimple> resourceIds = (Set<HAPResourceIdSimple>)data;
 					resourceIds.addAll(operand.getOperand().getResources(runtimeInfo, resourceManager));
 					return true;

@@ -20,7 +20,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	private String m_attribute;
 	
-	private HAPOperandWrapper m_base;
+	private HAPWrapperOperand m_base;
 	
 	private HAPOperandAttribute(){}
 	
@@ -32,13 +32,13 @@ public class HAPOperandAttribute extends HAPOperandImp{
 	
 	public String getAttribute(){   return this.m_attribute;   }
 	
-	public HAPOperandWrapper getBase() {  return this.m_base;  }
+	public HAPWrapperOperand getBase() {  return this.m_base;  }
 	
 	public void setBase(HAPOperand base){	this.m_base = this.createOperandWrapper(base);	}
 	
 	@Override
-	public List<HAPOperandWrapper> getChildren(){
-		List<HAPOperandWrapper> out = new ArrayList<HAPOperandWrapper>();
+	public List<HAPWrapperOperand> getChildren(){
+		List<HAPWrapperOperand> out = new ArrayList<HAPWrapperOperand>();
 		if(this.m_base!=null)	out.add(this.m_base);
 		return out;
 	}

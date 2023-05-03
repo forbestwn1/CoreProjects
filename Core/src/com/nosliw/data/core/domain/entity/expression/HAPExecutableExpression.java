@@ -18,9 +18,9 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandConstant;
-import com.nosliw.data.core.operand.HAPOperandTask;
-import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -40,17 +40,17 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 	
-	private HAPOperandWrapper m_operand;
+	private HAPWrapperOperand m_operand;
 
 	private HAPMatchers m_outputMatchers;
 	
 	private HAPContainerVariableCriteriaInfo m_varInfos;
 	
-	public HAPExecutableExpression(HAPOperandWrapper operand) {
+	public HAPExecutableExpression(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}
 	
-	public HAPOperandWrapper getOperand() {		return this.m_operand;	}
+	public HAPWrapperOperand getOperand() {		return this.m_operand;	}
 
 	public HAPDataTypeCriteria getOutputCriteria() {  return this.m_operand.getOperand().getOutputCriteria(); }
 	
@@ -61,9 +61,9 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varsInfo) {   this.m_varInfos = varsInfo;     }
 
 	public void updateConstant(Map<String, Object> value) {
-		HAPOperandUtility.processAllOperand(this.m_operand, value, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(this.m_operand, value, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, Object> value = (Map<String, Object>)data; 
@@ -79,9 +79,9 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 	
 	public Set<HAPDefinitionConstant> getConstantsDefinition(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
-		HAPOperandUtility.processAllOperand(this.m_operand, out, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(this.m_operand, out, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					Map<String, HAPDefinitionConstant> out = (Map<String, HAPDefinitionConstant>)data; 
@@ -135,9 +135,9 @@ public class HAPExecutableExpression extends HAPExecutableImp{
 			dependency.addAll(matchers.getResourceDependency(runtimeInfo, resourceManager));
 		}
 		
-		HAPOperandUtility.processAllOperand(this.getOperand(), dependency, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(this.getOperand(), dependency, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				List<HAPResourceDependency> dependency = (List<HAPResourceDependency>)data;
 				List<HAPResourceId> operandResourceIds = (List)operand.getOperand().getResources(runtimeInfo, resourceManager);
 				List<HAPResourceInfo> resourceInfos = resourceManager.discoverResources(operandResourceIds, runtimeInfo);

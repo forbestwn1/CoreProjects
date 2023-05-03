@@ -6,9 +6,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandVariable extends HAPOperandImp{
@@ -21,7 +22,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
-	protected String m_variableId;
+	protected HAPIdRootElement m_variableId;
 	
 	private HAPOperandVariable(){}
 	

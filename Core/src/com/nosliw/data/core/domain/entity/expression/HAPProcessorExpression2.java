@@ -22,10 +22,10 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperVal
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperandReference;
-import com.nosliw.data.core.operand.HAPOperandTask;
-import com.nosliw.data.core.operand.HAPOperandUtility;
+import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPOperandVariable;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoAlias;
@@ -100,9 +100,9 @@ public class HAPProcessorExpression2 {
 		//normalize child reference expression first
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
-			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
@@ -131,9 +131,9 @@ public class HAPProcessorExpression2 {
 		//normalize child reference expression first
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
-			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
@@ -147,15 +147,15 @@ public class HAPProcessorExpression2 {
 		//normalize variable mapping in reference operand first, so that all variables in referenced expression are mapped
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
-			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						
 						//go through all variables in reference expression and find those that not mapped
-						Map<String, HAPOperandWrapper> refExpMapping = referenceOperand.getMapping();
+						Map<String, HAPWrapperOperand> refExpMapping = referenceOperand.getMapping();
 						Set<String> mappedVarNames = new HashSet<String>(refExpMapping.keySet());
 						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityExpression.discoverDataVariablesDefinitionInStructure((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression());
 						
@@ -184,9 +184,9 @@ public class HAPProcessorExpression2 {
 		//normalize variable in structure
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
-			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 						HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
@@ -237,11 +237,11 @@ public class HAPProcessorExpression2 {
 			//all elements
 			Set<HAPDefinitionExpression> expressionDefs = expressionGroupDef.getEntityElements();
 			for(HAPDefinitionExpression expressionDef : expressionDefs) {
-				out.addExpression(expressionDef.getId(), new HAPOperandWrapper(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionDef.getExpression())));
+				out.addExpression(expressionDef.getId(), new HAPWrapperOperand(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionDef.getExpression())));
 			}
 		}
 		else {
-			out.addExpression(expressionId, new HAPOperandWrapper(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionGroupDef.getEntityElement(expressionId).getExpression())));
+			out.addExpression(expressionId, new HAPWrapperOperand(runtimeEnv.getExpressionManager().getExpressionParser().parseExpression(expressionGroupDef.getEntityElement(expressionId).getExpression())));
 		}
 		
 		return out;
@@ -256,12 +256,12 @@ public class HAPProcessorExpression2 {
 		
 		Map<String, HAPExecutableExpression> expressionExe = expressionGroupExe.getExpressionItems();
 		for(String key : expressionExe.keySet()) {
-			HAPOperandWrapper operand = expressionExe.get(key).getOperand();
+			HAPWrapperOperand operand = expressionExe.get(key).getOperand();
 			String expressionId = expressionGroupExe.getId() + "_" + key;
 			int[] subId = {0};
-			HAPOperandUtility.processAllOperand(operand, subId, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(operand, subId, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					int[] subId = (int[])data;
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
@@ -329,7 +329,7 @@ public class HAPProcessorExpression2 {
 	//update constant operand with constant data
 	private static void processConstant(HAPExecutableExpressionGroup expressionExe) {
 		for(HAPExecutableExpression expressionItem : expressionExe.getExpressionItems().values()) {
-			HAPOperandUtility.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
+			HAPUtilityOperand.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
 		}
 
 	}
@@ -341,9 +341,9 @@ public class HAPProcessorExpression2 {
 		
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);
-			HAPOperandUtility.processAllOperand(expressionItem.getOperand(), null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 						HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
@@ -357,8 +357,8 @@ public class HAPProcessorExpression2 {
 						//replace referenced variable name mapping  
 						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression()).getValueStructureDefinitionWrapper().getValueStructure());
 
-						Map<String, HAPOperandWrapper> mapping = referenceOperand.getMapping();
-						Map<String, HAPOperandWrapper> newMapping = new LinkedHashMap<String, HAPOperandWrapper>();
+						Map<String, HAPWrapperOperand> mapping = referenceOperand.getMapping();
+						Map<String, HAPWrapperOperand> newMapping = new LinkedHashMap<String, HAPWrapperOperand>();
 						for(String refVarName : mapping.keySet()) {
 							HAPInfoVariable varInfo = referenceExpContainer.getVariableInfoByAlias(refVarName);
 							newMapping.put(varInfo.getIdPath().getFullName(), mapping.get(refVarName));
@@ -380,7 +380,7 @@ public class HAPProcessorExpression2 {
 		Map<String, HAPExecutableExpression> items = expressionGroup.getExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
-			Set<String> varIds = HAPOperandUtility.discoverVariableIds(item.getOperand());
+			Set<String> varIds = HAPUtilityOperand.discoverVariableIds(item.getOperand());
 			
 			HAPContainerVariableCriteriaInfo expressionVarsContainer = new HAPContainerVariableCriteriaInfo();
 			for(String varId : varIds) {
@@ -388,9 +388,9 @@ public class HAPProcessorExpression2 {
 			}
 			item.setVariablesInfo(expressionVarsContainer);
 			
-			HAPOperandUtility.processAllOperand(item.getOperand(), name, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(item.getOperand(), name, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();

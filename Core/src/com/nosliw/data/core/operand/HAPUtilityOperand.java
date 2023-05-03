@@ -25,13 +25,13 @@ import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
-public class HAPOperandUtility {
+public class HAPUtilityOperand {
 
-	static public void replaceAttributeOpWithOperationOp(HAPOperandWrapper operand) {
-		List<HAPOperandWrapper> attrOperands = new ArrayList<HAPOperandWrapper>();
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+	static public void replaceAttributeOpWithOperationOp(HAPWrapperOperand operand) {
+		List<HAPWrapperOperand> attrOperands = new ArrayList<HAPWrapperOperand>();
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
 			@Override
-			public void postPross(HAPOperandWrapper operand, Object data) {
+			public void postPross(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
 					attrOperands.add(operand);
@@ -39,11 +39,11 @@ public class HAPOperandUtility {
 			}
 
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {		return true;	}
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {		return true;	}
 		});	
 
 		for(int i=0; i<attrOperands.size(); i++) {
-			HAPOperandWrapper attrOpWrapper = attrOperands.get(i);
+			HAPWrapperOperand attrOpWrapper = attrOperands.get(i);
 			HAPOperandAttribute attrOp = (HAPOperandAttribute)attrOpWrapper.getOperand();
 			
 			List<HAPParmInOperationOperand> parms = new ArrayList<HAPParmInOperationOperand>();
@@ -58,11 +58,11 @@ public class HAPOperandUtility {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-	public static void processAttributeOperandInExpressionOperand(HAPOperandWrapper orgOperand, final Set<String> dataVarNames, Set<String> dataConstantNames){
+	public static void processAttributeOperandInExpressionOperand(HAPWrapperOperand orgOperand, final Set<String> dataVarNames, Set<String> dataConstantNames){
 		List<HAPAttributeOperandChainInfo> data = new ArrayList<HAPAttributeOperandChainInfo>();
-		HAPOperandUtility.processAllOperand(orgOperand, data, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(orgOperand, data, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
@@ -91,7 +91,7 @@ public class HAPOperandUtility {
 			}
 			
 			@Override
-			public void postPross(HAPOperandWrapper operand, Object data){
+			public void postPross(HAPWrapperOperand operand, Object data){
 				List<HAPAttributeOperandChainInfo> stack = (List<HAPAttributeOperandChainInfo>)data;
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_ATTRIBUTEOPERATION)){
@@ -164,12 +164,12 @@ public class HAPOperandUtility {
 //		});	
 //	}
 
-	static public void updateNameInOperand(HAPOperandWrapper operand, HAPUpdateName nameUpdate, String[] operandTypes) {
+	static public void updateNameInOperand(HAPWrapperOperand operand, HAPUpdateName nameUpdate, String[] operandTypes) {
 		Set<String> types = new HashSet<String>(Arrays.asList(operandTypes));
 		//update variable operand
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(types.contains(opType)) {
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
@@ -194,11 +194,11 @@ public class HAPOperandUtility {
 		});	
 	}
 
-	static public Set<String> discoverReferences(HAPOperandWrapper operand) {
+	static public Set<String> discoverReferences(HAPWrapperOperand operand) {
 		Set<String> out = new HashSet<String>();
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
@@ -211,11 +211,11 @@ public class HAPOperandUtility {
 	}
 	
 	
-	static public Set<String> discoverVariableNames(HAPOperandWrapper operand){
+	static public Set<String> discoverVariableNames(HAPWrapperOperand operand){
 		Set<String> out = new HashSet<String>();
-		processAllOperand(operand, out, new HAPOperandTask(){
+		processAllOperand(operand, out, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				Set<String> varNames = (Set<String>)data;
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
@@ -229,11 +229,11 @@ public class HAPOperandUtility {
 		return out;
 	}
 
-	static public Set<String> discoverVariableIds(HAPOperandWrapper operand){
+	static public Set<String> discoverVariableIds(HAPWrapperOperand operand){
 		Set<String> out = new HashSet<String>();
-		processAllOperand(operand, out, new HAPOperandTask(){
+		processAllOperand(operand, out, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				Set<String> varIds = (Set<String>)data;
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
@@ -247,12 +247,12 @@ public class HAPOperandUtility {
 		return out;
 	}
 
-	static public Set<HAPOperandWrapper> discoverVariableOperands(HAPOperandWrapper operand){
-		Set<HAPOperandWrapper> out = new HashSet<HAPOperandWrapper>();
-		processAllOperand(operand, out, new HAPOperandTask(){
+	static public Set<HAPWrapperOperand> discoverVariableOperands(HAPWrapperOperand operand){
+		Set<HAPWrapperOperand> out = new HashSet<HAPWrapperOperand>();
+		processAllOperand(operand, out, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-				Set<HAPOperandWrapper> varOperands = (Set<HAPOperandWrapper>)data;
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
+				Set<HAPWrapperOperand> varOperands = (Set<HAPWrapperOperand>)data;
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
 					varOperands.add(operand);
@@ -269,11 +269,11 @@ public class HAPOperandUtility {
 	 * @param operand
 	 * @return
 	 */
-	static public Set<String> discoveryUnsolvedConstants(HAPOperandWrapper operand){
+	static public Set<String> discoveryUnsolvedConstants(HAPWrapperOperand operand){
 		Set<String> out = new HashSet<String>();
-		processAllOperand(operand, out, new HAPOperandTask(){
+		processAllOperand(operand, out, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				Set<String> vars = (Set<String>)data;
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_CONSTANT:
@@ -289,21 +289,21 @@ public class HAPOperandUtility {
 		return out;
 	}
 	
-	static public void processAllOperand(HAPOperandWrapper operand, Object data, HAPOperandTask task){
+	static public void processAllOperand(HAPWrapperOperand operand, Object data, HAPInterfaceProcessOperand task){
 		if(task.processOperand(operand, data)){
-			List<HAPOperandWrapper> children = operand.getOperand().getChildren();
-			for(HAPOperandWrapper child : children){
-				HAPOperandUtility.processAllOperand(child, data, task);
+			List<HAPWrapperOperand> children = operand.getOperand().getChildren();
+			for(HAPWrapperOperand child : children){
+				HAPUtilityOperand.processAllOperand(child, data, task);
 			}
 			task.postPross(operand, data);
 		}
 	}
 	
-	static public void updateConstantData(HAPOperandWrapper operand, final Map<String, HAPData> contextConstants){
+	static public void updateConstantData(HAPWrapperOperand operand, final Map<String, HAPData> contextConstants){
 		if(contextConstants!=null && !contextConstants.isEmpty()) {
-			HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+			HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
 				@Override
-				public boolean processOperand(HAPOperandWrapper operand, Object data) {
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 						HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
@@ -367,10 +367,10 @@ public class HAPOperandUtility {
 	 * It only works for OperationOperand with clear data typeId
 	 * @param expression
 	 */
-	public void processDefaultAnonomousParmInOperation(HAPOperandWrapper operand, HAPDataTypeHelper dataTypeHelper){
-		HAPOperandUtility.processAllOperand(operand, null, new HAPOperandTask(){
+	public void processDefaultAnonomousParmInOperation(HAPWrapperOperand operand, HAPDataTypeHelper dataTypeHelper){
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
 			@Override
-			public boolean processOperand(HAPOperandWrapper operand, Object data) {
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_OPERATION)){
 					HAPOperandOperation operationOperand = (HAPOperandOperation)operand.getOperand();
@@ -378,9 +378,9 @@ public class HAPOperandUtility {
 					if(dataTypeId!=null){
 						HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, operationOperand.getOperaion());
 						List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
-						Map<String, HAPOperandWrapper> parms = operationOperand.getParms();
+						Map<String, HAPWrapperOperand> parms = operationOperand.getParms();
 						for(HAPOperationParmInfo parmInfo : parmsInfo){
-							HAPOperandWrapper parmOperand = parms.get(parmInfo.getName());
+							HAPWrapperOperand parmOperand = parms.get(parmInfo.getName());
 							if(parmOperand==null && parmInfo.getIsBase() && operationOperand.getBase()!=null){
 								//if parmInfo is base parm and is located in base
 								parmOperand = operationOperand.getBase();
@@ -398,9 +398,9 @@ public class HAPOperandUtility {
 }
 
 class HAPAttributeOperandChainInfo{
-	public HAPOperandWrapper startOperand;
+	public HAPWrapperOperand startOperand;
 	
-	public HAPOperandWrapper lastAttrOperand;
+	public HAPWrapperOperand lastAttrOperand;
 	
 	public List<String> path;
 	

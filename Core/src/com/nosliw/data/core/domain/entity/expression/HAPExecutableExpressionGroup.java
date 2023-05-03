@@ -20,8 +20,8 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandUtility;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -55,7 +55,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 	}
 	
-	public void addExpression(String name, HAPOperandWrapper operand) {
+	public void addExpression(String name, HAPWrapperOperand operand) {
 		if(name==null)   name = HAPConstantShared.NAME_DEFAULT;
 		this.m_expressionItem.put(name, new HAPExecutableExpression(operand.cloneWrapper()));
 	}
@@ -78,7 +78,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 			operands.add(this.m_expressionItem.get(name).getOperand().getOperand());
 		}
 		
-		this.m_varInfos = HAPOperandUtility.discover(
+		this.m_varInfos = HAPUtilityOperand.discover(
 				operands,
 				outPutCriteria,
 				this.m_varInfos,

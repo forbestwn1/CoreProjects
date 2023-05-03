@@ -113,46 +113,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
-				var attr = loc_complexEntityDef.getAttribute(attrName);
-				if(attr.isNormalAttribute()){
-					//normal attribute
-					var attrValue = attr.getValue();
-					var entityType = attr.getEntityType();
-					if(attr.isComplex()==true){
-						//complex
-						var complexEntityId = attrValue;
-						out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createComplexAttributeRequest(attrName, complexEntityId, attr.getAdaptersInfo(), configure.getConfigureValue()[attrName]));
-					}
-					else{
-						//simple attribute
-						if(entityType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-							//test_simple attribute
-							loc_simpleTest1Atts[attrName] = loc_createSimpleAttribute(nosliw.runtime.getPackageService().createSimpleEntity(attrValue));
-						}
-					}
-				}
-				else{
-					//container attribute
-					if(attr.isElementComplex()==true){
-						//complex
-						var attrEntity = nosliw.runtime.getPackageService().createContainerComplexEntityRuntime(attr.getContainer(), loc_out, loc_bundleCore, loc_configureValue[attrName]);
-						loc_children[attrName] = attrEntity;
-					}
-					else{
-						//simple
-						if(attr.getElementEntityType()==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1){
-							//test_simple container attribute
-							var containerAttr = loc_createContainerAttribute();
-							_.each(attr.getElements(), function(ele, i){
-								var eleEntity = nosliw.runtime.getPackageService().createSimpleEntity(ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE]);
-								containerAttr.addElement(eleEntity);
-							});
-							loc_simpleTest1Atts[attrName] = containerAttr;
-						}
-					}
-				}
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName));
 			});
 			return out;
 		},

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.datasource.HAPDataSourceManager;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPOperandWrapper;
+import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteConverterRhino;
@@ -34,7 +34,7 @@ public class HAPExecutorTaskDataSource extends HAPExecutorTaskImp{
 		dataSourceParms.putAll(parms);
 		//prepare data source parms : converter, expression result
 		for(String parm : dataSourceExe.getParmsOperand().keySet()) {
-			HAPOperandWrapper parmOperand = dataSourceExe.getParmsOperand().get(parm);
+			HAPWrapperOperand parmOperand = dataSourceExe.getParmsOperand().get(parm);
 			if(parmOperand!=null) {
 				dataSourceParms.put(parm, this.calculateParmData(parmOperand, dataSourceExe.getMatchers().get(parm), parms));
 			}
@@ -46,7 +46,7 @@ public class HAPExecutorTaskDataSource extends HAPExecutorTaskImp{
 		return out;
 	}
 
-	private HAPData calculateParmData(HAPOperandWrapper operand, HAPMatchers matchers, Map<String, HAPData> parms) {
+	private HAPData calculateParmData(HAPWrapperOperand operand, HAPMatchers matchers, Map<String, HAPData> parms) {
 		HAPData parmData = HAPRhinoRuntimeUtility.executeOperandSync(operand, parms, null, m_runtime);
 		
 		HAPRuntimeTaskExecuteConverterRhino converterTask = new HAPRuntimeTaskExecuteConverterRhino(parmData, matchers); 
