@@ -7,10 +7,10 @@
 		{
 			"embeded": {
 				"info": {
-					"name" : "adapter_none_test.complex.script",
+					"name" : "adapter-none-test_complex_script",
 					"status": "disabled1"
 				},
-				"resourceId": "test.complex.script|#child",
+				"resourceId": "test_complex_script|#child",
 				"parent": {
 					"valuestructure":{
 						"inherit":{
@@ -188,7 +188,7 @@
 		},
 		{
 			"info": {
-				"name" : "debug.parent.valuestructure_none_test.complex.script",
+				"name" : "debug_parent_valuestructure-none-test_complex_script",
 				"status": "disabled1"
 			},
 			"parent": {

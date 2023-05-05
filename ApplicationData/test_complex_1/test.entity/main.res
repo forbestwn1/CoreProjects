@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "testconfigure_none_test.complex.script", 
+				"name" : "testconfigure-none-test_complex_script", 
 				"status": "disabled1"
 			},
 			"entity":{

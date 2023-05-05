@@ -77,7 +77,7 @@ var loc_eventView;
 var loc_resetView;
 
 function openApplication() {
-	var resourceType = "test.complex.1";
+	var resourceType = "test_complex_1";
 	var resourceId = "testvalue";
 	var configure = "testcomplex1";
 	var appWin = window.open ("http://localhost:8082/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,"_blank");
@@ -141,7 +141,7 @@ var loc_loadApplication = function(){
 
 	var out = node_createServiceRequestInfoSequence(undefined);
 	
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("test.complex.1", "testvalue"), undefined, {}, undefined, {
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("test_complex_1", "testvalue"), undefined, {}, undefined, {
 		success : function(request, application){
 			updateApplication(application);
 			return application;

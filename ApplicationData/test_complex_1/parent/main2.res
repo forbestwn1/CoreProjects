@@ -88,7 +88,7 @@
 			},
 			"resourceId": "testsimple1|*test1"
 		},
-		"entity2_none_test.complex.1": {
+		"entity2-none-test_complex_1": {
 			"extra": {
 				"status": "disabled"
 			},

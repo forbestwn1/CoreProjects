@@ -36,6 +36,7 @@ var packageObj = library;
     var node_makeObjectEntityTreeNodeInterface;
     var node_getEntityTreeNodeInterface;
 	var node_makeObjectWithId;
+	var node_complexEntityUtility;
     
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
@@ -191,29 +192,34 @@ var node_createComplexEntityRuntimeService = function() {
 	
 	var loc_out = {
 
-		getCreateApplicationRequest : function(resourceId, configure, runtimeContext, runtimeInterface, handlers, request){
-			var application = node_createApplication(resourceId, configure);
-
-			application = loc_buildOtherObject(application);
+		getCreateApplicationRequest : function(resourceId, configureInfo, runtimeContext, runtimeInterface, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			node_makeObjectWithComponentManagementInterface(application, application);
-			
-			//build backup state if not provided
-			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
-
-			//init lifecycle entity
-			if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
-			
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitApplication", {}), handlers, request);
-			out.addRequest(application.getPreInitRequest({
-				success : function(request){
-					return node_getComponentInterface(application).getUpdateRuntimeInterfaceRequest(runtimeInterface, {
+			out.addRequest(node_complexEntityUtility.getRootConfigureRequest(configureInfo, {
+				success : function(request, configure){
+					var application = node_createApplication(resourceId, configure);
+		
+					application = loc_buildOtherObject(application);
+					
+					node_makeObjectWithComponentManagementInterface(application, application);
+					
+					//build backup state if not provided
+					if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
+		
+					//init lifecycle entity
+					if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
+					
+					return application.getPreInitRequest({
 						success : function(request){
-							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
+							return node_getComponentInterface(application).getUpdateRuntimeInterfaceRequest(runtimeInterface, {
 								success : function(request){
-									return node_getComponentInterface(application).getPostInitRequest({
-										success : function(){
-											return application;
+									return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
+										success : function(request){
+											return node_getComponentInterface(application).getPostInitRequest({
+												success : function(){
+													return application;
+												}
+											});
 										}
 									});
 								}
@@ -222,7 +228,7 @@ var node_createComplexEntityRuntimeService = function() {
 					});
 				}
 			}));
-
+			
 			return out;
 		},
 			
@@ -348,6 +354,8 @@ nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface",
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+
 
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});

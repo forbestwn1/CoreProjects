@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "test_none_dataexpressiongroup",
+				"name" : "test-none-dataexpressiongroup",
 				"status": "disabled1"
 			},
 			"parent": {

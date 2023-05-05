@@ -579,8 +579,8 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_CONFIGURE" value="configure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPT" value="script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1" value="testsimple1"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1" value="test.complex.1"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT" value="test.complex.script"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1" value="test_complex_1"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT" value="test_complex_script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION_1" value="test.decoration.1"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATION" value="dataAssociation"/>

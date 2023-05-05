@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "value_none_test.complex.script", 
+				"name" : "value-none-test_complex_script", 
 				"status": "disabled1"
 			},
 			"entity":{
@@ -58,14 +58,14 @@
 		},
 		{
 			"info": {
-				"name" : "simplized1_none_test.complex.script", 
+				"name" : "simplized1-none-test_complex_script", 
 				"status": "disabled"
 			},
 			"scriptName": "complexscript_test_exist"
 		},
 		{
 			"info": {
-				"name": "testlifecycle.log_none_test.complex.script",
+				"name": "testlifecycle_log-none-test_complex_script",
 				"status": "disabled"
 			},
 			"entity":{
@@ -76,7 +76,7 @@
 		},
 		{
 			"info": {
-				"name" : "testparm_none_test.complex.script",
+				"name" : "testparm-none-test_complex_script",
 				"status": "disabled"
 			},
 			"entity":{
@@ -88,7 +88,7 @@
 		},
 		{
 			"info": {
-				"name" : "testconfigure_none_test.complex.script",
+				"name" : "testconfigure-none-test_complex_script",
 				"status": "disabled1"
 			},
 			"entity":{
@@ -100,7 +100,7 @@
 		},
 		{
 			"info": {
-				"name" : "teststate_none_test.complex.script",
+				"name" : "teststate-none-test_complex_script",
 				"status": "disabled"
 			},
 			"entity":{
@@ -112,7 +112,7 @@
 		},
 		{
 			"info": {
-				"name": "testlifecycle.rollback_none_test.complex.script",
+				"name": "testlifecycle_rollback-none-test_complex_script",
 				"status": "disabled"
 			},
 			"entity":{
@@ -123,7 +123,7 @@
 		},
 		{
 			"info": {
-				"name": "normal1_set_test.complex.script",
+				"name": "normal1-set-test_complex_script",
 				"status": "disabled"
 			},
 			"element": [
@@ -237,7 +237,7 @@
 						}
 					}
 				],
-				"test.complex.1": [
+				"test_complex_1": [
 				
 				]
 			}

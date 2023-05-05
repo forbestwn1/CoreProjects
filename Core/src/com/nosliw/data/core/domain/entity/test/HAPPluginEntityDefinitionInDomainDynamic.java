@@ -148,7 +148,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 	}
 	
 	private Pair<String, String> parseString(String str){
-		String seperator = "_";
+		String seperator = "-";
 		int index = str.indexOf(seperator);
 		if(index!=-1) {
 			return Pair.of(str.substring(0, index), str.substring(index+1));

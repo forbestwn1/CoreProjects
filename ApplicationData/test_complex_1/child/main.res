@@ -4,7 +4,7 @@
 		"description": "childcomplex"
 	},
 	"entity": {
-		"localresource_none_testcomplex1": {
+		"localresource-none-testcomplex1": {
 			"resourceId": "testcomplex1|#localchild",
 			"extra": {
 				"status": "disabled1"

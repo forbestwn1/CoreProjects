@@ -6,8 +6,36 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "reference.localresource_none_test.complex.script",
+				"name" : "merge_runtime_localresource-none-test_complex_script",
 				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},			
+			"resourceId": "test.complex.script|#merge"
+		},
+		{
+			"info": {
+				"name" : "merge_definition_localresource-none-test_complex_script", 
+				"status": "disabled"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "definition"
+					}
+				}
+			},
+			"resourceId": "test.complex.script|#merge"
+		},
+		{
+			"info": {
+				"name" : "merge_none_localresource-none-test_complex_script", 
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
@@ -16,7 +44,7 @@
 					}
 				}
 			},
-			"resourceId": "test.complex.script|#reference"
+			"resourceId": "test.complex.script|#merge"
 		},
 		{
 			"info": {
@@ -59,7 +87,7 @@
 								"a": {
 									"aa" : {
 										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of parent_public_withchildren.a.aa"
+										"value": "default value of a.aa"
 									}
 								}
 							}

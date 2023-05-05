@@ -129,6 +129,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					//normal attribute
 					var attrValue = attr.getValue();
 					var entityType = attr.getEntityType();
+					var adaptersInfo = attr.getAdaptersInfo();
 					if(attr.isComplex()==true){
 						//complex
 						var childEntitId = attrValue;

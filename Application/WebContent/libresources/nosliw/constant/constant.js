@@ -290,6 +290,9 @@ var node_CONSTANT=
 	  "CONFIGURE_DECORATION_INFO" : "info",
 	  "CONFIGURE_DECORATION_CORE" : "core",
 	  "CONFIGURE_CORE" : "core",
+	  "CONFIGURE_ROOT_VALUE" : "value",
+	  "CONFIGURE_ROOT_GLOBAL" : "global",
+	  "CONFIGURE_ROOT_PARM" : "parm",
 	  
 	  "VALUE_UNKNOW" : "UNKNOW",
 	  
