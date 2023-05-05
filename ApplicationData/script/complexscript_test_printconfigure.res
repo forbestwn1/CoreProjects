@@ -16,7 +16,7 @@ function(complexEntityDef, variableContextId, bundleCore, configure){
 
 		loc_configures.push({all : configure.getConfigureValue()});
 		
-		var configureDefs = parms.configures;
+		var configureDefs = parms.configure;
 		if(configureDefs!=undefined){
 			_.each(configureDefs, function(configureDef, i){
 				var configurPath;

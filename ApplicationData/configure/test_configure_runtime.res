@@ -21,7 +21,20 @@
 	"nosliw_core" : {
 		"a-none-test_complex_script" : {
 			"nosliw_core" : {
-				"a_configure" : "a configure value"
+				"a_configure" : {
+					"aa" : "aa value",
+					"ab" : "ab value"
+				}
+			}
+		},
+		"b-none-test_complex_1" : {
+			"nosliw_core" : {
+				"ba_none_test_complex_script" : {
+					"nosliw_core" : {
+						"baa" : "baa value",
+						"bab" : "bab value"
+					}
+				}
 			}
 		},
 		"nosliw_debug_package" : "true",
