@@ -1,5 +1,5 @@
 {
-	"nosliw_decoration1" :{
+	"nosliw_decoration" :{
 		"parts" : [
 			{
 				"parts" : {
@@ -29,10 +29,20 @@
 		},
 		"b-none-test_complex_1" : {
 			"nosliw_core" : {
-				"ba_none_test_complex_script" : {
+				"ba-none-test_complex_script" : {
 					"nosliw_core" : {
 						"baa" : "baa value",
 						"bab" : "bab value"
+					}
+				}
+			}
+		},
+		"c-none-test_complex_1" : {
+			"nosliw_core" : {
+				"ca-none-test_complex_script" : {
+					"nosliw_core" : {
+						"caa" : "caa value",
+						"cab" : "cab value"
 					}
 				}
 			}

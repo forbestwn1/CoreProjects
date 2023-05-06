@@ -51,7 +51,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 				HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
 				HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
-				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT.equals(attrEntityInfo.getEntityType())) {
+				if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
 					this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
 				}
 				else if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
@@ -71,7 +71,7 @@ public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComple
 					HAPContainerEntityExecutable conatinerEntityExe = HAPUtilityContainerEntity.buildExecutableContainer(containerEntityDef, processContext.getRuntimeEnvironment().getDomainEntityManager()); 
 					List<HAPElementContainerDefinition> eleInfoDefs = containerEntityDef.getAllElements();
 					for(HAPElementContainerDefinition eleInfoDef : eleInfoDefs) {
-						HAPEmbededDefinition embededDef = (HAPEmbededDefinition)eleInfoDef.getEmbededElementEntity();
+						HAPEmbededDefinition embededDef = eleInfoDef.getEmbededElementEntity();
 						HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition((HAPIdEntityInDomain)embededDef.getValue());
 
 						HAPElementContainerExecutable eleInfoExe = HAPUtilityContainerEntity.buildExecutableContainerElement(eleInfoDef, eleInfoDef.getElementId());

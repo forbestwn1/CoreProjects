@@ -24,7 +24,7 @@
 			"entity":[
 				{
 					"info": {
-						"name" : "ba_none_test_complex_script", 
+						"name" : "ba-none-test_complex_script", 
 						"status": "disabled1"
 					},
 					"entity":{
@@ -33,8 +33,27 @@
 							"configure" : []
 						}
 					}
-				},
-					
+				}
+			]
+		},
+		{
+			"info": {
+				"name" : "c-none-test_complex_1", 
+				"status": "disabled1"
+			},
+			"entity":[
+				{
+					"info": {
+						"name" : "ca-none-test_complex_script", 
+						"status": "disabled1"
+					},
+					"entity":{
+						"scriptName": "complexscript_test_printconfigure",
+						"parm" : {
+							"configure" : []
+						}
+					}
+				}
 			]
 		}
 	]

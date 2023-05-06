@@ -16,7 +16,7 @@
 					}
 				}
 			},			
-			"resourceId": "test.complex.script|#merge"
+			"resourceId": "test_complex_script|#merge"
 		},
 		{
 			"info": {
@@ -30,7 +30,7 @@
 					}
 				}
 			},
-			"resourceId": "test.complex.script|#merge"
+			"resourceId": "test_complex_script|#merge"
 		},
 		{
 			"info": {
@@ -44,7 +44,7 @@
 					}
 				}
 			},
-			"resourceId": "test.complex.script|#merge"
+			"resourceId": "test_complex_script|#merge"
 		},
 		{
 			"info": {
