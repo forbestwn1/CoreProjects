@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.test.decoration.testdecoration1;
+package com.nosliw.data.core.domain.entity.test.decoration.script;
 
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -13,6 +13,10 @@ public class HAPPluginEntityDefinitionInDomainTestDecoration1 extends HAPPluginE
 	
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		
+		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestDecoration1.ATTR_SCRIPTNAME);
+		entity.setScriptName(scriptName);
+		
 		HAPDefinitionEntityTestDecoration1 entity = (HAPDefinitionEntityTestDecoration1)this.getEntity(entityId, parserContext);
 		entity.setScript(obj+"");
 	}

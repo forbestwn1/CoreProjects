@@ -9,6 +9,7 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_getObjectType;
 	var node_objectOperationUtility;
+	var node_namingConvensionUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //configure for component
@@ -149,6 +150,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createConfigure", node_createConfigure); 

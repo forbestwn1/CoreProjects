@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.test.decoration.testdecoration1;
+package com.nosliw.data.core.domain.entity.test.decoration.script;
 
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;

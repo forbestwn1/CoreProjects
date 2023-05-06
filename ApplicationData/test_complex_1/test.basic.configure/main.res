@@ -25,7 +25,7 @@
 				{
 					"info": {
 						"name" : "ba-none-test_complex_script", 
-						"status": "disabled1"
+						"status": "disabled"
 					},
 					"entity":{
 						"scriptName": "complexscript_test_printconfigure",
@@ -39,7 +39,7 @@
 		{
 			"info": {
 				"name" : "c-none-test_complex_1", 
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity":[
 				{

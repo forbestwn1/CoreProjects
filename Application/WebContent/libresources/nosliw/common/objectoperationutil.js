@@ -21,7 +21,10 @@ var node_objectOperationUtility =
 		 */
 		getObjectAttributeByPath : function(obj, prop) {
 			if(obj==undefined)  return;
-			if(prop==undefined || prop=='')  return obj;
+			if(prop==undefined)  return obj;
+			
+			prop = prop + "";   //in case prop is number
+			if(prop=='')  return obj;
 		    var parts = prop.split('.');
 		    return this.getObjectAttributeByPathSegs(obj, parts);
 		},

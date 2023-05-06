@@ -34,7 +34,7 @@ var node_createDecoration = function(decorationInfo){
 	var loc_out = {
 
 		getPreInitRequest : function(handlers, request){
-			loc_runtimeObject = nosliw.runtime.getPackageService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
+			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
 			return loc_runtimeObject.getPreInitRequest(handlers, request);
 		},
 
