@@ -3,7 +3,7 @@
 		{
 			"nosliw_info" : {
 				"name" : "firstDec",
-				"type" : "test.decoration.1",
+				"type" : "decoration_script",
 				"id": "decoration1",
 				"description": "this is for testing decoration"
 			},

@@ -47,6 +47,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public String getEntityType() {  return this.m_entityType;	}
 
+	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
+	
 	public List<HAPAttributeEntityDefinition> getAttributes(){    return this.m_attributes;    }
 	
 	public HAPAttributeEntityDefinition getAttribute(String attrName) {

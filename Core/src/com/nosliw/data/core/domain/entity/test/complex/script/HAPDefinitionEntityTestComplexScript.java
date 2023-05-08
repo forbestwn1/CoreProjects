@@ -15,8 +15,6 @@ public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInD
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_PARM = "parm";
 
-	public static final String ATTR_SCRIPT = "script";
-
 	public HAPDefinitionEntityTestComplexScript() {
 		super(ENTITY_TYPE);
 		this.setNormalAttributeObject(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));

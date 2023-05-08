@@ -27,12 +27,18 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	private List<HAPAttributeEntityExecutable> m_attributes;
 
+	public HAPExecutableEntity() {
+		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
+	} 
+
 	public HAPExecutableEntity(String entityType) {
 		this.m_entityType = entityType;
 		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
 	} 
 	
 	public String getEntityType() {    return this.m_entityType;   }
+
+	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
 	
 	public List<HAPAttributeEntityExecutable> getAttributes(){    return this.m_attributes;     }
 	

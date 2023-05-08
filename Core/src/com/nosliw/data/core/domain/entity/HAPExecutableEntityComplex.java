@@ -22,6 +22,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
 	private String m_attachmentContainerId;
 	
+	public HAPExecutableEntityComplex() {}
+
 	public HAPExecutableEntityComplex(String entityType) {
 		super(entityType);
 	}

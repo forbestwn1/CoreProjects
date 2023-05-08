@@ -16,9 +16,9 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutableNormal;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
-import com.nosliw.data.core.domain.entity.HAPInfoAdapterExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
+import com.nosliw.data.core.domain.entity.HAPInfoAdapterExecutable;
 
 public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginComplexEntityProcessor{
 
@@ -38,6 +38,11 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 		}
 	}
 
+	public HAPPluginComplexEntityProcessorImp(String entityType, Class<? extends HAPExecutableEntityComplex> exeEntityClass) {
+		this.m_entityType = entityType;
+		this.m_exeEntityClass = exeEntityClass;
+	}
+
 	@Override
 	public String getEntityType() {    return this.m_entityType;    }
 	
@@ -46,6 +51,7 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 		HAPExecutableEntityComplex out = null;
 		try {
 			out = this.m_exeEntityClass.newInstance();
+			out.setEntityType(this.getEntityType());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

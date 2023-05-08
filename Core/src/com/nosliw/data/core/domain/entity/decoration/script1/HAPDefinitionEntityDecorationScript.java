@@ -1,18 +1,18 @@
-package com.nosliw.data.core.domain.entity.test.decoration.script;
+package com.nosliw.data.core.domain.entity.decoration.script1;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
-public class HAPDefinitionEntityTestDecoration1 extends HAPDefinitionEntityInDomainComplex{
+public class HAPDefinitionEntityDecorationScript extends HAPDefinitionEntityInDomainComplex{
 
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT;
+	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT;
 
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_SCRIPT = "script";
 	
-	public HAPDefinitionEntityTestDecoration1() {
+	public HAPDefinitionEntityDecorationScript() {
 	}
 	
 	public String getScriptName() {   return (String)this.getNormalAttributeValue(ATTR_SCRIPTNAME);     }
@@ -20,7 +20,7 @@ public class HAPDefinitionEntityTestDecoration1 extends HAPDefinitionEntityInDom
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityTestDecoration1 out = new HAPDefinitionEntityTestDecoration1();
+		HAPDefinitionEntityDecorationScript out = new HAPDefinitionEntityDecorationScript();
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}

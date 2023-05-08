@@ -49,6 +49,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		try {
 			
 			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
+			entity.setEntityType(this.getEntityType());
 			
 			//add to domain
 			out = parserContext.getCurrentDomain().addEntity(entity);
