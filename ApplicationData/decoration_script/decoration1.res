@@ -21,11 +21,12 @@ function(configure){
 	var loc_out = {
 			
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-			loc_runtimeInteface = runtimeInteface;
+//			loc_runtimeInteface = runtimeInteface;
 		},
 			
 		//call back to provide runtime context : view (during init phase)
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
+/*
 			loc_parentView = $(runtimeContext.view);
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration1</div>');
@@ -37,6 +38,8 @@ function(configure){
 					view : loc_wrapperView.get(),
 				});
 			}, handlers, request);
+			
+*/			
 		},
 
 	};
