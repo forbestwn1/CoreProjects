@@ -3,13 +3,10 @@ package com.nosliw.data.core.domain.entity.test.simple.testsimple1;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 
 public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainSimple{
-
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1;
 
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_PARM = "parm";
@@ -17,7 +14,6 @@ public class HAPDefinitionEntityTestSimple1 extends HAPDefinitionEntityInDomainS
 	public static final String ATTR_SCRIPT = "script";
 
 	public HAPDefinitionEntityTestSimple1() {
-		super(ENTITY_TYPE);
 		this.setNormalAttribute(ATTR_PARM, new HAPEmbededDefinitionWithValue(new LinkedHashMap<String, Object>()));
 	}
 

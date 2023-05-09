@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.entity.configure;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
@@ -8,7 +9,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainConfigure extends HAPPluginEntityDefinitionInDomainImp{
 
 	public HAPPluginEntityDefinitionInDomainConfigure(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityConfigure.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, HAPDefinitionEntityConfigure.class, runtimeEnv);
 	}
 	
 	@Override

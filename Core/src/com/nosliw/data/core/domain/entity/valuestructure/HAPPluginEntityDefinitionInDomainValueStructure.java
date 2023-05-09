@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
@@ -12,7 +13,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	public HAPPluginEntityDefinitionInDomainValueStructure(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityValueStructure.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, HAPDefinitionEntityValueStructure.class, runtimeEnv);
 	}
 
 	@Override

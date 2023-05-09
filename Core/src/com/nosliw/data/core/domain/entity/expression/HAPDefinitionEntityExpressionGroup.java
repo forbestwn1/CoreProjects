@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
@@ -16,14 +15,11 @@ import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDomainComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
 
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP;
-
 //	private Map<String, HAPDefinitionExpression> m_elements;
 	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
 	public HAPDefinitionEntityExpressionGroup() {
-		super(ENTITY_TYPE);
 		this.setNormalAttributeObject(ELEMENT, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}

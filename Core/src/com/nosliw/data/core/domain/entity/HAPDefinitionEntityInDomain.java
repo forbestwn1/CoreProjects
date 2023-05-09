@@ -17,7 +17,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
 
@@ -33,7 +32,6 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	private String m_entityType;
 	
 	protected HAPDefinitionEntityInDomain() {
-		this.m_entityType = HAPUtilityEntityDefinition.getEntityTypeFromEntityClass(this.getClass());
 		this.m_attributes = new ArrayList<HAPAttributeEntityDefinition>();
 	}
 	

@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
@@ -28,8 +28,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
 public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
-
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;
 
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
@@ -51,7 +49,6 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 	
 	
 	public HAPExecutableExpressionGroup() {
-		super(ENTITY_TYPE);
 		this.m_expressionItem = new LinkedHashMap<String, HAPExecutableExpression>();
 	}
 	

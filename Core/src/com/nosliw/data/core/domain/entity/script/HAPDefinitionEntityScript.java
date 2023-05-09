@@ -1,12 +1,9 @@
 package com.nosliw.data.core.domain.entity.script;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 
 public class HAPDefinitionEntityScript extends HAPDefinitionEntityInDomainSimple{
-
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT;
 
 	private String m_script;
 	

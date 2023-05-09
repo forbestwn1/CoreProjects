@@ -9,15 +9,12 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple{
-
-	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE;
 
 	@HAPAttribute
 	public static final String VALUE = "value";

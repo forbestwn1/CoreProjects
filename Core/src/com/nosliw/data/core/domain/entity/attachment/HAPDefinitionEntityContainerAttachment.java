@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPConfigureComplexRelationAttachment;
@@ -18,8 +18,6 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 @HAPEntityWithAttribute
 public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityInDomainSimple{
 
-	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT;
-	
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 

@@ -16,8 +16,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 @HAPEntityWithAttribute
 public class HAPExecutableDecorationScript extends HAPExecutableEntityComplex{
 
-	public static final String ENTITY_TYPE = HAPDefinitionEntityDecorationScript.ENTITY_TYPE;
-
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 

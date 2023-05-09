@@ -3,6 +3,7 @@ package com.nosliw.data.core.domain.entity.expression;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
@@ -11,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainExpressionGroup(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityExpressionGroup.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityExpressionGroup.class, runtimeEnv);
 	}
 
 	@Override

@@ -5,8 +5,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImpSimple extends HAPPluginEntityDefinitionInDomainImp{
 
-	public HAPPluginEntityDefinitionInDomainImpSimple(Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
-		super(entityClass, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainImpSimple(String entityType, Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
+		super(entityType, entityClass, runtimeEnv);
 	}
 	
 	@Override

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
@@ -13,8 +12,6 @@ import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPDefinitionEntityComplexValueStructure3 extends HAPDefinitionEntityInDomainSimple{
-
-	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURECOMPLEX;
 
 	public static final String PART = "part";
 	

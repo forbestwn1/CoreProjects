@@ -1,13 +1,10 @@
 package com.nosliw.data.core.domain.entity.dataassociation;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDomainSimple{
-
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION;
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	

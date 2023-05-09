@@ -29,11 +29,6 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		this.m_isComplex = isComplex;
 	}
 
-	public HAPPluginEntityDefinitionInDomainDynamic(Class<? extends HAPDefinitionEntityInDomain> entityClass, boolean isComplex, HAPRuntimeEnvironment runtimeEnv) {
-		super(entityClass, runtimeEnv);
-		this.m_isComplex = isComplex;
-	}
-
 	@Override
 	public boolean isComplexEntity() {	return this.m_isComplex;	}
 

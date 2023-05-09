@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain.entity.attachment;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
@@ -10,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	public HAPPluginEntityDefinitionInDomainAttachment(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityContainerAttachment.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, HAPDefinitionEntityContainerAttachment.class, runtimeEnv);
 	}
 
 	@Override

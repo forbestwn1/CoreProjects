@@ -7,6 +7,7 @@ import java.util.Map;
 import org.json.JSONArray;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -23,7 +24,7 @@ import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementRefere
 public class HAPPluginComplexEntityProcessorTestComplexScript extends HAPPluginComplexEntityProcessorImp{
 
 	public HAPPluginComplexEntityProcessorTestComplexScript() {
-		super(HAPExecutableTestComplexScript.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, HAPExecutableTestComplexScript.class);
 	}
 
 	@Override

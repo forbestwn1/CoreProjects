@@ -1,6 +1,5 @@
 package com.nosliw.data.core.complex;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Set;
 
@@ -26,18 +25,6 @@ public abstract class HAPPluginComplexEntityProcessorImp implements HAPPluginCom
 	
 	private String m_entityType;
 	
-	public HAPPluginComplexEntityProcessorImp(Class<? extends HAPExecutableEntityComplex> exeEntityClass) {
-		this.m_exeEntityClass = exeEntityClass;
-		
-		//get entity type from class
-		try {
-			Field f = this.m_exeEntityClass.getField("ENTITY_TYPE");
-			this.m_entityType = (String)f.get(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public HAPPluginComplexEntityProcessorImp(String entityType, Class<? extends HAPExecutableEntityComplex> exeEntityClass) {
 		this.m_entityType = entityType;
 		this.m_exeEntityClass = exeEntityClass;

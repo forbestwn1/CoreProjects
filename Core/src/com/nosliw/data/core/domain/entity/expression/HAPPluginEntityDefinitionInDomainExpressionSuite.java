@@ -12,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainExpressionSuite extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainExpressionSuite(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityExpressionSuite.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE, HAPDefinitionEntityExpressionSuite.class, runtimeEnv);
 	}
 
 	@Override

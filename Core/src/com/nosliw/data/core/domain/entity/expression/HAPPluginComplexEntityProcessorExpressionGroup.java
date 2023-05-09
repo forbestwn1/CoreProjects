@@ -29,10 +29,10 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
-import com.nosliw.data.core.operand.HAPUtilityOperand;
+import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
+import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
@@ -47,7 +47,7 @@ import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
 public class HAPPluginComplexEntityProcessorExpressionGroup extends HAPPluginComplexEntityProcessorImp{
 
 	public HAPPluginComplexEntityProcessorExpressionGroup() {
-		super(HAPExecutableExpressionGroup.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPExecutableExpressionGroup.class);
 	}
 
 	@Override

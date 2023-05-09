@@ -27,7 +27,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValu
 public class HAPPluginComplexEntityProcessorTestComplex1 extends HAPPluginComplexEntityProcessorImp{
 
 	public HAPPluginComplexEntityProcessorTestComplex1() {
-		super(HAPExecutableTestComplex1.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, HAPExecutableTestComplex1.class);
 	}
 
 	@Override

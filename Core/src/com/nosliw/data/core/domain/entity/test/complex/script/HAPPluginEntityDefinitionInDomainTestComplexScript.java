@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain.entity.test.complex.script;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
@@ -10,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainTestComplexScript extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainTestComplexScript(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityTestComplexScript.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, HAPDefinitionEntityTestComplexScript.class, runtimeEnv);
 	}
 	
 	@Override

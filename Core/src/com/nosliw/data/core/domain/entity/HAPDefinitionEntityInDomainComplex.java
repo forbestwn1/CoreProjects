@@ -1,10 +1,9 @@
 package com.nosliw.data.core.domain.entity;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 
 //entity that have data value structure and attachment
 public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueContext, HAPWithAttachment{
@@ -19,7 +18,7 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public HAPIdEntityInDomain getValueContextEntity() {  	return (HAPIdEntityInDomain)this.getNormalAttributeValue(HAPWithValueContext.VALUECONTEXT);	}
 
 	@Override
-	public void setValueContextEntity(HAPIdEntityInDomain valueContextEntity) {    this.setNormalAttributeValueSimple(HAPWithValueContext.VALUECONTEXT, valueContextEntity, HAPDefinitionEntityValueContext.ENTITY_TYPE);      }
+	public void setValueContextEntity(HAPIdEntityInDomain valueContextEntity) {    this.setNormalAttributeValueSimple(HAPWithValueContext.VALUECONTEXT, valueContextEntity, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT);      }
 
 	@Override
 	public String getValueStructureTypeIfNotDefined() {  return null;  }
@@ -28,6 +27,6 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getNormalAttributeValue(HAPWithAttachment.ATTACHMENT);  }
 
 	@Override
-	public void setAttachmentContainerEntity(HAPIdEntityInDomain attachmentEntity) {    this.setNormalAttributeValueSimple(HAPWithAttachment.ATTACHMENT, attachmentEntity, HAPDefinitionEntityContainerAttachment.ENTITY_TYPE);   }
+	public void setAttachmentContainerEntity(HAPIdEntityInDomain attachmentEntity) {    this.setNormalAttributeValueSimple(HAPWithAttachment.ATTACHMENT, attachmentEntity, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT);   }
 
 }

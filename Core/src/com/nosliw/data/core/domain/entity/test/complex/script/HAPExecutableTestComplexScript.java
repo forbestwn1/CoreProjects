@@ -19,8 +19,6 @@ import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContex
 @HAPEntityWithAttribute
 public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 
-	public static final String ENTITY_TYPE = HAPDefinitionEntityTestComplexScript.ENTITY_TYPE;
-
 	@HAPAttribute
 	public static String SCRIPT = "script";
 	
@@ -37,7 +35,6 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 	public static String UNKNOWNVARIABLE = "unknownVariable";
 	
 	public HAPExecutableTestComplexScript() {
-		super(HAPDefinitionEntityTestComplexScript.ENTITY_TYPE);
 	}
 	
 	public void setScript(String script) {		this.setNormalAttributeObject(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}

@@ -18,12 +18,9 @@ public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDom
 	@HAPAttribute
 	public static String GROUP = "group";
 
-	public static final String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE;
-	
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
 	public HAPDefinitionEntityExpressionSuite() {
-		super(ENTITY_TYPE);
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 

@@ -14,7 +14,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntityDefinitionInDomainImp{
 
 	public HAPPluginEntityDefinitionInDomainTestSimple1(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityTestSimple1.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1, HAPDefinitionEntityTestSimple1.class, runtimeEnv);
 	}
 	
 	@Override

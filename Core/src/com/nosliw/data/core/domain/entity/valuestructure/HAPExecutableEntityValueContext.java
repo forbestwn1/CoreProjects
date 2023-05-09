@@ -9,7 +9,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -17,8 +16,6 @@ import com.nosliw.data.core.valuestructure.HAPInfoPartValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEntityValueContext extends HAPExecutableImp{
-
-	public static String ENTITY_TYPE = HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT;
 
 	@HAPAttribute
 	public static String PART = "part";

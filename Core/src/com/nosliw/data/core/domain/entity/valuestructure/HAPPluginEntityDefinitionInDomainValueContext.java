@@ -13,7 +13,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	public HAPPluginEntityDefinitionInDomainValueContext(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPDefinitionEntityValueContext.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, HAPDefinitionEntityValueContext.class, runtimeEnv);
 	}
 
 	@Override
