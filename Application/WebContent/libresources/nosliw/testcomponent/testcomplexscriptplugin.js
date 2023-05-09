@@ -30,7 +30,6 @@ var node_createTestComplexScriptPlugin = function(){
 					var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
 					var rawComplexEntityCore = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
 					return rawComplexEntityCore;
-					
 	 			}
 			}));
 			
