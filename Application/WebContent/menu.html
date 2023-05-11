@@ -28,31 +28,38 @@
 		<div class="view view-main">
 			<div data-name="home" class="page">
 				<div class="page-content">
-					<div id="selectResourceDiv">
-						<button onclick="openApplication()">Click me111</button>
-					</div>
-				
-				    <div class="toolbar tabbar toolbar-bottom">
-				      <div class="toolbar-inner">
-				        <a href="#tab-complexentitytree" class="tab-link tab-link-active">ComplexEntityTree</a>
-				        <a href="#tab-variable" class="tab-link">Variable</a>
-				        <a href="#tab-lifecycle" class="tab-link">Lifecycle</a>
-				      </div>
-				    </div>				
 
-					<div class="tabs">
-					  <div class="tab tab-active" id="tab-complexentitytree">
-						<div id="complextreeDebug"></div>
+					  <div class="row">
+					    <div class="col-25 resizable">
+							<div id="selectResourceDiv">
+								<button onclick="openApplication()">Click me111</button>
+							</div>
+					    </div>
+					    
+					    <div class="col-75 resizable">
+						    <div class="toolbar tabbar toolbar-bottom">
+						      <div class="toolbar-inner">
+						        <a href="#tab-complexentitytree" class="tab-link tab-link-active">ComplexEntityTree</a>
+						        <a href="#tab-variable" class="tab-link">Variable</a>
+						        <a href="#tab-lifecycle" class="tab-link">Lifecycle</a>
+						      </div>
+						    </div>				
+		
+							<div class="tabs">
+							  <div class="tab tab-active" id="tab-complexentitytree">
+								<div id="complextreeDebug"></div>
+							  </div>
+							  <!-- Second tab, should have "tab" class and unique id attribute -->
+							  <div class="tab" id="tab-variable">
+								<div id="variableDebug"></div>
+							  </div>
+							  <!-- Third tab, should have "tab" class and unique id attribute -->
+							  <div class="tab" id="tab-lifecycle">
+								<div id="lifecycleDebug"></div>
+							  </div>
+							</div>				
+					    </div>
 					  </div>
-					  <!-- Second tab, should have "tab" class and unique id attribute -->
-					  <div class="tab" id="tab-variable">
-						<div id="variableDebug"></div>
-					  </div>
-					  <!-- Third tab, should have "tab" class and unique id attribute -->
-					  <div class="tab" id="tab-lifecycle">
-						<div id="lifecycleDebug"></div>
-					  </div>
-					</div>				
 				</div>
 			</div>
 		</div>
@@ -78,9 +85,9 @@ var loc_resetView;
 
 function openApplication() {
 	var resourceType = "test_complex_1";
-	var resourceId = "testvalue";
+	var resourceId = "test.entity.valuestructure.merge";
 	var configure = "testcomplex1";
-	var appWin = window.open ("http://localhost:8082/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,"_blank");
+	var appWin = window.open ("http://localhost:8080/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,"_blank");
 
 	appWin.addEventListener("nosliwApplicationActive", function(event) {
 		nosliw = appWin.nosliw;
@@ -131,7 +138,7 @@ $(document).on("nosliwActive", function(){
 
 	init();
 	
-	loc_loadApplication();
+//	loc_loadApplication();
 });
 
 var loc_loadApplication = function(){

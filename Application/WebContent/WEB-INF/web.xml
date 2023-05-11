@@ -71,6 +71,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>browseComplexEntityServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.browsecomplexentity.HAPBrowseComplexEntityServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>browseComplexEntityServlet</servlet-name>
+    <url-pattern>/browsecomplexentity</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>browseResourceServlet</servlet-name>
     <servlet-class>com.nosliw.servlet.app.browseresource.HAPBrowseResourceServlet</servlet-class>
   </servlet>

@@ -38,7 +38,23 @@ public class HAPUtilityFile {
 		return sortedList;
 	}
 	
-    public static Set<File> getAllFiles(String path) {
+	public static Set<File> getChildren(String path){
+    	Set<File> out = new HashSet<File>();
+        File f = new File(path);
+        if (!f.exists()) {
+            System.out.println(path + " not exists");
+            return out;
+        }
+
+        File fa[] = f.listFiles();
+        for (int i = 0; i < fa.length; i++) {
+            File fs = fa[i];
+        	out.add(fs);
+        }
+        return out;
+	}
+	
+	public static Set<File> getAllFiles(String path) {
     	Set<File> out = new HashSet<File>();
         File f = new File(path);
         if (!f.exists()) {

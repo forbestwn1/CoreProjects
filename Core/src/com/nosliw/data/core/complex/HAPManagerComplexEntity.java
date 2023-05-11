@@ -59,6 +59,8 @@ public class HAPManagerComplexEntity {
 		this.m_complexResourceBundles = new LinkedHashMap<HAPResourceIdSimple, HAPExecutableBundle>();
 	}
 
+	public Set<String> getComplexEntityTypes(){     return this.m_processorComplexEntityPlugins.keySet();     }
+	
 	public HAPExecutablePackage getExecutablePackage(HAPResourceId resourceId) {
 		HAPExecutablePackage out = new HAPExecutablePackage();
 
