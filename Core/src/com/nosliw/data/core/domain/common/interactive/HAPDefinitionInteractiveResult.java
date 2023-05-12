@@ -1,4 +1,4 @@
-package com.nosliw.data.core.interactive;
+package com.nosliw.data.core.domain.common.interactive;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +14,29 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPResultInteractive extends HAPEntityInfoWritableImp{
+public class HAPDefinitionInteractiveResult extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String OUTPUT = "output";
 	
-	private List<HAPOutputInteractive> m_output;
+	private List<HAPDefinitionInteractiveResultOutput> m_output;
 	
-	public HAPResultInteractive(){
-		this.m_output = new ArrayList<HAPOutputInteractive>();
+	public HAPDefinitionInteractiveResult(){
+		this.m_output = new ArrayList<HAPDefinitionInteractiveResultOutput>();
 	}
 
-	public void addOutput(HAPOutputInteractive output) {   this.m_output.add(output);   }
-	public List<HAPOutputInteractive> getOutput(){   return this.m_output;  }
+	public void addOutput(HAPDefinitionInteractiveResultOutput output) {   this.m_output.add(output);   }
+	public List<HAPDefinitionInteractiveResultOutput> getOutput(){   return this.m_output;  }
 	
-	public HAPResultInteractive cloneInteractiveResult() {
-		HAPResultInteractive out = new HAPResultInteractive();
+	public HAPDefinitionInteractiveResult cloneInteractiveResult() {
+		HAPDefinitionInteractiveResult out = new HAPDefinitionInteractiveResult();
 		this.cloneToInteractiveResult(out);
 		return out;
 	}
 	
-	protected void cloneToInteractiveResult(HAPResultInteractive result) {
+	protected void cloneToInteractiveResult(HAPDefinitionInteractiveResult result) {
 		this.cloneToEntityInfo(result);
-		for(HAPOutputInteractive output : this.m_output) {
+		for(HAPDefinitionInteractiveResultOutput output : this.m_output) {
 			result.addOutput(output.cloneInteractiveOutput());
 		}
 	}
@@ -49,7 +49,7 @@ public class HAPResultInteractive extends HAPEntityInfoWritableImp{
 			
 			JSONArray outputArray = objJson.getJSONArray(OUTPUT);
 			for(int i=0; i<outputArray.length(); i++) {
-				HAPOutputInteractive output = new HAPOutputInteractive();
+				HAPDefinitionInteractiveResultOutput output = new HAPDefinitionInteractiveResultOutput();
 				output.buildObject(outputArray.get(i), HAPSerializationFormat.JSON);
 				this.addOutput(output);
 			}

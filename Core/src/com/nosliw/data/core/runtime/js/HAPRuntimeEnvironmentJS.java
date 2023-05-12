@@ -21,6 +21,8 @@ import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntity;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntityThin;
+import com.nosliw.data.core.domain.common.script.HAPPluginComplexEntityProcessorScript;
+import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBase;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionInDomainAttachment;
 import com.nosliw.data.core.domain.entity.configure.HAPPluginEntityDefinitionInDomainConfigure;
@@ -36,8 +38,6 @@ import com.nosliw.data.core.domain.entity.expression.HAPProcessorAttachmentEntit
 import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.domain.entity.script.HAPPluginEntityDefinitionInDomainScript;
 import com.nosliw.data.core.domain.entity.script.HAPResourceManagerImpScript;
-import com.nosliw.data.core.domain.entity.scriptbased.HAPPluginComplexEntityProcessorScript;
-import com.nosliw.data.core.domain.entity.scriptbased.HAPPluginEntityDefinitionInDomainScriptBase;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginComplexEntityProcessorTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginComplexEntityProcessorTestComplex1;

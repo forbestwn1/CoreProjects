@@ -11,18 +11,19 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveResult;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveResultOutput;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.domain.entity.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.interactive.HAPOutputInteractive;
-import com.nosliw.data.core.interactive.HAPResultInteractive;
+import com.nosliw.data.core.domain.entity.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process1.util.HAPParserProcessDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.data.HAPContextDataFactory;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
@@ -80,11 +81,11 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		Map<String, HAPContainerStructure> outputExternalContexts = new LinkedHashMap<String, HAPContainerStructure>();
-		Map<String, HAPResultInteractive> serviceResult = serviceInterface.getResults();
+		Map<String, HAPDefinitionInteractiveResult> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
-			List<HAPOutputInteractive> output = serviceResult.get(resultName).getOutput();
+			List<HAPDefinitionInteractiveResultOutput> output = serviceResult.get(resultName).getOutput();
 			HAPValueStructureDefinitionFlat outputContext = new HAPValueStructureDefinitionFlat();
-			for(HAPOutputInteractive parm : output) {
+			for(HAPDefinitionInteractiveResultOutput parm : output) {
 				outputContext.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPContainerStructure.createDefault(outputContext));
@@ -113,10 +114,10 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 		
 		@Override
-		public HAPResultService execute(Map<String, HAPData> parms) {
+		public HAPResultInteractive execute(Map<String, HAPData> parms) {
 			JSONObject dataObj = (JSONObject)m_processRuntime.executeEmbededProcess(m_processExe, HAPContextDataFactory.newContextDataFlat(parms), this.m_resourceManager).getData();
 //			JSONObject dataObj = (JSONObject)m_processManager.executeProcess("main", suite, parms).getData();
-			HAPResultService out = new HAPResultService();
+			HAPResultInteractive out = new HAPResultInteractive();
 			out.buildObject(dataObj, HAPSerializationFormat.JSON);
 			return out;
 		}

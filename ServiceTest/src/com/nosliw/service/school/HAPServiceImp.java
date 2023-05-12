@@ -12,9 +12,9 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPProviderService;
-import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 import com.nosliw.service.realtor.HAPDataImporter;
 
@@ -31,12 +31,12 @@ public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 	public static void main(String[] argus) throws Exception{
 		HAPServiceImp dataSource = new HAPServiceImp();
-		HAPResultService result = dataSource.execute(null);
+		HAPResultInteractive result = dataSource.execute(null);
 		System.out.println(result);
 	}
 	
 	@Override
-	public HAPResultService execute(Map<String, HAPData> parms){
+	public HAPResultInteractive execute(Map<String, HAPData> parms){
 
 		InputStream inputStream = HAPUtilityFile.getInputStreamOnClassPath(getClass(), "elementSchoolArray.js");
 		

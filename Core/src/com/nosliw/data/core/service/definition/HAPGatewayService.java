@@ -11,6 +11,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 
@@ -48,7 +49,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 			serviceQuery.buildObject(parms.optJSONObject(COMMAND_REQUEST_QUERY), HAPSerializationFormat.JSON);
 			JSONObject parmsJson = parms.optJSONObject(COMMAND_REQUEST_PARMS);
 			Map<String, HAPData> dataSourceParms = HAPUtilityData.buildDataWrapperMapFromJson(parmsJson);
-			HAPResultService serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
+			HAPResultInteractive serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
 			out = this.createSuccessWithObject(serviceResult);
 			break;
 		}

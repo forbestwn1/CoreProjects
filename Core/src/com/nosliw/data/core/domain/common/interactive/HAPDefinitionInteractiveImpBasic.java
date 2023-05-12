@@ -1,4 +1,4 @@
-package com.nosliw.data.core.interactive;
+package com.nosliw.data.core.domain.common.interactive;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,41 +9,41 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public abstract class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableImp implements HAPWithInteractive{
+public abstract class HAPDefinitionInteractiveImpBasic extends HAPEntityInfoWritableImp implements HAPDefinitionInteractive{
 
 	//service input parms
-	private List<HAPVariableInfo> m_requestParms;
+	private List<HAPDefinitionInteractiveRequestParm> m_requestParms;
 
 	//service output
-	private Map<String, HAPResultInteractive> m_results;
+	private Map<String, HAPDefinitionInteractiveResult> m_results;
 	
-	public HAPWithInteractiveImpBasic() {
-		this.m_requestParms = new ArrayList<HAPVariableInfo>();
-		this.m_results = new LinkedHashMap<String, HAPResultInteractive>();
+	public HAPDefinitionInteractiveImpBasic() {
+		this.m_requestParms = new ArrayList<HAPDefinitionInteractiveRequestParm>();
+		this.m_results = new LinkedHashMap<String, HAPDefinitionInteractiveResult>();
 	}
 
-	public void addRequestParm(HAPVariableInfo parm) { this.m_requestParms.add(parm);  }
+	public void addRequestParm(HAPDefinitionInteractiveRequestParm parm) { this.m_requestParms.add(parm);  }
 	@Override
-	public List<HAPVariableInfo> getRequestParms(){   return this.m_requestParms;   }
+	public List<HAPDefinitionInteractiveRequestParm> getRequestParms(){   return this.m_requestParms;   }
 	
 	@Override
-	public Map<String, HAPResultInteractive> getResults(){ return this.m_results;  }
-	public HAPResultInteractive getResult(String result) {   return this.m_results.get(result);  }
-	public List<HAPOutputInteractive> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
-	public void addResult(String name, HAPResultInteractive result) {  this.m_results.put(name, result);  }
+	public Map<String, HAPDefinitionInteractiveResult> getResults(){ return this.m_results;  }
+	public HAPDefinitionInteractiveResult getResult(String result) {   return this.m_results.get(result);  }
+	public List<HAPDefinitionInteractiveResultOutput> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
+	public void addResult(String name, HAPDefinitionInteractiveResult result) {  this.m_results.put(name, result);  }
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {
-		for(HAPVariableInfo parm : this.m_requestParms) 	parm.getDataInfo().process(runtimeEnv);
+		for(HAPDefinitionInteractiveRequestParm parm : this.m_requestParms) 	parm.getDataInfo().process(runtimeEnv);
 	}
 	
-	protected void cloneToWithInteractive(HAPWithInteractiveImpBasic withInteractive) {
+	protected void cloneToWithInteractive(HAPDefinitionInteractiveImpBasic withInteractive) {
 		this.cloneToEntityInfo(withInteractive);
-		for(HAPVariableInfo parm : this.m_requestParms) 	withInteractive.addRequestParm(parm.cloneVariableInfo());
+		for(HAPDefinitionInteractiveRequestParm parm : this.m_requestParms) 	withInteractive.addRequestParm(parm.cloneVariableInfo());
 		for(String resultName : this.m_results.keySet()) {
 			withInteractive.addResult(resultName, this.m_results.get(resultName).cloneInteractiveResult());
 		}
@@ -57,7 +57,7 @@ public abstract class HAPWithInteractiveImpBasic extends HAPEntityInfoWritableIm
 			JSONObject resultObject = objJson.getJSONObject(RESULT);
 			for(Object key : resultObject.keySet()) {
 				String name = (String)key;
-				HAPResultInteractive resultEle = new HAPResultInteractive();
+				HAPDefinitionInteractiveResult resultEle = new HAPDefinitionInteractiveResult();
 				resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
 				resultEle.setName(name);
 				this.m_results.put(resultEle.getName(), resultEle);

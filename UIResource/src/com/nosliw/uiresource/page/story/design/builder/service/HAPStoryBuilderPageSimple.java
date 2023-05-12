@@ -17,10 +17,10 @@ import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.interactive.HAPResultInteractive;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveResult;
+import com.nosliw.data.core.domain.entity.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPInfoServiceStatic;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
@@ -255,7 +255,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//output
 				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstantShared.SERVICE_CHILD_RESULT));
-				HAPResultInteractive successResult = serviceInterface.getResult("success");
+				HAPDefinitionInteractiveResult successResult = serviceInterface.getResult("success");
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.RESULT);
 				for(HAPVariableInfo parm : successResult.getOutput()) {
 					String parmName = parm.getName();

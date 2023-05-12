@@ -10,16 +10,16 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveResultOutput;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionGroupDataAssociationForTask;
-import com.nosliw.data.core.interactive.HAPOutputInteractive;
+import com.nosliw.data.core.domain.entity.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
@@ -67,9 +67,9 @@ public class HAPUtilityServiceUse {
 		return buildValueStructureFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPOutputInteractive> serviceOutput) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPDefinitionInteractiveResultOutput> serviceOutput) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPOutputInteractive outParm : serviceOutput) {
+		for(HAPDefinitionInteractiveResultOutput outParm : serviceOutput) {
 			out.addRoot(outParm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.interfacee;
+package com.nosliw.data.core.domain.entity.service.interfacee;
 
 import java.util.ArrayList;
 import java.util.List;

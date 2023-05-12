@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
@@ -19,24 +20,24 @@ import com.nosliw.data.core.service.use.HAPWithServiceUse;
 
 public class HAPUtilityService {
 
-	public static HAPResultService generateSuccessResult(Map<String, HAPData> output) {
-		return new HAPResultService(HAPConstantShared.SERVICE_RESULT_SUCCESS, output);
+	public static HAPResultInteractive generateSuccessResult(Map<String, HAPData> output) {
+		return new HAPResultInteractive(HAPConstantShared.SERVICE_RESULT_SUCCESS, output);
 	}
 
-	public static Map<String, HAPResultService> readServiceResult(InputStream inputStream) {
-		Map<String, HAPResultService> out = new LinkedHashMap<String, HAPResultService>();
+	public static Map<String, HAPResultInteractive> readServiceResult(InputStream inputStream) {
+		Map<String, HAPResultInteractive> out = new LinkedHashMap<String, HAPResultInteractive>();
 		String content = HAPUtilityFile.readFile(inputStream);
 		JSONArray resultArray = new JSONArray(content);
 		for(int i=0; i<resultArray.length(); i++) {
 			JSONObject resultJsonObj = resultArray.getJSONObject(i);
-			HAPResultService result = new HAPResultService();
+			HAPResultInteractive result = new HAPResultInteractive();
 			result.buildObject(resultJsonObj, HAPSerializationFormat.JSON);
 			out.put(resultJsonObj.getString("name"), result);
 		}
 		return out;
 	}
 	
-	public static HAPResultService readServiceResult(InputStream inputStream, String name) {
+	public static HAPResultInteractive readServiceResult(InputStream inputStream, String name) {
 		return readServiceResult(inputStream).get(name);
 	}
 

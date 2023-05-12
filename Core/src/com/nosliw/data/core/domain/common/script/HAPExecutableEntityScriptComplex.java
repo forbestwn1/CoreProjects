@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.scriptbased;
+package com.nosliw.data.core.domain.common.script;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;

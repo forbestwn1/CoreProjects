@@ -21,8 +21,8 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
-import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 
 public class HAPServiceUpdateLineup implements HAPExecutableService{
@@ -30,7 +30,7 @@ public class HAPServiceUpdateLineup implements HAPExecutableService{
 	private String adminEmail = "forbestwn@hotmail.com";
 	
 	@Override
-	synchronized public HAPResultService execute(Map<String, HAPData> parms){
+	synchronized public HAPResultInteractive execute(Map<String, HAPData> parms){
 		String actionStr = null;
 		String statusStr = null;
 		String oweToStr = "";

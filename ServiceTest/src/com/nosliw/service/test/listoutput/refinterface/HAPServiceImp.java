@@ -10,15 +10,15 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPProviderService;
-import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 
 public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 	@Override
-	public HAPResultService execute(Map<String, HAPData> parms) {
+	public HAPResultInteractive execute(Map<String, HAPData> parms) {
 		Map<String, HAPData> output = new LinkedHashMap<String, HAPData>();
 		HAPData parm1 = parms.get("parm1");
 		HAPData parm2 = parms.get("parm2");

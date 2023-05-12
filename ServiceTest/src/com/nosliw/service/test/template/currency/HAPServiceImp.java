@@ -12,16 +12,16 @@ import com.nosliw.data.core.codetable.HAPCodeTableId;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPProviderService;
-import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 
 	@Override
-	public HAPResultService execute(Map<String, HAPData> parms) {
+	public HAPResultInteractive execute(Map<String, HAPData> parms) {
 		//read content
 		String file = HAPSystemFolderUtility.getCodeTableFolder()+"currencytype.res";
 		//parse content

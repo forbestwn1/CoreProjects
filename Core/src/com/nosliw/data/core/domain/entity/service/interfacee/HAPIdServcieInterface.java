@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.interfacee;
+package com.nosliw.data.core.domain.entity.service.interfacee;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 

@@ -3,10 +3,10 @@ package com.nosliw.data.core.component.command;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.interactive.HAPWithInteractive;
-import com.nosliw.data.core.interactive.HAPWithInteractiveImpBasic;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractive;
+import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveImpBasic;
 
-public class HAPDefinitionCommand extends HAPWithInteractiveImpBasic{
+public class HAPDefinitionCommand extends HAPDefinitionInteractiveImpBasic{
 
 	@HAPAttribute
 	public static String TASK = "task";
@@ -23,7 +23,7 @@ public class HAPDefinitionCommand extends HAPWithInteractiveImpBasic{
 	public String getTaskName() {     return this.m_task;     }
 	
 	@Override
-	public HAPWithInteractive cloneWithInteractive() {  return this.cloneCommandDefinition();  }
+	public HAPDefinitionInteractive cloneWithInteractive() {  return this.cloneCommandDefinition();  }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

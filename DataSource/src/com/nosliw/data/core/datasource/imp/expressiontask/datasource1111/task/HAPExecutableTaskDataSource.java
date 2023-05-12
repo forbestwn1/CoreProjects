@@ -71,15 +71,15 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	}
 
 	@Override
-	public void discoverVariable(Map<String, HAPVariableInfo> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
+	public void discoverVariable(Map<String, HAPDefinitionInteractiveRequestParm> variablesInfo, HAPDataTypeCriteria expectOutputCriteria,
 			HAPProcessTracker processTracker) {
 		
-		Map<String, HAPVariableInfo> varsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPDefinitionInteractiveRequestParm> varsInfo = new LinkedHashMap<String, HAPDefinitionInteractiveRequestParm>();
 		varsInfo.putAll(variablesInfo);
 
-		Map<String, HAPVariableInfo> oldVarsInfo = null;
+		Map<String, HAPDefinitionInteractiveRequestParm> oldVarsInfo = null;
 		do {
-			oldVarsInfo = new LinkedHashMap<String, HAPVariableInfo>();
+			oldVarsInfo = new LinkedHashMap<String, HAPDefinitionInteractiveRequestParm>();
 			oldVarsInfo.putAll(varsInfo);
 			processTracker.clear();
 

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.scriptbased;
+package com.nosliw.data.core.domain.common.script;
 
 import com.nosliw.data.core.complex.HAPPluginComplexEntityProcessorImp;
 import com.nosliw.data.core.component.HAPContextProcessor;

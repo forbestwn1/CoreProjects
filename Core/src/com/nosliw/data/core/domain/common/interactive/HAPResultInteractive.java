@@ -1,4 +1,4 @@
-package com.nosliw.data.core.service.definition;
+package com.nosliw.data.core.domain.common.interactive;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 
 @HAPEntityWithAttribute
-public class HAPResultService extends HAPSerializableImp{
+public class HAPResultInteractive extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String RESULTNAME = "resultName";
@@ -26,11 +26,11 @@ public class HAPResultService extends HAPSerializableImp{
 	
 	private Map<String, HAPData> m_resultValue;
 
-	public HAPResultService() {
+	public HAPResultInteractive() {
 		this.m_resultValue = new LinkedHashMap<String, HAPData>();
 	}
 	
-	public HAPResultService(String resultName, Map<String, HAPData> output) {
+	public HAPResultInteractive(String resultName, Map<String, HAPData> output) {
 		this.m_resultName = resultName;
 		this.m_resultValue = output;
 	}

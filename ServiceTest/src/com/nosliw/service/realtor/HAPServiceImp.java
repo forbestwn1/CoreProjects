@@ -14,22 +14,22 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
-import com.nosliw.data.core.service.definition.HAPResultService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;
 
 public class HAPServiceImp implements HAPExecutableService{
 
 	public static void main(String[] argus){
 		HAPServiceImp dataSource = new HAPServiceImp();
-		HAPResultService result = dataSource.execute(null);
+		HAPResultInteractive result = dataSource.execute(null);
 		System.out.println(result);
 	}
 	
 	private JSONArray m_data;
 	
 	@Override
-	public HAPResultService execute(Map<String, HAPData> parms){
+	public HAPResultInteractive execute(Map<String, HAPData> parms){
 		HAPData outData = null;
 		try{
 			if(true) {

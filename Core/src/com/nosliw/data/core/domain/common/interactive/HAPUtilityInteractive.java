@@ -1,4 +1,4 @@
-package com.nosliw.data.core.interactive;
+package com.nosliw.data.core.domain.common.interactive;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,20 +13,19 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.domain.entity.dataassociation.mapping.HAPDefinitionValueMapping;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityInteractive {
 
-	public static void solidateRelative(HAPWithInteractive withInteractive, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
+	public static void solidateRelative(HAPDefinitionInteractive withInteractive, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
 			if(parm.getCriteria()==null || HAPDataTypeCriteriaAny.getCriteria().equals(parm.getCriteria())) {
 				//no data criteria, then try to get it from reference
@@ -35,15 +34,15 @@ public class HAPUtilityInteractive {
 			}
 		}
 		
-		Map<String, HAPResultInteractive> results = withInteractive.getResults();
+		Map<String, HAPDefinitionInteractiveResult> results = withInteractive.getResults();
 		for(String resultName : results.keySet()) {
-			HAPResultInteractive result = results.get(resultName);
+			HAPDefinitionInteractiveResult result = results.get(resultName);
 			solidateInteractiveResult(result, parentStructures, mode, relativeInheritRule, elementTypes);
 		}
 	}
 	
-	public static void solidateInteractiveResult(HAPResultInteractive result, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
-		for(HAPOutputInteractive output : result.getOutput()) {
+	public static void solidateInteractiveResult(HAPDefinitionInteractiveResult result, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
+		for(HAPDefinitionInteractiveResultOutput output : result.getOutput()) {
 			if(output.getCriteria()==null || HAPDataTypeCriteriaAny.getCriteria().equals(output.getCriteria())) {
 				//no data criteria
 				if(output.getReferenceInfo()!=null) {
@@ -58,7 +57,7 @@ public class HAPUtilityInteractive {
 		}
 	}
 
-	public static HAPDefinitionGroupDataAssociationForTask buildDataAssociation(HAPWithInteractive withInteractive) {
+	public static HAPDefinitionGroupDataAssociationForTask buildDataAssociation(HAPDefinitionInteractive withInteractive) {
 		HAPDefinitionGroupDataAssociationForTask out = new HAPDefinitionGroupDataAssociationForTask();
 		HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
@@ -68,7 +67,7 @@ public class HAPUtilityInteractive {
 		}
 		out.setInDataAssociation(inputMapping);
 		
-		Map<String, HAPResultInteractive> results = withInteractive.getResults();
+		Map<String, HAPDefinitionInteractiveResult> results = withInteractive.getResults();
 		for(String resultName : results.keySet()) {
 			HAPDefinitionDataAssociationMapping outputMapping = buildDataAssociationForResult(results.get(resultName));
 			out.addOutDataAssociation(resultName, outputMapping);
@@ -76,9 +75,9 @@ public class HAPUtilityInteractive {
 		return out;
 	}
 	
-	public static HAPDefinitionDataAssociationMapping buildDataAssociationForResult(HAPResultInteractive result) {
+	public static HAPDefinitionDataAssociationMapping buildDataAssociationForResult(HAPDefinitionInteractiveResult result) {
 		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
-		for(HAPOutputInteractive output : result.getOutput()) {
+		for(HAPDefinitionInteractiveResultOutput output : result.getOutput()) {
 			HAPDefinitionValueMapping mapping = out.getMapping(null, true);
 			HAPReferenceElementInValueContext reference = output.getReferenceInfo();
 			HAPData constantData = output.getConstantData();
@@ -89,7 +88,7 @@ public class HAPUtilityInteractive {
 	}
 	
 	
-	public static HAPValueStructureDefinitionFlat buildInValueStructureFromWithInteractive(HAPWithInteractive withInteractive) {
+	public static HAPValueStructureDefinitionFlat buildInValueStructureFromWithInteractive(HAPDefinitionInteractive withInteractive) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(HAPVariableInfo varInfo : withInteractive.getRequestParms()) {
 			out.addRoot(varInfo.getName(), new HAPElementStructureLeafData(varInfo.getCriteria()));
@@ -97,12 +96,12 @@ public class HAPUtilityInteractive {
 		return out;
 	}
 
-	public static Map<String, HAPValueStructureDefinitionFlat> buildOutValueStructureFromWithInteractive(HAPWithInteractive withInteractive) {
+	public static Map<String, HAPValueStructureDefinitionFlat> buildOutValueStructureFromWithInteractive(HAPDefinitionInteractive withInteractive) {
 		Map<String, HAPValueStructureDefinitionFlat> out = new LinkedHashMap<String, HAPValueStructureDefinitionFlat>();
-		Map<String, HAPResultInteractive> results = withInteractive.getResults();
+		Map<String, HAPDefinitionInteractiveResult> results = withInteractive.getResults();
 		for(String resultName : results.keySet()) {
 			HAPValueStructureDefinitionFlat resultStructure = new HAPValueStructureDefinitionFlat();
-			for(HAPOutputInteractive output : results.get(resultName).getOutput()) {
+			for(HAPDefinitionInteractiveResultOutput output : results.get(resultName).getOutput()) {
 				resultStructure.addRoot(output.getName(), new HAPElementStructureLeafData(output.getCriteria()));
 			}
 			out.put(resultName, resultStructure);
@@ -110,9 +109,9 @@ public class HAPUtilityInteractive {
 		return out;
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureForResule(HAPResultInteractive result) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureForResule(HAPDefinitionInteractiveResult result) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPOutputInteractive output : result.getOutput()) {
+		for(HAPDefinitionInteractiveResultOutput output : result.getOutput()) {
 			out.addRoot(output.getName(), new HAPElementStructureLeafData(output.getCriteria()));
 		}
 		return out;

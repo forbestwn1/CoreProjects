@@ -6,9 +6,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
+import com.nosliw.data.core.domain.entity.service.interfacee.HAManagerServiceInterface;
+import com.nosliw.data.core.domain.entity.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.interfacee.HAManagerServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //service manager, it is used for runtime purpose
 @HAPEntityWithAttribute
@@ -44,7 +45,7 @@ public class HAPManagerService {
 	}
 	
 	//service query is used to find service provider
-	public HAPResultService execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
+	public HAPResultInteractive execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
 		//get service instance according to serviceId
 		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceQuery.getServiceId());
 		if(serviceInstance==null){
@@ -70,7 +71,7 @@ public class HAPManagerService {
 		}
 		
 		//execute service instance
-		HAPResultService out = null;
+		HAPResultInteractive out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			HAPServiceInterface serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface().getInterface();
