@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.data.core.domain.common.interactive.HAPDefinitionInteractiveResult;
+import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
 
 public class HAPDefinitionEvent extends HAPDefinitionInteractiveResult{
 

@@ -2,7 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.complex.HAPManagerComplexEntity;
+import com.nosliw.data.core.complex.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
@@ -57,9 +57,9 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
-	HAPManagerDomainEntityDefinition getDomainEntityManager();
+	HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager();
 	
-	HAPManagerComplexEntity getComplexEntityManager();
+	HAPManagerDomainEntityExecutable getDomainEntityExecutableManager();
 	
 	HAPManagerDynamicResource getDynamicResourceManager();
 	

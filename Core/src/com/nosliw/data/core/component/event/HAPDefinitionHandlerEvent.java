@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.handler.HAPHandler;
 
 @HAPEntityWithAttribute

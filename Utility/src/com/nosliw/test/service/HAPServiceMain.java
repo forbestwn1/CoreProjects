@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.data.core.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPQueryService;
 
 public class HAPServiceMain {

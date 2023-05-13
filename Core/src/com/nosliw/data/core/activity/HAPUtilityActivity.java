@@ -1,7 +1,7 @@
 package com.nosliw.data.core.activity;
 
-import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;

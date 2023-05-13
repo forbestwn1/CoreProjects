@@ -27,5 +27,5 @@ public class HAPPluginEntityDefinitionInDomainScriptBase extends HAPPluginEntity
 	}
 
 	@Override
-	public boolean isComplexEntity() {   return false;  }
+	public boolean isComplexEntity() {   return this.m_isComplex;  }
 }

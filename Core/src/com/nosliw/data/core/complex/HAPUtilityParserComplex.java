@@ -43,7 +43,7 @@ public class HAPUtilityParserComplex {
 	public static void parseContentInComplexContainerEntity(HAPIdEntityInDomain entityId, JSONObject jsonObj, String elementEntityType, HAPConfigureParentRelationComplex parentRelation, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexContainer containerEntity  = (HAPDefinitionEntityComplexContainer)parserContext.getDefinitionDomain().getComplexEntityInfo(entityId).getComplexEntity();
 		
-		HAPManagerDomainEntityDefinition domainEntityMan = parserContext.getRuntimeEnvironment().getDomainEntityManager();
+		HAPManagerDomainEntityDefinition domainEntityMan = parserContext.getRuntimeEnvironment().getDomainEntityDefinitionManager();
 		
 		//parse complex part
 		parseContentInComplexEntity(entityId, jsonObj, parserContext);

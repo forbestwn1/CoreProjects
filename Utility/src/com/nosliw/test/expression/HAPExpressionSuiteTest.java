@@ -16,7 +16,7 @@ public class HAPExpressionSuiteTest {
 		String suite = "test_temp";
 
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
-		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager(), runtimeEnvironment.getResourceDefinitionManager());
+		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityDefinitionManager(), runtimeEnvironment.getResourceDefinitionManager());
 		
 		HAPResourceIdSimple resourceId = new HAPResourceIdExpressionSuite(suite);
 		
@@ -26,7 +26,7 @@ public class HAPExpressionSuiteTest {
 		System.out.println(HAPUtilityJson.formatJson(expandedJsonStr));
 
 		//process
-		HAPExecutablePackage executablePackage = runtimeEnvironment.getComplexEntityManager().getExecutablePackage(resourceId);
+		HAPExecutablePackage executablePackage = runtimeEnvironment.getDomainEntityExecutableManager().getExecutablePackage(resourceId);
 	}
 	
 	

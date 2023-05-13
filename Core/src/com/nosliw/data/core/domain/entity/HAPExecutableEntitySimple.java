@@ -9,4 +9,7 @@ public abstract class HAPExecutableEntitySimple extends HAPExecutableEntity{
 		super(entityType);
 	}
 	
+	public HAPExecutableEntitySimple() {
+		super();
+	}
 }

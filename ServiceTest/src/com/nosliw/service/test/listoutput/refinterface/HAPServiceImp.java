@@ -10,7 +10,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
+import com.nosliw.data.core.interactive.HAPResultInteractive;
 import com.nosliw.data.core.service.definition.HAPExecutableService;
 import com.nosliw.data.core.service.definition.HAPProviderService;
 import com.nosliw.data.core.service.definition.HAPUtilityService;

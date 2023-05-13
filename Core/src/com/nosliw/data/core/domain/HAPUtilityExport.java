@@ -9,14 +9,14 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.complex.HAPManagerComplexEntity;
+import com.nosliw.data.core.complex.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
 
-	public static void exportExecutablePackage(HAPExecutablePackage executablePackage, HAPManagerComplexEntity complexEntityManager, HAPRuntimeInfo runtimeInfo) {
+	public static void exportExecutablePackage(HAPExecutablePackage executablePackage, HAPManagerDomainEntityExecutable complexEntityManager, HAPRuntimeInfo runtimeInfo) {
 		String mainFolderUnique = getRootFolderUnique();
 		exportExecutablePackage(executablePackage, mainFolderUnique, complexEntityManager, runtimeInfo);
 
@@ -24,7 +24,7 @@ public class HAPUtilityExport {
 		exportExecutablePackage(executablePackage, mainFolderTemp, complexEntityManager, runtimeInfo);
 	}
 
-	private static void exportExecutablePackage(HAPExecutablePackage executablePackage, String mainFolder, HAPManagerComplexEntity complexEntityManager, HAPRuntimeInfo runtimeInfo) {
+	private static void exportExecutablePackage(HAPExecutablePackage executablePackage, String mainFolder, HAPManagerDomainEntityExecutable complexEntityManager, HAPRuntimeInfo runtimeInfo) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info

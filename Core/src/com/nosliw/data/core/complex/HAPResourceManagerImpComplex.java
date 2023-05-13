@@ -11,9 +11,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerImpComplex extends HAPResourceManagerImp{
 
-	private HAPManagerComplexEntity m_complexEntityMan;
+	private HAPManagerDomainEntityExecutable m_complexEntityMan;
 	
-	public HAPResourceManagerImpComplex(HAPManagerComplexEntity complexEntityMan, HAPResourceManagerRoot rootResourceMan) {
+	public HAPResourceManagerImpComplex(HAPManagerDomainEntityExecutable complexEntityMan, HAPResourceManagerRoot rootResourceMan) {
 		super(rootResourceMan);
 		this.m_complexEntityMan = complexEntityMan;
 	}

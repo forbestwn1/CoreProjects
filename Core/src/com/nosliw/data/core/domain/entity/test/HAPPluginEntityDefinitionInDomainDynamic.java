@@ -137,7 +137,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 			}
 		}
 
-		out.isComplex = this.getRuntimeEnvironment().getDomainEntityManager().isComplexEntity(out.entityType);
+		out.isComplex = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().isComplexEntity(out.entityType);
 		
 		return out;
 	}

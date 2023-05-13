@@ -1,34 +1,24 @@
 package com.nosliw.data.core.domain.common.interactive;
 
-import java.util.List;
-import java.util.Map;
-
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 
-public class HAPDefinitionEntityInteractive extends HAPDefinitionEntityInDomain implements HAPDefinitionInteractive{
+public class HAPDefinitionEntityInteractive extends HAPDefinitionEntityInDomain{
 
-	@Override
-	public List<HAPDefinitionInteractiveRequestParm> getRequestParms() {
-		// TODO Auto-generated method stub
-		return null;
+	public static final String ATTR_INTERACTIVE = "interactive";
+
+	public HAPDefinitionEntityInteractive() {
 	}
+	
+	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getNormalAttributeValue(ATTR_INTERACTIVE);  }
 
-	@Override
-	public Map<String, HAPDefinitionInteractiveResult> getResults() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPDefinitionInteractive cloneWithInteractive() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setNormalAttributeObject(ATTR_INTERACTIVE, new HAPEmbededDefinition(interactive));      }
+	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPDefinitionEntityInteractive out = new HAPDefinitionEntityInteractive();
+		out.cloneToDefinitionEntityInDomain(out);
+		return out;
 	}
-
 }

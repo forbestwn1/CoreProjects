@@ -11,7 +11,7 @@ public class HAPPluginResourceDefinitionImpEntityThin extends HAPPluginResourceD
 
 	@Override
 	protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext) {
-		HAPIdEntityInDomain out = this.getRuntimeEnvironment().getDomainEntityManager().parseDefinition(getResourceType(), content, parserContext);
+		HAPIdEntityInDomain out = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(getResourceType(), content, parserContext);
 		return out;
 	}
 

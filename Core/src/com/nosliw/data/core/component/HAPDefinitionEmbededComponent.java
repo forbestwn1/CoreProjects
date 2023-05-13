@@ -11,8 +11,8 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionGroupDataAssociationForComponent;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionGroupDataAssociationForComponent;
 
 //a component reference embeded
 public class HAPDefinitionEmbededComponent extends HAPEntityInfoWritableImp implements HAPWithNameMapping, HAPWithEventHanlder{

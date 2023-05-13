@@ -1,6 +1,6 @@
 package com.nosliw.data.core.dataable;
 
-import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableTask;
 
 public interface HAPExecutableDataable extends HAPExecutableTask{
 

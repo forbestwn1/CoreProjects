@@ -6,10 +6,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.domain.common.interactive.HAPResultInteractive;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAManagerServiceInterface;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAPServiceInterface;
+import com.nosliw.data.core.interactive.HAPResultInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.interfacee.HAManagerServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 //service manager, it is used for runtime purpose
 @HAPEntityWithAttribute

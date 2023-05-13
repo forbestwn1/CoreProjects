@@ -3,9 +3,9 @@ package com.nosliw.data.core.component;
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 

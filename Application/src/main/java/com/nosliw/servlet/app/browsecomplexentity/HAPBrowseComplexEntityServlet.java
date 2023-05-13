@@ -37,7 +37,7 @@ public class HAPBrowseComplexEntityServlet extends HAPServiceServlet{
 	private List<HAPContainerComplexEntity> buildComplexEntityContainer(HAPRuntimeEnvironmentImpBrowser runtimeEnv){
 		List<HAPContainerComplexEntity> out = new ArrayList<HAPContainerComplexEntity>();
 		
-		Set<String> complexEntityTypes = runtimeEnv.getComplexEntityManager().getComplexEntityTypes();
+		Set<String> complexEntityTypes = runtimeEnv.getDomainEntityExecutableManager().getComplexEntityTypes();
 		for(String complexEntityType : complexEntityTypes) {
 			HAPContainerComplexEntity entityContainer = new HAPContainerComplexEntity(complexEntityType);
 			

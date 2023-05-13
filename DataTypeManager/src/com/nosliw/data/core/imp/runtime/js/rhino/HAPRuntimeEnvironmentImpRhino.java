@@ -5,7 +5,7 @@ import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.complex.HAPManagerComplexEntity;
+import com.nosliw.data.core.complex.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
@@ -63,8 +63,8 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
-		HAPManagerDomainEntityDefinition domainEntityManager = new HAPManagerDomainEntityDefinition();
-		HAPManagerComplexEntity complexEntityManager = new HAPManagerComplexEntity(this);
+		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
+		HAPManagerDomainEntityExecutable domainEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
 		
 		init(
 				dataTypeManager,
@@ -81,8 +81,8 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				serviceManager,
 				dynamicResourceManager,
 				resourceDefManager,
-				domainEntityManager,
-				complexEntityManager,
+				domainEntityDefinitionManager,
+				domainEntityExecutableManager,
 				attachmentManager,
 				cronJobManager,
 				storyManager,

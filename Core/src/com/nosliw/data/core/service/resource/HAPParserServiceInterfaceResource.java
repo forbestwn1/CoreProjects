@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
+import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 public class HAPParserServiceInterfaceResource implements HAPParserResourceEntity{
 

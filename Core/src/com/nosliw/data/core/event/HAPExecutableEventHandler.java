@@ -3,7 +3,7 @@ package com.nosliw.data.core.event;
 import java.util.Map;
 
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 

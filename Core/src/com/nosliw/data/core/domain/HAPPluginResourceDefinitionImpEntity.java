@@ -17,7 +17,7 @@ public class HAPPluginResourceDefinitionImpEntity extends HAPPluginResourceDefin
 		JSONObject jsonObj = null;
 		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
 		else if(content instanceof String)  jsonObj = new JSONObject(HAPUtilityJson.formatJson((String)content));
-		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), parserContext, this.getRuntimeEnvironment().getDomainEntityManager(), this.getRuntimeEnvironment().getResourceDefinitionManager()); 
+		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager()); 
 		return entityId;
 	}
 

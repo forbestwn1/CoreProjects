@@ -1,8 +1,8 @@
 package com.nosliw.data.core.service.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
+import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 public class HAPResourceDataServiceInterface extends HAPResourceDataJSValueImp{
 

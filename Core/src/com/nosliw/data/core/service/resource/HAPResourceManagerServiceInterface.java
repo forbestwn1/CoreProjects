@@ -1,7 +1,5 @@
 package com.nosliw.data.core.service.resource;
 
-import com.nosliw.data.core.domain.entity.service.interfacee.HAManagerServiceInterface;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -9,6 +7,8 @@ import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.service.interfacee.HAManagerServiceInterface;
+import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 public class HAPResourceManagerServiceInterface  extends HAPResourceManagerImp{
 

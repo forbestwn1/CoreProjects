@@ -129,14 +129,14 @@ public class HAPUtilityDomain {
 	}
 	
 	public static HAPExecutablePackage getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
-		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityManager());
+		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityDefinitionManager());
 		//build definition domain
 		HAPResourceDefinition resourceDefinition = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, domainContext.getDefinitionDomain(), null);
 		domainContext.getDefinitionDomain().setRootComplexEntityId(resourceDefinition.getEntityId());
 		
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, runtimeEnv); 
-		HAPIdEntityInDomain exeEntityId = runtimeEnv.getComplexEntityManager().process(resourceDefinition.getEntityId(), processorContext);
+		HAPIdEntityInDomain exeEntityId = runtimeEnv.getDomainEntityExecutableManager().process(resourceDefinition.getEntityId(), processorContext);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 

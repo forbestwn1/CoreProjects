@@ -15,10 +15,10 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.domain.entity.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 //static information for a service. readable, query for service
 //information needed during configuration time

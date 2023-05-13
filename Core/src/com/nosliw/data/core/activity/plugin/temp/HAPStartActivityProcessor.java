@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
-import com.nosliw.data.core.domain.entity.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPContextProcessor;
 import com.nosliw.data.core.process1.HAPExecutableActivity;
