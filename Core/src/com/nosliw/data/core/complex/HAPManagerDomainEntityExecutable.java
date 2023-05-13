@@ -99,6 +99,11 @@ public class HAPManagerDomainEntityExecutable {
 		}
 	}
 	
+	public HAPExecutableEntity processSimpleEntity(HAPIdEntityInDomain defEntityId, HAPContextProcessor processContext) {
+		HAPPluginEntityProcessorSimple processPlugin = this.m_processorSimpleEntityPlugins.get(defEntityId.getEntityType());
+		return processPlugin.process(defEntityId, processContext);
+	}
+	
 	public Object processEmbededAdapter(HAPInfoAdapter adapterDefinition, HAPExecutableEntity parentExe, Object childObj, HAPContextProcessor processContext){
 		HAPPluginAdapterProcessor processPlugin = this.m_processorAdapterPlugins.get(adapterDefinition.getValueType());
 		

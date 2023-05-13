@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.process1.HAPUtilityProcess;
 
 public class HAPDefinitionPollTask extends HAPSerializableImp{

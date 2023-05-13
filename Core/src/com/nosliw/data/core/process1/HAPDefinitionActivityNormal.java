@@ -9,9 +9,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPParserDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.valuestructure.HAPValueStructure;
 import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionEmpty;
 

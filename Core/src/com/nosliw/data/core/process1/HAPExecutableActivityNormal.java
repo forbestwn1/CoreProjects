@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPExecutableActivityNormal extends HAPExecutableActivity{

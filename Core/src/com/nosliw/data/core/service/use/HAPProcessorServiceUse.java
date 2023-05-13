@@ -2,11 +2,11 @@ package com.nosliw.data.core.service.use;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableTask;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPUtilityDAProcess;
+import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableTask;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;

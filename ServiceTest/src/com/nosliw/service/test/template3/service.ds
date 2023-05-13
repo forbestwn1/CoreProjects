@@ -1,7 +1,7 @@
 [{
 	"static": {
 		"id": "TestTemplateService3",
-		"status":"disabled",
+		"status":"disabled1",
 		"name": "TestTemplateService3",
 		"description" : "test service implemented by process",
 		"tag" : ["test", "public"],

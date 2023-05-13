@@ -3,7 +3,7 @@ package com.nosliw.data.core.event;
 import java.util.Map;
 
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 
 //task to run poll event resource and generate event

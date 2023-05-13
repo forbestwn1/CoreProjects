@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionWrapperTask;
 import com.nosliw.data.core.process1.resource.HAPElementContainerResourceDefinitionEntityImpComponentProcessSuite;
 import com.nosliw.data.core.process1.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;

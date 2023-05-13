@@ -18,6 +18,7 @@ import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionContainer;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormal;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPExecutableTestSimple1;
@@ -52,11 +53,12 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 				HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
 				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
 				if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
+					//complex attribute
 					this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
 				}
-				else if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(attrEntityInfo.getEntityType())) {
-					HAPExecutableTestSimple1 simpleTest1Exe = HAPProcessorTestSimple1.process(attrEntityInfo.getEntityId(), processContext);
-					executableEntity.setNormalAttribute(attr.getName(), new HAPEmbededExecutable(simpleTest1Exe), attr.getValueTypeInfo());
+				else {
+					HAPAttributeEntityExecutable attrExe = this.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
+					executableEntity.setAttribute(attrExe);
 				}
 			}
 			else if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
@@ -86,5 +88,4 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 			}
 		}
 	}
-
 }

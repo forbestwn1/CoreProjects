@@ -7,8 +7,8 @@ import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPExecutablePollSchedule;
 import com.nosliw.data.core.cronjob.HAPManagerScheduleDefinition;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPParserDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 
 public class HAPCronJobInstanceSerializer {

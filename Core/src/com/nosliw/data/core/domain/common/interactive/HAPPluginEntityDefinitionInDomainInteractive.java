@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain.common.interactive;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -19,9 +21,11 @@ public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntit
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		try {
+			JSONObject jsonObj = (JSONObject)obj; 
+			
 			HAPDefinitionEntityInteractive entity = (HAPDefinitionEntityInteractive)this.getEntity(entityId, parserContext);
 			HAPDefinitionInteractive interactiveDef = this.m_interactiveClass.newInstance();
-			interactiveDef.buildObject(obj, HAPSerializationFormat.JSON);
+			interactiveDef.buildObject(jsonObj.getJSONObject(HAPDefinitionEntityInteractive.ATTR_INTERACTIVE), HAPSerializationFormat.JSON);
 			entity.setInteractive(interactiveDef);
 		} catch (Exception e) {
 			e.printStackTrace();

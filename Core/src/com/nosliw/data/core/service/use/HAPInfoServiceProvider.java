@@ -3,7 +3,7 @@ package com.nosliw.data.core.service.use;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 
 //store all the info related with service provider attachment

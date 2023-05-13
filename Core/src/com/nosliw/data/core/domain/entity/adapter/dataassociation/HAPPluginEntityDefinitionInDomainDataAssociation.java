@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
+import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
