@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 //wrapper for value structure
 //extra info for value structure, group name

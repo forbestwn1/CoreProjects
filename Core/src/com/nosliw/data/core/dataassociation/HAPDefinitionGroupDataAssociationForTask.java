@@ -6,9 +6,10 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionGroupDataAssociationForTask extends HAPSerializableImp{
 
@@ -43,13 +44,15 @@ public class HAPDefinitionGroupDataAssociationForTask extends HAPSerializableImp
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildDefinitionByJson(outputMappingJson.optJSONObject((String)key)); 
+				HAPDefinitionDataAssociation dataAssociation = HAPParserDataAssociation.buildDefinitionByJson(outputMappingJson.optJSONObject((String)key));
+				dataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
 				this.addOutDataAssociation((String)key, dataAssociation);
 			}
 		}
 		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
 		if(inputMappingJson!=null) {
-			this.m_inDataAssociation = HAPParserDataAssociation.buildDefinitionByJson(inputMappingJson); 
+			this.m_inDataAssociation = HAPParserDataAssociation.buildDefinitionByJson(inputMappingJson);
+			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
 		}
 	}
 	

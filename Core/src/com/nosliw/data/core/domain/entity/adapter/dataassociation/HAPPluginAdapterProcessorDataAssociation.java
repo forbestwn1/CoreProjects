@@ -5,12 +5,11 @@ import com.nosliw.data.core.complex.HAPPluginAdapterProcessor;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
-import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
+import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapterProcessor{
@@ -32,46 +31,12 @@ public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapte
 		HAPExecutableEntityComplex parentComplexEntityExe = (HAPExecutableEntityComplex)parentEntityExecutable;
 		HAPExecutableEntityComplex childComplexEntityExe = (HAPExecutableEntityComplex)childEntityExecutable;
 		
-		
-		String type = dataAssociation.getType();
-		String direction = dataAssociation.getDirection();
-		switch(type) {
-		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
-			HAPDefinitionDataAssociationMapping valueMappingDA = (HAPDefinitionDataAssociationMapping)dataAssociation;
-			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA, null, null);
-			if(direction.equals(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM)) {
-				HAPProcessorDataAssociationMapping.processValueMapping(
-						daMappingExe,
-						parentComplexEntityExe.getValueContext(), 
-						parentContext.getCurrentValueStructureDomain(), 
-						valueMappingDA, 
-						childComplexEntityExe.getValueContext(), 
-						childContext.getCurrentValueStructureDomain(), 
-						parentContext.getRuntimeEnvironment());
-			}
-			else {
-				HAPProcessorDataAssociationMapping.processValueMapping(
-						daMappingExe,
-						childComplexEntityExe.getValueContext(), 
-						childContext.getCurrentValueStructureDomain(), 
-						valueMappingDA, 
-						parentComplexEntityExe.getValueContext(), 
-						parentContext.getCurrentValueStructureDomain(), 
-						parentContext.getRuntimeEnvironment());
-			}
-			out = daMappingExe;
-//			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, configure, runtimeEnv);
-		
-		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
-//			HAPDefinitionDataAssociationMapping mappingDataAssociation = HAPProcessorDataAssociationMirror.convertToDataAssociationMapping(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output);
-//			return processDataAssociation(input, mappingDataAssociation, output, configure, runtimeEnv);
+		out = HAPProcessorDataAssociation.processDataAssociation(
+				dataAssociation,
+				new HAPContextStructureReferenceValueStructure(parentComplexEntityExe.getValueContext(), null, parentContext.getCurrentValueStructureDomain()),
+				new HAPContextStructureReferenceValueStructure(childComplexEntityExe.getValueContext(), null, childContext.getCurrentValueStructureDomain()),
+				parentContext.getRuntimeEnvironment());
 
-		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
-//			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);
-		}
-		dataAssociation.cloneToEntityInfo(out);
 		return out;
 	}
-
-	
 }

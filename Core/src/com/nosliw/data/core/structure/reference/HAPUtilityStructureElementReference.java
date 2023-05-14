@@ -10,16 +10,14 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPInfoValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoPartSimple;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPInfoValueStructureSorting;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
@@ -28,23 +26,40 @@ import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPUtilityStructureElementReference {
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPCandidatesValueContext valueContexts, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
-		//find all candidate value structure 
-		List<HAPWrapperExecutableValueStructure> targetStructures = discoverCandidateValueStructure(reference.getValueStructureReference(), valueContexts.getValueContext(reference.getParentValueContextName()), resolveConfigure==null?null:resolveConfigure.getGroupTypes(), valueStructureDomain);
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPContextStructureReference valueStructureRefContext, HAPConfigureResolveStructureElementReference resolveConfigure){
+		List<HAPInfoValueStructureReference> valueStructureInfos = valueStructureRefContext.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
-		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), targetStructures, resolveConfigure, valueStructureDomain);
+		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
 		if(out!=null)  out.eleReference = reference;
 		
 		return out;
 	}
 
-	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceElementInValueContext rootEleCriteria, HAPExecutableEntityValueContext valueContext, Set<String> groupTypes, HAPDomainValueStructure valueStructureDomain){
-		List<HAPWrapperExecutableValueStructure> candidates = discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference(), valueContext, groupTypes, valueStructureDomain);
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceElementInValueContext rootEleCriteria, HAPContextStructureReference valueStructureRefContext){
+		List<HAPInfoValueStructureReference> candidates = valueStructureRefContext.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
+
 		if(candidates==null||candidates.size()==0)  return null;
-		for(HAPWrapperExecutableValueStructure structureWrapper : candidates) {
-			String valueStructureExeId = structureWrapper.getValueStructureRuntimeId();
-			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureExeId);
+		for(HAPInfoValueStructureReference structureRefInfo : candidates) {
+			String valueStructureExeId = structureRefInfo.getValueStructureId();
+			HAPDefinitionEntityValueStructure valueStructure = structureRefInfo.getValueStructureDefinition();
+			HAPComplexPath complexPath = new HAPComplexPath(rootEleCriteria.getElementPath());
+			String rootName = complexPath.getRoot();
+			if(valueStructure.getRootByName(rootName)!=null) {
+				return new HAPIdRootElement(valueStructureExeId, rootName);
+			}
+		}
+		return null;
+	}
+	
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceElementInValueContext rootEleCriteria, HAPExecutableEntityValueContext valueContext, Set<String> groupTypes, HAPDomainValueStructure valueStructureDomain){
+		HAPContextStructureReferenceValueStructure valueStructureRefContext = new HAPContextStructureReferenceValueStructure(valueContext, groupTypes, valueStructureDomain);
+		List<HAPInfoValueStructureReference> candidates = valueStructureRefContext.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
+
+		if(candidates==null||candidates.size()==0)  return null;
+		for(HAPInfoValueStructureReference structureWrapper : candidates) {
+			String valueStructureExeId = structureWrapper.getValueStructureId();
+			HAPDefinitionEntityValueStructure valueStructure = structureWrapper.getValueStructureDefinition();
 			HAPComplexPath complexPath = new HAPComplexPath(rootEleCriteria.getElementPath());
 			String rootName = complexPath.getRoot();
 			if(valueStructure.getRootByName(rootName)!=null) {
@@ -55,15 +70,14 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	//find best resolved element from structure 
-	public static HAPInfoReferenceResolve analyzeElementReference(String elementPath, List<HAPWrapperExecutableValueStructure> targetStructures, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+	public static HAPInfoReferenceResolve analyzeElementReference(String elementPath, List<HAPInfoValueStructureReference> targetStructures, HAPConfigureResolveStructureElementReference resolveConfigure){
 		if(targetStructures==null)   return null;
 
 		if(resolveConfigure==null)	resolveConfigure = new HAPConfigureResolveStructureElementReference();
 		
 		List<HAPInfoReferenceResolve> resolveCandidates = new ArrayList<HAPInfoReferenceResolve>();
-		for(HAPWrapperExecutableValueStructure structureWrapper : targetStructures) {
-			String valueStructureExeId = structureWrapper.getValueStructureRuntimeId();
-			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureExeId);
+		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
+			HAPDefinitionEntityValueStructure valueStructure = valueStructureInfo.getValueStructureDefinition();
 			HAPComplexPath complexPath = new HAPComplexPath(elementPath);
 			String rootName = complexPath.getRoot();
 			String path = complexPath.getPathStr();
@@ -71,7 +85,7 @@ public class HAPUtilityStructureElementReference {
 			HAPRootStructure root = valueStructure.getRootByName(rootName);
 			if(root!=null) {
 				HAPInfoReferenceResolve resolved = new HAPInfoReferenceResolve(); 
-				resolved.structureId = valueStructureExeId;
+				resolved.structureId = valueStructureInfo.getValueStructureId();
 				resolved.rootName = rootName;
 
 				resolved.elementInfoSolid = HAPUtilityStructure.resolveDescendant(root.getDefinition().getSolidStructureElement(), path);
@@ -109,51 +123,6 @@ public class HAPUtilityStructureElementReference {
 		return out;
 	}
 
-	//find all value structure which meet criteria from value structure complex
-	private static List<HAPWrapperExecutableValueStructure> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPExecutableEntityValueContext valueContext, Set<String> groupTypes, HAPDomainValueStructure valueStructureDomain){
-		List<HAPWrapperExecutableValueStructure> out = new ArrayList<HAPWrapperExecutableValueStructure>();
-		
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(valueContext);
-		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-			HAPWrapperExecutableValueStructure wraper = valueStructureInfo.getValueStructure();
-			boolean isValid = true;
-
-			HAPInfoValueStructure valueStructureDefInfo = valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
-
-			//check runtime id
-			if(isValid) {
-				String valueStructueDefId = valueStructureCriteria==null? null : valueStructureCriteria.getId();
-				if(valueStructueDefId!=null) {
-					if(!valueStructueDefId.equals(wraper.getValueStructureRuntimeId())){
-						isValid = false;
-					}
-				}
-			}
-			
-			//check group type
-			if(isValid) {
-				if(groupTypes!=null&&!groupTypes.isEmpty()) {
-					if(!groupTypes.contains(wraper.getGroupType())) {
-						isValid = false;
-					}
-				}
-			}
-
-			//check name
-			if(isValid) {
-				String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
-				if(valueStructureName!=null) {
-					if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
-						isValid = false;
-					}
-				}
-			}
-			
-			if(isValid)  out.add(wraper);
-		}
-		return out;
-	}
-	
 	//find exact physical node
 	public static boolean isPhysicallySolved(HAPInfoReferenceResolve solve) {
 		return solve!=null && (solve.elementInfoOriginal!=null && solve.elementInfoSolid.remainPath.isEmpty());

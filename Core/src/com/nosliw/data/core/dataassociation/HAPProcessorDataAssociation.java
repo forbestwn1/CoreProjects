@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.mirror.HAPProcessorDataAssociationMirror;
@@ -12,11 +13,49 @@ import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNon
 import com.nosliw.data.core.dataassociation.none.HAPProcessorDataAssociationNone;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
 import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorDataAssociation {
 
-	
+	public static HAPExecutableDataAssociation processDataAssociation(HAPDefinitionDataAssociation dataAssociation, HAPContextStructureReference parentContext, HAPContextStructureReference childContext, HAPRuntimeEnvironment runtimeEnv) {
+		HAPExecutableDataAssociation out = null;
+		String type = dataAssociation.getType();
+		String direction = dataAssociation.getDirection();
+		switch(type) {
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
+			HAPDefinitionDataAssociationMapping valueMappingDA = (HAPDefinitionDataAssociationMapping)dataAssociation;
+			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA, null, null);
+			if(direction.equals(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM)) {
+				
+				HAPProcessorDataAssociationMapping.processValueMapping(
+						daMappingExe,
+						parentContext,
+						valueMappingDA, 
+						childContext,
+						runtimeEnv);
+			}
+			else {
+				HAPProcessorDataAssociationMapping.processValueMapping(
+						daMappingExe,
+						childContext,
+						valueMappingDA, 
+						parentContext,
+						runtimeEnv);
+			}
+			out = daMappingExe;
+//			return HAPProcessorDataAssociationMapping.processDataAssociation(input, (HAPDefinitionDataAssociationMapping)dataAssociation, output, configure, runtimeEnv);
+		
+		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
+//			HAPDefinitionDataAssociationMapping mappingDataAssociation = HAPProcessorDataAssociationMirror.convertToDataAssociationMapping(input, (HAPDefinitionDataAssociationMirror)dataAssociation, output);
+//			return processDataAssociation(input, mappingDataAssociation, output, configure, runtimeEnv);
+
+		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
+//			return HAPProcessorDataAssociationNone.processDataAssociation(input, (HAPDefinitionDataAssociationNone)dataAssociation, output, configure, runtimeEnv);
+		}
+		dataAssociation.cloneToEntityInfo(out);
+		return out;
+	}
 	
 	public static HAPExecutableWrapperTask processDataAssociationWithTask(HAPDefinitionGroupDataAssociationForTask taskWrapperDef, HAPExecutableTask taskExe, HAPContainerStructure externalContext, HAPInfo configure, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		return processDataAssociationWithTask(taskWrapperDef, taskExe, externalContext, configure, externalContext, configure, attachmentContainer, runtimeEnv);

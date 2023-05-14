@@ -586,6 +586,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT" value="test.decoration.script"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATION" value="dataAssociation"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE" value="dataAssociationInteractive"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UI" value="ui"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PAGE" value="page"/>
 

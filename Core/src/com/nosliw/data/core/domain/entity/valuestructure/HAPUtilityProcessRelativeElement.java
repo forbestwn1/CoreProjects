@@ -32,13 +32,27 @@ import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
 import com.nosliw.data.core.structure.HAPPathElementMapping;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
+import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPUtilityProcessRelativeElement {
 
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPCandidatesValueContext valueContexts, HAPConfigureResolveStructureElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain){
+		HAPContextStructureReferenceValueStructure valueStructureRefContext = new HAPContextStructureReferenceValueStructure(valueContexts.getValueContext(reference.getParentValueContextName()), resolveConfigure==null?null:resolveConfigure.getGroupTypes(), valueStructureDomain);
+		List<HAPInfoValueStructureReference> valueStructureInfos = valueStructureRefContext.discoverCandidateValueStructure(reference.getValueStructureReference());
+		
+		//resolve targeted structure element
+		HAPInfoReferenceResolve out =  HAPUtilityStructureElementReference.analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
+		if(out!=null)  out.eleReference = reference;
+		
+		return out;
+	}
+
+	
 	//resolve the remain path part
 	public static HAPElementStructure resolveFinalElement(HAPInfoDesendantResolve resolveInfo, Boolean relativeInheritRule) {
 		HAPElementStructure out = null;
@@ -143,7 +157,7 @@ public class HAPUtilityProcessRelativeElement {
 		HAPElementStructureLeafRelative out = defStructureElementRelative;
 		
 		HAPReferenceElementInValueContext pathReference = defStructureElementRelative.getReference();
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, parentValueContexts, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), valueStructureDomain);
+		HAPInfoReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.resolveElementReference(pathReference, parentValueContexts, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), valueStructureDomain);
 		
 		if(resolveInfo==null) {
 			errors.add(HAPServiceData.createFailureData(structureEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
