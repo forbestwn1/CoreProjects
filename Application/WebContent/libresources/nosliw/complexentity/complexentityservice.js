@@ -42,6 +42,7 @@ var packageObj = library;
 	var node_createTestComplexScriptPlugin;
 	var node_createTestSimple1Plugin;
 	var node_createDataAssociationAdapterPlugin;
+	var node_createDataAssociationInteractiveAdapterPlugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -172,8 +173,13 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createDecorationScriptPlugin());
 
+		//simple entity plugin
+		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, node_createDataServiceEntityPlugin());
+
+
 		//adapter plugin
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, node_createDataAssociationAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, node_createDataAssociationInteractiveAdapterPlugin());
 	};
 
 
@@ -281,16 +287,15 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
 		},
 		
-		createSimpleEntity : function(entityDef){
-			var entityType = entityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];
-			var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
-			return simpleEntityPlugin.createEntity(node_createEntityDefinition(entityDef));
-		},
-		
 		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, configure, handlers, request){
 			return loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, handlers, request);
 		},
 
+		createSimpleEntityRequest : function(entityType, entityDef, configure, handlers, request){
+			var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
+			return simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, handlers, request);
+		},
+		
 		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){
 			return loc_createContainerComplexEntityRuntime(containerDef, parentCore, bundleCore, configure, request);
 		},
@@ -362,6 +367,7 @@ nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", functi
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestSimple1Plugin", function(){node_createTestSimple1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexEntityRuntimeService", node_createComplexEntityRuntimeService); 

@@ -78,7 +78,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 				//build complex entity runtime
 				return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, {
 					success : function(request, mainCoplexEntity){
-						loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_MAIN_NAME, mainCoplexEntity);
+						loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_MAIN_NAME, mainCoplexEntity, true);
 						return mainCoplexEntity.getPreInitRequest();
 					}
 				});
