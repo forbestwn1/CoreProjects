@@ -24,7 +24,9 @@ var node_createDataServiceEntityPlugin = function(){
 	var loc_out = {
 
 		getCreateEntityRequest : function(entityDef, configure, handlers, request){
-			
+			return node_createServiceRequestInfoSimple(function(request){
+				return loc_createDataServiceProvider(serviceProvider, configure);
+			}, handlers, request);
 		},
 	};
 
@@ -32,43 +34,21 @@ var node_createDataServiceEntityPlugin = function(){
 };
 
 
-var loc_createDataAssociationAdapter = function(dataAssociation){
+var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
-	var loc_dataAssociation = dataAssociation;
+	var loc_serviceProvider = serviceProvider;
 	
+	var loc_configure = configure;
 	
 	var loc_out = {
 		
-		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
-			
-			var direction = loc_dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_DIRECTION];
-
-			//input data set
-			var inDataSet;
-			
-			//output data set
-			var outDataSet;
-
-			var parentDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(parentCore));
-			var childDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(childRuntime.getCoreEntity()));
-
-			if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
-				inDataSet = parentDataIoSet;
-				outDataSet = childDataIoSet;
-			}
-			else if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_UPSTREAM){
-				inDataSet = childDataIoSet;
-				outDataSet = parentDataIoSet;
-			}
-			
-			var da = node_createDataAssociation(inDataSet, loc_dataAssociation, outDataSet, name);
-			return da.getExecuteRequest(handlers, request);
-		}
+		getExecuteTaskRequest: function(taskInput, handlers, request){
+			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID], taskInput);
+		},	
 	};
-	
+		
 	return loc_out;
 };
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
