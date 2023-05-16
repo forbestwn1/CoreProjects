@@ -160,7 +160,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var childValue = child.getChildValue();
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childValue, childView); 
-				out.addRequest(childValue.getUpdateRuntimeContextRequest(childRuntimeContext));
+				out.addRequest(node_getComponentInterface(childValue).getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
 			
 			return out;

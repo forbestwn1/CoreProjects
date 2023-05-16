@@ -15,7 +15,6 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createDataAssociation;
 	var node_createIODataSet;
-	var node_ioTaskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -65,7 +64,6 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){ioTaskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataServiceEntityPlugin", node_createDataServiceEntityPlugin); 

@@ -12,7 +12,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSet;
-	var node_ioTaskUtility;
+	var node_dataIOUtility;
 	var node_createEventObject;
 	var node_destroyUtil;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -219,7 +219,7 @@ var node_createIODataSet = function(value){
 				out.addRequest(loc_out.getGetDataValueRequest(name, {
 					success : function(request, value){
 						//do merge
-						var mergedValue = node_ioTaskUtility.mergeContext(request.getData('value'), value, isDataFlat);
+						var mergedValue = node_dataIOUtility.mergeContext(request.getData('value'), value, isDataFlat);
 						//then set value back
 						return loc_out.getData(request.getData('name')).getSetValueRequest(mergedValue, {
 							success : function(request, value){
@@ -232,7 +232,7 @@ var node_createIODataSet = function(value){
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var mergedValue = node_ioTaskUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					var mergedValue = node_dataIOUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
 					loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 					return mergedValue;
 				}).withData(name, 'name').withData(value, 'value'));
@@ -276,7 +276,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
 

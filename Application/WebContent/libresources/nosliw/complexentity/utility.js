@@ -18,7 +18,7 @@ var packageObj = library;
 
 var node_complexEntityUtility = {
 	
-	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter){
+	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, handlers, request){
 		var childInput;
 		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
 		if(childCore==undefined)   childInput = childRuntime;
@@ -32,7 +32,7 @@ var node_complexEntityUtility = {
 			}
 		}
 		
-		return adapter.getExecuteRequest(parentCoreEntity, childInput);
+		return adapter.getExecuteRequest(parentCoreEntity, childInput, handlers, request);
 	},
 
 	getAttributeType : function(attributeObj){

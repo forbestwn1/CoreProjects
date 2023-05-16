@@ -15,7 +15,8 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createDataAssociation;
 	var node_createIODataSet;
-	var node_ioTaskUtility;
+	var node_dataIOUtility;
+	var node_taskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -42,12 +43,12 @@ var loc_createDataAssociationInteractiveAdapter = function(dataAssociationIntera
 		
 		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var parentDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(parentCore));
-			node_taskUtility.getExecuteWrappedTaskRequest(parentDataIoSet, undefined, loc_dataAssociationInteractive, {
+			var parentDataIoSet = node_createIODataSet(node_dataIOUtility.createDataIOByComplexEntity(parentCore));
+			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentDataIoSet, undefined, loc_dataAssociationInteractive, {
 				taskRequestFun : function(taskInput){
 					return childRuntime.getExecuteTaskRequest(taskInput);
 				}
-			});
+			}));
 			return out;
 		}
 	};
@@ -71,7 +72,8 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociationInteractiveAdapterPlugin", node_createDataAssociationInteractiveAdapterPlugin); 

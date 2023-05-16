@@ -6,7 +6,7 @@ var packageObj = library;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSet;
-	var node_ioTaskUtility;
+	var node_dataIOUtility;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
 	
@@ -40,7 +40,7 @@ var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, associa
 				//input is not flat, output is flat
 				//make output flat
 				outputData = {};
-				_.each(node_ioTaskUtility.getContextTypes(), function(categary, index){
+				_.each(node_dataIOUtility.getContextTypes(), function(categary, index){
 					var context = inputData[categary];
 					if(context!=undefined){
 						_.each(context, function(value, name){
@@ -51,7 +51,7 @@ var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, associa
 			}
 		}
 		
-		setRequest.addRequest(name, node_ioTaskUtility.outputToDataSetIORequest(outputIODataSet, outputData, name, true));
+		setRequest.addRequest(name, node_dataIOUtility.outputToDataSetIORequest(outputIODataSet, outputData, name, true));
 	});
 	
 	out.addRequest(setRequest);
@@ -64,7 +64,7 @@ var node_getExecuteMirrorDataAssociationRequest = function(inputDataSet, associa
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 

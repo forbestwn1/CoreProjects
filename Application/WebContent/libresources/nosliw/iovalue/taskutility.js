@@ -42,6 +42,45 @@ var node_taskUtility = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
 			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
+			out.addRequest(taskInputDataAssociation.getExecuteRequest({
+				success : function(requestInfo, taskInputDataSet){
+					
+					return taskInputDataSet.getGetDataValueRequest(undefined, {
+						success : function(request, taskInput){
+							//execute task
+							var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
+							executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
+								success : function(request, taskResult){
+									//process output association according to result name
+									var outputDataAssociationDef;
+									if(outputDataAssociationByResult!=undefined){
+										if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
+										else{
+											outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
+											if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
+										}
+									}
+
+									var taskOutputDataAssociation = node_createDataAssociation(ioTaskInfo.outIO!=undefined?ioTaskInfo.outIO:taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
+									return taskOutputDataAssociation.getExecuteRequest({
+										success :function(request, taskOutputDataSetIO){
+											return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
+										}
+									});
+								}
+							}));
+							return executeIOTaskRequest;
+						}
+					});
+				}
+			}));
+			return out;
+		},
+
+		getExecuteTaskRequest1 : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
+			//process input association
+			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteWithExtraDataRequest(extraInputdata, {
 				success : function(requestInfo, taskInputDataSet){
 					
@@ -72,32 +111,6 @@ var node_taskUtility = function(){
 							return executeIOTaskRequest;
 						}
 					});
-					
-					
-//					var taskInput = taskInputDataSet.getData();
-//					//execute task
-//					var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
-//					executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
-//						success : function(request, taskResult){
-//							//process output association according to result name
-//							var outputDataAssociationDef;
-//							if(outputDataAssociationByResult!=undefined){
-//								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
-//								else{
-//									outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
-//									if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
-//								}
-//							}
-//
-//							var taskOutputDataAssociation = node_createDataAssociation(ioTaskInfo.outIO!=undefined?ioTaskInfo.outIO:taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
-//							return taskOutputDataAssociation.getExecuteRequest({
-//								success :function(request, taskOutputDataSetIO){
-//									return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
-//								}
-//							});
-//						}
-//					}));
-//					return executeIOTaskRequest;
 				}
 			}));
 			return out;

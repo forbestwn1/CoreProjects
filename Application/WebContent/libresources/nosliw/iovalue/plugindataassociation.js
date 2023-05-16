@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createDataAssociation;
 	var node_createIODataSet;
-	var node_ioTaskUtility;
+	var node_dataIOUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -51,8 +51,8 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 			//output data set
 			var outDataSet;
 
-			var parentDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(parentCore));
-			var childDataIoSet = node_createIODataSet(ioTaskUtility.createDataIOByComplexEntity(childRuntime.getCoreEntity()));
+			var parentDataIoSet = node_createIODataSet(node_dataIOUtility.createDataIOByComplexEntity(parentCore));
+			var childDataIoSet = node_createIODataSet(node_dataIOUtility.createDataIOByComplexEntity(childRuntime.getCoreEntity()));
 
 			if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
 				inDataSet = parentDataIoSet;
@@ -87,7 +87,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){ioTaskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociationAdapterPlugin", node_createDataAssociationAdapterPlugin); 

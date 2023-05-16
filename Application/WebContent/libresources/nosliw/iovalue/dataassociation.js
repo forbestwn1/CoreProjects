@@ -13,7 +13,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_makeObjectWithType;
 	var node_getObjectType;
-	var node_ioTaskUtility;
+	var node_dataIOUtility;
 	var node_getExecuteMappingDataAssociationRequest;
 	var node_getExecuteMirrorDataAssociationRequest;
 	var node_getExecuteNoneDataAssociationRequest;
@@ -57,7 +57,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
 
 			//get input data set first
-			out.addRequest(node_ioTaskUtility.getGetIODataValueRequest(loc_inputIO, {
+			out.addRequest(node_dataIOUtility.getGetIODataValueRequest(loc_inputIO, {
 				success: function(request, inputDataSet){
 					if(extraDataSet!=undefined){
 						//merge with extraDataSet
@@ -68,7 +68,7 @@ var node_createDataAssociation = function(inputIO, dataAssociationDef, outputIOD
 								inputData = {};
 								inputDataSet[setName] = inputData;
 							}
-							node_ioTaskUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
+							node_dataIOUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
 						})
 					}
 					
@@ -120,7 +120,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){nod
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioTaskUtility", function(){node_ioTaskUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("iovalue.getExecuteMappingDataAssociationRequest", function(){node_getExecuteMappingDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("iovalue.getExecuteMirrorDataAssociationRequest", function(){node_getExecuteMirrorDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("iovalue.getExecuteNoneDataAssociationRequest", function(){node_getExecuteNoneDataAssociationRequest = this.getData();	});
