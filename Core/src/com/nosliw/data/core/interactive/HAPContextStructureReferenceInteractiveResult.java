@@ -37,7 +37,7 @@ public class HAPContextStructureReferenceInteractiveResult implements HAPContext
 	private void buildValueStructure() {
 		this.m_valueStructureDef = new HAPDefinitionEntityValueStructure();
 		for(HAPDefinitionInteractiveResultOutput output : this.m_result.getOutput()) {
-			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(output.getCriteria())));
+			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(output.getCriteria()), output));
 		}
 	}
 }

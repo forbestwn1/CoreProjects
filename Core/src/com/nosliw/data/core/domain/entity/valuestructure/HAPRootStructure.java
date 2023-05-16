@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -36,7 +37,10 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp{
 	
 	public HAPRootStructure() {}
 	
-	public HAPRootStructure(HAPElementStructure definition) {  this.m_definition = definition;  }
+	public HAPRootStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {  
+		this.m_definition = definition;
+		entityInfo.cloneToEntityInfo(this);
+	}
 
 	public Object getDefaultValue(){   
 		Object value;

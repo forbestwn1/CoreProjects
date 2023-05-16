@@ -37,7 +37,9 @@ public class HAPContextStructureReferenceInteractiveRequest implements HAPContex
 	private void buildValueStructure() {
 		this.m_valueStructureDef = new HAPDefinitionEntityValueStructure();
 		for(HAPDefinitionInteractiveRequestParm parm : this.m_requestParms) {
-			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo())));
+			HAPRootStructure rootStructure = new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo()), parm);
+			rootStructure.setName(parm.getName());
+			m_valueStructureDef.addRoot(rootStructure);
 		}
 	}
 }

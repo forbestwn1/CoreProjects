@@ -12,15 +12,15 @@
 				},
 				"entity" : {
 					"serviceKey" : {
-						"id" : "TestTemplateService3"
+						"id" : "TestBasicService"
 					}
 				}
 			},
 			"adapter":[
 				{
 					"name" : "parent.child.data",
-					"status": "disabled",
-					"entityType" : "dataAssociation",
+					"status": "disabled1",
+					"entityType" : "dataAssociationInteractive",
 					"entity" : {
 						"in" : {
 							"serviceParm1" : {
