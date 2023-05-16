@@ -218,8 +218,17 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 					var child = that.getChild(childName);
 					processFun.call(child, child);
 				});
-			}
+			},
 			
+			processComplexChildren : function(processFun){
+				var that = this;
+				_.each(this.getChildrenName(), function(childName){
+					var child = that.getChild(childName);
+					if(child.getIsComplex()==true){
+						processFun.call(child, child);
+					}
+				});
+			}
 		});
 	}
 	

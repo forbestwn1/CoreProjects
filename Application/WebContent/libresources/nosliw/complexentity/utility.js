@@ -46,7 +46,7 @@ var node_complexEntityUtility = {
 		var getConfigureValueRequest = node_createServiceRequestInfoSequence(undefined, {
 			success : function(request, configureObject){
 				
-				var configureValue = configureObject[node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_ROOT_VALUE)];
+				var configureValue = configureObject==undefined?undefined:configureObject[node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_ROOT_VALUE)];
 				var configureGlobal;
 				var configureParms;
 				

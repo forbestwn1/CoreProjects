@@ -24,8 +24,8 @@ var node_createDataServiceEntityPlugin = function(){
 	var loc_out = {
 
 		getCreateEntityRequest : function(entityDef, configure, handlers, request){
-			return node_createServiceRequestInfoSimple(function(request){
-				return loc_createDataServiceProvider(serviceProvider, configure);
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				return loc_createDataServiceProvider(entityDef, configure);
 			}, handlers, request);
 		},
 	};

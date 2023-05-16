@@ -98,13 +98,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 	var loc_init = function(complexEntityDef, configure){
 	};
 	
-	var loc_simpleTest1AttrsInvoke = function(funName, parm1, parm2){
-		var argus = arguments;
-		_.each(loc_simpleTest1Atts, function(simpleTest1Att, name){
-			simpleTest1Att.callBack.apply(simpleTest1Att, argus);
-		});
-	};
-	
 	var loc_out = {
 
 		getDataType: function(){    return  "testComplex1";   },
@@ -124,12 +117,9 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 
 			//complex attribute
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
-				out.addRequest(child.getChildValue().getPreInitRequest());
+				out.addRequest(node_getComponentInterface(child.getChildValue()).getPreInitRequest());
 			});
 
-			//simpletest1 attribute
-			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_PREINIT);
-			
 			return out;
 		},		
 		
@@ -172,9 +162,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childValue, childView); 
 				out.addRequest(childValue.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
-			
-			//simpletest1 attribute
-			loc_simpleTest1AttrsInvoke(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT, runtimeContext);
 			
 			return out;
 		},

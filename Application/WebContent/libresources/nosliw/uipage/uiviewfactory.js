@@ -370,7 +370,7 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 	var loc_getExecuteHandlerRequest = function(handlerInfo, args, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
-			out.addRequest(node_createServiceRequestInfoSimple(function(request){
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				node_uiResourceUtility.callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
 			}));
 		}

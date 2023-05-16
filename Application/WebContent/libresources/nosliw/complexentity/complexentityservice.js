@@ -54,17 +54,6 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_adapterPlugins = {};
 
-	var loc_getCreateAdapterRequest = function(adapterType, adapterDefinition, handlers, request){
-		if(adapterDefinition==undefined){
-			return node_createServiceRequestInfoSimple({}, function(requestInfo){
-				return;
-			});		
-		}
-		else{
-			return loc_adapterPlugins[adapterType].getNewAdapterRequest(adapterDefinition, handlers, request);
-		}
-	};
-
 	var loc_getCreateContainerComplexEntityRuntimeRequest = function(containerDef, parentComplexEntityCore, bundleCore, configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
@@ -85,6 +74,35 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 	
+	var loc_getCreateAdapterRequest = function(adapterType, adapterDefinition, handlers, request){
+		if(adapterDefinition==undefined){
+			return node_createServiceRequestInfoSimple({}, function(requestInfo){
+				return;
+			});		
+		}
+		else{
+			return loc_adapterPlugins[adapterType].getNewAdapterRequest(adapterDefinition, handlers, request);
+		}
+	};
+
+	var loc_getCreateSimpleEntityRequest = function(entityType, entityDef, configure, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
+		out.addRequest(simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, {
+			success : function(request, simpleEntity){
+				simpleEntity = node_makeObjectWithEmbededEntityInterface(simpleEntity);
+				
+				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
+				
+				simpleEntity = node_makeObjectWithComponentInterface(simpleEntity, false);
+				
+				simpleEntity = node_makeObjectWithId(simpleEntity);
+				
+			}
+		}));
+		return out;
+	};
+
 	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
@@ -292,9 +310,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, configure, handlers, request);
 		},
 
-		createSimpleEntityRequest : function(entityType, entityDef, configure, handlers, request){
-			var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
-			return simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, handlers, request);
+		getCreateSimpleEntityRequest : function(entityType, entityDef, configure, handlers, request){
+			return loc_getCreateSimpleEntityRequest(entityType, entityDef, configure, handlers, request);
 		},
 		
 		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){

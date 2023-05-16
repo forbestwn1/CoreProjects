@@ -18,7 +18,7 @@
 			},
 			"adapter":[
 				{
-					"name" : "parent.child.data",
+					"name" : "serviceAdapter",
 					"status": "disabled1",
 					"entityType" : "dataAssociationInteractive",
 					"entity" : {
