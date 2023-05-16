@@ -10,16 +10,15 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
-import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
 @HAPEntityWithAttribute
-public class HAPInfoServiceInterface extends HAPResourceDefinition{
+public class HAPInfoServiceInterface extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String TAG = "tag";
@@ -41,12 +40,6 @@ public class HAPInfoServiceInterface extends HAPResourceDefinition{
 		this.m_serviceInterface = new HAPServiceInterface();
 		this.m_displayResource = new HAPDisplayResourceNode();
 	}
-
-	@Override
-	public String getResourceType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE; }
-
-	@Override
-	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
 	public HAPServiceInterface getInterface() {  return this.m_serviceInterface;  } 
 	

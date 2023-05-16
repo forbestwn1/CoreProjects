@@ -6,14 +6,16 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public class HAPDefinitionService extends HAPEntityInfoImp{
+public class HAPDefinitionService1 extends HAPResourceDefinition{
 
 	public static final String CHILD_INTERFACE = "interface";
 	
@@ -31,9 +33,21 @@ public class HAPDefinitionService extends HAPEntityInfoImp{
 	//information for how two create runtime executor 
 	private HAPInfoServiceRuntime m_runtimeInfo;
 
-	public HAPDefinitionService(){
+	public HAPDefinitionService1(){
 	}
 	
+	@Override
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE;  }
+	
+	@Override
+	public HAPResourceDefinitionOrId getChild(String path) {
+		HAPResourceDefinitionOrId out = null;
+		if(CHILD_INTERFACE.equals(path)) {
+			out = this.m_staticInfo.getInterface();
+		}
+		return out;
+	}
+
 	public HAPInfoServiceStatic getStaticInfo() {   return this.m_staticInfo;   }
 	
 	public HAPInfoServiceRuntime getRuntimeInfo() {  return this.m_runtimeInfo;  }

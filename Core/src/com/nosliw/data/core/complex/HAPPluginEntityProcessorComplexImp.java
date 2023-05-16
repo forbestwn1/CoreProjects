@@ -56,7 +56,7 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 
 		if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)) {
 			HAPAttributeEntityDefinitionNormal normalAttrDef = (HAPAttributeEntityDefinitionNormal)attrDef;
-			HAPExecutableEntity entityExe = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().processSimpleEntity((HAPIdEntityInDomain)attrDef.getValue(), processContext);
+			HAPExecutableEntity entityExe = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().processSimpleEntity((HAPIdEntityInDomain)normalAttrDef.getValue().getValue(), processContext);
 
 			HAPAttributeEntityExecutableNormal attrNormalExe = new HAPAttributeEntityExecutableNormal(attrName, new HAPEmbededExecutable(entityExe), attrDef.getValueTypeInfo()); 
 			

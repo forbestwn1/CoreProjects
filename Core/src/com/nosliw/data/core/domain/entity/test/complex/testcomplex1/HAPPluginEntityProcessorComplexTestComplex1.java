@@ -47,18 +47,21 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 		List<HAPAttributeEntityDefinition> attrs = definitionEntity.getAttributes();
 		for(HAPAttributeEntityDefinition attr : attrs) {
 			if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)){
-				//normal attribute
-				HAPAttributeEntityDefinitionNormal simpleAttrDef = (HAPAttributeEntityDefinitionNormal)attr;
-				HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
-				HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
-				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
-				if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
-					//complex attribute
-					this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
-				}
-				else {
-					HAPAttributeEntityExecutable attrExe = this.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
-					executableEntity.setAttribute(attrExe);
+				String valueType = attr.getValueTypeInfo().getValueType();
+				if(!(valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)||valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT))) {
+					//normal attribute
+					HAPAttributeEntityDefinitionNormal simpleAttrDef = (HAPAttributeEntityDefinitionNormal)attr;
+					HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
+					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
+					HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
+					if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
+						//complex attribute
+						this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
+					}
+					else {
+						HAPAttributeEntityExecutable attrExe = this.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
+						executableEntity.setAttribute(attrExe);
+					}
 				}
 			}
 			else if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
