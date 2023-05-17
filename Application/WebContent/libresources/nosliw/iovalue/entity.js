@@ -15,6 +15,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_dataIOUtility;
 	var node_createEventObject;
 	var node_destroyUtil;
+	var node_objectOperationUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //task result 
@@ -109,7 +110,7 @@ var node_createIODataSet = function(value){
 			}
 			else{
 				return node_createServiceRequestInfoSimple(undefined, function(request){
-					return node_objectOperationUtility.dataOperation(data, dataOperationService);
+					return node_objectOperationUtility.objectOperation(data, dataOperationService);
 				}, handlers, request);
 			}
 		},
@@ -279,6 +280,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.destroyUtil", function(){node_destroyUtil = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("IOTaskResult", node_IOTaskResult); 

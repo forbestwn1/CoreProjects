@@ -41,11 +41,12 @@ var node_taskUtility = function(){
 		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
+			var taskInputIOSet = ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet();
+			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIOSet, loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteRequest({
 				success : function(requestInfo, taskInputDataSet){
 					
-					return taskInputDataSet.getGetDataValueRequest(undefined, {
+					return taskInputIOSet.getGetDataValueRequest(undefined, {
 						success : function(request, taskInput){
 							//execute task
 							var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));

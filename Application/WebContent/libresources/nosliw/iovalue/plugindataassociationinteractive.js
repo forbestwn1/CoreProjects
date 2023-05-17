@@ -45,8 +45,8 @@ var loc_createDataAssociationInteractiveAdapter = function(dataAssociationIntera
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var parentDataIoSet = node_createIODataSet(node_dataIOUtility.createDataIOByComplexEntity(parentCore));
 			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentDataIoSet, undefined, loc_dataAssociationInteractive, {
-				taskRequestFun : function(taskInput){
-					return childRuntime.getExecuteTaskRequest(taskInput);
+				taskRequestFun : function(taskInput, handlers, request){
+					return childRuntime.getExecuteTaskRequest(taskInput, handlers, request);
 				}
 			}));
 			return out;

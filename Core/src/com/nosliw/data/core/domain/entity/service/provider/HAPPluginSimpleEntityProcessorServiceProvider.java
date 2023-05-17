@@ -19,6 +19,7 @@ public class HAPPluginSimpleEntityProcessorServiceProvider extends HAPPluginEnti
 		HAPExecutableEntityInDomainServiceProvider serviceProviderExe = (HAPExecutableEntityInDomainServiceProvider)entityExe;
 		
 		String serviceId = serviceProviderDef.getServiceKey().getServiceId();
+		serviceProviderExe.setServiceId(serviceId);
 		HAPServiceInterface serviceInterface = processContext.getRuntimeEnvironment().getServiceManager().getServiceDefinitionManager().getDefinition(serviceId).getStaticInfo().getInterface().getInterface();
 		serviceProviderExe.setInteractive(serviceInterface);
 	}

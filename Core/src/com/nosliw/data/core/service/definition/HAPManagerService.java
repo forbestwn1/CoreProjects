@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
+import com.nosliw.data.core.interactive.HAPDefinitionInteractiveRequestParm;
 import com.nosliw.data.core.interactive.HAPResultInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.interfacee.HAManagerServiceInterface;
@@ -75,7 +75,7 @@ public class HAPManagerService {
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			HAPServiceInterface serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface().getInterface();
-			for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
+			for(HAPDefinitionInteractiveRequestParm parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;
 				if(parms!=null)  parmData = parms.get(parmName);

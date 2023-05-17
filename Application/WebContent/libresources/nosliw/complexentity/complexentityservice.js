@@ -87,6 +87,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_getCreateSimpleEntityRequest = function(entityType, entityDef, configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var entityDef = node_createEntityDefinition(entityDef);
 		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
 		out.addRequest(simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, {
 			success : function(request, simpleEntity){
