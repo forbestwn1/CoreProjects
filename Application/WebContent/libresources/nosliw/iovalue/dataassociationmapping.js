@@ -15,7 +15,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, association, outputIODataSet, targetName, handlers, request){
+var node_getExecuteMappingDataAssociationRequest = function(inputIODataSet, association, outputIODataSet, targetName, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	var getDataSetRequest = node_createServiceRequestInfoSet(undefined, {
@@ -58,7 +58,7 @@ var node_getExecuteMappingDataAssociationRequest = function(inputDataSet, associ
 		else{
 			//from variable
 			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
-			mappingRequest.addRequest(inputDataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
+			mappingRequest.addRequest(inputIODataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
 				success : function(request, value){
 					value = value.value
 					if(matchers==undefined)   return value;

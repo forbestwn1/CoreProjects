@@ -117,7 +117,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 
 			//complex attribute
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
-				out.addRequest(node_getComponentInterface(child.getChildValue()).getPreInitRequest());
+				out.addRequest(child.getChildValue().getPreInitRequest());
 			});
 
 			return out;
@@ -160,7 +160,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var childValue = child.getChildValue();
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childValue, childView); 
-				out.addRequest(node_getComponentInterface(childValue).getUpdateRuntimeContextRequest(childRuntimeContext));
+				out.addRequest(childValue.getUpdateRuntimeContextRequest(childRuntimeContext));
 			});
 			
 			return out;

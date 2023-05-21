@@ -177,8 +177,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 //		}
 //	});
 	
-	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();
 	loc_out.id = nosliw.generateId();
+	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();
 	return loc_out;
 };
 

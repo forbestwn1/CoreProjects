@@ -94,27 +94,26 @@ var node_createIODataSet = function(value){
 	var loc_trigueEvent = function(eventName, eventData, requestInfo){loc_eventSource.triggerEvent(eventName, eventData, requestInfo); };
 
 	var loc_processName = function(name){  return name!=undefined?  name : node_COMMONCONSTANT.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  };
+
+	//directly get data element
+	var loc_getDataElement = function(name){
+		name = loc_processName(name);
+		var out = loc_out.prv_dataSet[name];
+		if(out==undefined){
+			out = {};
+			loc_out.prv_dataSet[name] = out;
+		}
+		return out;
+	};
+
+
 	
 	var loc_out = {
 		
 		prv_dataSet : {},
 		prv_id : nosliw.generateId(),
 		
-		getDataSet : function(){   return loc_out.prv_dataSet;   },
 
-		getDataOperationRequest : function(name, dataOperationService, handlers, request){
-			var data = this.getData(name);
-			var dataEleType = node_getObjectType(data);
-			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
-				return data.getDataOperationRequest(dataOperationService, handlers, request);
-			}
-			else{
-				return node_createServiceRequestInfoSimple(undefined, function(request){
-					return node_objectOperationUtility.objectOperation(data, dataOperationService);
-				}, handlers, request);
-			}
-		},
-		
 		//directly set data element
 		setData : function(name, data, request){ 
 			name = loc_processName(name);
@@ -129,20 +128,29 @@ var node_createIODataSet = function(value){
 			loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 		},
 
-		//directly get data element
-		getData : function(name){
-			name = loc_processName(name);
-			var out = loc_out.prv_dataSet[name];
-			if(out==undefined){
-				out = {};
-				loc_out.prv_dataSet[name] = out;
+		getDataOperationRequest : function(name, dataOperationService, handlers, request){
+			var dataEle = loc_getDataElement(name);
+			var dataEleType = node_getObjectType(dataEle);
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				return dataEle.getDataOperationRequest(dataOperationService, handlers, request);
 			}
-			return out;
+			else{
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					return node_objectOperationUtility.objectOperation(dataEle, dataOperationService);
+				}, handlers, request);
+			}
 		},
-
+		
+		
+		
+		
+		
+		
+		
+		
 		//get value of data request
 		getGetDataValueRequest : function(name, handlers, request){
-			var dataEle = this.getData(name);
+			var dataEle = loc_getDataElement(name);
 			var dataEleType = node_getObjectType(dataEle);
 			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
 				return dataEle.getGetValueRequest(handlers, request);
@@ -154,13 +162,20 @@ var node_createIODataSet = function(value){
 			}
 		},
 
+
+
+
+
+
+		getDataSet : function(){   return loc_out.prv_dataSet;   },
+
 		//set value of data request
 		getSetDataValueRequest : function(name, value, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var dataEle = this.getData(name);
+			var dataEle = loc_getDataElement(name);
 			var dataEleType = node_getObjectType(dataEle);
 			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
-				return loc_out.getData(name).getSetValueRequest(value, {
+				return loc_getDataElement(name).getSetValueRequest(value, {
 					success : function(request, value){
 						loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 						return value;
@@ -213,7 +228,7 @@ var node_createIODataSet = function(value){
 		//merge ioData with value
 		getMergeDataValueRequest : function(name, value, isDataFlat, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var dataEle = this.getData(name);
+			var dataEle = loc_getDataElement(name);
 			var dataEleType = node_getObjectType(dataEle);
 			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
 				//get value first
@@ -222,7 +237,7 @@ var node_createIODataSet = function(value){
 						//do merge
 						var mergedValue = node_dataIOUtility.mergeContext(request.getData('value'), value, isDataFlat);
 						//then set value back
-						return loc_out.getData(request.getData('name')).getSetValueRequest(mergedValue, {
+						return loc_getDataElement(request.getData('name')).getSetValueRequest(mergedValue, {
 							success : function(request, value){
 								loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 								return value;
@@ -233,7 +248,7 @@ var node_createIODataSet = function(value){
 			}
 			else{
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var mergedValue = node_dataIOUtility.mergeContext(request.getData('value'), loc_out.getData(request.getData('name')), isDataFlat);
+					var mergedValue = node_dataIOUtility.mergeContext(request.getData('value'), loc_getDataElement(request.getData('name')), isDataFlat);
 					loc_trigueEvent(node_CONSTANT.IODATASET_EVENT_CHANGE, undefined, request);
 					return mergedValue;
 				}).withData(name, 'name').withData(value, 'value'));

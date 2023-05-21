@@ -24,6 +24,7 @@ var packageObj = library;
 	var node_buildComponentInterface;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_createEntityDefinition;
+	var node_getObjectType;
 	
     var node_makeObjectWithEmbededEntityInterface;
     var node_getEmbededEntityInterface;
@@ -95,7 +96,7 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
 				
-				simpleEntity = node_makeObjectWithComponentInterface(simpleEntity, false);
+				simpleEntity = node_makeObjectWithComponentInterface(entityType, simpleEntity, false);
 				
 				simpleEntity = node_makeObjectWithId(simpleEntity);
 				
@@ -121,7 +122,7 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				complexEntityCore = node_makeObjectComplexEntityObjectInterface(complexEntityCore, valueContextId, bundleCore);
 				
-				complexEntityCore = node_makeObjectWithComponentInterface(complexEntityCore, false);
+				complexEntityCore = node_makeObjectWithComponentInterface(entityType, complexEntityCore, false);
 				
 				complexEntityCore = node_makeObjectWithId(complexEntityCore);
 				
@@ -209,7 +210,7 @@ var node_createComplexEntityRuntimeService = function() {
 		
 		entity = node_makeObjectEntityTreeNodeInterface(entity);
 		
-		entity = node_makeObjectWithComponentInterface(entity, false);
+		entity = node_makeObjectWithComponentInterface(node_getObjectType(entity), entity, false);
 		
 		entity = node_makeObjectWithId(entity);
 
@@ -365,6 +366,7 @@ nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_
 nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
