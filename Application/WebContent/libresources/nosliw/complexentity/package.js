@@ -111,7 +111,7 @@ var node_createPackageCore = function(resourceId, configure){
 			
 			loc_parentView = runtimeContext.view;
 
-			var runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_BUNDLE_NAME, loc_getMainBundleRuntime()); 
+			var runtimeContextForBundle = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_BUNDLE_NAME); 
 			
 			if(loc_isDebugMode()){
 				runtimeContextForBundle = loc_getDebugView().updateRuntimeContext(runtimeContextForBundle);

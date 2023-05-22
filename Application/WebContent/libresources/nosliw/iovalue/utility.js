@@ -21,37 +21,6 @@ var node_utility = function(){
 	
 	var loc_out = {
 
-		createDataIOByComplexEntity : function(complexEntityCore){
-			
-			return node_createDynamicIOData(function(dataOpService, handlers, request){
-				var complexInterface = node_getComplexEntityObjectInterface(this);
-				var bundle = complexInterface.getBundle();
-				var varDomain = bundle.getVariableDomain();
-				var valueContext = complexInterface.getValueContext();
-	
-				var fullPath = dataOpService.parms.path;
-				var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-				var valueStrcutureRuntimeId = fullPath.substring(0, index);
-				var eleFullPath = fullPath.substring(index+1);
-				var rootName;
-				var elePath;
-				index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-				if(index!=-1){
-					rootName = eleFullPath.substring(0, index);
-					elePath = eleFullPath.substring(index+1);
-				}
-				else{
-					rootName = eleFullPath;
-					elePath = undefined;
-				}
-				
-				dataOpService.parms.path = elePath;
-				var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
-			
-				return node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), handlers, request);
-			}, undefined, complexEntityCore);
-		},
-
 		createTransparentDataAssocationDefinition : function(){
 			var out = {};
 			out[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE] = node_COMMONCONSTANT.DATAASSOCIATION_TYPE_TRANSPARENT;

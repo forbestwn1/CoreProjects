@@ -85,7 +85,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		//id for this layer
 		var layerId = index + "";
 		//runtime context for this layer
-		var runtimeContext = node_componentUtility.makeChildRuntimeContext(upperRuntimeContext, layerId, loc_layers[index]); 
+		var runtimeContext = node_componentUtility.makeChildRuntimeContext(upperRuntimeContext, layerId); 
 
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
 		out.addRequest(loc_getLayerInterfaceObj(index).getUpdateRuntimeContextRequest(runtimeContext, {

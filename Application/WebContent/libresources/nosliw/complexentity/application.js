@@ -60,7 +60,7 @@ var node_createApplication = function(resourceId, configure){
 			loc_parentView = runtimeContext.view;
 			var packageRuntime = loc_getPackageRuntime();
 
-			var runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_PACKAGE_NAME, packageRuntime); 
+			var runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_PACKAGE_NAME); 
 			out.addRequest(packageRuntime.getUpdateRuntimeContextRequest(runtimeContextForPackage));
 			return out;
 		},

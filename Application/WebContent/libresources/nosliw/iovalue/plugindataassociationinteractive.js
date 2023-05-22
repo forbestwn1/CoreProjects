@@ -17,6 +17,9 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_dataIOUtility;
 	var node_taskUtility;
+	var node_ioDataFactory;
+	var node_getBasicEntityObjectInterface;
+	var node_IOTaskInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -43,12 +46,34 @@ var loc_createDataAssociationInteractiveAdapter = function(dataAssociationIntera
 		
 		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var parentDataIoSet = node_createIODataSet(node_dataIOUtility.createDataIOByComplexEntity(parentCore));
-			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentDataIoSet, undefined, loc_dataAssociationInteractive, {
-				taskRequestFun : function(taskInput, handlers, request){
-					return childRuntime.getExecuteTaskRequest(taskInput, handlers, request);
-				}
-			}));
+			
+			var inIO = node_createIODataSet();
+			
+			var outIOs = {};
+			var interactiveDef = node_getBasicEntityObjectInterface(childRuntime).getEntityDefinition();
+			var interactive = interactiveDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYINTERACTIVE_ATTR_INTERACTIVE);
+			_.each(interactive[node_COMMONATRIBUTECONSTANT.DEFINITIONINTERACTIVE_RESULT], function(resultDef, resultName){
+				outIOs[resultName] = node_createIODataSet();
+			});
+			
+			var taskInfo = new node_IOTaskInfo(function(handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				out.addRequest(inIO.getDataValueRequest(undefined, {
+					success : function(request, taskInputValue){
+						return childRuntime.getExecuteTaskRequest(taskInputValue.default, {
+							success : function(request, taskResult){
+								var resultName = taskResult.resultName;
+								outIOs[resultName].setData(undefined, {default:taskResult.resultValue});
+								return resultName;
+							}
+						});
+					}
+				}));
+				return out;
+			}, "interactive", inIO, outIOs);
+			
+			var parentIODataSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
+			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentIODataSet, loc_dataAssociationInteractive, taskInfo));
 			return out;
 		}
 	};
@@ -74,6 +99,10 @@ nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.ioDataFactory", function(){node_ioDataFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociationInteractiveAdapterPlugin", node_createDataAssociationInteractiveAdapterPlugin); 

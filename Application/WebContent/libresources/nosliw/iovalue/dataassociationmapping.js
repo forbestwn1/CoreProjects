@@ -60,7 +60,6 @@ var node_getExecuteMappingDataAssociationRequest = function(inputIODataSet, asso
 			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
 			mappingRequest.addRequest(inputIODataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
 				success : function(request, value){
-					value = value.value
 					if(matchers==undefined)   return value;
 					else{
 						return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers)

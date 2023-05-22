@@ -106,7 +106,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 			
 			loc_parentView = runtimeContext.view;
 			
-			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME, loc_getMainEntity()); 
+			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME); 
 
 			if(loc_isDebugMode()){
 				runtimeContextForMain = loc_getDebugView().updateRuntimeContext(runtimeContextForMain);

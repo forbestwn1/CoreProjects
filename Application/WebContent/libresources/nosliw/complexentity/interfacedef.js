@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_buildInterface;
 	var node_getInterface;
 	var node_getEmbededEntityInterface;
+	var node_getObjectType;
 
 //*******************************************   Start Node Definition  **************************************
 	
@@ -276,7 +277,17 @@ var loc_createNormalTreeChild = function(childName, entityRuntime, adapters, isC
 		
 		getAdapters : function(){   return loc_adapters;    },
 		
-		getIsComplex : function(){    return loc_isComplex;     }
+		getIsComplex : function(){    return loc_isComplex;     },
+		
+		getComponentInterface : function(){
+			var objType = node_getObjectType(loc_entityRuntime);
+			if(objType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+				return loc_entityRuntime; 
+			}
+			else{
+				return node_getComponentInterface(loc_entityRuntime);
+			}
+		}
 	};
 	
 	return loc_out;
@@ -295,6 +306,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name

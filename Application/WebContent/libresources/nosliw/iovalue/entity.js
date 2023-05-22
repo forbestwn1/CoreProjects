@@ -141,7 +141,20 @@ var node_createIODataSet = function(value){
 			}
 		},
 		
-		
+		getDataValueRequest : function(name, handlers, request){
+			name = loc_processName(name);
+
+			var dataEle = loc_getDataElement(name);
+			var dataEleType = node_getObjectType(dataEle);
+			if(dataEleType==node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION_DYNAMICIODATA){
+				return dataEle.getDataValueRequest(handlers, request);
+			}
+			else{
+				return node_createServiceRequestInfoSimple(undefined, function(request){
+					return dataEle;
+				}, handlers, request);
+			}
+		},
 		
 		
 		

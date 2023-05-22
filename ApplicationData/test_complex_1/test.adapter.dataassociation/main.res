@@ -21,7 +21,31 @@
 			},
 			"adapter":[
 				{
-					"name" : "parent.child.data",
+					"name" : "parent.child.data.value",
+					"status": "disabled1",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"child_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"ac" : {
+													"mapping" : {
+														"elementPath": "parent_tree_public.a.ac"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "parent.child.data.data",
 					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
@@ -70,7 +94,7 @@
 				},
 				{
 					"name" : "parent.child.data.constant",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {

@@ -21,15 +21,14 @@ var node_taskUtility = function(){
 	var loc_out = {
 			
 		//input and output is same
-		getExecuteWrappedTaskRequest : function(externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
-			return loc_out.getExecuteEmbededTaskRequest(externalIODataSet, externalIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request);
+		getExecuteWrappedTaskRequest : function(externalIODataSet, ioMapping, ioTaskInfo, handlers, request){
+			return loc_out.getExecuteEmbededTaskRequest(externalIODataSet, externalIODataSet, ioMapping, ioTaskInfo, handlers, request);
 		},
 
 		//input and output may not same
-		getExecuteEmbededTaskRequest : function(inputIODataSet, outputIODataSet, extraInputData, ioMapping, ioTaskInfo, handlers, request){
+		getExecuteEmbededTaskRequest : function(inputIODataSet, outputIODataSet, ioMapping, ioTaskInfo, handlers, request){
 			return loc_out.getExecuteTaskRequest(
 					inputIODataSet, 
-					extraInputData,
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORTASK_IN], 
 					ioTaskInfo, 
 					ioMapping[node_COMMONATRIBUTECONSTANT.EXECUTABLEGROUPDATAASSOCIATIONFORTASK_OUT], 
@@ -38,39 +37,31 @@ var node_taskUtility = function(){
 					request);
 		},
 
-		getExecuteTaskRequest : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
+		getExecuteTaskRequest : function(inputIODataSet, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIODataSet, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			var taskInputIOSet = ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet();
-			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, taskInputIOSet, loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
+			var taskInputIODataSet = ioTaskInfo.inIO;
+			var taskInputDataAssociation = node_createDataAssociation(inputIODataSet, inputDataAssociationDef, taskInputIODataSet, loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteRequest({
-				success : function(requestInfo, taskInputDataSet){
-					
-					return taskInputIOSet.getGetDataValueRequest(undefined, {
-						success : function(request, taskInput){
-							//execute task
-							var executeIOTaskRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask", {}));
-							executeIOTaskRequest.addRequest(ioTaskInfo.taskRequestFun(taskInput, {
-								success : function(request, taskResult){
-									//process output association according to result name
-									var outputDataAssociationDef;
-									if(outputDataAssociationByResult!=undefined){
-										if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(taskResult.resultName);
-										else{
-											outputDataAssociationDef = outputDataAssociationByResult[taskResult.resultName];
-											if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
-										}
-									}
-
-									var taskOutputDataAssociation = node_createDataAssociation(ioTaskInfo.outIO!=undefined?ioTaskInfo.outIO:taskResult.resultValue, outputDataAssociationDef, outputIO, loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
-									return taskOutputDataAssociation.getExecuteRequest({
-										success :function(request, taskOutputDataSetIO){
-											return new node_IOTaskResult(taskResult.resultName, taskOutputDataSetIO);
-										}
-									});
+				success : function(requestInfo){
+					return ioTaskInfo.taskRequestFun({
+						success : function(request, resultName){
+							//process output association according to result name
+							var outputDataAssociationDef;
+							if(outputDataAssociationByResult!=undefined){
+								if(typeof outputDataAssociationByResult === "function")		outputDataAssociationDef = outputDataAssociationByResult(resultName);
+								else{
+									outputDataAssociationDef = outputDataAssociationByResult[resultName];
+									if(outputDataAssociationDef==undefined)   outputDataAssociationDef = outputDataAssociationByResult[node_COMMONCONSTANT.NAME_DEFAULT];
 								}
-							}));
-							return executeIOTaskRequest;
+							}
+
+							var taskOutputDataAssociation = node_createDataAssociation(outputIODataSet, outputDataAssociationDef, ioTaskInfo.outIO[resultName], loc_buildTaskOutputDataAssociationName(ioTaskInfo.taskName));
+							return taskOutputDataAssociation.getExecuteRequest({
+								success :function(request){
+									return resultName;
+								}
+							});
 						}
 					});
 				}
@@ -78,10 +69,10 @@ var node_taskUtility = function(){
 			return out;
 		},
 
-		getExecuteTaskRequest1 : function(inputIO, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
+		getExecuteTaskRequest1 : function(inputIODataSet, extraInputdata, inputDataAssociationDef, ioTaskInfo, outputDataAssociationByResult, outputIO, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteIOTask", {}), handlers, request);
 			//process input association
-			var taskInputDataAssociation = node_createDataAssociation(inputIO, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
+			var taskInputDataAssociation = node_createDataAssociation(inputIODataSet, inputDataAssociationDef, ioTaskInfo.inIO!=undefined?ioTaskInfo.inIO:node_createIODataSet(), loc_buildTaskInputDataAssociationName(ioTaskInfo.taskName));   //data association for input for task
 			out.addRequest(taskInputDataAssociation.getExecuteWithExtraDataRequest(extraInputdata, {
 				success : function(requestInfo, taskInputDataSet){
 					

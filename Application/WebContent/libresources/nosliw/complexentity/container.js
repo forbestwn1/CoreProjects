@@ -52,7 +52,7 @@ var node_createComplexEntityRuntimeContainer = function(){
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getUpdateRuntimeContextRequest", {}), handlers, request);
 			_.each(loc_elements, function(ele, i){
-				var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, ele.id, ele.value); 
+				var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, ele.id); 
 				out.addRequest(ele.value.getUpdateRuntimeContextRequest(eleRuntimeContext));
 			});
 			return out;
@@ -109,7 +109,7 @@ var node_createEntityContainer = function(){
 			_.each(loc_elements, function(ele, i){
 				if(ele.getUpdateRuntimeContextRequest!=undefined){
 					var eleId = ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ELEMENTID];
-					var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, eleId, ele); 
+					var eleRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, eleId); 
 					out.addRequest(ele.getUpdateRuntimeContextRequest(runtimeContext));
 				}
 			});

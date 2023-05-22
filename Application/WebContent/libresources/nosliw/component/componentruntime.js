@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_basicUtility;
 	var node_requestServiceProcessor;
+	var node_makeObjectWithType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -177,6 +178,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 //		}
 //	});
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME);
+	
 	loc_out.id = nosliw.generateId();
 	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();
 	return loc_out;
@@ -200,6 +203,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentRuntime", node_createComponentRuntime); 

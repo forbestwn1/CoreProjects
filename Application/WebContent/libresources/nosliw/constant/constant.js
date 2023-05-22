@@ -215,6 +215,7 @@ var node_CONSTANT=
 	  "TYPEDOBJECT_TYPE_BUNDLE":							    28,
 	  "TYPEDOBJECT_TYPE_VAIRABLEDOMAIN":						29,
 	  "TYPEDOBJECT_TYPE_VARIABLEGROUP":							30,
+	  "TYPEDOBJECT_TYPE_COMPONENTRUNTIME":							    31,
 	  
 	  //status of request
 	  "REQUEST_STATUS_INIT" :			"init", 
