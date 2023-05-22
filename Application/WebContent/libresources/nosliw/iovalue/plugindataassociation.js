@@ -42,28 +42,10 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 	var loc_out = {
 		
 		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
-			
-			var direction = loc_dataAssociation[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_DIRECTION];
-
-			//input data set
-			var inDataSet;
-			
-			//output data set
-			var outDataSet;
-
 			var parentDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
 			var childDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(childRuntime.getCoreEntity()));
 
-			if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
-				inDataSet = parentDataIoSet;
-				outDataSet = childDataIoSet;
-			}
-			else if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_UPSTREAM){
-				inDataSet = childDataIoSet;
-				outDataSet = parentDataIoSet;
-			}
-			
-			var da = node_createDataAssociation(inDataSet, loc_dataAssociation, outDataSet, name);
+			var da = node_createDataAssociation(parentDataIoSet, loc_dataAssociation, childDataIoSet, name);
 			return da.getExecuteRequest(handlers, request);
 		}
 	};

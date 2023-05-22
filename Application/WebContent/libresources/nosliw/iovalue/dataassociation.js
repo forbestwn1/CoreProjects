@@ -24,11 +24,26 @@ var packageObj = library;
 //when it is executed, the data from inputIO is mapped to outputIO
 //the type of inputIO can be IODataSet or another dataAssociation
 //name in parm is for debugging purpose
-var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, outputIODataSet, name){
+var node_createDataAssociation = function(parentIODataSet, dataAssociationDef, childIODataSet, name){
 	
-	var loc_inputIODataSet = inputIODataSet;
-	var loc_outputIODataSet = node_createIODataSet(outputIODataSet);
-	var loc_dataAssociationDef = dataAssociationDef;
+	var loc_inputIODataSet;
+	var loc_outputIODataSet;
+	var loc_dataAssociationDef;
+
+	var loc_init = function(parentIODataSet, dataAssociationDef, childIODataSet, name){
+		var loc_dataAssociationDef = dataAssociationDef;
+
+		var direction = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_DIRECTION];
+
+		if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
+			loc_inputIODataSet = node_createIODataSet(parentIODataSet);
+			loc_outputIODataSet = node_createIODataSet(childIODataSet);
+		}
+		else if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_UPSTREAM){
+			loc_outputIODataSet = node_createIODataSet(parentIODataSet);
+			loc_inputIODataSet = node_createIODataSet(childIODataSet);
+		}
+	};
 
 	var loc_getExecuteDataAssociationRequest = function(handlers, request){
 		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
@@ -103,6 +118,8 @@ var node_createDataAssociation = function(inputIODataSet, dataAssociationDef, ou
 			}
 		}
 	};
+
+	loc_init(parentIODataSet, dataAssociationDef, childIODataSet, name);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION);
 
