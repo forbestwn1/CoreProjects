@@ -48,6 +48,25 @@
 		},
 		{
 			"info": {
+				"name" : "debug_parent_valuestructure-none-test_complex_script",
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},			
+			"entity":{
+				"scriptName": "complexscript_test_value",
+				"parm" : {
+					"variable" : []
+				}
+			}
+		},
+		{
+			"info": {
 				"name": "valueContext",
 				"status": "disabled1"
 			},

@@ -31,7 +31,7 @@ var node_createDataAssociation = function(parentIODataSet, dataAssociationDef, c
 	var loc_dataAssociationDef;
 
 	var loc_init = function(parentIODataSet, dataAssociationDef, childIODataSet, name){
-		var loc_dataAssociationDef = dataAssociationDef;
+		loc_dataAssociationDef = dataAssociationDef;
 
 		var direction = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_DIRECTION];
 

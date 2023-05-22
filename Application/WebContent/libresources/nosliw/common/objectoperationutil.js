@@ -154,7 +154,11 @@ var node_objectOperationUtility =
 			var operationBase = loc_getOperationBase(value, operationData.path);
 			
 			var out = value;
-			if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
+			if(command==node_CONSTANT.WRAPPER_OPERATION_GET){
+				if(node_basicUtility.isStringEmpty(operationBase.attribute))	out = operationData.value;
+				else	return operationBase.base[operationBase.attribute];
+			}
+			else if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
 				if(_.isObject(value) || _.isArray(value)){
 					//for array or object
 					if(node_basicUtility.isStringEmpty(operationBase.attribute))	out = operationData.value;

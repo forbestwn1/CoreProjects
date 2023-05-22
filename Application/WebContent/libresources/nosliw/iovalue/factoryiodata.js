@@ -23,41 +23,49 @@ var node_ioDataFactory = function(){
 
 		createIODataByComplexEntity : function(complexEntityCore){
 			
-			return node_createDynamicIOData(function(dataOpService, handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-				var complexInterface = node_getComplexEntityObjectInterface(this);
-				var bundle = complexInterface.getBundle();
-				var varDomain = bundle.getVariableDomain();
-				var valueContext = complexInterface.getValueContext();
+			var callBacks = {
+				getDataOperationRequest : function(dataOpService, handlers, request){
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 	
-				var fullPath = dataOpService.parms.path;
-				var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-				var valueStrcutureRuntimeId = fullPath.substring(0, index);
-				var eleFullPath = fullPath.substring(index+1);
-				var rootName;
-				var elePath;
-				index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-				if(index!=-1){
-					rootName = eleFullPath.substring(0, index);
-					elePath = eleFullPath.substring(index+1);
-				}
-				else{
-					rootName = eleFullPath;
-					elePath = undefined;
-				}
-				
-				dataOpService.parms.path = elePath;
-				var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
-			
-				out.addRequest(node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), {
-					success : function(request, uiData){
-						return uiData.value;
+					var complexInterface = node_getComplexEntityObjectInterface(this);
+					var bundle = complexInterface.getBundle();
+					var varDomain = bundle.getVariableDomain();
+					var valueContext = complexInterface.getValueContext();
+		
+					var fullPath = dataOpService.parms.path;
+					var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+					var valueStrcutureRuntimeId = fullPath.substring(0, index);
+					var eleFullPath = fullPath.substring(index+1);
+					var rootName;
+					var elePath;
+					index = eleFullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+					if(index!=-1){
+						rootName = eleFullPath.substring(0, index);
+						elePath = eleFullPath.substring(index+1);
 					}
-				}));
+					else{
+						rootName = eleFullPath;
+						elePath = undefined;
+					}
+					
+					dataOpService.parms.path = elePath;
+					var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 				
-				return out;
-			}, undefined, complexEntityCore);
+					out.addRequest(node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(rootName, dataOpService), {
+						success : function(request, result){
+							if(dataOpService.command==node_CONSTANT.WRAPPER_OPERATION_GET){
+								return result.value;
+							}
+							else return result;
+						}
+					}));
+					
+					return out;
+				}, 
+	
+			};
+			
+			return node_createDynamicIOData(callBacks, undefined, complexEntityCore);
 		}
 
 	};
