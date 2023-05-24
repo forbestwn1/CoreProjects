@@ -33,6 +33,8 @@ var loc_createComponentNodeRuntime = function(){
 			
 			getCoreEntity : function(){   return this.data==undefined?undefined:this.data.getCoreEntity();   },
 
+			getDecorations : function(){   return this.data==undefined?undefined:this.data.getDecorations();   },
+
 			getCoreChildrenName : function(){   
 				var out = this.data==undefined?undefined:node_getEntityTreeNodeInterface(this.data.getCoreEntity()).getChildrenName();
 				return out;
@@ -55,19 +57,55 @@ var loc_createComponentNodeRuntime = function(){
 		props : ['data', 'name'],
 		template : `
 			<div class="treeview-item">
-				    <a class="treeview-item-root treeview-item-selectable treeview-item-toggle1" v-on:click.prevent="onSelectEntity">
+				<div class="treeview-item-root">
+			        <span v-if="getCoreChildrenName().length>0" class="treeview-toggle"></span>
+				    <a class="treeview-item-root1 treeview-item-selectable treeview-item-toggle1" v-on:click.prevent="onSelectEntity">
 					      <div class="treeview-item-content">
 								<i class="icon f7-icons">doc</i>
 								<div class="treeview-item-label">{{name}}</div>
 					      </div>
 				    </a>
-			        <div class="treeview-toggle"></div>
+				</div>
+
 			    <div class="treeview-item-children">
-					Decoration
-			    </div>
-			    <div class="treeview-item-children">
-			    	Core
-					<div class="treeview-item">
+			    	<div v-if="getDecorations().length>0">
+						<!-- Decorations -->
+						<div class="treeview-item">
+							<div class="treeview-item-root">
+						        <span class="treeview-toggle"/><span>Decorations</span>
+						    </div>
+						    
+						    <div class="treeview-item-children">
+								<complextree-runtime
+									v-for="(decoration, index) in getDecorations()"
+									v-bind:key="index"
+							  		v-bind:data="decoration.getRuntimeObject()"
+							  		v-bind:name="decoration.getDecorationInfo().name"
+									v-on:selectEntity="onChildSelectEntity"
+								/>
+							</div>
+						    
+						</div>
+	
+						<!-- Core -->
+						<div class="treeview-item">
+							<div class="treeview-item-root">
+						        <span class="treeview-toggle"/><span>Core</span>
+						    </div>
+	
+						    <div class="treeview-item-children">
+								<complextree-runtime
+									v-for="childName in getCoreChildrenName()"
+									v-bind:key="childName"
+							  		v-bind:data="getChild(childName)"
+							  		v-bind:name="childName"
+									v-on:selectEntity="onChildSelectEntity"
+								/>
+							</div>
+						</div>
+					</div>
+
+				    <div v-if="getDecorations().length==0">
 						<complextree-runtime
 							v-for="childName in getCoreChildrenName()"
 							v-bind:key="childName"
@@ -76,6 +114,7 @@ var loc_createComponentNodeRuntime = function(){
 							v-on:selectEntity="onChildSelectEntity"
 						/>
 					</div>
+
 			    </div>
 		    </div>
 		`
@@ -149,6 +188,7 @@ var loc_createComponentValueContext = function(){
 		props : ['data'],
 		template : `
 			<div>
+				ValueContext:
 				<div>
 					<complexinfo-valuestructure 
 						v-for="vsId in data.getValueStructureRuntimeIds().solid" 
@@ -288,13 +328,13 @@ var node_createComplexTreeDebugView = function(containerViewId){
 					return this.application.getPackageRuntime==undefined?undefined:this.application.getPackageRuntime();    
 				},
 				isPackage : function(){
-					return "package"== this.currentEntityType;
+					return node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE== this.currentEntityType;
 				},
 				isBundle : function(){
-					return "bundle"== this.currentEntityType;
+					return node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE== this.currentEntityType;
 				},
 				isComplexEntity : function(){
-					return this.currentEntityType!=""&&this.currentEntityType!="package"&&this.currentEntityType!="bundle"
+					return this.currentEntityType!=""&&this.currentEntityType!=node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE&&this.currentEntityType!=node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE
 				},
 			},
 			template : `

@@ -1,12 +1,12 @@
 {
 	"parts" : {
-		"nosliw_decoration1" :{
+		"nosliw_decoration" :{
 			"parts" : [
 				{
 					"parts" : {
 						"nosliw_info" : {
 							"name" : "firstDec",
-							"type" : "test.decoration.1",
+							"type" : "decoration.script",
 							"id": "decoration1",
 							"description": "this is for testing decoration"
 						},

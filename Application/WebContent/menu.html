@@ -83,11 +83,12 @@ var loc_dataView;
 var loc_eventView;
 var loc_resetView;
 
+var loc_resourceType = "test_complex_1";
+var loc_resourceId = "test.entity.valuestructure.merge";
+var loc_configure = "test_configure_runtime";
+
 function openApplication() {
-	var resourceType = "test_complex_1";
-	var resourceId = "test.entity.valuestructure.merge";
-	var configure = "testcomplex1";
-	var appWin = window.open ("http://localhost:8080/nosliw/application.html?resourceType="+resourceType+"&resourceId="+resourceId+"&configure="+configure,"_blank");
+	var appWin = window.open ("http://localhost:8080/nosliw/application.html?resourceType="+loc_resourceType+"&resourceId="+loc_resourceId+"&configure="+loc_configure,"_blank");
 
 	appWin.addEventListener("nosliwApplicationActive", function(event) {
 		nosliw = appWin.nosliw;
@@ -138,7 +139,7 @@ $(document).on("nosliwActive", function(){
 
 	init();
 	
-//	loc_loadApplication();
+	loc_loadApplication();
 });
 
 var loc_loadApplication = function(){
@@ -148,7 +149,7 @@ var loc_loadApplication = function(){
 
 	var out = node_createServiceRequestInfoSequence(undefined);
 	
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("test_complex_1", "testvalue"), undefined, {}, undefined, {
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(loc_resourceType, loc_resourceId), loc_configure, {}, undefined, {
 		success : function(request, application){
 			updateApplication(application);
 			return application;
