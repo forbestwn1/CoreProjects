@@ -7,10 +7,13 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -18,13 +21,28 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 
+@HAPEntityWithAttribute
 public class HAPBrowseComplexEntityServlet extends HAPServiceServlet{
 
+	@HAPAttribute
+	final public static String COMMAND_RESOURCES = "getAllResources";
+	
+	@HAPAttribute
+	final public static String COMMAND_CONFIGURES = "getAllConfigures";
+	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {
 		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);
-		List<HAPContainerComplexEntity> entitys =  this.buildComplexEntityContainer(runtimeEnvironment);		
-		HAPServiceData out = HAPServiceData.createSuccessData(entitys);
+
+		Object outObj = null;
+		if(COMMAND_RESOURCES.equals(command)) {
+			outObj =  this.buildComplexEntityContainer(runtimeEnvironment);	
+		}
+		else if(COMMAND_CONFIGURES.equals(command)) {
+			outObj =  this.buildConfiguresList(runtimeEnvironment);	
+		}
+		
+		HAPServiceData out = HAPServiceData.createSuccessData(outObj);
 		return out;
 	}
 
@@ -58,6 +76,19 @@ public class HAPBrowseComplexEntityServlet extends HAPServiceServlet{
 			out.add(entityContainer);
 		}
 		
+		return out;
+	}
+	
+	private List<String> buildConfiguresList(HAPRuntimeEnvironmentImpBrowser runtimeEnv){
+		List<String> out = new ArrayList<String>();
+		
+		String basePath = HAPSystemFolderUtility.getResourceFolder(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE);
+		Set<File> childrenFile = HAPUtilityFile.getChildren(basePath);
+		for(File childFile : childrenFile) {
+			if(!childFile.isDirectory()) {
+				out.add(HAPUtilityFile.getFileCoreName(childFile.getName()));
+			}
+		}
 		return out;
 	}
 }

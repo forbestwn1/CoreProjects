@@ -31,7 +31,10 @@
 
 					  <div class="row">
 					    <div class="col-25 resizable">
-							<div id="selectResourceDiv">
+							<div>
+								<button onclick="openApplication()">Click me111</button>
+							</div>
+							<div id="resourcesBrowseDebug">
 								<button onclick="openApplication()">Click me111</button>
 							</div>
 					    </div>
@@ -115,6 +118,9 @@ var init = function(){
 
 	var node_createComplexTreeDebugView = nosliw.getNodeData("debug.createComplexTreeDebugView");
 	loc_complexTreeView = node_createComplexTreeDebugView("complextreeDebug");
+	
+	var node_createComplexResourceDebugView = nosliw.getNodeData("debug.createComplexResourceDebugView");
+	loc_resourceTreeView = node_createComplexResourceDebugView("resourcesBrowseDebug");
 	
 	var node_createComponentLifeCycleDebugView = nosliw.getNodeData("debug.createComponentLifeCycleDebugView");
 	loc_lifecycleView = node_createComponentLifeCycleDebugView();

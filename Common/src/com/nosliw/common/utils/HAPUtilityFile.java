@@ -26,6 +26,12 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 
 public class HAPUtilityFile {
 	
+	public static String getFileCoreName(String fileName) {
+		int index = fileName.indexOf(".");
+		if(index==-1)   return fileName;
+		else return fileName.substring(0, index);
+	}
+	
 	public static List<File> sortFiles(Set<File> files){
 		List<File> sortedList = new ArrayList<File>(files);
 		Collections.sort(sortedList, new Comparator<File>() {
