@@ -2,7 +2,6 @@ package com.nosliw.data.core.domain.common.interactive;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 
@@ -16,6 +15,6 @@ public class HAPExecutableEntityInteractive extends HAPExecutableEntitySimple{
 	
 	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getNormalAttributeValue(ATTR_INTERACTIVE);  }
 
-	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setNormalAttributeObject(ATTR_INTERACTIVE, new HAPEmbededExecutable(interactive));      }
+	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setNormalAttributeValueObject(ATTR_INTERACTIVE, interactive);      }
 	
 }

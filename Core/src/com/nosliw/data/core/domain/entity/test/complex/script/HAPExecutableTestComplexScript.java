@@ -7,7 +7,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -37,16 +36,16 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 	public HAPExecutableTestComplexScript() {
 	}
 	
-	public void setScript(String script) {		this.setNormalAttributeObject(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
+	public void setScript(String script) {		this.setNormalAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
-	public void setScriptName(String scriptName) {		this.setNormalAttributeObject(SCRIPTNAME, new HAPEmbededExecutable(scriptName));	}
+	public void setScriptName(String scriptName) {		this.setNormalAttributeValueObject(SCRIPTNAME, scriptName);	}
 	public String getScriptName() {		return (String)this.getNormalAttributeValue(SCRIPTNAME);	}
 
-	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeObject(PARM, new HAPEmbededExecutable(parms));	}
+	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeValueObject(PARM, parms);	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeObject(VARIABLE, new HAPEmbededExecutable(vars));	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeValueObject(VARIABLE, vars);	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeObject(UNKNOWNVARIABLE, new HAPEmbededExecutable(unknowns));   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

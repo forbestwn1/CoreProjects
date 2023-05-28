@@ -10,7 +10,6 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDomainComplex implements HAPWithEntityElement<HAPDefinitionExpression>{
@@ -20,7 +19,7 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDom
 	private Map<String, HAPDefinitionConstant> m_constantDefinitions;
 	
 	public HAPDefinitionEntityExpressionGroup() {
-		this.setNormalAttributeObject(ELEMENT, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
+		this.setNormalAttributeValueObject(ELEMENT, new LinkedHashMap<String, Object>());
 		this.m_constantDefinitions = new LinkedHashMap<String, HAPDefinitionConstant>();
 	}
 	

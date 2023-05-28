@@ -31,6 +31,7 @@ import com.nosliw.data.core.domain.entity.HAPResultSolveReference;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -45,7 +46,6 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEntityProcessorComplexImp{
@@ -73,7 +73,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		buildExpression(null, executableExpresionGroup, definitionExpressionGroup, processContext.getRuntimeEnvironment().getExpressionManager().getExpressionParser());
 		
 		//build constant value for expression
-		buildConstant(executableExpresionGroup, definitionExpressionGroup, valueStructureDomain);
+//		buildConstant(executableExpresionGroup, definitionExpressionGroup, valueStructureDomain);
 		
 		//expand reference 
 //		expandReference(exeEntityId, processContext);
@@ -82,7 +82,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		resolveVarName(complexEntityExecutableId, processContext);
 		
 		//discover all variables in expression group
-		buildVariableInfoInExpression(exeEntityId, processContext);
+		buildVariableInfoInExpression(complexEntityExecutableId, processContext);
 		
 		//discovery
 		if(HAPUtilityExpressionProcessConfigure.isDoDiscovery(defEntityInfo.getExtraInfo().getInfo())){
@@ -91,21 +91,33 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		}
 		
 		//build variable into within expression item
-		discoverExpressionItemVariable(out, processContext);
+//		discoverExpressionItemVariable(out, processContext);
 
 	}
 
+	//build variable into within expression item
+	private static void discoverExpressionItemVariable(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
+		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
+		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
+		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
+		
+		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroupExe.getVariablesInfo();
+		Map<String, HAPExecutableExpression> items = expressionGroupExe.getExpressionItems();
+		for(String name : items.keySet()) {
+			HAPExecutableExpression item = items.get(name);
+			Set<String> varIds = HAPUtilityOperand.discoverVariableIds(item.getOperand());
+			
+			HAPContainerVariableCriteriaInfo expressionVarsContainer = new HAPContainerVariableCriteriaInfo();
+			for(String varId : varIds) {
+				expressionVarsContainer.addVariable(varId, expressionGroupVarsContainer.getVariableCriteriaInfo(varId));
+			}
+			item.setVariablesInfo(expressionVarsContainer);
+		}
+	}
 	
 	private static void buildVariableInfoInExpression(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
-
-		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = new HAPContainerVariableCriteriaInfo();
-		
-		HAPContainerVariableCriteriaInfo varCrteriaInfoInStructure = HAPUtilityValueStructure.discoverDataVariablesInStructure(expressionGroupDef.getValueContextEntity(), processContext.getDomainContext().getValueStructureDomain());
-		for(String varId : HAPUtilityExpression.discoverDataVariablesIdInExpression(expressionGroupExe)) {
-			varCrteriaInfoInExpression.addVariable(varId, varCrteriaInfoInStructure.getVariableCriteriaInfo(varId));
-		}
+		HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression = HAPUtilityValueContext.discoverDataVariablesInValueContext(expressionGroupExe.getValueContext(), processContext.getCurrentValueStructureDomain());
 		expressionGroupExe.setVariablesInfo(varCrteriaInfoInExpression);
 	}
 	
@@ -126,6 +138,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 						variableOperand.setVariableId(idVariable);
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+/*						
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						//replace referenced variable name mapping
 						
@@ -142,6 +155,8 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 						
 						//replace variable name in referenced expression
 //						replaceVarNameWithId((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression());
+ 
+ */
 					}
 					return true;
 				}
@@ -220,27 +235,6 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 			});
 		}
 	}
-
-	//build variable into within expression item
-	private static void discoverExpressionItemVariable(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
-		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
-		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
-		
-		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroupExe.getVariablesInfo();
-		Map<String, HAPExecutableExpression> items = expressionGroupExe.getExpressionItems();
-		for(String name : items.keySet()) {
-			HAPExecutableExpression item = items.get(name);
-			Set<String> varIds = HAPUtilityOperand.discoverVariableIds(item.getOperand());
-			
-			HAPContainerVariableCriteriaInfo expressionVarsContainer = new HAPContainerVariableCriteriaInfo();
-			for(String varId : varIds) {
-				expressionVarsContainer.addVariable(varId, expressionGroupVarsContainer.getVariableCriteriaInfo(varId));
-			}
-			item.setVariablesInfo(expressionVarsContainer);
-		}
-	}
-	
 
 	
 	private static Triple<HAPDefinitionEntityExpressionGroup, HAPExecutableExpressionGroup, HAPDefinitionEntityValueContext> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){

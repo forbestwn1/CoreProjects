@@ -45,6 +45,7 @@ public class HAPPath {
 	
 	@Override
 	public int hashCode() {
+		if(this.m_path==null)  return 0;
 		return this.m_path.hashCode();
 	}
 	

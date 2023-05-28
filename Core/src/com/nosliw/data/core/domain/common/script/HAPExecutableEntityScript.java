@@ -6,7 +6,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -20,7 +19,7 @@ public class HAPExecutableEntityScript extends HAPExecutableEntity{
 
 	public HAPExecutableEntityScript() {	}
 
-	public void setScript(String script) {		this.setNormalAttributeObject(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
+	public void setScript(String script) {		this.setNormalAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {

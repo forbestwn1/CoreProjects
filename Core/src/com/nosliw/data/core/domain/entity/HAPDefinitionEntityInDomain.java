@@ -92,6 +92,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public void setContainerAttributeComplex(String attributeName, HAPContainerEntityDefinition container, String valueType) {	this.setContainerAttribute(attributeName, container, new HAPInfoValueType(valueType, true));  }
 
 	public void setNormalAttributeValue(String attributeName, Object attrValue, HAPInfoValueType valueTypeInfo) {	this.setNormalAttribute(attributeName, new HAPEmbededDefinition(attrValue), valueTypeInfo);	}
+	public void setNormalAttributeValueObject(String attributeName, Object attrValue) {	this.setNormalAttribute(attributeName, new HAPEmbededDefinition(attrValue), new HAPInfoValueType());	}
 	public void setNormalAttributeValueSimple(String attributeName, Object attrValue, String valueType) {setNormalAttributeValue(attributeName, attrValue, new HAPInfoValueType(valueType, false));}
 	public void setNormalAttributeValueComplex(String attributeName, Object attrValue, String valueType) {setNormalAttributeValue(attributeName, attrValue, new HAPInfoValueType(valueType, true));}
 	

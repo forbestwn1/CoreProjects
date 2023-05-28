@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.common.script;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 @HAPEntityWithAttribute
@@ -16,6 +15,6 @@ public class HAPExecutableEntityScriptComplex extends HAPExecutableEntityComplex
 
 	public HAPExecutableEntityScriptComplex() {	}
 
-	public void setScript(String script) {		this.setNormalAttributeObject(SCRIPT, new HAPEmbededExecutable(new HAPJsonTypeScript(script)));	}
+	public void setScript(String script) {		this.setNormalAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
 }

@@ -19,7 +19,7 @@ import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 public class HAPUtilityValueContext {
 
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(HAPExecutableEntityValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {
+	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInValueContext(HAPExecutableEntityValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {
 		
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		

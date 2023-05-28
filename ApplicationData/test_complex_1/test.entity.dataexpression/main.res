@@ -16,7 +16,14 @@
 					}
 				}
 			},
-			"resourceId": "dataexpressiongroup|#test"
+			"entity" : {
+				"element": [
+					{
+						"name" : "test1",
+						"expression" : "!(test.string)!.subString(?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
+					}
+				]		
+			}
 		},
 		{
 			"info": {
@@ -27,30 +34,31 @@
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"parent_tree_public": {
-							"definition": {
-								"child" : {
-									"a" : {
-										"child" : {
-											"aa" : {"criteria":"test.string;1.0.0"},
-											"ab" : {"criteria":"test.url;1.0.0"},
-											"ac" : {}
-										}
-									}
-								}
+						"testVar3": {
+							"definition":{
+								"criteria": "test.string;1.0.0"
 							},
 							"defaultValue": {
-								"a": {
-									"aa" : {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of parent_tree_public.a.aa"
-									},
-									"ab" : {
-										"dataTypeId": "test.url;1.0.0",
-										"value": "default value of parent_tree_public.a.ab"
-									},
-									"ac" : "default value of parent_tree_public.a.ac"
-								}
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of testvar3"
+							}
+						},
+						"testVar4" : {
+							"definition": {
+								"criteria" : "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						},
+						"testVar5" : {
+							"definition": {
+								"criteria": "test.integer"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
 							}
 						}
 					}
