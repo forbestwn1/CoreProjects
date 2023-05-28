@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.complex.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 
 public class HAPInfoParentComplex extends HAPSerializableImp{
 

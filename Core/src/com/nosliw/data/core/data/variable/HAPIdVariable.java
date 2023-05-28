@@ -4,10 +4,10 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
 public class HAPIdVariable extends HAPSerializableImp{
@@ -22,16 +22,32 @@ public class HAPIdVariable extends HAPSerializableImp{
 	
 	private HAPPath m_elementPath;
 	
-	public HAPIdVariable(String valueStructureId, String variableName) {
-		HAPComplexPath complexPath = new HAPComplexPath(variableName);
-		this.m_rootElementId = new HAPIdRootElement(valueStructureId, complexPath.getRoot());
-		this.m_elementPath = complexPath.getPath();
+	public HAPIdVariable(HAPIdRootElement rootEleId, String elePath) {
+		this.m_rootElementId = rootEleId;
+		this.m_elementPath = new HAPPath(elePath);
 	}
 	
 	public HAPIdRootElement getRootElementId() {    return this.m_rootElementId;     }
 	
 	public HAPPath getElementPath() {    return this.m_elementPath;   }
+
+	@Override
+	public int hashCode() {
+		return this.m_rootElementId.hashCode()+this.m_elementPath.hashCode();
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPIdVariable) {
+			HAPIdVariable varId = (HAPIdVariable)obj;
+			if(this.m_rootElementId.equals(varId.m_rootElementId)) {
+				if(HAPUtilityBasic.isEquals(this.m_elementPath, varId.m_elementPath)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

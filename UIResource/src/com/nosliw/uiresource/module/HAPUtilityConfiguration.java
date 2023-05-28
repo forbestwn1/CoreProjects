@@ -1,6 +1,6 @@
 package com.nosliw.uiresource.module;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.uiresource.common.HAPUtilityCommon;
 
 public class HAPUtilityConfiguration {

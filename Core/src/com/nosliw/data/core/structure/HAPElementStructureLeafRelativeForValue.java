@@ -94,7 +94,7 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructureLeafRelativeForValue out = (HAPElementStructureLeafRelativeForValue)this.cloneStructureElement();
 		this.solidateConstantScript(this, constants, runtimeEnv);
-		out.getReference().setElementPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getElementPath(), constants, runtimeEnv));
+		out.getReference().setPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getPath(), constants, runtimeEnv));
 		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
 		if(this.m_definition!=null) 	out.m_definition = (HAPElementStructure)this.m_definition.solidateConstantScript(constants, runtimeEnv);
 		return out;

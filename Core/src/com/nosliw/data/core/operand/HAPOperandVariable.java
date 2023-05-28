@@ -3,13 +3,14 @@ package com.nosliw.data.core.operand;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.data.variable.HAPIdRootElement;
+import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandVariable extends HAPOperandImp{
@@ -22,7 +23,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
-	protected HAPIdRootElement m_variableId;
+	protected HAPIdVariable m_variableId;
 	
 	private HAPOperandVariable(){}
 	
@@ -34,14 +35,14 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public String getVariableName(){  return this.m_variableName;  }
 	public void setVariableName(String name){   this.m_variableName = name;  }
 	
-	public String getVariableId(){  return this.m_variableId;  }
-	public void setVariableId(String id){   this.m_variableId = id;  }
+	public HAPIdVariable getVariableId(){  return this.m_variableId;  }
+	public void setVariableId(HAPIdVariable id){   this.m_variableId = id;  }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
-		jsonMap.put(VARIABLEID, m_variableId);
+		jsonMap.put(VARIABLEID, m_variableId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

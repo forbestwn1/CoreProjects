@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.complex.HAPUtilityValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
 
 //configure for resolve 
 public class HAPConfigureResolveStructureElementReference extends HAPInfoImpSimple{

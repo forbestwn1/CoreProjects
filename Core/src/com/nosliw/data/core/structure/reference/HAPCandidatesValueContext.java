@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 
 //a group of value structure complex for element reference
 public class HAPCandidatesValueContext {

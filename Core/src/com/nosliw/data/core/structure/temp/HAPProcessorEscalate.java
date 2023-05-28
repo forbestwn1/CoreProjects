@@ -11,8 +11,8 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
 public class HAPProcessorEscalate {
 

@@ -16,11 +16,11 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.valuestructure.HAPElementContextStructureValueExecutable;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure1.HAPElementContextStructureValueExecutable;
+import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContext {
 

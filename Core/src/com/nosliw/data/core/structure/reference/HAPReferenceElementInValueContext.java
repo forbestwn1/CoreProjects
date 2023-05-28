@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -52,9 +53,12 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 	
 	public void setParentValueContextName(String parent) {		this.m_parentValueContext = parent;	}
 	
-	public String getElementPath() {   return this.m_elementPath;    }
-	public void setElementPath(String path) {  this.m_elementPath = path;	}
+	public String getPath() {   return this.m_elementPath;    }
+	public void setPath(String path) {  this.m_elementPath = path;	}
 
+	public String getRootName() {   return new HAPComplexPath(this.m_elementPath).getRoot();      }
+	public String getElementPath() {   return new HAPComplexPath(this.m_elementPath).getPathStr();   }
+	
 	public HAPReferenceValueStructure getValueStructureReference() {    return this.m_valueStructureReference;     }
 	
 	@Override
@@ -67,11 +71,11 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 			this.m_parentValueContext = (String)jsonValue.opt(PARENTVALUECONTEXT);
 			Object referencePathObj = jsonValue.get(ELEMENTPATH);
 			
-			if(referencePathObj instanceof String)	this.setElementPath((String)referencePathObj);
+			if(referencePathObj instanceof String)	this.setPath((String)referencePathObj);
 			else if(referencePathObj instanceof JSONObject){
 				HAPReferenceElementInStructure contextPath = new HAPReferenceElementInStructure();
 				contextPath.buildObject(referencePathObj, HAPSerializationFormat.JSON);
-				this.setElementPath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
+				this.setPath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
 			}
 		}
 		return true;
@@ -80,14 +84,14 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENTPATH, this.getElementPath());
+		jsonMap.put(ELEMENTPATH, this.getPath());
 		jsonMap.put(PARENTVALUECONTEXT, this.getParentValueContextName());
 	}
 	
 	public HAPReferenceElementInValueContext cloneReferenceInfo() {
 		HAPReferenceElementInValueContext out = new HAPReferenceElementInValueContext();
 		out.m_parentValueContext = this.getParentValueContextName();
-		out.m_elementPath = this.getElementPath();
+		out.m_elementPath = this.getPath();
 		return out;
 	}
 	
@@ -98,7 +102,7 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPReferenceElementInValueContext) {
 			HAPReferenceElementInValueContext ele = (HAPReferenceElementInValueContext)obj;
-			if(!HAPUtilityBasic.isEquals(this.getElementPath(), ele.getElementPath()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getPath(), ele.getPath()))  return false;
 			if(!HAPUtilityBasic.isEquals(this.getParentValueContextName(), ele.getParentValueContextName()))  return false;
 			out = true;
 		}

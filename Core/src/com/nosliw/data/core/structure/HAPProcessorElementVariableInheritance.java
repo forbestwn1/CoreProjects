@@ -7,8 +7,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPProcessorElementVariableInheritance {
 

@@ -12,8 +12,8 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperVal
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPUtilityExpression {
 

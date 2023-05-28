@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPUtilityWithValueStructure;
-import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
+import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;

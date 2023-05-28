@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 
 public class HAPUtilityStructureScript {
 

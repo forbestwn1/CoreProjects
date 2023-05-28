@@ -6,9 +6,9 @@ import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociation
 import com.nosliw.data.core.handler.HAPExecutableHandler;
 import com.nosliw.data.core.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessEvent {
 

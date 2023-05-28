@@ -1,23 +1,18 @@
 package com.nosliw.data.core.service.interfacee;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.dataassociation.HAPIOTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
+import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityServiceInterface {
 
@@ -72,19 +67,19 @@ public class HAPUtilityServiceInterface {
 			this.m_serviceInterface = serviceInterface;
 		}
 		
-		@Override
-		public HAPContainerStructure getInStructure() {
-			return HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(m_serviceInterface));
-		}
-
-		@Override
-		public Map<String, HAPContainerStructure> getOutResultStructure() {
-			Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
-			Map<String, HAPValueStructureDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(m_serviceInterface);
-			for(String resultName : resultsContext.keySet()) {
-				out.put(resultName, HAPContainerStructure.createDefault(resultsContext.get(resultName)));
-			}
-			return out;
-		}
+//		@Override
+//		public HAPContainerStructure getInStructure() {
+//			return HAPContainerStructure.createDefault(HAPUtilityServiceUse.buildValueStructureFromServiceParms(m_serviceInterface));
+//		}
+//
+//		@Override
+//		public Map<String, HAPContainerStructure> getOutResultStructure() {
+//			Map<String, HAPContainerStructure> out = new LinkedHashMap<String, HAPContainerStructure>();
+//			Map<String, HAPValueStructureDefinitionFlat> resultsContext = HAPUtilityServiceUse.buildValueStructureFromResultServiceOutputs(m_serviceInterface);
+//			for(String resultName : resultsContext.keySet()) {
+//				out.put(resultName, HAPContainerStructure.createDefault(resultsContext.get(resultName)));
+//			}
+//			return out;
+//		}
 	}
 }

@@ -1,7 +1,6 @@
 package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPPluginAdapterProcessor;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -9,7 +8,8 @@ import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPContextStructureReferenceValueStructure;
+import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessor;
+import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapterProcessor{

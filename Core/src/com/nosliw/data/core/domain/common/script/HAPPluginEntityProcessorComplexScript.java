@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.common.script;
 
-import com.nosliw.data.core.complex.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 
 public class HAPPluginEntityProcessorComplexScript extends HAPPluginEntityProcessorComplexImp{
 

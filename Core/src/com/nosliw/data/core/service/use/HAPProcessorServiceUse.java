@@ -18,8 +18,8 @@ import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.interfacee.HAPUtilityServiceInterface;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 
 public class HAPProcessorServiceUse {
 

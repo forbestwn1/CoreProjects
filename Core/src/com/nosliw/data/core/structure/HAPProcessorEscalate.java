@@ -14,9 +14,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 
 public class HAPProcessorEscalate {
 

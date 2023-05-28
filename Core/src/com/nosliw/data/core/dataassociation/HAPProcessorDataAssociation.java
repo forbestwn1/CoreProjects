@@ -14,7 +14,6 @@ import com.nosliw.data.core.dataassociation.none.HAPProcessorDataAssociationNone
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public class HAPProcessorDataAssociation {
 
@@ -25,7 +24,7 @@ public class HAPProcessorDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 			HAPDefinitionDataAssociationMapping valueMappingDA = (HAPDefinitionDataAssociationMapping)dataAssociation;
-			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA, null, null);
+			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA);
 			if(direction.equals(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM)) {
 				
 				HAPProcessorDataAssociationMapping.processValueMapping(

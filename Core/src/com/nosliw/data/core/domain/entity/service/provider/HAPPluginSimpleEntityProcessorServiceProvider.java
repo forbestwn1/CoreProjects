@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity.service.provider;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPPluginEntityProcessorSimpleImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorSimpleImp;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 
 public class HAPPluginSimpleEntityProcessorServiceProvider extends HAPPluginEntityProcessorSimpleImp{

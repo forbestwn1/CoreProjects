@@ -1,9 +1,9 @@
 package com.nosliw.data.core.domain.common.interactive;
 
-import com.nosliw.data.core.complex.HAPPluginEntityProcessorSimpleImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorSimpleImp;
 
 public class HAPPluginSimpleEntityProcessorInteractive extends HAPPluginEntityProcessorSimpleImp{
 

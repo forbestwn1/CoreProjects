@@ -5,28 +5,20 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpEntityInfo implements HAPExecutableDataAssociation{
 
-	private HAPContainerStructure m_input;
-
-	private HAPContainerStructure m_output;
-	
 	private String m_type;
 	
 	private String m_direction;
 
 	public HAPExecutableDataAssociationImp() {}
 	
-	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition, HAPContainerStructure input, HAPContainerStructure output) {
+	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition) {
 		super(definition);
 		this.m_direction = definition.getDirection();
-		this.m_input = input;
-		this.m_output = output;
 		this.m_type = definition.getType();
 	}
 	
@@ -36,21 +28,6 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	@Override
 	public String getDireciton() {    return this.m_direction;    }
 	
-	@Override
-	public HAPContainerStructure getInput() {	return this.m_input;	}
-	public void setInput(HAPContainerStructure input) {    this.m_input = input;    }
-
-	@Override
-	public HAPOutputStructure getOutput() {
-		HAPOutputStructure out = new HAPOutputStructure();
-		if(this.m_output!=null) {
-			for(String outStructureName : this.m_output.getStructureNames()) {
-				out.addOutputStructure(outStructureName, this.m_output.getStructure(outStructureName));
-			}
-		}
-		return out;
-	}
-
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -58,8 +35,6 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 		super.buildObjectByJson(json);
 		this.m_type = jsonObj.getString(TYPE);
 		this.m_direction = jsonObj.getString(DIRECTION);
-		this.m_input = new HAPContainerStructure();
-		this.m_input.buildObject(jsonObj.getJSONObject(INPUT), HAPSerializationFormat.JSON);
 		return true;  
 	}
 

@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -21,9 +20,10 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormal;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
+import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPExecutableTestSimple1;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPProcessorTestSimple1;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 
 public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntityProcessorComplexImp{
 

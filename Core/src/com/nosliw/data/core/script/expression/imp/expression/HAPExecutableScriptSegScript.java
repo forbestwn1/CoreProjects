@@ -21,7 +21,7 @@ import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGrou
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
 

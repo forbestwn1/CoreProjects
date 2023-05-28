@@ -12,8 +12,8 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPUtilityDataAssociationnMapping {
 
@@ -117,7 +117,7 @@ public class HAPUtilityDataAssociationnMapping {
 				}
 				else if(varSubPath.startsWith(mappingRelativeSubPath)) {
 					//match only part of variable path, extend relative path to full path
-					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getElementPath(), varSubPath.substring(mappingRelativeSubPath.length()));
+					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getPath(), varSubPath.substring(mappingRelativeSubPath.length()));
 					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementStructureLeafRelative(relativePath));
 					found = true;
 					break;

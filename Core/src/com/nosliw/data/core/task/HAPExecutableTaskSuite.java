@@ -18,9 +18,9 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
+import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructureScript;
 
 @HAPEntityWithAttribute
 public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithEntityElement<HAPExecutableTask>{

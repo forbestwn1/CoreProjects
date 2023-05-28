@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
+import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.process1.HAPDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 

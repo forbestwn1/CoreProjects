@@ -11,7 +11,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.container.HAPElementContainerDefinitionWithId1;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 
 public class HAPDefinitionEntityExpressionSuite extends HAPDefinitionEntityInDomainComplex{
 

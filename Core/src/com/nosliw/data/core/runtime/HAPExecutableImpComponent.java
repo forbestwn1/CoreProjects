@@ -16,7 +16,6 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
 
 public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implements HAPExecutable{
 

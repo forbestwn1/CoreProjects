@@ -4,12 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
+import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpressionDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.task.HAPManagerTask;

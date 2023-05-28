@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.complex.HAPUtilityComplexConstant;
+import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPContextProcessAttachmentReferenceExpression;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
@@ -16,9 +16,9 @@ import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionIn
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessorScript2 {
 

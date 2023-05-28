@@ -12,11 +12,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
-import com.nosliw.data.core.dataassociation.HAPOutputStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssociationImp{
@@ -39,8 +37,8 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 
 	public HAPExecutableDataAssociationMapping() {}
 	
-	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition, HAPContainerStructure input, HAPContainerStructure output) {
-		super(definition, input, output);
+	public HAPExecutableDataAssociationMapping(HAPDefinitionDataAssociationMapping definition) {
+		super(definition);
 		this.m_items = new ArrayList<HAPItemValueMapping<HAPIdRootElement>>();
 		this.m_relativePathMapping = new ArrayList<HAPPathValueMapping>();
 		this.m_inputDependency = new HashSet<String>();
@@ -48,24 +46,6 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	
 	public Set<String> getInputDependency(){   return this.m_inputDependency;    }
 	
-	@Override
-	public HAPContainerStructure getInput() {
-		HAPContainerStructure out = new HAPContainerStructure();
-		for(String dependencyName : this.m_inputDependency) {
-			out.addStructure(dependencyName, super.getInput().getStructure(dependencyName));
-		}
-		return out;
-	}
-
-	@Override
-	public HAPOutputStructure getOutput() {
-		HAPOutputStructure out = new HAPOutputStructure();
-//		for(String name : this.m_mappings.keySet()) {
-//			out.addOutputStructure(name, super.getOutput().getOutputStructure(name));
-//		}
-		return out;
-	}
-
 	public void addItem(HAPItemValueMapping<HAPIdRootElement> valueMapping) {	this.m_items.add(valueMapping);	}
 	
 	public void setConstantAssignments(Map<String, Object> constantAssignment) {     this.m_constantAssignment = constantAssignment;      }

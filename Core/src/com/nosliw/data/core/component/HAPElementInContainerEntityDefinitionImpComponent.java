@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
 
 public class HAPElementInContainerEntityDefinitionImpComponent extends HAPDefinitionEntityComponentImp implements HAPElementInContainerEntityDefinition{
 

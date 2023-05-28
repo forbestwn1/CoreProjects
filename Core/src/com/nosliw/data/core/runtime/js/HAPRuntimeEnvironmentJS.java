@@ -11,8 +11,6 @@ import com.nosliw.data.core.activity.HAPTaskInfoProcessorActivity;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
-import com.nosliw.data.core.complex.HAPManagerDomainEntityExecutable;
-import com.nosliw.data.core.complex.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
@@ -25,6 +23,8 @@ import com.nosliw.data.core.domain.common.interactive.HAPPluginEntityDefinitionI
 import com.nosliw.data.core.domain.common.interactive.HAPPluginSimpleEntityProcessorInteractive;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBase;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorComplexScript;
+import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
+import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPPluginAdapterProcessorDataAssociation;
 import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPPluginEntityDefinitionInDomainDataAssociation;
 import com.nosliw.data.core.domain.entity.adapter.interactive.HAPPluginAdapterProcessorDataAssociationInteractive;
@@ -77,7 +77,7 @@ import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
 import com.nosliw.data.core.task.HAPInfoTask;
 import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.core.valuestructure.HAPProcessorAttachmentEntityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPProcessorAttachmentEntityValueStructure;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{

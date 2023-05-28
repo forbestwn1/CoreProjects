@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinitionReference;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinitionReference;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 public class HAPElementContainerResourceDefinitionReferenceProcessSuite extends HAPEntityInfoWritableImp implements HAPElementInContainerEntityDefinitionReference{

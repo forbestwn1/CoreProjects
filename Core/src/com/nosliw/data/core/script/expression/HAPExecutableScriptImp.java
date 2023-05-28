@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements HAPExecutableScript{
 

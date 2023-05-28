@@ -11,9 +11,9 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinition;
-import com.nosliw.data.core.complex.HAPElementInContainerEntityDefinitionImpComplex;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
+import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinitionImpComplex;
 import com.nosliw.data.core.process1.HAPDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 

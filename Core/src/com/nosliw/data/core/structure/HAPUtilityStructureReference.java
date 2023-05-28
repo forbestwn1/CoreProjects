@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.mapping.HAPReferenceRootInMapping;
-import com.nosliw.data.core.valuestructure.HAPReferenceRootInExecutable;
-import com.nosliw.data.core.valuestructure.HAPReferenceRootInFlat;
-import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
+import com.nosliw.data.core.valuestructure1.HAPReferenceRootInExecutable;
+import com.nosliw.data.core.valuestructure1.HAPReferenceRootInFlat;
+import com.nosliw.data.core.valuestructure1.HAPReferenceRootInGroup;
 
 public class HAPUtilityStructureReference {
 

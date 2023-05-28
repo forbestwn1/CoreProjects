@@ -19,9 +19,9 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.valuestructure.HAPParserValueStructure;
-import com.nosliw.data.core.valuestructure.HAPReferenceRootInGroup;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
+import com.nosliw.data.core.valuestructure1.HAPParserValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPReferenceRootInGroup;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEvent;
 
 public class HAPParserUITagDefinition {

@@ -8,17 +8,15 @@ import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.activity.HAPUtilityActivity;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
-import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.service.use.HAPProcessorServiceUse;
-import com.nosliw.data.core.valuestructure.HAPValueStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionGroup;
 
 public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 
@@ -62,19 +60,19 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		
-		HAPValueStructure m_activityValueStructure;
-		
-		public HAPBuilderResultContext1(HAPValueStructure activityValueStructure) {
-			this.m_activityValueStructure = activityValueStructure;
-		}
-		
-		@Override
-		public HAPValueStructure buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
-			HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
-			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
-				return this.m_activityValueStructure;
-			}
-			return out;
-		}
+//		HAPValueStructure m_activityValueStructure;
+//		
+//		public HAPBuilderResultContext1(HAPValueStructure activityValueStructure) {
+//			this.m_activityValueStructure = activityValueStructure;
+//		}
+//		
+//		@Override
+//		public HAPValueStructure buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
+//			HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
+//			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
+//				return this.m_activityValueStructure;
+//			}
+//			return out;
+//		}
 	}
 }

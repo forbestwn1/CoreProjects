@@ -42,6 +42,22 @@ public class HAPPath {
 		HAPPath out = new HAPPath(this.m_path);
 		return out;
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.m_path.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPPath) {
+			HAPPath path = (HAPPath)obj;
+			if(this.getPath().equals(path.getPath())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

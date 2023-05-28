@@ -3,8 +3,8 @@ package com.nosliw.data.core.domain.entity.expression.resource;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.HAPParserExpressionDefinition;
 import com.nosliw.data.core.resource.HAPEntityResourceDefinition;
 import com.nosliw.data.core.resource.HAPParserResourceEntityImp;

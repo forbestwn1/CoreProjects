@@ -17,7 +17,7 @@ import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoVariable;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
-import com.nosliw.data.core.valuestructure.HAPVariableInfoInStructure;
+import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPUtilityDataAssociationnMapping {
 
@@ -102,7 +102,7 @@ public class HAPUtilityDataAssociationnMapping {
 				}
 				else if(varSubPath.startsWith(mappingRelativeSubPath)) {
 					//match only part of variable path, extend relative path to full path
-					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getElementPath(), varSubPath.substring(mappingRelativeSubPath.length()));
+					String relativePath = HAPUtilityNamingConversion.cascadePath(relativeEle.getPath(), varSubPath.substring(mappingRelativeSubPath.length()));
 					HAPUtilityStructure.setDescendant(newMappingRoot, varInfo.getSubPath(), new HAPElementStructureLeafRelative(relativePath));
 					found = true;
 					break;

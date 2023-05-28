@@ -1,6 +1,6 @@
 package com.nosliw.data.core.cronjob;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 
 public class HAPUtilityConfiguration {
 

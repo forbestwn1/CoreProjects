@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
+import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.structure.HAPParserContext;
 import com.nosliw.uiresource.module.HAPDefinitionModuleUI;
 

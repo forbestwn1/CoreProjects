@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression.resource;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.complex.HAPDefinitionEntityContainer;
+import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite1;

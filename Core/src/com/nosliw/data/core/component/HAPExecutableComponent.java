@@ -19,10 +19,10 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
-import com.nosliw.data.core.valuestructure.HAPExecutableValueStructure;
-import com.nosliw.data.core.valuestructure.HAPTreeNodeValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructureScript;
+import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructureScript;
 
 @HAPEntityWithAttribute
 public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{

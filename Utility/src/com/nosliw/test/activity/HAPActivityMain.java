@@ -12,7 +12,7 @@ import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteTaskRhino
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.task.resource.HAPResourceDefinitionTaskSuite;
 import com.nosliw.data.core.task.resource.HAPUtilityResourceTask;
-import com.nosliw.data.core.valuestructure.HAPUtilityValueStructure;
+import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 
 public class HAPActivityMain {
 

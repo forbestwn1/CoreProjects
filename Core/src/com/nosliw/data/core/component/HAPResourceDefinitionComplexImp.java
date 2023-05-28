@@ -3,9 +3,7 @@ package com.nosliw.data.core.component;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.complex.HAPDefinitionEntityComplexImp;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPUtilityValueContext;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;
 import com.nosliw.data.core.resource.HAPResourceId;

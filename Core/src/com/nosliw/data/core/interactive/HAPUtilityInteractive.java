@@ -20,8 +20,8 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.valuestructure.HAPContainerStructure;
-import com.nosliw.data.core.valuestructure.HAPValueStructureDefinitionFlat;
+import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
+import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityInteractive {
 
@@ -63,7 +63,7 @@ public class HAPUtilityInteractive {
 		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
 			HAPReferenceElementInValueContext reference = parm.getReferenceInfo();
 			HAPDefinitionValueMapping mapping = inputMapping.getMapping(reference.getParentValueContextName(), true);
-			mapping.addMapping(reference.getElementPath(), new HAPElementStructureLeafRelative(parm.getName()));
+			mapping.addMapping(reference.getPath(), new HAPElementStructureLeafRelative(parm.getName()));
 		}
 		out.setInDataAssociation(inputMapping);
 		
@@ -81,7 +81,7 @@ public class HAPUtilityInteractive {
 			HAPDefinitionValueMapping mapping = out.getMapping(null, true);
 			HAPReferenceElementInValueContext reference = output.getReferenceInfo();
 			HAPData constantData = output.getConstantData();
-			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getElementPath()));
+			if(reference!=null)		mapping.addMapping(output.getName(), new HAPElementStructureLeafRelative(reference.getPath()));
 			else if(constantData!=null)    mapping.addMapping(output.getName(), new HAPElementStructureLeafConstant(constantData));
 		}
 		return out;
