@@ -38,12 +38,13 @@ var node_InterfaceInfo = function(name, description, owner, visibility, isasync)
 };
 
 //executable with source of function
-var node_createInterfaceExecutableFunction = function(fuc){
+var node_createInterfaceExecutableFunction = function(fuc, thisContext){
 	var loc_function = fun;
+	var loc_thisContext = thisContext;
 	
 	var loc_out = {
 		execute : function(){
-			loc_function.apply(undefined, arguments);
+			return loc_function.apply(loc_thisContext, arguments);
 		}
 	};
 	return loc_out;

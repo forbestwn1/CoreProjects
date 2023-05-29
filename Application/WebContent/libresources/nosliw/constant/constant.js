@@ -297,7 +297,8 @@ var node_CONSTANT=
 	  
 	  "VALUE_UNKNOW" : "UNKNOW",
 	  
-	  "INTERFACE_GETCOREINTERFACE" : "getCoreInterface",
+	  "INTERFACE_ENV_DECORATION" : "decoration",
+	  "INTERFACE_ENV_DECORATION_COMMAND" : "getCore",
 	  
 	  "INTERFACE_EMBEDEDENTITY" : "embededEntity",
 	  "INTERFACE_TREENODEENTITY" : "treeNodeEntity",

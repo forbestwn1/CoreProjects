@@ -255,7 +255,7 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 			if(loc_isDebugMode()){
 				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMEINTERFACE);
 			}
-			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest());
+			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest(runtimeInteface));
 			return out;
 		},
 		

@@ -109,14 +109,18 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 				//for decoration
 				var decorationRuntimeInterface = {
 					//all interface 
-					getAllInterfaceInfos : function(){},
+					getAllInterfaceInfos : function(){
+						return [node_CONSTANT.INTERFACE_GETCOREINTERFACE];
+					},
 					
 					//
 					getInterfaceExecutable : function(interfaceName){  
 						var out = undefined;
-						if(interfaceName==node_basicUtility.buildNosliwFullName(node_CONSTANT.INTERFACE_GETCOREINTERFACE)){
-							node_createInterfaceExecutableFunction(function(){
-								return loc_getCore();
+						if(interfaceName==node_basicUtility.buildNosliwFullName(node_CONSTANT.INTERFACE_ENV_DECORATION)){
+							out = node_createInterfaceExecutableFunction(function(command){
+								if(command==node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND){
+									return loc_getCore();
+								}
 							});
 						}
 						return out;

@@ -15,13 +15,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDataExpressionPlugin = function(){
+var node_createDataExpressionGroupPlugin = function(){
 	
 	var loc_out = {
 
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createDataExpressionComponentCore(complexEntityDef, configure);
+				return loc_createDataExpressionGroupComponentCore(complexEntityDef, configure);
 			}, handlers, request);
 		},
 	};
@@ -29,10 +29,9 @@ var node_createDataExpressionPlugin = function(){
 	return loc_out;
 };
 
-var loc_createDataExpressionComponentCore = function(complexEntityDef, configure){
+var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, configure){
 
-	
-	
+	var loc_complexEntityDef = complexEntityDef;
 	
 	var loc_out = {
 		
@@ -65,6 +64,6 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionPlugin", node_createDataExpressionPlugin); 
+packageObj.createChildNode("createDataExpressionGroupPlugin", node_createDataExpressionGroupPlugin); 
 
 })(packageObj);
