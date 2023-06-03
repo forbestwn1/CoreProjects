@@ -34,7 +34,7 @@ function(configure){
 	var loc_out = {
 			
 		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-//			loc_runtimeInteface = runtimeInteface;
+			loc_runtimeInteface = runtimeInteface;
 		},
 			
 		//call back to provide runtime context : view (during init phase)

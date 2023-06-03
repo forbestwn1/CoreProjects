@@ -8,11 +8,51 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_basicUtility;
 	var node_buildComponentInterface;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+	var node_getBasicEntityObjectInterface;
+	var node_createServiceRequestInfoSimple;
+	var node_getEntityTreeNodeInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
 var node_componentUtility = {
 	
+	getInterfaceCallRequest : function(baseObject, getInterfaceFun, interfaceMethodName, argus, handlers, request){
+		var flagName = "done_"+interfaceMethodName;
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), handlers, request);
+		var processed = false;
+		var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
+		if(basicEntityInterface!=undefined){
+			processed = basicEntityInterface.getExtraData(flagName);
+		}
+		
+		if(!(processed==true)){
+			//if not processed, then process it
+			if(baseObject[interfaceMethodName]!=undefined){
+				out.addRequest(baseObject[interfaceMethodName].apply(baseObject, argus));
+			}
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				//after processing, mark processed
+				var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
+				if(basicEntityInterface!=undefined){
+					basicEntityInterface.setExtraData(flagName, true);
+				}
+			}));
+		}
+		
+		var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
+		if(treeNodeInterface!=undefined){
+			//process every children
+			var childrenName = treeNodeInterface.getChildrenName();
+			_.each(childrenName, function(childName, i){
+				var childInterface = getInterfaceFun(treeNodeInterface.getChild(childName).getChildValue());
+				out.addRequest(childInterface[interfaceMethodName].apply(childInterface, Array.apply(null, Array(argus.length)).map(function () {})));
+			})
+		}
+		return out;
+	},
+
 	makeNewRuntimeContext : function(oldRuntimeContext, override){
 		return _.extend({}, oldRuntimeContext, override);
 	},
@@ -110,6 +150,11 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("componentUtility", node_componentUtility); 

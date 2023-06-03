@@ -103,7 +103,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		getDataType: function(){    return  "testComplex1";   },
 		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
-		
+
+/*		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
@@ -117,11 +118,12 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 
 			//complex attribute
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
-				out.addRequest(child.getComponentInterface().getPreInitRequest());
+				out.addRequest(node_getComponentInterface(child.getChildValue()).getPreInitRequest());
 			});
 
 			return out;
 		},		
+*/		
 		
 		//call back to provide runtime context : view (during init phase)
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
@@ -157,7 +159,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				loc_mainView.append(rootViewWrapper);
 				loc_childrenViews[attrName] = childView;
 				
-				var childComponentInterface = child.getComponentInterface();
+				var childComponentInterface = node_getComponentInterface(child.getChildValue());
 				
 				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childView); 
 				out.addRequest(childComponentInterface.getUpdateRuntimeContextRequest(childRuntimeContext));
@@ -166,7 +168,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			return out;
 		},
 
-		setEnvironmentInterface : function(envInterface){  
+		setEnvironmentInterface : function(envInterface){
 			loc_envInterface = envInterface;
 		},
 		

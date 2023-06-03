@@ -34,7 +34,7 @@ var node_createApplication = function(resourceId, configure){
 	
 	var loc_createPackageRuntime = function(request){
 		var packageRuntime = nosliw.runtime.getComplexEntityService().createPackageRuntime(loc_resourceId, loc_configure, request);
-		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_PACKAGE_NAME, packageRuntime);
+		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_PACKAGE_NAME, packageRuntime);
 		return packageRuntime;
 	};
 	
@@ -49,7 +49,7 @@ var node_createApplication = function(resourceId, configure){
 		getPackageRuntime : function(){   return loc_getPackageRuntime();   },
 		
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
-		
+
 		getPreInitRequest : function(handlers, request){   
 			var packageRuntime = loc_createPackageRuntime(request);
 			return packageRuntime.getPreInitRequest(handlers, request);

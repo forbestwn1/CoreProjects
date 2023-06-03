@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createComponentDebugView;
 	var node_buildInterface;
 	var node_getInterface;
+	var node_componentUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -218,7 +219,13 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 		unregisterValueChangeEventListener : function(listener){ },
 		
 		//***********************lifecycle
+
+
 		getPreInitRequest : function(handlers, request){
+			return node_componentUtility.getInterfaceCallRequest(loc_rawComponentCore, node_getComponentInterface, "getPreInitRequest", [], handlers, request);
+		},
+		
+		getPreInitRequest1 : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
 			if(loc_isDebugMode()){
 				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_PREINIT, {
@@ -296,7 +303,9 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 };
 
 var node_getComponentInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPONENTENTITY);
+	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPONENTENTITY);
+	if(out!=undefined)   return out;
+	else return baseObject; 
 };
 
 
@@ -332,6 +341,8 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", function(){node_createComponentDebugView = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPlugInObject); 

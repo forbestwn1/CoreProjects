@@ -208,10 +208,12 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 
-	var loc_buildOtherObject = function(entity){
+	var loc_buildOtherObject = function(entity, entityDef, configure){
 		
 		entity = node_makeObjectWithEmbededEntityInterface(entity);
 		
+		entity = node_makeObjectBasicEntityObjectInterface(entity, entityDef, configure);
+
 		entity = node_makeObjectEntityTreeNodeInterface(entity);
 		
 		entity = node_makeObjectWithComponentInterface(node_getObjectType(entity), entity, false);
@@ -230,7 +232,7 @@ var node_createComplexEntityRuntimeService = function() {
 				success : function(request, configure){
 					var application = node_createApplication(resourceId, configure);
 		
-					application = loc_buildOtherObject(application);
+					application = loc_buildOtherObject(application, resourceId, configure);
 					
 					node_makeObjectWithComponentManagementInterface(application, application);
 					
@@ -240,7 +242,7 @@ var node_createComplexEntityRuntimeService = function() {
 					//init lifecycle entity
 					if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
 					
-					return application.getPreInitRequest({
+					return node_getComponentInterface(application).getPreInitRequest({
 						success : function(request){
 							return node_getComponentInterface(application).getUpdateRuntimeInterfaceRequest(runtimeInterface, {
 								success : function(request){
@@ -272,7 +274,7 @@ var node_createComplexEntityRuntimeService = function() {
 		createPackageRuntime : function(packageResourceId, configure, request){
 			//create runtime object
 			var packageCore = node_createPackageCore(packageResourceId, configure);
-			packageCore = loc_buildOtherObject(packageCore);
+			packageCore = loc_buildOtherObject(packageCore, packageResourceId, configure);
 			return node_createComponentRuntime(packageCore, undefined, request); 
 		},
 				
@@ -304,7 +306,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 		createBundleRuntime : function(globalComplexEntitId, configure, request){
 			var bundleCore = node_createBundleCore(globalComplexEntitId, configure);
-			bundleCore = loc_buildOtherObject(bundleCore);
+			bundleCore = loc_buildOtherObject(bundleCore, globalComplexEntitId, configure);
 			return node_createComponentRuntime(bundleCore, undefined);
 		},
 

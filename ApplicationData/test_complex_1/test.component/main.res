@@ -10,7 +10,7 @@
 				"status": "disabled1"
 			},
 			"entity":{
-				"scriptName": "complexscript_test_printconfigure"
+				"scriptName": "complexscript_test_componentinterface"
 			}
 		},
 	]

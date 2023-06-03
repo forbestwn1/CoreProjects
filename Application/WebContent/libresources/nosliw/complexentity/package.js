@@ -60,7 +60,7 @@ var node_createPackageCore = function(resourceId, configure){
 
 	var loc_createMainBundleRuntime = function(request){
 		var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, request);
-		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addNormalChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
+		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
 		return mainBundleRuntime;
 	};
 	
