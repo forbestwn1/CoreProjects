@@ -102,7 +102,9 @@ var node_createPackageCore = function(resourceId, configure){
 
 		getDataType: function(){    return  "package";   },
 
-		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
+		getMainBundleRuntime : function(){   return loc_getMainBundleRuntime();     },
+
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 			
@@ -137,12 +139,6 @@ var node_createPackageCore = function(resourceId, configure){
 		
 		getPostInitRequest : function(handlers, request){	return loc_getMainBundleRuntime().getPostInitRequest(handlers, request);	},
 		
-		
-		
-		
-		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
-			loc_runtimeEnv = runtimeEnv;
-		},
 		
 	};
 	

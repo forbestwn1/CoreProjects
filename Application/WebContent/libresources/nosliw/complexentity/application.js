@@ -48,7 +48,7 @@ var node_createApplication = function(resourceId, configure){
 
 		getPackageRuntime : function(){   return loc_getPackageRuntime();   },
 		
-		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 
 		getPreInitRequest : function(handlers, request){   
 			var packageRuntime = loc_createPackageRuntime(request);

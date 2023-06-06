@@ -225,7 +225,7 @@ var node_createComplexEntityRuntimeService = function() {
 	
 	var loc_out = {
 
-		getCreateApplicationRequest : function(resourceId, configureInfo, runtimeContext, runtimeInterface, handlers, request){
+		getCreateApplicationRequest : function(resourceId, configureInfo, runtimeContext, envInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			out.addRequest(node_complexEntityUtility.getRootConfigureRequest(configureInfo, {
@@ -244,6 +244,14 @@ var node_createComplexEntityRuntimeService = function() {
 					
 					return node_getComponentInterface(application).getPreInitRequest({
 						success : function(request){
+							//try pass envInterface to main entity
+							if(envInterface!=undefined){
+								var embededInterface = node_getEmbededEntityInterface(application.getPackageRuntime().getCoreEntity().getMainBundleRuntime().getCoreEntity().getMainEntity());
+								_.each(envInterface, function(interfacee, name){
+									embededInterface.setEnvironmentInterface(name, interfacee);
+								});
+							}
+							
 							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
 									return node_getComponentInterface(application).getPostInitRequest({
@@ -275,7 +283,7 @@ var node_createComplexEntityRuntimeService = function() {
 		},
 				
 		//create package runtime object and init request
-		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request){
+		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
 			var packageRuntime = this.createPackageRuntime(packageResourceId, configure, request);
 			
 			//build backup state if not provided
@@ -286,7 +294,7 @@ var node_createComplexEntityRuntimeService = function() {
 			
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
 			//init package runtime
-			out.addRequest(packageRuntime.getInitRequest(runtimeContext, runtimeInterface, {
+			out.addRequest(packageRuntime.getInitRequest(runtimeContext, {
 				success : function(request){
 					return packageRuntime;
 				}
@@ -295,8 +303,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 		
-		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request){
-			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, runtimeInterface, handlers, request);
+		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 
