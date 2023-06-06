@@ -29,7 +29,8 @@ var node_makeObjectWithEmbededEntityInterface = function(rawEntity){
 };
 	
 var node_getEmbededEntityInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_EMBEDEDENTITY);
+	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_EMBEDEDENTITY);
+	return out==undefined?baseObject:out;
 };
 
 	

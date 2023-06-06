@@ -57,10 +57,6 @@ var loc_createTestDecoration1ComponentCore1 = function(complexEntityDef, variabl
 		getConfigure : function(){   return loc_configure;    },
 		
 		
-		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-			return loc_complexEntityDef.getUpdateRuntimeInterfaceRequest(runtimeInteface, handlers, request);
-		},
-		
 		//call back to provide runtime context : view (during init phase)
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			return loc_complexEntityDef.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);

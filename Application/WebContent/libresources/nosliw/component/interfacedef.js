@@ -218,22 +218,10 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 		registerValueChangeEventListener : function(listener, handler, thisContext){   },
 		unregisterValueChangeEventListener : function(listener){ },
 		
-		//***********************lifecycle
-
+		//***********************component interface
 
 		getPreInitRequest : function(handlers, request){
 			return node_componentUtility.getInterfaceCallRequest(loc_rawComponentCore, node_getComponentInterface, "getPreInitRequest", [], handlers, request);
-		},
-		
-		getPreInitRequest1 : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPreInitRequestCore", {}), handlers, request);
-			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_PREINIT, {
-					"configure" : loc_configureValue
-				});
-			}
-			if(loc_rawComponentCore.getPreInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPreInitRequest());
-			return out;
 		},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
@@ -257,23 +245,8 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 			return out;
 		},
 
-		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){   
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceRequestCore", {}), handlers, request);
-			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMEINTERFACE);
-			}
-			if(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeInterfaceRequest(runtimeInteface));
-			return out;
-		},
-		
-
 		getPostInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperPostInitRequestCore", {}), handlers, request);
-			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_POSTINIT);
-			}
-			if(loc_rawComponentCore.getPostInitRequest!=undefined)  out.addRequest(loc_rawComponentCore.getPostInitRequest());
-			return out;
+			return node_componentUtility.getInterfaceCallRequest(loc_rawComponentCore, node_getComponentInterface, "getPostInitRequest", [], handlers, request);
 		},
 		
 		getLifeCycleRequest : function(transitName, handlers, request){

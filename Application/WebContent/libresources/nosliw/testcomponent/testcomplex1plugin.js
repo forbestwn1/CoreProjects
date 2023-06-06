@@ -104,7 +104,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
 
-/*		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
@@ -113,6 +112,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			return out;
 		},
 		
+/*		
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
 
@@ -172,15 +172,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_envInterface = envInterface;
 		},
 		
-		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){   
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceInComponentRuntime", {}), handlers, request);
-			loc_runtimeInterface = runtimeInterface;
-			return out;
-		},
-
-		getPostInitRequest : function(handlers, request){
-		},
-
 		//lifecycle handler
 		getLifeCycleRequest : function(transitName, handlers, request){
 			if(!transitName.startsWith("_")){

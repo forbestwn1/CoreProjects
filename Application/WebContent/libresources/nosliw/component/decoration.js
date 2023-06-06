@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_buildDecorationPlugInObject;
 	var node_basicUtility;
 	var node_ResourceId;
+	var node_makeObjectWithEmbededEntityInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -25,11 +26,19 @@ var node_createDecoration = function(decorationInfo){
 	
 	var loc_runtimeObject;
 	
+	var loc_environmentInterface;
+	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
 
 	var loc_valueChangeEventSource = node_createEventObject();
 	var loc_valueChangeEventListener = node_createEventObject();
+
+	var loc_applyEnvInterfaceToRuntime = function(){
+		if(loc_environmentInterface!=undefined&&loc_runtimeObject!=undefined){
+			loc_runtimeObject.setEnvironmentInterface(loc_environmentInterface);
+		}
+	};
 
 	var loc_out = {
 
@@ -39,6 +48,7 @@ var node_createDecoration = function(decorationInfo){
 
 		getPreInitRequest : function(handlers, request){
 			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
+			loc_applyEnvInterfaceToRuntime();
 			return loc_runtimeObject.getPreInitRequest(handlers, request);
 		},
 
@@ -46,15 +56,15 @@ var node_createDecoration = function(decorationInfo){
 			return loc_runtimeObject.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
 		},
 		
-		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-			return loc_runtimeObject.getUpdateRuntimeInterfaceRequest(runtimeInteface, handlers, request);
-		},
-		
 		getPostInitRequest : function(handlers, request){
 			return loc_runtimeObject.getPostInitRequest(handlers, request);
 		},
 
-		
+		setEnvironmentInterface : function(envInterface){
+			loc_environmentInterface = envInterface;
+			loc_applyEnvInterfaceToRuntime();
+		},
+
 		
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
@@ -65,6 +75,7 @@ var node_createDecoration = function(decorationInfo){
 		
 	};
 	
+	loc_out = node_makeObjectWithEmbededEntityInterface(loc_out);
 	return loc_out;
 	
 };
@@ -184,6 +195,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
 
 //Register Node by Name
 //packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 

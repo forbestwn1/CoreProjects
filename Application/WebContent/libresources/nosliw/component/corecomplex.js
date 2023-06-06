@@ -37,6 +37,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_lifecycleEntity;
 	
+	var loc_environmentInterface;
+	
 	//current lifecycle status
 	var loc_lifecycleStatus;
 
@@ -50,13 +52,19 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	var loc_init = function(componentCore, decorationInfos){
 		var coreLayer = componentCore;
 		loc_addLayer(coreLayer);	
+		loc_applyEnvInterfaceToCore();
 
 		for(var i in decorationInfos){  
 			loc_addDecoration(decorationInfos[i]);	
 		}	
 	};
 	
-	
+	var loc_applyEnvInterfaceToCore = function(){
+		if(loc_environmentInterface!=undefined&&loc_getCore()!=undefined){
+			loc_getCore.setEnvironmentInterface(loc_environmentInterface);
+		}
+	};
+
 	var loc_getCurrentFacad = function(){   return loc_layers[loc_layers.length-1];  };
 	
 	var loc_getCore = function(){  return  loc_layers[0]; };
@@ -95,40 +103,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 				else return loc_getUpdateLayerRuntimeContextRequest(index-1, newRuntimeContext);
 			}
 		}));
-		return out;
-	};
-
-	var loc_getUpdateRuntimeInterfaceRequest = function(runtimeInterface, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterface", {}), handlers, request);
-		_.each(loc_layers, function(layer, i){
-			if(i==0){
-				//for core
-				out.addRequest(layer.getUpdateRuntimeInterfaceRequest(runtimeInterface));
-			}
-			else{
-				//for decoration
-				var decorationRuntimeInterface = {
-					//all interface 
-					getAllInterfaceInfos : function(){
-						return [node_CONSTANT.INTERFACE_GETCOREINTERFACE];
-					},
-					
-					//
-					getInterfaceExecutable : function(interfaceName){  
-						var out = undefined;
-						if(interfaceName==node_basicUtility.buildNosliwFullName(node_CONSTANT.INTERFACE_ENV_DECORATION)){
-							out = node_createInterfaceExecutableFunction(function(command){
-								if(command==node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND){
-									return loc_getCore();
-								}
-							});
-						}
-						return out;
-					},
-				};
-				out.addRequest(layer.getUpdateRuntimeInterfaceRequest(node_buildInterfaceEnv(decorationRuntimeInterface)));
-			}
-		});
 		return out;
 	};
 
@@ -229,6 +203,12 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decoration = node_createDecoration(decorationInfo);
+		var commands = {};
+		commands[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE] = function(){
+			return loc_getCore();
+		};
+		node_getEmbededEntityInterface(decoration).setEnvironmentInterface(node_CONSTANT.INTERFACE_ENV_DECORATION, commands);
+		
 		loc_addLayer(decoration);
 	};
 	
@@ -261,12 +241,14 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		return loc_getUpdateRuntimeContextRequest(runtimeContext, handlers, request);	},
 
-		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){   return loc_getUpdateRuntimeInterfaceRequest(runtimeInterface, handlers, request);    },
-		
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 
 		getPostInitRequest : function(handlers, request){	return loc_getPostInitRequest(handlers, request);	},
 		
+		setEnvironmentInterface : function(envInterface){
+			loc_environmentInterface = envInterface;
+			loc_applyEnvInterfaceToCore();
+		},
 
 		
 		

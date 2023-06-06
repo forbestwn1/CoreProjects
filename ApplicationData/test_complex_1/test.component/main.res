@@ -6,12 +6,12 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "testconfigure-none-test_complex_script", 
+				"name" : "testcomponentinterface-none-test_complex_script", 
 				"status": "disabled1"
 			},
 			"entity":{
 				"scriptName": "complexscript_test_componentinterface"
 			}
-		},
+		}
 	]
 }

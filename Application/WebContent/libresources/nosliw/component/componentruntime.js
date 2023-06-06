@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_requestServiceProcessor;
 	var node_makeObjectWithType;
+	var node_makeObjectWithEmbededEntityInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -93,13 +94,9 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 
 			out.addRequest(loc_componentCoreComplex.getPreInitRequest({
 				success : function(request){
-					return loc_componentCoreComplex.getUpdateRuntimeInterfaceRequest(runtimeInterface, {
+					return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, {
 						success : function(request){
-							return loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext, {
-								success : function(request){
-									return loc_componentCoreComplex.getPostInitRequest();
-								}
-							});
+							return loc_componentCoreComplex.getPostInitRequest();
 						}
 					});
 				}
@@ -120,12 +117,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return out;
 		},
 
-		getUpdateRuntimeInterfaceRequest : function(runtimeInterface, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeInterfaceInComponentRuntime", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeInterfaceRequest(runtimeInterface));
-			return out;
-		},
-		
 		getPostInitRequest : function(handlers, request){	
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
 			out.addRequest(loc_componentCoreComplex.getPostInitRequest());
@@ -137,11 +128,12 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return task.getProcessRequest(handlers, request);
 		},
 		
+		setEnvironmentInterface : function(envInterface){
+			loc_componentCoreComplex.setEnvironmentInterface(envInterface);
+		},	
 			
 
-		
-		
-			
+
 			
 			
 			
@@ -179,6 +171,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 //	});
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME);
+	loc_out = node_makeObjectWithEmbededEntityInterface(loc_out);
 	
 	loc_out.id = nosliw.generateId();
 	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();
@@ -204,6 +197,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentRuntime", node_createComponentRuntime); 

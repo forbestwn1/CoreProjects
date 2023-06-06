@@ -244,15 +244,11 @@ var node_createComplexEntityRuntimeService = function() {
 					
 					return node_getComponentInterface(application).getPreInitRequest({
 						success : function(request){
-							return node_getComponentInterface(application).getUpdateRuntimeInterfaceRequest(runtimeInterface, {
+							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){
-									return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
-										success : function(request){
-											return node_getComponentInterface(application).getPostInitRequest({
-												success : function(){
-													return application;
-												}
-											});
+									return node_getComponentInterface(application).getPostInitRequest({
+										success : function(){
+											return application;
 										}
 									});
 								}

@@ -21,29 +21,36 @@ var node_componentUtility = {
 	getInterfaceCallRequest : function(baseObject, getInterfaceFun, interfaceMethodName, argus, handlers, request){
 		var flagName = "done_"+interfaceMethodName;
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), handlers, request);
-		var processed = false;
-		var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
-		if(basicEntityInterface!=undefined){
-			processed = basicEntityInterface.getExtraData(flagName);
-		}
-		
-		if(!(processed==true)){
-			//if not processed, then process it
-			if(baseObject[interfaceMethodName]!=undefined){
-				out.addRequest(baseObject[interfaceMethodName].apply(baseObject, argus));
-			}
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				//after processing, mark processed
+
+		//process it if needed
+		out.addRequest(node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), {
+			success : function(request){
+				var processed = false;
 				var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
 				if(basicEntityInterface!=undefined){
-					basicEntityInterface.setExtraData(flagName, true);
+					processed = basicEntityInterface.getExtraData(flagName);
 				}
-			}));
-		}
-		
+				
+				if(!(processed==true)){
+					//if not processed, then process it
+					if(baseObject[interfaceMethodName]!=undefined){
+						return baseObject[interfaceMethodName].apply(baseObject, argus);
+					}
+				}
+			}
+		}));
+
+		//after processing, mark processed
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
+			if(basicEntityInterface!=undefined){
+				basicEntityInterface.setExtraData(flagName, true);
+			}
+		}));
+
+		//process every children
 		var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
 		if(treeNodeInterface!=undefined){
-			//process every children
 			var childrenName = treeNodeInterface.getChildrenName();
 			_.each(childrenName, function(childName, i){
 				var childInterface = getInterfaceFun(treeNodeInterface.getChild(childName).getChildValue());
