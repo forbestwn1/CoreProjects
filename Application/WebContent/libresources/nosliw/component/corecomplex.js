@@ -77,6 +77,33 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		return out;
 	};
 	
+	var loc_updateBackupStateObject = function(backupStateObj){
+		_.each(loc_layers, function(layer, i){
+			var layerBackupStateObj = backupStateObj.createChildState(i+"");
+			if(i==0){
+				//for core
+				node_getComponentInterface(layer).updateBackupStateObject(layerBackupStateObj);
+			}
+			else{
+				layer.updateBackupStateObject(layerBackupStateObj);				
+			}
+		});
+	};
+
+	var loc_updateLifecycleEntityObject = function(lifecycleEntityObj){
+		_.each(loc_layers, function(layer, i){
+			var layerLifecycleEntityObj = lifecycleEntityObj.createChild(i+""); 
+			if(i==0){
+				//for core
+				node_getComponentInterface(layer).updateLifecycleEntityObject(layerLifecycleEntityObj);
+			}
+			else{
+				layer.updateLifecycleEntityObject(layerLifecycleEntityObj);				
+			}
+		});
+	};
+
+	
 	//process runtime context from top layer to bottom layer
 	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
 	var loc_getUpdateRuntimeContextRequest = function(runtimeContext, handlers, request){
@@ -250,8 +277,14 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			loc_applyEnvInterfaceToCore();
 		},
 
+		updateBackupStateObject : function(backupStateObj){
+			loc_updateBackupStateObject(backupStateObj);
+		},
 		
-		
+		updateLifecycleEntityObject : function(lifecycleEntityObj){
+			loc_updateLifecycleEntityObject(lifecycleEntityObj);
+		},
+
 		
 		
 		

@@ -237,10 +237,10 @@ var node_createComplexEntityRuntimeService = function() {
 					node_makeObjectWithComponentManagementInterface(application, application);
 					
 					//build backup state if not provided
-					if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
+//					if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
 		
 					//init lifecycle entity
-					if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
+//					if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
 					
 					return node_getComponentInterface(application).getPreInitRequest({
 						success : function(request){
@@ -251,6 +251,15 @@ var node_createComplexEntityRuntimeService = function() {
 									embededInterface.setEnvironmentInterface(name, interfacee);
 								});
 							}
+
+							//update backup state object
+							var backupStateObj = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
+							node_getComponentInterface(application).updateBackupStateObject(backupStateObj);
+
+							//update lifecycle entity
+							var lifecycleEntity = node_createLifeCycleRuntimeContext("application");
+							node_getComponentInterface(application).updateLifecycleEntityObject(lifecycleEntity);
+
 							
 							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
 								success : function(request){

@@ -18,6 +18,29 @@ var packageObj = library;
 	
 var node_componentUtility = {
 	
+	updateBackupStateObject : function(baseObject, backupState){
+		var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
+		if(basicEntityInterface!=undefined){
+			basicEntityInterface.setExtraData(node_CONSTANT.COMPLEXENTITY_NODE_DATANAME_BACKUPSTATUS, backupState);
+		}
+		
+		var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
+		if(treeNodeInterface!=undefined){
+			var childrenName = treeNodeInterface.getChildrenName();
+			_.each(childrenName, function(childName, i){
+				var childValue = treeNodeInterface.getChild(childName).getChildValue();
+				var childBackupState = backupState.createChildState(childName);
+				if(node_getObjectType(childValue)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+					//for child is runtime					
+					childValue.updateBackupStateObject(childBackupState);
+				}
+				else{
+					node_componentUtility.updateBackupStateObject(childValue, childBackupState);
+				}
+			})
+		}
+	},
+	
 	getInterfaceCallRequest : function(baseObject, getInterfaceFun, interfaceMethodName, argus, handlers, request){
 		var flagName = "done_"+interfaceMethodName;
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), handlers, request);
@@ -66,8 +89,8 @@ var node_componentUtility = {
 
 	makeChildRuntimeContext : function(currentRuntimeContext, childId, view){
 		var newRuntimeContext = {
-			backupState : currentRuntimeContext.backupState.createChildState(childId),
-			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childId)
+//			backupState : currentRuntimeContext.backupState.createChildState(childId),
+//			lifecycleEntity : currentRuntimeContext.lifecycleEntity.createChild(childId)
 		};
 		if(view!=undefined)  newRuntimeContext.view = view;
 		

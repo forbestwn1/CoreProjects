@@ -65,6 +65,14 @@ var node_createDecoration = function(decorationInfo){
 			loc_applyEnvInterfaceToRuntime();
 		},
 
+		updateBackupStateObject : function(backupStateObj){
+			loc_runtimeObject.updateBackupStateObject(backupStateObj);
+		},
+		
+		updateLifecycleEntityObject : function(lifecycleEntityObj){
+			loc_runtimeObject.updateLifecycleEntityObject(lifecycleEntityObj);
+		},
+		
 		
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },

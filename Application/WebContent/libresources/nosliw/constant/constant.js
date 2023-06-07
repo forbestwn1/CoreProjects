@@ -323,6 +323,7 @@ var node_CONSTANT=
 	  "COMPONENT_INTERFACE_POSTINIT" : "getPostInitRequest",
 	  "COMPONENT_INTERFACE_LIFECYCLE" : "getLifeCycleRequest",
 	  "COMPONENT_INTERFACE_" : "",
+	  
 };
 
 //*******************************************   End Node Definition  ************************************** 	

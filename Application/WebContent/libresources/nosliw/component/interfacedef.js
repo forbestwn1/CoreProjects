@@ -19,6 +19,8 @@ var packageObj = library;
 	var node_buildInterface;
 	var node_getInterface;
 	var node_componentUtility;
+	var node_getBasicEntityObjectInterface;
+	var node_getEntityTreeNodeInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 	
@@ -235,10 +237,10 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 				runtimeContext.view = loc_debugView.getWrapperView();
 			}
 			
-			loc_backupState = runtimeContext.backupState;
+//			loc_backupState = runtimeContext.backupState;
 			
-			loc_lifecycleEntity = runtimeContext.lifecycleEntity;
-			loc_lifecycleEntity.setComponentCore(this);
+//			loc_lifecycleEntity = runtimeContext.lifecycleEntity;
+//			loc_lifecycleEntity.setComponentCore(this);
 			
 			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
 			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
@@ -261,6 +263,51 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 		},
 
 		getLifecycleEntity : function(){   return loc_lifecycleEntity;    },
+		
+		updateBackupStateObject : function(backupStateObj){
+			loc_backupState = backupStateObj;
+			
+			var treeNodeInterface = node_getEntityTreeNodeInterface(loc_rawComponentCore);
+			if(treeNodeInterface!=undefined){
+				var childrenName = treeNodeInterface.getChildrenName();
+				_.each(childrenName, function(childName, i){
+					var childValue = treeNodeInterface.getChild(childName).getChildValue();
+					var childBackupStateObj = backupStateObj.createChildState(childName);
+					if(node_getObjectType(childValue)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+						//for child is runtime					
+						childValue.updateBackupStateObject(childBackupStateObj);
+					}
+					else{
+						node_getComponentInterface(loc_rawComponentCore).updateBackupStateObject(childBackupStateObj);
+					}
+				})
+			}
+		},
+		
+		updateLifecycleEntityObject : function(lifecycleEntityObj){
+			loc_lifecycleEntity = lifecycleEntityObj;
+			loc_lifecycleEntity.setComponentCore(this);
+			
+			var treeNodeInterface = node_getEntityTreeNodeInterface(loc_rawComponentCore);
+			if(treeNodeInterface!=undefined){
+				var childrenName = treeNodeInterface.getChildrenName();
+				_.each(childrenName, function(childName, i){
+					var childValue = treeNodeInterface.getChild(childName).getChildValue();
+					var childLifecycleEntity = lifecycleEntityObj.createChild(childrenName);
+					if(node_getObjectType(childValue)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+						//for child is runtime					
+						childValue.updateLifecycleEntityObject(childLifecycleEntity);
+					}
+					else{
+						node_getComponentInterface(loc_rawComponentCore).updateLifecycleEntityObject(childLifecycleEntity);
+					}
+				})
+			}
+		},
+		
+		
+
+		
 		
 		
 		
@@ -315,6 +362,8 @@ nosliw.registerSetNodeDataEvent("component.debug.createComponentDebugView", func
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 
 
 //Register Node by Name

@@ -132,8 +132,13 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			loc_componentCoreComplex.setEnvironmentInterface(envInterface);
 		},	
 			
+		updateBackupStateObject : function(backupStateObj){
+			loc_componentCoreComplex.updateBackupStateObject(backupStateObj);
+		},
 
-
+		updateLifecycleEntityObject : function(lifecycleEntityObj){
+			loc_componentCoreComplex.updateLifecycleEntityObject(lifecycleEntityObj);
+		},
 			
 			
 			
