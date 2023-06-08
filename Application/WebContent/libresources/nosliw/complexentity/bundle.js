@@ -101,22 +101,6 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreBundle", {}), handlers, request);
-			
-			loc_parentView = runtimeContext.view;
-			
-			runtimeContextForMain = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_MAIN_NAME); 
-
-			if(loc_isDebugMode()){
-				runtimeContextForMain = loc_getDebugView().updateRuntimeContext(runtimeContextForMain);
-			}
-
-			out.addRequest(loc_getMainEntity().getUpdateRuntimeContextRequest(runtimeContextForMain));
-			return out;
-
-		},
-			
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			if(transitName==node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_DESTROY){

@@ -240,8 +240,7 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 };
 	
 var node_getEntityTreeNodeInterface = function(baseObject){
-	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_TREENODEENTITY);
-	return out!=undefined?out:baseObject;
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_TREENODEENTITY);
 };
 
 var loc_createTreeNodeChild = function(childName, entityRuntime, adapters, isComplex){

@@ -111,12 +111,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return out;
 		},
 		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInComponentRuntime", {}), handlers, request);
-			out.addRequest(loc_componentCoreComplex.getUpdateRuntimeContextRequest(runtimeContext));
-			return out;
-		},
-
 		getPostInitRequest : function(handlers, request){	
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
 			out.addRequest(loc_componentCoreComplex.getPostInitRequest());

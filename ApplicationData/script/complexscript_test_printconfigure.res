@@ -39,19 +39,6 @@ function(complexEntityDef, variableContextId, bundleCore, configure){
 		}
 	};
 
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-
-		var wrapperView =  $('<div></div>');
-
-		_.each(loc_configures, function(configureInfo, i){
-			var logView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
-			logView.val(JSON.stringify(configureInfo, null, 4));
-			wrapperView.append(logView);
-		});
-		
-		$(runtimeContext.view).append(wrapperView);
-	};
-
 	var loc_out = {
 		
 		updateView : function(view){
@@ -64,10 +51,6 @@ function(complexEntityDef, variableContextId, bundleCore, configure){
 			});
 			
 			$(view).append(wrapperView);
-		},
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
-			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},
 		
 	};

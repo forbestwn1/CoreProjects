@@ -7,14 +7,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_logView;
 	var loc_logText = "";
 
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-		var rootViewWrapper = $('<div/>');
-		$(runtimeContext.view).append(rootViewWrapper);
-
-		loc_logView = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
-		rootViewWrapper.append(loc_logView);
-	};
-
 	var loc_out = {
 		
 		updateView : function(view){
@@ -23,10 +15,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	
 			loc_logView = $('<textarea rows="3" cols="150" style="resize: none;" data-role="none"></textarea>');
 			rootViewWrapper.append(loc_logView);
-		},
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
-			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},
 		
 		//lifecycle handler

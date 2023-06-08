@@ -11,18 +11,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
     var loc_scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 	var loc_configure = configure;
 
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-		var rootViewWrapper = $('<div/>');
-		$(runtimeContext.view).append(rootViewWrapper);
-
-		var stateValueViewWrapper = $('<div><span>state:</span></div>');
-		loc_stateValueView = $('<input type="text" style="background-color:pink">');
-		stateValueViewWrapper.append(loc_stateValueView);
-		rootViewWrapper.append(stateValueViewWrapper);
-
-		loc_updateStateData(loc_parms.state);
-	};
-
 	var loc_getStateData = function(){
 		return loc_stateValueView.val();
 	};
@@ -43,10 +31,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			rootViewWrapper.append(stateValueViewWrapper);
 	
 			loc_updateStateData(loc_parms.state);
-		},
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
-			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},
 		
 		getGetStateDataRequest : function(handlers, request){

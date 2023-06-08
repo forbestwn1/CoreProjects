@@ -52,10 +52,6 @@ var node_createDecoration = function(decorationInfo){
 			return loc_runtimeObject.getPreInitRequest(handlers, request);
 		},
 
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			return loc_runtimeObject.getUpdateRuntimeContextRequest(runtimeContext, handlers, request);
-		},
-		
 		getPostInitRequest : function(handlers, request){
 			return loc_runtimeObject.getPostInitRequest(handlers, request);
 		},

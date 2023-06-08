@@ -60,16 +60,6 @@ var node_createApplication = function(resourceId, configure){
 			loc_getPackageRuntime().updateView(view);     
 		},
 		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreApplication", {}), handlers, request);
-			loc_parentView = runtimeContext.view;
-			var packageRuntime = loc_getPackageRuntime();
-
-			var runtimeContextForPackage = node_componentUtility.makeChildRuntimeContext(runtimeContext, loc_PACKAGE_NAME); 
-			out.addRequest(packageRuntime.getUpdateRuntimeContextRequest(runtimeContextForPackage));
-			return out;
-		},
-
 		getPostInitRequest : function(handlers, request){	return loc_getPackageRuntime().getPostInitRequest(handlers, request);	},
 	};
 	

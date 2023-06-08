@@ -56,26 +56,6 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_adapterPlugins = {};
 
-	var loc_getCreateContainerComplexEntityRuntimeRequest = function(containerDef, parentComplexEntityCore, bundleCore, configure, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		
-		var container = node_createComplexEntityRuntimeContainer();
-		var elements = containerDef[node_COMMONATRIBUTECONSTANT.CONTAINERENTITY_ELEMENT];
-		_.each(elements, function(ele, i){
-			var entityId = ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ENTITY][node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
-			out.addRequest(loc_getCreateComplexEntityRuntimeRequest(entityId, parentComplexEntityCore, bundleCore, configure, {
-				success : function(request, eleRuntime){
-					container.addElement(eleEntityRuntime, ele[node_COMMONATRIBUTECONSTANT.ELEMENTCONTAINER_ELEMENTID]);
-				}
-			}));
-		});
-		
-		out.addRequest(node_createServiceRequestInfoSimple({}, function(requestInfo){
-			return container;
-		}));
-		return out;
-	};
-	
 	var loc_getCreateAdapterRequest = function(adapterType, adapterDefinition, handlers, request){
 		if(adapterDefinition==undefined){
 			return node_createServiceRequestInfoSimple({}, function(requestInfo){
@@ -236,12 +216,6 @@ var node_createComplexEntityRuntimeService = function() {
 					
 					node_makeObjectWithComponentManagementInterface(application, application);
 					
-					//build backup state if not provided
-//					if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
-		
-					//init lifecycle entity
-//					if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("application");
-					
 					return node_getComponentInterface(application).getPreInitRequest({
 						success : function(request){
 							//try pass envInterface to main entity
@@ -268,17 +242,6 @@ var node_createComplexEntityRuntimeService = function() {
 							}
 
 							return application;
-/*							
-							return node_getComponentInterface(application).getUpdateRuntimeContextRequest(runtimeContext, {
-								success : function(request){
-									return node_getComponentInterface(application).getPostInitRequest({
-										success : function(){
-											return application;
-										}
-									});
-								}
-							});
-*/							
 						}
 					});
 				}

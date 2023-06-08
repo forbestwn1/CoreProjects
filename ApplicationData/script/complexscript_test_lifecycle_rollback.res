@@ -11,19 +11,6 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 	var loc_OPTION_ERROR = "Error";
 	var loc_OPTION_EXCEPTION = "Exception";
 
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-		var rootViewWrapper = $('<div/>');
-		$(runtimeContext.view).append(rootViewWrapper);
-
-		loc_selectionView = $('<select/>');
-		rootViewWrapper.append(loc_selectionView);
-		
-		loc_selectionView.append($('<option>'+loc_OPTION_NONE+'</option>'));
-		loc_selectionView.append($('<option>'+loc_OPTION_ERROR+'</option>'));
-		loc_selectionView.append($('<option>'+loc_OPTION_EXCEPTION+'</option>'));
-
-	};
-
 	var loc_out = {
 		
 		updateView : function(view){
@@ -36,10 +23,6 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 			loc_selectionView.append($('<option>'+loc_OPTION_NONE+'</option>'));
 			loc_selectionView.append($('<option>'+loc_OPTION_ERROR+'</option>'));
 			loc_selectionView.append($('<option>'+loc_OPTION_EXCEPTION+'</option>'));
-		},
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
-			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},
 		
 		//lifecycle handler

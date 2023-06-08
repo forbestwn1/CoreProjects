@@ -121,35 +121,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	};
 
 	
-	//process runtime context from top layer to bottom layer
-	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext, handlers, request){
-		loc_runtimeContext = runtimeContext;
-		loc_backupState = runtimeContext.backupState;
-		loc_lifecycleEntity = runtimeContext.lifecycleEntity;
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextInCoreComplex", {}), handlers, request);
-		var index = loc_layers.length-1;
-		out.addRequest(loc_getUpdateLayerRuntimeContextRequest(index, runtimeContext));
-		return out;
-	};
-	
-	var loc_getUpdateLayerRuntimeContextRequest = function(index, upperRuntimeContext, handlers, request){
-		//id for this layer
-		var layerId = index + "";
-		//runtime context for this layer
-		var runtimeContext = node_componentUtility.makeChildRuntimeContext(upperRuntimeContext, layerId); 
-
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateLayerRuntimeContextInCoreComplex", {}), handlers, request);
-		out.addRequest(loc_getLayerInterfaceObj(index).getUpdateRuntimeContextRequest(runtimeContext, {
-			success : function(request, newRuntimeContext){
-				if(newRuntimeContext==undefined) newRuntimeContext = runtimeContext;
-				if(index==0)  return node_createServiceRequestInfoSimple(undefined, function(request){return newRuntimeContext;});
-				else return loc_getUpdateLayerRuntimeContextRequest(index-1, newRuntimeContext);
-			}
-		}));
-		return out;
-	};
-
 	var loc_getPostInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PostInit", {}), handlers, request);
 		_.each(loc_layers, function(layer, i){
@@ -283,8 +254,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 		getPreInitRequest : function(handlers, request){	return loc_getPreInitRequest(handlers, request);	},
 		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		return loc_getUpdateRuntimeContextRequest(runtimeContext, handlers, request);	},
-
 		getLifeCycleRequest : function(transitName, handlers, request){	 return loc_getLifeCycleRequest(transitName, handlers, request);	},
 
 		getPostInitRequest : function(handlers, request){	return loc_getPostInitRequest(handlers, request);	},

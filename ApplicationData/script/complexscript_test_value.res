@@ -127,60 +127,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var unknownView =  $('<div>Unknow Variables : '+unknowVarStr+'</div>');
 			rootView.append(unknownView);	
 		};
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var rootView =  $('<div>' + '</div>');
-			$(runtimeContext.view).append(rootView);
-			
-			var containerView =  $('<div></div>');
-			rootView.append(containerView);	
-				
-			_.each(loc_variableInfos, function(varInfo, i){
-
-				var varContainerViewWrapper =  $('<div style="border:solid 3px;"></div>');
-				containerView.append(varContainerViewWrapper);	
-
-				var varViewWrapper = $('<div></div>');
-				var varNameView = $('<p>Variable:'+node_basicUtility.stringify(varInfo.reference)+'</p>');
-				var varIdView = $('<p>Id:'+varInfo.variable.prv_id+'</p>');
-				varViewWrapper.append(varNameView);	
-				varViewWrapper.append(varIdView);	
-				
-				varContainerViewWrapper.append(varViewWrapper);	
-
-				var viewWrapper = $('<div>Value:</div>');
-				varInfo.view = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
-				viewWrapper.append(varInfo.view);
-				varContainerViewWrapper.append(viewWrapper);	
-				varInfo.view.bind('change', function(){
-					var value = varInfo.view.val();
-					if(value==undefined || value==""){}
-					else {
-						value = {
-							dataTypeId: "test.string;1.0.0",
-							value: varInfo.view.val()
-						};
-					}
-				
-					varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", value));
-				});					
-
-				varInfo.displayView = $('<span/>');
-				var displayViewWrapper = $('<div>ValueDisplay:</div>');
-				displayViewWrapper.append(varInfo.displayView);
-				varContainerViewWrapper.append(displayViewWrapper);	
-
-				varInfo.variable.registerDataChangeEventListener(undefined, function(eventName, eventData){
-					loc_updateDataDisplay(varInfo);
-				});
-				loc_updateDataDisplay(varInfo);
-			});
-			
-			var unknowVarStr = JSON.stringify(loc_unknownVars, null, 4);
-			var unknownView =  $('<div>Unknow Variables : '+unknowVarStr+'</div>');
-			rootView.append(unknownView);	
-		},
-		
 	};
 	
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);

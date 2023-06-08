@@ -9,20 +9,11 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 
-	var loc_getUpdateRuntimeContextRequest = function(runtimeContext){
-		loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');
-		$(runtimeContext.view).append(loc_parmsView);
-	};
-
 	var loc_out = {
 
 		updateView : function(view){
 			loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');
 			$(view).append(loc_parmsView);
-		},
-		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
-			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},
 	};
 	return loc_out;
