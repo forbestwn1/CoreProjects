@@ -128,19 +128,19 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return task.getProcessRequest(handlers, request);
 		},
 		
-		setEnvironmentInterface : function(envInterface){
-			loc_componentCoreComplex.setEnvironmentInterface(envInterface);
-		},	
+		setEnvironmentInterface : function(envInterface){		loc_componentCoreComplex.setEnvironmentInterface(envInterface);		},	
 			
-		updateBackupStateObject : function(backupStateObj){
-			loc_componentCoreComplex.updateBackupStateObject(backupStateObj);
-		},
+		updateBackupStateObject : function(backupStateObj){		loc_componentCoreComplex.updateBackupStateObject(backupStateObj);		},
 
-		updateLifecycleEntityObject : function(lifecycleEntityObj){
-			loc_componentCoreComplex.updateLifecycleEntityObject(lifecycleEntityObj);
-		},
+		updateLifecycleEntityObject : function(lifecycleEntityObj){		loc_componentCoreComplex.updateLifecycleEntityObject(lifecycleEntityObj);		},
 			
-			
+		updateView : function(view){		return loc_componentCoreComplex.updateView(view);		},
+		
+		
+		
+		
+		
+		
 			
 		setInterfaceEnv : function(interfaceEnv){		loc_interfaceEnv = interfaceEnv;	},
 			

@@ -37,6 +37,24 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 
 	var loc_out = {
 		
+		updateView : function(view){
+			var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
+			$(view).append(rootViewWrapper);
+	
+			loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');
+			rootViewWrapper.append(loc_parmsView);
+	
+			loc_configureView =  $('<div>configures:' + JSON.stringify(loc_configure) + '</div>');
+			rootViewWrapper.append(loc_configureView);
+			
+			var stateValueViewWrapper = $('<div><span>state:</span></div>');
+			loc_stateValueView = $('<input type="text" style="background-color:pink">');
+			stateValueViewWrapper.append(loc_stateValueView);
+			rootViewWrapper.append(stateValueViewWrapper);
+	
+			loc_updateStateData(parms.state);
+		},
+		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
 			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},

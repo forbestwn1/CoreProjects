@@ -33,6 +33,18 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_out = {
 		
+		updateView : function(view){
+			var rootViewWrapper = $('<div/>');
+			$(view).append(rootViewWrapper);
+	
+			var stateValueViewWrapper = $('<div><span>state:</span></div>');
+			loc_stateValueView = $('<input type="text" style="background-color:pink">');
+			stateValueViewWrapper.append(loc_stateValueView);
+			rootViewWrapper.append(stateValueViewWrapper);
+	
+			loc_updateStateData(loc_parms.state);
+		},
+		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
 			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},

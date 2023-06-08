@@ -15,6 +15,11 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	};
 
 	var loc_out = {
+
+		updateView : function(view){
+			loc_parmsView =  $('<div>parms:' + JSON.stringify(loc_parms) + '</div>');
+			$(view).append(loc_parmsView);
+		},
 		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
 			return loc_getUpdateRuntimeContextRequest(runtimeContext);	

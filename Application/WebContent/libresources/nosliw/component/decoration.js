@@ -73,7 +73,7 @@ var node_createDecoration = function(decorationInfo){
 			loc_runtimeObject.updateLifecycleEntityObject(lifecycleEntityObj);
 		},
 		
-		
+		updateView : function(view){   return loc_runtimeObject.updateView(view);      },
 		
 		registerEventListener : function(listener, handler, thisContext){	return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
 		unregisterEventListener : function(listener){	return loc_eventSource.unregister(listener); },

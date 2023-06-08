@@ -26,6 +26,18 @@ function(complexEntityDef, variableGroupId, bundleCore, configure){
 
 	var loc_out = {
 		
+		updateView : function(view){
+			var rootViewWrapper = $('<div/>');
+			$(view).append(rootViewWrapper);
+	
+			loc_selectionView = $('<select/>');
+			rootViewWrapper.append(loc_selectionView);
+			
+			loc_selectionView.append($('<option>'+loc_OPTION_NONE+'</option>'));
+			loc_selectionView.append($('<option>'+loc_OPTION_ERROR+'</option>'));
+			loc_selectionView.append($('<option>'+loc_OPTION_EXCEPTION+'</option>'));
+		},
+		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){		
 			return loc_getUpdateRuntimeContextRequest(runtimeContext);	
 		},

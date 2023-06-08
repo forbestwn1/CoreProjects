@@ -55,6 +55,11 @@ var node_createApplication = function(resourceId, configure){
 			return packageRuntime.getPreInitRequest(handlers, request);
 		},
 		
+		updateView : function(view){    
+			loc_parentView = view;
+			loc_getPackageRuntime().updateView(view);     
+		},
+		
 		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreApplication", {}), handlers, request);
 			loc_parentView = runtimeContext.view;

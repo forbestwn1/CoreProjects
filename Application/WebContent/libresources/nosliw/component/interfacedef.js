@@ -305,7 +305,12 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 			}
 		},
 		
-		
+		updateView : function(view){
+			if(loc_rawComponentCore.updateView!=undefined){
+				return loc_rawComponentCore.updateView(view);
+			}
+			else  return view;
+		},
 
 		
 		

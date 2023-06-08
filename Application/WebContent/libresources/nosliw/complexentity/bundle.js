@@ -131,6 +131,10 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 			return out;
 		},
 		
+		updateView : function(view){    
+			loc_parentView = view;
+			loc_getMainEntity().updateView(view);     
+		},
 		
 		getBundleDefinition : function(){		return loc_bundleDef;	},
 		

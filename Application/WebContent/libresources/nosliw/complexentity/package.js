@@ -137,6 +137,11 @@ var node_createPackageCore = function(resourceId, configure){
 			return out;
 		},
 		
+		updateView : function(view){    
+			loc_parentView = view;
+			loc_getMainBundleRuntime().updateView(view);     
+		},
+		
 		getPostInitRequest : function(handlers, request){	return loc_getMainBundleRuntime().getPostInitRequest(handlers, request);	},
 		
 		

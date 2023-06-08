@@ -103,6 +103,23 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		});
 	};
 
+
+	var loc_updateView = function(view){
+		var newView = view;
+		for(var i=loc_layers.length-1; i>=0; i--){
+			var layer = loc_layers[i];
+			var returnView;
+			if(i==0){
+				returnView = node_getComponentInterface(layer).updateView(newView);
+			} 
+			else{
+				returnView = layer.updateView(newView);
+			}
+			if(returnView!=undefined)  newView = returnView;
+		}
+		return newView;
+	};
+
 	
 	//process runtime context from top layer to bottom layer
 	//any layer can modify runtime context (view and backup store) and return new runtime context and pass the new runtime context to next layer
@@ -277,15 +294,11 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			loc_applyEnvInterfaceToCore();
 		},
 
-		updateBackupStateObject : function(backupStateObj){
-			loc_updateBackupStateObject(backupStateObj);
-		},
+		updateBackupStateObject : function(backupStateObj){		loc_updateBackupStateObject(backupStateObj);		},
 		
-		updateLifecycleEntityObject : function(lifecycleEntityObj){
-			loc_updateLifecycleEntityObject(lifecycleEntityObj);
-		},
+		updateLifecycleEntityObject : function(lifecycleEntityObj){		loc_updateLifecycleEntityObject(lifecycleEntityObj);		},
 
-		
+		updateView : function(view){		return loc_updateView(view);		},
 		
 		
 		registerEventListener : function(listener, handler, thisContext){  return loc_eventSource.registerListener(undefined, listener, handler, thisContext); },
