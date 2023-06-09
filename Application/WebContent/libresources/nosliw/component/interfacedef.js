@@ -226,27 +226,6 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 			return node_componentUtility.getInterfaceCallRequest(loc_rawComponentCore, node_getComponentInterface, "getPreInitRequest", [], handlers, request);
 		},
 		
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("WrapperUpdateRuntimeContextRequestCore", {}), handlers, request);
-			if(loc_isDebugMode()){
-				loc_getDebugView().logMethodCalled(node_CONSTANT.COMPONENT_INTERFACE_UPDATERUNTIMECONTEXT,
-						{
-							"runtimeContext" : runtimeContext
-						});
-				$(runtimeContext.view).append(loc_debugView.getView());
-				runtimeContext.view = loc_debugView.getWrapperView();
-			}
-			
-//			loc_backupState = runtimeContext.backupState;
-			
-//			loc_lifecycleEntity = runtimeContext.lifecycleEntity;
-//			loc_lifecycleEntity.setComponentCore(this);
-			
-			if(loc_rawComponentCore.getUpdateRuntimeContextRequest!=undefined)  out.addRequest(loc_rawComponentCore.getUpdateRuntimeContextRequest(runtimeContext));
-			else out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){return runtimeContext}));
-			return out;
-		},
-
 		getPostInitRequest : function(handlers, request){
 			return node_componentUtility.getInterfaceCallRequest(loc_rawComponentCore, node_getComponentInterface, "getPostInitRequest", [], handlers, request);
 		},
@@ -330,7 +309,7 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 var node_getComponentInterface = function(baseObject){
 	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPONENTENTITY);
 	if(out!=undefined)   return out;
-	else return baseObject; 
+	return baseObject;
 };
 
 

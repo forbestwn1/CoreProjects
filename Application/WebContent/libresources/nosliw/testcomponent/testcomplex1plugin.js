@@ -160,49 +160,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			});
 		},
 		
-		//call back to provide runtime context : view (during init phase)
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UpdateRuntimeContextCoreTextComplex", {}), handlers, request);
-
-			loc_parentView = $(runtimeContext.view);
-//			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
-			loc_mainView = $('<div style="border-width:thick; border-style:solid; border-color:black">testComplex</div>');
-			loc_parentView.append(loc_mainView);
-			
-			//complex children
-
-			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
-				var attrName = child.getChildName();
-				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
-				var attributeView = $('<div>childAttr: '+attrName+'</div>');
-
-				//adapter view
-				if(child.getAdapters!=undefined){
-					_.each(child.getAdapters(), function(adapter, adapterName){
-						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
-						attributeView.append(adapterView);
-						adapterView.click(function() {
-							var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
-							node_requestServiceProcessor.processRequest(adapterExecuteRequest);
-						});
-					});
-				}
-
-				var childView = $('<div style="margin-left:10px;" />');
-				attributeView.append(childView);
-				rootViewWrapper.append(attributeView);
-				loc_mainView.append(rootViewWrapper);
-				loc_childrenViews[attrName] = childView;
-				
-				var childComponentInterface = node_getComponentInterface(child.getChildValue());
-				
-				var childRuntimeContext = node_componentUtility.makeChildRuntimeContext(runtimeContext, attrName, childView); 
-				out.addRequest(childComponentInterface.getUpdateRuntimeContextRequest(childRuntimeContext));
-			});
-			
-			return out;
-		},
-
 		setEnvironmentInterface : function(envInterface){
 			loc_envInterface = envInterface;
 		},

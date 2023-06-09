@@ -87,8 +87,7 @@ var node_makeObjectBasicEntityObjectInterface = function(rawEntity, entityDefini
 };
 
 var node_getBasicEntityObjectInterface = function(baseObject){
-	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_BASICENTITY);
-	return out!=undefined?out:baseObject;
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_BASICENTITY);
 };
 
 
@@ -186,8 +185,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 };
 
 var node_getComplexEntityObjectInterface = function(baseObject){
-	var out = node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
-	return out!=undefined?out:baseObject;
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
 };
 
 var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
