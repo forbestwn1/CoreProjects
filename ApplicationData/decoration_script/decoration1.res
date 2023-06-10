@@ -20,8 +20,6 @@ function(configure){
 
 	var loc_logContent = "";
 
-	var loc_runtimeInteface;
-
 	var loc_init = function(){
 		loc_logContent = loc_logContent + JSON.stringify(loc_configure.getConfigureValue(), null, 4) + "\n";
 	};
@@ -33,8 +31,18 @@ function(configure){
 
 	var loc_out = {
 			
-		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-//			loc_runtimeInteface = runtimeInteface;
+		updateView : function(view){
+			loc_parentView = $(view);
+			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration1</div>');
+			loc_wrapperView = $('<div></div>');
+			loc_logView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
+			loc_wrapperView.append(loc_logView);
+			loc_mainView.append(loc_wrapperView);
+			loc_parentView.append(loc_mainView);
+
+			loc_logView.val(loc_logContent);
+			
+			return loc_wrapperView.get();
 		},
 			
 		//call back to provide runtime context : view (during init phase)

@@ -126,7 +126,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var unknowVarStr = JSON.stringify(loc_unknownVars, null, 4);
 			var unknownView =  $('<div>Unknow Variables : '+unknowVarStr+'</div>');
 			rootView.append(unknownView);	
-		};
+		},
 	};
 	
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);

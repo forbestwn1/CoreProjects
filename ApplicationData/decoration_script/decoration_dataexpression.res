@@ -18,44 +18,45 @@ function(configure){
 	
 	var loc_configure = configure;
 
-	var loc_logContent = "";
+	var loc_envInterface;
 
-	var loc_runtimeInteface;
+	var loc_logContent;
 
 	var loc_init = function(){
 		loc_logContent = loc_logContent + JSON.stringify(loc_configure.getConfigureValue(), null, 4) + "\n";
 	};
 
-	var loc_log = function(content){
-		loc_logContent = loc_logContent + content;
-		loc_logView.val(loc_logText);
-	};
-
 	var loc_out = {
 			
-		getUpdateRuntimeInterfaceRequest : function(runtimeInteface, handlers, request){
-			loc_runtimeInteface = runtimeInteface;
-		},
+		updateView : function(view){
+			loc_parentView = $(view);
+			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Expression</div>');
+			loc_wrapperView = $('<div></div>');
+			loc_logView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
+			loc_wrapperView.append(loc_logView);
+			loc_mainView.append(loc_wrapperView);
+			loc_parentView.append(loc_mainView);
+
+			loc_logView.val(loc_logContent);
 			
-		//call back to provide runtime context : view (during init phase)
-		getUpdateRuntimeContextRequest : function(runtimeContext, handlers, request){
-			loc_parentView = $(runtimeContext.view);
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration1</div>');
-				loc_wrapperView = $('<div></div>');
-				loc_logView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
-				loc_wrapperView.append(loc_logView);
-				loc_mainView.append(loc_wrapperView);
-				loc_parentView.append(loc_mainView);
-
-				loc_logView.val(loc_logContent);
-				
-				return _.extend({}, runtimeContext, {
-					view : loc_wrapperView.get(),
-				});
-			}, handlers, request);
+			return loc_wrapperView.get();
 		},
-
+		
+		getPostInitRequest : function(handlers, request){
+			var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
+			var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
+			var expressionIds = coreEntity.getAllExpressionIds();
+			
+			loc_logContent = loc_logContent + "\n\n\n";
+			_.each(expressionIds, function(expressionId, i){
+				loc_logContent = loc_logContent + expressionId + "\n";
+			});
+			loc_logView.val(loc_logContent);
+		},
+		
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
+		},
 	};
 	
 	loc_init();

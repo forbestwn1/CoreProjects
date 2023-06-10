@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_getComponentInterface;
 	var node_getObjectId;
+	var node_getEmbededEntityInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -61,7 +62,9 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
 	var loc_applyEnvInterfaceToCore = function(){
 		if(loc_environmentInterface!=undefined&&loc_getCore()!=undefined){
-			loc_getCore.setEnvironmentInterface(loc_environmentInterface);
+			_.each(loc_environmentInterface, function(envInt, name){
+				node_getEmbededEntityInterface(loc_getCore()).setEnvironmentInterface(name, envInt);
+			});
 		}
 	};
 
@@ -341,6 +344,7 @@ nosliw.registerSetNodeDataEvent("component.createDecoration", function(){node_cr
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
+nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

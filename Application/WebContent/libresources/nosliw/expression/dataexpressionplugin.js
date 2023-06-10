@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ResourceId;
 	var node_resourceUtility;
 	var node_componentUtility;
+	var node_createServiceRequestInfoSimple;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -62,6 +63,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionGroupPlugin", node_createDataExpressionGroupPlugin); 
