@@ -53,6 +53,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 			//read content and parse it
 			rootEntityId = parseEntity(HAPUtilityFile.readFile(resourceLocInfo.getFiile()), new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
 			resourceDomain.setRootEntityId(rootEntityId);
+			resourceDomain.getEntityInfoDefinition(rootEntityId).setResourceId(rootResourceId);
 		}
 		else {
 			//if root resource already loaded

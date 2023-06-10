@@ -45,7 +45,7 @@ public abstract class HAPResourceDefinitionComplexImp extends HAPDefinitionEntit
 
 	@Override
 	public void cloneToResourceDefinition(HAPResourceDefinition1 resourceDef) {
-		resourceDef.setResourceId(this.getResourceId()==null?null:this.getResourceId().clone());
+		resourceDef.setReferedResourceId(this.getResourceId()==null?null:this.getResourceId().clone());
 	}
 
 	@Override

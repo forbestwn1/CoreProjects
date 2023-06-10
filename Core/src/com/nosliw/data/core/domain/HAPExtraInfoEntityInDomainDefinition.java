@@ -12,7 +12,7 @@ public class HAPExtraInfoEntityInDomainDefinition extends HAPEntityInfoImp{
 	
 	//for id from external system
 	private String m_globalId;
-	
+
 	public HAPExtraInfoEntityInDomainDefinition() {
 		this.m_alias = new HashSet<String>();
 	}

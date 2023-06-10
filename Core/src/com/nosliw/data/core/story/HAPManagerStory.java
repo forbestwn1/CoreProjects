@@ -85,7 +85,7 @@ public class HAPManagerStory {
 	public HAPResourceDefinition1 buildShow(HAPStory story) {
 		HAPResourceDefinition1 out = this.m_resourceDefinitionBuilders.get(story.getShowType()).buildShow(story);
 		String tempFileName = HAPUtilityStory.exportBuildResourceDefinition(story, out);
-		out.setResourceId(HAPUtilityResourceId.createFileBaseResourceId(story.getShowType(), tempFileName));
+		out.setReferedResourceId(HAPUtilityResourceId.createFileBaseResourceId(story.getShowType(), tempFileName));
 		return out;
 	}
 

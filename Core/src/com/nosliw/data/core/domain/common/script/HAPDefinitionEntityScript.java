@@ -1,21 +1,17 @@
 package com.nosliw.data.core.domain.common.script;
 
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPDefinitionEntityScript extends HAPDefinitionEntityInDomain{
+public interface HAPDefinitionEntityScript {
 
 	public static final String ATTR_SCRIPT = "script";
-
-	public HAPDefinitionEntityScript() {}
-
-	public void setScript(String script) {    this.setNormalAttributeObject(ATTR_SCRIPT, new HAPEmbededDefinition(script));    }
-	public String getScript() {   return (String)this.getNormalAttributeValue(ATTR_SCRIPT);     }
-
-	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityScript out = new HAPDefinitionEntityScript();
-		out.cloneToDefinitionEntityInDomain(out);
-		return out;
-	}
+	
+	public static final String ATTR_RESOURCEID = "resourceId";
+	
+	void setScript(String script);
+	String getScript();
+	
+	void setScriptResourceId(HAPResourceId resourceId);
+	HAPResourceId getScriptResourceId();
+	
 }

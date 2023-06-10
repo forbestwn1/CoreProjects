@@ -70,9 +70,9 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
 		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId);
 		if(out.getEntity()==null){
-			if(out.getResourceId()!=null) {
+			if(out.getReferedResourceId()!=null) {
 				if(out.isLocalResourceReference() || out.isGlobalSimpleResourceReference()) {
-					HAPIdEntityInDomain resourceEntityId = this.m_resourceDefinitionManager.getResourceDefinition(out.getResourceId(), this, entityId.getDomainId()).getEntityId();
+					HAPIdEntityInDomain resourceEntityId = this.m_resourceDefinitionManager.getResourceDefinition(out.getReferedResourceId(), this, entityId.getDomainId()).getEntityId();
 					HAPInfoEntityInDomainDefinition entityInfo = this.getEntityInfoDefinition(resourceEntityId);
 					HAPUtilityEntityInfo.softMerge(out.getExtraInfo(), entityInfo.getExtraInfo());
 					out.setEntity(entityInfo.getEntity());

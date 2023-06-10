@@ -114,7 +114,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 		}
 		else if(type.equals(HAPConstantShared.RESOURCEID)) {
 			HAPResourceId resourceId = (HAPResourceId)entityOrRef;
-			out.setResourceId(resourceId);
+			out.setReferedResourceId(resourceId);
 			entityType = resourceId.getResourceType();
 		}
 		else if(type.equals(HAPConstantShared.REFERENCE)) {

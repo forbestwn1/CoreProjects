@@ -38,8 +38,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	@Override
 	public HAPIdEntityInDomain parseDefinition(Object obj, HAPContextParser parserContext) {
 		HAPIdEntityInDomain out = null;
-		try {
-			
+		try {			
 			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
 			entity.setEntityType(this.getEntityType());
 			
@@ -48,6 +47,9 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 
 			//parse entity content
 			this.parseDefinitionContent(out, obj, parserContext);
+
+			//plugin can do do something after parse
+			postParseDefinitionContent(out, parserContext);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -66,12 +68,17 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 
 			//parse entity content
 			this.parseDefinitionContent(entityId, obj, parserContext);
+			
+			//plugin can do do something after parse
+			postParseDefinitionContent(entityId, parserContext);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
+	
+	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {}
 	
 	protected JSONObject convertToJsonObject(Object obj) {
 		JSONObject out = null;
@@ -80,8 +87,12 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		return out;
 	}
 
+	protected HAPInfoEntityInDomainDefinition getEntityDefinitionInfo(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		return parserContext.getGlobalDomain().getEntityInfoDefinition(entityId);
+	}
+	
 	protected HAPDefinitionEntityInDomain getEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		return parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
+		return this.getEntityDefinitionInfo(entityId, parserContext).getEntity();
 	}
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }

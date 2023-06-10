@@ -219,7 +219,7 @@ public class HAPManagerDomainEntityExecutable {
 		}
 		else {
 			//for globle complex entity
-			HAPIdComplexEntityInGlobal globalId = getComplexEntityGolbalIdResourceId(entityDefInfo.getResourceId());
+			HAPIdComplexEntityInGlobal globalId = getComplexEntityGolbalIdResourceId(entityDefInfo.getReferedResourceId());
 			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
 			out = complexResourceBundle.addExecutableEntity(globalId, exeExtraInfo);
 		}

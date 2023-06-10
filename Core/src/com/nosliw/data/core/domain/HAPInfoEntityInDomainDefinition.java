@@ -24,10 +24,10 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public static final String ENTITY = "entity";
 	
 	//resource id
-	public static final String RESOURCEID = "resourceId";
+	public static final String REFEREDRESOURCEID = "referedResourceId";
 
 	//resource id
-	public static final String RESOURCE = "resource";
+	public static final String RESOURCEID = "resourceId";
 
 	//reference to attachment
 	public static final String REFERENCE = "reference";
@@ -56,7 +56,10 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	//reference to data in attachment
 	private HAPReferenceAttachment m_reference;
 	
-	//reference to other resource
+	//reference to other external resource
+	private HAPResourceId m_refResourceId;
+	
+	//resource id for current entity
 	private HAPResourceId m_resourceId;
 	
 	public HAPInfoEntityInDomainDefinition() {
@@ -77,6 +80,9 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public HAPReferenceAttachment getAttachmentReference() {   return this.m_reference;    }
 	public void setAttachmentReference(HAPReferenceAttachment attachmentRef) {    this.m_reference = attachmentRef;    }
 	
+	public HAPResourceId getReferedResourceId() {    return this.m_refResourceId;    }
+	public void setReferedResourceId(HAPResourceId resourceId) {   this.m_refResourceId = resourceId;    }
+	
 	public HAPResourceId getResourceId() {    return this.m_resourceId;    }
 	public void setResourceId(HAPResourceId resourceId) {   this.m_resourceId = resourceId;    }
 	
@@ -91,8 +97,8 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public boolean isSolid() {   return this.m_entity!=null;   }
 	public boolean isAttachmentReference() {   return this.m_reference!=null;    }
 	public boolean isLocalResourceReference() {    
-		if(this.m_resourceId==null)  return false;
-		if(this.m_resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) return true;
+		if(this.m_refResourceId==null)  return false;
+		if(this.m_refResourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) return true;
 		return false;
 	}
 	public boolean isGlobalResourceReference() {	return !this.isLocalResourceReference();	}
@@ -104,6 +110,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 		out.m_entityType = this.m_entityType;
 		if(this.m_entity!=null)  out.m_entity = this.m_entity.cloneEntityDefinitionInDomain();
 		if(this.m_entityId!=null)   out.m_entityId = this.m_entityId.cloneValue();
+		if(this.m_refResourceId!=null)  out.m_refResourceId = this.m_refResourceId.clone();
 		if(this.m_resourceId!=null)  out.m_resourceId = this.m_resourceId.clone();
 		if(this.m_reference!=null)   out.m_reference = this.m_reference.cloneAttachmentReference();
 		if(this.m_extraInfo!=null)  out.m_extraInfo = this.m_extraInfo.cloneExtraInfo();
@@ -123,8 +130,8 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toExpandedJsonString(entityDefDomain));
 		
-		if(this.m_resourceId!=null) {
-			HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.getEntityInfoByResourceId(m_resourceId, this.getEntityId().getDomainId(), entityDefDomain);
+		if(this.m_refResourceId!=null) {
+			HAPInfoEntityInDomainDefinition entityInfo = HAPUtilityDomain.getEntityInfoByResourceId(m_refResourceId, this.getEntityId().getDomainId(), entityDefDomain);
 			if(entityInfo!=null)	jsonMap.put(ENTITY, entityInfo.toExpandedJsonString(entityDefDomain));
 		}
 		
@@ -140,6 +147,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		if(this.m_entityId!=null)   jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_refResourceId!=null)  jsonMap.put(REFEREDRESOURCEID, this.m_refResourceId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_resourceId!=null)  jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_reference!=null)   jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_extraInfo!=null)   jsonMap.put(INFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
