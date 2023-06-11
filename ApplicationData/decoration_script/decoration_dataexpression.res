@@ -14,7 +14,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_parentView;
 	var loc_mainView;
 	var loc_wrapperView;
-	var loc_logView;
+	var loc_expressionListView;
+	var loc_expressionResultView;
 	
 	var loc_configure = configure;
 
@@ -24,6 +25,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_init = function(){
 		loc_logContent = loc_logContent + JSON.stringify(loc_configure.getConfigureValue(), null, 4) + "\n";
+	};
+
+	var loc_calcuateExpression = function(expressionId){
+	
 	};
 
 	var loc_out = {
@@ -37,13 +42,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			loc_parentView = $(view);
 			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Expression</div>');
 			loc_wrapperView = $('<div></div>');
-			loc_logView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
-			loc_wrapperView.append(loc_logView);
+			loc_expressionListView = $('<div></div>');
+			loc_expressionResultView = $('<div></div>');
+
+			loc_mainView.append(loc_expressionListView);
+			loc_mainView.append(loc_expressionResultView);
 			loc_mainView.append(loc_wrapperView);
 			loc_parentView.append(loc_mainView);
 
-			loc_logView.val(loc_logContent);
-			
 			return loc_wrapperView.get();
 		},
 		
@@ -52,11 +58,18 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
 			var expressionIds = coreEntity.getAllExpressionIds();
 			
-			loc_logContent = loc_logContent + "\n\n\n";
-			_.each(expressionIds, function(expressionId, i){
-				loc_logContent = loc_logContent + expressionId + "\n";
+			loc_expressionListView.empty();
+			_.each(expressionIds, function(expressionId){
+				var itemView = $('<a>'+expressionId+'</a>');
+				itemView.on("click",function(){
+					loc_calcuateExpression(expressionId);
+				});
+				
+				loc_expressionListView.append($('<br><br>'));
+				loc_expressionListView.append(itemView);
+				loc_expressionListView.append($('<br><br>'));
+			
 			});
-			loc_logView.val(loc_logContent);
 		},
 		
 		setEnvironmentInterface : function(envInterface){
