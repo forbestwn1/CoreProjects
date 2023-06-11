@@ -177,8 +177,6 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, node_createDataExpressionGroupPlugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createScriptBasedPlugin());
 
-
-
 		//simple entity plugin
 		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, node_createDataServiceEntityPlugin());
 
@@ -221,7 +219,7 @@ var node_createComplexEntityRuntimeService = function() {
 						success : function(request){
 							//try pass envInterface to main entity
 							if(envInterface!=undefined){
-								var embededInterface = node_getEmbededEntityInterface(application.getPackageRuntime().getCoreEntity().getMainBundleRuntime().getCoreEntity().getMainEntity());
+								var embededInterface = node_getEmbededEntityInterface(application.getMainEntityRuntime());
 								_.each(envInterface, function(interfacee, name){
 									embededInterface.setEnvironmentInterface(name, interfacee);
 								});
@@ -242,7 +240,11 @@ var node_createComplexEntityRuntimeService = function() {
 								node_getComponentInterface(application).updateView(runtimeContext.view);
 							}
 
-							return application;
+							return node_getComponentInterface(application).getPostInitRequest({
+								success : function(request){
+									return application;
+								}
+							});
 						}
 					});
 				}

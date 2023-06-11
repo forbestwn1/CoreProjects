@@ -68,7 +68,6 @@ var node_createPackageCore = function(resourceId, configure){
 		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_BUNDLE_NAME).getChildValue();
 	};
 
-	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
 		//load resource first
@@ -103,6 +102,8 @@ var node_createPackageCore = function(resourceId, configure){
 		getDataType: function(){    return  "package";   },
 
 		getMainBundleRuntime : function(){   return loc_getMainBundleRuntime();     },
+
+		getMainEntityRuntime : function(){ return this.getMainBundleRuntime().getCoreEntity().getMainEntity();  },
 
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		

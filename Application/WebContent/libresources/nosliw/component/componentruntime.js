@@ -33,9 +33,6 @@ var packageObj = library;
 //    runtimeContext : other infor related with runtime obj, rootView, backupState
 var node_createComponentRuntime = function(componentCore, decorationInfos, request){
 	
-	//interface env for access to external env
-	var loc_interfaceEnv;
-	
 	var loc_componentCoreComplex;
 
 	var loc_lifeCycleStatus;
@@ -122,7 +119,7 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 			return task.getProcessRequest(handlers, request);
 		},
 		
-		setEnvironmentInterface : function(envInterface){		loc_componentCoreComplex.setEnvironmentInterface(envInterface);		},	
+		setEnvironmentInterface : function(name, envInterface){		loc_componentCoreComplex.setEnvironmentInterface(name, envInterface);		},	
 			
 		updateBackupStateObject : function(backupStateObj){		loc_componentCoreComplex.updateBackupStateObject(backupStateObj);		},
 
@@ -170,7 +167,6 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 //	});
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME);
-	loc_out = node_makeObjectWithEmbededEntityInterface(loc_out);
 	
 	loc_out.id = nosliw.generateId();
 	loc_out.dataType = node_getComponentInterface(loc_componentCoreComplex.getCore()).getDataType();

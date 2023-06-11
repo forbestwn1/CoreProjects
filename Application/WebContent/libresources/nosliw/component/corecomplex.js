@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_getComponentInterface;
 	var node_getObjectId;
 	var node_getEmbededEntityInterface;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
@@ -28,8 +29,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_runtimeContext;
 	
-	var loc_interfaceEnv;
-	
 	//component core and decoration layers
 	var loc_layers = [];
 
@@ -38,7 +37,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 	var loc_lifecycleEntity;
 	
-	var loc_environmentInterface;
+	var loc_environmentInterface = {};
+	var loc_applyEnvInterface = false;
 	
 	//current lifecycle status
 	var loc_lifecycleStatus;
@@ -53,7 +53,6 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	var loc_init = function(componentCore, decorationInfos){
 		var coreLayer = componentCore;
 		loc_addLayer(coreLayer);	
-		loc_applyEnvInterfaceToCore();
 
 		for(var i in decorationInfos){  
 			loc_addDecoration(decorationInfos[i]);	
@@ -61,10 +60,22 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	};
 	
 	var loc_applyEnvInterfaceToCore = function(){
-		if(loc_environmentInterface!=undefined&&loc_getCore()!=undefined){
-			_.each(loc_environmentInterface, function(envInt, name){
-				node_getEmbededEntityInterface(loc_getCore()).setEnvironmentInterface(name, envInt);
-			});
+		if(loc_applyEnvInterface==true){
+			var coreEntity = loc_getCore();
+			if(loc_environmentInterface!=undefined&&coreEntity!=undefined){
+				var coreEntityType = node_getObjectType(coreEntity);
+				var appliedCoreEntity = coreEntity;
+				if(coreEntityType==node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION||coreEntityType==node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE||coreEntityType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+					appliedCoreEntity = coreEntity.getMainEntityRuntime(); 
+				}
+				else{
+					appliedCoreEntity = node_getEmbededEntityInterface(coreEntity); 
+				}
+				
+				_.each(loc_environmentInterface, function(envInt, name){
+					appliedCoreEntity.setEnvironmentInterface(name, envInt);
+				});
+			}
 		}
 	};
 
@@ -77,6 +88,10 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		_.each(loc_layers, function(layer, i){
 			out.addRequest(loc_getLayerInterfaceObj(i).getPreInitRequest());
 		});
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			loc_applyEnvInterface = true;
+			loc_applyEnvInterfaceToCore();
+		}));
 		return out;
 	};
 	
@@ -225,7 +240,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 		commands[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE] = function(){
 			return loc_getCore();
 		};
-		node_getEmbededEntityInterface(decoration).setEnvironmentInterface(node_CONSTANT.INTERFACE_ENV_DECORATION, commands);
+		decoration.setEnvironmentInterface(node_CONSTANT.INTERFACE_ENV_DECORATION, commands);
 		
 		loc_addLayer(decoration);
 	};
@@ -261,8 +276,8 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 
 		getPostInitRequest : function(handlers, request){	return loc_getPostInitRequest(handlers, request);	},
 		
-		setEnvironmentInterface : function(envInterface){
-			loc_environmentInterface = envInterface;
+		setEnvironmentInterface : function(name, envInterface){
+			loc_environmentInterface[name] = envInterface;
 			loc_applyEnvInterfaceToCore();
 		},
 
@@ -345,6 +360,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

@@ -26,7 +26,8 @@ var node_createDecoration = function(decorationInfo){
 	
 	var loc_runtimeObject;
 	
-	var loc_environmentInterface;
+	var loc_environmentInterface = {};
+	var loc_applyEnvInterface = false;
 	
 	var loc_eventSource = node_createEventObject();
 	var loc_eventListener = node_createEventObject();
@@ -35,8 +36,12 @@ var node_createDecoration = function(decorationInfo){
 	var loc_valueChangeEventListener = node_createEventObject();
 
 	var loc_applyEnvInterfaceToRuntime = function(){
-		if(loc_environmentInterface!=undefined&&loc_runtimeObject!=undefined){
-			loc_runtimeObject.setEnvironmentInterface(loc_environmentInterface);
+		if(loc_applyEnvInterface==true){
+			if(loc_environmentInterface!=undefined&&loc_runtimeObject!=undefined){
+				_.each(loc_environmentInterface, function(envInterface, name){
+					loc_runtimeObject.setEnvironmentInterface(name, envInterface);
+				});
+			}
 		}
 	};
 
@@ -47,18 +52,23 @@ var node_createDecoration = function(decorationInfo){
 		getDecorationInfo : function(){    return loc_decorationInfo;     },
 
 		getPreInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
-			loc_applyEnvInterfaceToRuntime();
-			return loc_runtimeObject.getPreInitRequest(handlers, request);
+			out.addRequest(loc_runtimeObject.getPreInitRequest());
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_applyEnvInterface = true;
+				loc_applyEnvInterfaceToRuntime();
+			}));
+			return out;
 		},
 
 		getPostInitRequest : function(handlers, request){
 			return loc_runtimeObject.getPostInitRequest(handlers, request);
 		},
 
-		setEnvironmentInterface : function(envInterface){
-			loc_environmentInterface = envInterface;
-			loc_applyEnvInterfaceToRuntime();
+		setEnvironmentInterface : function(name, envInterface){
+			loc_environmentInterface[name] = envInterface;
+				loc_applyEnvInterfaceToRuntime();
 		},
 
 		updateBackupStateObject : function(backupStateObj){
@@ -79,9 +89,7 @@ var node_createDecoration = function(decorationInfo){
 		
 	};
 	
-	loc_out = node_makeObjectWithEmbededEntityInterface(loc_out);
 	return loc_out;
-	
 };
 	
 //component decoration

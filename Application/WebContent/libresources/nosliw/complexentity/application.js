@@ -48,6 +48,8 @@ var node_createApplication = function(resourceId, configure){
 
 		getPackageRuntime : function(){   return loc_getPackageRuntime();   },
 		
+		getMainEntityRuntime : function(){ return this.getPackageRuntime().getCoreEntity().getMainBundleRuntime().getCoreEntity().getMainEntity();  },
+		
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 
 		getPreInitRequest : function(handlers, request){   
