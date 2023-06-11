@@ -15,7 +15,7 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createTestComplexScriptPlugin = function(){
+var node_createTestComplexScriptPlugin1 = function(){
 	
 	var loc_out = {
 
@@ -56,6 +56,6 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTestComplexScriptPlugin", node_createTestComplexScriptPlugin); 
+packageObj.createChildNode("createTestComplexScriptPlugin1", node_createTestComplexScriptPlugin1); 
 
 })(packageObj);

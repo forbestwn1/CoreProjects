@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.common.script;
 
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public interface HAPDefinitionEntityScript {
+public interface HAPDefinitionEntityScriptBased {
 
 	public static final String ATTR_SCRIPT = "script";
 	

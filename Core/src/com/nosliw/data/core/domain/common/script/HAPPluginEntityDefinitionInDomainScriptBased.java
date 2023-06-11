@@ -6,18 +6,18 @@ import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainScriptBase extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainScriptBased extends HAPPluginEntityDefinitionInDomainImp{
 
 	private boolean m_isComplex = false;
 	
-	public HAPPluginEntityDefinitionInDomainScriptBase(String entityType, boolean isComplex, HAPRuntimeEnvironment runtimeEnv) {
-		super(entityType, isComplex?HAPDefinitionEntityScriptComplex.class:HAPDefinitionEntityScriptSimple.class, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainScriptBased(String entityType, boolean isComplex, HAPRuntimeEnvironment runtimeEnv) {
+		super(entityType, isComplex?HAPDefinitionEntityScriptBasedComplex.class:HAPDefinitionEntityScriptBasedSimple.class, runtimeEnv);
 		this.m_isComplex = isComplex;
 	}
 	
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		HAPDefinitionEntityScript entity = (HAPDefinitionEntityScript)this.getEntity(entityId, parserContext);
+		HAPDefinitionEntityScriptBased entity = (HAPDefinitionEntityScriptBased)this.getEntity(entityId, parserContext);
 		entity.setScript(obj+"");
 	}
 
@@ -25,7 +25,7 @@ public class HAPPluginEntityDefinitionInDomainScriptBase extends HAPPluginEntity
 	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		HAPResourceId resourceId = this.getEntityDefinitionInfo(entityId, parserContext).getResourceId();
 		if(resourceId!=null) {
-			HAPDefinitionEntityScript entity = (HAPDefinitionEntityScript)this.getEntity(entityId, parserContext);
+			HAPDefinitionEntityScriptBased entity = (HAPDefinitionEntityScriptBased)this.getEntity(entityId, parserContext);
 			entity.setScriptResourceId(resourceId);
 		}
 	}

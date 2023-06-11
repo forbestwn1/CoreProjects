@@ -4,9 +4,9 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPDefinitionEntityScriptSimple extends HAPDefinitionEntityInDomain implements HAPDefinitionEntityScript{
+public class HAPDefinitionEntityScriptBasedSimple extends HAPDefinitionEntityInDomain implements HAPDefinitionEntityScriptBased{
 
-	public HAPDefinitionEntityScriptSimple() {}
+	public HAPDefinitionEntityScriptBasedSimple() {}
 
 	@Override
 	public void setScript(String script) {    this.setNormalAttributeObject(ATTR_SCRIPT, new HAPEmbededDefinition(script));    }
@@ -20,7 +20,7 @@ public class HAPDefinitionEntityScriptSimple extends HAPDefinitionEntityInDomain
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityScriptSimple out = new HAPDefinitionEntityScriptSimple();
+		HAPDefinitionEntityScriptBasedSimple out = new HAPDefinitionEntityScriptBasedSimple();
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}

@@ -24,10 +24,10 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	public static final String ENTITY = "entity";
 	
 	//resource id
-	public static final String REFEREDRESOURCEID = "referedResourceId";
+	public static final String RESOURCEID = "resourceId";
 
 	//resource id
-	public static final String RESOURCEID = "resourceId";
+	public static final String CAL_RESOURCEID = "cal_resourceId";
 
 	//reference to attachment
 	public static final String REFERENCE = "reference";
@@ -147,8 +147,8 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		if(this.m_entityId!=null)   jsonMap.put(ENTITYID, this.m_entityId.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_refResourceId!=null)  jsonMap.put(REFEREDRESOURCEID, this.m_refResourceId.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_resourceId!=null)  jsonMap.put(RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_refResourceId!=null)  jsonMap.put(RESOURCEID, this.m_refResourceId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_resourceId!=null)  jsonMap.put(CAL_RESOURCEID, this.m_resourceId.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_reference!=null)   jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_extraInfo!=null)   jsonMap.put(INFO, this.m_extraInfo.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_entity!=null)   jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.script;
+package com.nosliw.data.core.domain.common.script;
 
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
@@ -11,12 +11,12 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPResourceManagerImpScript extends HAPResourceManagerImp{
+public class HAPResourceManagerImpScriptBased extends HAPResourceManagerImp{
 
 	private HAPManagerResourceDefinition m_resourceDefMan;
 	private HAPManagerDomainEntityDefinition m_entityDefMan;
 	
-	public HAPResourceManagerImpScript(HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefMan, HAPResourceManagerRoot rootResourceMan) {
+	public HAPResourceManagerImpScriptBased(HAPManagerDomainEntityDefinition entityDefMan, HAPManagerResourceDefinition resourceDefMan, HAPResourceManagerRoot rootResourceMan) {
 		super(rootResourceMan);
 		this.m_resourceDefMan = resourceDefMan;
 		this.m_entityDefMan = entityDefMan;
@@ -26,7 +26,7 @@ public class HAPResourceManagerImpScript extends HAPResourceManagerImp{
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPDomainEntityDefinitionGlobal entityDomain = new HAPDomainEntityDefinitionGlobal(m_entityDefMan, m_resourceDefMan);
 		HAPResourceDefinition resourceDef = m_resourceDefMan.getResourceDefinition(resourceId, entityDomain);
-		HAPDefinitionEntityScript scriptEntity = (HAPDefinitionEntityScript)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getEntity();
+		HAPDefinitionEntityScriptBased scriptEntity = (HAPDefinitionEntityScriptBased)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getEntity();
 		
 		HAPExecutableScript scriptExe = new HAPExecutableScript();
 		scriptExe.setScript(scriptEntity.getScript());
