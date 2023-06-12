@@ -28,7 +28,15 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	};
 
 	var loc_calcuateExpression = function(expressionId){
-	
+		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
+		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
+		var expressionIds = coreEntity.getAllExpressionIds();
+		var request = coreEntity.getExecuteDataExpressionRequest(expressionId, {
+			success : function(request, result){
+				loc_expressionResultView.val(JSON.stringify(result));
+			}
+		});
+		node_requestServiceProcessor.processRequest(request);
 	};
 
 	var loc_out = {
@@ -43,7 +51,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Expression</div>');
 			loc_wrapperView = $('<div></div>');
 			loc_expressionListView = $('<div></div>');
-			loc_expressionResultView = $('<div></div>');
+			loc_expressionResultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
 
 			loc_mainView.append(loc_expressionListView);
 			loc_mainView.append(loc_expressionResultView);

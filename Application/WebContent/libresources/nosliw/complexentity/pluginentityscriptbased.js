@@ -19,26 +19,14 @@ var node_createScriptBasedPlugin = function(){
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptBasedCoreEntity"), handlers, request);
 
-			var resourceId = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTBASED_RESOURCEID);
-			if(false){//resourceId!=undefined&&resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_STRUCUTRE]==node_COMMONCONSTANT.RESOURCEID_TYPE_SIMPLE){
-				//load script as resource
-				out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
-					success : function(requestInfo, resourceTree){
-						var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
-						return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
-		 			}
-				}));
-			}
-			else{
-				//run script
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTBASED_SCRIPT);
-					return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
-				}));
-			}
+			//run script
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTBASED_SCRIPT);
+				return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
+			}));
+
 			return out;
 		},
-			
 	};
 
 	return loc_out;

@@ -46,6 +46,8 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, conf
 		},
 		
 		getExecuteDataExpressionRequest : function(dataExpressionId, handlers, request){
+			var expressions = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+			var expression = expressions[dataExpressionId];
 			
 		},
 		
