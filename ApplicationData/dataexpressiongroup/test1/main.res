@@ -43,7 +43,7 @@
 		"element": [
 			{
 				"name" : "test1",
-				"expression" : "!(test.string)!.subString(?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
+				"expression" : "!(test.string)!.subString(base:?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
 			}
 		]		
 	}
