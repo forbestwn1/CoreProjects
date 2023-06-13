@@ -122,6 +122,10 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		
 		this.setId((String)jsonObj.opt(ID));
 		this.setName((String)jsonObj.opt(NAME));
+		
+		if(this.getId()==null)    this.setId(this.getName());
+		if(this.getName()==null)   this.setName(this.getId());
+		
 		this.setStatus((String)jsonObj.opt(STATUS));
 		this.setDisplayName((String)jsonObj.opt(DISPLAYNAME));
 		this.setDescription(jsonObj.optString(DESCRIPTION));

@@ -21,9 +21,14 @@ public class HAPOperandVariable extends HAPOperandImp{
 	@HAPAttribute
 	public final static String VARIABLEID = "variableId";
 	
+	@HAPAttribute
+	public final static String VARIABLEKEY = "variableKey";
+	
 	protected String m_variableName;
 	
 	protected HAPIdVariable m_variableId;
+	
+	protected String m_variableKey;
 	
 	private HAPOperandVariable(){}
 	
@@ -38,11 +43,15 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public HAPIdVariable getVariableId(){  return this.m_variableId;  }
 	public void setVariableId(HAPIdVariable id){   this.m_variableId = id;  }
 	
+	public String getVariableKey() {    return this.m_variableKey;    }
+	public void setVariableKey(String key) {     this.m_variableKey = key;     }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
 		jsonMap.put(VARIABLEID, m_variableId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEKEY, m_variableKey);
 	}
 
 	@Override

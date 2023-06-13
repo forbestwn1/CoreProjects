@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -18,7 +17,6 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
-import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -27,31 +25,29 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 
 	@HAPAttribute
-	public static String VARIABLEINFOS = "variableInfos";
+	public static String EXPRESSIONS = "expressions";
 
 	@HAPAttribute
-	public static String EXPRESSIONS = "expressions";
+	public static String VARIABLEINFOS = "variableInfos";
 
 	//temp info
 	private Map<String, HAPData> m_dataConstants;
-
-	public HAPExecutableExpressionGroup() {
-		this.setNormalAttributeValueObject(EXPRESSIONS, new LinkedHashMap<String, HAPExecutableExpression>());
-	}
 	
+	public HAPExecutableExpressionGroup() {
+		this.setNormalAttributeValueObject(EXPRESSIONS, new ArrayList<HAPExecutableExpression>());
+		this.setNormalAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
+	}
+
+	public List<HAPExecutableExpression> getExpressionItems(){   return (List<HAPExecutableExpression>)this.getNormalAttributeValue(EXPRESSIONS);  }
+	public void addExpressionItem(HAPExecutableExpression expressionItem) {    this.getExpressionItems().add(expressionItem);       }
+	
+
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
 	
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setNormalAttributeValueObject(VARIABLEINFOS, varInfo);  }
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getNormalAttributeValue(VARIABLEINFOS);    }
 	
-	public Map<String, HAPExecutableExpression> getExpressionItems(){   return (Map<String, HAPExecutableExpression>)this.getNormalAttributeValue(EXPRESSIONS);  }
-
-	public void addExpression(String name, HAPWrapperOperand operand) {
-		if(name==null)   name = HAPConstantShared.NAME_DEFAULT;
-		this.getExpressionItems().put(name, new HAPExecutableExpression(operand.cloneWrapper()));
-	}
-
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		Map<String, HAPInfoCriteria> discoveredVarsInf = new LinkedHashMap<String, HAPInfoCriteria>();
 		List<String> names = new ArrayList<String>();
@@ -59,11 +55,12 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 		List<HAPDataTypeCriteria> outPutCriteria = new ArrayList<HAPDataTypeCriteria>();
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		
-		for(String name : this.getExpressionItems().keySet()) {
+		for(HAPExecutableExpression expression : this.getExpressionItems()) {
+			String name = expression.getId();
 			names.add(name);
 			if(expectOutput==null)  outPutCriteria.add(null);
 			else outPutCriteria.add(expectOutput.get(name));
-			operands.add(this.getExpressionItems().get(name).getOperand().getOperand());
+			operands.add(expression.getOperand().getOperand());
 		}
 		
 		this.setVariablesInfo(HAPUtilityOperand.discover(
@@ -76,7 +73,7 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 				processTracker));
 		
 		for(int i=0; i<names.size(); i++) {
-			this.getExpressionItems().get(names.get(i)).setOutputMatchers(matchers.get(i));
+			this.getExpressionItems().get(i).setOutputMatchers(matchers.get(i));
 		}
 	}
 
@@ -88,8 +85,8 @@ public class HAPExecutableExpressionGroup extends HAPExecutableEntityComplex{
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
-		for(String id : this.getExpressionItems().keySet()) {
-			dependency.addAll(this.getExpressionItems().get(id).getResourceDependency(runtimeInfo, resourceManager));
+		for(HAPExecutableExpression expression : this.getExpressionItems()) {
+			dependency.addAll(expression.getResourceDependency(runtimeInfo, resourceManager));
 		}
 	}
 }

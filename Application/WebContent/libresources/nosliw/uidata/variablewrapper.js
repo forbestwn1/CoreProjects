@@ -88,6 +88,8 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 
+		getGetValueRequest : function(handlers, request){   return this.prv_variable.getGetValueRequest(handlers, request);  },
+
 		registerDataOperationEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataOperationEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		registerDataChangeEventListener : function(listenerEventObj, handler, thisContext){return this.prv_dataChangeEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
 		unregisterDataOperationEventListener : function(listenerEventObj){return this.prv_dataOperationEventObject.unregister(listenerEventObj);},

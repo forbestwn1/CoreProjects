@@ -425,6 +425,10 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				return out;
 			},
 			
+			getGetValueRequest : function(handlers, request){
+				return this.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), handlers, request);				
+			},
+			
 			executeDataOperationRequest : function(operationService, handlers, request){
 				var requestInfo = this.getDataOperationRequest(operationService, handlers, request);
 				node_requestServiceProcessor.processRequest(requestInfo);

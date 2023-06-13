@@ -15,7 +15,10 @@ import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueContext {
 
@@ -34,6 +37,12 @@ public class HAPUtilityValueContext {
 			}
 		}
 		return out;
+	}
+	
+	public static HAPElementStructure getStructureElement(HAPIdVariable variableId, HAPDomainValueStructure valueStructureDomain) {
+		HAPIdRootElement rootEleId = variableId.getRootElementId();
+		HAPRootStructure root = valueStructureDomain.getValueStructureDefinitionByRuntimeId(rootEleId.getValueStructureId()).getRootByName(rootEleId.getRootName());
+		return HAPUtilityStructure.getDescendant(root.getDefinition(), variableId.getElementPath().toString());
 	}
 	
 	public static List<HAPInfoValueStructureSorting> getAllValueStructuresSorted(HAPExecutableEntityValueContext valueStructureComplex){

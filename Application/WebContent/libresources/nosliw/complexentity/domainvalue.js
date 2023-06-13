@@ -181,9 +181,9 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			return out;
 		},
 
-		createVariable : function(structureRuntimeId, varPath){
+		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
-			return valueStructure.createVariable(node_createValueStructureVariableInfo(varPath));
+			return valueStructure.createVariable(node_createValueStructureVariableInfo(varPathSeg1, varPathSeg2));
 		},
 		
 		//

@@ -396,8 +396,8 @@ var node_utility = function()
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_VARIABLE: 
 			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteVariableOperand", {"operand":operand, "variables":variables}), 
 					function(requestInfo){  
-						var varName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARIABLEID];
-						return requestInfo.getService().parms.variables[varName];  
+						var varKey = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARIABLEKEY];
+						return requestInfo.getService().parms.variables[varKey];  
 					}, 
 					handlers, requestInfo);
 		    break;
