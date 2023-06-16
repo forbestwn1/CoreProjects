@@ -53,8 +53,7 @@ var node_createApplication = function(resourceId, configure){
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 
 		getPreInitRequest : function(handlers, request){   
-			var packageRuntime = loc_createPackageRuntime(request);
-			return packageRuntime.getPreInitRequest(handlers, request);
+			loc_createPackageRuntime(request);
 		},
 		
 		updateView : function(view){    
@@ -62,7 +61,7 @@ var node_createApplication = function(resourceId, configure){
 			loc_getPackageRuntime().updateView(view);     
 		},
 		
-		getPostInitRequest : function(handlers, request){	return loc_getPackageRuntime().getPostInitRequest(handlers, request);	},
+//		getPostInitRequest : function(handlers, request){	return loc_getPackageRuntime().getPostInitRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION);

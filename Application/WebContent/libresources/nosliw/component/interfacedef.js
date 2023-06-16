@@ -257,7 +257,7 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 						childValue.updateBackupStateObject(childBackupStateObj);
 					}
 					else{
-						node_getComponentInterface(loc_rawComponentCore).updateBackupStateObject(childBackupStateObj);
+						node_getComponentInterface(childValue).updateBackupStateObject(childBackupStateObj);
 					}
 				})
 			}
@@ -278,7 +278,7 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 						childValue.updateLifecycleEntityObject(childLifecycleEntity);
 					}
 					else{
-						node_getComponentInterface(loc_rawComponentCore).updateLifecycleEntityObject(childLifecycleEntity);
+						node_getComponentInterface(childValue).updateLifecycleEntityObject(childLifecycleEntity);
 					}
 				})
 			}

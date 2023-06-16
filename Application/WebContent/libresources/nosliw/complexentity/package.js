@@ -85,8 +85,7 @@ var node_createPackageCore = function(resourceId, configure){
 						//load all related resources first
 						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
 							success : function(requestInfo, resourceTree){
-								var mainBundleRuntime = loc_createMainBundleRuntime(requestInfo);
-								return mainBundleRuntime.getPreInitRequest();
+								loc_createMainBundleRuntime(requestInfo);
 							}
 						}));
 						
@@ -127,9 +126,6 @@ var node_createPackageCore = function(resourceId, configure){
 			loc_parentView = view;
 			loc_getMainBundleRuntime().updateView(view);     
 		},
-		
-		getPostInitRequest : function(handlers, request){	return loc_getMainBundleRuntime().getPostInitRequest(handlers, request);	},
-		
 		
 	};
 	

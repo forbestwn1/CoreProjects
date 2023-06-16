@@ -18,68 +18,44 @@ var packageObj = library;
 	
 var node_componentUtility = {
 	
-	updateBackupStateObject : function(baseObject, backupState){
-		var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
-		if(basicEntityInterface!=undefined){
-			basicEntityInterface.setExtraData(node_CONSTANT.COMPLEXENTITY_NODE_DATANAME_BACKUPSTATUS, backupState);
-		}
-		
-		var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
-		if(treeNodeInterface!=undefined){
-			var childrenName = treeNodeInterface.getChildrenName();
-			_.each(childrenName, function(childName, i){
-				var childValue = treeNodeInterface.getChild(childName).getChildValue();
-				var childBackupState = backupState.createChildState(childName);
-				if(node_getObjectType(childValue)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
-					//for child is runtime					
-					childValue.updateBackupStateObject(childBackupState);
-				}
-				else{
-					node_componentUtility.updateBackupStateObject(childValue, childBackupState);
-				}
-			})
-		}
-	},
-	
 	getInterfaceCallRequest : function(baseObject, getInterfaceFun, interfaceMethodName, argus, handlers, request){
 		var flagName = "done_"+interfaceMethodName;
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), handlers, request);
 
 		//process it if needed
-		out.addRequest(node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), {
-			success : function(request){
-				var processed = false;
-				var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
-				if(basicEntityInterface!=undefined){
-					processed = basicEntityInterface.getExtraData(flagName);
-				}
-				
-				if(!(processed==true)){
-					//if not processed, then process it
-					if(baseObject[interfaceMethodName]!=undefined){
-						return baseObject[interfaceMethodName].apply(baseObject, argus);
-					}
-				}
+		var processed = false;
+		var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
+		if(basicEntityInterface!=undefined){
+			processed = basicEntityInterface.getExtraData(flagName);
+		}
+		
+		if(!(processed==true)){
+			//if not processed, then process it
+			if(baseObject[interfaceMethodName]!=undefined){
+				out.addRequest( baseObject[interfaceMethodName].apply(baseObject, argus));
 			}
-		}));
-
+		}
+		
 		//after processing, mark processed
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			var basicEntityInterface = node_getBasicEntityObjectInterface(baseObject);
 			if(basicEntityInterface!=undefined){
 				basicEntityInterface.setExtraData(flagName, true);
 			}
+
+			var processChildRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+			//process every children
+			var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
+			if(treeNodeInterface!=undefined){
+				var childrenName = treeNodeInterface.getChildrenName();
+				_.each(childrenName, function(childName, i){
+					var childInterface = getInterfaceFun(treeNodeInterface.getChild(childName).getChildValue());
+					processChildRequest.addRequest(childInterface[interfaceMethodName].apply(childInterface, Array.apply(null, Array(argus.length)).map(function () {})));
+				})
+			}
+			return processChildRequest;
 		}));
 
-		//process every children
-		var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
-		if(treeNodeInterface!=undefined){
-			var childrenName = treeNodeInterface.getChildrenName();
-			_.each(childrenName, function(childName, i){
-				var childInterface = getInterfaceFun(treeNodeInterface.getChild(childName).getChildValue());
-				out.addRequest(childInterface[interfaceMethodName].apply(childInterface, Array.apply(null, Array(argus.length)).map(function () {})));
-			})
-		}
 		return out;
 	},
 

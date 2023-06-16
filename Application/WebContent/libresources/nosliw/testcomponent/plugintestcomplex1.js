@@ -49,49 +49,13 @@ var node_createTestComplex1Plugin = function(){
 	return loc_out;
 };
 
-var loc_createSimpleAttribute = function(entity, adapter){
-	var loc_entity = entity;
-	var loc_adapter = adapter;
-	
-	var loc_out = {
-		getType : function(){   return node_COMMONCONSTANT.ATTRIBUTE_TYPE_NORMAL;    },
-		callBack : function(){
-			loc_entity.callBack.apply(this, arguments);
-		},
-	};
-	return loc_out;
-};
-
-var loc_createContainerAttribute = function(){
-	
-	var loc_elements = [];
-	
-	var loc_out = {
-		getType : function(){   return node_COMMONCONSTANT.ATTRIBUTE_TYPE_CONTAINER;    },
-
-		addElement : function(element){
-			loc_elements.push(loc_createSimpleAttribute(element));
-		},
-		
-		callBack : function(){
-			var argus = arguments;
-			_.each(loc_elements, function(ele, i){
-				ele.callBack.apply(this, argus);
-			});
-		},
-	};
-	return loc_out;
-};
-
 var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_envInterface = {};
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
 	var loc_parentView;
 	var loc_mainView;
-	var loc_children = {};
 	var loc_childrenViews = {};
-	var loc_stateValueView;
 	
 	var loc_simpleTest1Atts = {};
 	
@@ -111,19 +75,6 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			});
 			return out;
 		},
-		
-/*		
-		getPreInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreTextComplex", {}), handlers, request);
-
-			//complex attribute
-			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
-				out.addRequest(node_getComponentInterface(child.getChildValue()).getPreInitRequest());
-			});
-
-			return out;
-		},		
-*/		
 		
 		updateView : function(view){
 			loc_parentView = $(view);

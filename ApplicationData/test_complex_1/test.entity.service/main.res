@@ -19,7 +19,7 @@
 			"adapter":[
 				{
 					"name" : "serviceAdapter",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociationInteractive",
 					"entity" : {
 						"in" : {
@@ -49,7 +49,7 @@
 		{
 			"info": {
 				"name" : "debug_parent_valuestructure-none-test_complex_script",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"parent": {
 				"valuestructure":{
@@ -68,7 +68,7 @@
 		{
 			"info": {
 				"name": "valueContext",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"entity": [
 				{
