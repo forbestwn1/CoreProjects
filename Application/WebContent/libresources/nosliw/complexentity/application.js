@@ -61,7 +61,6 @@ var node_createApplication = function(resourceId, configure){
 			loc_getPackageRuntime().updateView(view);     
 		},
 		
-//		getPostInitRequest : function(handlers, request){	return loc_getPackageRuntime().getPostInitRequest(handlers, request);	},
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION);

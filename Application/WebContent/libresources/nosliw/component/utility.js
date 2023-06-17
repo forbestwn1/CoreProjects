@@ -20,7 +20,7 @@ var node_componentUtility = {
 	
 	getInterfaceCallRequest : function(baseObject, getInterfaceFun, interfaceMethodName, argus, handlers, request){
 		var flagName = "done_"+interfaceMethodName;
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName, {}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo(interfaceMethodName+"Utility", {}), handlers, request);
 
 		//process it if needed
 		var processed = false;
@@ -43,7 +43,7 @@ var node_componentUtility = {
 				basicEntityInterface.setExtraData(flagName, true);
 			}
 
-			var processChildRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("", {}), handlers, request);
+			var processChildRequest = node_createServiceRequestInfoSequence();
 			//process every children
 			var treeNodeInterface = node_getEntityTreeNodeInterface(baseObject);
 			if(treeNodeInterface!=undefined){

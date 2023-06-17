@@ -22,7 +22,7 @@
 			"adapter":[
 				{
 					"name" : "parent.child.data.value",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {
@@ -70,7 +70,7 @@
 				},
 				{
 					"name" : "parent.child.data.matcher",
-					"status": "disabled",
+					"status": "disabled1",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {

@@ -68,7 +68,7 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 	var loc_getCreateSimpleEntityRequest = function(entityType, entityDef, configure, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var out = node_createServiceRequestInfoSequence("CreateSimpleEntityRequest", handlers, request);
 		var entityDef = node_createEntityDefinition(entityDef);
 		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
 		out.addRequest(simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, {
@@ -203,7 +203,7 @@ var node_createComplexEntityRuntimeService = function() {
 	var loc_out = {
 
 		getCreateApplicationRequest : function(resourceId, configureInfo, runtimeContext, envInterface, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var out = node_createServiceRequestInfoSequence("getCreateApplicationRequest", handlers, request);
 			
 			out.addRequest(node_complexEntityUtility.getRootConfigureRequest(configureInfo, {
 				success : function(request, configure){

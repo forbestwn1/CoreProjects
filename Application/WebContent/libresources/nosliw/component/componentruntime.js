@@ -86,8 +86,8 @@ var node_createComponentRuntime = function(componentCore, decorationInfos, reque
 		getDecorations : function(){   return loc_componentCoreComplex.getDecorations();   },
 		
 		//combo request(preinit, runtimeContext, postInit)
-		getInitRequest : function(runtimeContext, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("InitComponentRuntime", {}), handlers, request);
+		getInitRequest1 : function(runtimeContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getInitRequestRuntime", {}), handlers, request);
 
 			out.addRequest(loc_componentCoreComplex.getPreInitRequest({
 				success : function(request){

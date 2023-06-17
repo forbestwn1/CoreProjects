@@ -84,7 +84,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	var loc_getCore = function(){  return  loc_layers[0]; };
 
 	var loc_getPreInitRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInit", {}), handlers, request);
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getPreInitRequestCoreComplex", {}), handlers, request);
 		_.each(loc_layers, function(layer, i){
 			out.addRequest(loc_getLayerInterfaceObj(i).getPreInitRequest());
 		});
