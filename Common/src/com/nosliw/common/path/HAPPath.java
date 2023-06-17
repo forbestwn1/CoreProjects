@@ -53,7 +53,7 @@ public class HAPPath {
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPPath) {
 			HAPPath path = (HAPPath)obj;
-			if(this.getPath().equals(path.getPath())) {
+			if(HAPUtilityBasic.isEquals(this.getPath(), path.getPath())) {
 				return true;
 			}
 		}

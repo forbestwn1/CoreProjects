@@ -70,7 +70,7 @@
 				},
 				{
 					"name" : "parent.child.data.matcher",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {
@@ -82,6 +82,30 @@
 												"aa" : {
 													"mapping" : {
 														"elementPath": "parent_tree_public.a.ab"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
+					"name" : "parent.child.data.matcher.reverse",
+					"status": "disabled1",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"child_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"ab" : {
+													"mapping" : {
+														"elementPath": "parent_tree_public.a.aa"
 													}
 												}
 											}

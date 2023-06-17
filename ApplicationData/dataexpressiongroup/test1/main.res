@@ -9,7 +9,7 @@
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"testVar3": {
+						"baseVarNormal": {
 							"definition":{
 								"criteria": "test.string;1.0.0"
 							},
@@ -18,7 +18,16 @@
 								"value": "default value of testvar3"
 							}
 						},
-						"testVar4" : {
+						"baseVarMatcher": {
+							"definition":{
+								"criteria": "test.url;1.0.0"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.url;1.0.0",
+								"value": "default value of testvar3"
+							}
+						},
+						"parm1" : {
 							"definition": {
 								"criteria" : "test.integer"
 							},
@@ -27,7 +36,7 @@
 								"value": 5
 							}
 						},
-						"testVar5" : {
+						"parm2" : {
 							"definition": {
 								"criteria": "test.integer"
 							},
@@ -42,9 +51,21 @@
 		},
 		"element": [
 			{
-				"name" : "test1",
-				"expression" : "!(test.string)!.subString(base:?(testVar3)?,from:?(testVar4)?,to:?(testVar5)?)"
-			}
+				"name" : "normalized",
+				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+			},
+			{
+				"name" : "normalized1",
+				"expression" : "?(baseVarNormal)?.subString(from:?(parm1)?,to:?(parm2)?)"
+			},
+			{
+				"name" : "normal",
+				"expression" : "!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+			},
+			{
+				"name" : "matcher",
+				"expression" : "!(test.string)!.subString(?(baseVarMatcher)?,from:?(parm1)?,to:?(parm2)?)"
+			},
 		]		
 	}
 }

@@ -32,7 +32,7 @@ public class HAPUtilityExpressionProcessConfigure {
 	static public boolean isDoDiscovery(HAPInfo info){
 		boolean out = true;
 		if(info!=null) {
-			out = "true".equals(info.getValue(CONFIGURE_DISCOVERY));
+			out = !("false".equals(info.getValue(CONFIGURE_DISCOVERY)));
 		}
 		return out;
 	}

@@ -2,11 +2,11 @@ package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
@@ -39,6 +39,7 @@ public class HAPContextProcessor {
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_bundle = currentBundle;
 		this.m_complexEntityManager = this.m_runtimeEnv.getDomainEntityExecutableManager();
+		this.m_processTracker = new HAPProcessTracker();
 	}
 
 	public HAPResourceIdSimple getCurrentComplexResourceId() {     return this.m_bundle.getRootResourceId();     }
