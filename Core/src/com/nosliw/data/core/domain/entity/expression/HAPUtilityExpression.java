@@ -62,7 +62,7 @@ public class HAPUtilityExpression {
 	public static Set<String> discoverDataVariablesIdInExpression(HAPExecutableExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
-			out.addAll(HAPUtilityOperand.discoverVariableIds(expression.getOperand()));
+			out.addAll(HAPUtilityOperand.discoverVariableKeys(expression.getOperand()));
 		}
 		return out;
 	}

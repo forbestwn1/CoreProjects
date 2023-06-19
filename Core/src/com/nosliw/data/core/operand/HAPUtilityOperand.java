@@ -9,10 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -229,7 +229,7 @@ public class HAPUtilityOperand {
 		return out;
 	}
 
-	static public Set<String> discoverVariableIds(HAPWrapperOperand operand){
+	static public Set<String> discoverVariableKeys(HAPWrapperOperand operand){
 		Set<String> out = new HashSet<String>();
 		processAllOperand(operand, out, new HAPInterfaceProcessOperand(){
 			@Override
@@ -238,7 +238,7 @@ public class HAPUtilityOperand {
 				switch(operand.getOperand().getType()){
 				case HAPConstantShared.EXPRESSION_OPERAND_VARIABLE:
 					HAPOperandVariable varOperand = (HAPOperandVariable)operand.getOperand();
-					varIds.add(varOperand.getVariableId());
+					varIds.add(varOperand.getVariableKey());
 					break;
 				}
 				return true;

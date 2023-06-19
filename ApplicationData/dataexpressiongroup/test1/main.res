@@ -51,21 +51,46 @@
 		},
 		"element": [
 			{
-				"name" : "normalized",
+				"name" : "normal_cleardatatype",
 				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
-				"name" : "normalized1",
+				"name" : "normal_implieddatatype",
 				"expression" : "?(baseVarNormal)?.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
-				"name" : "normal",
+				"name" : "normal_impliedbase",
 				"expression" : "!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+			},
+			{
+				"name" : "constant_embeded",
+				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
+			},
+			{
+				"name" : "constant_embeded1",
+				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "matcher",
 				"expression" : "!(test.string)!.subString(?(baseVarMatcher)?,from:?(parm1)?,to:?(parm2)?)"
 			},
-		]		
+		],
+		"attachment": {
+			"extra": {
+				"status": "disabled",
+				"name": "parent attachment" 
+			},
+			"entity": {
+				"data" : [
+					{
+						"name" : "constant",
+						"entity": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 5
+						}
+					}
+				]
+			}
+		}
 	}
 }

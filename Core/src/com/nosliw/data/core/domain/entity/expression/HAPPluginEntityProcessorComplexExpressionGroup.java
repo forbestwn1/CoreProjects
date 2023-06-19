@@ -93,25 +93,22 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		}
 		
 		//build variable into within expression item
-//		discoverExpressionItemVariable(out, processContext);
+		discoverExpressionItemVariable(complexEntityExecutableId, processContext);
 
 	}
 
 	//build variable into within expression item
 	private static void discoverExpressionItemVariable(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
-		HAPInfoEntityComplex complexEntityInfo = processContext.getDomainContext().getComplexEntityInfoByExecutableId(expreesionGroupEntityIdExe);
-		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)complexEntityInfo.getExecutable();
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = (HAPDefinitionEntityExpressionGroup)complexEntityInfo.getDefinition();
+		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
 		
 		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroupExe.getVariablesInfo();
-		Map<String, HAPExecutableExpression> items = expressionGroupExe.getExpressionItems();
-		for(String name : items.keySet()) {
-			HAPExecutableExpression item = items.get(name);
-			Set<String> varIds = HAPUtilityOperand.discoverVariableIds(item.getOperand());
+		List<HAPExecutableExpression> items = expressionGroupExe.getExpressionItems();
+		for(HAPExecutableExpression item : items) {
+			Set<String> varKeys = HAPUtilityOperand.discoverVariableKeys(item.getOperand());
 			
 			HAPContainerVariableCriteriaInfo expressionVarsContainer = new HAPContainerVariableCriteriaInfo();
-			for(String varId : varIds) {
-				expressionVarsContainer.addVariable(varId, expressionGroupVarsContainer.getVariableCriteriaInfo(varId));
+			for(String varKey : varKeys) {
+				expressionVarsContainer.addVariable(varKey, expressionGroupVarsContainer.getVariableId(varKey), expressionGroupVarsContainer.getVaraibleCriteriaInfo(varKey));
 			}
 			item.setVariablesInfo(expressionVarsContainer);
 		}

@@ -41,11 +41,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_out = {
 
-		getPreInitRequest : function(handlers, request){
-			var kkk = 555;
-			kkk++;
-		},
-			
 		updateView : function(view){
 			loc_parentView = $(view);
 			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Expression</div>');
@@ -67,17 +62,17 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var expressionIds = coreEntity.getAllExpressionIds();
 			
 			loc_expressionListView.empty();
+			loc_expressionListView.append($('<br>'));
 			_.each(expressionIds, function(expressionId){
 				var itemView = $('<a>'+expressionId+'</a>');
 				itemView.on("click",function(){
 					loc_calcuateExpression(expressionId);
 				});
 				
-				loc_expressionListView.append($('<br><br>'));
 				loc_expressionListView.append(itemView);
-				loc_expressionListView.append($('<br><br>'));
-			
+				loc_expressionListView.append($('<br>'));
 			});
+			loc_expressionListView.append($('<br>'));
 		},
 		
 		setEnvironmentInterface : function(envInterface){

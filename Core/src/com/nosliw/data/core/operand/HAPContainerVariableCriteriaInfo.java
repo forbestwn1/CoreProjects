@@ -40,6 +40,12 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		this.m_variableIdByKey = new LinkedHashMap<String, HAPIdVariable>();
 	}
 	
+	public Map<HAPIdVariable, HAPInfoCriteria> getVariableCriteriaInfos() {   return this.m_criteriaInfosById; }
+	
+	public HAPIdVariable getVariableId(String key) {    return this.m_variableIdByKey.get(key);     }
+	
+	public HAPInfoCriteria getVaraibleCriteriaInfo(String key) {   return this.m_criteriaInfosById.get(this.m_variableIdByKey.get(key));     }
+	
 	public String addVariable(HAPIdVariable variableId) {
 		if(m_criteriaInfosById.get(variableId)!=null) {
 			//already exist
@@ -60,13 +66,13 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		}
 	}
 	
-	public Map<HAPIdVariable, HAPInfoCriteria> getVariableCriteriaInfos() {   return this.m_criteriaInfosById; }
-	
-	
-	
-	public void addVariable(HAPIdVariable variableId, HAPInfoCriteria criteria) {
+	public void addVariable(String variableKey, HAPIdVariable variableId, HAPInfoCriteria criteria) {
+		this.m_variableIdByKey.put(variableKey, variableId);
 		this.m_criteriaInfosById.put(variableId, criteria);
 	}
+	
+	
+	
 	
 	public Set<HAPIdVariable> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
 	
@@ -75,8 +81,8 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	@Override
 	public HAPContainerVariableCriteriaInfo clone() {
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
-		for(HAPIdVariable id : this.m_criteriaInfosById.keySet()) {
-			out.addVariable(id, this.m_criteriaInfosById.get(id).cloneCriteriaInfo());
+		for(String key : this.m_variableIdByKey.keySet()) {
+			out.addVariable(key, this.getVariableId(key), this.getVaraibleCriteriaInfo(key));
 		}
 		return out;
 	}
