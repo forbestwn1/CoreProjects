@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.attachment;
+package com.nosliw.data.core.domain.entity.attachment1;
 
 import java.util.Map;
 
@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImp;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 
 //

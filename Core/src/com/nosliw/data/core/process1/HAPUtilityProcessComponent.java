@@ -9,8 +9,8 @@ import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerCompo
 import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
 import com.nosliw.data.core.process1.resource.HAPElementContainerResourceDefinitionReferenceProcessSuite;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;

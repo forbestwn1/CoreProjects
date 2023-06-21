@@ -3,8 +3,8 @@ package com.nosliw.data.core.activity;
 import org.json.JSONObject;
 
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.attachment.HAPInfoAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment1.HAPInfoAttachment;
 
 public class HAPProcessorAttachmentEntityActivity implements HAPProcessorAttachmentEntity{
 

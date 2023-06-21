@@ -4,37 +4,45 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implements HAPAttachment{
 
 	private String m_valueType;
 	
-	private Object m_adaptor;
+	private Object m_rawValue;
+	
+	private HAPIdEntityInDomain m_entityId;
 
 	public HAPAttachmentImp() {}
 
-	public HAPAttachmentImp(String valueType) {
+	public HAPAttachmentImp(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo) {
 		this.m_valueType  = valueType;
+		this.m_rawValue = rawValue;
+		this.m_entityId = entityId;
+		entityInfo.cloneToEntityInfo(this);
 	}
 	
 	@Override
 	public String getValueType() {   return this.m_valueType;   }
 	
 	@Override
-	public void setValueType(String valueType) {    this.m_valueType = valueType;    }
-
+	public Object getRawValue() {    return this.m_rawValue;    }
+	
 	@Override
-	public Object getAdaptor() {   return this.m_adaptor;    }
+	public HAPIdEntityInDomain getEntityId() {    return this.m_entityId;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUETYPE, this.getValueType());
-		jsonMap.put(ADAPTOR, HAPSerializeManager.getInstance().toStringValue(this.m_adaptor, HAPSerializationFormat.JSON));
+		jsonMap.put(RAWVALUE, HAPSerializeManager.getInstance().toStringValue(this.m_rawValue, HAPSerializationFormat.JSON));
+		jsonMap.put(ENTITYID, HAPSerializeManager.getInstance().toStringValue(this.m_entityId, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -62,7 +70,8 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 
 	public void cloneToAttachment(HAPAttachmentImp obj) {
 		this.cloneToEntityInfo(obj);
-		obj.setValueType(this.getValueType());
-		obj.m_adaptor = this.m_adaptor;
+		obj.m_valueType = this.m_valueType;
+		obj.m_entityId = this.m_entityId;
+		obj.m_rawValue = this.m_rawValue;
 	}
 }

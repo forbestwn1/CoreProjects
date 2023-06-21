@@ -8,12 +8,15 @@ import org.json.JSONArray;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
@@ -66,6 +69,24 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 			executableEntity.setVariables(resolvedVars);
 			executableEntity.setUnknowVariable(unknownVars);
 		}
+	
+		HAPDomainAttachment attachmentDomain = processContext.getCurrentBundle().getAttachmentDomain();
+		Object attachmentsObj = parms.get(HAPExecutableTestComplexScript.ATTACHMENT);
+		if(attachmentsObj!=null) {
+			List<HAPInfoAttachmentResolve> attachments = new ArrayList<HAPInfoAttachmentResolve>(); 
+			JSONArray attachmentsArray = (JSONArray)attachmentsObj;
+			for(int i=0; i<attachmentsArray.length(); i++) {
+				String attIdStr = (String)attachmentsArray.get(i);
+				String[] segs = HAPUtilityNamingConversion.parseLevel2(attIdStr);
+				String valueType = segs[0];
+				String itemName = segs[1];
+				HAPAttachment attachment = attachmentDomain.getAttachment(executableEntity.getAttachmentContainerId(), valueType, itemName);
+				String entityStr = definitionDomain.getEntityInfoDefinition(attachment.getEntityId()).getEntity().toExpandedJsonString(definitionDomain);
+				attachments.add(new HAPInfoAttachmentResolve(valueType, itemName, attachment, entityStr));
+			}
+			executableEntity.setAttachment(attachments);
+		}
+
 		
 //		
 //		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));

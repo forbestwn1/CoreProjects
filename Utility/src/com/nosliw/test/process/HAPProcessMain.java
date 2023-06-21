@@ -3,7 +3,7 @@ package com.nosliw.test.process;
 import java.io.FileNotFoundException;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcess;

@@ -16,7 +16,7 @@ import com.nosliw.data.core.domain.HAPResultExecutableEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionResource;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;

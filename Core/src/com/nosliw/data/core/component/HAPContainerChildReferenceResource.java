@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPContainerChildReferenceResource {

@@ -6,10 +6,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 //attachment that have real entity
 public class HAPAttachmentEntity extends HAPAttachmentImp{
@@ -21,15 +22,10 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	
 	private HAPAttachmentEntity() {}
 	
-	public HAPAttachmentEntity(String resourceType) {
-		this.setValueType(resourceType);
+	public HAPAttachmentEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo) {
+		super(valueType, rawValue, entityId, entityInfo);
 	}
 	
-	@Override
-	public String getType() {
-		return HAPConstantShared.ATTACHMENT_TYPE_ENTITY;
-	}
-
 	public Object getEntity() {    return this.m_entity;    }
 	public void setEntity(Object entityObj) {    this.m_entity = entityObj;    }
 

@@ -5,14 +5,12 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
@@ -21,39 +19,63 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	//all attachment by type and by name
-	private Map<String, Map<String, HAPAttachment>> m_element;
-
 	public HAPDefinitionEntityContainerAttachment() {
-		this.m_element = new LinkedHashMap<>();
+		this.setNormalAttributeValueObject(ELEMENT, new LinkedHashMap<>());
 	}
 
-	public boolean isEmpty() {     return this.m_element.isEmpty();   }
+	public boolean isEmpty() {     return this.getAllAttachment().isEmpty();   }
 	
-	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return this.m_element;    }
+	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return (Map<String, Map<String, HAPAttachment>>)this.getNormalAttributeValue(ELEMENT);   }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
-		Map<String, HAPAttachment> out = this.m_element.get(type);
+		Map<String, HAPAttachment> out = this.getAllAttachment().get(type);
 		if(out==null)   out = new LinkedHashMap<String, HAPAttachment>();
 		return out;
 	}
 	
-	public void addAttachment(String type, HAPAttachment attachment) {
-		attachment.setValueType(type);
-		Map<String, HAPAttachment> byName = this.m_element.get(type);
+	public HAPAttachment getAttachment(String valueType, String name) {    return this.getAllAttachment().get(valueType).get(name);     }
+
+	public void addAttachment(String name, HAPAttachment attachment) {
+		String valueType = attachment.getValueType();
+		Map<String, HAPAttachment> byName = this.getAllAttachment().get(valueType);
 		if(byName==null) {
 			byName = new LinkedHashMap<String, HAPAttachment>();
-			this.m_element.put(type, byName);
+			this.getAllAttachment().put(valueType, byName);
 		}
-		byName.put(attachment.getName(), attachment);
+		byName.put(name, attachment);
 	}
 
+	
 	public void merge(HAPDefinitionEntityContainerAttachment parent, HAPConfigureComplexRelationAttachment mode) {
 		this.merge(parent, mode==null?null:mode.getMode());
 	}
 	
 	//merge with parent
 	public void merge(HAPDefinitionEntityContainerAttachment parent, String mode) {
+		if(parent==null)  return;
+		if(mode==null)   mode = HAPConstant.INHERITMODE_CHILD;
+		if(mode.equals(HAPConstant.INHERITMODE_NONE))  return;
+		
+		for(String type : parent.getAllAttachment().keySet()) {
+			Map<String, HAPAttachment> byName = parent.getAllAttachment().get(type);
+			for(String name : byName.keySet()) {
+				HAPAttachment parentEle = byName.get(name);
+				HAPAttachment thisEle = this.getElement(type, name);
+				boolean override = false;
+				if(mode.equals(HAPConstant.INHERITMODE_CHILD)&&thisEle==null) override = true;
+				else if(mode.equals(HAPConstant.INHERITMODE_PARENT)) override = true;
+
+				if(override) {
+					//if configurable, then parent override child
+					HAPAttachment newEle = parentEle.cloneAttachment();
+					HAPUtilityAttachment.setOverridenByParent(newEle);
+					this.addAttachment(name, newEle);
+				}
+			}
+		}
+	}
+	//merge with parent
+	public void merge1(HAPDefinitionEntityContainerAttachment parent, String mode) {
 		if(parent==null)  return;
 		if(mode==null)   mode = HAPConstant.INHERITMODE_CHILD;
 		if(mode.equals(HAPConstant.INHERITMODE_NONE))  return;
@@ -85,7 +107,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	
 	public HAPAttachment getElement(String type, String name) {
 		HAPAttachment out = null;
-		Map<String, HAPAttachment> byName = this.m_element.get(type);
+		Map<String, HAPAttachment> byName = this.getAllAttachment().get(type);
 		if(byName!=null) {
 			out = byName.get(name);
 		}
@@ -95,8 +117,8 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	public HAPDefinitionEntityContainerAttachment cloneAttachmentContainer() {
 		HAPDefinitionEntityContainerAttachment out = new HAPDefinitionEntityContainerAttachment();
 		super.cloneToDefinitionEntityInDomain(out);
-		for(String type : this.m_element.keySet()) {
-			Map<String, HAPAttachment> byName = this.m_element.get(type);
+		for(String type : this.getAllAttachment().keySet()) {
+			Map<String, HAPAttachment> byName = this.getAllAttachment().get(type);
 			for(String name : byName.keySet()) {
 				out.addAttachment(type, byName.get(name));
 			}
@@ -107,21 +129,5 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		return this.cloneAttachmentContainer();
-	}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		this.buildCommonJsonMap(jsonMap, typeJsonMap);
-	}
-
-	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
-		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
-		this.buildCommonJsonMap(jsonMap, typeJsonMap);
-	}
-
-	private void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(ELEMENT, HAPUtilityJson.buildJson(this.m_element, HAPSerializationFormat.JSON));
 	}
 }

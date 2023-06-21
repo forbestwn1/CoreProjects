@@ -1,11 +1,14 @@
 package com.nosliw.data.core.domain.entity.attachment;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntityDefinitionInDomainImpSimple{
@@ -17,7 +20,20 @@ public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntity
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityContainerAttachment attachmentContainer = (HAPDefinitionEntityContainerAttachment)this.getEntity(entityId, parserContext);
-		HAPUtilityAttachment.parseDefinition((JSONObject)obj, attachmentContainer);
+		
+		JSONObject jsonObj = (JSONObject)obj;
+		for(Object key : jsonObj.keySet()) {
+			String valueType = (String)key;
+			JSONArray byNameArray = jsonObj.getJSONArray(valueType);
+			for(int i=0; i<byNameArray.length(); i++) {
+				JSONObject attachmentJson = byNameArray.getJSONObject(i);
+				HAPIdEntityInDomain attaEntityId = HAPUtilityParserEntity.parseEntity(attachmentJson, valueType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+				HAPExtraInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(attaEntityId).getExtraInfo();
+				HAPAttachment attachment = new HAPAttachmentEntity(valueType, attachmentJson, attaEntityId, entityInfo);
+				String name = entityInfo.getName();
+				attachmentContainer.addAttachment(name, attachment);
+			}
+		}
 	}
 
 }

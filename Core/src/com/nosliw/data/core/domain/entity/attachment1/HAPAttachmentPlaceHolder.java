@@ -1,8 +1,9 @@
-package com.nosliw.data.core.domain.entity.attachment;
+package com.nosliw.data.core.domain.entity.attachment1;
 
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImp;
 
 public class HAPAttachmentPlaceHolder extends HAPAttachmentImp{
 

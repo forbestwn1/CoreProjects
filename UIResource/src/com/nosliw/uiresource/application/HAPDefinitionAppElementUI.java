@@ -14,8 +14,8 @@ import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
 
 @HAPEntityWithAttribute
 public class HAPDefinitionAppElementUI  extends HAPDefinitionAppElement{
