@@ -30,12 +30,15 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.HAPResultSolveReference;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
@@ -75,7 +78,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		buildExpression(null, executableExpresionGroup, definitionExpressionGroup, processContext.getRuntimeEnvironment().getExpressionManager().getExpressionParser());
 		
 		//build constant value for expression
-//		buildConstant(executableExpresionGroup, definitionExpressionGroup, valueStructureDomain);
+		processConstant(complexEntityExecutableId, processContext);
 		
 		//expand reference 
 //		expandReference(exeEntityId, processContext);
@@ -97,6 +100,38 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 
 	}
 
+	//update constant operand with constant data
+	private static void processConstant(HAPExecutableExpressionGroup expressionExe) {
+		for(HAPExecutableExpression expressionItem : expressionExe.getExpressionItems().values()) {
+			HAPUtilityOperand.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
+		}
+
+	}
+
+	private static void processConstant(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
+		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
+		
+		for(HAPExecutableExpression expressionItem : expressionGroupExe.getExpressionItems()) {
+			HAPUtilityOperand.processAllOperand(expressionItem.getOperand(), null, new HAPInterfaceProcessOperand(){
+				@Override
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
+						HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+						if(constantOperand.getData()==null) {
+							String constantName = constantOperand.getName();
+							HAPAttachment attachment = processContext.getCurrentBundle().getAttachmentDomain().getAttachment(expressionGroupExe.getAttachmentContainerId(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA, constantName);
+							HAPDefinitionEntityData dataEntity = (HAPDefinitionEntityData)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(attachment.getEntityId()).getEntity();
+							constantOperand.setData(dataEntity.getData());
+						}
+					}
+					return true;
+				}
+			});
+		}
+	}
+
+	
 	//build variable into within expression item
 	private static void discoverExpressionItemVariable(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
 		HAPExecutableExpressionGroup expressionGroupExe = (HAPExecutableExpressionGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
@@ -381,7 +416,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 	}
 	
 	//update constant operand with constant data
-	private static void processConstant(HAPExecutableExpressionGroup expressionExe) {
+	private static void processConstant1(HAPExecutableExpressionGroup expressionExe) {
 		for(HAPExecutableExpression expressionItem : expressionExe.getExpressionItems().values()) {
 			HAPUtilityOperand.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
 		}

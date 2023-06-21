@@ -67,8 +67,8 @@
 				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
-				"name" : "constant_embeded1",
-				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
+				"name" : "constant_attachment",
+				"expression" : "&(constant)&.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "matcher",
@@ -77,7 +77,7 @@
 		],
 		"attachment": {
 			"extra": {
-				"status": "disabled",
+				"status": "disabled1",
 				"name": "parent attachment" 
 			},
 			"entity": {
@@ -85,8 +85,8 @@
 					{
 						"name" : "constant",
 						"entity": {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 5
+							"dataTypeId": "test.string;1.0.0",
+							"value": "012345678901234567890"
 						}
 					}
 				]
