@@ -12,9 +12,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.structure.HAPStructure;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDomainSimple implements HAPStructure{
 
 	@HAPAttribute
 	public static final String VALUE = "value";
@@ -33,11 +34,24 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	public Map<String, HAPRootStructure> getRoots(){  
 		return (Map<String, HAPRootStructure>)this.getNormalAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
 	}
+	
+	@Override
+	public HAPRootStructure getRoot(String rootName, boolean createIfNotExist) {
+		HAPRootStructure out = null;
+		Map<String, HAPRootStructure> roots = this.getRoots();
+		out = roots.get(rootName);
+		if(createIfNotExist==true&&out==null) {
+			out = new HAPRootStructure();
+			roots.put(rootName, out);
+		}
+		return out;
+	}
 
 	public Set<String> getRootNames(){   return this.getRoots().keySet();    }
 	
 	public HAPRootStructure getRootByName(String rootName) {   return this.getRoots().get(rootName);  }
 	
+	@Override
 	public Set<HAPRootStructure> getAllRoots(){   return new HashSet<HAPRootStructure>(this.getRoots().values());      }
 
 	public List<HAPRootStructure> resolveRoot(String rootName, boolean createIfNotExist) {
@@ -78,5 +92,5 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	}
 
 	public HAPDefinitionEntityValueStructure cloneValueStructure(){  return (HAPDefinitionEntityValueStructure)this.cloneEntityDefinitionInDomain();	}
-	
+
 }

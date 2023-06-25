@@ -9,8 +9,6 @@ public class HAPExecutablePartValueContextGroupWithReference extends HAPExecutab
 
 	private List<String> m_parentPartIds;
 	
-	public HAPExecutablePartValueContextGroupWithReference() {}
-	
 	public HAPExecutablePartValueContextGroupWithReference(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
 		this.m_parentPartIds = new ArrayList<String>();
@@ -21,7 +19,7 @@ public class HAPExecutablePartValueContextGroupWithReference extends HAPExecutab
 
 	
 	public HAPExecutablePartValueContextGroupWithReference cloneValueStructureComplexPartGroup() {
-		HAPExecutablePartValueContextGroupWithReference out = new HAPExecutablePartValueContextGroupWithReference();
+		HAPExecutablePartValueContextGroupWithReference out = new HAPExecutablePartValueContextGroupWithReference(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToEntityInfo(out);
 		out.m_children.addAll(this.m_children);
 		return out;

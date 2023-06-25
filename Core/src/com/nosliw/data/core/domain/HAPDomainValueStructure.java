@@ -55,6 +55,13 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		return this.newRuntime(definitionId);
 	}
 
+	public String newValueStructure() {
+		HAPDefinitionEntityValueStructure valueStructureEntityDef = new HAPDefinitionEntityValueStructure();
+		String defId = this.m_idGenerator.generateId();
+		this.m_valueStructure.put(defId, new HAPInfoValueStructure(valueStructureEntityDef, null));
+		return this.newRuntime(defId);
+	}
+	
 	//add definition and create runtime id
 	//return runtime id
 	public String newValueStructure(HAPInfoEntityInDomainDefinition valueStructureDefInfo, String valueStructureDefId) {

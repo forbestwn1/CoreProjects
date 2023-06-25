@@ -14,8 +14,8 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 
 public class HAPProcessorStructure {
 
-	public static HAPStructure process(HAPStructure valueStructure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPStructure out = null;
+	public static HAPStructure1 process(HAPStructure1 valueStructure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPStructure1 out = null;
 
 		if(valueStructure!=null) {
 			out = process(valueStructure, parent, attachmentContainer, new HashSet<String>(), errors, configure, runtimeEnv);
@@ -24,7 +24,7 @@ public class HAPProcessorStructure {
 		return out;
 	}
 	
-	public static HAPStructure processRelative(HAPStructure contextGroup, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 processRelative(HAPStructure1 contextGroup, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return processRelative(contextGroup, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 	
@@ -36,16 +36,16 @@ public class HAPProcessorStructure {
 //		return processed.getFlat(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 //	}
 	
-	public static HAPStructure process(HAPStructure contextGroup, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 process(HAPStructure1 contextGroup, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(configure==null)  configure = new HAPConfigureProcessorValueStructure();
-		HAPStructure out = processStatic(contextGroup, parent, attachmentContainer, errors, configure, runtimeEnv);
+		HAPStructure1 out = processStatic(contextGroup, parent, attachmentContainer, errors, configure, runtimeEnv);
 		out = processRelative(out, parent, dependency, errors, configure, runtimeEnv);
 		out.processed();
 		return out;
 	}
 
 	//merge child context with parent context
-	public static HAPStructure processStatic(HAPStructure structure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 processStatic(HAPStructure1 structure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(configure==null)  configure = new HAPConfigureProcessorValueStructure();
 		
 		//figure out all constant values in context
@@ -63,7 +63,7 @@ public class HAPProcessorStructure {
 		return structure;
 	}
 	
-	public static HAPStructure processRelative(HAPStructure structure, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 processRelative(HAPStructure1 structure, HAPContainerStructure parent, Set<String>  dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		if(configure==null)  configure = new HAPConfigureProcessorValueStructure();
 		
 		//resolve relative context

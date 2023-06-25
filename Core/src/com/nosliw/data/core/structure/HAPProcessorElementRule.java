@@ -10,7 +10,7 @@ import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 public class HAPProcessorElementRule {
 
 	//process rule in data variable in context 
-	public static HAPStructure process(HAPStructure structure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 process(HAPStructure1 structure, HAPRuntimeEnvironment runtimeEnv) {
 
 		for(HAPRootStructure root : structure.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {

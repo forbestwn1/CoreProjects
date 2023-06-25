@@ -76,7 +76,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	public Set<HAPIdVariable> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
 	
-	public HAPInfoCriteria getVariableCriteriaInfo(HAPIdVariable variableId) {     return this.m_criteriaInfosById.get(variableId);     }
+//	public HAPInfoCriteria getVariableCriteriaInfo(HAPIdVariable variableId) {     return this.m_criteriaInfosById.get(variableId);     }
 	
 	@Override
 	public HAPContainerVariableCriteriaInfo clone() {

@@ -8,12 +8,12 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -23,8 +23,9 @@ import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationId;
 import com.nosliw.data.core.data.HAPOperationOutInfo;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceHelper;
@@ -166,7 +167,11 @@ public class HAPOperandOperation extends HAPOperandImp{
 		this.resetMatchers();
 		
 		//process base first
-		if(this.m_base!=null)			this.m_base.getOperand().discover(variablesInfo, null, context, dataTypeHelper);
+		if(this.m_base!=null) {
+			HAPDataTypeCriteria baseCriteria = null;
+			if(this.m_dataTypeId!=null)  baseCriteria = new HAPDataTypeCriteriaId(this.m_dataTypeId, null);
+			this.m_base.getOperand().discover(variablesInfo, baseCriteria, context, dataTypeHelper);
+		}
 		
 		//define seperate one, do not work on original one
 		HAPDataTypeId dataTypeId = this.m_dataTypeId;

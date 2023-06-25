@@ -10,10 +10,6 @@ public class HAPExecutablePartValueContextGroupWithEntity extends HAPExecutableP
 
 	private List<HAPExecutablePartValueContext> m_children;
 	
-	public HAPExecutablePartValueContextGroupWithEntity() {
-		this.m_children = new ArrayList<HAPExecutablePartValueContext>();
-	}
-	
 	public HAPExecutablePartValueContextGroupWithEntity(HAPInfoPartValueStructure partInfo) {
 		super(partInfo);
 		this.m_children = new ArrayList<HAPExecutablePartValueContext>();
@@ -32,7 +28,7 @@ public class HAPExecutablePartValueContextGroupWithEntity extends HAPExecutableP
 	}
 	
 	public HAPExecutablePartValueContextGroupWithEntity cloneValueStructureComplexPartGroup() {
-		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity();
+		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 		for(HAPExecutablePartValueContext child : this.m_children) {
 			out.addChild(child.cloneValueContextPart());
@@ -44,11 +40,11 @@ public class HAPExecutablePartValueContextGroupWithEntity extends HAPExecutableP
 	public HAPExecutablePartValueContext cloneValueContextPart() {   return this.cloneValueStructureComplexPartGroup();  }
 
 	@Override
-	public HAPExecutablePartValueContext cloneValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity();
+	public HAPExecutablePartValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPExecutablePartValueContextGroupWithEntity out = new HAPExecutablePartValueContextGroupWithEntity(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 		for(HAPExecutablePartValueContext child : this.m_children) {
-			out.addChild(child.cloneValueContextPart(valueStructureDomain, mode, groupTypeCandidates));
+			out.addChild(child.inheritValueContextPart(valueStructureDomain, mode, groupTypeCandidates));
 		}
 		return out;
 	}

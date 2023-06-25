@@ -22,6 +22,9 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	@HAPAttribute
 	public static String VALUESTRUCTURE = "valueStructure";
 
+	@HAPAttribute
+	public static String ISBORDER = "isBorder";
+
 	private List<HAPExecutablePartValueContext> m_parts;
 	
 	public HAPExecutableEntityValueContext() {

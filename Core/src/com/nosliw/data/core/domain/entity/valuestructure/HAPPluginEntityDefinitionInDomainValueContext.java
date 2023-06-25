@@ -18,19 +18,19 @@ public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEnti
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPContextParser parserContext) {
-		HAPDefinitionEntityValueContext valueStructureComplex = (HAPDefinitionEntityValueContext)this.getEntity(entityId, parserContext);
+		HAPDefinitionEntityValueContext valueContext = (HAPDefinitionEntityValueContext)this.getEntity(entityId, parserContext);
 
 		if(obj instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)obj;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
 				HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parserContext);
-				valueStructureComplex.addValueStructure(valueStructureWrapper);
+				valueContext.addValueStructure(valueStructureWrapper);
 			}
 		}
 		else if(obj instanceof JSONObject) {
 			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)obj, parserContext);
-			valueStructureComplex.addValueStructure(valueStructureWrapper);
+			valueContext.addValueStructure(valueStructureWrapper);
 		}
 	}
 

@@ -8,13 +8,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPProcessorElementSolidateConstantScript {
 
 	
-	static public HAPStructure process(
-			HAPStructure structure,
+	static public HAPStructure1 process(
+			HAPStructure1 structure,
 			HAPRuntimeEnvironment runtimeEnv){
 		//find all constants
 		Map<String, Object> constantsValue = HAPUtilityStructure.discoverConstantValue(structure);
 
-		HAPStructure out = (HAPStructure)structure.solidateConstantScript(constantsValue, runtimeEnv);
+		HAPStructure1 out = (HAPStructure1)structure.solidateConstantScript(constantsValue, runtimeEnv);
 		
 		//solidate element in root
 		for(HAPRootStructure root : out.getAllRoots()) {

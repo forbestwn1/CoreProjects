@@ -25,12 +25,12 @@ import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
 public class HAPUtilityStructure {
 
-	public static HAPRootStructure getRootFromStructure(HAPStructure structure, String rootRefLiterate) {
+	public static HAPRootStructure getRootFromStructure(HAPStructure1 structure, String rootRefLiterate) {
 		HAPReferenceRootInStrucutre rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		return getRootFromStructure(structure, rootRef);
 	}
 
-	public static HAPRootStructure getRootFromStructure(HAPStructure structure, HAPReferenceRootInStrucutre rootRef) {
+	public static HAPRootStructure getRootFromStructure(HAPStructure1 structure, HAPReferenceRootInStrucutre rootRef) {
 		List<HAPRootStructure> roots = structure.resolveRoot(rootRef, false);
 		if(roots==null || roots.size()==0)  return null;
 		return roots.get(0);
@@ -79,7 +79,7 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	public static void setDescendantByNamePath(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
+	public static void setDescendantByNamePath(HAPStructure1 targetStructure, HAPComplexPath path, HAPElementStructure ele) {
 		HAPReferenceRootInStrucutre rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(path.getRoot(), targetStructure.getStructureType());
 		HAPRootStructure root = getRootFromStructure(targetStructure, rootRef);
 		if(root==null) {
@@ -90,7 +90,7 @@ public class HAPUtilityStructure {
 	}
 	
 	public static void setDescendant(HAPStructure targetStructure, HAPComplexPath path, HAPElementStructure ele) {
-		setDescendant(targetStructure.getRoot(path.getRoot()), path.getPath(), ele);
+		setDescendant(targetStructure.getRoot(path.getRoot(), true), path.getPath(), ele);
 	}
 	
 	public static void setDescendant(HAPRootStructure targetRoot, HAPPath path, HAPElementStructure ele) {
@@ -204,7 +204,7 @@ public class HAPUtilityStructure {
 	}
 
 	//find all constants in structure by name, including constants defined in leaf
-	public static Map<String, Object> discoverConstantValue(HAPStructure structure){
+	public static Map<String, Object> discoverConstantValue(HAPStructure1 structure){
 		//discover cosntant value by id
 		Map<String, Object> constantsById = new LinkedHashMap<String, Object>();
 		for(HAPRootStructure root : structure.getAllRoots()) {
@@ -264,19 +264,19 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	public static List<HAPRootStructure> resolveRoot(String rootRefLiterate, HAPStructure structure, boolean createIfNotExist) {
+	public static List<HAPRootStructure> resolveRoot(String rootRefLiterate, HAPStructure1 structure, boolean createIfNotExist) {
 		HAPReferenceRootInStrucutre rootReference = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		List<HAPRootStructure> out = structure.resolveRoot(rootReference, createIfNotExist);
 		return out;
 	}
 	
-	public static HAPRootStructure getRootByName(String name, HAPStructure structure) {
+	public static HAPRootStructure getRootByName(String name, HAPStructure1 structure) {
 		List<HAPRootStructure> allRoots = resolveRoot(name, structure, false);
 		if(allRoots==null || allRoots.size()==0)  return null;
 		else return allRoots.get(0);
 	}
 	
-	public static HAPRootStructure addRoot(HAPStructure structure, String rootReference, HAPRootStructure root) {
+	public static HAPRootStructure addRoot(HAPStructure1 structure, String rootReference, HAPRootStructure root) {
 		return structure.addRoot(HAPUtilityStructureReference.parseRootReferenceLiterate(rootReference, structure.getStructureType()), root);
 	}
 

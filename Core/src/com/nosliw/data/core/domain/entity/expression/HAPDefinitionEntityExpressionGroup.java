@@ -40,8 +40,10 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityInDom
 	
 	@Override
 	public void addEntityElement(HAPDefinitionExpression expression) {  
-		HAPUtilityEntityInfo.processEntityId(expression);
-		this.getAllExpressions().add(expression);  
+		if(expression!=null) {
+			HAPUtilityEntityInfo.processEntityId(expression);
+			this.getAllExpressions().add(expression);  
+		}
 	}
 
 	@Override

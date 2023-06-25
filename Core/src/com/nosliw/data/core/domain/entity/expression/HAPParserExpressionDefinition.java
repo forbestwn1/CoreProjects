@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain.entity.expression;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPParserExpressionDefinition {
@@ -13,8 +14,10 @@ public class HAPParserExpressionDefinition {
 			out = new HAPDefinitionExpression((String)obj);
 		}
 		else if(obj instanceof JSONObject) {
-			out = new HAPDefinitionExpression();
-			out.buildObject(obj, HAPSerializationFormat.JSON);
+			if(HAPUtilityEntityInfo.isEnabled((JSONObject)obj)) {
+				out = new HAPDefinitionExpression();
+				out.buildObject(obj, HAPSerializationFormat.JSON);
+			}
 		}
 		return out;
 	}

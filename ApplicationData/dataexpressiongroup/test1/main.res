@@ -52,28 +52,39 @@
 		"element": [
 			{
 				"name" : "normal_cleardatatype",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "normal_implieddatatype",
+				"status": "disabled",
 				"expression" : "?(baseVarNormal)?.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "normal_impliedbase",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "constant_embeded",
+				"status": "disabled",
 				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "constant_attachment",
-				"expression" : "&(constant)&.subString(from:?(parm1)?,to:?(parm2)?)"
+				"status": "disabled",
+				"expression" : "&(constantBase)&.subString(from:&(constantFrom)&,to:&(constantTo)&)"
 			},
 			{
 				"name" : "matcher",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(?(baseVarMatcher)?,from:?(parm1)?,to:?(parm2)?)"
 			},
+			{
+				"name" : "extensionVariable",
+				"status": "disabled1",
+				"expression" : "!(test.string)!.subString(?(newVar)?,from:&(constantFrom)&,to:&(constantFrom)&)"
+			}
 		],
 		"attachment": {
 			"extra": {
@@ -83,10 +94,24 @@
 			"entity": {
 				"data" : [
 					{
-						"name" : "constant",
+						"name" : "constantBase",
 						"entity": {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "012345678901234567890"
+						}
+					},
+					{
+						"name" : "constantFrom",
+						"entity": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 5
+						}
+					},
+					{
+						"name" : "constantTo",
+						"entity": {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 7
 						}
 					}
 				]

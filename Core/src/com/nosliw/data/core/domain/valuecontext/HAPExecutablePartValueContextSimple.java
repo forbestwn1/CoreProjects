@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
@@ -21,10 +21,6 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
 
-	public HAPExecutablePartValueContextSimple() {
-		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
-	}
-	
 	@Override
 	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE;    }
 
@@ -33,8 +29,9 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 		if(valueStructure!=null) this.m_valueStructures.add(valueStructure);   
 	}
 	
-	public HAPExecutablePartValueContextSimple cloneValueContextPartSimple(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo());
+	@Override
+	public HAPExecutablePartValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
@@ -58,15 +55,10 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 		}
 		return out;
 	}
-
-	@Override
-	public HAPExecutablePartValueContext cloneValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		return this.cloneValueContextPartSimple(valueStructureDomain, mode, groupTypeCandidates);  
-	}
 	
 	@Override
 	public HAPExecutablePartValueContext cloneValueContextPart() {
-		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple();
+		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 		for(HAPWrapperExecutableValueStructure valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());

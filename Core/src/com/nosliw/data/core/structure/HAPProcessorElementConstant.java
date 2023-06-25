@@ -34,14 +34,14 @@ import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
 public class HAPProcessorElementConstant {
 
-	static public HAPStructure process(
-			HAPStructure structure,
+	static public HAPStructure1 process(
+			HAPStructure1 structure,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 
 		//process constant ref in context
-		HAPStructure out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
+		HAPStructure1 out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
 
 		//figure out constant value (some constant may use another constant)
 		out =  solidateConstantElements(out, configure, runtimeEnv);
@@ -52,21 +52,21 @@ public class HAPProcessorElementConstant {
 		return out;
 	}
 
-	static public HAPStructure process(
-			HAPStructure structure,
+	static public HAPStructure1 process(
+			HAPStructure1 structure,
 			HAPContainerStructure parent,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
 
 		//merge with parent
-		HAPStructure merged = structure;
+		HAPStructure1 merged = structure;
 		for(String parentName : parent.getStructureNames()) {
 			merged = mergeWithParent(merged, HAPUtilityStructureElementReference.getReferedStructure(parentName, parent, merged), configure.inheritMode);
 		}
 
 		//process constant ref in context
-		HAPStructure out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
+		HAPStructure1 out =  solidateConstantRefs(structure, attachmentContainer, runtimeEnv);
 
 		//figure out constant value (some constant may use another constant)
 		out =  solidateConstantElements(out, configure, runtimeEnv);
@@ -80,11 +80,11 @@ public class HAPProcessorElementConstant {
 	
 	//merge constant with parent
 	//child constant has higher priority than parent
-	private static HAPStructure mergeWithParent(
-			HAPStructure valueStructure,
-			HAPStructure parentValueStructure,
+	private static HAPStructure1 mergeWithParent(
+			HAPStructure1 valueStructure,
+			HAPStructure1 parentValueStructure,
 			String inheritMode){
-		HAPStructure out = valueStructure.cloneStructure();
+		HAPStructure1 out = valueStructure.cloneStructure();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentValueStructure!=null) {
 				//merge constants with parent
@@ -102,8 +102,8 @@ public class HAPProcessorElementConstant {
 	}
 
 	//find all the context root which is actually constant, convert it to constant element 
-	static private HAPStructure discoverConstantContextRoot(HAPStructure structure) {
-		HAPStructure out = structure.cloneStructure();
+	static private HAPStructure1 discoverConstantContextRoot(HAPStructure1 structure) {
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			Object value = discoverConstantValue(root.getDefinition());
 			if(value!=null) {
@@ -134,12 +134,12 @@ public class HAPProcessorElementConstant {
 	}
 
 	//process constant reference element, replace with constant element
-	static private HAPStructure solidateConstantRefs(
-			HAPStructure structure,
+	static private HAPStructure1 solidateConstantRefs(
+			HAPStructure1 structure,
 			HAPDefinitionEntityContainerAttachment attachmentContainer,
 			HAPRuntimeEnvironment runtimeEnv){
 		if(attachmentContainer==null)   return structure;
-		HAPStructure out = structure.cloneStructure();
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
@@ -160,11 +160,11 @@ public class HAPProcessorElementConstant {
 		return out;
 	}
 
-	static private HAPStructure solidateConstantElements(
-			HAPStructure structure,
+	static private HAPStructure1 solidateConstantElements(
+			HAPStructure1 structure,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv){
-		HAPStructure out = structure.cloneStructure();
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
@@ -186,7 +186,7 @@ public class HAPProcessorElementConstant {
 
 	static private void solidateConstantDefEle(
 			HAPElementStructureLeafConstant contextElement, 
-			HAPStructure structure,
+			HAPStructure1 structure,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 
@@ -210,7 +210,7 @@ public class HAPProcessorElementConstant {
 	 */
 	static private Object processConstantDefJsonNode(
 			Object nodeValue,
-			HAPStructure structure,
+			HAPStructure1 structure,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 		Object out = null;
@@ -263,7 +263,7 @@ public class HAPProcessorElementConstant {
 	 */
 	static private Object processConstantDefLeaf(
 			Object leafData,
-			HAPStructure structure,
+			HAPStructure1 structure,
 			HAPConfigureProcessorValueStructure configure,
 			HAPRuntimeEnvironment runtimeEnv) {
 

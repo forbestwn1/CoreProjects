@@ -17,7 +17,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSim
 import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
-import com.nosliw.data.core.structure.HAPStructure;
+import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityStructureElementReference {
@@ -112,7 +112,7 @@ public class HAPUtilityStructureElementReference {
 		return solve!=null && solve.elementInfoOriginal!=null;
 	}
 
-	public static HAPStructure getReferedStructure(String name, HAPContainerStructure parents, HAPStructure self) {
+	public static HAPStructure1 getReferedStructure(String name, HAPContainerStructure parents, HAPStructure1 self) {
 		if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(name))  return self;
 		else return parents.getStructure(name);
 	}
@@ -121,13 +121,13 @@ public class HAPUtilityStructureElementReference {
 		return resolveElementReference(reference.getPath(), parentStructures.getStructure(reference.getParentValueContextName()), mode, relativeInheritRule, elementTypes);
 	}
 	
-	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
+	public static HAPInfoReferenceResolve resolveElementReference(String elementReferenceLiterate, HAPStructure1 parentStructure, String mode, Boolean relativeInheritRule, Set<String> elementTypes){
 		HAPInfoReferenceResolve resolveInfo = analyzeElementReference(elementReferenceLiterate, parentStructure, mode, elementTypes);
 		if(resolveInfo!=null)  resolveInfo.resolvedElement = resolveFinalElement(resolveInfo.realSolidSolved, relativeInheritRule);
 		return resolveInfo;
 	}
 	
-	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure parentStructure, String mode, Set<String> elementTypes){
+	public static HAPInfoReferenceResolve analyzeElementReference(String elementReferenceLiterate, HAPStructure1 parentStructure, String mode, Set<String> elementTypes){
 		HAPReferenceElementInStructure elementReference = new HAPReferenceElementInStructure(elementReferenceLiterate); 
 		return analyzeElementReference(elementReference, parentStructure, mode, elementTypes);
 	}

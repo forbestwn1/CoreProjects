@@ -7,8 +7,6 @@ public abstract class HAPExecutablePartValueContext extends HAPEntityInfoImp{
 	
 	private HAPInfoPartValueStructure m_partInfo;
 	
-	public HAPExecutablePartValueContext() {}
-	
 	public HAPExecutablePartValueContext(HAPInfoPartValueStructure partInfo) {
 		this.m_partInfo = processPartInfo(partInfo);
 	}
@@ -17,14 +15,13 @@ public abstract class HAPExecutablePartValueContext extends HAPEntityInfoImp{
 	
 	abstract public String getPartType();
 	
-	abstract public HAPExecutablePartValueContext cloneValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
+	abstract public HAPExecutablePartValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
 	abstract public HAPExecutablePartValueContext cloneValueContextPart();
 	
 	abstract public boolean isEmpty();
 
 	protected void cloneToPartValueContext(HAPExecutablePartValueContext part) {
 		this.cloneToEntityInfo(part);
-		part.m_partInfo = this.m_partInfo.cloneValueStructurePartInfo();
 	}
 	
 	private HAPInfoPartValueStructure processPartInfo(HAPInfoPartValueStructure partInfo) {

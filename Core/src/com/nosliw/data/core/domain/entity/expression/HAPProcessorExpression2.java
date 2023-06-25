@@ -30,7 +30,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPInfoVariable;
-import com.nosliw.data.core.structure.HAPStructure;
+import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
@@ -337,7 +337,7 @@ public class HAPProcessorExpression2 {
 	private static void replaceVarNameWithId(HAPExecutableExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
-		HAPStructure structure = HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper());
+		HAPStructure1 structure = HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper());
 		
 		for(String name : expressionItems.keySet()) {
 			HAPExecutableExpression expressionItem = expressionItems.get(name);

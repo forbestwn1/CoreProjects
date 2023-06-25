@@ -39,8 +39,8 @@ public class HAPProcessorElementVariableInheritance {
 	} 
 
 	//add FINAL to all constant root node, means constant cannot be override by parent 
-	private static HAPStructure processConstant(HAPStructure structure) {
-		HAPStructure out = structure.cloneStructure();
+	private static HAPStructure1 processConstant(HAPStructure1 structure) {
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			if(root.isConstant()) {
 				root.getInfo().setValue(HAPRootStructure.INHERIT_MODE, HAPRootStructure.INHERIT_MODE_FINAL);

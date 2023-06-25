@@ -13,12 +13,16 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.domain.container.HAPElementContainer;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutable;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -127,6 +131,37 @@ public class HAPUtilityDomain {
 			}
 		}
 	}
+	
+
+	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal globalDomain) {
+		traverseDefinitionComplexEntityTree(globalDomain.getEntityInfoDefinition(entityId), null, null, processor, globalDomain);
+	}
+
+	private static void traverseDefinitionComplexEntityTree(HAPInfoEntityInDomainDefinition entityInfo, Set<HAPInfoAdapter> adapter, HAPInfoEntityInDomainDefinition parentEntityInfo, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal globalDomain) {
+		//process current entity
+		processor.process(entityInfo, adapter, parentEntityInfo, globalDomain);
+
+		HAPDefinitionEntityInDomainComplex complexEntity = (HAPDefinitionEntityInDomainComplex)entityInfo.getEntity();
+		if(complexEntity!=null) {
+			List<HAPAttributeEntityDefinition> attrsDef = complexEntity.getAttributes();
+			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
+				if(attrDef.getValueTypeInfo().getIsComplex()) {
+					Object attrObj = attrDef.getValue();
+					if(attrObj instanceof HAPEmbededDefinition) {
+						//process complex normal attribute
+						HAPEmbededDefinition complexSimpleAttrDef = (HAPEmbededDefinition)attrObj;
+						HAPInfoEntityInDomainDefinition attrEntityInfo = globalDomain.getEntityInfoDefinition((HAPIdEntityInDomain)complexSimpleAttrDef.getValue());
+						traverseDefinitionComplexEntityTree(attrEntityInfo, complexSimpleAttrDef.getAdapters(), entityInfo, processor, globalDomain);
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+
 	
 	public static HAPExecutablePackage getResourceExecutableComplexEntity(HAPResourceId resourceId, HAPRuntimeEnvironment runtimeEnv) {
 		HAPContextDomain domainContext = new HAPContextDomain(runtimeEnv.getDomainEntityDefinitionManager());

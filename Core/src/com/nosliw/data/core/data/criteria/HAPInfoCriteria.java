@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPInfoCriteria extends HAPSerializableImp{
 
@@ -56,6 +56,7 @@ public class HAPInfoCriteria extends HAPSerializableImp{
 	}
 	
 	public String getStatus() {   return this.m_status;    }
+	public void setStatus(String status) {   this.m_status = status;      }
 	public HAPDataTypeCriteria getCriteria() {    return this.m_criteria;    }
 	public void setCriteria(HAPDataTypeCriteria criteria) {    this.m_criteria = criteria;     }
 	

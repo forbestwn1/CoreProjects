@@ -15,6 +15,8 @@ public class HAPUtilityValueContextReference {
 		
 		HAPInfoReferenceResolve refResolve = resolveElementReference(reference, complexEntityExeId, processorContext, resolveConfigure);
 		
+		if(refResolve==null)  return null;
+		
 		HAPIdRootElement rootEleId = new HAPIdRootElement(null, refResolve.structureId, refResolve.rootName);
 		
 		return new HAPIdVariable(rootEleId, reference.getElementPath());

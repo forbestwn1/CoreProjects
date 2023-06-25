@@ -25,19 +25,19 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
-import com.nosliw.data.core.structure.HAPStructure;
+import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {
 
-	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPStructure1 process(HAPStructure1 structure, HAPContainerStructure parent, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		return process(structure, parent, new HashSet<String>(), errors, configure, runtimeEnv);
 	}
 
-	public static HAPStructure process(HAPStructure structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPStructure out = structure.cloneStructure();
+	public static HAPStructure1 process(HAPStructure1 structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
 				@Override
@@ -47,7 +47,7 @@ public class HAPProcessorElementRelative {
 						String parent = relativeEle.getReference().getParentValueContextName();
 						if(dependency!=null)   dependency.add(parent);
 						if(!relativeEle.isProcessed()) {
-							HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, structure);
+							HAPStructure1 parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, structure);
 							return Pair.of(false, processRelativeElement(eleInfo, parentStructure, errors, configure, runtimeEnv));
 						}
 					}
@@ -75,7 +75,7 @@ public class HAPProcessorElementRelative {
 					String parent = relativeEle.getReference().getParentValueContextName();
 					if(dependency!=null)   dependency.add(parent);
 					if(!relativeEle.isProcessed()) {
-						HAPStructure parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, null);
+						HAPStructure1 parentStructure = HAPUtilityStructureElementReference.getReferedStructure(parent, parents, null);
 						return Pair.of(false, processRelativeElement(eleInfo, parentStructure, errors, configure, runtimeEnv));
 					}
 				}
@@ -88,7 +88,7 @@ public class HAPProcessorElementRelative {
 		return out;
 	}
 	
-	private static HAPElementStructure processRelativeElement(HAPInfoElement eleInfo, HAPStructure parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPElementStructure processRelativeElement(HAPInfoElement eleInfo, HAPStructure1 parentStructure, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructureLeafRelative relativeElement = (HAPElementStructureLeafRelative)eleInfo.getElement();
 		HAPElementStructure out = relativeElement;
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(relativeElement.getReference().getPath(), parentStructure, configure.elementReferenceResolveMode, configure.relativeInheritRule, null);

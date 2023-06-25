@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPStructure;
+import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
@@ -42,8 +42,8 @@ public class HAPProcessorContextVariableInheritance {
 	} 
 
 	//add FINAL to all constant root node, means constant cannot be override by parent 
-	private static HAPStructure processConstant(HAPStructure structure) {
-		HAPStructure out = structure.cloneStructure();
+	private static HAPStructure1 processConstant(HAPStructure1 structure) {
+		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
 			if(root.isConstant()) {
 				root.getInfo().setValue(HAPRootStructure.INHERIT_MODE, HAPRootStructure.INHERIT_MODE_FINAL);

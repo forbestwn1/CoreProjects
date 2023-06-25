@@ -35,8 +35,9 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	@Override
 	public String getEntityType() {  return this.m_entityType;	}
 
+	//new definition instance
 	@Override
-	public HAPIdEntityInDomain parseDefinition(Object obj, HAPContextParser parserContext) {
+	public HAPIdEntityInDomain newInstance(HAPContextParser parserContext) {
 		HAPIdEntityInDomain out = null;
 		try {			
 			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
@@ -44,36 +45,21 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			
 			//add to domain
 			out = parserContext.getCurrentDomain().addEntity(entity);
-
-			//parse entity content
-			this.parseDefinitionContent(out, obj, parserContext);
-
-			//plugin can do do something after parse
-			postParseDefinitionContent(out, parserContext);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return out;
 	}
 
 	@Override
 	public void parseDefinition(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		try {
-			
-			HAPDefinitionEntityInDomain entity = this.m_entityClass.newInstance();
-			
-			//add to domain
-			parserContext.getCurrentDomain().setEntity(entityId, entity);
+		
+		//parse entity content
+		this.parseDefinitionContent(entityId, obj, parserContext);
+		
+		//plugin can do do something after parse
+		postParseDefinitionContent(entityId, parserContext);
 
-			//parse entity content
-			this.parseDefinitionContent(entityId, obj, parserContext);
-			
-			//plugin can do do something after parse
-			postParseDefinitionContent(entityId, parserContext);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	protected abstract void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);

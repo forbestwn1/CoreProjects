@@ -16,9 +16,18 @@ public class HAPManagerDomainEntityDefinition {
 		this.m_defaultAdapter = new LinkedHashMap<String, String>();
 	}
 	
+	public HAPIdEntityInDomain newDefinitionInstance(String entityType, HAPContextParser parseContext) {
+		HAPPluginEntityDefinitionInDomain plugin = this.m_entityDefinitionPlugin.get(entityType);
+		return plugin.newInstance(parseContext);
+	}
+	
 	public HAPIdEntityInDomain parseDefinition(String entityType, Object obj, HAPContextParser parseContext) {
 		if(obj==null)  return null;
-		return this.m_entityDefinitionPlugin.get(entityType).parseDefinition(obj, parseContext);
+		
+		HAPPluginEntityDefinitionInDomain plugin = this.m_entityDefinitionPlugin.get(entityType);
+		HAPIdEntityInDomain out = plugin.newInstance(parseContext);
+		plugin.parseDefinition(out, obj, parseContext);		
+		return out;
 	}
 	
 	public void registerEntityDefinitionPlugin(HAPPluginEntityDefinitionInDomain plugin) {		this.m_entityDefinitionPlugin.put(plugin.getEntityType(), plugin);	}
