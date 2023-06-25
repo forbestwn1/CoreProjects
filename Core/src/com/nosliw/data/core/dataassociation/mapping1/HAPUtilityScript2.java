@@ -83,7 +83,7 @@ public class HAPUtilityScript2 {
 		List<String> pathSegs = new ArrayList<String>();
 		HAPReferenceElementInStructure contextPath = new HAPReferenceElementInStructure(path);
 		if(HAPUtilityBasic.isStringNotEmpty(contextPath.getRootReference().getCategary()))  pathSegs.add(contextPath.getRootReference().getCategary());
-		pathSegs.add(contextPath.getRootReference().getName());
+		pathSegs.add(contextPath.getRootReference().getVariableName());
 		pathSegs.addAll(Arrays.asList(contextPath.getPathSegments()));
 		String pathSegsStr = HAPUtilityJson.buildArrayJson(pathSegs.toArray(new String[0]));
 		return pathSegsStr;

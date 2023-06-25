@@ -48,12 +48,12 @@ public class HAPExecutableTaskDataSource implements HAPExecutableTask{
 	}
 	
 	public HAPDefinition getDataSourceDefinition() {   return this.m_dataSourceDefinition;   }
-	public String getDataSource() {   return this.m_dataSourceDefinition.getName();   }
+	public String getDataSource() {   return this.m_dataSourceDefinition.getVariableName();   }
 	
 	public Map<String, HAPMatchers> getMatchers(){   return this.m_matchers;   }
 	
 	@Override
-	public String getName() {  return this.m_dataSourceDefinition.getName();  }
+	public String getName() {  return this.m_dataSourceDefinition.getVariableName();  }
 	
 	@Override
 	public String getType() {	return HAPConstant.DATATASK_TYPE_DATASOURCE;	}

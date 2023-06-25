@@ -78,7 +78,7 @@ public class HAPUtilityContextScript {
 								output.put(categary, parentJsonObj);
 							}
 						}
-						parentJsonObj.put(rootId.getName(), contextEleJson);
+						parentJsonObj.put(rootId.getVariableName(), contextEleJson);
 					}
 				}
 			}

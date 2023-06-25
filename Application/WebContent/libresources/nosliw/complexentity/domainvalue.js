@@ -185,6 +185,14 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			var valueStructure = this.getValueStructure(structureRuntimeId);
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varPathSeg1, varPathSeg2));
 		},
+
+		createVariableById : function(variableIdEntity){
+			var rootEleId = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVAIRALBE_ROOTELEMENTID];
+			var elePath = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVAIRALBE_ELEMENTPATH];
+			var valueStructureId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
+			var rootName = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME];
+			return this.createVariable(valueStructureId, rootName, elePath);
+		},
 		
 		//
 		createResolvedVariable : function(varResolve){

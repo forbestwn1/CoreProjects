@@ -5,20 +5,29 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
+import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
@@ -44,15 +53,12 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		HAPDefinitionEntityTestComplexScript definitionEntity = (HAPDefinitionEntityTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 
-//		HAPIdEntityInDomain scriptEntityId = definitionEntity.getNormalAttributeWithId(HAPDefinitionEntityTestComplexScript.ATTR_SCRIPT).getValue().getEntityId();
-//		HAPDefinitionEntityScript scriptDef = (HAPDefinitionEntityScript)globalDomain.getEntityInfoDefinition(scriptEntityId).getEntity();
-//		executableEntity.setScript(scriptDef.getScript());
-		
 		executableEntity.setScriptName(definitionEntity.getScriptName());
 		
 		Map<String, Object> parms = definitionEntity.getParms();
 		executableEntity.setParms(parms);
 	
+		//normal variable
 		Object variables = parms.get(HAPExecutableTestComplexScript.VARIABLE);
 		if(variables!=null) {
 			JSONArray varJsonArray = (JSONArray)variables;
@@ -70,6 +76,32 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 			executableEntity.setUnknowVariable(unknownVars);
 		}
 	
+		//extended variable
+		Object variablesExtension = parms.get(HAPExecutableTestComplexScript.VARIABLEEXTENDED);
+		HAPContainerVariableCriteriaInfo varsContainer = new  HAPContainerVariableCriteriaInfo();
+		if(variablesExtension!=null) {
+			JSONArray varJsonArray = (JSONArray)variablesExtension;
+			List<HAPExecutableVariableExpected> resolvedVars = new ArrayList<HAPExecutableVariableExpected>();
+			List<HAPReferenceElementInValueContext> unknownVars = new ArrayList<HAPReferenceElementInValueContext>();
+			for(int i=0; i<varJsonArray.length(); i++) {
+				HAPExecutableVariableExpected varExe = new HAPExecutableVariableExpected();
+				
+				JSONObject varJson = varJsonArray.getJSONObject(i);
+				HAPDefinitionVariableExpected varDef = new HAPDefinitionVariableExpected();
+				varDef.buildObject(varJson, HAPSerializationFormat.JSON);
+				
+				HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), complexEntityExecutableId, varDef.getGroup(), processContext, null);
+				varExe.setVariableId(idVariable);
+				HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(idVariable, valueStructureDomain);
+				
+				HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(dataStructureEle.getCriteriaInfo(), new HAPDataTypeCriteriaId(varDef.getDataTypeId(), null), processContext.getRuntimeEnvironment().getDataTypeHelper());
+				varExe.setMarchers(matchers);
+				
+				resolvedVars.add(varExe);
+			}
+			executableEntity.setExtendedVariables(resolvedVars);
+		}
+		
 		HAPDomainAttachment attachmentDomain = processContext.getCurrentBundle().getAttachmentDomain();
 		Object attachmentsObj = parms.get(HAPExecutableTestComplexScript.ATTACHMENT);
 		if(attachmentsObj!=null) {
@@ -94,3 +126,4 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	
 	}
 }
+

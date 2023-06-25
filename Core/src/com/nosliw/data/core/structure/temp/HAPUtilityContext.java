@@ -169,7 +169,7 @@ public class HAPUtilityContext {
 		for(String rootName : context.getRootNames()) {
 			HAPRootStructure root = context.getRoot(rootName);
 //			HAPIdContextDefinitionRoot rootId = new HAPIdContextDefinitionRoot(rootName);
-			out.addRoot(rootId.getName(), root, rootId.getCategary());
+			out.addRoot(rootId.getVariableName(), root, rootId.getCategary());
 		}
 		return out;
 	}
@@ -187,7 +187,7 @@ public class HAPUtilityContext {
 			out = analyzeElementReference(contextPath, (HAPValueStructureDefinitionGroup)parentContext, null, null);
 		}
 		else {
-			out = ((HAPValueStructureDefinitionFlat)parentContext).discoverChild(contextPath.getRootReference().getName(), contextPath.getSubPath());
+			out = ((HAPValueStructureDefinitionFlat)parentContext).discoverChild(contextPath.getRootReference().getVariableName(), contextPath.getSubPath());
 			//process remaining path
 			out = processContextElementRefResolve(out);
 		}

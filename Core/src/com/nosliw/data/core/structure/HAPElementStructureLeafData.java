@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -48,6 +49,8 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 
 	
 	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo==null?null:this.m_dataInfo.getCriteria();  }
+	
+	public HAPInfoCriteria getCriteriaInfo() {   return HAPInfoCriteria.buildCriteriaInfo(this.getCriteria(), this.getStatus());      }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

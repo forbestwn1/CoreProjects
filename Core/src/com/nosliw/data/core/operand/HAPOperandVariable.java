@@ -63,12 +63,6 @@ public class HAPOperandVariable extends HAPOperandImp{
 		
 		HAPInfoCriteria variableInfo = variablesInfo.getVaraibleCriteriaInfo(this.getVariableKey());
 		
-//		if(variableInfo==null){
-//			//found a new variable
-//			variableInfo = HAPInfoCriteria.buildUndefinedCriteriaInfo();
-//			variablesInfo.addVariableCriteriaInfo(variableInfo, this.getVariableName());
-//		}
-		
 		HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(variableInfo, expectCriteria, dataTypeHelper);
 		
 		//set output criteria

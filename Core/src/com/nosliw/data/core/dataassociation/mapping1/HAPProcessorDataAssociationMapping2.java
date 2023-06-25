@@ -76,7 +76,7 @@ public class HAPProcessorDataAssociationMapping2 {
 					HAPInfoElement contextEleInfo = (HAPInfoElement)error.getData();
 					//find referred element defined in output
 					HAPReferenceElementInStructure path = contextEleInfo.getElementPath();
-					HAPElementStructure sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootReference().getName(), false).getDefinition(), path.getSubPath());
+					HAPElementStructure sourceContextEle = HAPUtilityContext.getDescendant(outputStructure.getRoot(path.getRootReference().getVariableName(), false).getDefinition(), path.getSubPath());
 					if(sourceContextEle==null)  throw new RuntimeException();
 					//update input: set referred element defined in output to input
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
