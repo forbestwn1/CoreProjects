@@ -12,7 +12,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionGroup;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -118,7 +118,7 @@ public class HAPProcessorScript {
 			i++;
 		}
 		
-		HAPExecutableExpressionGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionGroup.process(id, expressionGroupDef, processContext, null, configure, runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionGroup.process(id, expressionGroupDef, processContext, null, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {

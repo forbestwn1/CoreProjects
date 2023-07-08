@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -32,7 +32,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 
 	private HAPDefinitionWrapperValueStructure m_valueStructureWrapper;
 	
-	private HAPExecutableExpressionGroup m_expressionExe;
+	private HAPExecutableEntityExpressionGroup m_expressionExe;
 	
 	private List<HAPExecutableScriptEntity> m_elements;
 	
@@ -47,8 +47,8 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	
 	public HAPDefinitionWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 	
-	public HAPExecutableExpressionGroup getExpression() {    return this.m_expressionExe;   }
-	public void setExpression(HAPExecutableExpressionGroup expression) {    this.m_expressionExe = expression;    }
+	public HAPExecutableEntityExpressionGroup getExpression() {    return this.m_expressionExe;   }
+	public void setExpression(HAPExecutableEntityExpressionGroup expression) {    this.m_expressionExe = expression;    }
 	
 //	public Map<String, Object> getConstantsValue(){    return this.m_constants;     }
 //	public void addConstants(Map<String, Object> constants) {  this.m_constants.putAll(constants);    }

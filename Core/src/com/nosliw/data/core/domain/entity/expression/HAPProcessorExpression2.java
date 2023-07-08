@@ -44,7 +44,7 @@ public class HAPProcessorExpression2 {
 	 * domainPool : domain env 
 	 * entityId : entity for process
 	 */
-	public static HAPExecutableExpressionGroup process(
+	public static HAPExecutableEntityExpressionGroup process(
 			String id, 
 			HAPDomainEntityDefinitionLocal domainPool,
 			HAPIdEntityInDomain entityId
@@ -55,7 +55,7 @@ public class HAPProcessorExpression2 {
 		
 	}
 	
-	public static HAPExecutableExpressionGroup process(
+	public static HAPExecutableEntityExpressionGroup process(
 			String id,
 			HAPDefinitionExpressionGroup1 expressionGroupDef,
 			HAPContextProcessor attachmentReferenceContext,
@@ -65,7 +65,7 @@ public class HAPProcessorExpression2 {
 			HAPProcessTracker processTracker) {
 
 		//create execUtable 
-		HAPExecutableExpressionGroup out = createExecutable(id, expressionGroupDef, null, attachmentReferenceContext, runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionGroup out = createExecutable(id, expressionGroupDef, null, attachmentReferenceContext, runtimeEnv, processTracker);
 
 		//expand all reference
 		expandReference(out, attachmentReferenceContext, runtimeEnv, processTracker);
@@ -94,7 +94,7 @@ public class HAPProcessorExpression2 {
 		return out;
 	}
 	
-	private static void buildVariableInfoInExpression(HAPExecutableExpressionGroup expressionExe) {
+	private static void buildVariableInfoInExpression(HAPExecutableEntityExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
 		//normalize child reference expression first
@@ -106,7 +106,7 @@ public class HAPProcessorExpression2 {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						buildVariableInfoInExpression((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression());
+						buildVariableInfoInExpression((HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression());
 					}
 					return true;
 				}
@@ -125,7 +125,7 @@ public class HAPProcessorExpression2 {
 	//discover missed variable in two way
 	//1. discover those variable not get mapped, add those mapping by enrich variable in parent
 	//2. variable operand
-	private static void normalizeVariable(HAPExecutableExpressionGroup expressionExe) {
+	private static void normalizeVariable(HAPExecutableEntityExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
 		//normalize child reference expression first
@@ -137,7 +137,7 @@ public class HAPProcessorExpression2 {
 					String opType = operand.getOperand().getType();
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						normalizeVariable((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression());
+						normalizeVariable((HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression());
 					}
 					return true;
 				}
@@ -157,7 +157,7 @@ public class HAPProcessorExpression2 {
 						//go through all variables in reference expression and find those that not mapped
 						Map<String, HAPWrapperOperand> refExpMapping = referenceOperand.getMapping();
 						Set<String> mappedVarNames = new HashSet<String>(refExpMapping.keySet());
-						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityExpression.discoverDataVariablesDefinitionInStructure((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityExpression.discoverDataVariablesDefinitionInStructure((HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression());
 						
 						for(HAPInfoVariable varInfo : referenceExpContainer.getAllVariables()) {
 							boolean mapped = false;
@@ -212,7 +212,7 @@ public class HAPProcessorExpression2 {
 	
 	//create executable 
 	//in some case, executable can be created based on one expression item in group, this is case when deal with reference expression 
-	private static HAPExecutableExpressionGroup createExecutable(
+	private static HAPExecutableEntityExpressionGroup createExecutable(
 			String id,
 			HAPDefinitionExpressionGroup1 expressionGroupDef, 
 			String expressionId,
@@ -220,7 +220,7 @@ public class HAPProcessorExpression2 {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 
-		HAPExecutableExpressionGroup out = new HAPExecutableExpressionGroup(id);
+		HAPExecutableEntityExpressionGroup out = new HAPExecutableEntityExpressionGroup(id);
 		
 		//structure
 		HAPDefinitionWrapperValueStructure valueStructureWrapper =  expressionGroupDef.getValueStructureWrapper();
@@ -249,7 +249,7 @@ public class HAPProcessorExpression2 {
 	
 	//replace reference operand with referenced expression exe
 	private static void expandReference(
-			HAPExecutableExpressionGroup expressionGroupExe, 
+			HAPExecutableEntityExpressionGroup expressionGroupExe, 
 			HAPContextProcessor attachmentReferenceContext,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
@@ -312,7 +312,7 @@ public class HAPProcessorExpression2 {
 						referenceOperand.setElementName(eleName);
 						
 						//process refered expression
-						HAPExecutableExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup1)refSolveResult.getValue(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
+						HAPExecutableEntityExpressionGroup refExpressionExe = HAPProcessorExpression2.createExecutable(expressionId+"_"+subId[0], (HAPDefinitionExpressionGroup1)refSolveResult.getValue(), eleName, refSolveResult.getContext(), runtimeEnv, processTracker);
 						expandReference(refExpressionExe, refSolveResult.getContext(), runtimeEnv, processTracker);
 						
 						referenceOperand.setReferedExpression(refExpressionExe);
@@ -327,14 +327,14 @@ public class HAPProcessorExpression2 {
 	}
 	
 	//update constant operand with constant data
-	private static void processConstant(HAPExecutableExpressionGroup expressionExe) {
+	private static void processConstant(HAPExecutableEntityExpressionGroup expressionExe) {
 		for(HAPExecutableExpression expressionItem : expressionExe.getExpressionItems().values()) {
 			HAPUtilityOperand.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
 		}
 
 	}
 	
-	private static void replaceVarNameWithId(HAPExecutableExpressionGroup expressionExe) {
+	private static void replaceVarNameWithId(HAPExecutableEntityExpressionGroup expressionExe) {
 		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
 		
 		HAPStructure1 structure = HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper());
@@ -355,7 +355,7 @@ public class HAPProcessorExpression2 {
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						//replace referenced variable name mapping  
-						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression()).getValueStructureDefinitionWrapper().getValueStructure());
+						HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(((HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression()).getValueStructureDefinitionWrapper().getValueStructure());
 
 						Map<String, HAPWrapperOperand> mapping = referenceOperand.getMapping();
 						Map<String, HAPWrapperOperand> newMapping = new LinkedHashMap<String, HAPWrapperOperand>();
@@ -366,7 +366,7 @@ public class HAPProcessorExpression2 {
 						referenceOperand.setMapping(newMapping);
 						
 						//replace variable name in referenced expression
-						replaceVarNameWithId((HAPExecutableExpressionGroup)referenceOperand.getReferedExpression());
+						replaceVarNameWithId((HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression());
 					}
 					return true;
 				}
@@ -375,7 +375,7 @@ public class HAPProcessorExpression2 {
 	}
 	
 	//build variable into within expression item
-	private static void discoverExpressionItemVariable(HAPExecutableExpressionGroup expressionGroup) {
+	private static void discoverExpressionItemVariable(HAPExecutableEntityExpressionGroup expressionGroup) {
 		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroup.getVariablesInfo();
 		Map<String, HAPExecutableExpression> items = expressionGroup.getExpressionItems();
 		for(String name : items.keySet()) {

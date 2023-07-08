@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
@@ -58,7 +58,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	public List<Object> getElements(){	return this.m_elements;	}
 	
 	@Override
-	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup) {
 		HAPVariableInfoInStructure out = new HAPVariableInfoInStructure();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
@@ -72,7 +72,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	}
 
 	@Override
-	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
+	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPVariableInScript) {
@@ -97,7 +97,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	}
 
 	@Override
-	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		for(Object ele : this.m_elements) {
 			if(ele instanceof HAPConstantInScript) {

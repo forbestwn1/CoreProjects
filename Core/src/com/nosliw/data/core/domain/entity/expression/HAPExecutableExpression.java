@@ -16,7 +16,6 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
@@ -38,16 +37,16 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	public static String OUTPUTMATCHERS = "outputMatchers";
 
 	@HAPAttribute
-	public static String VARIABLEINFOS = "variableInfos";
+	public static String VARIABLEKEYS = "variableKeys";
 	
 	private HAPWrapperOperand m_operand;
 
 	private HAPMatchers m_outputMatchers;
 	
-	private HAPContainerVariableCriteriaInfo m_varInfos;
+	private Set<String> m_varKeys;
 
-	public HAPExecutableExpression(HAPDefinitionExpression expressionDef, HAPParserExpression expressionParser) {
-		this.m_operand = new HAPWrapperOperand(expressionParser.parseExpression(expressionDef.getExpression()));
+	public HAPExecutableExpression(HAPDefinitionExpression expressionDef) {
+		this.m_operand = expressionDef.getOperand().cloneWrapper();
 		expressionDef.cloneToEntityInfo(this);
 	}
 	
@@ -62,8 +61,8 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
 	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
 
-	public HAPContainerVariableCriteriaInfo getVariablesInfo(){   return this.m_varInfos;    }
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varsInfo) {   this.m_varInfos = varsInfo;     }
+	public Set<String> getVariablesInfo(){   return this.m_varKeys;    }
+	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
 
 	public void updateConstant(Map<String, Object> value) {
 		HAPUtilityOperand.processAllOperand(this.m_operand, value, new HAPInterfaceProcessOperand(){
@@ -101,32 +100,6 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 		return new HashSet<HAPDefinitionConstant>(out.values());
 	}
 	
-//	public void updateVariableName(HAPUpdateName nameUpdate) {
-//		HAPOperandUtility.updateNameInOperand(this.m_operand, nameUpdate, new String[]{HAPConstantShared.EXPRESSION_OPERAND_VARIABLE});
-//		HAPOperandUtility.processAllOperand(this.m_operand, null, new HAPOperandTask(){
-//			@Override
-//			public boolean processOperand(HAPOperandWrapper operand, Object data) {
-//				String opType = operand.getOperand().getType();
-//				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-//					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-//					HAPDefinitionDataAssociation inputMapping = referenceOperand.getInputMapping();
-//					
-//					String inputMappingType = inputMapping.getType();
-//					if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-//						HAPDefinitionDataAssociationMapping mappingDa = (HAPDefinitionDataAssociationMapping)inputMapping;
-//						HAPValueStructureDefinitionFlat da = mappingDa.getMapping();
-//						da.updateReferenceName(nameUpdate);
-//					}
-//					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR)) {
-//					}
-//					else if(inputMappingType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_NONE)) {
-//					}
-//				}
-//				return true;
-//			}
-//		});
-//	}
-	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 	}
@@ -159,6 +132,6 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JSON));
 		jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
-		jsonMap.put(VARIABLEINFOS, HAPUtilityJson.buildJson(this.m_varInfos, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
 	}
 }

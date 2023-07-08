@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
@@ -31,7 +31,7 @@ public class HAPDataRuleExpression extends HAPDataRuleImp{
 	
 	private String m_expressionDef;
 
-	private HAPExecutableExpressionGroup m_expressionExe;
+	private HAPExecutableEntityExpressionGroup m_expressionExe;
 	
 	public HAPDataRuleExpression() {
 		super(HAPConstantShared.DATARULE_TYPE_EXPRESSION);
@@ -45,7 +45,7 @@ public class HAPDataRuleExpression extends HAPDataRuleImp{
 	public String getExpressionDefinition() {   return this.m_expressionDef;   }
 	public void setExpressionDefinition(String expression) {   this.m_expressionDef = expression;    }
 
-	public HAPExecutableExpressionGroup getExpressionExecutable() {    return this.m_expressionExe;     }
+	public HAPExecutableEntityExpressionGroup getExpressionExecutable() {    return this.m_expressionExe;     }
 	
 	@Override
 	public HAPServiceData verify(HAPData data, HAPRuntimeEnvironment runtimeEnv) {

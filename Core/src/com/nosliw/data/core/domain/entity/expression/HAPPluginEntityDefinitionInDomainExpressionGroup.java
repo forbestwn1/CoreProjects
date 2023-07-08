@@ -16,15 +16,15 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 	}
 
 	@Override
-	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj,
-			HAPContextParser parserContext) {
+	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)this.getEntity(entityId, parserContext);
 		
 		//parse expression items
-		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj);
+		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj, parserContext);
 	}
 
-	private void parseExpressionDefinitionList(HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj){
+	private void parseExpressionDefinitionList(HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
+		HAPParserExpression expressionParser = this.getRuntimeEnvironment().getExpressionManager().getExpressionParser();
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionGroup.ELEMENT);
 		if(eleArrayJson!=null) {
 			for(int i=0; i<eleArrayJson.length(); i++) {
@@ -32,7 +32,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 				Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpression.EXPRESSION);
 				if(expressionObj!=null) {
 					//process
-					expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionJsonObj));
+					expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionJsonObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));
 				}
 				else {
 					//reference
@@ -44,7 +44,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 			Object expressionObj = jsonObj.opt(HAPDefinitionExpression.EXPRESSION);
 			if(expressionObj!=null) {
 				//process
-				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionObj));
+				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));
 			}
 			else {
 				//reference

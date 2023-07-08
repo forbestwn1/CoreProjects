@@ -7,7 +7,7 @@ import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptImp;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
@@ -28,14 +28,14 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION;  }
 
 	@Override
-	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableExpressionGroup expressionGroup) {
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup) {
 //		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 //		return expressionExe.getVariablesInfo());
 		return null;
 	}
 
 	@Override
-	public Set<String> discoverVariables(HAPExecutableExpressionGroup expressionGroup){
+	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup){
 		if(m_expressionExe==null) {
 			m_expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		}
@@ -43,13 +43,13 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	}
 
 	@Override
-	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableExpressionGroup expressionGroup) {
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {
 		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 		return expressionExe.getConstantsDefinition();
 	}
 
 	@Override
-	public Set<String> discoverExpressionReference(HAPExecutableExpressionGroup expressionGroup) {
+	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionGroup expressionGroup) {
 		Set<String> out = new HashSet<String>();
 		out.add(this.m_expressionId);
 		return out;

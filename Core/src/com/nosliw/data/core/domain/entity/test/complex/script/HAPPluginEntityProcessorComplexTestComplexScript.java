@@ -90,7 +90,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 				HAPDefinitionVariableExpected varDef = new HAPDefinitionVariableExpected();
 				varDef.buildObject(varJson, HAPSerializationFormat.JSON);
 				
-				HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), complexEntityExecutableId, varDef.getGroup(), processContext, null);
+				HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), valueStructureComplex, varDef.getGroup(), valueStructureDomain, null);
 				varExe.setVariableId(idVariable);
 				HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(idVariable, valueStructureDomain);
 				

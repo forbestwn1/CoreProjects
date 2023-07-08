@@ -76,7 +76,7 @@ public class HAPUtilityComplexEntity {
 		if(resourceId!=null) {
 			//is resource id
 			//reference name is resource id
-			HAPResourceDefinition resourceDef = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, context.getCurrentDefinitionDomain(), context.get);
+			HAPResourceDefinition resourceDef = runtimeEnv.getResourceDefinitionManager().getResourceDefinition(resourceId, context.getCurrentDefinitionDomain(), context.getcu);
 			contextResult = new HAPContextProcessor(context.getDomainContext(), resourceDef.getLocalReferenceBase(), resourceDef.getEntityId(), context.getRuntimeEnvironment());
 			return HAPResultSolveReference.newResultFromResource(resourceDef.getEntityId(), contextResult);
 		}

@@ -20,9 +20,8 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpressionGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityOperand {
@@ -324,7 +323,7 @@ public class HAPUtilityOperand {
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						HAPExecutableExpressionGroup refExpGroup = (HAPExecutableExpressionGroup)referenceOperand.getReferedExpression();
+						HAPExecutableEntityExpressionGroup refExpGroup = (HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression();
 						Map<String, HAPExecutableExpression> expItems = refExpGroup.getExpressionItems();
 						for(HAPExecutableExpression expItem : expItems.values()) {
 							updateConstantData(expItem.getOperand(), refExpGroup.getDataConstants());
@@ -340,7 +339,6 @@ public class HAPUtilityOperand {
 			List<HAPOperand> operands, 
 			List<HAPDataTypeCriteria> expectOutputs,
 			HAPContainerVariableCriteriaInfo inVariablesInfo, 
-			Map<String, HAPInfoCriteria> outVariablesInfo,
 			List<HAPMatchers> matchers,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPProcessTracker processTracker) {

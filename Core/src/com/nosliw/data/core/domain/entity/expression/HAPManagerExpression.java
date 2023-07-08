@@ -47,7 +47,7 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		return expressionDef;
 	}
 	
-	public HAPExecutableExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
+	public HAPExecutableEntityExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		HAPValueStructureDefinitionFlat valueStructure = new HAPValueStructureDefinitionFlat();
@@ -60,18 +60,18 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
-	public HAPExecutableExpressionGroup getExpression(String expression) {
+	public HAPExecutableEntityExpressionGroup getExpression(String expression) {
 		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
 		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
 		HAPUtilityWithValueStructure.setValueStructure(expressionGroupDef, new HAPValueStructureDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

@@ -48,7 +48,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
 
 	//referenced expression
-	private HAPIdEntityInDomain m_referredExpressionExeId;
+	private HAPIdEntityInDomain m_referredExpressionDefId;
 	
 	//expression element in group
 	private String m_elementName;
@@ -76,8 +76,8 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_mapping.putAll(mapping);
 	}
 
-	public HAPIdEntityInDomain getReferedExpression() {   return this.m_referredExpressionExeId;   }
-	public void setReferedExpression(HAPIdEntityInDomain m_referredExpressionExeId) {   this.m_referredExpressionExeId = m_referredExpressionExeId;    }
+	public HAPIdEntityInDomain getReferedExpression() {   return this.m_referredExpressionDefId;   }
+	public void setReferedExpression(HAPIdEntityInDomain m_referredExpressionDefId) {   this.m_referredExpressionDefId = m_referredExpressionDefId;    }
 
 	public String getElementName() {   return this.m_elementName;   }
 	public void setElementName(String elementName) {
@@ -104,7 +104,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	@Override
 	public List<HAPResourceIdSimple> getResources(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceIdSimple> out = super.getResources(runtimeInfo, resourceManager);
-		List<HAPResourceDependency> referenceResources = this.m_referredExpressionExeId.getResourceDependency(runtimeInfo, resourceManager);
+		List<HAPResourceDependency> referenceResources = this.m_referredExpressionDefId.getResourceDependency(runtimeInfo, resourceManager);
 		for(HAPResourceDependency dependency : referenceResources) {
 			out.add((HAPResourceIdSimple)dependency.getId());
 		}
@@ -116,7 +116,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCE, m_reference);
 		jsonMap.put(ELEMENTNAME, this.m_elementName);
-		if(this.m_referredExpressionExeId!=null)  jsonMap.put(EXPRESSION, this.m_referredExpressionExeId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_referredExpressionDefId!=null)  jsonMap.put(EXPRESSION, this.m_referredExpressionDefId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
@@ -131,18 +131,18 @@ public class HAPOperandReference extends HAPOperandImp{
 		
 		Map<String, HAPDataTypeCriteria> cs = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		cs.put(this.m_elementName, expectCriteria);
-		this.m_referredExpressionExeId.discover(cs, dataTypeHelper, processTracker);
+		this.m_referredExpressionDefId.discover(cs, dataTypeHelper, processTracker);
 
 		//variable
 		
-		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_referredExpressionExeId.getVariablesInfo();
+		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_referredExpressionDefId.getVariablesInfo();
 		for(String inVarId : this.m_mapping.keySet()) {
 			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfo(inVarId).getCriteria(), processTracker, dataTypeHelper);
 			if(matchers!=null)  this.m_matchers.put(inVarId, matchers);
 		}
 		
 		//output
-		HAPDataTypeCriteria outputCriteria = this.m_referredExpressionExeId.getExpressionItems().get(this.m_elementName).getOutputCriteria();
+		HAPDataTypeCriteria outputCriteria = this.m_referredExpressionDefId.getExpressionItems().get(this.m_elementName).getOutputCriteria();
 		return HAPUtilityCriteria.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
 	}
 	
@@ -159,7 +159,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		operand.m_elementName = this.m_elementName;
 		for(String name : this.m_mapping.keySet()) 	operand.m_mapping.put(name, this.m_mapping.get(name).cloneWrapper());
 		for(String varId : this.m_matchers.keySet())    operand.m_matchers.put(varId, this.m_matchers.get(varId).cloneMatchers());
-		operand.m_referredExpressionExeId = this.m_referredExpressionExeId;
+		operand.m_referredExpressionDefId = this.m_referredExpressionDefId;
 	}
 	
 }

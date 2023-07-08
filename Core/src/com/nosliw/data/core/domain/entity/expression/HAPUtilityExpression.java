@@ -22,16 +22,16 @@ public class HAPUtilityExpression {
 	}
 	
 	//make global name
-	public static HAPUpdateName getUpdateNameGlobal(HAPExecutableExpressionGroup expression) {
+	public static HAPUpdateName getUpdateNameGlobal(HAPExecutableEntityExpressionGroup expression) {
 		return new HAPUpdateNamePrefix(expression.getId()+"_");
 	}
 	
 	//get local name according to global name
-	public static String getLocalName(HAPExecutableExpressionGroup expression, String globalName) {
+	public static String getLocalName(HAPExecutableEntityExpressionGroup expression, String globalName) {
 		return globalName.substring((expression.getId()+"_").length());
 	}
 
-	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableExpressionGroup expressionGroup) {
+	public static HAPVariableInfoInStructure discoverDataVariablesDefinitionInStructure(HAPExecutableEntityExpressionGroup expressionGroup) {
 		HAPVariableInfoInStructure allVarInfosInStructure = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(expressionGroup.getValueStructureDefinitionWrapper().getValueStructure());
 
 		Map<String, HAPInfoVariable> allVarInfosInExpression = new LinkedHashMap<String, HAPInfoVariable>(); 
@@ -51,7 +51,7 @@ public class HAPUtilityExpression {
 		return out;
 	}
 	
-	public static Set<String> discoverDataVariablesNameInExpression(HAPExecutableExpressionGroup expressionGroup){
+	public static Set<String> discoverDataVariablesNameInExpression(HAPExecutableEntityExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
 			out.addAll(HAPUtilityOperand.discoverVariableNames(expression.getOperand()));
@@ -59,7 +59,7 @@ public class HAPUtilityExpression {
 		return out;
 	}
 	
-	public static Set<String> discoverDataVariablesIdInExpression(HAPExecutableExpressionGroup expressionGroup){
+	public static Set<String> discoverDataVariablesIdInExpression(HAPExecutableEntityExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
 		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
 			out.addAll(HAPUtilityOperand.discoverVariableKeys(expression.getOperand()));
