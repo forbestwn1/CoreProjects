@@ -51,5 +51,6 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 //				out.addProcess(id, parseProcessReference(processObjJson));
 			}
 		}
+		HAPParserExpressionDefinition.processReferenceInExpression(expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }

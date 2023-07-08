@@ -31,21 +31,25 @@ public class HAPParserExpressionDefinition {
 		}
 		if(out!=null)   out.setOperand(expressionParser.parseExpression(out.getExpression()));
 		
-		
-		HAPUtilityOperand.processAllOperand(out.getOperand(), null, new HAPInterfaceProcessOperand(){
-			@Override
-			public boolean processOperand(HAPWrapperOperand operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					HAPResourceId resourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, referenceOperand.getReference());
-					HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
-					referenceOperand.setReferedExpression(refExpId);
-				}
-				return true;
-			}
-		});
-		
 		return out;
+	}
+
+	public static void processReferenceInExpression(HAPDefinitionEntityExpression expressionEntity, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
+		for(HAPDefinitionExpression expressionDef : expressionEntity.getAllExpressions()) {
+			HAPUtilityOperand.processAllOperand(expressionDef.getOperand(), null, new HAPInterfaceProcessOperand(){
+				@Override
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						HAPResourceId resourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, referenceOperand.getReference());
+						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
+						String refAttrName = expressionEntity.addReferencedExpressionAttribute(refExpId);
+						referenceOperand.setReferedExpression(refExpId);
+					}
+					return true;
+				}
+			});
+		}
 	}
 }
