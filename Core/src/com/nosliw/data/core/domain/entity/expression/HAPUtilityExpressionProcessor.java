@@ -1,29 +1,90 @@
 package com.nosliw.data.core.domain.entity.expression;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPUtilityEntityProcess;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
+import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
+import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 public class HAPUtilityExpressionProcessor {
 
+	public static void processReferencedExpression(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPDefinitionEntityExpression expressionEntity = (HAPDefinitionEntityExpression)currentBundle.getDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		
+		for(String refAtt : expressionEntity.getReferenceAttributes()) {
+			HAPUtilityEntityProcess.processComplexAttribute(refAtt, complexEntityExecutableId, processContext);
+		}
+	}
+	
+	public static void resolveReferenceVariableMapping(HAPIdEntityInDomain expreesionEntityIdExe, HAPContextProcessor processContext) {
+		HAPExecutableEntityExpression expressionGroupExe = (HAPExecutableEntityExpression)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionEntityIdExe).getEntity();
+		HAPIdEntityInDomain complexEntityDefinitionId = processContext.getCurrentBundle().getDefinitionEntityIdByExecutableEntityId(expreesionEntityIdExe);
+		HAPDefinitionEntityExpression expressionGroupDef = (HAPDefinitionEntityExpression)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		
+		List<HAPExecutableExpression> expressionExeItems = expressionGroupExe.getAllExpressionItems();
+		
+		for(HAPExecutableExpression expressionExeItem : expressionExeItems) {
+			HAPWrapperOperand operand = expressionExeItem.getOperand();
+			HAPUtilityOperand.processAllOperand(operand, null, new HAPInterfaceProcessOperand(){
+				@Override
+				public boolean processOperand(HAPWrapperOperand operand, Object data) {
+					String opType = operand.getOperand().getType();
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
+						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+						Map<String, HAPWrapperOperand> referenceMapping = referenceOperand.getMapping();
+						
+						String refAttributeName = referenceOperand.getReferenceExpressionAttributeName();
+						HAPIdEntityInDomain referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getNormalAttributeValue(refAttributeName);
+						Pair<HAPExecutableEntity, HAPContextProcessor> referencedEntityInfo = HAPUtilityDomain.resolveExecutableEntityId(referedExperssionEntityId, processContext);
+						HAPDomainValueStructure valueStructureDomain = referencedEntityInfo.getRight().getCurrentValueStructureDomain();
+						
+						for(String varName : referenceMapping.keySet()) {
+							HAPIdVariable variableId = HAPUtilityValueContextReference.resolveVariableReference(
+									new HAPReferenceElementInValueContext(varName), 
+									Sets.newHashSet(HAPUtilityValueStructure.getVisibleToExternalCategaries()), 
+									((HAPExecutableEntityComplex)referencedEntityInfo.getLeft()).getValueContext(), 
+									valueStructureDomain, 
+									null);
+							HAPElementStructureLeafData structureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(variableId, valueStructureDomain);
+							referenceOperand.addResolvedMappingTo(varName, variableId, structureEle);
+						}
+					}
+					return true;
+				}
+			});
+		}
+	}
+	
 	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
 		Map<HAPIdVariable, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
 		for(HAPIdVariable varId : variables.keySet()) {

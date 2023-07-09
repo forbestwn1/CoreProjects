@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -87,6 +89,7 @@ public class HAPManagerDomainEntityExecutable {
 	}
 	
 	public void processComplexEntity(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+		//only process local entity
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
 			HAPPluginEntityProcessorComplex processPlugin = this.m_processorComplexEntityPlugins.get(exeEntityId.getEntityType());
 			processPlugin.process(exeEntityId, processContext);
@@ -108,19 +111,10 @@ public class HAPManagerDomainEntityExecutable {
 			childExe = (HAPExecutable)childObj;
 		}
 		else if(childObj instanceof HAPIdEntityInDomain) {
-			HAPIdEntityInDomain childEntityId = (HAPIdEntityInDomain)childObj;
-			HAPInfoEntityInDomainExecutable entityInfo = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(childEntityId);	
-			if(entityInfo.isLocalEntity()) {
-				childExe = entityInfo.getEntity();
-			}
-			else {
-				HAPIdComplexEntityInGlobal globalEntityId = processContext.getCurrentExecutableDomain().getExternalEntityGlobalId(childEntityId);
-				HAPExecutableBundle childBundle = this.getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceIdSimple());
-				childExe = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getEntity();
-				childProcessorContext = new HAPContextProcessor(childBundle, processContext.getRuntimeEnvironment());
-			}
+			Pair<HAPExecutableEntity, HAPContextProcessor> result = HAPUtilityDomain.resolveExecutableEntityId((HAPIdEntityInDomain)childObj, processContext);
+			childExe = result.getLeft();
+			childProcessorContext = result.getRight();
 		}
-		
 		return processPlugin.process(adapterDefinition.getValue(), childExe, childProcessorContext, parentExe, processContext);
 	}
 	

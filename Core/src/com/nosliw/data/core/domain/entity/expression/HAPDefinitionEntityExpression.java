@@ -17,7 +17,7 @@ public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityI
 		this.setNormalAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
 	}
 
-	public abstract List<HAPDefinitionExpression> getAllExpressions();
+	public abstract List<HAPDefinitionExpression> getAllExpressionItems();
 	
 	//add referenced expression as attribute so that it can be processed under complex entity framework
 	//return attribute name
@@ -38,6 +38,6 @@ public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityI
 	private int getIdIndex() {    return (Integer)this.getNormalAttributeValue(ATTR_INDEX_ID, Integer.valueOf(0));     }
 	private void setIdIndex(int idIndex) {    this.setNormalAttributeValueObject(ATTR_INDEX_ID, Integer.valueOf(idIndex));      }
 
-	private Set<String> getReferenceAttributes(){    return (Set<String>)this.getNormalAttributeValue(ATTR_ATTRIBUTES_REFERENCE);     }
+	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getNormalAttributeValue(ATTR_ATTRIBUTES_REFERENCE);     }
 	
 }

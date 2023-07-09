@@ -35,7 +35,7 @@ public class HAPUtilityExpression {
 		HAPVariableInfoInStructure allVarInfosInStructure = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(expressionGroup.getValueStructureDefinitionWrapper().getValueStructure());
 
 		Map<String, HAPInfoVariable> allVarInfosInExpression = new LinkedHashMap<String, HAPInfoVariable>(); 
-		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
+		for(HAPExecutableExpression expression : expressionGroup.getAllExpressionItems().values()) {
 			for(String varName : HAPUtilityOperand.discoverVariableNames(expression.getOperand())) {
 				HAPInfoVariable varInfo = allVarInfosInStructure.getVariableInfoByAlias(varName);
 				if(allVarInfosInExpression.get(varInfo.getIdPath().getFullName())==null) {
@@ -53,7 +53,7 @@ public class HAPUtilityExpression {
 	
 	public static Set<String> discoverDataVariablesNameInExpression(HAPExecutableEntityExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
-		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
+		for(HAPExecutableExpression expression : expressionGroup.getAllExpressionItems().values()) {
 			out.addAll(HAPUtilityOperand.discoverVariableNames(expression.getOperand()));
 		}
 		return out;
@@ -61,7 +61,7 @@ public class HAPUtilityExpression {
 	
 	public static Set<String> discoverDataVariablesIdInExpression(HAPExecutableEntityExpressionGroup expressionGroup){
 		Set<String> out = new HashSet<String>();
-		for(HAPExecutableExpression expression : expressionGroup.getExpressionItems().values()) {
+		for(HAPExecutableExpression expression : expressionGroup.getAllExpressionItems().values()) {
 			out.addAll(HAPUtilityOperand.discoverVariableKeys(expression.getOperand()));
 		}
 		return out;

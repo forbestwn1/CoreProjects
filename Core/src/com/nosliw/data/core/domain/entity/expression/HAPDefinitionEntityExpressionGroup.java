@@ -17,11 +17,11 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityExpre
 	public void addExpression(HAPDefinitionExpression element) {	this.addEntityElement(element);	}
 
 	@Override
-	public List<HAPDefinitionExpression> getEntityElements() {		return this.getAllExpressions();	}
+	public List<HAPDefinitionExpression> getEntityElements() {		return this.getAllExpressionItems();	}
 
 	@Override
 	public HAPDefinitionExpression getEntityElement(String id) {
-		for(HAPDefinitionExpression expression : this.getAllExpressions()) {
+		for(HAPDefinitionExpression expression : this.getAllExpressionItems()) {
 			if(id.equals(expression.getId())) {
 				return expression;
 			}
@@ -30,14 +30,14 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityExpre
 	}
 
 	@Override
-	public List<HAPDefinitionExpression> getAllExpressions(){	return (List<HAPDefinitionExpression>)this.getNormalAttributeValue(ELEMENT);	}
+	public List<HAPDefinitionExpression> getAllExpressionItems(){	return (List<HAPDefinitionExpression>)this.getNormalAttributeValue(ELEMENT);	}
 	
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpression expression) {  
 		if(expression!=null) {
 			HAPUtilityEntityInfo.processEntityId(expression);
-			this.getAllExpressions().add(expression);  
+			this.getAllExpressionItems().add(expression);  
 		}
 	}
 

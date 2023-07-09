@@ -35,7 +35,7 @@ public class HAPParserExpressionDefinition {
 	}
 
 	public static void processReferenceInExpression(HAPDefinitionEntityExpression expressionEntity, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
-		for(HAPDefinitionExpression expressionDef : expressionEntity.getAllExpressions()) {
+		for(HAPDefinitionExpression expressionDef : expressionEntity.getAllExpressionItems()) {
 			HAPUtilityOperand.processAllOperand(expressionDef.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
 				public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -45,7 +45,7 @@ public class HAPParserExpressionDefinition {
 						HAPResourceId resourceId = HAPUtilityResourceId.buildResourceIdByLiterate(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, referenceOperand.getReference());
 						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
 						String refAttrName = expressionEntity.addReferencedExpressionAttribute(refExpId);
-						referenceOperand.setReferedExpression(refExpId);
+						referenceOperand.setReferenceExpressionAttributeName(refAttrName);
 					}
 					return true;
 				}

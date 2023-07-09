@@ -21,6 +21,7 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
+import com.nosliw.data.core.domain.entity.HAPUtilityEntityProcess;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPExecutableTestSimple1;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPProcessorTestSimple1;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
@@ -45,7 +46,7 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 		HAPDefinitionEntityTestComplex1 definitionEntity = (HAPDefinitionEntityTestComplex1)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
 		List<HAPAttributeEntityDefinition> attrs = definitionEntity.getAttributes();
-		for(HAPAttributeEntityDefinition attr : attrs) {
+		for(HAPAttributeEntityDefinition attr : attrs ) {
 			if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)){
 				String valueType = attr.getValueTypeInfo().getValueType();
 				if(!(valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)||valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT))) {
@@ -56,10 +57,10 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 					HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
 					if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
 						//complex attribute
-						this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
+						HAPUtilityEntityProcess.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
 					}
 					else {
-						HAPAttributeEntityExecutable attrExe = this.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
+						HAPAttributeEntityExecutable attrExe = HAPUtilityEntityProcess.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
 						executableEntity.setAttribute(attrExe);
 					}
 				}
@@ -70,7 +71,7 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 				HAPContainerEntityDefinition containerEntityDef = containerAttrDef.getValue();
 				String eleType = attr.getValueTypeInfo().getValueType();
 				if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT.equals(eleType)) {
-					this.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
+					HAPUtilityEntityProcess.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
 				}
 				else if(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1.equals(eleType)) {
 					HAPContainerEntityExecutable conatinerEntityExe = HAPUtilityContainerEntity.buildExecutableContainer(containerEntityDef, processContext.getRuntimeEnvironment().getDomainEntityDefinitionManager()); 

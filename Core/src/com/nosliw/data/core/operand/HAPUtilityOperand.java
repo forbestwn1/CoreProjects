@@ -324,7 +324,7 @@ public class HAPUtilityOperand {
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 						HAPExecutableEntityExpressionGroup refExpGroup = (HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression();
-						Map<String, HAPExecutableExpression> expItems = refExpGroup.getExpressionItems();
+						Map<String, HAPExecutableExpression> expItems = refExpGroup.getAllExpressionItems();
 						for(HAPExecutableExpression expItem : expItems.values()) {
 							updateConstantData(expItem.getOperand(), refExpGroup.getDataConstants());
 						}

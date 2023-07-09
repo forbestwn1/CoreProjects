@@ -106,11 +106,18 @@ public class HAPUtilityValueStructure {
 	}
 
 	//visible to child
-	public static String[] getVisibleCategaries(){
+	public static String[] getVisibleToChildCategaries(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
+		};
+		return contextTypes;
+	}
+	
+	public static String[] getVisibleToExternalCategaries(){
+		String[] contextTypes = {
+			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC
 		};
 		return contextTypes;
 	}

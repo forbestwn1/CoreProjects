@@ -41,7 +41,7 @@ public class HAPConfigureResolveStructureElementReference extends HAPInfoImpSimp
 	
 	public HAPConfigureResolveStructureElementReference() {
 		this.setSearchMode(HAPConstant.RESOLVEPARENTMODE_BEST);
-		this.setGroupTypes(new HashSet<String>(Arrays.asList(HAPUtilityValueStructure.getVisibleCategaries())));
+		this.setGroupTypes(new HashSet<String>(Arrays.asList(HAPUtilityValueStructure.getVisibleToChildCategaries())));
 	}
 	
 	

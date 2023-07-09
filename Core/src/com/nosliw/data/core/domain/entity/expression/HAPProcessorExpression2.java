@@ -95,7 +95,7 @@ public class HAPProcessorExpression2 {
 	}
 	
 	private static void buildVariableInfoInExpression(HAPExecutableEntityExpressionGroup expressionExe) {
-		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
+		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getAllExpressionItems();
 		
 		//normalize child reference expression first
 		for(String name : expressionItems.keySet()) {
@@ -126,7 +126,7 @@ public class HAPProcessorExpression2 {
 	//1. discover those variable not get mapped, add those mapping by enrich variable in parent
 	//2. variable operand
 	private static void normalizeVariable(HAPExecutableEntityExpressionGroup expressionExe) {
-		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
+		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getAllExpressionItems();
 		
 		//normalize child reference expression first
 		for(String name : expressionItems.keySet()) {
@@ -254,7 +254,7 @@ public class HAPProcessorExpression2 {
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPProcessTracker processTracker) {
 		
-		Map<String, HAPExecutableExpression> expressionExe = expressionGroupExe.getExpressionItems();
+		Map<String, HAPExecutableExpression> expressionExe = expressionGroupExe.getAllExpressionItems();
 		for(String key : expressionExe.keySet()) {
 			HAPWrapperOperand operand = expressionExe.get(key).getOperand();
 			String expressionId = expressionGroupExe.getId() + "_" + key;
@@ -328,14 +328,14 @@ public class HAPProcessorExpression2 {
 	
 	//update constant operand with constant data
 	private static void processConstant(HAPExecutableEntityExpressionGroup expressionExe) {
-		for(HAPExecutableExpression expressionItem : expressionExe.getExpressionItems().values()) {
+		for(HAPExecutableExpression expressionItem : expressionExe.getAllExpressionItems().values()) {
 			HAPUtilityOperand.updateConstantData(expressionItem.getOperand(), expressionExe.getDataConstants());
 		}
 
 	}
 	
 	private static void replaceVarNameWithId(HAPExecutableEntityExpressionGroup expressionExe) {
-		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getExpressionItems();
+		Map<String, HAPExecutableExpression> expressionItems = expressionExe.getAllExpressionItems();
 		
 		HAPStructure1 structure = HAPUtilityValueStructure.getValueStructureFromWrapper(expressionExe.getValueStructureDefinitionWrapper());
 		
@@ -377,7 +377,7 @@ public class HAPProcessorExpression2 {
 	//build variable into within expression item
 	private static void discoverExpressionItemVariable(HAPExecutableEntityExpressionGroup expressionGroup) {
 		HAPContainerVariableCriteriaInfo expressionGroupVarsContainer = expressionGroup.getVariablesInfo();
-		Map<String, HAPExecutableExpression> items = expressionGroup.getExpressionItems();
+		Map<String, HAPExecutableExpression> items = expressionGroup.getAllExpressionItems();
 		for(String name : items.keySet()) {
 			HAPExecutableExpression item = items.get(name);
 			Set<String> varIds = HAPUtilityOperand.discoverVariableKeys(item.getOperand());

@@ -37,14 +37,14 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	@Override
 	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup){
 		if(m_expressionExe==null) {
-			m_expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+			m_expressionExe = expressionGroup.getAllExpressionItems().get(this.m_expressionId);
 		}
 		return m_expressionExe.getVariablesInfo().getVariablesId();	
 	}
 
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {
-		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+		HAPExecutableExpression expressionExe = expressionGroup.getAllExpressionItems().get(this.m_expressionId);
 		return expressionExe.getConstantsDefinition();
 	}
 

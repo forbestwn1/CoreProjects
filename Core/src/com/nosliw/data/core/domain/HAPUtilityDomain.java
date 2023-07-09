@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializable;
@@ -20,6 +21,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
@@ -32,6 +34,23 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static Pair<HAPExecutableEntity, HAPContextProcessor> resolveExecutableEntityId(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext){
+		HAPExecutableEntity outExeEntity;
+		HAPContextProcessor outProcessorContext;
+		HAPInfoEntityInDomainExecutable entityInfo = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(exeEntityId);	
+		if(entityInfo.isLocalEntity()) {
+			outExeEntity = entityInfo.getEntity();
+			outProcessorContext = processContext;
+		}
+		else {
+			HAPIdComplexEntityInGlobal globalEntityId = processContext.getCurrentExecutableDomain().getExternalEntityGlobalId(exeEntityId);
+			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceIdSimple());
+			outExeEntity = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getEntity();
+			outProcessorContext = new HAPContextProcessor(childBundle, processContext.getRuntimeEnvironment());
+		}
+		return Pair.of(outExeEntity, outProcessorContext);
+	}
+	
 	public static <T> T getEntity(Object entityObj, HAPContextProcessor processContext, Class<T> entityClass) {
 		Object out = null;
 		if(entityClass.isInstance(entityObj))  out = entityObj;    

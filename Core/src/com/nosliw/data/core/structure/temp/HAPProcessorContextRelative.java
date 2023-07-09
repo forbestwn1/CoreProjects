@@ -90,7 +90,7 @@ public class HAPProcessorContextRelative {
 				if(!relativeContextElement.isProcessed()){
 					List<String> categaryes = new ArrayList<String>();
 					if(relativeContextElement.getParentCategary()!=null) categaryes.add(relativeContextElement.getParentCategary());
-					else if(configure.parentCategary==null)   categaryes.addAll(Arrays.asList(HAPValueStructureDefinitionGroup.getVisibleCategaries()));
+					else if(configure.parentCategary==null)   categaryes.addAll(Arrays.asList(HAPValueStructureDefinitionGroup.getVisibleToChildCategaries()));
 					else   categaryes.addAll(Arrays.asList(configure.parentCategary));
 					out = processRelativeContextDefinitionElement(contextEleInfo, parentContext, errors, isParentFlat, categaryes.toArray(new String[0]), configure, runtimeEnv);
 				}

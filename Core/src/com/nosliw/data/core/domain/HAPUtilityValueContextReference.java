@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain;
 
+import java.util.Set;
+
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
@@ -19,7 +21,7 @@ public class HAPUtilityValueContextReference {
 
 	//resolve variable name with possible extension
 	public static HAPIdVariable resolveVariableName(String variableName, HAPExecutableEntityValueContext valueContext, String extensionStructureGroup, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){
-		HAPIdVariable out = HAPUtilityValueContextReference.resolveVariableReference(new HAPReferenceElementInValueContext(variableName), valueContext, valueStructureDomain, resolveConfigure);
+		HAPIdVariable out = HAPUtilityValueContextReference.resolveVariableReference(new HAPReferenceElementInValueContext(variableName), null, valueContext, valueStructureDomain, resolveConfigure);
 		if(out==null) {
 			//not able to resolve variable
 			String valueStructureRuntimId = HAPUtilityValueContext.getExtensionValueStructure(valueContext, extensionStructureGroup!=null?extensionStructureGroup:HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
@@ -36,9 +38,9 @@ public class HAPUtilityValueContextReference {
 		return out;
 	}
 	
-	public static HAPIdVariable resolveVariableReference(HAPReferenceElementInValueContext reference, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){
+	public static HAPIdVariable resolveVariableReference(HAPReferenceElementInValueContext reference, Set<String> groupType, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){
 		
-		HAPInfoReferenceResolve refResolve = resolveElementReference(reference, valueContext, valueStructureDomain, resolveConfigure);
+		HAPInfoReferenceResolve refResolve = resolveElementReference(reference, groupType, valueContext, valueStructureDomain, resolveConfigure);
 		
 		if(refResolve==null)  return null;
 		
@@ -47,9 +49,9 @@ public class HAPUtilityValueContextReference {
 		return new HAPIdVariable(rootEleId, reference.getElementPath());
 	}
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, Set<String> groupType, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){
 
-		HAPContextStructureReferenceValueStructure structureRefContext = new HAPContextStructureReferenceValueStructure(valueContext, null, valueStructureDomain);
+		HAPContextStructureReferenceValueStructure structureRefContext = new HAPContextStructureReferenceValueStructure(valueContext, groupType, valueStructureDomain);
 
 		return HAPUtilityStructureElementReference.resolveElementReference(reference, structureRefContext, resolveConfigure);
 		

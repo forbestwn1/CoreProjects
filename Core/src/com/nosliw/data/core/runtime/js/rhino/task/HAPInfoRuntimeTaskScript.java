@@ -41,7 +41,7 @@ public class HAPInfoRuntimeTaskScript{
 	public HAPScriptFunctionInfo getScriptFunction() {
 		return HAPUtilityScriptForExecuteJSScript.buildFunctionInfo(this.m_scriptGroup.getScript(m_scriptId));
 	}
-	public Map<String, HAPExecutableExpression> getExpressionItems(){  return this.m_scriptGroup.getExpression().getExpressionItems(); }
+	public Map<String, HAPExecutableExpression> getExpressionItems(){  return this.m_scriptGroup.getExpression().getAllExpressionItems(); }
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	public Map<String, Object> getConstantsValue(){  return new LinkedHashMap<String, Object>();  }
 
