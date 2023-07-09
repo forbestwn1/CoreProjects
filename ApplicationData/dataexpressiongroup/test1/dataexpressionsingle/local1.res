@@ -40,13 +40,7 @@
 				}
 			]
 		},
-		"expression": [
-			{
-				"name" : "normal_cleardatatype",
-				"status": "disabled1",
-				"expression" : "!(test.string)!.subString(base:?(localBase)?,from:?(localParm1)?,to:?(localParm2)?)"
-			}
-		],
+		"expression" : "!(test.string)!.subString(base:?(localBase)?,from:?(localParm1)?,to:?(localParm2)?)",
 		"attachment": {
 			"extra": {
 				"status": "disabled1",
