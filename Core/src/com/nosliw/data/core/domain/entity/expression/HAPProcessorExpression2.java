@@ -277,7 +277,7 @@ public class HAPProcessorExpression2 {
 							refName = refName.substring(0, eleIndex);
 						}
 						
-						HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(refName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, attachmentReferenceContext);
+						HAPResultSolveReference refSolveResult = HAPUtilityComponent.solveReference(refName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, attachmentReferenceContext);
 						
 //						HAPDefinitionExpressionGroup expressionGroupDefiniton = null;
 //						HAPContextProcessAttachmentReference attachmentReferenceContextForRefExpression = null;

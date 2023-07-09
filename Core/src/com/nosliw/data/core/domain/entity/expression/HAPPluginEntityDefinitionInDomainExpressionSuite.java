@@ -21,7 +21,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionSuite extends HAPPluginE
 		HAPDefinitionEntityExpressionSuite suiteEntity = (HAPDefinitionEntityExpressionSuite)definitionDomain.getEntityInfoDefinition(entityId).getEntity();
 		
 		//parse element
-		this.parseContainerComplexAttribute(jsonObj, entityId, HAPDefinitionEntityExpressionSuite.GROUP, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, null, HAPConstantShared.ENTITYCONTAINER_TYPE_SET, HAPUtilityDomain.createDefaultParentRelationConfigure(), definitionDomain);
+		this.parseContainerComplexAttribute(jsonObj, entityId, HAPDefinitionEntityExpressionSuite.GROUP, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, null, HAPConstantShared.ENTITYCONTAINER_TYPE_SET, HAPUtilityDomain.createDefaultParentRelationConfigure(), definitionDomain);
 		
 //		JSONObject groupObj = jsonObj.getJSONObject(HAPDefinitionEntityExpressionSuite.GROUP);
 //		List<HAPInfoContainerElement> eles = HAPUtilityParserEntity.parseComplexContainer(

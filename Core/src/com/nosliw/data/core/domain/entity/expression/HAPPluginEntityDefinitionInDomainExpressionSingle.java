@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginEntityDefinitionInDomainExpressionSingle extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainExpressionSingle(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, HAPDefinitionEntityExpressionSingle.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPDefinitionEntityExpressionSingle.class, runtimeEnv);
 	}
 
 	@Override

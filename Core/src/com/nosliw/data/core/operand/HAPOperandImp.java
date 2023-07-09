@@ -52,7 +52,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	
 	@Override
 	public HAPDataTypeCriteria getOutputCriteria(){  return this.m_outputCriteria; }
-	protected void setOutputCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
+	public void setOutputCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
 	
 	@Override
 	public String getStatus(){		return this.m_status;	}

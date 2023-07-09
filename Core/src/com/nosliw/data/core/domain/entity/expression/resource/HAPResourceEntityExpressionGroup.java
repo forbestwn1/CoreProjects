@@ -19,7 +19,7 @@ public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElemen
 	}
 
 	@Override
-	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION;  }
+	public String getResourceType() {   return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE;  }
 
 	public HAPElementContainerResourceDefinitionEntityExpressionSuite getExpressionGroupEntity() {    return (HAPElementContainerResourceDefinitionEntityExpressionSuite)this.getComponentEntity();   }
 	public HAPResourceEntityExpressionSuite getSuite() {   return (HAPResourceEntityExpressionSuite)this.getResourceContainer();  }

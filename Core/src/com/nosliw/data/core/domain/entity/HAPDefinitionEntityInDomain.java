@@ -78,6 +78,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
 		if(att==null) {
 			this.setNormalAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue), null);
+			att = this.getNormalAttribute(attrName);
 		}
 		return att.getValue().getValue();
 		

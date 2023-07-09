@@ -18,7 +18,7 @@ import com.nosliw.data.core.operand.HAPUtilityOperand;
 public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEntityProcessorComplexImp{
 
 	public HAPPluginEntityProcessorComplexExpressionSingle() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION, HAPExecutableEntityExpressionSingle.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPExecutableEntityExpressionSingle.class);
 	}
 
 	@Override

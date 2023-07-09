@@ -45,14 +45,14 @@ public class HAPOperandReference extends HAPOperandImp{
 	private String m_reference;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
-	protected Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
+	private Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
 
 	//referenced expression attribute name
 	private String m_referenceExpressionAttributeName;
 	
 	//resolve map to reference info 
-	protected Map<String, HAPIdVariable> m_resolvedVariable = new LinkedHashMap<String, HAPIdVariable>();
-	protected Map<String, HAPElementStructureLeafData> m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
+	private Map<String, HAPIdVariable> m_resolvedVariable = new LinkedHashMap<String, HAPIdVariable>();
+	private Map<String, HAPElementStructureLeafData> m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
 	
 	private Map<String, HAPMatchers> m_matchers;
 	
@@ -103,15 +103,6 @@ public class HAPOperandReference extends HAPOperandImp{
 	}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(REFERENCE, m_reference);
-		jsonMap.put(REFERENCEATTRIBUTENAME, this.m_referenceExpressionAttributeName);
-		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
-		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
-	}
-
-	@Override
 	public HAPMatchers discover(
 			HAPContainerVariableCriteriaInfo variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
@@ -119,23 +110,25 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		
-		Map<String, HAPDataTypeCriteria> cs = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		cs.put(this.m_elementName, expectCriteria);
-		this.m_referredExpressionDefId.discover(cs, dataTypeHelper, processTracker);
-
-		//variable
-		
-		HAPContainerVariableCriteriaInfo internalVariablesInfo = this.m_referredExpressionDefId.getVariablesInfo();
-		for(String inVarId : this.m_mapping.keySet()) {
-			HAPMatchers matchers = this.m_mapping.get(inVarId).getOperand().discover(variablesInfo, internalVariablesInfo.getVariableCriteriaInfo(inVarId).getCriteria(), processTracker, dataTypeHelper);
-			if(matchers!=null)  this.m_matchers.put(inVarId, matchers);
+		for(String name : this.m_mapping.keySet()) {
+			HAPMatchers matchers = this.m_mapping.get(name).getOperand().discover(variablesInfo, this.m_resolvedElement.get(name).getCriteria(), processTracker, dataTypeHelper);
+			if(matchers!=null)  this.m_matchers.put(name, matchers);
 		}
 		
-		//output
-		HAPDataTypeCriteria outputCriteria = this.m_referredExpressionDefId.getAllExpressionItems().get(this.m_elementName).getOutputCriteria();
-		return HAPUtilityCriteria.isMatchable(outputCriteria, expectCriteria, dataTypeHelper);
+		return HAPUtilityCriteria.isMatchable(this.getOutputCriteria(), expectCriteria, dataTypeHelper);
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(REFERENCE, m_reference);
+		jsonMap.put(REFERENCEATTRIBUTENAME, this.m_referenceExpressionAttributeName);
+		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
+		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOLVED_VARIABLE, HAPUtilityJson.buildJson(this.m_resolvedVariable, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOLVED_ELEMENT, HAPUtilityJson.buildJson(this.m_resolvedElement, HAPSerializationFormat.JSON));
+	}
+
 	@Override
 	public HAPOperand cloneOperand() {
 		HAPOperandReference out = new HAPOperandReference();
