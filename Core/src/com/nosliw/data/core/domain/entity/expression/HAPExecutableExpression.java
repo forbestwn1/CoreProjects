@@ -43,7 +43,7 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 
 	private HAPMatchers m_outputMatchers;
 	
-	private Set<String> m_varKeys;
+	private Set<String> m_varKeys = new HashSet<String>();
 
 	public HAPExecutableExpression(HAPDefinitionExpression expressionDef) {
 		this.m_operand = expressionDef.getOperand().cloneWrapper();

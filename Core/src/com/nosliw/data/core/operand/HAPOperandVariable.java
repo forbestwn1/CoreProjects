@@ -50,7 +50,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VARIABLENAME, m_variableName);
-		jsonMap.put(VARIABLEID, m_variableId.toStringValue(HAPSerializationFormat.JSON));
+		if(m_variableId!=null)   jsonMap.put(VARIABLEID, m_variableId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEKEY, m_variableKey);
 	}
 

@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain.entity.expression;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -156,7 +157,18 @@ public class HAPUtilityExpressionProcessor {
 				return true;
 			}
 		});
-
 	}
 
+	//build variable into within expression item
+	public static void buildVariableInfoInExpression(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
+		HAPExecutableEntityExpression expressionGroupExe = (HAPExecutableEntityExpression)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
+		
+		List<HAPExecutableExpression> items = expressionGroupExe.getAllExpressionItems();
+		for(HAPExecutableExpression item : items) {
+			Set<String> varKeys = HAPUtilityOperand.discoverVariableKeys(item.getOperand());
+			for(String varKey : varKeys) {
+				item.addVariableKey(varKey);
+			}
+		}
+	}
 }

@@ -27,9 +27,6 @@ public class HAPExecutableEntityExpressionSingle extends HAPExecutableEntityExpr
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 
-	@HAPAttribute
-	public static String VARIABLEINFOS = "variableInfos";
-
 	//temp info
 	private Map<String, HAPData> m_dataConstants;
 	
@@ -45,9 +42,6 @@ public class HAPExecutableEntityExpressionSingle extends HAPExecutableEntityExpr
 	
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
-	
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setNormalAttributeValueObject(VARIABLEINFOS, varInfo);  }
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getNormalAttributeValue(VARIABLEINFOS);    }
 	
 	public void discover(HAPDataTypeCriteria expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		Map<String, HAPInfoCriteria> discoveredVarsInf = new LinkedHashMap<String, HAPInfoCriteria>();

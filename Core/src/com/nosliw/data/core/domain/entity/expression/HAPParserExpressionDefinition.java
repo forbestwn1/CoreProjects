@@ -36,7 +36,7 @@ public class HAPParserExpressionDefinition {
 		return out;
 	}
 
-	public static void processReferenceInExpression(HAPDefinitionEntityExpression expressionEntity, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
+	public static void processReferenceInExpression(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpression expressionEntity, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
 		for(HAPDefinitionExpression expressionDef : expressionEntity.getAllExpressionItems()) {
 			HAPUtilityOperand.processAllOperand(expressionDef.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
@@ -48,7 +48,8 @@ public class HAPParserExpressionDefinition {
 						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
 						
 						HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
-						parentInfo.
+						parentInfo.setParentId(expressionEntityId);
+						parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_RUNTIME);
 						
 						((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(refExpId, parentInfo);
 						

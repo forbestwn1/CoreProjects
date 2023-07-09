@@ -24,9 +24,6 @@ public class HAPExecutableEntityExpressionGroup extends HAPExecutableEntityExpre
 	@HAPAttribute
 	public static String EXPRESSIONS = "expressions";
 
-	@HAPAttribute
-	public static String VARIABLEINFOS = "variableInfos";
-
 	//temp info
 	private Map<String, HAPData> m_dataConstants;
 	
@@ -42,9 +39,6 @@ public class HAPExecutableEntityExpressionGroup extends HAPExecutableEntityExpre
 
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }
-	
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setNormalAttributeValueObject(VARIABLEINFOS, varInfo);  }
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getNormalAttributeValue(VARIABLEINFOS);    }
 	
 	public void discover(Map<String, HAPDataTypeCriteria> expectOutput, HAPDataTypeHelper dataTypeHelper, HAPProcessTracker processTracker) {
 		List<String> names = new ArrayList<String>();

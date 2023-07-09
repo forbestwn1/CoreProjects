@@ -23,6 +23,6 @@ public class HAPPluginEntityDefinitionInDomainExpressionSingle extends HAPPlugin
 				parserContext, 
 				this.getRuntimeEnvironment().getExpressionManager().getExpressionParser(), 
 				this.getRuntimeEnvironment().getResourceDefinitionManager()));
-		HAPParserExpressionDefinition.processReferenceInExpression(expressionEntity, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPParserExpressionDefinition.processReferenceInExpression(entityId, expressionEntity, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }

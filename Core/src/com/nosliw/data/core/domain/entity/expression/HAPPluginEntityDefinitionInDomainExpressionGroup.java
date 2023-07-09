@@ -20,10 +20,10 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)this.getEntity(entityId, parserContext);
 		
 		//parse expression items
-		this.parseExpressionDefinitionList(expressionGroupEntity, jsonObj, parserContext);
+		this.parseExpressionDefinitionList(entityId, expressionGroupEntity, jsonObj, parserContext);
 	}
 
-	private void parseExpressionDefinitionList(HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
+	private void parseExpressionDefinitionList(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
 		HAPParserExpression expressionParser = this.getRuntimeEnvironment().getExpressionManager().getExpressionParser();
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionGroup.ELEMENT);
 		if(eleArrayJson!=null) {
@@ -51,6 +51,6 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 //				out.addProcess(id, parseProcessReference(processObjJson));
 			}
 		}
-		HAPParserExpressionDefinition.processReferenceInExpression(expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPParserExpressionDefinition.processReferenceInExpression(expressionEntityId, expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }
