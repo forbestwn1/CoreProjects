@@ -34,11 +34,32 @@ var node_createDataExpressionGroupPlugin = function(){
 var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
-	
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
+	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
+	var loc_envInterface = {};
+	var loc_referencedRuntime = {};
 	
 	var loc_out = {
+		
+		getComplexEntityInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue[node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE];
+			
+			_.each(refAttrNames, function(attrName, i){
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+					success : function(request, childNode){
+						loc_referencedRuntime[attrName] = childNode.getChildValue();
+					}
+				}));
+			});
+			return out;
+		},
+		
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
+		},
 		
 		getAllExpressionIds : function(){
 			var out = [];
@@ -50,9 +71,6 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		},
 		
 		getExecuteDataExpressionRequest : function(dataExpressionId, handlers, request){
-			var varDomain = loc_bundleCore.getVariableDomain();
-			loc_valueContext = varDomain.getValueContext(loc_valueContextId);
-			
 			var expressions = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
 			var expressionItem;		
 			_.each(expressions, function(expression, i){
@@ -61,43 +79,8 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 				}
 			});
 			
-			var variables = {};
-			var variablesInfo = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_VARIABLEINFOS);
-			_.each(variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES], function(varInfo, i){
-				var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
-				var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
-				var rootElemId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
-				var variable = loc_valueContext.createVariable(
-						rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], 
-						rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME],
-						varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
-				variables[varKey] = variable;	
-			});
-			
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
-						
-			var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
-				success : function(request, results){
-					return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, results.getResults());
-				}	
-			});
-			
-			_.each(variables, function(variable, key){
-				calVarsRequest.addRequest(key, variable.getGetValueRequest({
-					success : function(request, data){
-						var value = data;
-						if(data!=undefined&&data.value!=undefined){
-						    value = data.value;
-						}
-						return value;
-					}	
-				}));
-			});
-			
-			out.addRequest(calVarsRequest);
-			return out;
+			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
-		
 	};
 	
 	return loc_out;

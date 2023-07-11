@@ -52,7 +52,7 @@
 		"element": [
 			{
 				"name" : "normal_cleardatatype",
-				"status": "disabled",
+				"status": "disabled1",
 				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
@@ -87,7 +87,7 @@
 			},
 			{
 				"name" : "reference",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "<(dataexpressionsingle|#local1)>.with(localBase:?(baseVarNormal)?,localParm1:?(parm1)?,localParm2:?(parm2)?)"
 			}
 		],

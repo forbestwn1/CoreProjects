@@ -15,6 +15,7 @@ public abstract class HAPExecutableEntityExpression extends HAPExecutableEntityC
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 
+	@HAPAttribute
 	public static final String ATTRIBUTESREFERENCE = "referenceAttribute";
 	
 	public abstract List<HAPExecutableExpression> getAllExpressionItems();

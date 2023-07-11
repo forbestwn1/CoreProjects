@@ -31,7 +31,7 @@ var node_ioDataFactory = function(){
 					var bundle = complexInterface.getBundle();
 					var varDomain = bundle.getVariableDomain();
 					var valueContext = complexInterface.getValueContext();
-		
+
 					var fullPath = dataOpService.parms.path;
 					var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
 					var valueStrcutureRuntimeId = fullPath.substring(0, index);

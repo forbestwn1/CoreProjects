@@ -40,7 +40,7 @@ var node_createExpressionService = function(){
 		});
 		_.each(expressionItems, function(expressionItem, name){
 			//find variable value only for this expression
-			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, variables, constants, {}));
+			executeMultipleExpressionItemRequest.addRequest(name, node_expressionUtility.getExecuteExpressionRequest(expressionItem, variables, constants, {}));
 		});
 		
 		out.addRequest(executeMultipleExpressionItemRequest);

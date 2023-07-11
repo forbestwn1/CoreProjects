@@ -145,8 +145,8 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 								
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
-										treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
-									}	
+										return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
+									}
 								});
 								
 								_.each(adaptersInfo, function(adapterInfo){
@@ -163,7 +163,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 							success : function(request, simpleEntity){
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
-										treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
+										return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
 									}	
 								});
 								
@@ -199,7 +199,9 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		getChild : function(childName){   return loc_children.getElement(childName);	},
 
 		addChild : function(childName, entityRuntime, adapters, isComplex){
-			loc_children.addElement(childName, loc_createTreeNodeChild(childName, entityRuntime, adapters, isComplex));
+			var child = loc_createTreeNodeChild(childName, entityRuntime, adapters, isComplex);
+			loc_children.addElement(childName, child);
+			return child;
 		},
 		
 	};
@@ -212,7 +214,7 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			
 			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
 			
-			addChild : function(childName, entityRuntime, adapters, isComplex){   loc_interfaceEntity.addChild(childName, entityRuntime, adapters, isComplex);  },
+			addChild : function(childName, entityRuntime, adapters, isComplex){   return loc_interfaceEntity.addChild(childName, entityRuntime, adapters, isComplex);  },
 			
 			processChildren : function(processFun){
 				var that = this;

@@ -18,6 +18,25 @@ var packageObj = library;
 
 var node_complexEntityUtility = {
 	
+	getComplexCoreEntity : function(parm){
+		var dataType = node_getObjectType(parm);
+		if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+			return this.getComplexCoreEntity(parm.getCoreEntity());
+		}
+		else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_APPLICATION){
+			return this.getComplexCoreEntity(parm.getPackageRuntime());
+		}
+		else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE){
+			return this.getComplexCoreEntity(parm.getMainBundleRuntime());
+		}
+		else if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+			return this.getComplexCoreEntity(parm.getMainEntityRuntime());
+		}
+		else{
+			return parm;
+		}
+	},
+	
 	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, handlers, request){
 		var childInput;
 		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
@@ -41,7 +60,6 @@ var node_complexEntityUtility = {
 
 	getRootConfigureRequest : function(configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
 
 		var getConfigureValueRequest = node_createServiceRequestInfoSequence(undefined, {
 			success : function(request, configureObject){

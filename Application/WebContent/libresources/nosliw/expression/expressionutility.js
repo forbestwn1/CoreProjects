@@ -71,15 +71,7 @@ var node_utility = function()
 		return out;
 	};	
 
-	var loc_getExecuteExpressionRequest = function(expression, itemName, variables, constants, references, handlers, requestInfo){
-		//expression item
-		if(itemName==undefined || itemName=='')   itemName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var expressionItem = expression[node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS][itemName];
-		
-		return loc_getExecuteExpressionItemRequest(expressionItem, variables, constants, references, handlers, requestInfo);
-	};
-	
-	var loc_getExecuteExpressionItemRequest = function(expressionItem, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteExpressionRequest = function(expressionItem, variables, constants, references, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
@@ -306,12 +298,17 @@ var node_utility = function()
 				//match parms and base
 				var refVarsInMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {}), {
 					success : function(requestInfo, refVarsInMatchResult){
-						var refVarsValue = refVarsInMatchResult.getResults();
-						return loc_getExecuteExpressionRequest(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], refVarsValue, undefined, undefined, {
-							success : function(requestInfo, referenceData){
-								return referenceData;
-							}
+						var referedExpressionEntity = references[referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCEATTRIBUTENAME]];
+
+						var mappingToReferencedExpressionRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("MappingToReferencedExpression", {}), {});
+						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOLVED_VARIABLE];
+						_.each(refVarsInMatchResult.getResults(), function(value, name){
+							var varId = varsId[name];
+							var rootId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH], value));
 						});
+						mappingToReferencedExpressionRequest.addRequest(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity).getExecuteDataExpressionRequest());
+						return mappingToReferencedExpressionRequest;			
 					}
 				});
 				_.each(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS], function(varMatchers, varId, list){
@@ -321,6 +318,7 @@ var node_utility = function()
 				return refVarsInMatcherRequest;
 			}
 		});
+		
 		_.each(refVarsMapping, function(refVarInOperand, refVarId, list){
 			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, constants, references, {
 				success :function(request, refVarInValue){
@@ -336,49 +334,6 @@ var node_utility = function()
 	
 	
 	//execute reference operand
-	var loc_getExecuteReferenceOperandRequest1 = function(referenceOperand, variables, constants, references, handlers, requestInfo){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
-		//
-		var varMapping = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
-		var refVarValue = {};
-		_.each(varMapping, function(parentVar, refVar){
-			refVarValue[refVar] = variables[parentVar];
-		});
-		
-		//if have variables, convert variables
-		var varsMatchers = operand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS];
-		if(varsMatchers==undefined)  varsMatchers = {};
-		var varsMatchRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatcherVariable", {"variables":variables, "variablesMatchers":varsMatchers}), 
-				{			
-					success : function(reqInfo, setResult){
-						var variables = reqInfo.getData();
-						var matchedVars = {};
-						_.each(variables, function(varData, varName, list){
-							var matchedVar = setResult.getResult(varName);
-							if(matchedVar==undefined){
-								matchedVar = variables[varName];
-							}
-							matchedVars[varName] = matchedVar;
-						}, this);
-						reqInfo.setData(matchedVars);
-						
-						//execute operand
-						return loc_getExecuteExpressionRequest(operand[node_COMMONATRIBUTECONSTANT.OPERAND_EXPRESSION], operand[node_COMMONATRIBUTECONSTANT.OPERAND_ELEMENTNAME], variables, constants, references);
-					}, 
-				}, 
-				null).withData(refVarValue);
-			
-		_.each(refVarValue, function(varData, varName, list){
-			var varMatchers = varsMatchers[varName];
-			if(varMatchers!=undefined){
-				var request = loc_getMatchDataTaskRequest(varData, varMatchers, {}, null);
-				varsMatchRequest.addRequest(varName, request);
-			}
-		}, this);
-		out.addRequest(varsMatchRequest);
-		return out;
-	};
-	
 	var loc_getExecuteOperandRequest = function(operand, variables, constants, references, handlers, requestInfo){
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
@@ -413,6 +368,43 @@ var node_utility = function()
 		return out;
 	};
 
+	var loc_getExecuteExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
+		var variables = {};
+		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
+		_.each(variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES], function(varInfo, i){
+			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
+			var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
+			var rootElemId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+			var variable = valueContext.createVariable(
+					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], 
+					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME],
+					varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
+			variables[varKey] = variable;
+		});
+		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
+					
+		var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
+			success : function(request, results){
+				return loc_getExecuteExpressionRequest(expressionItem, results.getResults(), undefined, references);
+			}
+		});
+		
+		_.each(variables, function(variable, key){
+			calVarsRequest.addRequest(key, variable.getGetValueRequest({
+				success : function(request, data){
+					var value = data;
+					if(data!=undefined&&data.value!=undefined){
+					    value = data.value;
+					}
+					return value;
+				}	
+			}));
+		});
+		
+		out.addRequest(calVarsRequest);
+		return out;		
+	};
 	
 	var loc_out = {
 	
@@ -488,14 +480,13 @@ var node_utility = function()
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 		
-		getExecuteExpressionRequest : function(expression, eleName, variables, constants, references, handlers, requestInfo){
-			return loc_getExecuteExpressionRequest(expression, eleName, variables, constants, references, handlers, requestInfo);
-		},
-		
-		getExecuteExpressionItemRequest : function(expressionItem, variables, constants, references, handlers, requestInfo){
-			return loc_getExecuteExpressionItemRequest(expressionItem, variables, constants, references, handlers, requestInfo);
+		getExecuteExpressionRequest : function(expressionItem, variables, constants, references, handlers, requestInfo){
+			return loc_getExecuteExpressionRequest(expressionItem, variables, constants, references, handlers, requestInfo);
 		},
 
+		getExecuteExpressionItemRequest : function(expressionItem, valueContext, references, expressionDef, handlers, request){
+			return loc_getExecuteExpressionItemRequest(expressionItem, valueContext, references, expressionDef, handlers, request);
+		}
 	};
 	return loc_out;
 }();
