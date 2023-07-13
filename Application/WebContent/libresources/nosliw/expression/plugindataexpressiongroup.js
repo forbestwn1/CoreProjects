@@ -45,7 +45,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue[node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE];
+			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
 				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {

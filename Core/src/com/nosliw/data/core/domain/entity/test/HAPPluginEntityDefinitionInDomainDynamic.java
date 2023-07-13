@@ -80,19 +80,6 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		}
 	}
 	
-	private boolean isAttributeEnabled(Object entityObj) {
-		boolean out = true;
-		if(entityObj instanceof JSONObject) {
-			JSONObject jsonObj = (JSONObject)entityObj;
-			JSONObject extraJsonObj = jsonObj.optJSONObject("extra");
-			if(extraJsonObj!=null) {
-				return HAPUtilityEntityInfo.isEnabled(extraJsonObj);
-			}
-		}
-		
-		return out;
-	}
-	
 	//name_(none|set|list|container)_entitytype_adapterType
 	private HAPAttributeEntityInfo parseAttributeInfo(String attrName) {
 		HAPAttributeEntityInfo out = new HAPAttributeEntityInfo();

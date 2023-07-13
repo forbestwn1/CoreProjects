@@ -37,6 +37,10 @@ import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContex
 
 public class HAPUtilityExpressionProcessor {
 
+	public static void buildEntityExpressionExe(HAPExecutableEntityExpression expressionEntityExe, HAPDefinitionEntityExpression expressionEntityDef) {
+		expressionEntityExe.getReferenceAttributes().addAll(expressionEntityDef.getReferenceAttributes());
+	}
+	
 	public static void processReferencedExpression(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);

@@ -13,13 +13,18 @@ var packageObj = library;
 	var node_ResourceId;
 	var node_resourceUtility;
 	var node_createConfigure;
+	var node_complexEntityUtility;
+	var node_getComplexEntityObjectInterface;
+	var node_createUIDataOperationRequest;
+	var node_UIDataOperation;
+	var node_uiDataOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_valueContextUtility = {
 	
 	getValueContext : function(parm){
-		var complexCore = this.getComplexCoreEntity(parm);
+		var complexCore = node_complexEntityUtility.getComplexCoreEntity(parm);
 		var complexInterface = node_getComplexEntityObjectInterface(complexCore);
 		var bundle = complexInterface.getBundle();
 		var valueContext = complexInterface.getValueContext();
@@ -39,7 +44,7 @@ var node_valueContextUtility = {
 		return out;
 	},
 	
-	getSetValueRequest : function(entity, valueStrcutureRuntimeId, rootName, elePath, value){
+	getSetValueRequest : function(entity, valueStrcutureRuntimeId, rootName, elePath, value, handlers, request){
 		var valueContext = this.getValueContext(entity);
 		var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 	
@@ -66,6 +71,11 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("valueContextUtility", node_valueContextUtility); 

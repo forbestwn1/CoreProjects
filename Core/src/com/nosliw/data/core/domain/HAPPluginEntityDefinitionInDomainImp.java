@@ -109,9 +109,11 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	}
 	
 	protected void parseNormalSimpleEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-		entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
+		if(isAttributeEnabled(attrEntityObj)) {
+			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
+			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
+		}
 	}
 
 	protected void parseNormalComplexEntityAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
@@ -122,10 +124,46 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	}
 
 	protected void parseNormalComplexEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-		entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
+		if(isAttributeEnabled(attrEntityObj)) {
+			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
+			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
+		}
 	}
+	
+	protected boolean isAttributeEnabled(Object entityObj) {
+		boolean out = true;
+		if(entityObj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)entityObj;
+			JSONObject extraJsonObj = jsonObj.optJSONObject("extra");
+			if(extraJsonObj!=null) {
+				return HAPUtilityEntityInfo.isEnabled(extraJsonObj);
+			}
+		}
+		
+		return out;
+	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	protected void parseContainerAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {
 		if(this.m_runtimeEnv.getDomainEntityDefinitionManager().isComplexEntity(eleEntityType)) {

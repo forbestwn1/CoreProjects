@@ -49,7 +49,7 @@ public class HAPParserExpressionDefinition {
 						
 						HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
 						parentInfo.setParentId(expressionEntityId);
-						parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_RUNTIME);
+						parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_DEFINITION);
 						
 						((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(refExpId, parentInfo);
 						
