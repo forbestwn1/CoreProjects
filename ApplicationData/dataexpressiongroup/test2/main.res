@@ -15,7 +15,7 @@
 							},
 							"defaultValue": {
 								"dataTypeId": "test.string;1.0.0",
-								"value": "default value of testvar3"
+								"value": "default value of baseVarNormal"
 							}
 						}
 					}
