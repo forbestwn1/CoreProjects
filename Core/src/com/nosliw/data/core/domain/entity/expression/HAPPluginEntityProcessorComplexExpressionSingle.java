@@ -17,7 +17,7 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 	}
 
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();

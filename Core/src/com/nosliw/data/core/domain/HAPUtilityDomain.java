@@ -190,7 +190,7 @@ public class HAPUtilityDomain {
 		
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, runtimeEnv); 
-		HAPIdEntityInDomain exeEntityId = runtimeEnv.getDomainEntityExecutableManager().process(resourceDefinition.getEntityId(), processorContext);
+		HAPIdEntityInDomain exeEntityId = runtimeEnv.getDomainEntityExecutableManager().postProcess(resourceDefinition.getEntityId(), processorContext);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 

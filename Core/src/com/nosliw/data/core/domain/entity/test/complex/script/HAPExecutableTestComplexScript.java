@@ -54,6 +54,7 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 	
 	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
 
+	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getNormalAttributeValue(VARIABLEEXTENDED);         }
 	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setNormalAttributeValueObject(VARIABLEEXTENDED, vars);	}
 
 	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setNormalAttributeValueObject(ATTACHMENT, attachments);	}

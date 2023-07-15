@@ -47,7 +47,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 	}
 
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();

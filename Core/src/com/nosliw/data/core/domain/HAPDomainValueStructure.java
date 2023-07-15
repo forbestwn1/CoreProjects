@@ -32,21 +32,23 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	//id generator
 	private HAPGeneratorId m_idGenerator;
 
+	private boolean m_isDirty;
+	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
 		this.m_valueStructure = new LinkedHashMap<String, HAPInfoValueStructure>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
+		this.m_isDirty = false;
 	}
 
+	public void setIsDirty(boolean isDirty) {    this.m_isDirty = isDirty;     }
+	public boolean getIsDirty() {     return this.m_isDirty;   }
+	
 	public HAPInfoValueStructure getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
 	public HAPDefinitionEntityValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
 	public HAPDefinitionEntityValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
 	public HAPInfoValueStructure getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructure.get(valueStructureDefId);     }
 	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
-	
-	public String createRuntimeByRelativeRef(String runtimeId) {
-		
-	}
 	
 	//create another runtime that has common definition
 	//return new runtime id

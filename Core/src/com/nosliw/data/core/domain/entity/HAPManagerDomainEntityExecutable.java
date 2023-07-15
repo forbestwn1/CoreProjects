@@ -92,7 +92,7 @@ public class HAPManagerDomainEntityExecutable {
 		//only process local entity
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
 			HAPPluginEntityProcessorComplex processPlugin = this.m_processorComplexEntityPlugins.get(exeEntityId.getEntityType());
-			processPlugin.process(exeEntityId, processContext);
+			processPlugin.postProcess(exeEntityId, processContext);
 		}
 	}
 	

@@ -33,7 +33,7 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 	}
 
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();

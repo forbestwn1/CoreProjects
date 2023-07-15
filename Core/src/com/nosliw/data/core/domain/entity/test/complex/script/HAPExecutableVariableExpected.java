@@ -17,18 +17,27 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPExecutableVariableExpected extends HAPExecutableImp{
 
 	@HAPAttribute
+	public static String DEFINITION = "definition";
+	
+	@HAPAttribute
 	public static String VARIABLEID = "variableId";
 	
 	@HAPAttribute
 	public static String MATCHERS = "matchers";
 	
+	private HAPDefinitionVariableExpected m_definition;
+	
 	private HAPIdVariable m_variableId;
 	
 	private HAPMatchers m_matchers;
 	
-	public HAPExecutableVariableExpected() {
+	public HAPExecutableVariableExpected(HAPDefinitionVariableExpected definition) {
+		this.m_definition = definition;
 	}
+
+	public HAPDefinitionVariableExpected getDefinition() {     return this.m_definition;     }
 	
+	public HAPIdVariable getVariableId() {    return this.m_variableId;      }
 	public void setVariableId(HAPIdVariable variableId) {    this.m_variableId = variableId;     }
 
 	public void setMarchers(HAPMatchers matchers) {     this.m_matchers = matchers;      }

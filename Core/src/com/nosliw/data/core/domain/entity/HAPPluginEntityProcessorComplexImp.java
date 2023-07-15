@@ -1,5 +1,8 @@
 package com.nosliw.data.core.domain.entity;
 
+import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+
 public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEntityProcessorComplex{
 
 	private Class<? extends HAPExecutableEntityComplex> m_exeEntityClass;
@@ -13,6 +16,18 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 
 	@Override
 	public String getEntityType() {    return this.m_entityType;    }
+	
+	//process definition before value context
+	@Override
+	public void preProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+
+	//value context extension, variable resolve
+	@Override
+	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	
+	//matcher
+	@Override
+	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 	
 	@Override
 	public HAPExecutableEntityComplex newExecutable() {
