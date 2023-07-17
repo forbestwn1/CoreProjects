@@ -7,6 +7,9 @@ public interface HAPPluginEntityProcessorComplex {
 
 	String getEntityType();
 	
+	//new executable
+	HAPExecutableEntityComplex newExecutable();
+
 	//process definition before value context
 	void preProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 
@@ -19,7 +22,4 @@ public interface HAPPluginEntityProcessorComplex {
 	//process definition after value context
 	void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 
-	//new executable
-	HAPExecutableEntityComplex newExecutable();
-	
 }

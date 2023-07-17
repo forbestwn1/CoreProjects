@@ -1,6 +1,5 @@
 package com.nosliw.data.core.domain.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -8,7 +7,6 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
 
 public class HAPUtilityEntityProcess {
 
@@ -34,14 +32,6 @@ public class HAPUtilityEntityProcess {
 				HAPInfoAdapterExecutable adapterExe = new HAPInfoAdapterExecutable(adapter.getValueType(), adapterExeObj);
 				adapter.cloneToEntityInfo(adapterExe);
 				attrNormalExe.getValue().addAdapter(adapterExe);
-			}
-		}
-		else {
-			//container attribute
-			HAPAttributeEntityExecutableContainer attrContainerExe = (HAPAttributeEntityExecutableContainer)attrExe;
-			List<HAPElementContainerExecutable> eles = attrContainerExe.getValue().getAllElements();
-			for(HAPElementContainerExecutable ele : eles) {
-				processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().processComplexEntity((HAPIdEntityInDomain)((HAPEmbededExecutable)ele.getEmbededElementEntity()).getValue(), processContext);
 			}
 		}
 	}

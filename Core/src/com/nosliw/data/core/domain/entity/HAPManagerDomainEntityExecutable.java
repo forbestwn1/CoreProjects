@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainExecutable;
@@ -23,11 +24,7 @@ import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.domain.attachment.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
-import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
-import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
-import com.nosliw.data.core.domain.container.HAPElementContainerExecutable;
-import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
+import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructureDomain;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -161,9 +158,33 @@ public class HAPManagerDomainEntityExecutable {
 		
 		//process root entity
 		this.processComplexEntity(complexResourcePackage.getExecutableRootEntityId(), processContext);
-		
+
+		HAPIdEntityInDomain exeEntityId = complexResourcePackage.getExecutableRootEntityId();
+		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
+			this.processComplexEntity1(complexResourcePackage.getExecutableRootEntityId(), processContext);
+		}
+
 		//process adapter
 		
+	}
+
+	private void processComplexEntity1(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
+		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
+		
+		HAPExecutableEntityComplex executableEntity = currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
+		
+		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPDefinitionEntityInDomainComplex definitionEntity = (HAPDefinitionEntityInDomainComplex)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		
+		
+		
+		
+		HAPPluginEntityProcessorComplex processPlugin = this.m_processorComplexEntityPlugins.get(complexEntityExecutableId.getEntityType());
+		processPlugin.postProcess(complexEntityExecutableId, processContext);
 	}
 
 	private HAPManagerResourceDefinition getResourceDefinitionManager() {    return this.m_runtimeEnv.getResourceDefinitionManager();      }
@@ -195,21 +216,6 @@ public class HAPManagerDomainEntityExecutable {
 						HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
 						complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
 					} 
-					else if(attrDef.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_CONTAINER)) {
-						HAPAttributeEntityDefinitionContainer containerAttrDef = (HAPAttributeEntityDefinitionContainer)attrDef;
-						HAPContainerEntityDefinition defContainer = containerAttrDef.getValue();
-						HAPContainerEntityExecutable exeContainer = HAPUtilityContainerEntity.buildExecutionContainer(defContainer.getContainerType());
-						List<HAPElementContainerDefinition> defEles = defContainer.getAllElements();
-						for(HAPElementContainerDefinition defEle : defEles) {
-							HAPIdEntityInDomain defEleId = (HAPIdEntityInDomain)defEle.getEmbededElementEntity().getValue();
-							HAPInfoEntityInDomainDefinition eleEntityInfo = defDomain.getEntityInfoDefinition(defEleId);
-							HAPIdEntityInDomain eleEntityExeId = buildExecutableTree(defEleId, processContext);
-							HAPElementContainerExecutable eleExe = HAPUtilityContainerEntity.buildExecutableContainerElement(defEle, defEleId.getEntityId());
-							eleExe.setEmbededElementEntity(new HAPEmbededExecutable(eleEntityExeId));
-							exeContainer.addEntityElement(eleExe);
-						}
-						complexEntityExe.setContainerAttribute(attrDef.getName(), exeContainer, attrDef.getValueTypeInfo());
-					}
 				}
 			}
 		}
