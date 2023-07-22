@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
-import com.nosliw.data.core.domain.container.HAPContainerEntityExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -49,7 +48,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return null;
 	}
 
-	public HAPEmbededExecutable getNormalAttributeEmbeded(String attrName) { return (HAPEmbededExecutable)this.getAttribute(attrName).getValue(); }
+	public HAPEmbededExecutable getNormalAttributeEmbeded(String attrName) { return this.getAttribute(attrName).getValue(); }
 
 	public Object getNormalAttributeValue(String attrName) {
 		Object out = null;
@@ -65,17 +64,9 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public void setNormalAttributeValueObject(String attributeName, Object value) {    setNormalAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
 	
 	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
-//	public void setNormalAttributeObject(String attributeName, HAPEmbededExecutable embededEntity) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType()); }
 	public void setNormalAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false)); }
 	public void setNormalAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true)); }
 
-	public void setContainerAttribute(String attributeName, HAPContainerEntityExecutable container, HAPInfoValueType valueTypeInfo) {
-		if(container!=null)		this.setAttribute(new HAPAttributeEntityExecutableContainer(attributeName, container, valueTypeInfo));
-	}
-	public void setContainerAttributeObject(String attributeName, HAPContainerEntityExecutable container) { setContainerAttribute(attributeName, container, new HAPInfoValueType());  }
-	public void setContainerAttributeSimple(String attributeName, HAPContainerEntityExecutable container, String valueType) { setContainerAttribute(attributeName, container, new HAPInfoValueType(valueType, false));  }
-	public void setContainerAttributeComplex(String attributeName, HAPContainerEntityExecutable container, String valueType) { setContainerAttribute(attributeName, container, new HAPInfoValueType(valueType, true));  }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		buildCommonJsonMap(jsonMap, typeJsonMap);

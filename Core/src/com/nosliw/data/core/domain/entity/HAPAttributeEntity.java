@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -13,10 +13,7 @@ import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 
 @HAPEntityWithAttribute
-public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implements HAPExpandable{
-
-	@HAPAttribute
-	public final static String NAME = "name"; 
+public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements HAPExpandable{
 
 	@HAPAttribute
 	public final static String VALUE = "value"; 
@@ -24,7 +21,7 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	@HAPAttribute
 	public final static String VALUETYPEINFO = "valueTypeInfo"; 
 
-	private String m_name;
+	public final static String INFO_AUTOPROCESS = "autoProcess";
 	
 	private T m_value;
 	
@@ -34,23 +31,29 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 
 	public HAPAttributeEntity(String name, T value, HAPInfoValueType valueTypeInfo) {
 		this.m_valueTypeInfo = valueTypeInfo;
-		this.m_name = name;
+		this.setName(name);
 		this.m_value = value;
 	}
-	
-	public String getName() {    return this.m_name;    }
-	public void setName(String name) {    this.m_name = name;    }
 	
 	public T getValue() {    return this.m_value;    }
 	public void setValue(T value) {   this.m_value = value;   }
 	
 	public HAPInfoValueType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
 	
+	public boolean isAttributeAutoProcess(boolean defaultValue) {
+		Object value = this.getInfoValue(INFO_AUTOPROCESS);
+		if(value!=null)   return Boolean.valueOf((String)value);
+		else return defaultValue;
+	}
+	
+	public void setAttributeAutoProcess(boolean auto) {
+		this.getInfo().setValue(INFO_AUTOPROCESS, auto+"");
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUETYPEINFO, HAPSerializeManager.getInstance().toStringValue(this.m_valueTypeInfo, HAPSerializationFormat.JSON));
-		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JSON));
 	}
 
@@ -66,7 +69,7 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	public abstract HAPAttributeEntity cloneEntityAttribute();
 	
 	protected void cloneToEntityAttribute(HAPAttributeEntity attr) {
-		attr.m_name = this.m_name;
+		this.cloneToEntityInfo(attr);
 		attr.m_valueTypeInfo = this.m_valueTypeInfo;
 	}
 }

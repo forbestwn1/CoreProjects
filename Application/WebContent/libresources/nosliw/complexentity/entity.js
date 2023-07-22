@@ -37,7 +37,7 @@ var node_createEntityDefinition = function(original){
 		var attrs = loc_entityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE];
 		for(var i in attrs){
 			var attr = attrs[i];
-			if(attrName == attr[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_NAME]){
+			if(attrName == attr[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]){
 				return attr;
 			}
 		}
@@ -48,7 +48,7 @@ var node_createEntityDefinition = function(original){
 		getAllAttributesName : function(){
 			var out = [];
 			_.each(loc_entityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ATTRIBUTE], function(attr, i){
-				out.push(attr[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_NAME]);
+				out.push(attr[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]);
 			});
 			return out;
 		},

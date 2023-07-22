@@ -7,7 +7,9 @@ public class HAPAttributeEntityDefinition extends HAPAttributeEntity<HAPEmbededD
 	}
 
 	public HAPAttributeEntityDefinition() {}
-	
+
+	public boolean isAttributeAutoProcess() {	return this.isAttributeAutoProcess(true);	}
+
 	protected void cloneToEntityAttribute(HAPAttributeEntityDefinition attr) {
 		super.cloneToEntityAttribute(attr);
 		attr.setValue((HAPEmbededDefinition)this.getValue().cloneEmbeded());

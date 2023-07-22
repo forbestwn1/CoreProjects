@@ -21,6 +21,8 @@ public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededE
 
 	public HAPAttributeEntityExecutable() {}
 
+	public boolean isAttributeAutoProcess() {	return this.isAttributeAutoProcess(false);	}
+
 	protected void cloneToEntityAttribute(HAPAttributeEntityExecutable attr) {
 		super.cloneToEntityAttribute(attr);
 		this.setValue((HAPEmbededExecutable)this.getValue().cloneEmbeded());

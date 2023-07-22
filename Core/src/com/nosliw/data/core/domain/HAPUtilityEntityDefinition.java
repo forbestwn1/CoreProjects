@@ -14,7 +14,7 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 public class HAPUtilityEntityDefinition {
 
 	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
-		processor.processRoot(entityId, globalObj);
+		processor.processComplexRoot(entityId, globalObj);
 		traverseDefinitionEntityTreeLeaf(entityId, processor, definitionDomain, globalObj);
 	}
 
@@ -44,7 +44,7 @@ public class HAPUtilityEntityDefinition {
 			rootEntityDefinitionId, 
 			new HAPProcessorEntityDefinition() {
 				@Override
-				public void processRoot(HAPIdEntityInDomain entityId, Object globalObj) {	}
+				public void processComplexRoot(HAPIdEntityInDomain entityId, Object globalObj) {	}
 
 				@Override
 				public void processAttribute(HAPIdEntityInDomain parentEntityId, String attrName, Object globalObj) {
