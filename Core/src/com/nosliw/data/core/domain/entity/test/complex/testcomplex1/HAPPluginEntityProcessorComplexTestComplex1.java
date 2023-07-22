@@ -10,7 +10,6 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinitionNormal;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
@@ -38,22 +37,19 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 		
 		List<HAPAttributeEntityDefinition> attrs = definitionEntity.getAttributes();
 		for(HAPAttributeEntityDefinition attr : attrs ) {
-			if(attr.getEntityType().equals(HAPConstantShared.ENTITYATTRIBUTE_TYPE_NORMAL)){
-				String valueType = attr.getValueTypeInfo().getValueType();
-				if(!(valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)||valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT))) {
-					//normal attribute
-					HAPAttributeEntityDefinitionNormal simpleAttrDef = (HAPAttributeEntityDefinitionNormal)attr;
-					HAPEmbededDefinition embededAttributeDef = simpleAttrDef.getValue();
-					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
-					HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
-					if(simpleAttrDef.getValueTypeInfo().getIsComplex()) {
-						//complex attribute
-						HAPUtilityEntityProcess.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
-					}
-					else {
-						HAPAttributeEntityExecutable attrExe = HAPUtilityEntityProcess.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
-						executableEntity.setAttribute(attrExe);
-					}
+			String valueType = attr.getValueTypeInfo().getValueType();
+			if(!(valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)||valueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT))) {
+				//normal attribute
+				HAPEmbededDefinition embededAttributeDef = attr.getValue();
+				HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
+				HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityDefId);
+				if(attr.getValueTypeInfo().getIsComplex()) {
+					//complex attribute
+					HAPUtilityEntityProcess.processComplexAttribute(attr.getName(), complexEntityExecutableId, processContext);
+				}
+				else {
+					HAPAttributeEntityExecutable attrExe = HAPUtilityEntityProcess.processSimpleAttribute(attr.getName(), complexEntityExecutableId, processContext);
+					executableEntity.setAttribute(attrExe);
 				}
 			}
 		}

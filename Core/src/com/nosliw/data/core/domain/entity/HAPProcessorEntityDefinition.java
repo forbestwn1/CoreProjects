@@ -1,12 +1,11 @@
 package com.nosliw.data.core.domain.entity;
 
-import java.util.Set;
-
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public interface HAPProcessorEntityDefinition {
 
-	void process(HAPInfoEntityInDomainDefinition entityInfo, Set<HAPInfoAdapter> adapters, HAPInfoEntityInDomainDefinition parentEntityInfo, HAPDomainEntityDefinitionGlobal globalDomain);
-	
+	void processRoot(HAPIdEntityInDomain entityId, Object globalObj);
+
+	void processAttribute(HAPIdEntityInDomain parentEntityId, String attrName, Object globalObj);
+
 }

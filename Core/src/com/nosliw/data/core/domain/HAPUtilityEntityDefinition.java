@@ -1,13 +1,105 @@
 package com.nosliw.data.core.domain;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 
 public class HAPUtilityEntityDefinition {
 
+	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
+		processor.processRoot(entityId, globalObj);
+		traverseDefinitionEntityTreeLeaf(entityId, processor, definitionDomain, globalObj);
+	}
+
+	private static void traverseDefinitionEntityTreeLeaf(HAPIdEntityInDomain parentEntityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
+		//process current entity
+		HAPInfoEntityInDomainDefinition parentEntityInfo = definitionDomain.getEntityInfoDefinition(parentEntityId);
+		HAPDefinitionEntityInDomain complexEntity = parentEntityInfo.getEntity();
+		if(complexEntity!=null) {
+			List<HAPAttributeEntityDefinition> attrsDef = complexEntity.getAttributes();
+			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
+				processor.processAttribute(parentEntityId, attrDef.getName(), globalObj);
+				
+				if(attrDef.getValueTypeInfo().getIsComplex()) {
+					HAPEmbededDefinition embededDef = attrDef.getValue();
+					HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)embededDef.getValue();
+					traverseDefinitionEntityTreeLeaf(attrEntityId, processor, definitionDomain, globalObj);
+				}
+			}
+		}
+	}
+
+	//solid entity means:
+	//   if entity is attachment ref, then replace with real entity
+	//   if entity is local or global simple resource ref, then replace with real entity
+	public static void solidateLocalResourceReference(HAPIdEntityInDomain rootEntityDefinitionId, HAPDomainEntityDefinitionGlobal definitionDomain, HAPManagerResourceDefinition resourceDefinitionManager) {
+		HAPUtilityEntityDefinition.traverseDefinitionComplexEntityTree(
+			rootEntityDefinitionId, 
+			new HAPProcessorEntityDefinition() {
+				@Override
+				public void processRoot(HAPIdEntityInDomain entityId, Object globalObj) {	}
+
+				@Override
+				public void processAttribute(HAPIdEntityInDomain parentEntityId, String attrName, Object globalObj) {
+					HAPInfoEntityInDomainDefinition entityInfo = definitionDomain.getEntityInfoDefinition(parentEntityId);
+					HAPDefinitionEntityInDomain parentEntity = entityInfo.getEntity();
+					HAPAttributeEntityDefinition attrDef = parentEntity.getAttribute(attrName);
+					HAPEmbededDefinition embededDef = attrDef.getValue();
+					Object entityDef = embededDef.getValue();
+					if(entityDef instanceof HAPIdEntityInDomain) {
+						HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)entityDef;
+						HAPInfoEntityInDomainDefinition attrEntityInfo = definitionDomain.getEntityInfoDefinition(attrEntityId);
+
+						if(attrEntityInfo.getReferedResourceId()!=null&&attrEntityInfo.getEntity()==null){
+							if(attrEntityInfo.isLocalResourceReference() || attrEntityInfo.isGlobalSimpleResourceReference()) {
+								HAPIdEntityInDomain resourceEntityId = resourceDefinitionManager.getResourceDefinition(attrEntityInfo.getReferedResourceId(), definitionDomain, attrEntityId.getDomainId()).getEntityId();
+								HAPInfoEntityInDomainDefinition resourceEntityInfo = definitionDomain.getEntityInfoDefinition(resourceEntityId);
+								HAPUtilityEntityInfo.softMerge(attrEntityInfo.getExtraInfo(), resourceEntityInfo.getExtraInfo());
+								attrEntityInfo.setEntity(resourceEntityInfo.getEntity());
+								
+								//solidate resource entity
+								solidateLocalResourceReference(attrEntityId, definitionDomain, resourceDefinitionManager);
+							}
+						}
+					}
+				}
+			}, definitionDomain, null);
+	}
+	
+	//solid entity means:
+	//   if entity is attachment ref, then replace with real entity
+	//   if entity is local or global simple resource ref, then replace with real entity
+/*
+	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
+		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId);
+		if(out.getEntity()==null){
+			if(out.getReferedResourceId()!=null) {
+				if(out.isLocalResourceReference() || out.isGlobalSimpleResourceReference()) {
+					HAPIdEntityInDomain resourceEntityId = this.m_resourceDefinitionManager.getResourceDefinition(out.getReferedResourceId(), this, entityId.getDomainId()).getEntityId();
+					HAPInfoEntityInDomainDefinition entityInfo = this.getEntityInfoDefinition(resourceEntityId);
+					HAPUtilityEntityInfo.softMerge(out.getExtraInfo(), entityInfo.getExtraInfo());
+					out.setEntity(entityInfo.getEntity());
+				}
+			}
+			else if(out.getAttachmentReference()!=null) {
+				HAPAttachmentEntity attachment = (HAPAttachmentEntity)attachmentContainer.getElement(out.getAttachmentReference());
+				Object entityObj = attachment.getEntity();
+				out.setEntity(this.getEntityInfoDefinition(HAPUtilityParserEntity.parseEntity(entityObj, attachment.getValueType(), new HAPContextParser(this, entityId.getDomainId()), this.m_entityDefManager, null)).getEntity());
+			}
+		}
+		return out;
+	}
+*/
+	
+	
+	
 	public static HAPEmbededDefinitionWithId newEmbededDefinitionWithId(HAPIdEntityInDomain entityId, HAPIdEntityInDomain adapterEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
 		return new HAPEmbededDefinition(entityId, adapterEntityId);
 	}

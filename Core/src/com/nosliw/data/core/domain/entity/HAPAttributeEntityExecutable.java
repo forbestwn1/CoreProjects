@@ -13,16 +13,26 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
-public abstract class HAPAttributeEntityExecutable<T> extends HAPAttributeEntity<T> implements HAPExecutable{
+public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededExecutable> implements HAPExecutable{
 
-	public HAPAttributeEntityExecutable(String type, String name, T value, HAPInfoValueType valueTypeInfo) {
-		super(type, name, value, valueTypeInfo);
+	public HAPAttributeEntityExecutable(String name, HAPEmbededExecutable value, HAPInfoValueType valueTypeInfo) {
+		super(name, value, valueTypeInfo);
 	}
 
-	public HAPAttributeEntityExecutable(String type) {
-		super(type);
+	public HAPAttributeEntityExecutable() {}
+
+	protected void cloneToEntityAttribute(HAPAttributeEntityExecutable attr) {
+		super.cloneToEntityAttribute(attr);
+		this.setValue((HAPEmbededExecutable)this.getValue().cloneEmbeded());
 	}
 
+	@Override
+	public HAPAttributeEntity cloneEntityAttribute() {
+		HAPAttributeEntityExecutable out = new HAPAttributeEntityExecutable();
+		this.cloneToEntityAttribute(out);
+		return out;
+	}
+	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
@@ -38,5 +48,4 @@ public abstract class HAPAttributeEntityExecutable<T> extends HAPAttributeEntity
 		if(this.getValue() instanceof HAPExecutable)    out.addAll(((HAPExecutable)this.getValue()).getResourceDependency(runtimeInfo, resourceManager));
 		return out;
 	}
-
 }

@@ -1,17 +1,9 @@
 package com.nosliw.data.core.domain;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.container.HAPContainerEntity;
-import com.nosliw.data.core.domain.container.HAPContainerEntityDefinition;
-import com.nosliw.data.core.domain.container.HAPElementContainer;
-import com.nosliw.data.core.domain.container.HAPElementContainerDefinition;
-import com.nosliw.data.core.domain.container.HAPUtilityContainerEntity;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
@@ -141,134 +133,6 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			}
 		}
 		
-		return out;
-	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	protected void parseContainerAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {
-		if(this.m_runtimeEnv.getDomainEntityDefinitionManager().isComplexEntity(eleEntityType)) {
-			parseContainerComplexAttribute(entityJsonObj, entityId, attributeName, eleEntityType, adapterType, containerType, null, parserContext);
-		}
-		else {
-			parseContainerSimpleAttribute(entityJsonObj, entityId, attributeName, eleEntityType, adapterType, containerType, parserContext);
-		}
-	}
-	
-	protected void parseContainerAttributeSelf(Object entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {
-		if(this.m_runtimeEnv.getDomainEntityDefinitionManager().isComplexEntity(eleEntityType)) {
-			parseContainerComplexAttributeSelf(entityJsonObj, entityId, attributeName, eleEntityType, adapterType, containerType, null, parserContext);
-		}
-		else {
-			parseContainerSimpleAttributeSelf(entityJsonObj, entityId, attributeName, eleEntityType, adapterType, containerType, parserContext);
-		}
-	}
-	
-	protected void parseContainerComplexAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
-		Object containerObj = entityJsonObj.opt(attributeName);
-		if(containerObj!=null) {
-			this.parseContainerComplexAttributeSelf(containerObj, entityId, attributeName, eleEntityType, adapterType, containerType, parentRelationConfigureDefault, parserContext);
-		}
-	}
-	
-	protected void parseContainerComplexAttributeSelf(Object containerObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		
-		HAPConfigureParentRelationComplex parentRelationConfigureCustomer = null;
-		boolean isEnable = true;
-		HAPEntityInfo extraInfo = null;
-		JSONArray eleArrayObj = null;
-		if(containerObj instanceof JSONObject) {
-			JSONObject containerJsonObj = (JSONObject)containerObj;
-			JSONObject parentRelationConfigureObjCustomer = containerJsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.PARENT);
-			if(parentRelationConfigureObjCustomer!=null) {
-				parentRelationConfigureCustomer = new HAPConfigureParentRelationComplex();
-				parentRelationConfigureCustomer.buildObject(parentRelationConfigureObjCustomer, HAPSerializationFormat.JSON);
-			}
-			eleArrayObj = containerJsonObj.getJSONArray(HAPContainerEntity.ELEMENT);
-			extraInfo = HAPUtilityEntityInfo.buildEntityInfoFromJson(containerJsonObj.optJSONObject(HAPContainerEntity.INFO));
-			isEnable = HAPUtilityEntityInfo.isEnabled(extraInfo);
-		}
-		else if(containerObj instanceof JSONArray) {
-			eleArrayObj = (JSONArray)containerObj;
-		}
-
-		if(isEnable) {
-			HAPContainerEntityDefinition entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType);
-			entityContainer.setExtraInfo(extraInfo);
-			for(int i=0; i<eleArrayObj.length(); i++) {
-				JSONObject eleObj = eleArrayObj.getJSONObject(i);
-				
-				//element entity
-				HAPEmbededDefinition embededEntity = HAPUtilityParserEntity.parseEmbededComplexEntity(eleObj, eleEntityType, adapterType, entityId, parentRelationConfigureCustomer, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-				
-				//element
-				entityContainer.addEntityElement(buildContainerElement(eleObj, embededEntity, parserContext));
-			}
-			entity.setContainerAttributeComplex(attributeName, entityContainer, eleEntityType);
-		}
-	}
-	
-	protected void parseContainerSimpleAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {
-		Object containerObj = entityJsonObj.opt(attributeName);
-		if(containerObj!=null) {
-			this.parseContainerSimpleAttributeSelf(containerObj, entityId, attributeName, eleEntityType, adapterType, containerType, parserContext);
-		}
-	}
-
-	protected void parseContainerSimpleAttributeSelf(Object containerObj, HAPIdEntityInDomain entityId, String attributeName, String eleEntityType, String adapterType, String containerType, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-		boolean isEnable = true;
-		HAPEntityInfo extraInfo = null;
-		JSONArray eleArrayObj = null;
-		if(containerObj instanceof JSONArray)  eleArrayObj = (JSONArray)containerObj;
-		else if(containerObj instanceof JSONObject) {
-			JSONObject containerJsonObj = (JSONObject)containerObj;
-			eleArrayObj = containerJsonObj.getJSONArray(HAPContainerEntity.ELEMENT);
-			extraInfo = HAPUtilityEntityInfo.buildEntityInfoFromJson(containerJsonObj.optJSONObject(HAPContainerEntity.INFO));
-			isEnable = HAPUtilityEntityInfo.isEnabled(extraInfo);
-		}
-		
-		if(isEnable) {
-			HAPContainerEntityDefinition entityContainer = HAPUtilityContainerEntity.buildDefinitionContainer(containerType);
-			entityContainer.setExtraInfo(extraInfo);
-			for(int i=0; i<eleArrayObj.length(); i++) {
-				JSONObject eleObj = eleArrayObj.getJSONObject(i);
-				
-				//element entity
-				HAPEmbededDefinition embededEntity = HAPUtilityParserEntity.parseEmbededEntity(eleObj, eleEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-				
-				//element info
-				entityContainer.addEntityElement(buildContainerElement(eleObj, embededEntity, parserContext));
-			}
-			entity.setContainerAttributeSimple(attributeName, entityContainer, eleEntityType);
-		}
-	}
-	
-	private HAPElementContainer buildContainerElement(JSONObject eleObj, HAPEmbededDefinition embededEntity, HAPContextParser parserContext) {
-		HAPElementContainer out = null;
-		HAPIdEntityInDomain eleEntityId = (HAPIdEntityInDomain)embededEntity.getValue();
-		out = new HAPElementContainerDefinition(embededEntity, eleEntityId.toString());
-		out.setInfo(parserContext.getCurrentDomain().getEntityInfoDefinition(eleEntityId).getExtraInfo().cloneEntityInfo());
 		return out;
 	}
 }

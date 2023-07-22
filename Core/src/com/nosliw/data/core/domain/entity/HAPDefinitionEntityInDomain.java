@@ -57,10 +57,10 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return out;
 	}
 	
-	public HAPAttributeEntityDefinitionNormal getNormalAttribute(String attrName) {   return (HAPAttributeEntityDefinitionNormal)this.getAttribute(attrName);    }
+	public HAPAttributeEntityDefinition getNormalAttribute(String attrName) {   return (HAPAttributeEntityDefinition)this.getAttribute(attrName);    }
 	
 	public HAPEmbededDefinition getNormalAttributeEmbeded(String attrName) {
-		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
+		HAPAttributeEntityDefinition att = this.getNormalAttribute(attrName);
 		if(att!=null)  return att.getValue();
 		else return null;
 	}
@@ -75,7 +75,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	}
 
 	public Object getNormalAttributeValue(String attrName, Object defaultValue) {
-		HAPAttributeEntityDefinitionNormal att = this.getNormalAttribute(attrName);
+		HAPAttributeEntityDefinition att = this.getNormalAttribute(attrName);
 		if(att==null) {
 			this.setNormalAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue), null);
 			att = this.getNormalAttribute(attrName);
@@ -99,7 +99,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	
 	public void setNormalAttribute(String attributeName, HAPEmbededDefinition embededEntity, HAPInfoValueType valueTypeInfo) {
 		if(embededEntity!=null) {
-			this.setAttribute(new HAPAttributeEntityDefinitionNormal(attributeName, embededEntity, valueTypeInfo));
+			this.setAttribute(new HAPAttributeEntityDefinition(attributeName, embededEntity, valueTypeInfo));
 		}
 	}
 	

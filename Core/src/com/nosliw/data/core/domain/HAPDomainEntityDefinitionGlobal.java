@@ -4,11 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
-import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -64,28 +61,6 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 		return out;
 	}
 	
-	//solid entity means:
-	//   if entity is attachment ref, then replace with real entity
-	//   if entity is local or global simple resource ref, then replace with real entity
-	public HAPInfoEntityInDomainDefinition getSolidEntityInfoDefinition(HAPIdEntityInDomain entityId, HAPDefinitionEntityContainerAttachment attachmentContainer) {
-		HAPInfoEntityInDomainDefinition out = this.getEntityInfoDefinition(entityId);
-		if(out.getEntity()==null){
-			if(out.getReferedResourceId()!=null) {
-				if(out.isLocalResourceReference() || out.isGlobalSimpleResourceReference()) {
-					HAPIdEntityInDomain resourceEntityId = this.m_resourceDefinitionManager.getResourceDefinition(out.getReferedResourceId(), this, entityId.getDomainId()).getEntityId();
-					HAPInfoEntityInDomainDefinition entityInfo = this.getEntityInfoDefinition(resourceEntityId);
-					HAPUtilityEntityInfo.softMerge(out.getExtraInfo(), entityInfo.getExtraInfo());
-					out.setEntity(entityInfo.getEntity());
-				}
-			}
-			else if(out.getAttachmentReference()!=null) {
-				HAPAttachmentEntity attachment = (HAPAttachmentEntity)attachmentContainer.getElement(out.getAttachmentReference());
-				Object entityObj = attachment.getEntity();
-				out.setEntity(this.getEntityInfoDefinition(HAPUtilityParserEntity.parseEntity(entityObj, attachment.getValueType(), new HAPContextParser(this, entityId.getDomainId()), this.m_entityDefManager, null)).getEntity());
-			}
-		}
-		return out;
-	}
 	
 	private HAPDomainEntityDefinitionLocal getLocalDomainByResourceId(HAPResourceIdSimple resourceId) {
 		HAPDomainEntityDefinitionLocal out = null;

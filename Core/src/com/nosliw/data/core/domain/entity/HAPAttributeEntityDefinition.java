@@ -1,12 +1,22 @@
 package com.nosliw.data.core.domain.entity;
 
-public abstract class HAPAttributeEntityDefinition<T> extends HAPAttributeEntity<T>{
+public class HAPAttributeEntityDefinition extends HAPAttributeEntity<HAPEmbededDefinition>{
 
-	public HAPAttributeEntityDefinition(String type, String name, T value, HAPInfoValueType valueTypeInfo) {
-		super(type, name, value, valueTypeInfo);
+	public HAPAttributeEntityDefinition(String name, HAPEmbededDefinition embeded, HAPInfoValueType valueTypeInfo) {
+		super(name, embeded, valueTypeInfo);
 	}
 
-	public HAPAttributeEntityDefinition(String type) {
-		super(type);
+	public HAPAttributeEntityDefinition() {}
+	
+	protected void cloneToEntityAttribute(HAPAttributeEntityDefinition attr) {
+		super.cloneToEntityAttribute(attr);
+		attr.setValue((HAPEmbededDefinition)this.getValue().cloneEmbeded());
+	}
+
+	@Override
+	public HAPAttributeEntity cloneEntityAttribute() {
+		HAPAttributeEntityDefinition out = new HAPAttributeEntityDefinition();
+		this.cloneToEntityAttribute(out);
+		return out;
 	}
 }

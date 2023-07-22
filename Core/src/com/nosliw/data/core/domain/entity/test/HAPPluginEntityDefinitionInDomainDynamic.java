@@ -57,21 +57,11 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 						Object entityObj = jsonObj.opt(attrName);
 						if(isAttributeEnabled(entityObj)) {
 							HAPAttributeEntityInfo attributeInfo = this.parseAttributeInfo(attrName);
-							if(attributeInfo.isContainer) {
-								if(attributeInfo.isComplex) {
-									parseContainerComplexAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, attributeInfo.containerType, null, parserContext);
-								}
-								else {
-									parseContainerSimpleAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, attributeInfo.containerType, parserContext);
-								}
+							if(attributeInfo.isComplex) {
+								this.parseNormalComplexEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, null, parserContext);
 							}
 							else {
-								if(attributeInfo.isComplex) {
-									this.parseNormalComplexEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, null, parserContext);
-								}
-								else {
-									this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, parserContext);
-								}
+								this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, parserContext);
 							}
 						}
 					}
@@ -98,12 +88,12 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
 				String container = pair.getLeft();
-				if(container.equals("none"))  out.isContainer = false;
-				else if(container.equals("container"))  out.isContainer = true;
-				else {
-					out.isContainer = true;
-					out.containerType = container;
-				}
+//				if(container.equals("none"))  out.isContainer = false;
+//				else if(container.equals("container"))  out.isContainer = true;
+//				else {
+//					out.isContainer = true;
+//					out.containerType = container;
+//				}
 				str = pair.getRight();
 			}
 		}
@@ -144,7 +134,6 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 		public String entityType;
 		public String attirbuteName;
 		public boolean isComplex;
-		public boolean isContainer;
 		public String containerType;
 		public String adapterType;
 	}

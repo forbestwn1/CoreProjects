@@ -64,7 +64,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	public void setNormalAttributeValueObject(String attributeName, Object value) {    setNormalAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
 	
-	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutableNormal(attributeName, embededEntity, valueTypeInfo));	}
+	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
 //	public void setNormalAttributeObject(String attributeName, HAPEmbededExecutable embededEntity) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType()); }
 	public void setNormalAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false)); }
 	public void setNormalAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true)); }

@@ -16,9 +16,6 @@ import com.nosliw.data.core.domain.HAPExpandable;
 public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implements HAPExpandable{
 
 	@HAPAttribute
-	public final static String ENTITYTYPE = "entityType"; 
-
-	@HAPAttribute
 	public final static String NAME = "name"; 
 
 	@HAPAttribute
@@ -27,9 +24,6 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	@HAPAttribute
 	public final static String VALUETYPEINFO = "valueTypeInfo"; 
 
-	//normal or container
-	private String m_entityType;
-	
 	private String m_name;
 	
 	private T m_value;
@@ -38,18 +32,11 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	
 	public HAPAttributeEntity() {}
 
-	public HAPAttributeEntity(String type) {
-		this.m_entityType = type;
-	}
-
-	public HAPAttributeEntity(String entityType, String name, T value, HAPInfoValueType valueTypeInfo) {
-		this.m_entityType = entityType;
+	public HAPAttributeEntity(String name, T value, HAPInfoValueType valueTypeInfo) {
 		this.m_valueTypeInfo = valueTypeInfo;
 		this.m_name = name;
 		this.m_value = value;
 	}
-	
-	public String getEntityType() {    return this.m_entityType;    }
 	
 	public String getName() {    return this.m_name;    }
 	public void setName(String name) {    this.m_name = name;    }
@@ -62,7 +49,6 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ENTITYTYPE, this.m_entityType);
 		jsonMap.put(VALUETYPEINFO, HAPSerializeManager.getInstance().toStringValue(this.m_valueTypeInfo, HAPSerializationFormat.JSON));
 		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JSON));
@@ -80,7 +66,7 @@ public abstract class HAPAttributeEntity<T> extends HAPSerializableImp implement
 	public abstract HAPAttributeEntity cloneEntityAttribute();
 	
 	protected void cloneToEntityAttribute(HAPAttributeEntity attr) {
-		attr.m_entityType = this.m_entityType;
 		attr.m_name = this.m_name;
+		attr.m_valueTypeInfo = this.m_valueTypeInfo;
 	}
 }
