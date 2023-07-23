@@ -21,12 +21,12 @@ public abstract class HAPExecutableEntityExpression extends HAPExecutableEntityC
 	public abstract List<HAPExecutableExpression> getAllExpressionItems();
 
 	public HAPExecutableEntityExpression() {
-		this.setNormalAttributeValueObject(ATTRIBUTESREFERENCE, new HashSet<String>());
+		this.setAttributeValueObject(ATTRIBUTESREFERENCE, new HashSet<String>());
 	}
 
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setNormalAttributeValueObject(VARIABLEINFOS, varInfo);  }
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getNormalAttributeValue(VARIABLEINFOS);    }
+	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }
+	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getAttributeValue(VARIABLEINFOS);    }
 	
-	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getNormalAttributeValue(ATTRIBUTESREFERENCE);     }
+	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getAttributeValue(ATTRIBUTESREFERENCE);     }
 	
 }

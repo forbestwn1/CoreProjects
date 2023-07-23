@@ -12,7 +12,7 @@ import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessor;
 import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
-public class HAPPluginAdapterProcessorDataAssociation implements HAPPluginAdapterProcessor{
+public class HAPPluginAdapterProcessorDataAssociation extends HAPPluginAdapterProcessor{
 
 	@Override
 	public String getAdapterType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION;  }

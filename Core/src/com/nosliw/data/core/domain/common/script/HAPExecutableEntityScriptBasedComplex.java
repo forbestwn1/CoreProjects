@@ -9,9 +9,9 @@ public class HAPExecutableEntityScriptBasedComplex extends HAPExecutableEntityCo
 	public HAPExecutableEntityScriptBasedComplex() {	}
 
 	@Override
-	public void setScript(String script) {		this.setNormalAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
+	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
 	@Override
-	public void setResrouceId(HAPResourceId resourceId) {   this.setNormalAttributeValueObject(SCRIPT, resourceId);	}
+	public void setResrouceId(HAPResourceId resourceId) {   this.setAttributeValueObject(SCRIPT, resourceId);	}
 
 }

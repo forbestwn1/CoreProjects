@@ -67,7 +67,7 @@ public class HAPUtilityExpressionProcessor {
 						Map<String, HAPWrapperOperand> referenceMapping = referenceOperand.getMapping();
 						
 						String refAttributeName = referenceOperand.getReferenceExpressionAttributeName();
-						HAPIdEntityInDomain referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getNormalAttributeValue(refAttributeName);
+						HAPIdEntityInDomain referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getAttributeValue(refAttributeName);
 						Pair<HAPExecutableEntity, HAPContextProcessor> referencedEntityInfo = HAPUtilityDomain.resolveExecutableEntityId(referedExperssionEntityId, processContext);
 						HAPDomainValueStructure valueStructureDomain = referencedEntityInfo.getRight().getCurrentValueStructureDomain();
 						

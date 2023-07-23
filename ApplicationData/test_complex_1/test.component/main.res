@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "testcomponentinterface-none-test_complex_script", 
+				"name" : "testcomponentinterface-test_complex_script", 
 				"status": "disabled1"
 			},
 			"entity":{

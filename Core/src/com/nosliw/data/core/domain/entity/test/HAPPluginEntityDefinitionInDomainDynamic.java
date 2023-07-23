@@ -83,7 +83,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				str = pair.getRight();
 			}
 		}
-
+/*
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
@@ -97,6 +97,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				str = pair.getRight();
 			}
 		}
+*/
 
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {

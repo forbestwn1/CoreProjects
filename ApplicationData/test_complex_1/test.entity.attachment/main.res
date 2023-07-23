@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "constant-none-test_complex_script", 
+				"name" : "constant-test_complex_script", 
 				"status": "disabled1"
 			},
 			"parent": {

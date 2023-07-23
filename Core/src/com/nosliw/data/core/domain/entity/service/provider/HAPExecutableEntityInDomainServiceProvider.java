@@ -6,8 +6,8 @@ public class HAPExecutableEntityInDomainServiceProvider extends HAPExecutableEnt
 
 	public static final String ATTR_SERVICEID = "serviceId";
 
-	public void setServiceId(String serviceId) {	this.setNormalAttributeValueObject(ATTR_SERVICEID, serviceId);	}
+	public void setServiceId(String serviceId) {	this.setAttributeValueObject(ATTR_SERVICEID, serviceId);	}
 
-	public String getServiceId() {	return (String)this.getNormalAttributeValue(ATTR_SERVICEID);	}
+	public String getServiceId() {	return (String)this.getAttributeValue(ATTR_SERVICEID);	}
 	
 }

@@ -20,7 +20,7 @@ import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
-public class HAPPluginAdapterProcessorDataAssociationInteractive implements HAPPluginAdapterProcessor{
+public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessor{
 
 	@Override
 	public String getAdapterType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE;  }

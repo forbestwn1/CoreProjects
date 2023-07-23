@@ -15,7 +15,7 @@
 		}
 	],
 	"nosliw_core" : {
-		"a-none-test_complex_script" : {
+		"a-test_complex_script" : {
 			"nosliw_core" : {
 				"a_configure" : {
 					"aa" : "aa value",
@@ -23,9 +23,9 @@
 				}
 			}
 		},
-		"b-none-test_complex_1" : {
+		"b-test_complex_1" : {
 			"nosliw_core" : {
-				"ba-none-test_complex_script" : {
+				"ba-test_complex_script" : {
 					"nosliw_core" : {
 						"baa" : "baa value",
 						"bab" : "bab value"
@@ -33,9 +33,9 @@
 				}
 			}
 		},
-		"c-none-test_complex_1" : {
+		"c-test_complex_1" : {
 			"nosliw_core" : {
-				"ca-none-test_complex_script" : {
+				"ca-test_complex_script" : {
 					"nosliw_core" : {
 						"caa" : "caa value",
 						"cab" : "cab value"

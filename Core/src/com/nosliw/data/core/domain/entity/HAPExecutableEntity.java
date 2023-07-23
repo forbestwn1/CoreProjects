@@ -54,11 +54,11 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return null;
 	}
 
-	public HAPEmbededExecutable getNormalAttributeEmbeded(String attrName) { return this.getAttribute(attrName).getValue(); }
+	public HAPEmbededExecutable getAttributeEmbeded(String attrName) { return this.getAttribute(attrName).getValue(); }
 
-	public Object getNormalAttributeValue(String attrName) {
+	public Object getAttributeValue(String attrName) {
 		Object out = null;
-		HAPEmbededExecutable embeded = this.getNormalAttributeEmbeded(attrName);
+		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);
 		if(embeded!=null) {
 			out = embeded.getValue();
 		}
@@ -67,11 +67,11 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {    this.m_attributes.add(attrObj);    }
 	
-	public void setNormalAttributeValueObject(String attributeName, Object value) {    setNormalAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
+	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
 	
-	public void setNormalAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
-	public void setNormalAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false)); }
-	public void setNormalAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setNormalAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true)); }
+	public void setAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
+	public void setAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false)); }
+	public void setAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true)); }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

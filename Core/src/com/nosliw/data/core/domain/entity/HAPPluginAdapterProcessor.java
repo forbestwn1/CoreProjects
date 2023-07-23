@@ -10,7 +10,7 @@ public abstract class HAPPluginAdapterProcessor {
 	public abstract HAPExecutableEntity newExecutable();
 
 	//process definition before value context
-	public abstract void preProcess(HAPExecutableEntity adapterExe, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutableEntity parentEntityExecutable, HAPContextProcessor parentContext);
+	public void preProcess(HAPExecutableEntity adapterExe, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutableEntity parentEntityExecutable, HAPContextProcessor parentContext) {}
 
 	//value context extension, variable resolve
 	public void processValueContextExtension(HAPExecutableEntity adapterExe, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutableEntity parentEntityExecutable, HAPContextProcessor parentContext) {}

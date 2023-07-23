@@ -7,7 +7,7 @@
 		{
 			"embeded": {
 				"info": {
-					"name" : "adapter-none-serviceprovider",
+					"name" : "adapter-serviceprovider",
 					"status": "disabled1"
 				},
 				"entity" : {
@@ -48,7 +48,7 @@
 		},
 		{
 			"info": {
-				"name" : "debug_parent_valuestructure-none-test_complex_script",
+				"name" : "debug_parent_valuestructure-test_complex_script",
 				"status": "disabled1"
 			},
 			"parent": {

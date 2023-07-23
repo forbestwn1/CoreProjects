@@ -13,8 +13,8 @@ public class HAPExecutableEntityInteractive extends HAPExecutableEntitySimple{
 
 	public HAPExecutableEntityInteractive() {}
 	
-	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getNormalAttributeValue(ATTR_INTERACTIVE);  }
+	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getAttributeValue(ATTR_INTERACTIVE);  }
 
-	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setNormalAttributeValueObject(ATTR_INTERACTIVE, interactive);      }
+	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setAttributeValueObject(ATTR_INTERACTIVE, interactive);      }
 	
 }

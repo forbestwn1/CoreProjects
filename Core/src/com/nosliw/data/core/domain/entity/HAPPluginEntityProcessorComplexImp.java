@@ -30,6 +30,9 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 	
 	@Override
+	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
+
+	@Override
 	public HAPExecutableEntityComplex newExecutable() {
 		HAPExecutableEntityComplex out = null;
 		try {

@@ -7,7 +7,7 @@
 		{
 			"embeded": {
 				"info": {
-					"name" : "adapter-none-test_complex_script",
+					"name" : "adapter-test_complex_script",
 					"status": "disabled1"
 				},
 				"resourceId": "test_complex_script|#child",
@@ -236,7 +236,7 @@
 		},
 		{
 			"info": {
-				"name" : "debug_parent_valuestructure-none-test_complex_script",
+				"name" : "debug_parent_valuestructure-test_complex_script",
 				"status": "disabled1"
 			},
 			"parent": {

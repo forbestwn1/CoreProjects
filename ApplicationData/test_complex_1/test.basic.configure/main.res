@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "a-none-test_complex_script", 
+				"name" : "a-test_complex_script", 
 				"status": "disabled"
 			},
 			"entity":{
@@ -18,13 +18,13 @@
 		},
 		{
 			"info": {
-				"name" : "b-none-test_complex_1", 
+				"name" : "b-test_complex_1", 
 				"status": "disabled1"
 			},
 			"entity":[
 				{
 					"info": {
-						"name" : "ba-none-test_complex_script", 
+						"name" : "ba-test_complex_script", 
 						"status": "disabled"
 					},
 					"entity":{
@@ -38,13 +38,13 @@
 		},
 		{
 			"info": {
-				"name" : "c-none-test_complex_1", 
+				"name" : "c-test_complex_1", 
 				"status": "disabled"
 			},
 			"entity":[
 				{
 					"info": {
-						"name" : "ca-none-test_complex_script", 
+						"name" : "ca-test_complex_script", 
 						"status": "disabled1"
 					},
 					"entity":{

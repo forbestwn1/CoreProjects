@@ -1,20 +1,7 @@
 package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
 
-import java.util.List;
-
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
-import com.nosliw.data.core.domain.entity.HAPUtilityEntityProcess;
-import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 
 public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntityProcessorComplexImp{
 
@@ -22,6 +9,8 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, HAPExecutableTestComplex1.class);
 	}
 
+
+/*	
 	@Override
 	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
@@ -54,4 +43,5 @@ public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginEntity
 			}
 		}
 	}
+*/	
 }

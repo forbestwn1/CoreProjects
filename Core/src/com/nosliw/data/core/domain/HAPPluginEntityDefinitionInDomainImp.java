@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
@@ -105,6 +106,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
+			processReservedAttribute(entity, attributeName, attrEntityType);
 		}
 	}
 
@@ -120,6 +122,13 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
+			processReservedAttribute(entity, attributeName, attrEntityType);
+		}
+	}
+	
+	private void processReservedAttribute(HAPDefinitionEntityInDomain entity, String attrName, String entityValueType) {
+		if(entityValueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT)||entityValueType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
+			entity.getAttribute(attrName).setAttributeAutoProcess(false);
 		}
 	}
 	

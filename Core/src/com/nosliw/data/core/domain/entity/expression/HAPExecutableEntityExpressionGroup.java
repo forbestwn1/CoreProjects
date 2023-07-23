@@ -28,12 +28,12 @@ public class HAPExecutableEntityExpressionGroup extends HAPExecutableEntityExpre
 	private Map<String, HAPData> m_dataConstants;
 	
 	public HAPExecutableEntityExpressionGroup() {
-		this.setNormalAttributeValueObject(EXPRESSIONS, new ArrayList<HAPExecutableExpression>());
-		this.setNormalAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
+		this.setAttributeValueObject(EXPRESSIONS, new ArrayList<HAPExecutableExpression>());
+		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
 
 	@Override
-	public List<HAPExecutableExpression> getAllExpressionItems(){   return (List<HAPExecutableExpression>)this.getNormalAttributeValue(EXPRESSIONS);  }
+	public List<HAPExecutableExpression> getAllExpressionItems(){   return (List<HAPExecutableExpression>)this.getAttributeValue(EXPRESSIONS);  }
 	public void addExpressionItem(HAPExecutableExpression expressionItem) {    this.getAllExpressionItems().add(expressionItem);       }
 	
 

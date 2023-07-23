@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -27,6 +28,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public HAPExecutableEntityComplex(String entityType) {
 		super(entityType);
 	}
+	
+	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {   return (HAPIdEntityInDomain)this.getAttributeEmbeded(attrName).getValue();    }
 	
 	public void setValueContext(HAPExecutableEntityValueContext valueContext) {     this.m_valueContext = valueContext;      }
 	public HAPExecutableEntityValueContext getValueContext() {    return this.m_valueContext;    }

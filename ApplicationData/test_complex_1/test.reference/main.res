@@ -6,14 +6,14 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "globalresource-none-test_complex_script",
+				"name" : "globalresource-test_complex_script",
 				"status": "disabled1"
 			},
 			"resourceId": "test_complex_script|exist"
 		},
 		{
 			"info": {
-				"name" : "localresource-none-test_complex_script",
+				"name" : "localresource-test_complex_script",
 				"status": "disabled1"
 			},
 			"resourceId": "test_complex_script|#localexist"

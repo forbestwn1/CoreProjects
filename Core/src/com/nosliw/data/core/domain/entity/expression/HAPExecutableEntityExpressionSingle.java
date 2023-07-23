@@ -31,14 +31,14 @@ public class HAPExecutableEntityExpressionSingle extends HAPExecutableEntityExpr
 	private Map<String, HAPData> m_dataConstants;
 	
 	public HAPExecutableEntityExpressionSingle() {
-		this.setNormalAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
+		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
  
 	@Override
 	public List<HAPExecutableExpression> getAllExpressionItems(){   return Lists.newArrayList(this.getExpression());     }
 
-	public HAPExecutableExpression getExpression(){   return (HAPExecutableExpression)this.getNormalAttributeValue(EXPRESSION);  }
-	public void setExpression(HAPExecutableExpression expression) {    this.setNormalAttributeValueObject(EXPRESSION, expression);       }
+	public HAPExecutableExpression getExpression(){   return (HAPExecutableExpression)this.getAttributeValue(EXPRESSION);  }
+	public void setExpression(HAPExecutableExpression expression) {    this.setAttributeValueObject(EXPRESSION, expression);       }
 	
 	public void setDataConstants(Map<String, HAPData> dataConstants) {   this.m_dataConstants = dataConstants;    }
 	public Map<String, HAPData> getDataConstants(){   return this.m_dataConstants;     }

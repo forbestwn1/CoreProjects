@@ -353,23 +353,25 @@ public class HAPManagerDomainEntityExecutable {
 			
 			List<HAPAttributeEntityDefinition> attrsDef = entityDef.getAttributes();
 			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
-				HAPEmbededDefinition embededAttributeDef = attrDef.getValue();
-				if(attrDef.getValueTypeInfo().getIsComplex()) {
-					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
-					HAPIdEntityInDomain attrEntityExeId = (HAPIdEntityInDomain)buildExecutableTree(attrEntityDefId, processContext);
-					entityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
-					HAPAttributeEntityExecutable attrExe = entityExe.getAttribute(attrDef.getName());
-					attrExe.setAttributeAutoProcess(true);
-					
-					//adapter
-					for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
-						HAPExecutableEntity adapterEntityExe = this.m_processorAdapterPlugins.get(defAdapterInfo.getValueType()).newExecutable();
-						adapterEntityExe.setDefinitionEntityId(defAdapterInfo.getEntityIdValue());
-						attrExe.getValue().addAdapter(new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe));
+				if(attrDef.isAttributeAutoProcess()) {
+					HAPEmbededDefinition embededAttributeDef = attrDef.getValue();
+					if(attrDef.getValueTypeInfo().getIsComplex()) {
+						HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
+						HAPIdEntityInDomain attrEntityExeId = (HAPIdEntityInDomain)buildExecutableTree(attrEntityDefId, processContext);
+						entityExe.setAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
+						HAPAttributeEntityExecutable attrExe = entityExe.getAttribute(attrDef.getName());
+						attrExe.setAttributeAutoProcess(true);
+						
+						//adapter
+						for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
+							HAPExecutableEntity adapterEntityExe = this.m_processorAdapterPlugins.get(defAdapterInfo.getValueType()).newExecutable();
+							adapterEntityExe.setDefinitionEntityId(defAdapterInfo.getEntityIdValue());
+							attrExe.getValue().addAdapter(new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe));
+						}
 					}
-				}
-				else {
-					
+					else {
+						
+					}
 				}
 			}
 		}
@@ -406,7 +408,7 @@ public class HAPManagerDomainEntityExecutable {
 				if(attrDef.getValueTypeInfo().getIsComplex()) {
 					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
 					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-					complexEntityExe.setNormalAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
+					complexEntityExe.setAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
 				}
 				else {
 					

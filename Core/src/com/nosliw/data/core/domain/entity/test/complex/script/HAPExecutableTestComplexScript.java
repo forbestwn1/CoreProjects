@@ -43,21 +43,21 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 	public HAPExecutableTestComplexScript() {
 	}
 	
-	public void setScript(String script) {		this.setNormalAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
+	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
-	public void setScriptName(String scriptName) {		this.setNormalAttributeValueObject(SCRIPTNAME, scriptName);	}
-	public String getScriptName() {		return (String)this.getNormalAttributeValue(SCRIPTNAME);	}
+	public void setScriptName(String scriptName) {		this.setAttributeValueObject(SCRIPTNAME, scriptName);	}
+	public String getScriptName() {		return (String)this.getAttributeValue(SCRIPTNAME);	}
 
-	public void setParms(Map<String, Object> parms) {	this.setNormalAttributeValueObject(PARM, parms);	}
+	public void setParms(Map<String, Object> parms) {	this.setAttributeValueObject(PARM, parms);	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setNormalAttributeValueObject(VARIABLE, vars);	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setAttributeValueObject(VARIABLE, vars);	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setNormalAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
 
-	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getNormalAttributeValue(VARIABLEEXTENDED);         }
-	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setNormalAttributeValueObject(VARIABLEEXTENDED, vars);	}
+	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValue(VARIABLEEXTENDED);         }
+	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setAttributeValueObject(VARIABLEEXTENDED, vars);	}
 
-	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setNormalAttributeValueObject(ATTACHMENT, attachments);	}
+	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setAttributeValueObject(ATTACHMENT, attachments);	}
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

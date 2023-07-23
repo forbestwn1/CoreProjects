@@ -6,7 +6,7 @@
 	"entity": [
 		{
 			"info": {
-				"name" : "merge_runtime_localresource-none-test_complex_script",
+				"name" : "merge_runtime_localresource-test_complex_script",
 				"status": "disabled1"
 			},
 			"parent": {
@@ -20,7 +20,7 @@
 		},
 		{
 			"info": {
-				"name" : "merge_definition_localresource-none-test_complex_script", 
+				"name" : "merge_definition_localresource-test_complex_script", 
 				"status": "disabled"
 			},
 			"parent": {
@@ -34,7 +34,7 @@
 		},
 		{
 			"info": {
-				"name" : "merge_none_localresource-none-test_complex_script", 
+				"name" : "merge_none_localresource-test_complex_script", 
 				"status": "disabled"
 			},
 			"parent": {
