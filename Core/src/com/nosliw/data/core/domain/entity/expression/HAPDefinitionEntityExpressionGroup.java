@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityExpression implements HAPWithEntityElement<HAPDefinitionExpression>{
 
 	public HAPDefinitionEntityExpressionGroup() {
-		this.setNormalAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpression>());
+		this.setAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpression>());
 	}
 	
 	public void addExpression(HAPDefinitionExpression element) {	this.addEntityElement(element);	}
@@ -30,7 +30,7 @@ public class HAPDefinitionEntityExpressionGroup extends HAPDefinitionEntityExpre
 	}
 
 	@Override
-	public List<HAPDefinitionExpression> getAllExpressionItems(){	return (List<HAPDefinitionExpression>)this.getNormalAttributeValue(ELEMENT);	}
+	public List<HAPDefinitionExpression> getAllExpressionItems(){	return (List<HAPDefinitionExpression>)this.getAttributeValue(ELEMENT);	}
 	
 
 	@Override

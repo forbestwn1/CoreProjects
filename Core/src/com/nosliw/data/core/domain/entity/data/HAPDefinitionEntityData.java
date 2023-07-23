@@ -8,8 +8,8 @@ public class HAPDefinitionEntityData extends HAPDefinitionEntityInDomainSimple{
 
 	public static final String ATTR_DATA = "data";
 	
-	public void setData(HAPData data) {    this.setNormalAttributeValueObject(ATTR_DATA, data);    }
-	public HAPData getData() {   return (HAPData)this.getNormalAttributeValue(ATTR_DATA);     }
+	public void setData(HAPData data) {    this.setAttributeValueObject(ATTR_DATA, data);    }
+	public HAPData getData() {   return (HAPData)this.getAttributeValue(ATTR_DATA);     }
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

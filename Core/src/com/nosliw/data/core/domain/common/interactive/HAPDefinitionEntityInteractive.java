@@ -11,9 +11,9 @@ public class HAPDefinitionEntityInteractive extends HAPDefinitionEntityInDomain{
 	public HAPDefinitionEntityInteractive() {
 	}
 	
-	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getNormalAttributeValue(ATTR_INTERACTIVE);  }
+	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getAttributeValue(ATTR_INTERACTIVE);  }
 
-	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setNormalAttributeObject(ATTR_INTERACTIVE, new HAPEmbededDefinition(interactive));      }
+	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setAttributeObject(ATTR_INTERACTIVE, new HAPEmbededDefinition(interactive));      }
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

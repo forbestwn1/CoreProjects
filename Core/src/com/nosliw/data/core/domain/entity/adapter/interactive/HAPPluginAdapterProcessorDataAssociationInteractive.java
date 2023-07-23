@@ -12,7 +12,7 @@ import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.common.interactive.HAPExecutableEntityInteractive;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessor;
+import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessorImp;
 import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveRequest;
 import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveResult;
@@ -20,7 +20,11 @@ import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
-public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessor{
+public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessorImp{
+
+	public HAPPluginAdapterProcessorDataAssociationInteractive() {
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, HAPExecutableGroupDataAssociationForTask.class);
+	}
 
 	@Override
 	public String getAdapterType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE;  }

@@ -14,7 +14,7 @@ public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityI
 	public static final String ATTR_ATTRIBUTES_REFERENCE = "referenceAttribute";
 	
 	public HAPDefinitionEntityExpression() {
-		this.setNormalAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
+		this.setAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
 	}
 
 	public abstract List<HAPDefinitionExpression> getAllExpressionItems();
@@ -26,7 +26,7 @@ public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityI
 		Set<String> refAttrs = this.getReferenceAttributes();
 		
 		String attrName = "Reference_"+idIndex;
-		this.setNormalAttributeValueComplex(attrName, entityId);
+		this.setAttributeValueComplex(attrName, entityId);
 		
 		refAttrs.add(attrName);
 		idIndex++;
@@ -35,9 +35,9 @@ public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityI
 		return attrName;
 	}
 	
-	private int getIdIndex() {    return (Integer)this.getNormalAttributeValue(ATTR_INDEX_ID, Integer.valueOf(0));     }
-	private void setIdIndex(int idIndex) {    this.setNormalAttributeValueObject(ATTR_INDEX_ID, Integer.valueOf(idIndex));      }
+	private int getIdIndex() {    return (Integer)this.getAttributeValue(ATTR_INDEX_ID, Integer.valueOf(0));     }
+	private void setIdIndex(int idIndex) {    this.setAttributeValueObject(ATTR_INDEX_ID, Integer.valueOf(idIndex));      }
 
-	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getNormalAttributeValue(ATTR_ATTRIBUTES_REFERENCE);     }
+	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getAttributeValue(ATTR_ATTRIBUTES_REFERENCE);     }
 	
 }

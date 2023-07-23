@@ -13,14 +13,14 @@ public class HAPDefinitionEntityTestComplexScript extends HAPDefinitionEntityInD
 	public static final String ATTR_PARM = "parm";
 
 	public HAPDefinitionEntityTestComplexScript() {
-		this.setNormalAttributeObject(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
+		this.setAttributeObject(ATTR_PARM, new HAPEmbededDefinition(new LinkedHashMap<String, Object>()));
 	}
 
-	public void setScriptName(String scriptName) {    this.setNormalAttributeObject(ATTR_SCRIPTNAME, new HAPEmbededDefinition(scriptName));    }
-	public String getScriptName() {   return (String)this.getNormalAttributeValue(ATTR_SCRIPTNAME);     }
+	public void setScriptName(String scriptName) {    this.setAttributeObject(ATTR_SCRIPTNAME, new HAPEmbededDefinition(scriptName));    }
+	public String getScriptName() {   return (String)this.getAttributeValue(ATTR_SCRIPTNAME);     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
-	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getNormalAttributeValue(ATTR_PARM);    }
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getAttributeValue(ATTR_PARM);    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override

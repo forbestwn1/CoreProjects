@@ -1,5 +1,5 @@
 {
-	"nosliw_decoration1" :[
+	"nosliw_decoration" :[
 		{
 			"nosliw_info" : {
 				"name" : "firstDec",

@@ -20,12 +20,12 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	public static final String ELEMENT = "element";
 
 	public HAPDefinitionEntityContainerAttachment() {
-		this.setNormalAttributeValueObject(ELEMENT, new LinkedHashMap<>());
+		this.setAttributeValueObject(ELEMENT, new LinkedHashMap<>());
 	}
 
 	public boolean isEmpty() {     return this.getAllAttachment().isEmpty();   }
 	
-	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return (Map<String, Map<String, HAPAttachment>>)this.getNormalAttributeValue(ELEMENT);   }
+	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return (Map<String, Map<String, HAPAttachment>>)this.getAttributeValue(ELEMENT);   }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
 		Map<String, HAPAttachment> out = this.getAllAttachment().get(type);

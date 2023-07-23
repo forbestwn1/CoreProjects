@@ -105,7 +105,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(isAttributeEnabled(attrEntityObj)) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
+			entity.setAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
 			processReservedAttribute(entity, attributeName, attrEntityType);
 		}
 	}
@@ -121,7 +121,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(isAttributeEnabled(attrEntityObj)) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-			entity.setNormalAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
+			entity.setAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
 			processReservedAttribute(entity, attributeName, attrEntityType);
 		}
 	}

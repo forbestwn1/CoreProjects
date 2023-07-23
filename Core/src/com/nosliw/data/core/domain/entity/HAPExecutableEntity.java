@@ -12,6 +12,9 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -119,5 +122,23 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
+	}
+	
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
+			HAPEmbededExecutable embeded = attribute.getValue();
+			Object valueObj = embeded.getValue();
+			if(valueObj instanceof HAPExecutable) {
+				dependency.addAll(((HAPExecutable)valueObj).getResourceDependency(runtimeInfo, resourceManager));
+			}
+		
+			for(HAPInfoAdapter adapterInfo : embeded.getAdapters()) {
+				Object adapterObj = adapterInfo.getValue();
+				if(adapterObj instanceof HAPExecutable) {
+					dependency.addAll(((HAPExecutable)adapterObj).getResourceDependency(runtimeInfo, resourceManager));
+				}
+			}
+		}
 	}
 }

@@ -8,8 +8,8 @@ public class HAPDefinitionEntityDataAssociationInteractive extends HAPDefinition
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	
-	public void setDataAssciation(HAPDefinitionGroupDataAssociationForTask dataAssciation) {    this.setNormalAttributeObject(ATTR_DATAASSOCIATION, new HAPEmbededDefinition(dataAssciation));    }
-	public HAPDefinitionGroupDataAssociationForTask getDataAssociation() {   return (HAPDefinitionGroupDataAssociationForTask)this.getNormalAttributeValue(ATTR_DATAASSOCIATION);     }
+	public void setDataAssciation(HAPDefinitionGroupDataAssociationForTask dataAssciation) {    this.setAttributeObject(ATTR_DATAASSOCIATION, new HAPEmbededDefinition(dataAssciation));    }
+	public HAPDefinitionGroupDataAssociationForTask getDataAssociation() {   return (HAPDefinitionGroupDataAssociationForTask)this.getAttributeValue(ATTR_DATAASSOCIATION);     }
 
 	
 	@Override

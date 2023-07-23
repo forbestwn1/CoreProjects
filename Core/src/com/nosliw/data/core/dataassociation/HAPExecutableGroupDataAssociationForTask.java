@@ -9,15 +9,15 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableGroupDataAssociationForTask extends HAPExecutableImp{
+public class HAPExecutableGroupDataAssociationForTask extends HAPExecutableEntitySimple{
 
 	@HAPAttribute
 	public static String OUT = "out";

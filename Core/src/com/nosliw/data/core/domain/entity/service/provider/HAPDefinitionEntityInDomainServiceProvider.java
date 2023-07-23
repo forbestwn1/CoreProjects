@@ -10,9 +10,9 @@ public class HAPDefinitionEntityInDomainServiceProvider extends HAPDefinitionEnt
 
 	public static final String ATTR_SERVICEKEY = "serviceKey";
 
-	public void setServiceKey(HAPKeyService serviceKey) {	this.setNormalAttributeObject(ATTR_SERVICEKEY, new HAPEmbededDefinition(serviceKey));	}
+	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeObject(ATTR_SERVICEKEY, new HAPEmbededDefinition(serviceKey));	}
 
-	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getNormalAttributeValue(ATTR_SERVICEKEY);	}
+	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValue(ATTR_SERVICEKEY);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

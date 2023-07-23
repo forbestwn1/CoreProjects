@@ -21,7 +21,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	public static final String VALUE = "value";
 
 	public HAPDefinitionEntityValueStructure() {
-		this.setNormalAttributeObject(VALUE, new HAPEmbededDefinition(new LinkedHashMap<String, HAPRootStructure>()));
+		this.setAttributeObject(VALUE, new HAPEmbededDefinition(new LinkedHashMap<String, HAPRootStructure>()));
 	}
 
 	public HAPRootStructure addRoot(HAPRootStructure root) {
@@ -32,7 +32,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	}
 
 	public Map<String, HAPRootStructure> getRoots(){  
-		return (Map<String, HAPRootStructure>)this.getNormalAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
+		return (Map<String, HAPRootStructure>)this.getAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
 	}
 	
 	@Override
