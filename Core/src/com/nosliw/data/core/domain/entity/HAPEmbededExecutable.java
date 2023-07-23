@@ -22,6 +22,9 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 		super(entity);
 	}
 
+	public Set<HAPInfoAdapterExecutable> getExecutableAdapters(){   return (Set)this.getAdapters();     }
+	public HAPInfoAdapterExecutable getExecutableAdapter(String name) {	return (HAPInfoAdapterExecutable)this.getAdapter(name);	}
+	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

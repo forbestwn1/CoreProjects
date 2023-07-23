@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbeded;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.domain.entity.HAPInfoAdapter;
+import com.nosliw.data.core.domain.entity.HAPInfoAdapterDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -37,8 +37,8 @@ public class HAPUtilityParserEntity {
 				//adapter
 				Object adapterObjs = jsonObj.opt(HAPEmbeded.ADAPTER);
 				if(adapterObjs!=null) {
-					List<HAPInfoAdapter> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-					for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+					List<HAPInfoAdapterDefinition> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+					for(HAPInfoAdapterDefinition adapter : adapters)   out.addAdapter(adapter);
 				}
 			}
 		}
@@ -66,16 +66,16 @@ public class HAPUtilityParserEntity {
 				//adapter
 				Object adapterObjs = jsonObj.opt(HAPEmbeded.ADAPTER);
 				if(adapterObjs!=null) {
-					List<HAPInfoAdapter> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
-					for(HAPInfoAdapter adapter : adapters)   out.addAdapter(adapter);
+					List<HAPInfoAdapterDefinition> adapters = parseAdapter(adapterObjs, entityId.getEntityType(), parserContext, domainEntityManager, resourceDefinitionManager);
+					for(HAPInfoAdapterDefinition adapter : adapters)   out.addAdapter(adapter);
 				}
 			}
 		}
 		return out;
 	}
 
-	private static List<HAPInfoAdapter> parseAdapter(Object adaptersObj, String embededEntityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager){
-		List<HAPInfoAdapter> out = new ArrayList<HAPInfoAdapter>();
+	private static List<HAPInfoAdapterDefinition> parseAdapter(Object adaptersObj, String embededEntityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager){
+		List<HAPInfoAdapterDefinition> out = new ArrayList<HAPInfoAdapterDefinition>();
 		
 		if(adaptersObj instanceof JSONArray) {
 			JSONArray adaptersArray = (JSONArray)adaptersObj;
@@ -83,7 +83,7 @@ public class HAPUtilityParserEntity {
 				JSONObject adapterObj = adaptersArray.getJSONObject(i);
 				if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
 					HAPIdEntityInDomain adpaterEntityId = parseEntity(adapterObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
-					HAPInfoAdapter adapterInfo = new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId);
+					HAPInfoAdapterDefinition adapterInfo = new HAPInfoAdapterDefinition(adpaterEntityId.getEntityType(), adpaterEntityId);
 					adapterInfo.buildEntityInfoByJson(adapterObj);
 					if(adapterInfo.getName()==null)   adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
 					out.add(adapterInfo);
@@ -94,7 +94,7 @@ public class HAPUtilityParserEntity {
 			JSONObject adapterObj = (JSONObject)adaptersObj;
 			if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
 				HAPIdEntityInDomain adpaterEntityId = parseEntity(adapterObj, domainEntityManager.getDefaultAdapterByEntity(embededEntityType), parserContext, domainEntityManager, resourceDefinitionManager);
-				HAPInfoAdapter adapterInfo = new HAPInfoAdapter(adpaterEntityId.getEntityType(), adpaterEntityId);
+				HAPInfoAdapterDefinition adapterInfo = new HAPInfoAdapterDefinition(adpaterEntityId.getEntityType(), adpaterEntityId);
 				adapterInfo.buildEntityInfoByJson(adapterObj);
 				if(adapterInfo.getName()==null)   adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
 				out.add(adapterInfo);

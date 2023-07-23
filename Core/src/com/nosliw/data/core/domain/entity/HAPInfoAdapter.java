@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 
 @HAPEntityWithAttribute
-public class HAPInfoAdapter extends HAPEntityInfoImp implements HAPExpandable{
+public abstract class HAPInfoAdapter extends HAPEntityInfoImp implements HAPExpandable{
 
 	@HAPAttribute
 	public static String VALUETYPE = "valueType";

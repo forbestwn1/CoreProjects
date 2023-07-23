@@ -15,10 +15,12 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 public class HAPInfoAdapterExecutable extends HAPInfoAdapter implements HAPExecutable{
 
-	public HAPInfoAdapterExecutable(String valueType, Object value) {
+	public HAPInfoAdapterExecutable(String valueType, HAPExecutableEntity value) {
 		super(valueType, value);
 	}
 
+	public HAPExecutableEntity getExecutableEntityValue() {    return (HAPExecutableEntity)this.getValue();       }
+	
 	@Override
 	public HAPResourceData toResourceData(HAPRuntimeInfo runtimeInfo) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();

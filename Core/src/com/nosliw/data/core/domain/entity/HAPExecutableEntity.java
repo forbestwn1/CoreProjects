@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -26,6 +27,8 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	private List<HAPAttributeEntityExecutable> m_attributes;
 
+	private HAPIdEntityInDomain m_definitionEntityId;
+	
 	public HAPExecutableEntity() {
 		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
 	} 
@@ -34,6 +37,9 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		this.m_entityType = entityType;
 		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
 	} 
+	
+	public void setDefinitionEntityId(HAPIdEntityInDomain defEntityId) {    this.m_definitionEntityId = defEntityId;      }
+	public HAPIdEntityInDomain getDefinitionEntityId() {    return this.m_definitionEntityId;     }
 	
 	public String getEntityType() {    return this.m_entityType;   }
 
