@@ -133,10 +133,13 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
-		for(HAPExecutableVariableExpected extendedVar : executableEntity.getExtendedVariables()) {
-			HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
-			HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), valueStructureComplex, varDef.getGroup(), valueStructureDomain, null);
-			extendedVar.setVariableId(idVariable);
+		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
+		if(expectedVars!=null) {
+			for(HAPExecutableVariableExpected extendedVar : expectedVars) {
+				HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
+				HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), valueStructureComplex, varDef.getGroup(), valueStructureDomain, null);
+				extendedVar.setVariableId(idVariable);
+			}
 		}
 	}
 	
@@ -148,12 +151,15 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		
-		for(HAPExecutableVariableExpected extendedVar : executableEntity.getExtendedVariables()) {
-			HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
-			HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(extendedVar.getVariableId(), valueStructureDomain);
-			
-			HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(dataStructureEle.getCriteriaInfo(), new HAPDataTypeCriteriaId(varDef.getDataTypeId(), null), processContext.getRuntimeEnvironment().getDataTypeHelper());
-			extendedVar.setMarchers(matchers);
+		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
+		if(expectedVars!=null) {
+			for(HAPExecutableVariableExpected extendedVar : expectedVars) {
+				HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
+				HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(extendedVar.getVariableId(), valueStructureDomain);
+				
+				HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(dataStructureEle.getCriteriaInfo(), new HAPDataTypeCriteriaId(varDef.getDataTypeId(), null), processContext.getRuntimeEnvironment().getDataTypeHelper());
+				extendedVar.setMarchers(matchers);
+			}
 		}
 	}
 	

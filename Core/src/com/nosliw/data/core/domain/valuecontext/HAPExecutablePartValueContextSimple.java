@@ -47,8 +47,8 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 					cloned.setValueStructureRuntimeId(valueStructureDomain.cloneRuntime(valueStructure.getValueStructureRuntimeId()));
 				}
 				else if(mode.equals(HAPConstantShared.INHERITMODE_REFER)) {
-					cloned = valueStructure.cloneValueStructureWrapper();
-					cloned.setValueStructureRuntimeId(valueStructureDomain.createRuntimeByRelativeRef(valueStructure.getValueStructureRuntimeId()));
+//					cloned = valueStructure.cloneValueStructureWrapper();
+//					cloned.setValueStructureRuntimeId(valueStructureDomain.createRuntimeByRelativeRef(valueStructure.getValueStructureRuntimeId()));
 				}
 				out.addValueStructure(cloned);
 			}

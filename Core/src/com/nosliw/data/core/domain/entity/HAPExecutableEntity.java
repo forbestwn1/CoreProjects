@@ -54,7 +54,10 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return null;
 	}
 
-	public HAPEmbededExecutable getAttributeEmbeded(String attrName) { return this.getAttribute(attrName).getValue(); }
+	public HAPEmbededExecutable getAttributeEmbeded(String attrName) {
+		HAPAttributeEntityExecutable attr = this.getAttribute(attrName);
+		return attr==null?null:attr.getValue(); 
+	}
 
 	public Object getAttributeValue(String attrName) {
 		Object out = null;

@@ -130,50 +130,47 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				var configure = basicEntityInterface.getConfigure();
 				var attr = complexEntityDef.getAttribute(attrName);
 				
-				if(attr.isNormalAttribute()){
-					//normal attribute
-					var attrValue = attr.getValue();
-					var entityType = attr.getEntityType();
-					var adaptersInfo = attr.getAdaptersInfo();
-					var childConfigure = configure.getChildConfigure(attrName);
-					if(attr.isComplex()==true){
-						//complex attribute
-						var childEntitId = attrValue;
+				var attrValue = attr.getValue();
+				var entityType = attr.getEntityType();
+				var adaptersInfo = attr.getAdaptersInfo();
+				var childConfigure = configure.getChildConfigure(attrName);
+				if(attr.isComplex()==true){
+					//complex attribute
+					var childEntitId = attrValue;
 
-						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, {
-							success : function(request, complexEntityRuntime){
-								
-								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-									success : function(request, adaptersResult){
-										return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
-									}
-								});
-								
-								_.each(adaptersInfo, function(adapterInfo){
-									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
-								});
-								return adaptersRequest;
-							}
-						}));
-					}
-					else{
-						//simple attribute
-						var childEntityDef = attrValue;
-						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(entityType, childEntityDef, childConfigure, {
-							success : function(request, simpleEntity){
-								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-									success : function(request, adaptersResult){
-										return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
-									}	
-								});
-								
-								_.each(adaptersInfo, function(adapterInfo){
-									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
-								});
-								return adaptersRequest;
-							}
-						}));
-					}
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, {
+						success : function(request, complexEntityRuntime){
+							
+							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+								success : function(request, adaptersResult){
+									return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
+								}
+							});
+							
+							_.each(adaptersInfo, function(adapterInfo){
+								adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+							});
+							return adaptersRequest;
+						}
+					}));
+				}
+				else{
+					//simple attribute
+					var childEntityDef = attrValue;
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(entityType, childEntityDef, childConfigure, {
+						success : function(request, simpleEntity){
+							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+								success : function(request, adaptersResult){
+									return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
+								}	
+							});
+							
+							_.each(adaptersInfo, function(adapterInfo){
+								adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+							});
+							return adaptersRequest;
+						}
+					}));
 				}
 				return out;
 			}

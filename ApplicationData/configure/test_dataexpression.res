@@ -15,7 +15,7 @@
 		}
 	],
 	"nosliw_core" : {
-		"test_none_dataexpressiongroup" : {
+		"test_dataexpressiongroup" : {
 			"nosliw_debug_package" : "true",
 			"nosliw_debug" : "true",
 			"nosliw_decoration" : {

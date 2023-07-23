@@ -54,10 +54,6 @@ var node_complexEntityUtility = {
 		return adapter.getExecuteRequest(parentCoreEntity, childInput, handlers, request);
 	},
 
-	getAttributeType : function(attributeObj){
-		return attributeObj[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_ENTITYTYPE];
-	},
-
 	getRootConfigureRequest : function(configure, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
