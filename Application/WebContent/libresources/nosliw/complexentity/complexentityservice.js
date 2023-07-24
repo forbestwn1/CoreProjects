@@ -64,7 +64,7 @@ var node_createComplexEntityRuntimeService = function() {
 			});		
 		}
 		else{
-			return loc_adapterPlugins[adapterType].getNewAdapterRequest(adapterDefinition, handlers, request);
+			return loc_adapterPlugins[adapterType].getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), handlers, request);
 		}
 	};
 

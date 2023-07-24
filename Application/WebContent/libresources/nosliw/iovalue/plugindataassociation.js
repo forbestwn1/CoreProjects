@@ -36,7 +36,7 @@ var node_createDataAssociationAdapterPlugin = function(){
 
 var loc_createDataAssociationAdapter = function(dataAssociation){
 	
-	var loc_dataAssociation = dataAssociation;
+	var loc_dataAssociation = dataAssociation.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSCIATION_ATTR_DATAASSOCIATION);
 	
 	
 	var loc_out = {
@@ -45,7 +45,7 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 			var parentDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
 			var childDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(childRuntime.getCoreEntity()));
 
-			var da = node_createDataAssociation(parentDataIoSet, loc_dataAssociation, childDataIoSet, name);
+			var da = node_createDataAssociation(parentDataIoSet, loc_dataAssociation, childDataIoSet);
 			return da.getExecuteRequest(handlers, request);
 		}
 	};

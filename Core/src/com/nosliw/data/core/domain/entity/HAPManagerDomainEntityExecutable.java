@@ -358,7 +358,9 @@ public class HAPManagerDomainEntityExecutable {
 						for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
 							HAPExecutableEntity adapterEntityExe = this.m_processorAdapterPlugins.get(defAdapterInfo.getValueType()).newExecutable();
 							adapterEntityExe.setDefinitionEntityId(defAdapterInfo.getEntityIdValue());
-							attrExe.getValue().addAdapter(new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe));
+							HAPInfoAdapterExecutable exeAdapterInfo = new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe);
+							defAdapterInfo.cloneToEntityInfo(exeAdapterInfo);
+							attrExe.getValue().addAdapter(exeAdapterInfo);
 						}
 					}
 					else {
