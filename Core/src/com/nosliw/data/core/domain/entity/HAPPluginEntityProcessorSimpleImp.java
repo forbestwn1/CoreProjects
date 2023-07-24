@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.entity;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEntityProcessorSimple{
 
@@ -20,20 +19,23 @@ public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEnti
 	public String getEntityType() {  return this.m_entityType;  }
 
 	@Override
-	public HAPExecutableEntity process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+	public void process(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
+		HAPDefinitionEntityInDomain entityDef = definitionDomain.getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
+		this.process(entityExe, entityDef, processContext);
+	}
+	
+	@Override
+	public HAPExecutableEntity newExecutable() {
 		HAPExecutableEntity out = null;
 		try {
-			HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-			HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
-			HAPDefinitionEntityInDomain entityDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 			out = this.m_exeEntityClass.newInstance();
 			out.setEntityType(this.getEntityType());
-			this.process(out, entityDef, processContext);
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return out;
+		return out; 
 	}
 
 	abstract protected void process(HAPExecutableEntity entityExe, HAPDefinitionEntityInDomain entityDef, HAPContextProcessor processContext);

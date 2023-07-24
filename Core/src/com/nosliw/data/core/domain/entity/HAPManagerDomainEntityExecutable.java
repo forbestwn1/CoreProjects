@@ -347,24 +347,20 @@ public class HAPManagerDomainEntityExecutable {
 			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
 				if(attrDef.isAttributeAutoProcess()) {
 					HAPEmbededDefinition embededAttributeDef = attrDef.getValue();
-					if(attrDef.getValueTypeInfo().getIsComplex()) {
-						HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
-						HAPIdEntityInDomain attrEntityExeId = (HAPIdEntityInDomain)buildExecutableTree(attrEntityDefId, processContext);
-						entityExe.setAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
-						HAPAttributeEntityExecutable attrExe = entityExe.getAttribute(attrDef.getName());
-						attrExe.setAttributeAutoProcess(true);
-						
-						//adapter
-						for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
-							HAPExecutableEntity adapterEntityExe = this.m_processorAdapterPlugins.get(defAdapterInfo.getValueType()).newExecutable();
-							adapterEntityExe.setDefinitionEntityId(defAdapterInfo.getEntityIdValue());
-							HAPInfoAdapterExecutable exeAdapterInfo = new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe);
-							defAdapterInfo.cloneToEntityInfo(exeAdapterInfo);
-							attrExe.getValue().addAdapter(exeAdapterInfo);
-						}
-					}
-					else {
-						
+
+					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
+					Object attrEntityObject = buildExecutableTree(attrEntityDefId, processContext);
+					entityExe.setAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityObject), attrDef.getValueTypeInfo());
+					HAPAttributeEntityExecutable attrExe = entityExe.getAttribute(attrDef.getName());
+					attrExe.setAttributeAutoProcess(true);
+					
+					//adapter
+					for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
+						HAPExecutableEntity adapterEntityExe = this.m_processorAdapterPlugins.get(defAdapterInfo.getValueType()).newExecutable();
+						adapterEntityExe.setDefinitionEntityId(defAdapterInfo.getEntityIdValue());
+						HAPInfoAdapterExecutable exeAdapterInfo = new HAPInfoAdapterExecutable(defAdapterInfo.getValueType(), adapterEntityExe);
+						defAdapterInfo.cloneToEntityInfo(exeAdapterInfo);
+						attrExe.getValue().addAdapter(exeAdapterInfo);
 					}
 				}
 			}

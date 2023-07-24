@@ -18,5 +18,4 @@ public class HAPDefinitionEntityDataAssociationInteractive extends HAPDefinition
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}
-
 }

@@ -77,16 +77,30 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		
 	}	
 	
+	public void setAttribute(String attributeName, HAPEmbededDefinition embededEntity, HAPInfoValueType valueTypeInfo, Boolean autoProcess) {
+		if(embededEntity!=null) {
+			Object value = embededEntity.getValue();
+			HAPAttributeEntityDefinition attribute = new HAPAttributeEntityDefinition(attributeName, embededEntity, valueTypeInfo);	
+			if(!(value instanceof HAPIdEntityInDomain)) {
+				//for not entity attribute, then not autoprocess anyway
+				attribute.setAttributeAutoProcess(false);
+			}
+			else if(autoProcess!=null) {
+				attribute.setAttributeAutoProcess(autoProcess);
+			}
+			this.setAttribute(attribute);
+		}
+	}
+
+	public void setAttribute(String attributeName, HAPEmbededDefinition embededEntity, HAPInfoValueType valueTypeInfo) {
+		this.setAttribute(attributeName, embededEntity, valueTypeInfo, null);
+	}
+
 	public void setAttributeValue(String attributeName, Object attrValue, HAPInfoValueType valueTypeInfo) {	this.setAttribute(attributeName, new HAPEmbededDefinition(attrValue), valueTypeInfo);	}
 	public void setAttributeValueObject(String attributeName, Object attrValue) {	this.setAttribute(attributeName, new HAPEmbededDefinition(attrValue), new HAPInfoValueType());	}
 	public void setAttributeValueSimple(String attributeName, HAPIdEntityInDomain attrEntityIdInDomain) {setAttributeValue(attributeName, attrEntityIdInDomain, new HAPInfoValueType(attrEntityIdInDomain.getEntityType(), false));}
 	public void setAttributeValueComplex(String attributeName, HAPIdEntityInDomain attrEntityIdInDomain) {setAttributeValue(attributeName, attrEntityIdInDomain, new HAPInfoValueType(attrEntityIdInDomain.getEntityType(), true));}
 	
-	public void setAttribute(String attributeName, HAPEmbededDefinition embededEntity, HAPInfoValueType valueTypeInfo) {
-		if(embededEntity!=null) {
-			this.setAttribute(new HAPAttributeEntityDefinition(attributeName, embededEntity, valueTypeInfo));
-		}
-	}
 	
 	public void setAttributeObject(String attributeName, HAPEmbededDefinition embededEntity) {setAttribute(attributeName, embededEntity, new HAPInfoValueType());}
 	public void setAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false));}

@@ -11,6 +11,7 @@ import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationFor
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.common.interactive.HAPExecutableEntityInteractive;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessorImp;
 import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
@@ -23,17 +24,14 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessorImp{
 
 	public HAPPluginAdapterProcessorDataAssociationInteractive() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, HAPExecutableGroupDataAssociationForTask.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, HAPExecutableEntityDataAssociationInteractive.class);
 	}
 
 	@Override
-	public String getAdapterType() {  return HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE;  }
-
-	@Override
-	public Object process(Object adapter, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutable parentEntityExecutable, HAPContextProcessor parentContext) {
-		HAPExecutableGroupDataAssociationForTask out = new HAPExecutableGroupDataAssociationForTask();
+	public void postProcess(HAPExecutableEntity adapterExe, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutableEntity parentEntityExecutable, HAPContextProcessor parentContext) {
+		HAPExecutableGroupDataAssociationForTask dataAssociationGroupExe = new HAPExecutableGroupDataAssociationForTask();
 		
-		HAPDefinitionEntityDataAssociationInteractive adapterDef = HAPUtilityDomain.getEntity(adapter, parentContext, HAPDefinitionEntityDataAssociationInteractive.class);
+		HAPDefinitionEntityDataAssociationInteractive adapterDef = HAPUtilityDomain.getEntity(adapterExe.getDefinitionEntityId(), parentContext, HAPDefinitionEntityDataAssociationInteractive.class);
 		HAPDefinitionGroupDataAssociationForTask dataAssociationGroup = adapterDef.getDataAssociation();
 		
 		HAPExecutableEntityComplex parentComplexEntityExe = (HAPExecutableEntityComplex)parentEntityExecutable;
@@ -47,7 +45,7 @@ public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPlug
 				new HAPContextStructureReferenceValueStructure(parentComplexEntityExe.getValueContext(), null, parentContext.getCurrentValueStructureDomain()),
 				new HAPContextStructureReferenceInteractiveRequest(interactiveExe.getRequestParms()),
 				parentContext.getRuntimeEnvironment());
-		out.setInDataAssociation(inExe);
+		dataAssociationGroupExe.setInDataAssociation(inExe);
 
 		//data association for result
 		Map<String, HAPDefinitionInteractiveResult> results = interactiveExe.getResults();
@@ -58,9 +56,8 @@ public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPlug
 					new HAPContextStructureReferenceValueStructure(parentComplexEntityExe.getValueContext(), null, parentContext.getCurrentValueStructureDomain()),
 					new HAPContextStructureReferenceInteractiveResult(results.get(resultName)),
 					parentContext.getRuntimeEnvironment());
-			out.addOutDataAssociation(resultName, outExe);
+			dataAssociationGroupExe.addOutDataAssociation(resultName, outExe);
 		}
-		
-		return out;
+		((HAPExecutableEntityDataAssociationInteractive)adapterExe).setDataAssciation(dataAssociationGroupExe);
 	}
 }

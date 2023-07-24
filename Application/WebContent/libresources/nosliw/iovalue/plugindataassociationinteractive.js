@@ -40,7 +40,7 @@ var node_createDataAssociationInteractiveAdapterPlugin = function(){
 
 var loc_createDataAssociationInteractiveAdapter = function(dataAssociationInteractive){
 	
-	var loc_dataAssociationInteractive = dataAssociationInteractive;
+	var loc_dataAssociationInteractive = dataAssociationInteractive.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSOCIATIONINTERACTIVE_ATTR_DATAASSOCIATION);
 	
 	var loc_out = {
 		
