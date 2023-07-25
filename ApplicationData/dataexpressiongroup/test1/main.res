@@ -82,12 +82,12 @@
 			},
 			{
 				"name" : "extensionVariable",
-				"status": "disabled",
+				"status": "disabled1",
 				"expression" : "!(test.string)!.subString(?(newVar)?,from:&(constantFrom)&,to:&(constantFrom)&)"
 			},
 			{
 				"name" : "reference",
-				"status": "disabled",
+				"status": "disabled1",
 				"expression1" : "<(dataexpressionsingle|#local1)>.with(localBase:?(baseVarNormal)?,localParm1:?(parm1)?,localParm2:?(parm2)?)",
 				"expression" : "<(dataexpressionsingle|#local1)>.with(localParm1:?(parm1)?,localParm2:?(parm2)?)"
 			}
