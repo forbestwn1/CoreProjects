@@ -16,6 +16,15 @@ import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutable1;
 
 public class HAPUtilityEntityExecutable {
 
+	public static boolean isAttributeLocal(HAPExecutableEntity parentEntity, String attributeName, HAPContextProcessor processContext) {
+		Object attrValue = parentEntity.getAttribute(attributeName).getValue().getValue();
+		if(attrValue instanceof HAPIdEntityInDomain) {
+			HAPInfoEntityInDomainExecutable entityInfo = processContext.getCurrentExecutableDomain().getEntityInfoExecutable((HAPIdEntityInDomain)attrValue);	
+			return entityInfo.isLocalEntity();
+		}
+		else  return true;
+	}
+	
 	//traverse only leaves that is local complex entity
 	public static void traverseExecutableLocalComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityExecutable processor, HAPContextProcessor processContext) {
 		traverseExecutableComplexEntityTree(

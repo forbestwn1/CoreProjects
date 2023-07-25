@@ -17,10 +17,20 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static Pair<HAPExecutable, HAPContextProcessor> resolveAttributeExecutableEntity(HAPExecutableEntity exeEntity, String attribute, HAPContextProcessor processContext){
+		Object attrValue = exeEntity.getAttributeEmbeded(attribute).getValue();
+		if(attrValue instanceof HAPIdEntityInDomain) {
+			Pair<HAPExecutableEntity, HAPContextProcessor> result = resolveExecutableEntityId((HAPIdEntityInDomain)attrValue, processContext);
+			return Pair.of(result.getLeft(), result.getRight());
+		}
+		else return Pair.of(exeEntity, processContext);
+	}
+	
 	public static Pair<HAPExecutableEntity, HAPContextProcessor> resolveExecutableEntityId(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext){
 		HAPExecutableEntity outExeEntity;
 		HAPContextProcessor outProcessorContext;
