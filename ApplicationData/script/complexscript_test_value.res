@@ -66,16 +66,17 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			});		
 		}
 
-
+/*
 		//extended variable
 		if(loc_extendVars!=undefined&&loc_extendVars.length>0){
 			_.each(loc_extendVars, function(extendVar, i){
 				var varInfo = {
-					variable : loc_valueContext.createVariableById(node_COMMONATRIBUTECONSTANT.EXECUTABLEVARIABLEEXPECTED_VARIABLEID)
+					variable : loc_valueContext.createVariableById(extendVar[node_COMMONATRIBUTECONSTANT.EXECUTABLEVARIABLEEXPECTED_VARIABLEID])
 				};
 				loc_variableInfos.push(varInfo);
 			});
 		}
+*/		
 	};
 
 	var loc_updateDataDisplay = function(varInfo){

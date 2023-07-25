@@ -187,8 +187,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		},
 
 		createVariableById : function(variableIdEntity){
-			var rootEleId = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVAIRALBE_ROOTELEMENTID];
-			var elePath = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVAIRALBE_ELEMENTPATH];
+			var rootEleId = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+			var elePath = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID_ELEMENTPATH];
 			var valueStructureId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
 			var rootName = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME];
 			return this.createVariable(valueStructureId, rootName, elePath);

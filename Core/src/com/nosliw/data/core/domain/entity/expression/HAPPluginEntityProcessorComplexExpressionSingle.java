@@ -58,8 +58,5 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 		
 		//build variable into within expression item
 		HAPUtilityExpressionProcessor.buildVariableInfoInExpression(complexEntityExecutableId, processContext);
-
 	}
-
-	
 }
