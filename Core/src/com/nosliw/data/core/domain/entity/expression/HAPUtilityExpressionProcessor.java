@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
@@ -104,7 +105,26 @@ public class HAPUtilityExpressionProcessor {
 			}
 		}
 	}
-	
+
+	//update value context according to vairable info
+	public static void updateValueContext(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
+		Map<HAPIdVariable, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
+		for(HAPIdVariable varId : variables.keySet()) {
+			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
+			HAPElementStructure structureEle = HAPUtilityValueContext.getStructureElement(varId, valueStructureDomain);
+			String eleType = structureEle.getType();
+			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
+				if(dataEle.getStatus().equals(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN)) {
+					if(!HAPUtilityBasic.isEquals(dataEle.getCriteria(), varCriteriaInfo.getCriteria())){
+						dataEle.setCriteria(varCriteriaInfo.getCriteria());
+						valueStructureDomain.setIsDirty(true);
+					}
+				}
+			}
+		}
+	}
+
 	public static void processConstant(HAPExecutableEntityComplex containerComplexEntity, HAPExecutableExpression expressionExe, HAPContextProcessor processContext) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
@@ -136,27 +156,6 @@ public class HAPUtilityExpressionProcessor {
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);
-				}
-				else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
-/*						
-					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-					//replace referenced variable name mapping
-					
-//					Triple<HAPDefinitionExpressionGroup1, HAPExecutableExpressionGroup, HAPComplexValueStructure> refEntityInfo = getComplexEntityByExecutableId(referenceOperand.getReferedExpression(), processContext);
-					HAPVariableInfoInStructure referenceExpContainer = HAPUtilityValueStructure.discoverDataVariablesDefinitionInStructure(refEntityInfo.getMiddle().getValueContextEntity(), processContext.getDomainContext().getValueStructureDomain());
-
-					Map<String, HAPWrapperOperand> mapping = referenceOperand.getMapping();
-					Map<String, HAPWrapperOperand> newMapping = new LinkedHashMap<String, HAPWrapperOperand>();
-					for(String refVarName : mapping.keySet()) {
-						HAPInfoVariable varInfo = referenceExpContainer.getVariableInfoByAlias(refVarName);
-						newMapping.put(varInfo.getIdPath().getFullName(), mapping.get(refVarName));
-					}
-					referenceOperand.setMapping(newMapping);
-					
-					//replace variable name in referenced expression
-//					replaceVarNameWithId((HAPExecutableExpressionGroupInSuite)referenceOperand.getReferedExpression());
-
-*/
 				}
 				return true;
 			}

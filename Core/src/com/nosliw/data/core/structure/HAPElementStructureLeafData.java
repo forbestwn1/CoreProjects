@@ -49,6 +49,10 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 
 	
 	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo==null?null:this.m_dataInfo.getCriteria();  }
+	public void setCriteria(HAPDataTypeCriteria criteria) {
+		if(this.m_dataInfo==null) 	this.m_dataInfo = new HAPVariableDataInfo();
+		this.m_dataInfo.setCriteria(criteria);;
+	}
 	
 	public HAPInfoCriteria getCriteriaInfo() {   return HAPInfoCriteria.buildCriteriaInfo(this.getCriteria(), this.getStatus());      }
 	

@@ -17,14 +17,11 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 	}
 
 	@Override
-	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-
+	public void preProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
-		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
 		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
-		HAPExecutableEntityValueContext valueContext = executableExpresion.getValueContext();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
@@ -35,17 +32,38 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 		//build expression in executable
 		executableExpresion.setExpression(new HAPExecutableExpression(definitionExpression.getExpression()));
 		
-		//process referenced expression
-		HAPUtilityExpressionProcessor.processReferencedExpression(complexEntityExecutableId, processContext);
-		
-		//process mapping in reference operand
-		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(complexEntityExecutableId, processContext);
-		
 		//build constant value for expression
 		HAPUtilityExpressionProcessor.processConstant(executableExpresion, executableExpresion.getExpression(), processContext);
 		
-		//replace variable name with id
+	}
+
+	//value context extension, variable resolve
+	@Override
+	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
+		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityValueContext valueContext = executableExpresion.getValueContext();
+		
+		//resolve variable name in mapping in reference operand
+		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(complexEntityExecutableId, processContext);
+		
+		//resolve variable name
 		HAPUtilityExpressionProcessor.resolveVariableName(executableExpresion.getExpression(), valueContext, executableExpresion.getVariablesInfo(), valueStructureDomain);
+		
+	}
+	
+	//matcher
+	@Override
+	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
+		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
+		
+		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		
+		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
 		
 		//build all variables info in expression group
 		HAPUtilityExpressionProcessor.buildVariableInfo(executableExpresion.getVariablesInfo(), valueStructureDomain);
@@ -54,7 +72,16 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 		if(HAPUtilityExpressionProcessConfigure.isDoDiscovery(defEntityInfo.getExtraInfo().getInfo())){
 			//do discovery
 			executableExpresion.discover(null, processContext.getRuntimeEnvironment().getDataTypeHelper(), processContext.getProcessTracker());
+		
+			//update value context according to variable info
+			HAPUtilityExpressionProcessor.updateValueContext(executableExpresion.getVariablesInfo(), valueStructureDomain);
 		}
+	}
+
+	@Override
+	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		//process referenced expression
+//		HAPUtilityExpressionProcessor.processReferencedExpression(complexEntityExecutableId, processContext);
 		
 		//build variable into within expression item
 		HAPUtilityExpressionProcessor.buildVariableInfoInExpression(complexEntityExecutableId, processContext);
