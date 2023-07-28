@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScriptImp implements HAPExecutableScriptWithSegment{
@@ -41,7 +41,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	public List<HAPExecutableScript> getSegments(){    return this.m_segs;     }
 
 	@Override
-	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup) {
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup) {
 		if(this.m_variableInfos==null) {
 			this.m_variableInfos = new HAPVariableInfoInStructure();
 			for(HAPExecutableScript seg : this.m_segs) {
@@ -55,7 +55,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	}
 
 	@Override
-	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup){
+	public Set<String> discoverVariables(HAPExecutableEntityExpressionDataGroup expressionGroup){
 		if(this.m_variables==null) {
 			this.m_variables = new HashSet<String>();
 			for(HAPExecutableScript seg : this.m_segs) {
@@ -68,7 +68,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 
 	
 	@Override
-	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionDataGroup expressionGroup) {
 		if(this.m_constantDefs==null) {
 			this.m_constantDefs = new LinkedHashMap<String, HAPDefinitionConstant>();
 			for(HAPExecutableScript seg : this.m_segs) {
@@ -81,7 +81,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 	}
 
 	@Override
-	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionGroup expressionGroup){
+	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionDataGroup expressionGroup){
 		if(this.m_expressionIds==null) {
 			this.m_expressionIds = new HashSet<String>();
 			for(HAPExecutableScript seg : this.m_segs) {

@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionSuite1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.resource.HAPEntityResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceDefinitionOrId;

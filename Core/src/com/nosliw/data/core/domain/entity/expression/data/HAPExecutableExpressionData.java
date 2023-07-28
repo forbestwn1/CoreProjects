@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -28,7 +28,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
+public class HAPExecutableExpressionData extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -45,12 +45,12 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
-	public HAPExecutableExpression(HAPDefinitionExpression expressionDef) {
+	public HAPExecutableExpressionData(HAPDefinitionExpressionData expressionDef) {
 		this.m_operand = expressionDef.getOperand().cloneWrapper();
 		expressionDef.cloneToEntityInfo(this);
 	}
 	
-	public HAPExecutableExpression(HAPWrapperOperand operand) {
+	public HAPExecutableExpressionData(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}
 	

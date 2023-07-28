@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
@@ -21,19 +21,19 @@ public abstract class HAPExecutableScriptImp extends HAPExecutableImp implements
 	public String getId() {   return this.m_id;  }
 
 	@Override
-	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup) {  return new HAPVariableInfoInStructure();  }
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup) {  return new HAPVariableInfoInStructure();  }
 
 	@Override
-	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup){  return new HashSet<String>();  }
+	public Set<String> discoverVariables(HAPExecutableEntityExpressionDataGroup expressionGroup){  return new HashSet<String>();  }
 	
 	@Override
-	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {  return new HashSet<HAPDefinitionConstant>(); }
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionDataGroup expressionGroup) {  return new HashSet<HAPDefinitionConstant>(); }
 	
 	@Override
 	public void updateConstant(Map<String, Object> value) {	}
 
 	@Override
-	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionGroup expressionGroup) {  return new HashSet<String>(); }
+	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionDataGroup expressionGroup) {  return new HashSet<String>(); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

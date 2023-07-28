@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
 
-public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
+public class HAPDefinitionExpressionData extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -22,10 +22,10 @@ public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
 	
 	private HAPWrapperOperand m_operand;
 
-	public HAPDefinitionExpression() {
+	public HAPDefinitionExpressionData() {
 	}
 
-	public HAPDefinitionExpression(String expression) {
+	public HAPDefinitionExpressionData(String expression) {
 		this.m_expression = expression;
 	}
 
@@ -34,8 +34,8 @@ public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
 	public HAPWrapperOperand getOperand() {    return this.m_operand;      }
 	public void setOperand(HAPOperand operand) {    this.m_operand = new HAPWrapperOperand(operand);     }
 	
-	public HAPDefinitionExpression cloneDefinitionExpression() {
-		HAPDefinitionExpression out = new HAPDefinitionExpression(this.m_expression);
+	public HAPDefinitionExpressionData cloneDefinitionExpression() {
+		HAPDefinitionExpressionData out = new HAPDefinitionExpressionData(this.m_expression);
 		out.m_operand = this.m_operand.cloneWrapper();
 		this.cloneToEntityInfo(out);
 		return out;
@@ -52,7 +52,7 @@ public class HAPDefinitionExpression extends HAPEntityInfoWritableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_expression = jsonObj.getString(HAPDefinitionExpression.EXPRESSION);
+		this.m_expression = jsonObj.getString(HAPDefinitionExpressionData.EXPRESSION);
 		return true;  
 	}
 }

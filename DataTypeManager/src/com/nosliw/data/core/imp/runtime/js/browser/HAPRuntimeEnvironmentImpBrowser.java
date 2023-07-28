@@ -11,7 +11,7 @@ import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
-import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;

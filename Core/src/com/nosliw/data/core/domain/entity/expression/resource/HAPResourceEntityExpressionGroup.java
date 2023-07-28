@@ -5,8 +5,8 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionData;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 
 //expressioin group resource
@@ -25,10 +25,10 @@ public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElemen
 	public HAPResourceEntityExpressionSuite getSuite() {   return (HAPResourceEntityExpressionSuite)this.getResourceContainer();  }
 
 	@Override
-	public Set<HAPDefinitionExpression> getEntityElements() {		return this.getExpressionGroupEntity().getEntityElements();	}
+	public Set<HAPDefinitionExpressionData> getEntityElements() {		return this.getExpressionGroupEntity().getEntityElements();	}
 
 	@Override
-	public HAPDefinitionExpression getEntityElement(String id) {  return this.getExpressionGroupEntity().getEntityElement(id);  }
+	public HAPDefinitionExpressionData getEntityElement(String id) {  return this.getExpressionGroupEntity().getEntityElement(id);  }
 
 	@Override
 	public HAPDefinitionEntityComponent cloneComponent() {
@@ -41,7 +41,7 @@ public class HAPResourceEntityExpressionGroup  extends HAPDefinitionEntityElemen
 	public HAPDefinitionExpressionGroup1 cloneExpressionGroupDefinition() { return (HAPDefinitionExpressionGroup1)cloneComponent();  }
 
 	@Override
-	public void addEntityElement(HAPDefinitionExpression entityElement) {
+	public void addEntityElement(HAPDefinitionExpressionData entityElement) {
 		// TODO Auto-generated method stub
 	}
 

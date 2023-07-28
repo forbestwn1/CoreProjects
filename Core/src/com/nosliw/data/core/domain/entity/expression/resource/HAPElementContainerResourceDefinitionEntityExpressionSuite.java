@@ -10,28 +10,28 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPElementInContainerEntityDefinitionImpComponent;
 import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionData;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionGroup1;
 
 //expression group within suite
 public class HAPElementContainerResourceDefinitionEntityExpressionSuite 
 		extends HAPElementInContainerEntityDefinitionImpComponent 
 		implements HAPDefinitionExpressionGroup1{
 
-	private Map<String, HAPDefinitionExpression> m_element;
+	private Map<String, HAPDefinitionExpressionData> m_element;
 	
 	public HAPElementContainerResourceDefinitionEntityExpressionSuite() {
-		this.m_element = new LinkedHashMap<String, HAPDefinitionExpression>();
+		this.m_element = new LinkedHashMap<String, HAPDefinitionExpressionData>();
 	}
 	
 	@Override
-	public Set<HAPDefinitionExpression> getEntityElements() {  return new HashSet<HAPDefinitionExpression>(this.m_element.values());  }
+	public Set<HAPDefinitionExpressionData> getEntityElements() {  return new HashSet<HAPDefinitionExpressionData>(this.m_element.values());  }
 
 	@Override
-	public HAPDefinitionExpression getEntityElement(String id) {  return this.m_element.get(id); }
+	public HAPDefinitionExpressionData getEntityElement(String id) {  return this.m_element.get(id); }
 
 	@Override
-	public void addEntityElement(HAPDefinitionExpression expression) {
+	public void addEntityElement(HAPDefinitionExpressionData expression) {
 		//validate id
 		HAPUtilityEntityInfo.processEntityId(expression);
 		this.m_element.put(expression.getId(), expression); 

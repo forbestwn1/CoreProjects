@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.domain.entity.expression.HAPParserExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserExpression;
 
 public class HAPImporterExpressionSuiteDefinition {
 

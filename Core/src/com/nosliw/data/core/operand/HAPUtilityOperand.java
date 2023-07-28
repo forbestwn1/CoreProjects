@@ -20,8 +20,8 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityOperand {
@@ -323,9 +323,9 @@ public class HAPUtilityOperand {
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
-						HAPExecutableEntityExpressionGroup refExpGroup = (HAPExecutableEntityExpressionGroup)referenceOperand.getReferedExpression();
-						Map<String, HAPExecutableExpression> expItems = refExpGroup.getAllExpressionItems();
-						for(HAPExecutableExpression expItem : expItems.values()) {
+						HAPExecutableEntityExpressionDataGroup refExpGroup = (HAPExecutableEntityExpressionDataGroup)referenceOperand.getReferedExpression();
+						Map<String, HAPExecutableExpressionData> expItems = refExpGroup.getAllExpressionItems();
+						for(HAPExecutableExpressionData expItem : expItems.values()) {
 							updateConstantData(expItem.getOperand(), refExpGroup.getDataConstants());
 						}
 					}

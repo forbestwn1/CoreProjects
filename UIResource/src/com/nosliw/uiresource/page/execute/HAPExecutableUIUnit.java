@@ -17,7 +17,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionSuite;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;

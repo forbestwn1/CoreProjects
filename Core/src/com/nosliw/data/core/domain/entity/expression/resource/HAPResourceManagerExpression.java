@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -25,7 +25,7 @@ public class HAPResourceManagerExpression  extends HAPResourceManagerImp{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPExecutableEntityExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null);
+		HAPExecutableEntityExpressionDataGroup expression = this.m_expressionMan.getExpression(resourceId, null);
 		if(expression==null)  return null;
 		Map<String, Object> info = new LinkedHashMap<String, Object>();
 		info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
@@ -34,7 +34,7 @@ public class HAPResourceManagerExpression  extends HAPResourceManagerImp{
 
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
-		HAPExecutableEntityExpressionGroup expression = this.m_expressionMan.getExpression(resourceId, null);
+		HAPExecutableEntityExpressionDataGroup expression = this.m_expressionMan.getExpression(resourceId, null);
 		return expression.getResourceDependency(runtimeInfo, this.m_rootResourceMan);
 	}
 }

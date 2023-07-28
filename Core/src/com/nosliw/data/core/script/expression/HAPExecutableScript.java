@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
@@ -22,14 +22,14 @@ public interface HAPExecutableScript extends HAPExecutable{
 
 	String getId();
 
-	HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup);
+	HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup);
 
-	Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup);
+	Set<String> discoverVariables(HAPExecutableEntityExpressionDataGroup expressionGroup);
 
-	Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup);
+	Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionDataGroup expressionGroup);
 	void updateConstant(Map<String, Object> value);
 
 	void updateVariableName(HAPUpdateName nameUpdate);
 	
-	Set<String> discoverExpressionReference(HAPExecutableEntityExpressionGroup expressionGroup);
+	Set<String> discoverExpressionReference(HAPExecutableEntityExpressionDataGroup expressionGroup);
 }

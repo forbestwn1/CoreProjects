@@ -10,7 +10,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
@@ -147,8 +146,6 @@ public class HAPManagerDomainEntityExecutable {
 
 	private void processBundle(HAPContextProcessor processContext) {
 		HAPExecutableBundle complexResourcePackage = processContext.getCurrentBundle();
-		HAPDomainEntityDefinitionGlobal defDomain = complexResourcePackage.getDefinitionDomain();
-		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourcePackage.getExecutableDomain();
 		
 		//build complex entity tree
 		HAPIdEntityInDomain rootEntityIdExe = (HAPIdEntityInDomain)buildExecutableTree(complexResourcePackage.getDefinitionRootEntityId(), processContext);
@@ -159,9 +156,6 @@ public class HAPManagerDomainEntityExecutable {
 		//process value structure
 		HAPUtilityValueStructureDomain.buildValueStructureDomain(rootEntityIdExe, processContext);
 		
-		//process root entity
-//		this.processComplexEntity(complexResourcePackage.getExecutableRootEntityId(), processContext);
-
 		HAPIdEntityInDomain exeEntityId = complexResourcePackage.getExecutableRootEntityId();
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
 			this.processComplexEntityInit(complexResourcePackage.getExecutableRootEntityId(), processContext);
@@ -445,46 +439,6 @@ public class HAPManagerDomainEntityExecutable {
 		return out;
 	}
 
-	
-	private HAPIdEntityInDomain buildExecutableTree1(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
-		HAPExecutableBundle complexResourceBundle = processContext.getCurrentBundle();
-		HAPDomainEntityDefinitionGlobal defDomain = complexResourceBundle.getDefinitionDomain();
-		HAPDomainEntityExecutableResourceComplex exeDomain = complexResourceBundle.getExecutableDomain();
-		
-		//create executable and add to domain
-		HAPIdEntityInDomain out = null;
-		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getEntityInfoDefinition(complexEntityDefinitionId);
-		if(entityDefInfo.isSolid()) {
-			HAPDefinitionEntityInDomainComplex complexEntityDef = (HAPDefinitionEntityInDomainComplex)entityDefInfo.getEntity();
-			String entityType = complexEntityDef.getEntityType();
-			HAPExecutableEntityComplex exeEntity = this.m_processorComplexEntityPlugins.get(entityType).newExecutable();
-			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
-			out = complexResourceBundle.addExecutableEntity(exeEntity, exeExtraInfo);
-			HAPExecutableEntityComplex complexEntityExe = exeDomain.getEntityInfoExecutable(out).getEntity();
-			
-			List<HAPAttributeEntityDefinition> attrsDef = complexEntityDef.getAttributes();
-			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
-				HAPEmbededDefinition embededAttributeDef = attrDef.getValue();
-				if(attrDef.getValueTypeInfo().getIsComplex()) {
-					HAPIdEntityInDomain attrEntityDefId = (HAPIdEntityInDomain)embededAttributeDef.getValue();
-					HAPIdEntityInDomain attrEntityExeId = buildExecutableTree(attrEntityDefId, processContext);
-					complexEntityExe.setAttribute(attrDef.getName(), new HAPEmbededExecutable(attrEntityExeId), attrDef.getValueTypeInfo());
-				}
-				else {
-					
-				}
-			}
-		}
-		else {
-			//for globle complex entity
-			HAPIdComplexEntityInGlobal globalId = getComplexEntityGolbalIdResourceId(entityDefInfo.getReferedResourceId());
-			HAPExtraInfoEntityInDomainExecutable exeExtraInfo = HAPUtilityDomain.buildExecutableExtraInfo(entityDefInfo);
-			out = complexResourceBundle.addExecutableEntity(globalId, exeExtraInfo);
-		}
-		
-		return out;
-	}
-	
 	//
 	private HAPIdComplexEntityInGlobal getComplexEntityGolbalIdResourceId(HAPResourceId resourceId) {
 		HAPInfoResourceIdNormalize normalizedResourceInfo = this.getResourceDefinitionManager().normalizeResourceId(resourceId);

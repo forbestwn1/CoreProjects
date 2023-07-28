@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute(baseName="EXPRESSION")
-public abstract class HAPExecutableEntityExpression extends HAPExecutableEntityComplex{
+public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEntityComplex{
 
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
@@ -18,9 +18,9 @@ public abstract class HAPExecutableEntityExpression extends HAPExecutableEntityC
 	@HAPAttribute
 	public static final String ATTRIBUTESREFERENCE = "referenceAttribute";
 	
-	public abstract List<HAPExecutableExpression> getAllExpressionItems();
+	public abstract List<HAPExecutableExpressionData> getAllExpressionItems();
 
-	public HAPExecutableEntityExpression() {
+	public HAPExecutableEntityExpressionData() {
 		this.setAttributeValueObject(ATTRIBUTESREFERENCE, new HashSet<String>());
 	}
 

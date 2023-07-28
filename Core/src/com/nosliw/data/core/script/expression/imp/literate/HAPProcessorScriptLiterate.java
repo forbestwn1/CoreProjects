@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPScript;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;

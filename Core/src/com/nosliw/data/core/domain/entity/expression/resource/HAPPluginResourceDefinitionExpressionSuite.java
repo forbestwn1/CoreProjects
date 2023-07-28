@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoComplexEntityDefinition;
 import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.domain.entity.expression.HAPParserExpressionDefinition;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserExpressionDefinition;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.task.HAPManagerTask;
 

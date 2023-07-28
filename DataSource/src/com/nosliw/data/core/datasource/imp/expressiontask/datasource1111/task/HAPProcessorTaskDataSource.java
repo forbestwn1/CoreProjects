@@ -35,7 +35,7 @@ public class HAPProcessorTaskDataSource implements HAPProcessorTask{
 		HAPExecutableTaskDataSource out = new HAPExecutableTaskDataSource(this.m_dataSourceDefMan.getDataSourceDefinition(dataSourceTaskDef.getDataSource()));
 	
 		//parms
-		Map<String, HAPDefinitionExpression> parmsDef = dataSourceTaskDef.getParmsDef();
+		Map<String, HAPDefinitionExpressionData> parmsDef = dataSourceTaskDef.getParmsDef();
 		HAPDefinition dataSourceDefintion = out.getDataSourceDefinition();
 		for(String dsParm : dataSourceDefintion.getParms().keySet()) {
 			if(parmsDef.get(dsParm)!=null) {

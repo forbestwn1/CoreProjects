@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
@@ -96,14 +96,14 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 	@Override
 	public List<HAPExecutableScript> getSegments(){    return this.m_script.getSegments();     }
 	@Override
-	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionGroup expressionGroup) {return this.m_script.discoverVariablesInfo1(expressionGroup);}
+	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup) {return this.m_script.discoverVariablesInfo1(expressionGroup);}
 	@Override
-	public Set<String> discoverVariables(HAPExecutableEntityExpressionGroup expressionGroup) {  return this.m_script.discoverVariables(expressionGroup); }
+	public Set<String> discoverVariables(HAPExecutableEntityExpressionDataGroup expressionGroup) {  return this.m_script.discoverVariables(expressionGroup); }
 
 	@Override
-	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionGroup expressionGroup) {	return this.m_script.discoverConstantsDefinition(expressionGroup);	}
+	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionDataGroup expressionGroup) {	return this.m_script.discoverConstantsDefinition(expressionGroup);	}
 	@Override
-	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionGroup expressionGroup){	return this.m_script.discoverExpressionReference(expressionGroup);	}
+	public Set<String> discoverExpressionReference(HAPExecutableEntityExpressionDataGroup expressionGroup){	return this.m_script.discoverExpressionReference(expressionGroup);	}
 
 	@Override
 	public void updateConstant(Map<String, Object> value) {  this.m_script.updateConstant(value);  }

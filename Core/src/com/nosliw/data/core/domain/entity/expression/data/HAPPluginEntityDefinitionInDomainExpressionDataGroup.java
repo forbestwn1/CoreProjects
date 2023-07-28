@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,27 +9,27 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
+public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
 
-	public HAPPluginEntityDefinitionInDomainExpressionGroup(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityExpressionGroup.class, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainExpressionDataGroup(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityExpressionDataGroup.class, runtimeEnv);
 	}
 
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
-		HAPDefinitionEntityExpressionGroup expressionGroupEntity = (HAPDefinitionEntityExpressionGroup)this.getEntity(entityId, parserContext);
+		HAPDefinitionEntityExpressionDataGroup expressionGroupEntity = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(entityId, parserContext);
 		
 		//parse expression items
 		this.parseExpressionDefinitionList(entityId, expressionGroupEntity, jsonObj, parserContext);
 	}
 
-	private void parseExpressionDefinitionList(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
+	private void parseExpressionDefinitionList(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionDataGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
 		HAPParserExpression expressionParser = this.getRuntimeEnvironment().getExpressionManager().getExpressionParser();
-		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionGroup.ELEMENT);
+		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionDataGroup.ELEMENT);
 		if(eleArrayJson!=null) {
 			for(int i=0; i<eleArrayJson.length(); i++) {
 				JSONObject expressionJsonObj = eleArrayJson.getJSONObject(i);
-				Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpression.EXPRESSION);
+				Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpressionData.EXPRESSION);
 				if(expressionObj!=null) {
 					//process
 					expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionJsonObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));
@@ -41,7 +41,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionGroup extends HAPPluginE
 			}
 		}
 		else {
-			Object expressionObj = jsonObj.opt(HAPDefinitionExpression.EXPRESSION);
+			Object expressionObj = jsonObj.opt(HAPDefinitionExpressionData.EXPRESSION);
 			if(expressionObj!=null) {
 				//process
 				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));

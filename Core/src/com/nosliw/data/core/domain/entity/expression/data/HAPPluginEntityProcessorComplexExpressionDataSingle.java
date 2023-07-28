@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
@@ -10,10 +10,10 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 
-public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEntityProcessorComplexImp{
+public class HAPPluginEntityProcessorComplexExpressionDataSingle extends HAPPluginEntityProcessorComplexImp{
 
-	public HAPPluginEntityProcessorComplexExpressionSingle() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPExecutableEntityExpressionSingle.class);
+	public HAPPluginEntityProcessorComplexExpressionDataSingle() {
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPExecutableEntityExpressionDataSingle.class);
 	}
 
 	@Override
@@ -21,16 +21,16 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
-		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityExpressionDataSingle executableExpresion = (HAPExecutableEntityExpressionDataSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
-		HAPDefinitionEntityExpressionSingle definitionExpression = (HAPDefinitionEntityExpressionSingle)defEntityInfo.getEntity();
+		HAPDefinitionEntityExpressionDataSingle definitionExpression = (HAPDefinitionEntityExpressionDataSingle)defEntityInfo.getEntity();
 
 		HAPUtilityExpressionProcessor.buildEntityExpressionExe(executableExpresion, definitionExpression);
 		
 		//build expression in executable
-		executableExpresion.setExpression(new HAPExecutableExpression(definitionExpression.getExpression()));
+		executableExpresion.setExpression(new HAPExecutableExpressionData(definitionExpression.getExpression()));
 		
 		//build constant value for expression
 		HAPUtilityExpressionProcessor.processConstant(executableExpresion, executableExpresion.getExpression(), processContext);
@@ -42,7 +42,7 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
-		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityExpressionDataSingle executableExpresion = (HAPExecutableEntityExpressionDataSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		HAPExecutableEntityValueContext valueContext = executableExpresion.getValueContext();
 		
 		//resolve variable name
@@ -57,7 +57,7 @@ public class HAPPluginEntityProcessorComplexExpressionSingle extends HAPPluginEn
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPExecutableEntityExpressionSingle executableExpresion = (HAPExecutableEntityExpressionSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityExpressionDataSingle executableExpresion = (HAPExecutableEntityExpressionDataSingle)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);

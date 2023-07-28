@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
 import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPScriptFunctionInfo;
 import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
@@ -41,7 +41,7 @@ public class HAPInfoRuntimeTaskScript{
 	public HAPScriptFunctionInfo getScriptFunction() {
 		return HAPUtilityScriptForExecuteJSScript.buildFunctionInfo(this.m_scriptGroup.getScript(m_scriptId));
 	}
-	public Map<String, HAPExecutableExpression> getExpressionItems(){  return this.m_scriptGroup.getExpression().getAllExpressionItems(); }
+	public Map<String, HAPExecutableExpressionData> getExpressionItems(){  return this.m_scriptGroup.getExpression().getAllExpressionItems(); }
 	public Map<String, Object> getVariablesValue(){  return this.m_variablesValue;  }
 	public Map<String, Object> getConstantsValue(){  return new LinkedHashMap<String, Object>();  }
 

@@ -7,8 +7,8 @@ import java.util.Map;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionExpressionGroup1;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionData;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionGroup1;
 import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression.HAPExecutableScript;
 import com.nosliw.data.core.script.expression.HAPScript;
@@ -45,7 +45,7 @@ public class HAPProcessorScriptExpression {
 			String scriptType = scriptSeg.getType();
 			String scriptId = id+"_"+j;
 			if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
-				HAPDefinitionExpression expressionItem = new HAPDefinitionExpression(scriptSeg.getScript());
+				HAPDefinitionExpressionData expressionItem = new HAPDefinitionExpressionData(scriptSeg.getScript());
 				expressionItem.setName(scriptId);
 				expressionGroup.addEntityElement(expressionItem);
 				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));

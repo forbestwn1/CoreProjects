@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.Map;
 
@@ -47,9 +47,9 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		return expressionDef;
 	}
 	
-	public HAPExecutableEntityExpressionGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
-		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
+	public HAPExecutableEntityExpressionDataGroup getExpression(String expression, Map<String, HAPDataTypeCriteria> varCriteria) {
+		HAPDefinitionExpressionData expressionDef = new HAPDefinitionExpressionData(expression);
+		HAPDefinitionEntityExpressionDataGroup expressionGroupDef = new HAPDefinitionEntityExpressionDataGroup();
 		HAPValueStructureDefinitionFlat valueStructure = new HAPValueStructureDefinitionFlat();
 		if(varCriteria!=null) {
 			for(String varName : varCriteria.keySet()) {
@@ -60,18 +60,18 @@ public class HAPManagerExpression extends HAPManagerResourceComplexEntity{
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableEntityExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionDataGroup out = HAPPluginEntityDefinitionInDomainExpressionDataGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 
-	public HAPExecutableEntityExpressionGroup getExpression(String expression) {
-		HAPDefinitionExpression expressionDef = new HAPDefinitionExpression(expression);
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
+	public HAPExecutableEntityExpressionDataGroup getExpression(String expression) {
+		HAPDefinitionExpressionData expressionDef = new HAPDefinitionExpressionData(expression);
+		HAPDefinitionEntityExpressionDataGroup expressionGroupDef = new HAPDefinitionEntityExpressionDataGroup();
 		HAPUtilityWithValueStructure.setValueStructure(expressionGroupDef, new HAPValueStructureDefinitionFlat());
 		expressionGroupDef.addExpression(expressionDef);
 		
 		HAPProcessTracker processTracker = new HAPProcessTracker();
-		HAPExecutableEntityExpressionGroup out = HAPPluginEntityDefinitionInDomainExpressionGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionDataGroup out = HAPPluginEntityDefinitionInDomainExpressionDataGroup.process(null, expressionGroupDef, new HAPContextProcessor(null, this.m_runtimeEnv), null, HAPUtilityExpressionProcessConfigure.setDontDiscovery(null), this.m_runtimeEnv, processTracker);
 		return out;
 	}
 	

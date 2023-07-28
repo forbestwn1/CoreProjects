@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.Map;
 
@@ -54,7 +54,7 @@ public class HAPUtilityExpressionComponent {
 	}
 
 	private static HAPDefinitionExpressionGroup1 buildExpressionGroup(HAPAttachment attachment) {
-		HAPDefinitionEntityExpressionGroup out = new HAPDefinitionEntityExpressionGroup();
+		HAPDefinitionEntityExpressionDataGroup out = new HAPDefinitionEntityExpressionDataGroup();
 		attachment.cloneToEntityInfo(out);
 		if(HAPConstantShared.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
 			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;

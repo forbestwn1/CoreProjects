@@ -8,11 +8,11 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPContextProcessAttachmentReferenceExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPManagerExpression;
-import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPContextProcessAttachmentReferenceExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression.imp.literate.HAPProcessorScriptLiterate;
@@ -72,7 +72,7 @@ public class HAPProcessorScript2 {
 		Map<String, Object> constantsValue = HAPUtilityComplexConstant.getConstantsValue(scriptGroupDef, out.getValueStructureFlat());
 		
 		//expression definition containing all expression in script 
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
+		HAPDefinitionEntityExpressionDataGroup expressionGroupDef = new HAPDefinitionEntityExpressionDataGroup();
 		expressionGroupDef.setValueContext(contextStructure);
 
 		//constant --- discover constant from attachment and context
@@ -106,7 +106,7 @@ public class HAPProcessorScript2 {
 			i++;
 		}
 		
-		HAPExecutableEntityExpressionGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionGroup.process(id, expressionGroupDef, processContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionDataGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionDataGroup.process(id, expressionGroupDef, processContext, null, null, expressionMan, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {

@@ -11,9 +11,9 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
-import com.nosliw.data.core.domain.entity.expression.HAPDefinitionEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPExecutableEntityExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.HAPPluginEntityDefinitionInDomainExpressionGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression.imp.expression.HAPProcessorScriptExpression;
@@ -64,7 +64,7 @@ public class HAPProcessorScript {
 		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//expression definition containing all expression in script 
-		HAPDefinitionEntityExpressionGroup expressionGroupDef = new HAPDefinitionEntityExpressionGroup();
+		HAPDefinitionEntityExpressionDataGroup expressionGroupDef = new HAPDefinitionEntityExpressionDataGroup();
 		//value structure for expression
 		expressionGroupDef.setValueStructureWrapper(valueStructureWrapper);
 		//data constant for expression
@@ -118,7 +118,7 @@ public class HAPProcessorScript {
 			i++;
 		}
 		
-		HAPExecutableEntityExpressionGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionGroup.process(id, expressionGroupDef, processContext, null, configure, runtimeEnv, processTracker);
+		HAPExecutableEntityExpressionDataGroup expressionExe = HAPPluginEntityDefinitionInDomainExpressionDataGroup.process(id, expressionGroupDef, processContext, null, configure, runtimeEnv, processTracker);
 		out.setExpression(expressionExe);
 		
 		for(HAPExecutableScriptEntity script : out.getScripts()) {

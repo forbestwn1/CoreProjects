@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,17 +7,17 @@ import java.util.Set;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
-public abstract class HAPDefinitionEntityExpression extends HAPDefinitionEntityInDomainComplex{
+public abstract class HAPDefinitionEntityExpressionData extends HAPDefinitionEntityInDomainComplex{
 
 	public static final String ATTR_INDEX_ID = "idIndex";
 	
 	public static final String ATTR_ATTRIBUTES_REFERENCE = "referenceAttribute";
 	
-	public HAPDefinitionEntityExpression() {
+	public HAPDefinitionEntityExpressionData() {
 		this.setAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
 	}
 
-	public abstract List<HAPDefinitionExpression> getAllExpressionItems();
+	public abstract List<HAPDefinitionExpressionData> getAllExpressionItems();
 	
 	//add referenced expression as attribute so that it can be processed under complex entity framework
 	//return attribute name

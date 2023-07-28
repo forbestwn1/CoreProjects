@@ -23,10 +23,10 @@ public class HAPDefinitionTaskDataSource extends HAPDefinitionTask{
 	
 	private String m_dataSource;
 	
-	private Map<String, HAPDefinitionExpression> m_parmsDef;
+	private Map<String, HAPDefinitionExpressionData> m_parmsDef;
 	
 	public HAPDefinitionTaskDataSource() {
-		this.m_parmsDef = new LinkedHashMap<String, HAPDefinitionExpression>();
+		this.m_parmsDef = new LinkedHashMap<String, HAPDefinitionExpressionData>();
 	}
 	
 	public HAPDefinitionTaskDataSource(String dataSource) {
@@ -38,7 +38,7 @@ public class HAPDefinitionTaskDataSource extends HAPDefinitionTask{
 	public String getType() {	return HAPConstant.DATATASK_TYPE_DATASOURCE;	}
 
 	public String getDataSource() {   return this.m_dataSource;    }
-	public Map<String, HAPDefinitionExpression> getParmsDef(){   return this.m_parmsDef;   }
+	public Map<String, HAPDefinitionExpressionData> getParmsDef(){   return this.m_parmsDef;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -55,7 +55,7 @@ public class HAPDefinitionTaskDataSource extends HAPDefinitionTask{
 					while(its.hasNext()){
 						String name = its.next();
 						String parmDef = parmsObj.getString(name);
-						this.m_parmsDef.put(name, new HAPDefinitionExpression(parmDef));
+						this.m_parmsDef.put(name, new HAPDefinitionExpressionData(parmDef));
 					}
 				}
 			}

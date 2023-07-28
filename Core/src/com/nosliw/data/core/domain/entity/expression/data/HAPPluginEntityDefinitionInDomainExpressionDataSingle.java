@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression;
+package com.nosliw.data.core.domain.entity.expression.data;
 
 import org.json.JSONObject;
 
@@ -8,16 +8,16 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainExpressionSingle extends HAPPluginEntityDefinitionInDomainImpComplex{
+public class HAPPluginEntityDefinitionInDomainExpressionDataSingle extends HAPPluginEntityDefinitionInDomainImpComplex{
 
-	public HAPPluginEntityDefinitionInDomainExpressionSingle(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPDefinitionEntityExpressionSingle.class, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainExpressionDataSingle(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPDefinitionEntityExpressionDataSingle.class, runtimeEnv);
 	}
 
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
-		HAPDefinitionEntityExpressionSingle expressionEntity = (HAPDefinitionEntityExpressionSingle)this.getEntity(entityId, parserContext);
-		String expression = jsonObj.getString(HAPDefinitionEntityExpressionSingle.ATTR_EXPRESSION);
+		HAPDefinitionEntityExpressionDataSingle expressionEntity = (HAPDefinitionEntityExpressionDataSingle)this.getEntity(entityId, parserContext);
+		String expression = jsonObj.getString(HAPDefinitionEntityExpressionDataSingle.ATTR_EXPRESSION);
 		expressionEntity.setExpression(HAPParserExpressionDefinition.parseExpressionDefinition(
 				expression, 
 				parserContext, 

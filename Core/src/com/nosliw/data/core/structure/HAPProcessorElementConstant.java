@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.entity.expression.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
