@@ -88,7 +88,7 @@ public class HAPProcessorComponent {
 	
 	public static void processCommand(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionCommand command : definition.getCommands()) {
-			HAPExecutableCommand commandExe = HAPProcessorCommand.process(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPExecutableCommand commandExe = HAPProcessorCommand.processAttribute(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
 			executable.addCommand(commandExe);
 		}
 	}

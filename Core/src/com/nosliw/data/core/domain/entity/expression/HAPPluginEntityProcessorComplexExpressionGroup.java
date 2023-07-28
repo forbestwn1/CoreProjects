@@ -46,7 +46,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 	}
 
 	@Override
-	public void preProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
@@ -69,16 +69,13 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 	//value context extension, variable resolve
 	@Override
 	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		//process mapping in reference operand
-		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(complexEntityExecutableId, processContext);
-		
 		//resolve variable name
 		resolveVariableName(complexEntityExecutableId, processContext);
 	}
 	
 	//matcher
 	@Override
-	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void postProcessValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
@@ -91,6 +88,9 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 		//build all variables info in expression group
 		HAPUtilityExpressionProcessor.buildVariableInfo(executableExpresionGroup.getVariablesInfo(), valueStructureDomain);
 		
+		//process mapping in reference operand
+		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(complexEntityExecutableId, processContext);
+		
 		//discovery
 		if(HAPUtilityExpressionProcessConfigure.isDoDiscovery(defEntityInfo.getExtraInfo().getInfo())){
 			//do discovery
@@ -102,7 +102,7 @@ public class HAPPluginEntityProcessorComplexExpressionGroup extends HAPPluginEnt
 	}
 	
 	@Override
-	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 
 		//process referenced expression
 //		HAPUtilityExpressionProcessor.processReferencedExpression(complexEntityExecutableId, processContext);

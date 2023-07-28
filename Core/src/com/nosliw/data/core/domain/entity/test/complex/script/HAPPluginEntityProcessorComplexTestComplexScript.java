@@ -39,7 +39,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 
 	@Override
-	public void preProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
@@ -68,7 +68,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 	
 	@Override
-	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();

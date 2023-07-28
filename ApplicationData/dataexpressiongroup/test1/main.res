@@ -52,44 +52,44 @@
 		"element": [
 			{
 				"name" : "normal_cleardatatype",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "normal_implieddatatype",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "?(baseVarNormal)?.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "normal_impliedbase",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "constant_embeded",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "&(#test##string___012345678901234567890)&.subString(from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
 				"name" : "constant_attachment",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "&(constantBase)&.subString(from:&(constantFrom)&,to:&(constantTo)&)"
 			},
 			{
 				"name" : "matcher",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(?(baseVarMatcher)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
-				"name" : "extensionVariable",
-				"status": "disabled1",
-				"expression" : "!(test.string)!.subString(?(newVar)?,from:&(constantFrom)&,to:&(constantFrom)&)"
-			},
-			{
 				"name" : "reference",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression1" : "<(dataexpressionsingle|#local1)>.with(localBase:?(baseVarNormal)?,localParm1:?(parm1)?,localParm2:?(parm2)?)",
 				"expression" : "<(dataexpressionsingle|#local1)>.with(localParm1:?(parm1)?,localParm2:?(parm2)?)"
+			},
+			{
+				"name" : "reference_extensionVariable",
+				"status": "disabled1",
+				"expression" : "<(dataexpressionsingle|#local_extension)>.with(newBase:?(baseVarNormal)?,newFrom:?(parm1)?,newTo:?(parm2)?)"
 			}
 		],
 		"attachment": {

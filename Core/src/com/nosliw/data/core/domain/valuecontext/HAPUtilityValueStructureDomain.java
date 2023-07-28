@@ -86,7 +86,7 @@ public class HAPUtilityValueStructureDomain {
 			}
 
 			@Override
-			public boolean process(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
 				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
 				process(parentComplexEntity.getComplexEntityAttributeValue(attribute));
 				return true;
@@ -115,7 +115,7 @@ public class HAPUtilityValueStructureDomain {
 			}
 
 			@Override
-			public boolean process(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
 				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
 
 				HAPExecutableBundle bundleExe = processContext.getCurrentBundle();
@@ -148,7 +148,7 @@ public class HAPUtilityValueStructureDomain {
 			public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {	}
 
 			@Override
-			public boolean process(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
 				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
 
 				HAPExecutableBundle bundleExe = processContext.getCurrentBundle();

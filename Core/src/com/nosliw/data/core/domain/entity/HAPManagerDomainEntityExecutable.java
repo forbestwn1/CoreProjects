@@ -89,7 +89,7 @@ public class HAPManagerDomainEntityExecutable {
 		//only process local entity
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
 			HAPPluginEntityProcessorComplex processPlugin = this.m_processorComplexEntityPlugins.get(exeEntityId.getEntityType());
-			processPlugin.postProcess(exeEntityId, processContext);
+			processPlugin.process(exeEntityId, processContext);
 		}
 	}
 	
@@ -160,11 +160,11 @@ public class HAPManagerDomainEntityExecutable {
 		HAPUtilityValueStructureDomain.buildValueStructureDomain(rootEntityIdExe, processContext);
 		
 		//process root entity
-		this.processComplexEntity(complexResourcePackage.getExecutableRootEntityId(), processContext);
+//		this.processComplexEntity(complexResourcePackage.getExecutableRootEntityId(), processContext);
 
 		HAPIdEntityInDomain exeEntityId = complexResourcePackage.getExecutableRootEntityId();
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
-			this.processComplexEntityPre(complexResourcePackage.getExecutableRootEntityId(), processContext);
+			this.processComplexEntityInit(complexResourcePackage.getExecutableRootEntityId(), processContext);
 		
 			this.processComplexEntityValueContextExtension(complexResourcePackage.getExecutableRootEntityId(), processContext);
 		
@@ -174,36 +174,49 @@ public class HAPManagerDomainEntityExecutable {
 				this.processComplexEntityValueContextDiscovery(complexResourcePackage.getExecutableRootEntityId(), processContext);
 			}while(valueContextDomain.getIsDirty()==true);
 		
-			this.processComplexEntityPost(complexResourcePackage.getExecutableRootEntityId(), processContext);
+			this.processComplexEntityProcess(complexResourcePackage.getExecutableRootEntityId(), processContext);
 		}
 	}
 
-	private void processComplexEntityPre(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	private void processComplexEntityInit(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntityExecutableId, 
 			new HAPProcessorEntityExecutable() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(entityId.getEntityType()).preProcess(entityId, processContext);
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).init(entityId, processContext);
 				}
 
 				@Override
-				public boolean process(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
 					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
 					String entityType = attr.getValueTypeInfo().getValueType();
-					HAPExecutableEntity attrEntity;
 					
 					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
 						//only process local entity 
 						if(attr.getValueTypeInfo().getIsComplex()) {
 							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
-							attrEntity = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(attrEntityId).getEntity();
-							m_processorComplexEntityPlugins.get(entityType).preProcess(attrEntityId, processContext);
+							m_processorComplexEntityPlugins.get(entityType).init(attrEntityId, processContext);
 						}
 						else {
-							attrEntity = (HAPExecutableEntity)attr.getValue().getValue();
+							HAPExecutableEntity attrEntity = (HAPExecutableEntity)attr.getValue().getValue();
 							m_processorSimpleEntityPlugins.get(entityType).process(attrEntity, processContext);
+						}
+					}
+					return true;
+				}
+
+				@Override
+				public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
+					String entityType = attr.getValueTypeInfo().getValueType();
+					
+					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
+						//only process local entity 
+						if(attr.getValueTypeInfo().getIsComplex()) {
+							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
+							m_processorComplexEntityPlugins.get(entityType).postInit(attrEntityId, processContext);
 						}
 					}
 					
@@ -212,7 +225,11 @@ public class HAPManagerDomainEntityExecutable {
 					for(HAPInfoAdapterExecutable adpater : attr.getValue().getExecutableAdapters()) {
 						m_processorAdapterPlugins.get(adpater.getValueType()).preProcess(adpater.getExecutableEntityValue(), attributeResolved.getLeft(), attributeResolved.getRight(), parentEntity, processContext);
 					}
-					return true;
+				}
+
+				@Override
+				public void postProcessComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).postInit(entityId, processContext);
 				}
 			}, 
 			processContext);
@@ -229,19 +246,28 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public boolean process(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
 					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
 					String entityType = attr.getValueTypeInfo().getValueType();
-					HAPExecutableEntity attrEntity;
 
 					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
 						if(attr.getValueTypeInfo().getIsComplex()) {
 							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
-							attrEntity = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(attrEntityId).getEntity();
 							m_processorComplexEntityPlugins.get(entityType).processValueContextExtension(attrEntityId, processContext);
 						}
-						else {
-							attrEntity = (HAPExecutableEntity)attr.getValue().getValue();
+					}
+					return true;
+				}
+
+				@Override
+				public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
+					String entityType = attr.getValueTypeInfo().getValueType();
+
+					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
+						if(attr.getValueTypeInfo().getIsComplex()) {
+							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
+							m_processorComplexEntityPlugins.get(entityType).postProcessValueContextExtension(attrEntityId, processContext);
 						}
 					}
 					
@@ -250,7 +276,11 @@ public class HAPManagerDomainEntityExecutable {
 					for(HAPInfoAdapterExecutable adpater : attr.getValue().getExecutableAdapters()) {
 						m_processorAdapterPlugins.get(adpater.getValueType()).processValueContextExtension(adpater.getExecutableEntityValue(), attributeResolved.getLeft(), attributeResolved.getRight(), parentEntity, processContext);
 					}
-					return true;
+				}
+
+				@Override
+				public void postProcessComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).postProcessValueContextExtension(entityId, processContext);
 				}
 			}, 
 			processContext);
@@ -267,19 +297,28 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public boolean process(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
 					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
 					String entityType = attr.getValueTypeInfo().getValueType();
-					HAPExecutableEntity attrEntity;
 
 					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
 						if(attr.getValueTypeInfo().getIsComplex()) {
 							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
-							attrEntity = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(attrEntityId).getEntity();
 							m_processorComplexEntityPlugins.get(entityType).processValueContextDiscovery(attrEntityId, processContext);
 						}
-						else {
-							attrEntity = (HAPExecutableEntity)attr.getValue().getValue();
+					}
+					return true;
+				}
+
+				@Override
+				public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
+					String entityType = attr.getValueTypeInfo().getValueType();
+
+					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
+						if(attr.getValueTypeInfo().getIsComplex()) {
+							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
+							m_processorComplexEntityPlugins.get(entityType).postProcessValueContextDiscovery(attrEntityId, processContext);
 						}
 					}
 					
@@ -288,36 +327,49 @@ public class HAPManagerDomainEntityExecutable {
 					for(HAPInfoAdapterExecutable adpater : attr.getValue().getExecutableAdapters()) {
 						m_processorAdapterPlugins.get(adpater.getValueType()).processValueContextDiscovery(adpater.getExecutableEntityValue(), attributeResolved.getLeft(), attributeResolved.getRight(), parentEntity, processContext);
 					}
-					return true;
+				}
+
+				@Override
+				public void postProcessComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).postProcessValueContextDiscovery(entityId, processContext);
 				}
 			}, 
 			processContext);
 	}
 
-	private void processComplexEntityPost(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	private void processComplexEntityProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 			complexEntityExecutableId, 
 			new HAPProcessorEntityExecutable() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(entityId.getEntityType()).postProcess(entityId, processContext);
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).process(entityId, processContext);
 				}
 
 				@Override
-				public boolean process(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
 					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
 					String entityType = attr.getValueTypeInfo().getValueType();
-					HAPExecutableEntity attrEntity;
 
 					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
 						if(attr.getValueTypeInfo().getIsComplex()) {
 							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
-							attrEntity = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(attrEntityId).getEntity();
-							m_processorComplexEntityPlugins.get(entityType).postProcess(attrEntityId, processContext);
+							m_processorComplexEntityPlugins.get(entityType).process(attrEntityId, processContext);
 						}
-						else {
-							attrEntity = (HAPExecutableEntity)attr.getValue().getValue();
+					}
+					return true;
+				}
+
+				@Override
+				public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+					HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
+					String entityType = attr.getValueTypeInfo().getValueType();
+
+					if(HAPUtilityEntityExecutable.isAttributeLocal(parentEntity, attribute, processContext)) {
+						if(attr.getValueTypeInfo().getIsComplex()) {
+							HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attr.getValue().getValue();
+							m_processorComplexEntityPlugins.get(entityType).postProcess(attrEntityId, processContext);
 						}
 					}
 
@@ -326,7 +378,11 @@ public class HAPManagerDomainEntityExecutable {
 					for(HAPInfoAdapterExecutable adpater : attr.getValue().getExecutableAdapters()) {
 						m_processorAdapterPlugins.get(adpater.getValueType()).postProcess(adpater.getExecutableEntityValue(), attributeResolved.getLeft(), attributeResolved.getRight(), parentEntity, processContext);
 					}
-					return true;
+				}
+
+				@Override
+				public void postProcessComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(entityId.getEntityType()).postProcess(entityId, processContext);
 				}
 			}, 
 			processContext);

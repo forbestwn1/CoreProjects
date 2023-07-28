@@ -62,7 +62,7 @@ public class HAPProcessorCompile {
 
 		//child tag
 		for(HAPExecutableUITag childTag : body.getUITags()) {
-			process(childTag, exeUnit.getUIUnitDefinition(), runtimeEnv);			
+			processAttribute(childTag, exeUnit.getUIUnitDefinition(), runtimeEnv);			
 		}
 		
 	}

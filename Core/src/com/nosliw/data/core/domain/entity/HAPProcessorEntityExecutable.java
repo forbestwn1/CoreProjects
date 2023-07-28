@@ -7,7 +7,12 @@ public abstract class HAPProcessorEntityExecutable {
 	
 	public abstract void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext);
 	
+	//process attribute under entity
 	//return true: continue process, false: not
-	public abstract boolean process(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext);
+	public abstract boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext);
 	
+	//after process attribute
+	public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {}
+	
+	public void postProcessComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {}
 }

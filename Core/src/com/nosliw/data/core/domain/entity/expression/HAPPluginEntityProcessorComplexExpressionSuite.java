@@ -12,7 +12,7 @@ public class HAPPluginEntityProcessorComplexExpressionSuite extends HAPPluginEnt
 	}
 
 	@Override
-	public void postProcess(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
+	public void process(HAPIdEntityInDomain complexEntityDefinitionId, HAPContextProcessor processContext) {
 	}
 
 }
