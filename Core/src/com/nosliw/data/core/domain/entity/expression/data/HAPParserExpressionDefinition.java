@@ -20,7 +20,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPParserExpressionDefinition {
 
-	public static HAPDefinitionExpressionData parseExpressionDefinition(Object obj, HAPContextParser parserContext, HAPParserExpression expressionParser, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPDefinitionExpressionData parseExpressionDefinition(Object obj, HAPContextParser parserContext, HAPParserDataExpression expressionParser, HAPManagerResourceDefinition resourceDefMan) {
 		HAPDefinitionExpressionData out = null;
 		if(obj instanceof String) {
 			out = new HAPDefinitionExpressionData((String)obj);

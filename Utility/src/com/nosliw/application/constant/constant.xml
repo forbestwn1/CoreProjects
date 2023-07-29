@@ -544,7 +544,7 @@
 			<definition type="space"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE" value="dataexpressionsingle"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP" value="dataexpressiongroup"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSUITE" value="dataexpressionsuite"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP" value="scriptexpressiongroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION" value="scriptexpression"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_OPERATION" value="operation"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATATYPE" value="datatype"/>

@@ -11,7 +11,7 @@ import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
-import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
@@ -32,7 +32,7 @@ import com.nosliw.data.core.service.definition.HAPGatewayService;
 import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.imp.expression.parser.HAPExpressionParserImp;
+import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
@@ -73,13 +73,13 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
 		HAPManagerAttachment attachmentManager = new HAPManagerAttachment();
 		HAPManagerService serviceManager = new HAPManagerService(this);
-		HAPManagerExpression expressionMan = new HAPManagerExpression(new HAPExpressionParserImp(), this);
+		HAPParserDataExpression dataExpressionParser = new HAPDataExpressionParserImp();
 		HAPManagerScript scriptMan = new HAPManagerScript(this);
 		HAPManagerTask taskManager = new HAPManagerTask(this);
 		HAPManagerActivity activityMan = new HAPManagerActivity(new HAPManagerActivityPlugin(), this);
 		HAPManagerProcess processMan = new HAPManagerProcess(this);
 		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
-		HAPManagerCronJob cronJobManager = new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
+		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerDomainEntityExecutable complexEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
 		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
@@ -93,7 +93,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			activityMan,
 			processMan,
 			processRuntimeMan,
-			expressionMan,
+			dataExpressionParser,
 			scriptMan,
 			new HAPGatewayManager(),
 			serviceManager,

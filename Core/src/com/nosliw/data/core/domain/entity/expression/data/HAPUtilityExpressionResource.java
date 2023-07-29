@@ -41,7 +41,7 @@ public class HAPUtilityExpressionResource {
 		}
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 	}
-
+ 
 	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableEntityExpressionDataGroup expressions, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
 		Map<String, HAPExecutableExpressionData> items = expressions.getAllExpressionItems();

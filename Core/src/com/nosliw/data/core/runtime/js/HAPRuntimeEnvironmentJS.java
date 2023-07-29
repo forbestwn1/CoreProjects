@@ -35,15 +35,11 @@ import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionIn
 import com.nosliw.data.core.domain.entity.configure.HAPPluginEntityDefinitionInDomainConfigure;
 import com.nosliw.data.core.domain.entity.configure.HAPResourceManagerImpConfigure;
 import com.nosliw.data.core.domain.entity.data.HAPPluginEntityDefinitionInDomainData;
-import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataSingle;
-import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionSuite;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataSingle;
-import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionSuite;
-import com.nosliw.data.core.domain.entity.expression.data.HAPProcessorAttachmentEntityExpression;
-import com.nosliw.data.core.domain.entity.expression.resource.HAPResourceManagerExpression;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginEntityDefinitionInDomainServiceProvider;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginSimpleEntityProcessorServiceProvider;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
@@ -121,7 +117,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPRuntimeProcess m_processRuntime;
 	
-	private HAPManagerExpression m_expressionManager;
+	private HAPParserDataExpression m_dataExpressionParser;
 	
 	private HAPManagerScript m_scriptManager;
 	
@@ -156,7 +152,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPManagerActivity activityManager,
 			HAPManagerProcess processManager,
 			HAPRuntimeProcess processRuntime,
-			HAPManagerExpression expressionManager,
+			HAPParserDataExpression dataExpressionParser,
 			HAPManagerScript scriptManager,
 		    HAPGatewayManager gatewayManager,
 		    HAPManagerService serviceManager,
@@ -169,7 +165,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, expressionManager, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, attachmentManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, attachmentManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -181,7 +177,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPManagerActivity activityManager,
 				HAPManagerProcess processManager,
 				HAPRuntimeProcess processRuntime,
-				HAPManagerExpression expressionManager,
+				HAPParserDataExpression dataExpressionParser,
 				HAPManagerScript scriptManager,
 			    HAPGatewayManager gatewayManager,
 			    HAPManagerService serviceManager,
@@ -200,7 +196,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_activityManager = activityManager;
 		this.m_processManager = processManager;
 		this.m_processRuntime = processRuntime;
-		this.m_expressionManager = expressionManager;
+		this.m_dataExpressionParser = dataExpressionParser;
 		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
@@ -226,7 +222,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPResourceManagerExpression(this.m_expressionManager, this.m_resourceManager));
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		
 //		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
@@ -250,7 +246,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_SEQUENCE, new HAPInfoTask(new HAPTaskInfoParserSequence(this.getTaskManager()), new HAPTaskInfoProcessorSequence(this.getTaskManager())));
 		
 		//attachment
-		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPProcessorAttachmentEntityExpression(this));
+//		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPProcessorAttachmentEntityExpression(this));
 		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPProcessorAttachmentEntityValueStructure());
 		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITY, new HAPProcessorAttachmentEntityActivity(this.getActivityManager().getPluginManager()));
 		
@@ -295,7 +291,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainAttachment(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueContext(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructure(this));
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionSuite(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionDataGroup(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionDataSingle(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainConfigure(this));
@@ -315,7 +310,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexTestComplexScript());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionDataGroup());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionDataSingle());
-		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionSuite());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT));
 
 		//simple entity processor
@@ -355,7 +349,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPRuntimeProcess getProcessRuntime() {   return this.m_processRuntime;  }
 
 	@Override
-	public HAPManagerExpression getExpressionManager(){  return this.m_expressionManager;  }
+	public HAPParserDataExpression getDataExpressionParser() {    return this.m_dataExpressionParser;    }
 
 	@Override
 	public HAPManagerScript getScriptManager() {    return this.m_scriptManager;    }

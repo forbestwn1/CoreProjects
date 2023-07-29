@@ -67,6 +67,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return out;
 	}
 
+	public HAPIdEntityInDomain getAttributeValueComplex(String attrName) {    return (HAPIdEntityInDomain)this.getAttributeValue(attrName);      }
+	
 	public Object getAttributeValue(String attrName, Object defaultValue) {
 		HAPAttributeEntityDefinition att = this.getAttribute(attrName);
 		if(att==null) {

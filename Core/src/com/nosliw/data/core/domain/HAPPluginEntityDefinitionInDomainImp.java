@@ -44,6 +44,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		return out;
 	}
 
+	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {}
+	
 	@Override
 	public void parseDefinition(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		

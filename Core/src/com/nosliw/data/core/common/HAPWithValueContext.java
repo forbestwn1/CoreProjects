@@ -8,13 +8,6 @@ public interface HAPWithValueContext {
 	@HAPAttribute
 	public static String VALUECONTEXT = "valueContext";
 
-	@HAPAttribute
-	public static String ISBORDER = "isBorder";
-
-	boolean getIsBorder();
-	
-	void setIsBorder(boolean isBorder);
-	
 	HAPIdEntityInDomain getValueContextEntity();
 
 	void setValueContextEntity(HAPIdEntityInDomain valueContextId);

@@ -24,7 +24,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 	}
 
 	private void parseExpressionDefinitionList(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionDataGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
-		HAPParserExpression expressionParser = this.getRuntimeEnvironment().getExpressionManager().getExpressionParser();
+		HAPParserDataExpression expressionParser = this.getRuntimeEnvironment().getDataExpressionParser();
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionDataGroup.ELEMENT);
 		if(eleArrayJson!=null) {
 			for(int i=0; i<eleArrayJson.length(); i++) {
