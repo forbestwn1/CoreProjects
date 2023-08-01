@@ -44,13 +44,13 @@ public class HAPProcessorScriptExpression {
 			HAPScript scriptSeg = scriptSegs.get(j);
 			String scriptType = scriptSeg.getType();
 			String scriptId = id+"_"+j;
-			if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION.equals(scriptType)) {
+			if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA.equals(scriptType)) {
 				HAPDefinitionExpressionData expressionItem = new HAPDefinitionExpressionData(scriptSeg.getScript());
 				expressionItem.setName(scriptId);
 				expressionGroup.addEntityElement(expressionItem);
 				out.add(new HAPExecutableScriptSegExpression(scriptId, scriptId));
 			}
-			else if(HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT.equals(scriptType)) {
+			else if(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT.equals(scriptType)) {
 				HAPExecutableScriptSegScript scriptSegExe = new HAPExecutableScriptSegScript(scriptId, scriptSeg.getScript());
 				//update with constant value
 				scriptSegExe.updateConstantValue(constantValues);
@@ -96,12 +96,12 @@ public class HAPProcessorScriptExpression {
 			int index = content.indexOf(EXPRESSION_TOKEN_OPEN);
 			if(index==-1){
 				//no expression
-				out.add(HAPScript.newScript(content, HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT));
+				out.add(HAPScript.newScript(content, HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT));
 				content = null;
 			}
 			else if(index!=0){
 				//start with text
-				out.add(HAPScript.newScript(content.substring(0, index), HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT));
+				out.add(HAPScript.newScript(content.substring(0, index), HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT));
 				content = content.substring(index);
 			}
 			else{
@@ -112,7 +112,7 @@ public class HAPProcessorScriptExpression {
 				String expressionStr = content.substring(expStart, expEnd);
 				content = content.substring(expEnd + EXPRESSION_TOKEN_CLOSE.length());
 				//build expression definition
-				out.add(HAPScript.newScript(expressionStr, HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION));
+				out.add(HAPScript.newScript(expressionStr, HAPConstantShared.EXPRESSION_SEG_TYPE_DATA));
 			}
 			i++;
 		}

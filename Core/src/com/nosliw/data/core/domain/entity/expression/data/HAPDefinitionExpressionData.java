@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.operand.HAPOperand;
@@ -12,10 +11,8 @@ import com.nosliw.data.core.operand.HAPWrapperOperand;
 
 public class HAPDefinitionExpressionData extends HAPEntityInfoWritableImp{
 
-	@HAPAttribute
 	public static String EXPRESSION = "expression";
 
-	@HAPAttribute
 	public static String OPERAND = "operand";
 
 	private String m_expression;

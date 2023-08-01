@@ -36,7 +36,7 @@ public class HAPUtilityScriptExpression {
 		
 		String scriptType = scriptExe.getScriptType();
 		//if pure data
-		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return literate;
+		if(HAPConstantShared.EXPRESSION_TYPE_TEXT.equals(scriptType))  return literate;
 		
 		//execute script expression
 		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(new HAPInfoRuntimeTaskScript(groupExe, null, null, null), runtimeEnv);
@@ -48,17 +48,17 @@ public class HAPUtilityScriptExpression {
 		String type = null;
 		String script = null;
 		if(HAPUtilityScriptLiterate.isText(content)) {
-			type = HAPConstantShared.SCRIPT_TYPE_TEXT;
+			type = HAPConstantShared.EXPRESSION_TYPE_TEXT;
 			script = content;
 		}
 		else {
 			List<HAPScript> iterateSegs = HAPUtilityScriptLiterate.parseScriptLiterate(content);
 			if(iterateSegs.size()==1) {
-				type = HAPConstantShared.SCRIPT_TYPE_EXPRESSION;
+				type = HAPConstantShared.EXPRESSION_TYPE_SCRIPT;
 				script = iterateSegs.get(0).getScript();
 			}
 			else {
-				type = HAPConstantShared.SCRIPT_TYPE_LITERATE;
+				type = HAPConstantShared.EXPRESSION_TYPE_LITERATE;
 				script = content;
 			}
 		}

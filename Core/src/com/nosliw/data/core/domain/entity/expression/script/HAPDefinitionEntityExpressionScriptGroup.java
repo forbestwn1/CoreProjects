@@ -1,44 +1,41 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.common.HAPWithEntityElement;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionData;
 
-public abstract class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityComplexWithDataExpressionGroup{
-
-	public static final String ATTR_INDEX_ID = "idIndex";
-	
-	public static final String ATTR_ATTRIBUTES_REFERENCE = "referenceAttribute";
+public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityComplexWithDataExpressionGroup implements HAPWithEntityElement<HAPDefinitionExpression>{
 	
 	public HAPDefinitionEntityExpressionScriptGroup() {
-		this.setAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
+		this.setAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpression>());
 	}
 
-	public abstract List<HAPDefinitionExpressionData> getAllExpressionItems();
-	
-	//add referenced expression as attribute so that it can be processed under complex entity framework
-	//return attribute name
-	public String addReferencedExpressionAttribute(HAPIdEntityInDomain entityId) {
-		int idIndex = this.getIdIndex();
-		Set<String> refAttrs = this.getReferenceAttributes();
-		
-		String attrName = "Reference_"+idIndex;
-		this.setAttributeValueComplex(attrName, entityId);
-		
-		refAttrs.add(attrName);
-		idIndex++;
-		this.setIdIndex(idIndex);
-		
-		return attrName;
+	@Override
+	public List<HAPDefinitionExpression> getEntityElements() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	private int getIdIndex() {    return (Integer)this.getAttributeValue(ATTR_INDEX_ID, Integer.valueOf(0));     }
-	private void setIdIndex(int idIndex) {    this.setAttributeValueObject(ATTR_INDEX_ID, Integer.valueOf(idIndex));      }
 
-	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getAttributeValue(ATTR_ATTRIBUTES_REFERENCE);     }
+	@Override
+	public HAPDefinitionExpression getEntityElement(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addEntityElement(HAPDefinitionExpression entityElement) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -53,7 +53,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 	}
 
 	@Override
-	public String getScriptType() {  return HAPConstantShared.SCRIPT_TYPE_SEG_SCRIPT;  }
+	public String getScriptType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT;  }
 
 	public List<Object> getElements(){	return this.m_elements;	}
 	

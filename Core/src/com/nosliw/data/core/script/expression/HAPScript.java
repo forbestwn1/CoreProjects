@@ -21,8 +21,8 @@ public class HAPScript extends HAPSerializableImp{
 	
 	private String m_script;
 
-	public static HAPScript newScriptExpression(String script) {	return new HAPScript(script, HAPConstantShared.SCRIPT_TYPE_EXPRESSION);	}
-	public static HAPScript newScriptLiterate(String script) {	return new HAPScript(script, HAPConstantShared.SCRIPT_TYPE_LITERATE);	}
+	public static HAPScript newScriptExpression(String script) {	return new HAPScript(script, HAPConstantShared.EXPRESSION_TYPE_SCRIPT);	}
+	public static HAPScript newScriptLiterate(String script) {	return new HAPScript(script, HAPConstantShared.EXPRESSION_TYPE_LITERATE);	}
 	public static HAPScript newScript(String script, String type) {    return new HAPScript(script, type);     }
 	public static HAPScript newScript(JSONObject jsonObject) {
 		HAPScript out = new HAPScript();

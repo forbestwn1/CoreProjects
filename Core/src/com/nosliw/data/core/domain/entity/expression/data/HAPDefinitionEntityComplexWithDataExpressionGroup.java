@@ -7,7 +7,9 @@ public abstract class HAPDefinitionEntityComplexWithDataExpressionGroup extends 
 
 	static final public String ATTR_DATAEEXPRESSIONGROUP = "dataExpressionGroup";  
 	
-	public HAPDefinitionEntityComplexWithDataExpressionGroup(String entityType) {
+	public HAPDefinitionEntityComplexWithDataExpressionGroup() {}
+	
+	protected HAPDefinitionEntityComplexWithDataExpressionGroup(String entityType) {
 		super(entityType);
 	}
 	

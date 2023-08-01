@@ -9,6 +9,6 @@ public class HAPExecutableScriptEntityExpression extends HAPExecutableScriptEnti
 	private boolean m_isDataExpression;
 
 	public HAPExecutableScriptEntityExpression(String id) {
-		super(HAPConstantShared.SCRIPT_TYPE_EXPRESSION, id);
+		super(HAPConstantShared.EXPRESSION_TYPE_SCRIPT, id);
 	}
 }

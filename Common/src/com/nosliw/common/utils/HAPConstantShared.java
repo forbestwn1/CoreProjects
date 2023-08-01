@@ -674,16 +674,16 @@ public class HAPConstantShared {
 
 
 
-		public static final String SCRIPT_TYPE_TEXT = "text";
-		public static final String SCRIPT_TYPE_EXPRESSION = "expression";
-		public static final String SCRIPT_TYPE_LITERATE = "literate";
+		public static final String EXPRESSION_TYPE_TEXT = "text";
+		public static final String EXPRESSION_TYPE_SCRIPT = "script";
+		public static final String EXPRESSION_TYPE_LITERATE = "literate";
 
 
 
-		public static final String SCRIPT_TYPE_SEG_SCRIPT = "scriptSeg";
-		public static final String SCRIPT_TYPE_SEG_EXPRESSION = "expressionSeg";
-		public static final String SCRIPT_TYPE_SEG_TEXT = "textSeg";
-		public static final String SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT = "exprssionScriptSeg";
+		public static final String EXPRESSION_SEG_TYPE_SCRIPT = "scriptSeg";
+		public static final String EXPRESSION_SEG_TYPE_DATA = "dataSeg";
+		public static final String EXPRESSION_SEG_TYPE_TEXT = "textSeg";
+		public static final String EXPRESSION_SEG_TYPE_DATASCRIPT = "dataScriptSeg";
 
 
 

@@ -4,7 +4,7 @@ public abstract class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEnt
 
 	public HAPDefinitionEntityInDomainSimple() {}
 	
-	public HAPDefinitionEntityInDomainSimple (String entityType) {
+	protected HAPDefinitionEntityInDomainSimple (String entityType) {
 		super(entityType);
 	}
 	

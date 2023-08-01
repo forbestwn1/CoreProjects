@@ -9,7 +9,7 @@ public class HAPDefinitionUIEmbededScriptExpression extends HAPDefinitionScriptE
 	private String m_uiId;
 
 	public HAPDefinitionUIEmbededScriptExpression(String uiId, String content) {
-		super(HAPScript.newScript(content, HAPConstantShared.SCRIPT_TYPE_LITERATE));
+		super(HAPScript.newScript(content, HAPConstantShared.EXPRESSION_TYPE_LITERATE));
 		this.setId(uiId);
 		this.m_uiId = uiId;
 	}

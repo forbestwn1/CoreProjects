@@ -9,7 +9,7 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 
 	protected HAPDefinitionEntityInDomainComplex() {}
 	
-	public HAPDefinitionEntityInDomainComplex (String entityType) {
+	protected HAPDefinitionEntityInDomainComplex (String entityType) {
 		super(entityType);
 	}
 	

@@ -21,7 +21,7 @@ public class HAPExecutableScriptSegText extends HAPExecutableScriptImp{
 	}
 
 	@Override
-	public String getScriptType() {   return HAPConstantShared.SCRIPT_TYPE_SEG_TEXT;  }
+	public String getScriptType() {   return HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT;  }
 	
 	public String getText() {    return this.m_text;   }
 	

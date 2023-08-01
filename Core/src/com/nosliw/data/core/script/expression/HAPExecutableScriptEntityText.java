@@ -7,7 +7,7 @@ public class HAPExecutableScriptEntityText extends HAPExecutableScriptEntity{
 	private String m_text;
 	
 	public HAPExecutableScriptEntityText(String id, String text) {
-		super(HAPConstantShared.SCRIPT_TYPE_TEXT, id);
+		super(HAPConstantShared.EXPRESSION_TYPE_TEXT, id);
 	}
 
 	public String getText() {    return this.m_text;   }

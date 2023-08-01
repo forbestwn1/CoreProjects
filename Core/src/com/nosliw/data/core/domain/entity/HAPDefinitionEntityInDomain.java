@@ -30,7 +30,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		this.m_attributes = new ArrayList<HAPAttributeEntityDefinition>();
 	}
 	
-	public HAPDefinitionEntityInDomain (String entityType) {
+	protected HAPDefinitionEntityInDomain (String entityType) {
 		this();
 		this.m_entityType = entityType;
 	}

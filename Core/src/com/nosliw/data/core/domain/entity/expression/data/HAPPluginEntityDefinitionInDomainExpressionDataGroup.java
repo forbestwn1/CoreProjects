@@ -31,26 +31,18 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 				JSONObject expressionJsonObj = eleArrayJson.getJSONObject(i);
 				Object expressionObj = expressionJsonObj.opt(HAPDefinitionExpressionData.EXPRESSION);
 				if(expressionObj!=null) {
-					//process
-					expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionJsonObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));
-				}
-				else {
-					//reference
-//					out.addProcess(id, parseProcessReference(processObjJson));
+					//expression
+					expressionGroup.addEntityElement(HAPUtilityDataExpressionDefinition.parseExpressionDefinition(expressionJsonObj, expressionParser));
 				}
 			}
 		}
 		else {
 			Object expressionObj = jsonObj.opt(HAPDefinitionExpressionData.EXPRESSION);
 			if(expressionObj!=null) {
-				//process
-				expressionGroup.addEntityElement(HAPParserExpressionDefinition.parseExpressionDefinition(expressionObj, parserContext, expressionParser, this.getRuntimeEnvironment().getResourceDefinitionManager()));
-			}
-			else {
-				//reference
-//				out.addProcess(id, parseProcessReference(processObjJson));
+				//expression
+				expressionGroup.addEntityElement(HAPUtilityDataExpressionDefinition.parseExpressionDefinition(expressionObj, expressionParser));
 			}
 		}
-		HAPParserExpressionDefinition.processReferenceInExpression(expressionEntityId, expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionEntityId, expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }

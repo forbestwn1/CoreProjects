@@ -26,12 +26,12 @@ public class HAPProcessorScriptLiterate {
 			HAPScript scriptSeg = scriptSegs.get(j);
 			String scriptType = scriptSeg.getType();
 			String scriptId = id+"_"+j;
-			if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
+			if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT.equals(scriptType)) {
 				HAPExecutableScriptSegExpressionScript expressionScriptSegExe = new HAPExecutableScriptSegExpressionScript(scriptId);
 				expressionScriptSegExe.addSegments(HAPProcessorScriptExpression.process(scriptId, scriptSeg, constantValues, name2IdUpdate, expressionDef));
 				out.addSegment(expressionScriptSegExe);
 			}
-			else if(HAPConstantShared.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)) {
+			else if(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT.equals(scriptType)) {
 				out.addSegment(new HAPExecutableScriptSegText(scriptId, scriptSeg.getScript())); 
 			}
 		}

@@ -239,10 +239,10 @@ public class HAPParserPage implements HAPParserResourceEntity{
 			StringBuffer newText = new StringBuffer();
 			for(HAPScript scriptSeg : scriptSegs){
 				String scriptType = scriptSeg.getType();
-				if(HAPConstantShared.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)){
+				if(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT.equals(scriptType)){
 					newText.append(scriptSeg.getScript());
 				}
-				else if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
+				else if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT.equals(scriptType)) {
 					List<HAPScript> s = new ArrayList<HAPScript>(); 
 					s.add(scriptSeg);
 					String sStr = HAPUtilityScriptLiterate.buildScriptLiterate(s);

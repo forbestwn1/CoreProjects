@@ -67,7 +67,7 @@ public class HAPExecutableScriptEntity extends HAPExecutableImpEntityInfo implem
 		if(segs.size()>=2)  return false;
 		if(segs.size()==1) {
 			HAPExecutableScript seg = segs.get(0);
-			if(seg.getScriptType().equals(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSION))  return true;
+			if(seg.getScriptType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA))  return true;
 		}
 		return false;
 	}

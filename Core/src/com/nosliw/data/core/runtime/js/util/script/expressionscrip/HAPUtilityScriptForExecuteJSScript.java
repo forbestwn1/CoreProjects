@@ -29,9 +29,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 	private static String functionsParmName = "functions"; 
 	
 	static {
-		m_processors.put(HAPConstantShared.SCRIPT_TYPE_EXPRESSION, new HAPScriptProcessorExpression());
-		m_processors.put(HAPConstantShared.SCRIPT_TYPE_LITERATE, new HAPScriptProcessorLiterate());
-		m_processors.put(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT, new HAPScriptProcessorExpression());
+		m_processors.put(HAPConstantShared.EXPRESSION_TYPE_SCRIPT, new HAPScriptProcessorExpression());
+		m_processors.put(HAPConstantShared.EXPRESSION_TYPE_LITERATE, new HAPScriptProcessorLiterate());
+		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT, new HAPScriptProcessorExpression());
 	}
 	
 	public static HAPScriptFunctionInfo buildFunctionInfo(HAPExecutableScript scriptExe) {

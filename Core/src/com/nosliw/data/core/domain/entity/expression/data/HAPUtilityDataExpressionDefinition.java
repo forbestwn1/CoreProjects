@@ -18,9 +18,9 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPParserExpressionDefinition {
+public class HAPUtilityDataExpressionDefinition {
 
-	public static HAPDefinitionExpressionData parseExpressionDefinition(Object obj, HAPContextParser parserContext, HAPParserDataExpression expressionParser, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPDefinitionExpressionData parseExpressionDefinition(Object obj, HAPParserDataExpression expressionParser) {
 		HAPDefinitionExpressionData out = null;
 		if(obj instanceof String) {
 			out = new HAPDefinitionExpressionData((String)obj);

@@ -11,6 +11,6 @@ public class HAPExecutableScriptSegExpressionScript extends HAPExecutableScriptW
 	}
 	
 	@Override
-	public String getScriptType() {   return HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT;  }
+	public String getScriptType() {   return HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT;  }
 
 }

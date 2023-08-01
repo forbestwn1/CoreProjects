@@ -104,13 +104,13 @@ public class HAPProcessorScript {
 			String type = script.getType();
 			String scriptId = scriptDef.getId();
 			if(HAPUtilityBasic.isStringEmpty(scriptId))  scriptId = i+"";
-			if(HAPConstantShared.SCRIPT_TYPE_EXPRESSION.equals(type)) {
+			if(HAPConstantShared.EXPRESSION_TYPE_SCRIPT.equals(type)) {
 				scriptExe = HAPProcessorScriptExpression.process(scriptId, scriptDef, constantsValue, name2IdUpdate, expressionGroupDef);
 			}
-			else if(HAPConstantShared.SCRIPT_TYPE_LITERATE.equals(type)) {
+			else if(HAPConstantShared.EXPRESSION_TYPE_LITERATE.equals(type)) {
 				scriptExe = HAPProcessorScriptLiterate.process(scriptId, scriptDef, constantsValue, name2IdUpdate, expressionGroupDef);
 			}
-			else if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(type)) {
+			else if(HAPConstantShared.EXPRESSION_TYPE_TEXT.equals(type)) {
 				scriptExe = new HAPExecutableScriptEntityText(scriptId, script.getScript());
 			}
 			out.addScript(scriptExe);

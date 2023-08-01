@@ -6,7 +6,7 @@ import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
 public class HAPExecutableScriptEntityLiterate extends HAPExecutableScriptEntity{
 
 	public HAPExecutableScriptEntityLiterate(String id) {
-		super(HAPConstantShared.SCRIPT_TYPE_LITERATE, id);
+		super(HAPConstantShared.EXPRESSION_TYPE_LITERATE, id);
 	}
 
 }

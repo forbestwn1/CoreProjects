@@ -273,7 +273,7 @@ public class HAPProcessorContextConstant {
 		
 		String scriptType = scriptExe.getScriptType();
 		//if pure data
-		if(HAPConstantShared.SCRIPT_TYPE_TEXT.equals(scriptType))  return leafData;
+		if(HAPConstantShared.EXPRESSION_TYPE_TEXT.equals(scriptType))  return leafData;
 		
 		///if contain script
 		//discover all constant

@@ -24,17 +24,17 @@ public class HAPUtilityScriptLiterate {
 		
 		int start = script.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		while(start != -1){
-			if(start>0)   out.add(HAPScript.newScript(script.substring(0, start), HAPConstantShared.SCRIPT_TYPE_SEG_TEXT));
+			if(start>0)   out.add(HAPScript.newScript(script.substring(0, start), HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT));
 			int expEnd = script.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = script.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			out.add(HAPScript.newScript(expression, HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT));
+			out.add(HAPScript.newScript(expression, HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT));
 			//keep searching the rest
 			script=script.substring(end);
 			start = script.indexOf(UIEXPRESSION_TOKEN_OPEN);
 		}
 		if(!HAPUtilityBasic.isStringEmpty(script)){
-			out.add(HAPScript.newScript(script, HAPConstantShared.SCRIPT_TYPE_SEG_TEXT));
+			out.add(HAPScript.newScript(script, HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT));
 		}
 		return out;
 	}
@@ -43,10 +43,10 @@ public class HAPUtilityScriptLiterate {
 		StringBuffer out = new StringBuffer();
 		for(HAPScript scriptSeg : scriptSegs) {
 			String scriptType = scriptSeg.getType();
-			if(HAPConstantShared.SCRIPT_TYPE_SEG_TEXT.equals(scriptType)) {
+			if(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT.equals(scriptType)) {
 				out.append(scriptSeg.getScript());
 			}
-			else if(HAPConstantShared.SCRIPT_TYPE_SEG_EXPRESSIONSCRIPT.equals(scriptType)) {
+			else if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT.equals(scriptType)) {
 				out.append(UIEXPRESSION_TOKEN_OPEN).append(scriptSeg.getScript()).append(UIEXPRESSION_TOKEN_CLOSE);
 			}
 		}
