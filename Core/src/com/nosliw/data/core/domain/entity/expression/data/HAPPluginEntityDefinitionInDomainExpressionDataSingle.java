@@ -21,6 +21,6 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataSingle extends HAPPl
 		expressionEntity.setExpression(HAPUtilityDataExpressionDefinition.parseExpressionDefinition(
 				expression, 
 				this.getRuntimeEnvironment().getDataExpressionParser())); 
-		HAPUtilityDataExpressionDefinition.processReferenceInExpression(entityId, expressionEntity, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPUtilityDataExpressionDefinition.processReferenceInExpression(entityId, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }

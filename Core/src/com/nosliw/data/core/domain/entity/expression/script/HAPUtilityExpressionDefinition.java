@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
@@ -16,6 +17,38 @@ public class HAPUtilityExpressionDefinition {
 	public static final String EXPRESSION_TOKEN_OPEN = "#|";
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
+	public static boolean isText(String script) {
+		return script.indexOf(LITERATE_TOKEN_OPEN)==-1;
+	}
+
+	public static HAPDefinitionExpression parseDefinitionExpression(String content, String scriptType, HAPDefinitionEntityExpressionDataGroup dataExpressionGroup, HAPParserDataExpression expressionParser) {
+		HAPDefinitionExpression out = null;
+		
+		if(scriptType==null) {
+			if(content.indexOf(LITERATE_TOKEN_OPEN)==-1) {
+				scriptType = HAPConstantShared.EXPRESSION_TYPE_TEXT;
+			}
+			else if(content.indexOf(LITERATE_TOKEN_OPEN)==0&&content.indexOf(LITERATE_TOKEN_CLOSE)==content.length()-LITERATE_TOKEN_CLOSE.length()-1) {
+				scriptType = HAPConstantShared.EXPRESSION_TYPE_SCRIPT;
+			}
+			else {
+				scriptType = HAPConstantShared.EXPRESSION_TYPE_LITERATE;
+			}
+		}
+		
+		if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_TEXT)) {
+			out = parseDefinitionExpressionText(content);
+		}
+		else if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_SCRIPT)) {
+			out = parseDefinitionExpressionScript(content, dataExpressionGroup, expressionParser);
+		}
+		if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE)) {
+			out = parseDefinitionExpressionLiterate(content, dataExpressionGroup, expressionParser);
+		}
+		
+		return out;
+	}
+	
 	public static HAPDefinitionExpressionText parseDefinitionExpressionText(String content) {
 		HAPDefinitionExpressionText out = new HAPDefinitionExpressionText();
 		out.addSegmentText(parseDefinitionSegmentExpressionText(content));
@@ -91,7 +124,7 @@ public class HAPUtilityExpressionDefinition {
 	}
 
 	private static HAPDefinitionSegmentExpressionData parseDefinitionSegmentExpressionData(String dataExpressionScript, HAPDefinitionEntityExpressionDataGroup dataExpressionGroup, HAPParserDataExpression expressionParser) {
-		HAPDefinitionExpressionData dataExpressionDef = HAPUtilityDataExpressionDefinition.parseExpressionDefinition(dataExpressionScript, expressionParser);
+		HAPDefinitionExpressionData dataExpressionDef = HAPUtilityDataExpressionDefinition.parseExpressionDefinitionScript(dataExpressionScript, expressionParser);
 		String dataExpressionId = dataExpressionGroup.addExpression(dataExpressionDef);
 		return new HAPDefinitionSegmentExpressionData(dataExpressionId);
 	}

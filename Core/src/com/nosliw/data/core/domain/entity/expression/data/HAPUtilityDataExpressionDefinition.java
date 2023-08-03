@@ -36,7 +36,15 @@ public class HAPUtilityDataExpressionDefinition {
 		return out;
 	}
 
-	public static void processReferenceInExpression(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionData expressionEntity, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPDefinitionExpressionData parseExpressionDefinitionScript(String script, HAPParserDataExpression expressionParser) {
+		HAPDefinitionExpressionData out = new HAPDefinitionExpressionData(script);
+		out.setOperand(expressionParser.parseExpression(out.getExpression()));
+		return out;
+	}
+
+	
+	public static void processReferenceInExpression(HAPIdEntityInDomain expressionEntityId, HAPContextParser parserContext, HAPManagerResourceDefinition resourceDefMan) {
+		HAPDefinitionEntityExpressionData expressionEntity = (HAPDefinitionEntityExpressionData)parserContext.getGlobalDomain().getEntityInfoDefinition(expressionEntityId).getEntity();
 		for(HAPDefinitionExpressionData expressionDef : expressionEntity.getAllExpressionItems()) {
 			HAPUtilityOperand.processAllOperand(expressionDef.getOperand(), null, new HAPInterfaceProcessOperand(){
 				@Override
@@ -61,4 +69,14 @@ public class HAPUtilityDataExpressionDefinition {
 			});
 		}
 	}
+	
+	
+	public static void buildParentRelation(HAPIdEntityInDomain parentEntityId, HAPIdEntityInDomain childEntityId, String valueContextInheritMode, HAPContextParser parserContext) {
+		HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
+		parentInfo.setParentId(parentEntityId);
+		parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(valueContextInheritMode);
+		
+		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(childEntityId, parentInfo);
+	}
+	
 }

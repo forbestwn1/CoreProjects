@@ -43,6 +43,6 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 				expressionGroup.addEntityElement(HAPUtilityDataExpressionDefinition.parseExpressionDefinition(expressionObj, expressionParser));
 			}
 		}
-		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionEntityId, expressionGroup, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionEntityId, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }
