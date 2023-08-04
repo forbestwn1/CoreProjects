@@ -16,6 +16,8 @@ public class HAPDefinitionSegmentExpressionDataScript implements HAPDefinitionSe
 	public void addSegmentScript(HAPDefinitionSegmentExpressionScript scriptSegment) {	this.m_segments.add(scriptSegment);	}
 	
 	public void addSegmentData(HAPDefinitionSegmentExpressionData dataSegment) {	this.m_segments.add(dataSegment);	}
+
+	public List<HAPDefinitionSegmentExpression> getSegments(){    return this.m_segments;     }
 	
 	@Override
 	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT;  }

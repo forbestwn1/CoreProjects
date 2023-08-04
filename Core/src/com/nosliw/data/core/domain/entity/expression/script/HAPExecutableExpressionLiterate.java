@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity.expression.script;
 
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPExecuteExpressionLiterate extends HAPExecuteExpression{
+public class HAPExecutableExpressionLiterate extends HAPExecutableExpression{
 
 	@Override
 	public String getType() {	return HAPConstantShared.EXPRESSION_TYPE_LITERATE;	}

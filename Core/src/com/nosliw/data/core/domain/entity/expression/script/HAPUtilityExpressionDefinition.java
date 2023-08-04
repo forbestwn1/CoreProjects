@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
+import java.lang.reflect.Constructor;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -8,6 +10,8 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressio
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
 
 public class HAPUtilityExpressionDefinition {
 
@@ -42,7 +46,7 @@ public class HAPUtilityExpressionDefinition {
 		else if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_SCRIPT)) {
 			out = parseDefinitionExpressionScript(content, dataExpressionGroup, expressionParser);
 		}
-		if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE)) {
+		else if(scriptType.equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE)) {
 			out = parseDefinitionExpressionLiterate(content, dataExpressionGroup, expressionParser);
 		}
 		
@@ -89,9 +93,71 @@ public class HAPUtilityExpressionDefinition {
 	}
 
 	private static HAPDefinitionSegmentExpressionScript parseDefinitionSegmentExpressionScript(String script) {
-		return new HAPDefinitionSegmentExpressionScript(script);
+		HAPDefinitionSegmentExpressionScript out = new HAPDefinitionSegmentExpressionScript(script);
+		parseExpressionScriptSegment(script, out);
+		return out;
 	}
 
+	//define the segment parsing infor
+	private static final Object[][] m_definitions = {
+			{"&(", ")&", HAPConstantInScript.class}, 
+			{"?(", ")?", HAPVariableInScript.class}
+	};
+
+	private static void parseExpressionScriptSegment(String orignalScript, HAPDefinitionSegmentExpressionScript expressionScriptSegment){
+		try{
+			String content = orignalScript;
+			int[] indexs = indexScript(content);
+			while(indexs[0]!=-1){
+				int type = indexs[1];
+				String startToken = (String)m_definitions[type][0];
+				String endToken = (String)m_definitions[type][1];
+				int startIndex = indexs[0];
+				if(startIndex>0){
+					expressionScriptSegment.addSegment(content.substring(0, startIndex));
+				}
+				int endIndex = content.indexOf(endToken);
+				Class cs = (Class)m_definitions[type][2];
+				Constructor cons = cs.getConstructor(String.class);
+				String name = content.substring(startIndex+startToken.length(), endIndex);
+				expressionScriptSegment.addSegment(cons.newInstance(name));
+				content = content.substring(endIndex+endToken.length());
+				indexs = indexScript(content);
+			}
+			if(HAPUtilityBasic.isStringNotEmpty(content)){
+				expressionScriptSegment.addSegment(content);
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	private static int[] indexScript(String content){
+		int invalidValue = 99999;
+		int[] indexs = new int[2];
+		int currentIndex = invalidValue;
+		int currentType = invalidValue;
+		for(int i=0; i<m_definitions.length; i++){
+			int index = content.indexOf((String)m_definitions[i][0]);
+			if(index==-1)  continue;
+			else if(index < currentIndex){
+				currentIndex = index;
+				currentType = i;
+			}
+		}
+		if(currentIndex==invalidValue){
+			indexs[0] = -1;
+			indexs[1] = -1;
+		}
+		else{
+			indexs[0] = currentIndex;
+			indexs[1] = currentType;
+		}
+		return indexs;
+	}
+
+	
 	private static HAPDefinitionSegmentExpressionDataScript parseDefinitionSegmentExpressionDataScript(String script, HAPDefinitionEntityExpressionDataGroup dataExpressionGroup, HAPParserDataExpression expressionParser) {
 		HAPDefinitionSegmentExpressionDataScript out = new HAPDefinitionSegmentExpressionDataScript();
 		String content = script;

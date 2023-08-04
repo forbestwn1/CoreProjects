@@ -6,9 +6,8 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoParentComplex;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
@@ -55,11 +54,7 @@ public class HAPUtilityDataExpressionDefinition {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, referenceOperand.getReference());
 						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
 						
-						HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
-						parentInfo.setParentId(expressionEntityId);
-						parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_DEFINITION);
-						
-						((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(refExpId, parentInfo);
+						HAPUtilityEntityDefinition.buildParentRelation(refExpId, expressionEntityId, HAPConstantShared.INHERITMODE_DEFINITION, parserContext);
 						
 						String refAttrName = expressionEntity.addReferencedExpressionAttribute(refExpId);
 						referenceOperand.setReferenceExpressionAttributeName(refAttrName);
@@ -69,14 +64,4 @@ public class HAPUtilityDataExpressionDefinition {
 			});
 		}
 	}
-	
-	
-	public static void buildParentRelation(HAPIdEntityInDomain parentEntityId, HAPIdEntityInDomain childEntityId, String valueContextInheritMode, HAPContextParser parserContext) {
-		HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
-		parentInfo.setParentId(parentEntityId);
-		parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(valueContextInheritMode);
-		
-		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(childEntityId, parentInfo);
-	}
-	
 }

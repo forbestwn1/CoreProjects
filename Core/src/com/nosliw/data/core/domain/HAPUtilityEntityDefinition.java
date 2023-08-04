@@ -13,6 +13,13 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 
 public class HAPUtilityEntityDefinition {
 
+	public static void buildParentRelation(HAPIdEntityInDomain childEntityId, HAPIdEntityInDomain parentEntityId, String valueContextInheritMode, HAPContextParser parserContext) {
+		HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
+		parentInfo.setParentId(parentEntityId);
+		parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(valueContextInheritMode);
+		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(childEntityId, parentInfo);
+	}
+
 	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
 		processor.processComplexRoot(entityId, globalObj);
 		traverseDefinitionEntityTreeLeaf(entityId, processor, definitionDomain, globalObj);
