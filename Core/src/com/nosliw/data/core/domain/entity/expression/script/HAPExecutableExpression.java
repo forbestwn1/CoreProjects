@@ -1,12 +1,14 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -19,10 +21,14 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 
+@HAPEntityWithAttribute
 public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public final static String TYPE = "type";
+
+	@HAPAttribute
+	public final static String SEGMENT = "segment";
 
 	@HAPAttribute
 	public static final String SCRIPTFUNCTION = "scriptFunction";
@@ -34,16 +40,14 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	public static final String VARIABLESINFO = "variablesInfo";
 
 	@HAPAttribute
-	public static final String VARIABLES = "variables";
+	public static String VARIABLEKEYS = "variableKeys";
 
-	@HAPAttribute
-	public static final String EXPRESSIONREF = "expressionRef";
-
+	private String m_type;
 	
 	private List<HAPExecutableSegmentExpression> m_segments;
 	
-	private String m_type;
-	
+	private Set<String> m_varKeys = new HashSet<String>();
+
 	public HAPExecutableExpression(String type) {
 		this.m_segments = new ArrayList<HAPExecutableSegmentExpression>();
 		this.m_type = type;
@@ -52,8 +56,23 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	public String getType() {     return this.m_type;      }
 
 	protected void addSegment(HAPExecutableSegmentExpression segment) {	this.m_segments.add(segment);	}
-	
 	public List<HAPExecutableSegmentExpression> getSegments(){    return this.m_segments;     }
+	
+	public Set<String> getVariablesInfo(){   return this.m_varKeys;    }
+	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
+		
+		List<String> segmentArrayStr = new ArrayList<String>();
+		for(HAPExecutableSegmentExpression segment : this.m_segments) {
+			segmentArrayStr.add(segment.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentArrayStr.toArray(new String[0])));
+	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
@@ -75,16 +94,10 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 
 		jsonMap.put(SCRIPTFUNCTION, new HAPJsonTypeScript(scriptFunctionInfo.getMainScript().getScript()).toStringValue(HAPSerializationFormat.JSON_FULL));
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeScript.class);
-
-		jsonMap.put(EXPRESSIONREF, HAPUtilityJson.buildJson(this.discoverExpressionReference(null), HAPSerializationFormat.JSON));
-		
-		Set<String> vars = this.discoverVariables(null);
-		jsonMap.put(VARIABLES, HAPUtilityJson.buildJson(vars, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		
 	}
-
 }

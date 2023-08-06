@@ -19,7 +19,7 @@ public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcesso
 		HAPExecutableSegmentExpressionScript scriptScriptExe = (HAPExecutableSegmentExpressionScript)scriptExe;
 
 		StringBuffer funScript = new StringBuffer();
-		List<Object> scriptSegmentEles = scriptScriptExe.getSegments();
+		List<Object> scriptSegmentEles = scriptScriptExe.getParts();
 		for(Object scriptSegmentEle : scriptSegmentEles){
 			if(scriptSegmentEle instanceof String){
 				funScript.append((String)scriptSegmentEle);

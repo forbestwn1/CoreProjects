@@ -63,18 +63,18 @@ public class HAPUtilityExpressionExecute {
 		HAPExecutableSegmentExpressionScript out = new HAPExecutableSegmentExpressionScript(idGenerator.generateId());
 		for(Object segObj : scriptSegDef.getSegments()) {
 			if(segObj instanceof String) {
-				out.addSegment(segObj);
+				out.addPart(segObj);
 			}
 			else if(segObj instanceof HAPDefinitionConstantInScript) {
 				HAPDefinitionConstantInScript constantSegDef = (HAPDefinitionConstantInScript)segObj;
 				String contantName = constantSegDef.getConstantName();
-				out.addSegment(new HAPExecutableConstantInScript(contantName, constantValues.get(contantName)));
+				out.addPart(new HAPExecutableConstantInScript(contantName, constantValues.get(contantName)));
 			}
 			else if(segObj instanceof HAPDefinitionVariableInScript) {
 				HAPDefinitionVariableInScript varSegDef = (HAPDefinitionVariableInScript)segObj;
 				HAPIdVariable varId = HAPUtilityValueContextReference.resolveVariableName(varSegDef.getVariableName(), valueContext, null, valueStructureDomain, null);
 				String varKey = variableContainer.addVariable(varId);
-				out.addSegment(new HAPExecutableVariableInScript(varSegDef.getVariableName(), varKey));
+				out.addPart(new HAPExecutableVariableInScript(varSegDef.getVariableName(), varKey));
 			}
 		}
 		return out;

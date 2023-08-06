@@ -4,29 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
 
 public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentExpression{
 
-	private List<Object> m_segments;
+	@HAPAttribute
+	public static String PART = "part";
+
+	private List<Object> m_parts;
 
 	public HAPExecutableSegmentExpressionScript(String id) {
 		super(id);
-		this.m_segments = new ArrayList<Object>();
+		this.m_parts = new ArrayList<Object>();
 	}
 	
 	@Override
 	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT;  }
 
-	public List<Object> getSegments(){   return this.m_segments;    }
+	public List<Object> getParts(){   return this.m_parts;    }
 	
-	public void addSegment(Object segment) {    this.m_segments.add(segment);    }
+	public void addPart(Object part) {    this.m_parts.add(part);    }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		List<String> partJsonArray = new ArrayList<String>();
+		for(Object part : this.m_parts) {
+			partJsonArray.add(HAPSerializeManager.getInstance().toStringValue(part, HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partJsonArray.toArray(new String[0])));
+	}
+
 	public void updateConstantValue(Map<String, Object> constantsValue) {
 		List<Object> newEles = new ArrayList<Object>();
-		for(Object ele : this.m_segments) {
+		for(Object ele : this.m_parts) {
 			if(ele instanceof HAPVariableInScript) {
 				HAPVariableInScript varEle = (HAPVariableInScript)ele;
 				Object constantValue = constantsValue.get(varEle.getVariableName());
@@ -47,7 +64,7 @@ public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentEx
 				newEles.add(ele);
 			}
 		}
-		this.m_segments = newEles;
+		this.m_parts = newEles;
 	}
 	
 }

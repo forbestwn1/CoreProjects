@@ -3,8 +3,10 @@ package com.nosliw.data.core.domain.entity.expression.script;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
+@HAPEntityWithAttribute
 public class HAPExecutableVariableInScript extends HAPExecutableImp{
 
 	@HAPAttribute
