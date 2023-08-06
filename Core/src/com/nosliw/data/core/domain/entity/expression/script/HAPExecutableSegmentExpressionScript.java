@@ -12,7 +12,8 @@ public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentEx
 
 	private List<Object> m_segments;
 
-	public HAPExecutableSegmentExpressionScript() {
+	public HAPExecutableSegmentExpressionScript(String id) {
+		super(id);
 		this.m_segments = new ArrayList<Object>();
 	}
 	

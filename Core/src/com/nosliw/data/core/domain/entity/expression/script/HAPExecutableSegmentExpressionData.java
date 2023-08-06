@@ -12,7 +12,8 @@ public class HAPExecutableSegmentExpressionData extends HAPExecutableSegmentExpr
 
 	private String m_dataExpressionId;
 	
-	public HAPExecutableSegmentExpressionData(String dataExpressionId) {
+	public HAPExecutableSegmentExpressionData(String id, String dataExpressionId) {
+		super(id);
 		this.m_dataExpressionId = dataExpressionId;
 	}
 	

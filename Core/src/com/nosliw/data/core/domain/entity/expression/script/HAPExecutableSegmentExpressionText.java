@@ -12,7 +12,8 @@ public class HAPExecutableSegmentExpressionText extends HAPExecutableSegmentExpr
 
 	private String m_content;
 	
-	public HAPExecutableSegmentExpressionText(String content) {
+	public HAPExecutableSegmentExpressionText(String id, String content) {
+		super(id);
 		this.m_content = content;
 	}
 	

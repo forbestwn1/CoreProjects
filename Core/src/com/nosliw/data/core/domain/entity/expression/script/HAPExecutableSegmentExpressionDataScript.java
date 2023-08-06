@@ -16,12 +16,15 @@ public class HAPExecutableSegmentExpressionDataScript extends HAPExecutableSegme
 	
 	private List<HAPExecutableSegmentExpression> m_segments;
 	
-	public HAPExecutableSegmentExpressionDataScript() {
+	public HAPExecutableSegmentExpressionDataScript(String id) {
+		super(id);
 		this.m_segments = new ArrayList<HAPExecutableSegmentExpression>();
 	}
 	
 	@Override
 	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT;  }
+	
+	public List<HAPExecutableSegmentExpression> getSegments(){     return this.m_segments;      }
 	
 	public void addSegmentScript(HAPExecutableSegmentExpressionScript scriptSegment) {	this.m_segments.add(scriptSegment);	}
 	

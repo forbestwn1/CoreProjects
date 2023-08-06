@@ -11,7 +11,6 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -29,7 +28,6 @@ public class HAPExecutableEntityExpressionDataGroup extends HAPExecutableEntityE
 	
 	public HAPExecutableEntityExpressionDataGroup() {
 		this.setAttributeValueObject(EXPRESSIONS, new ArrayList<HAPExecutableExpressionData>());
-		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
 
 	@Override

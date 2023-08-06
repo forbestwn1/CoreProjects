@@ -38,6 +38,8 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 			
 			//add to domain
 			out = parserContext.getCurrentDomain().addEntity(entity);
+			
+			this.postNewInstance(out, parserContext);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

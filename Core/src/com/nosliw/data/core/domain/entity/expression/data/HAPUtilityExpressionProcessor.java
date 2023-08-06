@@ -144,7 +144,6 @@ public class HAPUtilityExpressionProcessor {
 		});
 	}
 	
-
 	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPExecutableEntityValueContext valueContext, HAPContainerVariableCriteriaInfo varInfos, HAPDomainValueStructure valueStructureDomain) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override

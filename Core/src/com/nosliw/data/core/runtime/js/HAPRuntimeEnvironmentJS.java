@@ -41,6 +41,7 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinit
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataSingle;
 import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityDefinitionInDomainExpressionScriptGroup;
+import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityProcessorComplexExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginEntityDefinitionInDomainServiceProvider;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginSimpleEntityProcessorServiceProvider;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
@@ -312,6 +313,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexTestComplexScript());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionDataGroup());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionDataSingle());
+		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexExpressionScriptGroup());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT));
 
 		//simple entity processor

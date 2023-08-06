@@ -3,66 +3,64 @@ package com.nosliw.data.core.domain.entity.expression.script;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 public class HAPUtilityExpressionExecute {
 
-	public HAPExecutableExpression processExpression(HAPDefinitionExpression expressionDef, Map<String, Object> constantValues,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain) {
-		HAPExecutableExpression out = null;
+	public static HAPExecutableExpression processExpression(HAPDefinitionExpression expressionDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
+		HAPExecutableExpression out = new HAPExecutableExpression(expressionDef.getType());
 
-		String expressionType = expressionDef.getType();
-		if(expressionType.equals(HAPConstantShared.EXPRESSION_TYPE_TEXT)) 	out = new HAPExecutableExpressionText();
-		else if(expressionType.equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE)) out = new HAPExecutableExpressionLiterate();
-		if(expressionType.equals(HAPConstantShared.EXPRESSION_TYPE_SCRIPT)) out = new HAPExecutableExpressionScript();
+		expressionDef.cloneToEntityInfo(out);
 		
 		for(HAPDefinitionSegmentExpression segDef : expressionDef.getSegments()) {
 			String segType = segDef.getType();
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT)) {
-				out.addSegment(processSegmentText((HAPDefinitionSegmentExpressionText)segDef));
+				out.addSegment(processSegmentText((HAPDefinitionSegmentExpressionText)segDef, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
-				out.addSegment(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues, valueContext, valueStructureDomain));
+				out.addSegment(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
-				out.addSegment(processSegmentData((HAPDefinitionSegmentExpressionData)segDef));
+				out.addSegment(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
-				out.addSegment(processSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segDef, constantValues, valueContext, valueStructureDomain));
+				out.addSegment(processSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
 			}
 		}
 		return out;
 	}
 	
-	
-	private HAPExecutableSegmentExpressionText processSegmentText(HAPDefinitionSegmentExpressionText textSegDef) {
-		return new HAPExecutableSegmentExpressionText(textSegDef.getContent());
+	private static HAPExecutableSegmentExpressionText processSegmentText(HAPDefinitionSegmentExpressionText textSegDef, HAPGeneratorId idGenerator) {
+		return new HAPExecutableSegmentExpressionText(idGenerator.generateId(), textSegDef.getContent());
 	}
 	
-	private HAPExecutableSegmentExpressionData processSegmentData(HAPDefinitionSegmentExpressionData dataSegDef) {
-		return new HAPExecutableSegmentExpressionData(dataSegDef.getDataExpressionId());
+	private static HAPExecutableSegmentExpressionData processSegmentData(HAPDefinitionSegmentExpressionData dataSegDef, HAPGeneratorId idGenerator) {
+		return new HAPExecutableSegmentExpressionData(idGenerator.generateId(), dataSegDef.getDataExpressionId());
 	}
 	
-	private HAPExecutableSegmentExpressionDataScript processSegmentDataScript(HAPDefinitionSegmentExpressionDataScript dataScriptSegDef, Map<String, Object> constantValues,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain) {
+	private static HAPExecutableSegmentExpressionDataScript processSegmentDataScript(HAPDefinitionSegmentExpressionDataScript dataScriptSegDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
 		
-		HAPExecutableSegmentExpressionDataScript out = new HAPExecutableSegmentExpressionDataScript();
+		HAPExecutableSegmentExpressionDataScript out = new HAPExecutableSegmentExpressionDataScript(idGenerator.generateId());
 		
 		for(HAPDefinitionSegmentExpression segDef : dataScriptSegDef.getSegments()) {
 			String segType = segDef.getType();
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
-				out.addSegmentScript(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues,  valueContext, valueStructureDomain));
+				out.addSegmentScript(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
-				out.addSegmentData(processSegmentData((HAPDefinitionSegmentExpressionData)segDef));
+				out.addSegmentData(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
 			}
 		}
 		return out;
 	}
 	
-	private HAPExecutableSegmentExpressionScript processSegmentScript(HAPDefinitionSegmentExpressionScript scriptSegDef, Map<String, Object> constantValues,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain) {
-		HAPExecutableSegmentExpressionScript out = new HAPExecutableSegmentExpressionScript();
+	private static HAPExecutableSegmentExpressionScript processSegmentScript(HAPDefinitionSegmentExpressionScript scriptSegDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
+		HAPExecutableSegmentExpressionScript out = new HAPExecutableSegmentExpressionScript(idGenerator.generateId());
 		for(Object segObj : scriptSegDef.getSegments()) {
 			if(segObj instanceof String) {
 				out.addSegment(segObj);
@@ -75,10 +73,10 @@ public class HAPUtilityExpressionExecute {
 			else if(segObj instanceof HAPDefinitionVariableInScript) {
 				HAPDefinitionVariableInScript varSegDef = (HAPDefinitionVariableInScript)segObj;
 				HAPIdVariable varId = HAPUtilityValueContextReference.resolveVariableName(varSegDef.getVariableName(), valueContext, null, valueStructureDomain, null);
-				out.addSegment(new HAPExecutableVariableInScript(varSegDef.getVariableName(), varId));
+				String varKey = variableContainer.addVariable(varId);
+				out.addSegment(new HAPExecutableVariableInScript(varSegDef.getVariableName(), varKey));
 			}
 		}
 		return out;
 	}
-	
 }

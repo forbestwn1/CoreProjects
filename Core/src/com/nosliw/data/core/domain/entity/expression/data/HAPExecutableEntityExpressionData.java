@@ -22,6 +22,7 @@ public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEnt
 
 	public HAPExecutableEntityExpressionData() {
 		this.setAttributeValueObject(ATTRIBUTESREFERENCE, new HashSet<String>());
+		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
 
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }

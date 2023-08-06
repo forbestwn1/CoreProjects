@@ -14,7 +14,6 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -31,7 +30,6 @@ public class HAPExecutableEntityExpressionDataSingle extends HAPExecutableEntity
 	private Map<String, HAPData> m_dataConstants;
 	
 	public HAPExecutableEntityExpressionDataSingle() {
-		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
  
 	@Override

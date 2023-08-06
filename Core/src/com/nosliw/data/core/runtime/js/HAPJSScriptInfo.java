@@ -80,6 +80,4 @@ public class HAPJSScriptInfo extends HAPSerializableImp{
 		if(this.m_script!=null)		jsonMap.put(SCRIPT, this.m_script.toString());
 		jsonMap.put(FILE, this.m_file);
 	}
-
-
 }
