@@ -681,9 +681,9 @@ public class HAPConstantShared {
 
 
 		public static final String EXPRESSION_SEG_TYPE_SCRIPT = "scriptSeg";
-		public static final String EXPRESSION_SEG_TYPE_DATA = "dataSeg";
+		public static final String EXPRESSION_SEG_TYPE_DATA = "expressionSeg";
 		public static final String EXPRESSION_SEG_TYPE_TEXT = "textSeg";
-		public static final String EXPRESSION_SEG_TYPE_DATASCRIPT = "dataScriptSeg";
+		public static final String EXPRESSION_SEG_TYPE_DATASCRIPT = "exprssionScriptSeg";
 
 
 

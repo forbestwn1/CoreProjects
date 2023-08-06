@@ -1,8 +1,6 @@
 package com.nosliw.data.core.operand;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -89,17 +87,17 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	@Override
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		List<String> outList = new ArrayList<String>();
+		Map<String, String> outMap = new LinkedHashMap<String, String>();
 
 		for(String key : this.m_variableIdByKey.keySet()) {
 			Map<String, String> entryMap = new LinkedHashMap<String, String>();
 			entryMap.put(VARIABLEKEY, key);
 			entryMap.put(VARIABLEID, m_variableIdByKey.get(key).toStringValue(HAPSerializationFormat.JSON));
 			entryMap.put(CRITERIA, this.m_criteriaInfosById.get(m_variableIdByKey.get(key)).toStringValue(HAPSerializationFormat.JSON));
-			outList.add(HAPUtilityJson.buildMapJson(entryMap));
+			outMap.put(key, HAPUtilityJson.buildMapJson(entryMap));
 		}
 		
-		jsonMap.put(VARIABLES, HAPUtilityJson.buildArrayJson(outList.toArray(new String[0])));
+		jsonMap.put(VARIABLES, HAPUtilityJson.buildMapJson(outMap));
 	}
 
 }

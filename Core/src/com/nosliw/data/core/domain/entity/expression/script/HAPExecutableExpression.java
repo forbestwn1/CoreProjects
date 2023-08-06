@@ -40,7 +40,10 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	public static final String VARIABLESINFO = "variablesInfo";
 
 	@HAPAttribute
-	public static String VARIABLEKEYS = "variableKeys";
+	public static final String VARIABLEKEYS = "variableKeys";
+
+	@HAPAttribute
+	public static final String DATAEXPRESSIONIDS = "dataExpressionIds";
 
 	private String m_type;
 	
@@ -48,6 +51,8 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
+	private Set<String> m_dataExpressionId = new HashSet<String>();
+	
 	public HAPExecutableExpression(String type) {
 		this.m_segments = new ArrayList<HAPExecutableSegmentExpression>();
 		this.m_type = type;
@@ -58,14 +63,18 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	protected void addSegment(HAPExecutableSegmentExpression segment) {	this.m_segments.add(segment);	}
 	public List<HAPExecutableSegmentExpression> getSegments(){    return this.m_segments;     }
 	
-	public Set<String> getVariablesInfo(){   return this.m_varKeys;    }
+	public Set<String> getVariableKeys(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
+
+	public Set<String> getDataExpressionIds(){   return this.m_dataExpressionId;    }
+	public void addDataExpressionId(String id) {   this.m_dataExpressionId.add(id);    }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
+		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
 		
 		List<String> segmentArrayStr = new ArrayList<String>();
 		for(HAPExecutableSegmentExpression segment : this.m_segments) {
