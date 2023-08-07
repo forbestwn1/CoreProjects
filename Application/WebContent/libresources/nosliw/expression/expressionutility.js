@@ -413,49 +413,11 @@ var node_utility = function()
 	var loc_getExecuteDataExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
 		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
-		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesInfo, valueContext), {
+		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesInfo, valueContext, {
 			success : function(request, varValues){
 				return loc_getExecuteDataExpressionRequest(expressionItem, varValues, undefined, references);
 			}
-		});
-		return out;		
-	};
-	
-	var loc_getExecuteDataExpressionItemRequest1 = function(expressionItem, valueContext, references, expressionDef, handlers, request){
-		var variables = {};
-		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
-		_.each(variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES], function(varInfo, i){
-			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
-			var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
-			var rootElemId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
-			var variable = valueContext.createVariable(
-					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], 
-					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME],
-					varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
-			variables[varKey] = variable;
-		});
-		
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
-					
-		var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
-			success : function(request, results){
-				return loc_getExecuteDataExpressionRequest(expressionItem, results.getResults(), undefined, references);
-			}
-		});
-		
-		_.each(variables, function(variable, key){
-			calVarsRequest.addRequest(key, variable.getGetValueRequest({
-				success : function(request, data){
-					var value = data;
-					if(data!=undefined&&data.value!=undefined){
-					    value = data.value;
-					}
-					return value;
-				}	
-			}));
-		});
-		
-		out.addRequest(calVarsRequest);
+		}));
 		return out;		
 	};
 	

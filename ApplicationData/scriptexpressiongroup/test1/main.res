@@ -66,7 +66,7 @@
 				"name" : "literate_datascript",
 				"status": "disabled1",
 				"type" : "literate",
-				"expression" : "HaHaHa  <%=#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value+?(parm1)?.value%>  End!!!!"
+				"expression" : "HaHaHa  <%=(#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value)+?(parm1)?.value%>  End!!!!"
 			},
 		],
 	}
