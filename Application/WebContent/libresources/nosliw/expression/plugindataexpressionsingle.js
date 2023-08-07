@@ -58,7 +58,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 		
 		getExecuteDataExpressionRequest : function(handlers, request){
 			var expressionItem = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONSINGLE_EXPRESSION);
-			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
+			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
 		
 	};

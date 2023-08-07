@@ -23,34 +23,21 @@ var packageObj = library;
 	var node_getEntityTreeNodeInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
-	
-var node_buildRuntimeObject = function(rawRuntimeObject){
-	
-	var interfaceDef = {
-		getInitRequest : function(handlers, request){	},
 
-		getUpdateViewRequest : function(view, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){return view}, handlers, request);
-		},
-
-		
-		getUpdateSystemDataRequest : function(domain, systemData, handlers, request){
-			return loc_getComponentCore().getUpdateSystemDataRequest(domain, systemData, handlers, request);
-		},
-		
-		//component management interface 
-		getContextIODataSet :  function(){  return loc_getContextIODataSet();  },
-		getExecuteCommandRequest : function(command, parms, handlers, request){		},
-
-		registerEventListener : function(listener, handler, thisContext){     },
-		unregisterEventListener : function(listener){     },
-		registerValueChangeEventListener : function(listener, handler, thisContext){      },
-		unregisterValueChangeEventListener : function(listener){      }
-	};
-	
-	return _.extend({}, interfaceDef, rawRuntimeObject);
+var node_makeObjectWithApplicationInterface = function(baseObject, facadeName, interface){
+	var interfaces = node_getInterface(baseObject, node_CONSTANT.INTERFACE_APPLICATIONENTITY);
+	if(interfaces==undefined){
+		interfaces = {};
+	}
+	interfaces[facadeName] = interface;
+	return node_buildInterface(baseObject, node_CONSTANT.INTERFACE_APPLICATIONENTITY, interfaces);
 };
-	
+
+var node_getApplicationInterface = function(baseObject, facadeName){
+	var interfaces = node_getInterface(baseObject, node_CONSTANT.INTERFACE_APPLICATIONENTITY);
+	if(interfaces==undefined)   return interfaces;
+	else return interfaces[facadeName];
+};
 	
 //interface for decoration plug in
 var node_buildDecorationPlugInObject = function(rawPluginObj){
@@ -87,31 +74,6 @@ var node_buildDecorationPlugInObject = function(rawPluginObj){
 	};
 	
 	return loc_out;
-};
-
-//external interface env for current entity
-var node_buildInterfaceEnv = function(rawInterfaceEnv){
-
-	var interfaceDef = {
-		//all interface 
-		getAllInterfaceInfos : function(){},
-		
-		//
-		getInterfaceExecutable : function(interfaceName){  },
-	};
-
-	return _.extend({}, interfaceDef, rawInterfaceEnv);
-};
-
-
-var node_makeComponentWithDebugInterface = function(rawEntity){
-
-	
-	var loc_interfaceEntity = {
-
-	};
-	
-	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPONENTENTITY, loc_interfaceEntity);
 };
 
 //interface for component core 
@@ -355,5 +317,8 @@ packageObj.createChildNode("buildDecorationPlugInObject", node_buildDecorationPl
 packageObj.createChildNode("buildComponentEnv", node_buildComponentEnv); 
 packageObj.createChildNode("makeObjectWithComponentInterface", node_makeObjectWithComponentInterface); 
 packageObj.createChildNode("getComponentInterface", node_getComponentInterface); 
+
+packageObj.createChildNode("makeObjectWithApplicationInterface", node_makeObjectWithApplicationInterface); 
+packageObj.createChildNode("getApplicationInterface", node_getApplicationInterface); 
 
 })(packageObj);

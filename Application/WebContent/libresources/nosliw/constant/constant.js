@@ -306,10 +306,13 @@ var node_CONSTANT=
 	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
 	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
 	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",
+	  "INTERFACE_APPLICATIONENTITY" : "applicationEntity",
 
 	  "INTERFACE_COMPONENTENTITYMANAGE" : "componentEntityManage",
 	  
 	  "INTERFACE_WITHID" : "withId",
+
+	  "INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER" : "taskContainer",
 	  
 	  
 	  "ATTRIBUTE_TYPE_NORMAL" : "normal",

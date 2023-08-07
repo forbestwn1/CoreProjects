@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_resourceUtility;
 	var node_requestServiceProcessor;
 	var node_buildServiceProvider;
@@ -23,6 +24,7 @@ var packageObj = library;
 	var node_namingConvensionUtility;
 	var node_valueContextUtility;
 	var node_complexEntityUtility;
+	var node_getApplicationInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function() 
@@ -409,6 +411,17 @@ var node_utility = function()
 	};
 
 	var loc_getExecuteDataExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
+		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
+		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesInfo, valueContext), {
+			success : function(request, varValues){
+				return loc_getExecuteDataExpressionRequest(expressionItem, varValues, undefined, references);
+			}
+		});
+		return out;		
+	};
+	
+	var loc_getExecuteDataExpressionItemRequest1 = function(expressionItem, valueContext, references, expressionDef, handlers, request){
 		var variables = {};
 		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
 		_.each(variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES], function(varInfo, i){
@@ -472,7 +485,7 @@ var node_utility = function()
 			}
 		});
 		_.each(dataExpressionIds, function(dataExpressionId, i){
-			calDataExpressionsRequest.addRequest(dataExpressionId, dataExpressionGroupCore.getExecuteItemnRequest(dataExpressionId));
+			calDataExpressionsRequest.addRequest(dataExpressionId, node_getApplicationInterface(dataExpressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER).getExecuteItemnRequest(dataExpressionId));
 		});
 		prepareRequest.addRequest("expressionDatas", calDataExpressionsRequest);
 
@@ -573,6 +586,7 @@ var node_utility = function()
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_buildServiceProvider = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
@@ -593,6 +607,7 @@ nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUt
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.valueContextUtility", function(){node_valueContextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

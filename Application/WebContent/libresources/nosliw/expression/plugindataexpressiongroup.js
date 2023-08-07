@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_createServiceRequestInfoSimple;
 	var node_expressionUtility;
+	var node_makeObjectWithApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,28 +40,8 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_referencedRuntime = {};
-	
-	var loc_out = {
-		
-		getComplexEntityInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
-			
-			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
-					success : function(request, childNode){
-						loc_referencedRuntime[attrName] = childNode.getChildValue();
-					}
-				}));
-			});
-			return out;
-		},
-		
-		setEnvironmentInterface : function(envInterface){
-			loc_envInterface = envInterface;
-		},
-		
+
+	var loc_facade = {
 		getAllItemIds : function(){
 			var out = [];
 			var expressions = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
@@ -83,10 +64,31 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		},
 	};
 	
-	return loc_out;
+	var loc_out = {
+		
+		getComplexEntityInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
+			
+			_.each(refAttrNames, function(attrName, i){
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+					success : function(request, childNode){
+						loc_referencedRuntime[attrName] = childNode.getChildValue();
+					}
+				}));
+			});
+			return out;
+		},
+		
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
+		},
+		
+	};
 	
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facade);
 };
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -102,6 +104,8 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionGroupPlugin", node_createDataExpressionGroupPlugin); 

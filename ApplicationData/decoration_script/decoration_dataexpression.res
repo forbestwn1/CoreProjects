@@ -1,4 +1,5 @@
 function(complexEntityDef, valueContextId, bundleCore, configure){
+	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
 	var node_createServiceRequestInfoCommon = nosliw.getNodeData("request.request.createServiceRequestInfoCommon");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
@@ -30,14 +31,18 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_calcuateExpression = function(expressionId){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var expressionIds = coreEntity.getAllItemIds();
-		var request = coreEntity.getExecuteItemnRequest(expressionId, {
+		var request = loc_getCoreTaskContainerInterface(coreEntity).getExecuteItemnRequest(expressionId, {
 			success : function(request, result){
 				loc_expressionResultView.val(JSON.stringify(result));
 			}
 		});
 		node_requestServiceProcessor.processRequest(request);
 	};
+
+	var loc_getCoreTaskContainerInterface = function(coreEntity){
+		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+	};
+
 
 	var loc_out = {
 
@@ -59,7 +64,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		getPostInitRequest : function(handlers, request){
 			var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 			var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-			var expressionIds = coreEntity.getAllItemIds();
+			var expressionIds = loc_getCoreTaskContainerInterface(coreEntity).getAllItemIds();
 			
 			loc_expressionListView.empty();
 			loc_expressionListView.append($('<br>'));
