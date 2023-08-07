@@ -464,7 +464,7 @@ var node_utility = function()
 			
 		});
 
-		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS], valueContext));
+		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS), valueContext));
 		
 		var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {
 			success : function(request, results){
@@ -472,7 +472,7 @@ var node_utility = function()
 			}
 		});
 		_.each(dataExpressionIds, function(dataExpressionId, i){
-			calDataExpressionsRequest.addRequest(dataExpressionId, dataExpressionGroupCore.getExecuteDataExpressionRequest(dataExpressionId));
+			calDataExpressionsRequest.addRequest(dataExpressionId, dataExpressionGroupCore.getExecuteItemnRequest(dataExpressionId));
 		});
 		prepareRequest.addRequest("expressionDatas", calDataExpressionsRequest);
 

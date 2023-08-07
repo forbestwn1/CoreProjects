@@ -10,8 +10,6 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressio
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
 
 public class HAPUtilityExpressionDefinition {
 
@@ -100,8 +98,8 @@ public class HAPUtilityExpressionDefinition {
 
 	//define the segment parsing infor
 	private static final Object[][] m_definitions = {
-			{"&(", ")&", HAPConstantInScript.class}, 
-			{"?(", ")?", HAPVariableInScript.class}
+			{"&(", ")&", HAPDefinitionConstantInScript.class}, 
+			{"?(", ")?", HAPDefinitionVariableInScript.class}
 	};
 
 	private static void parseExpressionScriptSegment(String orignalScript, HAPDefinitionSegmentExpressionScript expressionScriptSegment){

@@ -36,8 +36,8 @@ public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcesso
 				}
 			}
 			else if(scriptSegmentEle instanceof HAPExecutableVariableInScript){
-				String varName = ((HAPExecutableVariableInScript)scriptSegmentEle).getVariableKey();
-				String varValueScript = variablesDataParmName + "[\"" + varName +"\"]";
+				String varKey = ((HAPExecutableVariableInScript)scriptSegmentEle).getVariableKey();
+				String varValueScript = variablesDataParmName + "[\"" + varKey +"\"]";
 				funScript.append("("+varValueScript+"!=undefined?"+varValueScript+":''"+")");
 			}
 		}

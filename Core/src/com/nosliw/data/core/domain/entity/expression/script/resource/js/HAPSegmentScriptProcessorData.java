@@ -10,7 +10,7 @@ public class HAPSegmentScriptProcessorData implements HAPSegmentScriptProcessor{
 			String expressionsDataParmName, String constantsDataParmName, String variablesDataParmName) {
 		HAPOutputScriptProcessor out = new HAPOutputScriptProcessor();
 		HAPExecutableSegmentExpressionData dataScriptExe = (HAPExecutableSegmentExpressionData)scriptExe;
-		out.setFunctionBody(expressionsDataParmName+"["+dataScriptExe.getDataExpressionId()+"]");
+		out.setFunctionBody(expressionsDataParmName+"[\""+dataScriptExe.getDataExpressionId()+"\"]");
 		return out;
 	}
 }

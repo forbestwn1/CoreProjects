@@ -52,7 +52,7 @@
 		"element": [
 			{
 				"name" : "text",
-				"status": "disabled1",
+				"status": "disabled",
 				"type" : "text",
 				"expression" : "hello world"
 			},
@@ -60,13 +60,13 @@
 				"name" : "literate_script",
 				"status": "disabled",
 				"type" : "literate",
-				"expression" : "HaHaHa  <%=(&(baseVarNormal)&.value+&(parm2)&)+&(parm1)&%>  End!!!!"
+				"expression" : "HaHaHa  <%=?(baseVarNormal)?.value+?(parm2)?.value+?(parm1)?.value%>  End!!!!"
 			},
 			{
 				"name" : "literate_datascript",
-				"status": "disabled",
+				"status": "disabled1",
 				"type" : "literate",
-				"expression" : "HaHaHa  <%=#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+&(parm2)&)+&(parm1)&%>  End!!!!"
+				"expression" : "HaHaHa  <%=#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value+?(parm1)?.value%>  End!!!!"
 			},
 		],
 	}
