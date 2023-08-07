@@ -34,8 +34,8 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 		if(valueObj!=null) {
 			if(valueObj instanceof HAPExecutable) {
 				jsonMap.put(VALUE, ((HAPExecutable)valueObj).toResourceData(runtimeInfo).toString());
-				typeJsonMap.put(VALUE, valueObj.getClass());
 			}
+			typeJsonMap.put(VALUE, valueObj.getClass());
 		}
 		
 		Map<String, String> adaptersMap = new LinkedHashMap<String, String>();

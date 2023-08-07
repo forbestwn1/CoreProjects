@@ -80,9 +80,9 @@ var node_utility = function()
 		var allVariables = variables;
 		
 		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OPERAND], allVariables, constants, references, {
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
 			success : function(requestInfo, operandResult){
-				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_OUTPUTMATCHERS];
+				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
 				if(outputMatchers!=undefined){
 					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
 				}
