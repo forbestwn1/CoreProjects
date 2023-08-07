@@ -58,13 +58,13 @@
 			},
 			{
 				"name" : "literate_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"type" : "literate",
 				"expression" : "HaHaHa  <%=(&(baseVarNormal)&.value+&(parm2)&)+&(parm1)&%>  End!!!!"
 			},
 			{
 				"name" : "literate_datascript",
-				"status": "disabled1",
+				"status": "disabled",
 				"type" : "literate",
 				"expression" : "HaHaHa  <%=#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+&(parm2)&)+&(parm1)&%>  End!!!!"
 			},

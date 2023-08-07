@@ -85,6 +85,7 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
 		HAPScriptFunctionInfo scriptFunctionInfo = HAPUtilityScriptForExecuteJSScript.buildExpressionFunctionInfo(this);
 		
 		String functionParmValue = "{}";

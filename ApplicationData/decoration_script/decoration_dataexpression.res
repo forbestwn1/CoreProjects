@@ -30,8 +30,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_calcuateExpression = function(expressionId){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var expressionIds = coreEntity.getAllExpressionIds();
-		var request = coreEntity.getExecuteDataExpressionRequest(expressionId, {
+		var expressionIds = coreEntity.getAllItemIds();
+		var request = coreEntity.getExecuteItemnRequest(expressionId, {
 			success : function(request, result){
 				loc_expressionResultView.val(JSON.stringify(result));
 			}
@@ -59,7 +59,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		getPostInitRequest : function(handlers, request){
 			var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 			var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-			var expressionIds = coreEntity.getAllExpressionIds();
+			var expressionIds = coreEntity.getAllItemIds();
 			
 			loc_expressionListView.empty();
 			loc_expressionListView.append($('<br>'));

@@ -48,7 +48,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 		
 		StringBuffer funScript = buildSegmentFunctionScript(segments);
 		if(expressionExe.getType().equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE))  funScript.append("+\"\"");
-		out.setMainScript(HAPJSScriptInfo.buildByScript(funScript.toString(), null));
+		
+		String script = HAPUtilityScriptForExecuteJSScript.buildFunction(funScript.toString(), functionsParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
+		out.setMainScript(HAPJSScriptInfo.buildByScript(script, null));
 		return out;
 	}
 	

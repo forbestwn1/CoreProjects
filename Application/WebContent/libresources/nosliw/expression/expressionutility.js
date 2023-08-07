@@ -451,14 +451,14 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getExecuteExpressionRequest", {}), handlers, request);
 
 		var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEKEYS];
-		var dataExpressionIds = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_DATAEXPRESSIONIDS];
-		var scriptFun = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SCRIPTFUNCTION];
-		var supportFuns = scriptObj[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SUPPORTFUNCTION];
+		var dataExpressionIds = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_DATAEXPRESSIONIDS];
+		var scriptFun = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SCRIPTFUNCTION];
+		var supportFuns = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SUPPORTFUNCTION];
 
 		var prepareRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("prepareRequest", {}), {
 			success : function(request, results){
-				var variableValues = results.getResults("variableValues"); 	
-				var expressionDatas = results.getResults("expressionDatas"); 	
+				var variableValues = results.getResult("variableValues"); 	
+				var expressionDatas = results.getResult("expressionDatas"); 	
 				return scriptFun.call(undefined, supportFuns, expressionDatas, constants, variableValues);
 			}
 			
@@ -466,12 +466,17 @@ var node_utility = function()
 
 		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS], valueContext));
 		
-		var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {});
+		var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {
+			success : function(request, results){
+				return results.getResults();
+			}
+		});
 		_.each(dataExpressionIds, function(dataExpressionId, i){
 			calDataExpressionsRequest.addRequest(dataExpressionId, dataExpressionGroupCore.getExecuteDataExpressionRequest(dataExpressionId));
 		});
 		prepareRequest.addRequest("expressionDatas", calDataExpressionsRequest);
 
+		out.addRequest(prepareRequest);
 		return out;		
 	};
 

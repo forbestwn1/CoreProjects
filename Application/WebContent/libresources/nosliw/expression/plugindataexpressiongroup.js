@@ -61,17 +61,17 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			loc_envInterface = envInterface;
 		},
 		
-		getAllExpressionIds : function(){
+		getAllItemIds : function(){
 			var out = [];
-			var expressions = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+			var expressions = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
 			_.each(expressions, function(expression, i){
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 			});
 			return out;
 		},
 		
-		getExecuteDataExpressionRequest : function(dataExpressionId, handlers, request){
-			var expressions = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+		getExecuteItemnRequest : function(dataExpressionId, handlers, request){
+			var expressions = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
 			var expressionItem;		
 			_.each(expressions, function(expression, i){
 				if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){

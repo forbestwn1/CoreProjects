@@ -46,6 +46,7 @@ var packageObj = library;
 	var node_createDataServiceEntityPlugin;
 	var node_createDataExpressionGroupPlugin;
 	var node_createDataExpressionSinglePlugin;
+	var node_createExpressionGroupPlugin;
 	var node_createDecorationScriptPlugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -175,6 +176,9 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, node_createDataExpressionGroupPlugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, node_createDataExpressionSinglePlugin());
+
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, node_createExpressionGroupPlugin());
+
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createScriptBasedPlugin());
 
 		//simple entity plugin
@@ -385,6 +389,7 @@ nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapter
 nosliw.registerSetNodeDataEvent("dataservice.createDataServiceEntityPlugin", function(){node_createDataServiceEntityPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionGroupPlugin", function(){node_createDataExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexEntityRuntimeService", node_createComplexEntityRuntimeService); 

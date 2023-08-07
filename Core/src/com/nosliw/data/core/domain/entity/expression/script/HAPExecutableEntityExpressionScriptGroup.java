@@ -1,11 +1,9 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEntityExpressionScriptGroup extends HAPExecutableEntityExpressionScript{
@@ -14,9 +12,11 @@ public class HAPExecutableEntityExpressionScriptGroup extends HAPExecutableEntit
 	public static String EXPRESSIONS = "expressions";
 	
 	public HAPExecutableEntityExpressionScriptGroup() {
-		this.setAttributeValueObject(EXPRESSIONS, new ArrayList<HAPExecutableExpressionData>());
+		this.setAttributeValueObject(EXPRESSIONS, new HAPExecutableContainerExpression());
 	}
 
-	public List<HAPExecutableExpression> getAllExpressionItems(){   return (List<HAPExecutableExpression>)this.getAttributeValue(EXPRESSIONS);  }
-	public void addExpressionItem(HAPExecutableExpression expressionItem) {    this.getAllExpressionItems().add(expressionItem);       }
+	public HAPExecutableContainerExpression getExprssionContainer() {   return (HAPExecutableContainerExpression)this.getAttributeValue(EXPRESSIONS);  }
+	
+	public List<HAPExecutableExpression> getAllExpressionItems(){   return this.getExprssionContainer().getAllExpressionItems();  }
+	public void addExpressionItem(HAPExecutableExpression expressionItem) {    this.getExprssionContainer().addExpressionItem(expressionItem);       }
 }
