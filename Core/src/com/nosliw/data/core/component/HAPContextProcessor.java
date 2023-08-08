@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
@@ -60,7 +60,7 @@ public class HAPContextProcessor {
 		Object entity = null;
 		HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
-			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentEntity)attachment).getEntity()), this.m_complexEntity);
+			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentImpEntity)attachment).getEntity()), this.m_complexEntity);
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {

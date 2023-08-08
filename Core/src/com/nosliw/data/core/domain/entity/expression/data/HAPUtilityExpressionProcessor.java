@@ -10,6 +10,7 @@ import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -17,11 +18,10 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
+import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPUtilityEntityProcess;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
@@ -133,10 +133,8 @@ public class HAPUtilityExpressionProcessor {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null) {
-						String constantName = constantOperand.getName();
-						HAPAttachment attachment = processContext.getCurrentBundle().getAttachmentDomain().getAttachment(containerComplexEntity.getAttachmentContainerId(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA, constantName);
-						HAPDefinitionEntityData dataEntity = (HAPDefinitionEntityData)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(attachment.getEntityId()).getEntity();
-						constantOperand.setData(dataEntity.getData());
+						HAPData constantData = HAPUtilityComplexConstant.getConstantData(constantOperand.getName(), containerComplexEntity, processContext);
+						constantOperand.setData(constantData);
 					}
 				}
 				return true;

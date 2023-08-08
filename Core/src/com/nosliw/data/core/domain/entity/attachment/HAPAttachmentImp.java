@@ -50,7 +50,6 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
 		if(this.m_valueType==null)   this.m_valueType = jsonObj.getString(VALUETYPE);
-		this.m_adaptor = jsonObj.opt(ADAPTOR);
 		return true;  
 	}
 

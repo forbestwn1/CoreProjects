@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.attachment;
+package com.nosliw.data.core.domain.attachment;
 
 import java.util.Map;
 

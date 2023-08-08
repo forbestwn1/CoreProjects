@@ -7,7 +7,6 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
-import com.nosliw.data.core.domain.entity.attachment.HAPManagerAttachment;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
@@ -49,8 +48,6 @@ public interface HAPRuntimeEnvironment {
 
 	HAPResourceManagerRoot getResourceManager();
 	
-	HAPManagerAttachment getAttachmentManager();
-
 	HAPGatewayManager getGatewayManager();
 
 	HAPManagerService getServiceManager();

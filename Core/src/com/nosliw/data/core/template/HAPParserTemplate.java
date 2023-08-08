@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.resource.dynamic.HAPParmDefinition;
 
 public class HAPParserTemplate {
@@ -50,7 +50,7 @@ public class HAPParserTemplate {
 		//parms
 		Map<String, HAPAttachment> attachments = out.getAttachmentsByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TESTDATA);
 		for(String setName : attachments.keySet()) {
-			HAPAttachmentEntity att = (HAPAttachmentEntity)attachments.get(setName);
+			HAPAttachmentImpEntity att = (HAPAttachmentImpEntity)attachments.get(setName);
 			JSONArray parmJsonArray = att.getEntityJsonArray();
 			for(int i=0; i<parmJsonArray.length(); i++) {
 				HAPParmDefinition parmDef = new HAPParmDefinition();

@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -53,7 +53,7 @@ public class HAPUtilityActivityComponent {
 	private static HAPDefinitionActivity buildActivity(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
 		HAPDefinitionActivity out = null;
 		if(HAPConstantShared.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
-			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
+			HAPAttachmentImpEntity entityAttachment = (HAPAttachmentImpEntity)attachment;
 			JSONObject attachmentEntityJsonObj = entityAttachment.getEntityJsonObj();
 			out = HAPParserActivity.parseActivityDefinition(attachmentEntityJsonObj, activityPluginMan);
 		}

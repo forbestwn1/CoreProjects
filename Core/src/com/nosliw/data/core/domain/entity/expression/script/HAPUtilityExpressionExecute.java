@@ -1,20 +1,18 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
-import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
 
 public class HAPUtilityExpressionExecute {
 
-	public static HAPExecutableExpression processExpression(HAPDefinitionExpression expressionDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
+	public static HAPExecutableExpression processExpression(HAPDefinitionExpression expressionDef, HAPExecutableEntityExpressionScript expressionEntity, HAPContextProcessor processContext, HAPGeneratorId idGenerator) {
 		HAPExecutableExpression out = new HAPExecutableExpression(expressionDef.getType());
 
 		expressionDef.cloneToEntityInfo(out);
@@ -25,21 +23,22 @@ public class HAPUtilityExpressionExecute {
 				out.addSegment(processSegmentText((HAPDefinitionSegmentExpressionText)segDef, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
-				out.addSegment(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
+				out.addSegment(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, expressionEntity, processContext, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
 				out.addSegment(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
-				out.addSegment(processSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
+				out.addSegment(processSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segDef, expressionEntity, processContext, idGenerator));
 			}
 		}
 		
 		buildVariableInfoInExpression(out);
 		buildDataExpressionInExpression(out);
 		return out;
-	}
 
+	}
+	
 	private static void buildDataExpressionInExpression(HAPExecutableExpression expressionExe) {
 		List<HAPExecutableSegmentExpression> segments = expressionExe.getSegments();
 		for(HAPExecutableSegmentExpression segment : segments) {
@@ -93,14 +92,14 @@ public class HAPUtilityExpressionExecute {
 		return new HAPExecutableSegmentExpressionData(generateSegmentId(dataSegDef.getType(), idGenerator), dataSegDef.getDataExpressionId());
 	}
 	
-	private static HAPExecutableSegmentExpressionDataScript processSegmentDataScript(HAPDefinitionSegmentExpressionDataScript dataScriptSegDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
+	private static HAPExecutableSegmentExpressionDataScript processSegmentDataScript(HAPDefinitionSegmentExpressionDataScript dataScriptSegDef, HAPExecutableEntityExpressionScript expressionEntity, HAPContextProcessor processContext, HAPGeneratorId idGenerator) {
 		
 		HAPExecutableSegmentExpressionDataScript out = new HAPExecutableSegmentExpressionDataScript(generateSegmentId(dataScriptSegDef.getType(), idGenerator));
 		
 		for(HAPDefinitionSegmentExpression segDef : dataScriptSegDef.getSegments()) {
 			String segType = segDef.getType();
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
-				out.addSegmentScript(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, constantValues, variableContainer, valueContext, valueStructureDomain, idGenerator));
+				out.addSegmentScript(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, expressionEntity, processContext, idGenerator));
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
 				out.addSegmentData(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
@@ -109,7 +108,7 @@ public class HAPUtilityExpressionExecute {
 		return out;
 	}
 	
-	private static HAPExecutableSegmentExpressionScript processSegmentScript(HAPDefinitionSegmentExpressionScript scriptSegDef, Map<String, Object> constantValues, HAPContainerVariableCriteriaInfo variableContainer,  HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPGeneratorId idGenerator) {
+	private static HAPExecutableSegmentExpressionScript processSegmentScript(HAPDefinitionSegmentExpressionScript scriptSegDef, HAPExecutableEntityExpressionScript expressionEntity, HAPContextProcessor processContext, HAPGeneratorId idGenerator) {
 		HAPExecutableSegmentExpressionScript out = new HAPExecutableSegmentExpressionScript(generateSegmentId(scriptSegDef.getType(), idGenerator));
 		for(Object segObj : scriptSegDef.getSegments()) {
 			if(segObj instanceof String) {
@@ -118,12 +117,13 @@ public class HAPUtilityExpressionExecute {
 			else if(segObj instanceof HAPDefinitionConstantInScript) {
 				HAPDefinitionConstantInScript constantSegDef = (HAPDefinitionConstantInScript)segObj;
 				String contantName = constantSegDef.getConstantName();
-				out.addPart(new HAPExecutableConstantInScript(contantName, constantValues.get(contantName)));
+				Object constantValue = HAPUtilityComplexConstant.getConstantValue(contantName, expressionEntity, processContext);
+				out.addPart(new HAPExecutableConstantInScript(contantName, constantValue));
 			}
 			else if(segObj instanceof HAPDefinitionVariableInScript) {
 				HAPDefinitionVariableInScript varSegDef = (HAPDefinitionVariableInScript)segObj;
-				HAPIdVariable varId = HAPUtilityValueContextReference.resolveVariableName(varSegDef.getVariableName(), valueContext, null, valueStructureDomain, null);
-				String varKey = variableContainer.addVariable(varId);
+				HAPIdVariable varId = HAPUtilityValueContextReference.resolveVariableName(varSegDef.getVariableName(), expressionEntity.getValueContext(), null, processContext.getCurrentValueStructureDomain(), null);
+				String varKey = expressionEntity.getVariablesInfo().addVariable(varId);
 				out.addPart(new HAPExecutableVariableInScript(varSegDef.getVariableName(), varKey));
 			}
 		}

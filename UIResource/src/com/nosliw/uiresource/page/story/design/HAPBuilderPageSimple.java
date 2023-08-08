@@ -19,7 +19,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReferenceExternal;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
@@ -141,7 +141,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 			HAPData constantData = constantNode.getData();
 			if(constantData!=null) {
 				//build service attachment
-				HAPAttachmentEntity atta = new HAPAttachmentEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
+				HAPAttachmentImpEntity atta = new HAPAttachmentImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
 				atta.setEntity(new JSONObject(constantData.toStringValue(HAPSerializationFormat.JSON)));
 				attachs.add(atta);
 			}

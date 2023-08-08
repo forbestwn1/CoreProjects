@@ -21,7 +21,7 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
@@ -113,8 +113,8 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 				String[] segs = HAPUtilityNamingConversion.parseLevel2(attIdStr);
 				String valueType = segs[0];
 				String itemName = segs[1];
-				HAPAttachment attachment = attachmentDomain.getAttachment(executableEntity.getAttachmentContainerId(), valueType, itemName);
-				String entityStr = definitionDomain.getEntityInfoDefinition(attachment.getEntityId()).getEntity().toExpandedJsonString(definitionDomain);
+				HAPAttachmentImpEntity attachment = (HAPAttachmentImpEntity)attachmentDomain.getAttachment(executableEntity.getAttachmentContainerId(), valueType, itemName);
+				String entityStr = attachment.getEntity().toExpandedJsonString(definitionDomain);
 				attachments.add(new HAPInfoAttachmentResolve(valueType, itemName, attachment, entityStr));
 			}
 			executableEntity.setAttachment(attachments);

@@ -8,7 +8,7 @@ import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponentImp;
@@ -38,7 +38,7 @@ public class HAPUtilityProcessComponent {
 	public static HAPElementInContainerEntityDefinition getProcessDefinitionElementFromAttachment(HAPAttachment attachment, HAPManagerActivityPlugin activityPluginMan) {
 		HAPElementInContainerEntityDefinition out = null;
 		if(HAPConstantShared.ATTACHMENT_TYPE_ENTITY.equals(attachment.getType())) {
-			HAPAttachmentEntity entityAttachment = (HAPAttachmentEntity)attachment;
+			HAPAttachmentImpEntity entityAttachment = (HAPAttachmentImpEntity)attachment;
 			out = HAPParserProcessDefinition.parseProcess(entityAttachment.getEntityJsonObj(), activityPluginMan);
 		}
 		else if(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL.equals(attachment.getType())) {

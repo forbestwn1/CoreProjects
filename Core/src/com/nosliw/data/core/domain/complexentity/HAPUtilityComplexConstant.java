@@ -9,19 +9,53 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
+import com.nosliw.data.core.domain.entity.value.HAPDefinitionEntityValue;
 import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPValue;
 
 public class HAPUtilityComplexConstant {
 
+	public static HAPData getConstantData(String constantName, HAPExecutableEntityComplex complexEntityExe, HAPContextProcessor processContext) {
+		HAPData out = null;
+		HAPAttachmentImpEntity attachment = (HAPAttachmentImpEntity)processContext.getCurrentBundle().getAttachmentDomain().getAttachment(complexEntityExe.getAttachmentContainerId(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA, constantName);
+		if(attachment!=null) {
+			HAPDefinitionEntityData dataEntity = (HAPDefinitionEntityData)attachment.getEntity();
+			out = dataEntity.getData();
+		}
+		return out;
+	}
+
+	public static Object getConstantValue(String constantName, HAPExecutableEntityComplex complexEntityExe, HAPContextProcessor processContext) {
+		Object out = null;
+		HAPAttachmentImpEntity attachment = (HAPAttachmentImpEntity)processContext.getCurrentBundle().getAttachmentDomain().getAttachment(complexEntityExe.getAttachmentContainerId(), HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE, constantName);
+		if(attachment!=null) {
+			HAPDefinitionEntityValue valueEntity = (HAPDefinitionEntityValue)attachment.getEntity();
+			out = valueEntity.getValue();
+		}	
+		return out;
+	}
+	
+	public static Object getConstantValueOrData(String constantName, HAPExecutableEntityComplex complexEntityExe, HAPContextProcessor processContext) {
+		Object out = null;
+		out = getConstantValue(constantName, complexEntityExe, processContext);
+		if(out==null)	out = getConstantData(constantName, complexEntityExe, processContext);
+		return out;
+	}
+	
+	
+	
+	
 	public static Map<String, HAPData> getConstantsData(HAPDefinitionEntityInDomainComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
 	
 	}
@@ -110,7 +144,7 @@ public class HAPUtilityComplexConstant {
 		Map<String, HAPAttachment> attrs = attContainer.getAttachmentByType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUE);
 		for(String id : attrs.keySet()) {
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
-			HAPAttachmentEntity attr = (HAPAttachmentEntity)attrs.get(id);
+			HAPAttachmentImpEntity attr = (HAPAttachmentImpEntity)attrs.get(id);
 			attr.cloneToEntityInfo(constantDef);
 			HAPValue value = new HAPValue();
 			value.buildObject(attr.getEntity(), HAPSerializationFormat.JSON);

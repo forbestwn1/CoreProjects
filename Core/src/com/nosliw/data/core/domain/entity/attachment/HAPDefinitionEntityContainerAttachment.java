@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
+import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
@@ -74,35 +74,6 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 			}
 		}
 	}
-	//merge with parent
-	public void merge1(HAPDefinitionEntityContainerAttachment parent, String mode) {
-		if(parent==null)  return;
-		if(mode==null)   mode = HAPConstant.INHERITMODE_CHILD;
-		if(mode.equals(HAPConstant.INHERITMODE_NONE))  return;
-		
-		for(String type : parent.m_element.keySet()) {
-			Map<String, HAPAttachment> byName = parent.m_element.get(type);
-			for(String name : byName.keySet()) {
-				HAPAttachment parentEle = byName.get(name);
-				HAPAttachment thisEle = this.getElement(type, name);
-				if(thisEle==null || thisEle.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_PLACEHOLDER)) {
-					//element not exist, or empty, borrow from parent
-					HAPAttachment newEle = parentEle.cloneAttachment();
-					HAPUtilityAttachment.setOverridenByParent(newEle);
-					this.addAttachment(type, newEle);
-				}
-				else {
-					if(mode.equals(HAPConstant.INHERITMODE_PARENT)&&HAPUtilityAttachment.isOverridenByParentMode(thisEle)) {
-						//if configurable, then parent override child
-						HAPAttachment newEle = parentEle.cloneAttachment();
-						HAPUtilityAttachment.setOverridenByParent(newEle);
-						this.addAttachment(type, newEle);
-					}
-				}
-			}
-		}
-	}
-
 	public HAPAttachment getElement(HAPReferenceAttachment attachmentReference) {   return this.getElement(attachmentReference.getDataType(), attachmentReference.getName());  }
 	
 	public HAPAttachment getElement(String type, String name) {

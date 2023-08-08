@@ -4,7 +4,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPManagerActivity;
-import com.nosliw.data.core.activity.HAPProcessorAttachmentEntityActivity;
 import com.nosliw.data.core.activity.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.activity.HAPTaskInfoParserActivity;
 import com.nosliw.data.core.activity.HAPTaskInfoProcessorActivity;
@@ -49,6 +48,7 @@ import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityPro
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityDefinitionInDomainTestComplex1;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityProcessorComplexTestComplex1;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPPluginEntityDefinitionInDomainTestSimple1;
+import com.nosliw.data.core.domain.entity.value.HAPPluginEntityDefinitionInDomainValue;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructure;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
@@ -77,7 +77,6 @@ import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
 import com.nosliw.data.core.task.HAPInfoTask;
 import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.core.valuestructure1.HAPProcessorAttachmentEntityValueStructure;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
@@ -127,8 +126,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerService m_serviceManager;
 	
-	private HAPManagerAttachment m_attachmentManager;
-	
 	private HAPManagerResourceDefinition m_resourceDefinitionManager;
 	
 	private HAPManagerDomainEntityDefinition m_domainEntityDefinitionManager;
@@ -167,7 +164,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, attachmentManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -187,7 +184,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerResourceDefinition resourceDefManager,
 			    HAPManagerDomainEntityDefinition domainEntityDefinitionManager,
 				HAPManagerDomainEntityExecutable complexEntityExecutableManager,
-				HAPManagerAttachment attachmentManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
@@ -204,7 +200,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_domainEntityDefinitionManager = domainEntityDefinitionManager;
 		this.m_domainEntityExecutableManager = complexEntityExecutableManager;
-		this.m_attachmentManager = attachmentManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
 		this.m_cronJobManager = cronJobManager;
@@ -248,10 +243,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_ACTIVITY, new HAPInfoTask(new HAPTaskInfoParserActivity(this.getActivityManager().getPluginManager()), new HAPTaskInfoProcessorActivity(this)));
 		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_SEQUENCE, new HAPInfoTask(new HAPTaskInfoParserSequence(this.getTaskManager()), new HAPTaskInfoProcessorSequence(this.getTaskManager())));
 		
-		//attachment
-//		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPProcessorAttachmentEntityExpression(this));
-		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, new HAPProcessorAttachmentEntityValueStructure());
-		this.m_attachmentManager.registerProcessor(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITY, new HAPProcessorAttachmentEntityActivity(this.getActivityManager().getPluginManager()));
 		
 		//component
 
@@ -306,6 +297,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociationInteractive(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainServiceProvider(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainData(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValue(this));
 		
 
 		//complex entity processor
@@ -372,9 +364,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerDomainEntityExecutable getDomainEntityExecutableManager() {   return this.m_domainEntityExecutableManager;   }
-
-	@Override
-	public HAPManagerAttachment getAttachmentManager() {    return this.m_attachmentManager;     }
 
 	@Override
 	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}

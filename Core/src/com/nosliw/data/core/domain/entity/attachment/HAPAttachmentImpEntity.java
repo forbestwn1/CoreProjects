@@ -2,7 +2,6 @@ package com.nosliw.data.core.domain.entity.attachment;
 
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -11,29 +10,25 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 
 //attachment that have real entity
-public class HAPAttachmentEntity extends HAPAttachmentImp{
+public class HAPAttachmentImpEntity extends HAPAttachmentImp{
 
 	@HAPAttribute
 	public static String ENTITY = "entity";
 
-	private Object m_entity;
+	private HAPDefinitionEntityInDomain m_entity;
 	
-	private HAPAttachmentEntity() {}
+	private HAPAttachmentImpEntity() {}
 	
-	public HAPAttachmentEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo) {
+	public HAPAttachmentImpEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo, HAPDefinitionEntityInDomain entity) {
 		super(valueType, rawValue, entityId, entityInfo);
+		this.setEntity(entity);
 	}
 	
-	public Object getEntity() {    return this.m_entity;    }
-	public void setEntity(Object entityObj) {    this.m_entity = entityObj;    }
-
-	public String getEntityString() {   return (String)this.getEntity();   }
-	public Integer getEntityInteger() {   return (Integer)this.getEntity();   }
-	public Boolean getEntityBoolean() {   return (Boolean)this.getEntity();   }
-	public JSONObject getEntityJsonObj() {   return (JSONObject)this.getEntity();   }
-	public JSONArray getEntityJsonArray() {   return (JSONArray)this.getEntity();   }
+	public HAPDefinitionEntityInDomain getEntity() {    return this.m_entity;    }
+	public void setEntity(HAPDefinitionEntityInDomain entityObj) {    this.m_entity = entityObj;    }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -52,8 +47,8 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPAttachmentEntity) {
-			HAPAttachmentEntity ele = (HAPAttachmentEntity)obj;
+		if(obj instanceof HAPAttachmentImpEntity) {
+			HAPAttachmentImpEntity ele = (HAPAttachmentImpEntity)obj;
 			if(super.equals(ele)) {
 				if(HAPUtilityBasic.isEquals(ele.m_entity, this.m_entity)) {
 					out = true;
@@ -64,8 +59,8 @@ public class HAPAttachmentEntity extends HAPAttachmentImp{
 	}
 	
 	@Override
-	public HAPAttachmentEntity cloneAttachment() {
-		HAPAttachmentEntity out = new HAPAttachmentEntity();
+	public HAPAttachmentImpEntity cloneAttachment() {
+		HAPAttachmentImpEntity out = new HAPAttachmentImpEntity();
 		this.cloneToAttachment(out);
 		out.m_entity = this.m_entity;
 		return out;

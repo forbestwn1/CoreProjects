@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentEntity;
+import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -87,7 +87,7 @@ public class HAPUtilityAttachment {
 	
 	public static HAPContextDataFlat getContextDataFromAttachment(HAPDefinitionEntityContainerAttachment attContainer, String type, String name) {
 		HAPContextDataFlat out = new HAPContextDataFlat();
-		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
+		HAPAttachmentImpEntity attachment = (HAPAttachmentImpEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
 			JSONObject dataObjJson = attachment.getEntityJsonObj();
 			out = HAPContextDataFactory.newContextDataFlat(dataObjJson);
@@ -105,7 +105,7 @@ public class HAPUtilityAttachment {
 
 	public static Map<String, Object> getContextValueFromAttachment(HAPDefinitionEntityContainerAttachment attContainer, String type, String name) {
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		HAPAttachmentEntity attachment = (HAPAttachmentEntity)attContainer.getElement(type, name);
+		HAPAttachmentImpEntity attachment = (HAPAttachmentImpEntity)attContainer.getElement(type, name);
 		if(attachment!=null) {
 			JSONObject dataObjJson = attachment.getEntityJsonObj();
 			for(Object key : dataObjJson.keySet()) {
@@ -128,7 +128,7 @@ public class HAPUtilityAttachment {
 			out = resourceDefMan.getLocalResourceDefinition(resourceId);
 		}
 		else if(attachment.getType().equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)){
-			out = resourceDefMan.parseResourceDefinition(attachment.getValueType(), ((HAPAttachmentEntity)attachment).getEntityJsonObj());
+			out = resourceDefMan.parseResourceDefinition(attachment.getValueType(), ((HAPAttachmentImpEntity)attachment).getEntityJsonObj());
 		}
 		return out;
 	}
@@ -150,8 +150,8 @@ public class HAPUtilityAttachment {
 						attachment = new HAPAttachmentReferenceExternal(type);
 					}
 				}
-				else if(attachmentJson.opt(HAPAttachmentEntity.ENTITY)!=null){
-					attachment = new HAPAttachmentEntity(type);
+				else if(attachmentJson.opt(HAPAttachmentImpEntity.ENTITY)!=null){
+					attachment = new HAPAttachmentImpEntity(type);
 				}
 				else {
 					attachment = new HAPAttachmentPlaceHolder(type);

@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -28,8 +29,9 @@ public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntity
 			for(int i=0; i<byNameArray.length(); i++) {
 				JSONObject attachmentJson = byNameArray.getJSONObject(i);
 				HAPIdEntityInDomain attaEntityId = HAPUtilityParserEntity.parseEntity(attachmentJson, valueType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-				HAPExtraInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(attaEntityId).getExtraInfo();
-				HAPAttachment attachment = new HAPAttachmentEntity(valueType, attachmentJson, attaEntityId, entityInfo);
+				HAPInfoEntityInDomainDefinition entityInDomainInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(attaEntityId);				
+				HAPExtraInfoEntityInDomainDefinition entityInfo = entityInDomainInfo.getExtraInfo();
+				HAPAttachment attachment = new HAPAttachmentImpEntity(valueType, attachmentJson, attaEntityId, entityInfo, entityInDomainInfo.getEntity());
 				String name = entityInfo.getName();
 				attachmentContainer.addAttachment(name, attachment);
 			}

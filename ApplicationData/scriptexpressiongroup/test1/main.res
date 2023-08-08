@@ -52,22 +52,49 @@
 		"element": [
 			{
 				"name" : "text",
-				"status": "disabled",
+				"status": "disabled1",
 				"type" : "text",
 				"expression" : "hello world"
 			},
 			{
-				"name" : "literate_script",
-				"status": "disabled",
+				"name" : "literate_without_data",
+				"status": "disabled1",
 				"type" : "literate",
-				"expression" : "HaHaHa  <%=?(baseVarNormal)?.value+?(parm2)?.value+?(parm1)?.value%>  End!!!!"
+				"expression" : "HaHaHa  <%=?(baseVarNormal)?.value+?(parm2)?.value+?(parm1)?.value+&(constantValueData)&.value+&(constantValueString)&+(&(constantValueObject)&.value+200)%>  End!!!!"
 			},
 			{
 				"name" : "literate_datascript",
 				"status": "disabled1",
 				"type" : "literate",
 				"expression" : "HaHaHa  <%=(#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value)+?(parm1)?.value%>  End!!!!"
-			},
+			}
 		],
+		"attachment": {
+			"extra": {
+				"status": "disabled1",
+				"name": "parent attachment" 
+			},
+			"entity": {
+				"value" : [
+					{
+						"name" : "constantValueData",
+						"entity": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "012345678901234567890"
+						}
+					},
+					{
+						"name" : "constantValueString",
+						"entity": "String value"
+					},
+					{
+						"name" : "constantValueObject",
+						"entity": {
+							"value": 1000
+						}
+					}
+				]
+			}
+		}
 	}
 }
