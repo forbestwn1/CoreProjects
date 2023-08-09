@@ -542,6 +542,7 @@
 			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>
 
 			<definition type="space"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER" value="complexContainer"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE" value="dataexpressionsingle"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP" value="dataexpressiongroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP" value="scriptexpressiongroup"/>

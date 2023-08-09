@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
@@ -18,7 +19,11 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionDataGroup expressionGroupEntity = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(entityId, parserContext);
-		
+
+		HAPIdEntityInDomain refContainerEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER, parserContext);
+		expressionGroupEntity.setAttributeValueComplex(HAPDefinitionEntityExpressionDataGroup.ATTR_REFERENCES, refContainerEntityId);
+		HAPUtilityEntityDefinition.buildParentRelation(refContainerEntityId, entityId, HAPConstantShared.INHERITMODE_DEFINITION, parserContext);
+
 		//parse expression items
 		this.parseExpressionDefinitionList(entityId, expressionGroupEntity, jsonObj, parserContext);
 	}

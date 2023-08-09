@@ -12,7 +12,9 @@ public abstract class HAPDefinitionEntityExpressionData extends HAPDefinitionEnt
 	public static final String ATTR_INDEX_ID = "idIndex";
 	
 	public static final String ATTR_ATTRIBUTES_REFERENCE = "referenceAttribute";
-	
+
+	public static final String ATTR_REFERENCES = "references";
+
 	public HAPDefinitionEntityExpressionData() {
 		this.setAttributeValueObject(ATTR_ATTRIBUTES_REFERENCE, new HashSet<String>());
 	}
