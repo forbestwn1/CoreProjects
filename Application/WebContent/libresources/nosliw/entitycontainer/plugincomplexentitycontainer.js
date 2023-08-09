@@ -18,13 +18,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createExpressionGroupPlugin = function(){
+var node_createComplexEntityContainerPlugin = function(){
 	
 	var loc_out = {
 
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createExpressionGroupComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createComplexEntityContainerComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
 		},
 	};
@@ -32,63 +32,39 @@ var node_createExpressionGroupPlugin = function(){
 	return loc_out;
 };
 
-var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
+var loc_createComplexEntityContainerComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
-	var loc_valueContextId = valueContextId;
-	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
-	var loc_dataExpressionGroupRuntime;
-	
-	var loc_getAllExpressionItems = function(){
-		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTGROUP_EXPRESSIONS)[node_COMMONATRIBUTECONSTANT.EXECUTABLECONTAINEREXPRESSION_ELEMENT];
-	};
-	
-	var loc_facade = {
-		getAllItemIds : function(){
-			var out = [];
-			var expressions = loc_getAllExpressionItems();
-			_.each(expressions, function(expression, i){
-				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
-			});
-			return out;
-		},
-		
-		getExecuteItemnRequest : function(expressionId, handlers, request){
-			var expressions = loc_getAllExpressionItems();
-			var expressionItem;		
-			_.each(expressions, function(expression, i){
-				if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==expressionId){
-					expressionItem = expression;
-				}
-			});
-			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionGroupRuntime.getCoreEntity(), handlers, request)
-		}
-	};
+
+	var loc_childrenEntity = {};
 	
 	var loc_out = {
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHDATAEXPRESSIONGROUP_DATAEEXPRESSIONGROUP, {
-				success : function(request, childNode){
-					loc_dataExpressionGroupRuntime = childNode.getChildValue();
-				}
-			}));
+			
+			var attrNames = loc_complexEntityDef.getAllAttributesName();
+			_.each(attrNames, function(attrName, i){
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+					success : function(request, childNode){
+						loc_childrenEntity[attrName] = childNode.getChildValue();
+					}
+				}));
+			});
 			return out;
 		},
+		
+		getChildrenEntity : function(){   return loc_childrenEntity;      },
 		
 		setEnvironmentInterface : function(envInterface){
 			loc_envInterface = envInterface;
 		},
+		
 	};
 	
 	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facade);
-	
 };
-
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -106,7 +82,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 
+
 //Register Node by Name
-packageObj.createChildNode("createExpressionGroupPlugin", node_createExpressionGroupPlugin); 
+packageObj.createChildNode("createComplexEntityContainerPlugin", node_createComplexEntityContainerPlugin); 
 
 })(packageObj);

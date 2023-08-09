@@ -17,10 +17,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplexWithDataExpress
 
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
-		HAPIdEntityInDomain expressionGrouEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, parserContext);
-		HAPUtilityEntityDefinition.buildParentRelation(expressionGrouEntityId, entityId, HAPConstantShared.INHERITMODE_RUNTIME, parserContext);
-		entity.setAttributeValueComplex(HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP, expressionGrouEntityId);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
 
 }

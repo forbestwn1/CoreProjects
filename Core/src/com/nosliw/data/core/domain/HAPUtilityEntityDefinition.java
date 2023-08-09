@@ -5,18 +5,47 @@ import java.util.List;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
+import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityDefinition {
 
+	public static HAPIdEntityInDomain newTransparentAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionEntityInDomain entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
+		HAPIdEntityInDomain attrEntityId = runtimeEnv.getDomainEntityDefinitionManager().newDefinitionInstance(attrEntityType, parserContext);
+		
+		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex();
+		parentRelationConfigure.getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_RUNTIME);
+		
+		HAPUtilityEntityDefinition.buildParentRelation(attrEntityId, parentEntityId, parentRelationConfigure, parserContext);
+		entity.setAttributeValueComplex(attrName, attrEntityId);
+		return attrEntityId;
+	}
+
+	public static HAPIdEntityInDomain newAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPConfigureParentRelationComplex relationConfigure, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionEntityInDomain entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
+		HAPIdEntityInDomain attrEntityId = runtimeEnv.getDomainEntityDefinitionManager().newDefinitionInstance(attrEntityType, parserContext);
+		HAPUtilityEntityDefinition.buildParentRelation(attrEntityId, parentEntityId, relationConfigure, parserContext);
+		entity.setAttributeValueComplex(attrName, attrEntityId);
+		return attrEntityId;
+	}
+	
 	public static void buildParentRelation(HAPIdEntityInDomain childEntityId, HAPIdEntityInDomain parentEntityId, String valueContextInheritMode, HAPContextParser parserContext) {
+		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex();
+		parentRelationConfigure.getValueStructureRelationMode().getInheritProcessorConfigure().setMode(valueContextInheritMode);
+		buildParentRelation(childEntityId, parentEntityId, parentRelationConfigure, parserContext);
+	}
+
+	public static void buildParentRelation(HAPIdEntityInDomain childEntityId, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex relationConfigure, HAPContextParser parserContext) {
 		HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
 		parentInfo.setParentId(parentEntityId);
-		parentInfo.getParentRelationConfigure().getValueStructureRelationMode().getInheritProcessorConfigure().setMode(valueContextInheritMode);
+		parentInfo.setParentRelationConfigure(relationConfigure);
 		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(childEntityId, parentInfo);
 	}
 

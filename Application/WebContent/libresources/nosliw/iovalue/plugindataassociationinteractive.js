@@ -40,7 +40,7 @@ var node_createDataAssociationInteractiveAdapterPlugin = function(){
 
 var loc_createDataAssociationInteractiveAdapter = function(dataAssociationInteractive){
 	
-	var loc_dataAssociationInteractive = dataAssociationInteractive.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSOCIATIONINTERACTIVE_ATTR_DATAASSOCIATION);
+	var loc_dataAssociationInteractive = dataAssociationInteractive.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSOCIATIONINTERACTIVE_ATTR_DATAASSOCIATION);
 	
 	var loc_out = {
 		
@@ -51,7 +51,7 @@ var loc_createDataAssociationInteractiveAdapter = function(dataAssociationIntera
 			
 			var outIOs = {};
 			var interactiveDef = node_getBasicEntityObjectInterface(childRuntime).getEntityDefinition();
-			var interactive = interactiveDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYINTERACTIVE_ATTR_INTERACTIVE);
+			var interactive = interactiveDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYINTERACTIVE_ATTR_INTERACTIVE);
 			_.each(interactive[node_COMMONATRIBUTECONSTANT.DEFINITIONINTERACTIVE_RESULT], function(resultDef, resultName){
 				outIOs[resultName] = node_createIODataSet();
 			});

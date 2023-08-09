@@ -21,7 +21,7 @@ var node_createScriptBasedPlugin = function(){
 
 			//run script
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTBASED_SCRIPT);
+				var scriptFun = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTBASED_SCRIPT);
 				return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
 			}));
 

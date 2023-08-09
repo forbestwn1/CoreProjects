@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
-import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
+import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 
 public class HAPUtilityExpressionExecute {
 

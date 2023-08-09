@@ -44,7 +44,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
+			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
 				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
@@ -57,7 +57,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 		},
 		
 		getExecuteDataExpressionRequest : function(handlers, request){
-			var expressionItem = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONSINGLE_EXPRESSION);
+			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONSINGLE_EXPRESSION);
 			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
 		

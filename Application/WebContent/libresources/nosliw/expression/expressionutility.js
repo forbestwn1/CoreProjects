@@ -412,7 +412,7 @@ var node_utility = function()
 
 	var loc_getExecuteDataExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
-		var variablesInfo = expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
+		var variablesInfo = expressionDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_VARIABLEINFOS);
 		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesInfo, valueContext, {
 			success : function(request, varValues){
 				return loc_getExecuteDataExpressionRequest(expressionItem, varValues, undefined, references);
@@ -439,7 +439,7 @@ var node_utility = function()
 			
 		});
 
-		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS), valueContext));
+		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS), valueContext));
 		
 		var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {
 			success : function(request, results){

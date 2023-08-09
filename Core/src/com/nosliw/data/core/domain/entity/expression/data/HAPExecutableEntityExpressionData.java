@@ -17,7 +17,10 @@ public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEnt
 
 	@HAPAttribute
 	public static final String ATTRIBUTESREFERENCE = "referenceAttribute";
-	
+
+	@HAPAttribute
+	public static final String REFERENCES = "references";
+
 	public abstract List<HAPExecutableExpressionData> getAllExpressionItems();
 
 	public HAPExecutableEntityExpressionData() {

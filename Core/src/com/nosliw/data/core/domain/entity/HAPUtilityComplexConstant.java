@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.complexentity;
+package com.nosliw.data.core.domain.entity;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -13,8 +13,6 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;

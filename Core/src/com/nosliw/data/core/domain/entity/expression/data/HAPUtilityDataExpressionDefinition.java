@@ -57,6 +57,7 @@ public class HAPUtilityDataExpressionDefinition {
 						HAPUtilityEntityDefinition.buildParentRelation(refExpId, expressionEntityId, HAPConstantShared.INHERITMODE_DEFINITION, parserContext);
 						
 						String refAttrName = expressionEntity.addReferencedExpressionAttribute(refExpId);
+						expressionEntity.getReferences(parserContext.getGlobalDomain()).addElementAttribute(refExpId);
 						referenceOperand.setReferenceExpressionAttributeName(refAttrName);
 					}
 					return true;

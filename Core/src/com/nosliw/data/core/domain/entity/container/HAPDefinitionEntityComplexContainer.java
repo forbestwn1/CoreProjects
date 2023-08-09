@@ -12,6 +12,10 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 
 	public static final String ATTR_ELEMENT_TYPEINFO = "eleTypeInfo";
 
+	public String addElementAttribute(HAPIdEntityInDomain entityId) {
+		return this.addElementAttribute(entityId, true);
+	}
+
 	public String addElementAttribute(HAPIdEntityInDomain entityId, Boolean autoProcess) {
 		int idIndex = this.getIdIndex();
 		String attrName = "Element_"+idIndex;

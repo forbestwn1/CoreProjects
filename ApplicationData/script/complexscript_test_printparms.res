@@ -7,7 +7,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	
 	var loc_configure = configure;
 
-	var loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
+	var loc_parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 
 	var loc_out = {
 

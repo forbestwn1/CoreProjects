@@ -10,7 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
+import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroup;

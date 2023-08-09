@@ -27,6 +27,7 @@ public class HAPInfoParentComplex extends HAPSerializableImp{
 	public void setParentId(HAPIdEntityInDomain parentId) {    this.m_parentId = parentId;     }
 	
 	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return this.m_parentRelation;    }
+	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {   this.m_parentRelation = parentRelationConfigure;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

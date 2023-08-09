@@ -60,7 +60,7 @@ var node_createEntityDefinition = function(original){
 			return loc_createAttributeDefinition(attr);
 		},
 
-		getSimpleAttributeValue : function(attrName){
+		getAttributeValue : function(attrName){
 			var attr = this.getAttribute(attrName);
 			return attr==undefined? undefined : attr.getValue();
 		},

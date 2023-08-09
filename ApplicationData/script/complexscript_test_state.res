@@ -7,8 +7,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_parmsView;
 	var loc_configureView;
 	
-	var loc_parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
-    var loc_scriptVars = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
+	var loc_parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
+    var loc_scriptVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 	var loc_configure = configure;
 
 	var loc_getStateData = function(){

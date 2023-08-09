@@ -12,7 +12,7 @@ function(complexEntityDef, variableContextId, bundleCore, configure){
 	var loc_configures = [];
 	
 	var loc_init = function(complexEntityDef, variableContextId, bundleCore, configure){
-		var parms = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
+		var parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
 
 		loc_configures.push({all : configure.getConfigureValue()});
 		

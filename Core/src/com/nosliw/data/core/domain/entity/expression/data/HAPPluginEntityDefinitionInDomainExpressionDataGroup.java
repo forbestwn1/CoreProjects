@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
+import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
@@ -20,14 +20,16 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionDataGroup expressionGroupEntity = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(entityId, parserContext);
 
-		HAPIdEntityInDomain refContainerEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER, parserContext);
-		expressionGroupEntity.setAttributeValueComplex(HAPDefinitionEntityExpressionDataGroup.ATTR_REFERENCES, refContainerEntityId);
-		HAPUtilityEntityDefinition.buildParentRelation(refContainerEntityId, entityId, HAPConstantShared.INHERITMODE_DEFINITION, parserContext);
-
 		//parse expression items
 		this.parseExpressionDefinitionList(entityId, expressionGroupEntity, jsonObj, parserContext);
 	}
 
+	@Override
+	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		//create reference container attribute
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPDefinitionEntityExpressionDataGroup.ATTR_REFERENCES, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, parserContext, getRuntimeEnvironment());
+	}
+	
 	private void parseExpressionDefinitionList(HAPIdEntityInDomain expressionEntityId, HAPDefinitionEntityExpressionDataGroup expressionGroup, JSONObject jsonObj, HAPContextParser parserContext){
 		HAPParserDataExpression expressionParser = this.getRuntimeEnvironment().getDataExpressionParser();
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionDataGroup.ELEMENT);

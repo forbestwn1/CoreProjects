@@ -9,7 +9,7 @@ function(complexEntityDef, variableContextId, bundleCore, configure){
 	var loc_parmsView;
 	
 	var loc_init = function(complexEntityDef, variableContextId, bundleCore, configure){
-		loc_attachments = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_ATTACHMENT);
+		loc_attachments = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_ATTACHMENT);
 
 	};
 

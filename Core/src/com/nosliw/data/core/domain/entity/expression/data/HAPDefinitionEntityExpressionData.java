@@ -4,8 +4,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityComplexContainer;
 
 public abstract class HAPDefinitionEntityExpressionData extends HAPDefinitionEntityInDomainComplex{
 
@@ -20,6 +22,10 @@ public abstract class HAPDefinitionEntityExpressionData extends HAPDefinitionEnt
 	}
 
 	public abstract List<HAPDefinitionExpressionData> getAllExpressionItems();
+
+	public HAPDefinitionEntityComplexContainer getReferences(HAPDomainEntityDefinitionGlobal globalDomain){    
+		return (HAPDefinitionEntityComplexContainer)globalDomain.getEntityInfoDefinition((HAPIdEntityInDomain)this.getAttributeValue(ATTR_REFERENCES)).getEntity();    
+	}
 	
 	//add referenced expression as attribute so that it can be processed under complex entity framework
 	//return attribute name

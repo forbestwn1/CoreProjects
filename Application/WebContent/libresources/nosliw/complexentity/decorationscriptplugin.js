@@ -16,7 +16,7 @@ var node_createDecorationScriptPlugin = function(){
 	var loc_out = {
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSimple(undefined, function(request){
-				var scriptFun = complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTCOMPLEX_SCRIPT);
+				var scriptFun = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTCOMPLEX_SCRIPT);
 				return scriptFun(configure);
 			}, handlers, request);
 			

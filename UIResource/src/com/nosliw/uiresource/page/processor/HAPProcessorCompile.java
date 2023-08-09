@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.complexentity.HAPUtilityComplexConstant;
+import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

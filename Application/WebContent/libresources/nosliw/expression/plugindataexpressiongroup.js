@@ -40,11 +40,13 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_referencedRuntime = {};
+	
+	var loc_referenceContainer;
 
 	var loc_facade = {
 		getAllItemIds : function(){
 			var out = [];
-			var expressions = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+			var expressions = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
 			_.each(expressions, function(expression, i){
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 			});
@@ -52,7 +54,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		},
 		
 		getExecuteItemnRequest : function(dataExpressionId, handlers, request){
-			var expressions = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+			var expressions = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
 			var expressionItem;		
 			_.each(expressions, function(expression, i){
 				if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){
@@ -60,7 +62,8 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 				}
 			});
 			
-			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
+			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
+//			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
 	};
 	
@@ -69,7 +72,16 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var refAttrNames = loc_complexEntityDef.getSimpleAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
+			loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
+				success : function(request, childNode){
+					loc_referenceContainer = childNode.getChildValue();
+				}
+			});
+			
+			
+			
+			
+			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
 				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
