@@ -63,7 +63,6 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			});
 			
 			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
-//			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
 	};
 	
@@ -72,12 +71,11 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
 				success : function(request, childNode){
-					loc_referenceContainer = childNode.getChildValue();
+					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
 				}
-			});
-			
+			}));
 			
 			
 			
@@ -90,6 +88,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 					}
 				}));
 			});
+			
 			return out;
 		},
 		

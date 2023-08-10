@@ -7,8 +7,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityParserEntity;
+import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
@@ -54,10 +54,7 @@ public class HAPUtilityDataExpressionDefinition {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, referenceOperand.getReference());
 						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
 						
-						HAPUtilityEntityDefinition.buildParentRelation(refExpId, expressionEntityId, HAPConstantShared.INHERITMODE_DEFINITION, parserContext);
-						
-						String refAttrName = expressionEntity.addReferencedExpressionAttribute(refExpId);
-						expressionEntity.getReferences(parserContext.getGlobalDomain()).addElementAttribute(refExpId);
+						String refAttrName = HAPUtilityEntityContainer.addElementAttribute(expressionEntity.getReferencesContainerId(), refExpId, parserContext);
 						referenceOperand.setReferenceExpressionAttributeName(refAttrName);
 					}
 					return true;

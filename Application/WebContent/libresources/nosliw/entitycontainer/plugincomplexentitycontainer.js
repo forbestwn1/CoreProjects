@@ -63,7 +63,7 @@ var loc_createComplexEntityContainerComponentCore = function(complexEntityDef, v
 		
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facade);
+	return loc_out;
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -72,12 +72,12 @@
 			},
 			{
 				"name" : "constant_attachment",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "&(constantBase)&.subString(from:&(constantFrom)&,to:&(constantTo)&)"
 			},
 			{
 				"name" : "matcher",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "!(test.string)!.subString(?(baseVarMatcher)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{
@@ -88,7 +88,7 @@
 			},
 			{
 				"name" : "reference_extensionVariable",
-				"status": "disabled1",
+				"status": "disabled",
 				"expression" : "<(dataexpressionsingle|#local_extension)>.with(newBase:?(baseVarNormal)?,newFrom:?(parm1)?,newTo:?(parm2)?)"
 			}
 		],

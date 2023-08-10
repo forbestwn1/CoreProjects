@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
@@ -9,6 +10,8 @@ import com.nosliw.data.core.domain.entity.HAPInfoValueType;
 public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDomainComplex{
 
 	public static final String ATTR_INDEX_ID = "idIndex";
+
+	public static final String ATTR_ELEMENTRELATIONCONFIGURE = "elementRelationCoonfigure";
 
 	public static final String ATTR_ELEMENT_TYPEINFO = "eleTypeInfo";
 
@@ -29,9 +32,13 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 	public HAPInfoValueType getElmentValueTypeInfo() {     return (HAPInfoValueType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
 	public void setElementValueTypeInfo(HAPInfoValueType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
 	
+	public HAPConfigureParentRelationComplex getElementRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_ELEMENTRELATIONCONFIGURE, new HAPConfigureParentRelationComplex());     }
+	public void setElementRelationConfigure(HAPConfigureParentRelationComplex relationConfigure) {    this.setAttributeValueObject(ATTR_ELEMENTRELATIONCONFIGURE, relationConfigure);      }
+	
 	private int getIdIndex() {    return (Integer)this.getAttributeValue(ATTR_INDEX_ID, Integer.valueOf(0));     }
 	private void setIdIndex(int idIndex) {    this.setAttributeValueObject(ATTR_INDEX_ID, Integer.valueOf(idIndex));      }
 
+	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexContainer out = new HAPDefinitionEntityComplexContainer();

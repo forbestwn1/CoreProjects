@@ -14,14 +14,12 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
-import com.nosliw.data.core.domain.entity.HAPUtilityEntityProcess;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
@@ -38,20 +36,6 @@ import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContex
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void buildEntityExpressionExe(HAPExecutableEntityExpressionData expressionEntityExe, HAPDefinitionEntityExpressionData expressionEntityDef) {
-		expressionEntityExe.getReferenceAttributes().addAll(expressionEntityDef.getReferenceAttributes());
-	}
-	
-	public static void processReferencedExpression(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
-		HAPDefinitionEntityExpressionData expressionEntity = (HAPDefinitionEntityExpressionData)currentBundle.getDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
-		
-		for(String refAtt : expressionEntity.getReferenceAttributes()) {
-			HAPUtilityEntityProcess.processComplexAttribute(refAtt, complexEntityExecutableId, processContext);
-		}
-	}
-	
 	public static void resolveReferenceVariableMapping(HAPIdEntityInDomain expreesionEntityIdExe, HAPContextProcessor processContext) {
 		HAPExecutableEntityExpressionData expressionGroupExe = (HAPExecutableEntityExpressionData)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionEntityIdExe).getEntity();
 		
@@ -69,6 +53,10 @@ public class HAPUtilityExpressionProcessor {
 						
 						String refAttributeName = referenceOperand.getReferenceExpressionAttributeName();
 						HAPIdEntityInDomain referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getAttributeValue(refAttributeName);
+						
+						referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getReferences(processContext).getAttributeValue(refAttributeName);
+						
+						
 						Pair<HAPExecutableEntity, HAPContextProcessor> referencedEntityInfo = HAPUtilityDomain.resolveExecutableEntityId(referedExperssionEntityId, processContext);
 						HAPDomainValueStructure valueStructureDomain = referencedEntityInfo.getRight().getCurrentValueStructureDomain();
 						

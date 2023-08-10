@@ -27,8 +27,6 @@ public class HAPPluginEntityProcessorComplexExpressionDataSingle extends HAPPlug
 		HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
 		HAPDefinitionEntityExpressionDataSingle definitionExpression = (HAPDefinitionEntityExpressionDataSingle)defEntityInfo.getEntity();
 
-		HAPUtilityExpressionProcessor.buildEntityExpressionExe(executableExpresion, definitionExpression);
-		
 		//build expression in executable
 		executableExpresion.setExpression(new HAPExecutableExpressionData(definitionExpression.getExpression()));
 		
