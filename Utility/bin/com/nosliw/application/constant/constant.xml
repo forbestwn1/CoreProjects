@@ -554,14 +554,6 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_JSHELPER" value="jshelper"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_JSGATEWAY" value="jsGateway"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CRONJOB" value="cronJob"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION" value="uiModuleDecoration"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPENTRY" value="uiAppEntry"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIAPP" value="uiApp"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPDECORATION" value="uiAppDecoration"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASKSUITE" value="tasksuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITY" value="activity"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
@@ -586,6 +578,20 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1" value="test_complex_1"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT" value="test_complex_script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT" value="test.decoration.script"/>
+
+			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uiPage"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIUNIT" value="uiUnit"/>
+
+
+			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION" value="uiModuleDecoration"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPENTRY" value="uiAppEntry"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPP" value="uiApp"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPDECORATION" value="uiAppDecoration"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE" value="uiAppConfigure"/>
+
 
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATION" value="dataAssociation"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE" value="dataAssociationInteractive"/>

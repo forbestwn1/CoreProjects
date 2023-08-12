@@ -1,0 +1,53 @@
+package com.nosliw.data.core.domain.entity.uipage;
+
+import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
+
+public class HAPDefinitionEntityComplexUIUnit extends HAPDefinitionEntityComplexWithDataExpressionGroup{
+
+	static final public String ATTR_CONTENT = "content";  
+
+	static final public String ATTR_SCRIPT = "script";  
+	
+	static final public String ATTR_CUSTOMERTAG = "tag";  
+	
+	static final public String ATTR_SCRIPTEXPRESSIONINCONTENT = "scriptExpressionInContent";
+	
+	static final public String ATTR_SCRIPTEXPRESSIONINATTRIBUTE = "scriptExpressionInAttribute";
+	
+	static final public String ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE = "scriptExpressionInTagAttribute";
+
+	static final public String ATTR_STYPE = "style";  
+	
+	static final public String ATTR_NORMALTAGEVENT = "normalTagEvent";  
+	
+	static final public String ATTR_CUSTOMTAGEVENT = "customTagEvent";  
+	
+	
+	static final public String ATTR_SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
+
+
+	@Override
+	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getUnitType() {    return null;   }
+
+	public void setContent(String content) {    this.setAttributeValueObject(ATTR_CONTENT, content);        }
+	public String getContent() {     return (String)this.getAttributeValue(ATTR_CONTENT);     }
+	
+	public void setJSBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(ATTR_SCRIPT, jsBlock);        }
+
+	public void addNormalTagEvent(HAPElementEvent event) {       }
+	public void addCustomTagEvent(HAPElementEvent event) {       }
+	
+	public void addScriptExpressionInCustomTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {     }
+	public void addScriptExpressionInNormalTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {}
+	
+	public HAPIdEntityInDomain getScriptExpressionGroup() {    return this.getAttributeValueComplex(ATTR_SCRIPTEEXPRESSIONGROUP);     }
+
+}
