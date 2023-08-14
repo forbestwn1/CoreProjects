@@ -490,9 +490,8 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT = "test_complex_script";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT = "test.decoration.script";
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uiPage";
-		public static final String RUNTIME_RESOURCE_TYPE_UIUNIT = "uiUnit";
-		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
+		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION = "uiModuleDecoration";
 		public static final String RUNTIME_RESOURCE_TYPE_UIAPPENTRY = "uiAppEntry";

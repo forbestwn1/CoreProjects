@@ -580,11 +580,11 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT" value="test.decoration.script"/>
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uiPage"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UIUNIT" value="uiUnit"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
+			<!-- definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/-->
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULE" value="uiModule"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION" value="uiModuleDecoration"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIAPPENTRY" value="uiAppEntry"/>
