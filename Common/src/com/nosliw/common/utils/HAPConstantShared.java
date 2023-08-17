@@ -454,9 +454,10 @@ public class HAPConstantShared {
 
 
 		public static final String RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER = "complexContainer";
-		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE = "dataexpressionsingle";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP = "dataexpressiongroup";
+		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE = "dataexpressionsingle";
 		public static final String RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP = "scriptexpressiongroup";
+		public static final String RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE = "scriptexpressionsingle";
 		public static final String RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION = "scriptexpression";
 		public static final String RUNTIME_RESOURCE_TYPE_OPERATION = "operation";
 		public static final String RUNTIME_RESOURCE_TYPE_DATATYPE = "datatype";
@@ -489,6 +490,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1 = "test_complex_1";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT = "test_complex_script";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT = "test.decoration.script";
+		public static final String RUNTIME_RESOURCE_TYPE_UIUNIT = "uiUnit";
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uiPage";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uiTag";
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";

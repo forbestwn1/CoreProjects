@@ -35,5 +35,6 @@
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeManager"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

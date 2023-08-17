@@ -8,7 +8,7 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityCom
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 
-public abstract class HAPDefinitionEntityComplexUIUnit extends HAPDefinitionEntityComplexWithDataExpressionGroup{
+public class HAPDefinitionEntityComplexUIUnit extends HAPDefinitionEntityComplexWithDataExpressionGroup{
 
 	static final public String ATTR_CONTENT = "content";  
 

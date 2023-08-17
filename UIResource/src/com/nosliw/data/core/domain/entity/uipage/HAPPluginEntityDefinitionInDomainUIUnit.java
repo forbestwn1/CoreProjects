@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.entity.uipage;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.json.JSONObject;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -17,13 +16,11 @@ import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.common.HAPWithValueContext;
-import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
@@ -33,19 +30,24 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegment
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegmentExpressionText;
 import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
-import com.nosliw.uiresource.page.definition.HAPUtilityUIResourceParser;
 
 public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefinitionInDomainImp{
 
-	public HAPPluginEntityDefinitionInDomainUIUnit(String entityType, Class<? extends HAPDefinitionEntityInDomain> entityClass, HAPRuntimeEnvironment runtimeEnv) {
-		super(entityType, entityClass, runtimeEnv);
+	public HAPPluginEntityDefinitionInDomainUIUnit(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIUNIT, HAPDefinitionEntityComplexUIUnit.class, runtimeEnv);
 	}
 
 	public static final String SCRIPT = "script";
 
 	private HAPGeneratorId m_idGenerator = new HAPGeneratorId();
 	
+	@Override
+	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		parseUIDefinitionUnit((Element)obj, entityId, parserContext);
+	}
+	
+	@Override
+	public boolean isComplexEntity() {		return true;	}
 
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
@@ -53,16 +55,6 @@ public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefi
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityComplexUIUnit.ATTR_SCRIPTEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
-
-	@Override
-	public boolean isComplexEntity() {   return true;  }
-
-	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	
 	private void parseUIDefinitionUnit(Element unitEle, HAPIdEntityInDomain uiUnitId, HAPContextParser parserContext){
@@ -290,7 +282,7 @@ public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefi
 	private void parseValueContext(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			this.parseNormalSimpleEntityAttribute(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+			this.parseSimpleEntityAttribute(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 			break;
 		}
 		for(Element valueContextEle : valueContextEles)  valueContextEle.remove();
@@ -299,7 +291,7 @@ public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefi
 	private void parseAttachment(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> attachmentEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithAttachment.ATTACHMENT);
 		for(Element attachmentEle : attachmentEles){
-			this.parseNormalSimpleEntityAttribute(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+			this.parseSimpleEntityAttribute(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 			break;
 		}
 		for(Element attachmentEle : attachmentEles)  attachmentEle.remove();
@@ -350,7 +342,7 @@ public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefi
 	
 	
 	
-	
+/*	
 	private void parseComponent(Element parentEle, HAPDefinitionUIUnit uiUnit) {
 		List<Element> componentEles = HAPUtilityUIResourceParser.getChildElementsByTag(parentEle, COMPONENT);
 		JSONObject componentObj = null;
@@ -367,7 +359,10 @@ public class HAPPluginEntityDefinitionInDomainUIUnit extends HAPPluginEntityDefi
 		return StringEscapeUtils.unescapeHtml(ele.html());
 //		childEle.ownText().html()
 	}
-	
+
+
+*/
+
 
 	
 }

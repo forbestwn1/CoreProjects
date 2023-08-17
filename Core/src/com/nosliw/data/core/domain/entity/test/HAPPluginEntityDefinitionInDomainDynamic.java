@@ -48,20 +48,20 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+						this.parseSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
-						this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+						this.parseSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 					}
 					else {
 						Object entityObj = jsonObj.opt(attrName);
 						if(isAttributeEnabled(entityObj)) {
 							HAPAttributeEntityInfo attributeInfo = this.parseAttributeInfo(attrName);
 							if(attributeInfo.isComplex) {
-								this.parseNormalComplexEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, null, parserContext);
+								this.parseComplexEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, null, parserContext);
 							}
 							else {
-								this.parseNormalSimpleEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, parserContext);
+								this.parseSimpleEntityAttributeSelf(jsonObj, entityId, attrName, attributeInfo.entityType, attributeInfo.adapterType, parserContext);
 							}
 						}
 					}

@@ -67,6 +67,12 @@
 				"status": "disabled1",
 				"type" : "literate",
 				"expression" : "HaHaHa  <%=(#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value)+?(parm1)?.value%>  End!!!!"
+			},
+			{
+				"name" : "literate_reference",
+				"status": "disabled1",
+				"type" : "literate",
+				"expression" : "HaHaHa  <%=<(dataexpressionsingle|#local_extension)>.with(newBase:<%=?(baseVarNormal)?%>,newFrom:?(parm1)?,newTo:?(parm2)?) %>  End!!!!"
 			}
 		],
 		"attachment": {

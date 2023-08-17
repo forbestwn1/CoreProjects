@@ -10,6 +10,8 @@ public class HAPDefinitionEntityExpressionDataSingle extends HAPDefinitionEntity
 
 	public static final String ATTR_EXPRESSION = "expression";
 
+	public final static String ATTR_TYPE = "type";
+
 	public HAPDefinitionEntityExpressionDataSingle() {
 	}
 	

@@ -6,15 +6,17 @@ import java.util.List;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
 
-public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityComplexWithDataExpressionGroup implements HAPWithEntityElement<HAPDefinitionExpression>{
+public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityExpressionScript implements HAPWithEntityElement<HAPDefinitionExpression>{
 	
 	final private static String ATTR_IDINDEX = "idIndex"; 
 	
 	public HAPDefinitionEntityExpressionScriptGroup() {
 		this.setAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpression>());
 	}
+
+	@Override
+	public List<HAPDefinitionExpression> getAllExpressionItems() {   return (List<HAPDefinitionExpression>)this.getAttributeValue(ELEMENT);  }
 
 	public String addExpression(HAPDefinitionExpression expression) {
 		if(expression!=null) {
@@ -28,7 +30,7 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 	}
 
 	@Override
-	public List<HAPDefinitionExpression> getEntityElements() { 	return (List<HAPDefinitionExpression>)this.getAttributeValue(ELEMENT);	}
+	public List<HAPDefinitionExpression> getEntityElements() { 	   return this.getAllExpressionItems(); 	}
 
 	@Override
 	public HAPDefinitionExpression getEntityElement(String id) {
@@ -56,4 +58,5 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 		this.setAttributeValueObject(ATTR_IDINDEX, idIndex);
 		return "generatedId_"+ idIndex;
 	}
+
 }

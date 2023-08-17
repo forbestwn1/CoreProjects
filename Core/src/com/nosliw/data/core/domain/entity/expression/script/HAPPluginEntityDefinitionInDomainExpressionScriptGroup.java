@@ -7,6 +7,8 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainImpComplexWithDataExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
@@ -45,6 +47,15 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptGroup extends HAPP
 		}
 		
 		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionGroupEntity.getDataExpressionGroup(), parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+	}
+
+	@Override
+	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		super.postNewInstance(entityId, parserContext);
+		//create reference container attribute
+		HAPConfigureParentRelationComplex childRelationConfigure = new HAPConfigureParentRelationComplex();
+		childRelationConfigure.getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_DEFINITION);
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPDefinitionEntityExpressionScript.ATTR_REFERENCES, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, childRelationConfigure, parserContext, getRuntimeEnvironment());
 	}
 
 }
