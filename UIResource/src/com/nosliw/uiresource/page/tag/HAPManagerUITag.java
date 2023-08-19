@@ -88,6 +88,12 @@ public class HAPManagerUITag {
 		
 		return out;
 	}
+
+	public String getUITagDefinitionContent(String tagId) {
+		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + tagId + "/definition.json";
+		File file = new File(fileName);
+		return HAPUtilityFile.readFile(file);
+	}
 	
 	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
 //		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());

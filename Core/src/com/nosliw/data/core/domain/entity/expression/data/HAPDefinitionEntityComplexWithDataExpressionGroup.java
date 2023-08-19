@@ -13,5 +13,5 @@ public abstract class HAPDefinitionEntityComplexWithDataExpressionGroup extends 
 		super(entityType);
 	}
 	
-	public HAPIdEntityInDomain getDataExpressionGroup() {    return this.getAttributeValueComplex(ATTR_DATAEEXPRESSIONGROUP);     }
+	public HAPIdEntityInDomain getDataExpressionGroup() {    return this.getAttributeValueEntityId(ATTR_DATAEEXPRESSIONGROUP);     }
 }

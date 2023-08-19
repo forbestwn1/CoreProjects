@@ -114,20 +114,25 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		}
 	}
 
-	protected void parseComplexEntityAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
+	protected HAPIdEntityInDomain parseComplexEntityAttribute(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
+		HAPIdEntityInDomain out = null;
 		Object attrEntityObj = entityJsonObj.opt(attributeName);
 		if(attrEntityObj!=null) {
-			this.parseComplexEntityAttributeSelf(attrEntityObj, entityId, attributeName, attrEntityType, adapterType, parentRelationConfigureDefault, parserContext);
+			out = this.parseComplexEntityAttributeSelf(attrEntityObj, entityId, attributeName, attrEntityType, adapterType, parentRelationConfigureDefault, parserContext);
 		}
+		return out;
 	}
 
-	protected void parseComplexEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
+	protected HAPIdEntityInDomain parseComplexEntityAttributeSelf(Object attrEntityObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext) {
+		HAPIdEntityInDomain out = null;
 		if(isAttributeEnabled(attrEntityObj)) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, true));
 			processReservedAttribute(entity, attributeName, attrEntityType);
+			out = (HAPIdEntityInDomain)attributeEntity.getValue();
 		}
+		return out;
 	}
 	
 	private void processReservedAttribute(HAPDefinitionEntityInDomain entity, String attrName, String entityValueType) {

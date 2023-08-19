@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
@@ -67,7 +68,10 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 		return out;
 	}
 
-	public HAPIdEntityInDomain getAttributeValueComplex(String attrName) {    return (HAPIdEntityInDomain)this.getAttributeValue(attrName);      }
+	public HAPIdEntityInDomain getAttributeValueEntityId(String attrName) {    return (HAPIdEntityInDomain)this.getAttributeValue(attrName);      }
+	public HAPDefinitionEntityInDomain getAttributeValueEntity(String attrName, HAPContextParser parserContext) {
+		return parserContext.getGlobalDomain().getEntityInfoDefinition(this.getAttributeValueEntityId(attrName)).getEntity();
+	}
 	
 	public Object getAttributeValue(String attrName, Object defaultValue) {
 		HAPAttributeEntityDefinition att = this.getAttribute(attrName);

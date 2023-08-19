@@ -93,6 +93,9 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 
 	abstract protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext);
 
+	protected HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
+		return HAPUtilityResourceId.getResourceLocationInfo(resourceId);
+	}
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
 	

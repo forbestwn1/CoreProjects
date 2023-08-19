@@ -580,9 +580,10 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT" value="test_complex_script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT" value="test.decoration.script"/>
 
-			<definition name="RUNTIME_RESOURCE_TYPE_UIUNIT" value="uiUnit"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UICONTENT" value="uiContent"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uiPage"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uiTag"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UITAGDEFINITION" value="uiTagDefinition"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>

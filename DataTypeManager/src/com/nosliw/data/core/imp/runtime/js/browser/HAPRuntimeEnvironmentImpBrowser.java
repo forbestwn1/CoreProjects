@@ -32,6 +32,7 @@ import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
+import com.nosliw.ui.tag.HAPPluginResourceDefinitionUITagDefinition;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 import com.nosliw.uiresource.page.tag.HAPManagerUITag;
@@ -119,6 +120,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionUITagDefinition(this));
+		
 		//story builder
 //		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.m_uiResourceManager.getUITagManager(), this));
 		

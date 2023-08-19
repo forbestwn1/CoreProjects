@@ -9,7 +9,6 @@
 		<project>UIResource</project>
 		<project>DataTypeTest</project>
 		<project>Common</project>
-		<project>MiniApp</project>
 		<project>Core</project>
 		<project>ServiceTest</project>
 	</projects>
