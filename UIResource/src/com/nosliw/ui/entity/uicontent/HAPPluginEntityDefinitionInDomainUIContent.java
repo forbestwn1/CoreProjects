@@ -55,68 +55,40 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
-
 	
-	private void parseUIDefinitionUnit(Element unitEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
+	private void parseUIDefinitionUnit(Element wrapperEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
 		
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		
 		//parse value context
-		parseValueContext(unitEle, uiContentId, parserContext);
+		parseValueContext(wrapperEle, uiContentId, parserContext);
 		
 		//parse value context
-		parseAttachment(unitEle, uiContentId, parserContext);
+		parseAttachment(wrapperEle, uiContentId, parserContext);
 		
 		//process script block
-		this.parseUnitScriptBlocks(unitEle, this.getUIContentEntityById(uiContentId, parserContext));
-		
-		//process key attribute
-		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiContent.getUnitType()))   parseKeyAttributeOnTag(unitEle, uiContentId, true, parserContext);
+		this.parseUnitScriptBlocks(wrapperEle, this.getUIContentEntityById(uiContentId, parserContext));
 
-		//process unit element's attribute that have expression value 
-		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiContent.getUnitType()))	parseScriptExpressionInTagAttribute(unitEle, uiContentId, true, parserContext);
+		//process contents within customer ele
+		parseDescendantTags(wrapperEle, uiContentId, parserContext);
 		
 		//parse script in content
-		parseChildScriptExpressionInContent(unitEle, uiContentId, parserContext);
+		parseChildScriptExpressionInContent(wrapperEle, uiContentId, parserContext);
+		
+		HAPUtilityUIResourceParser.addSpanToText(wrapperEle);
+		
+		uiContent.setContent(wrapperEle.html());
 		
 		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiContent.getUnitType())) {
 			//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
 			String uiId = uiContentId.getEntityId();
-			unitEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
-			unitEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
-			unitEle.remove();
+			wrapperEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
+			wrapperEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
+			wrapperEle.remove();
 		}
-		
-		//process element's normal attribute
-		parseUIUnitAttribute(unitEle, uiContentId, parserContext);
-		
-		
-		
 
-		//parse as component 
-//		parseComponent(unitEle, uiUnit);
-		
-		//process contents within customer ele
-		parseDescendantTags(unitEle, uiContentId, parserContext);
-		
-		HAPUtilityUIResourceParser.addSpanToText(unitEle);
-		
-//		uiUnit.postRead();
-		
-		uiContent.setContent(unitEle.html());
 	}
 
-	/*
-	 * process attribute of ui unit(UI resource or custom tag)
-	 */
-	private void parseUIUnitAttribute(Element unitEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiContentId, parserContext);
-		Attributes eleAttrs = unitEle.attributes();
-		for(Attribute eleAttr : eleAttrs){
-			uiUnit.addAttribute(eleAttr.getKey(), eleAttr.getValue());
-		}
-	}
-	
 	/*
 	 * process all the descendant tags under element
 	 */
@@ -145,7 +117,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	 * 		  false : this element should not be removed after processiong
 	 */
 	private boolean parseTag(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiContentId, parserContext);
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
 		if(customTagName!=null){
 			//process custome tag
@@ -154,13 +126,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				parseStyle(ele, uiContentId, uiId, parserContext);
 			}
 			else {
-				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, parserContext);
+				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
+				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
+				
+				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, parserContext);
 				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
 				uiTag.setUIId(uiId);
-				uiTag.setTagName(customTagName);
-				parseUIDefinitionUnit(ele, tagEntityId, parserContext);
-				uiUnit.addCustomTag(tagEntityId);
-				HAPUtilityEntityDefinition.buildParentRelation(tagEntityId, uiContentId, uiTag.getChildRelationConfigure(), parserContext);
+				uiContent.addCustomTag(tagEntityId, uiTag.getChildRelationConfigure());
 			}
 			return false;
 		}
@@ -181,15 +153,15 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	 * process expression in child text content within element 
 	 */
 	private void parseChildScriptExpressionInContent(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiContentId, parserContext);
-		HAPDefinitionEntityExpressionScriptGroup scriptEntityGroupEntity = uiUnit.getScriptExpressionGroupEntity(parserContext);
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
+		HAPDefinitionEntityExpressionScriptGroup scriptEntityGroupEntity = uiContent.getScriptExpressionGroupEntity(parserContext);
 
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
 			
 			StringBuffer newText = new StringBuffer();
-			HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(text, null, uiUnit.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
+			HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(text, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
 			for(HAPDefinitionSegmentExpression segment : expressionDef.getSegments()) {
 				String segmentType = segment.getType();
 				if(segmentType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT)) {
@@ -203,7 +175,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 
 					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.generateId(), scriptExpressionId);
 					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
-					uiUnit.addScriptExpressionInContent(expressionContent);
+					uiContent.addScriptExpressionInContent(expressionContent);
 				}
 			}
 			
@@ -216,8 +188,8 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	 * process element's attribute that have script expression value
 	 */
 	private void parseScriptExpressionInTagAttribute(Element ele, HAPIdEntityInDomain uiContentId, boolean isCustomerTag, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiContentId, parserContext);
-		HAPDefinitionEntityExpressionScriptGroup scriptEntityGroupEntity = uiUnit.getScriptExpressionGroupEntity(parserContext);
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
+		HAPDefinitionEntityExpressionScriptGroup scriptEntityGroupEntity = uiContent.getScriptExpressionGroupEntity(parserContext);
 		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		
 		//read attributes
@@ -228,12 +200,12 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 			String attrValue = eleAttr.getValue(); 
 			if(!HAPUtilityExpressionDefinition.isText(attrValue)) {
 
-				HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(attrValue, null, uiUnit.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
+				HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(attrValue, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
 				String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
 				
 				HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
-				if(isCustomerTag)  uiUnit.addScriptExpressionInCustomTagAttribute(eAttr);
-				else  uiUnit.addScriptExpressionInNormalTagAttribute(eAttr);
+				if(isCustomerTag)  uiContent.addScriptExpressionInCustomTagAttribute(eAttr);
+				else  uiContent.addScriptExpressionInNormalTagAttribute(eAttr);
 				ele.attr(eleAttrKey, "");
 			}
 		}
@@ -246,7 +218,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	 */
 	private void parseKeyAttributeOnTag(Element ele, HAPIdEntityInDomain uiContentId, boolean isCustomerTag, HAPContextParser parserContext){
 		
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiContentId, parserContext);
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		
 		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		Attributes eleAttrs = ele.attributes();
@@ -264,12 +236,12 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 						if(isCustomerTag){
 							//this attribute belong to customer tag
 							HAPElementEvent tagEvent = new HAPElementEvent(uiId, event);
-							uiUnit.addCustomTagEvent(tagEvent);
+							uiContent.addCustomTagEvent(tagEvent);
 						}
 						else{
 							//this attribute blong to regular tag
 							HAPElementEvent eleEvent = new HAPElementEvent(uiId, event);
-							uiUnit.addNormalTagEvent(eleEvent);
+							uiContent.addNormalTagEvent(eleEvent);
 						}
 					}
 					//remove this attribute from element
@@ -283,7 +255,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseValueContext(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			this.parseSimpleEntityAttribute(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+			this.parseSimpleEntityAttributeSelf(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 			break;
 		}
 		for(Element valueContextEle : valueContextEles)  valueContextEle.remove();
@@ -292,7 +264,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseAttachment(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> attachmentEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithAttachment.ATTACHMENT);
 		for(Element attachmentEle : attachmentEles){
-			this.parseSimpleEntityAttribute(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+			this.parseSimpleEntityAttributeSelf(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 			break;
 		}
 		for(Element attachmentEle : attachmentEles)  attachmentEle.remove();
@@ -315,8 +287,8 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	}
 
 	//parse style 
-	private void parseStyle(Element ele, HAPIdEntityInDomain uiUnitId, String uiId, HAPContextParser parserContext) {
-		HAPDefinitionEntityComplexUIContent uiUnit = this.getUIContentEntityById(uiUnitId, parserContext);
+	private void parseStyle(Element ele, HAPIdEntityInDomain uiContentId, String uiId, HAPContextParser parserContext) {
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		HAPDefinitionStyle style = new HAPDefinitionStyle(uiId);
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
@@ -325,7 +297,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 			break;
 		}
 		ele.remove();
-		uiUnit.setStyle(style);
+		uiContent.setStyle(style);
 	}
 
 	private HAPDefinitionEntityComplexUIContent getUIContentEntityById(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
@@ -333,37 +305,4 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	}
 	
 	private String generateId() {     return this.m_idGenerator.generateId();      }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*	
-	private void parseComponent(Element parentEle, HAPDefinitionUIUnit uiUnit) {
-		List<Element> componentEles = HAPUtilityUIResourceParser.getChildElementsByTag(parentEle, COMPONENT);
-		JSONObject componentObj = null;
-		if(componentEles.size()>0) {
-			Element componentEle = componentEles.get(0);
-			componentObj = new JSONObject(componentEle.html());
-		}
-		HAPParserEntityComponent.parseComponentEntity(uiUnit, componentObj, this.m_runtimeEnv.getTaskManager());
-		for(Element ele : componentEles)  ele.remove();
-	}
-	
-
-	private String getElementText(Element ele) {
-		return StringEscapeUtils.unescapeHtml(ele.html());
-//		childEle.ownText().html()
-	}
-
-
-*/
-
-
-	
 }

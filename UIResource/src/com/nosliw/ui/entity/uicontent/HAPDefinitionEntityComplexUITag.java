@@ -37,6 +37,8 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {}
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {}
 
+	public void addAttribute(String attrName, String attrValue) {}
+	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		// TODO Auto-generated method stub

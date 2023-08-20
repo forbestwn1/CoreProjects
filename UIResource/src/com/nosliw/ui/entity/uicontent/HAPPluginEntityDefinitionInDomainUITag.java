@@ -1,5 +1,7 @@
 package com.nosliw.ui.entity.uicontent;
 
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -27,6 +29,13 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		HAPManagerUITag uiTagMan = ((HAPRuntimeEnvironmentImpBrowser)this.getRuntimeEnvironment()).getUIResourceManager().getUITagManager();
 		Element ele = (Element)obj;
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
+		uiTagEntity.setTagName(customTagName);
+
+		
+		Attributes eleAttrs = ele.attributes();
+		for(Attribute eleAttr : eleAttrs){
+			uiTagEntity.addAttribute(eleAttr.getKey(), eleAttr.getValue());
+		}
 
 		HAPResourceDefinition tagDefResourceDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, customTagName), parserContext.getGlobalDomain());
 		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(tagDefResourceDef.getEntityId()).getEntity();

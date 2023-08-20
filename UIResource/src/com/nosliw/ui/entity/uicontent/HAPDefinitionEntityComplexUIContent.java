@@ -3,6 +3,7 @@ package com.nosliw.ui.entity.uicontent;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
@@ -40,7 +41,7 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityComp
 
 	public String getUnitType() {    return null;   }
 
-	public void addCustomTag(HAPIdEntityInDomain customTagId) {}
+	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure) {}
 	
 	public void setContent(String content) {    this.setAttributeValueObject(ATTR_CONTENT, content);        }
 	public String getContent() {     return (String)this.getAttributeValue(ATTR_CONTENT);     }
