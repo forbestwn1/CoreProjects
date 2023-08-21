@@ -23,8 +23,8 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskExpression;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteExpressionRhino;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 
 public class HAPExpressionGroupTest {
@@ -75,7 +75,7 @@ public class HAPExpressionGroupTest {
 				}
 				
 				//execute the expression
-				HAPRuntimeTaskExecuteExpressionRhino task = new HAPRuntimeTaskExecuteExpressionRhino(new HAPInfoRuntimeTaskExpression(expresionExecutable, null, varInput, null), runtimeEnvironment);
+				HAPRuntimeTaskExecuteDataExpressionRhino task = new HAPRuntimeTaskExecuteDataExpressionRhino(new HAPInfoRuntimeTaskDataExpression(expresionExecutable, null, varInput, null), runtimeEnvironment);
 				HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 				System.out.println("--------------------   "+id+"    -------------------------");

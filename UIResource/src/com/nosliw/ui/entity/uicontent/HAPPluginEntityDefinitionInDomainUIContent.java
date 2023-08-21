@@ -1,6 +1,7 @@
 package com.nosliw.ui.entity.uicontent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -52,6 +53,17 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postNewInstance(entityId, parserContext);
+		HAPDefinitionEntityComplexUIContent uiContentEntity = (HAPDefinitionEntityComplexUIContent)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
+
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
+		
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInContent>());
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInAttribute>());
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInAttribute>());
+
+		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
+		
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
@@ -78,15 +90,6 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		HAPUtilityUIResourceParser.addSpanToText(wrapperEle);
 		
 		uiContent.setContent(wrapperEle.html());
-		
-		if(HAPConstantShared.UIRESOURCE_TYPE_TAG.equals(uiContent.getUnitType())) {
-			//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
-			String uiId = uiContentId.getEntityId();
-			wrapperEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
-			wrapperEle.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
-			wrapperEle.remove();
-		}
-
 	}
 
 	/*

@@ -39,14 +39,14 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		
 		
 		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex(); 
-		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.PARENTRELATIONCONFIGURE);
+		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.ATTR_PARENTRELATIONCONFIGURE);
 		if(parentRelationConfigureJson!=null) {
 			parentRelationConfigure.buildObject(parentRelationConfigureJson, HAPSerializationFormat.JSON);
 		}
 		uiTagDefinition.setParentRelationConfigure(parentRelationConfigure);
 		
 		HAPConfigureParentRelationComplex childRelationConfigure = new HAPConfigureParentRelationComplex(); 
-		JSONObject childRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.CHILDRELATIONCONFIGURE);
+		JSONObject childRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.ATTR_CHILDRELATIONCONFIGURE);
 		if(childRelationConfigureJson!=null) {
 			childRelationConfigure.buildObject(childRelationConfigureJson, HAPSerializationFormat.JSON);
 		}

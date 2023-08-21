@@ -10,7 +10,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 
 @HAPEntityWithAttribute
-public class HAPInfoRuntimeTaskExpression{
+public class HAPInfoRuntimeTaskDataExpression{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -30,7 +30,7 @@ public class HAPInfoRuntimeTaskExpression{
 
 	private Map<String, HAPData> m_referencesValue;
 	
-	public HAPInfoRuntimeTaskExpression(HAPExecutableEntityExpressionDataGroup expression, String itemName, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
+	public HAPInfoRuntimeTaskDataExpression(HAPExecutableEntityExpressionDataGroup expression, String itemName, Map<String, HAPData> variablesValue, Map<String, HAPData> referencesValue){
 		this.m_expression = expression;
 		this.m_itemName = itemName;
 		if(HAPUtilityBasic.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;

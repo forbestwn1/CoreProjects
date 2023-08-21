@@ -1,5 +1,7 @@
 package com.nosliw.ui.entity.uicontent;
 
+import java.util.LinkedHashMap;
+
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
@@ -23,6 +25,14 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 	}
 
 	@Override
+	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		super.postNewInstance(entityId, parserContext);
+		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
+
+		uiTagEntity.setAttributeValueObject(HAPDefinitionEntityComplexUITag.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
+	}
+
+	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)this.getEntity(entityId, parserContext);
 		
@@ -30,12 +40,6 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		Element ele = (Element)obj;
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
 		uiTagEntity.setTagName(customTagName);
-
-		
-		Attributes eleAttrs = ele.attributes();
-		for(Attribute eleAttr : eleAttrs){
-			uiTagEntity.addAttribute(eleAttr.getKey(), eleAttr.getValue());
-		}
 
 		HAPResourceDefinition tagDefResourceDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, customTagName), parserContext.getGlobalDomain());
 		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(tagDefResourceDef.getEntityId()).getEntity();
@@ -45,7 +49,18 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		
 		HAPIdEntityInDomain uiContentId = this.parseUIContent(ele, entityId, parserContext);
 		HAPUtilityEntityDefinition.buildParentRelation(uiContentId, entityId, uiTagEntity.getChildRelationConfigure(), parserContext);
-		
+
+		//parse 
+		Attributes eleAttrs = ele.attributes();
+		for(Attribute eleAttr : eleAttrs){
+			uiTagEntity.addAttribute(eleAttr.getKey(), eleAttr.getValue());
+		}
+
+		//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
+		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
+		ele.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
+		ele.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
+		ele.remove();
 	}
 
 }

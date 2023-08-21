@@ -1,6 +1,7 @@
 package com.nosliw.ui.entity.uitag;
 
 import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
@@ -17,19 +18,19 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 
 	public void setInfo(HAPEntityInfo entityInfo) {}
 	
+	public HAPIdEntityInDomain getValueContextEntityId() {    return this.getAttributeValueEntityId(HAPWithValueContext.VALUECONTEXT);         }
+	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);   }
+
+	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {    this.setAttributeValueObject(PARENTRELATIONCONFIGURE, parentRelationConfigure);      }
+	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(PARENTRELATIONCONFIGURE);   }
+	
+	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {   this.setAttributeValueObject(CHILDRELATIONCONFIGURE, childRelationConfigure);    }
+	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(CHILDRELATIONCONFIGURE);     }
+	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		// TODO Auto-generated method stub
-		return null;
+		HAPDefinitionEntityUITagDefinition out = new HAPDefinitionEntityUITagDefinition();
+		this.cloneToDefinitionEntityInDomain(out);
+		return out;
 	}
-
-	public HAPIdEntityInDomain getValueContextEntityId() {}
-	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {}
-
-	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {}
-	public HAPConfigureParentRelationComplex getParentRelationConfigure() {}
-	
-	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {}
-	public HAPConfigureParentRelationComplex getChildRelationConfigure() {}
-	
 }
