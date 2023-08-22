@@ -234,17 +234,17 @@ var node_createComplexEntityRuntimeService = function() {
 							}
 
 							//update backup state object
-							var backupStateObj = runtimeContext.backupState;
+							var backupStateObj = runtimeContext==undefined?undefined:runtimeContext.backupState;
 							if(backupStateObj==undefined)  backupStateObj =	node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
 							node_getComponentInterface(application).updateBackupStateObject(backupStateObj);
 
 							//update lifecycle entity
-							var lifecycleEntity = runtimeContext.lifecycleEntity;
+							var lifecycleEntity = runtimeContext==undefined?undefined:runtimeContext.lifecycleEntity;
 							if(lifecycleEntity==undefined)  lifecycleEntity = node_createLifeCycleRuntimeContext("application");
 							node_getComponentInterface(application).updateLifecycleEntityObject(lifecycleEntity);
 
 							//update view
-							if(runtimeContext.view!=undefined){
+							if(runtimeContext!=undefined && runtimeContext.view!=undefined){
 								node_getComponentInterface(application).updateView(runtimeContext.view);
 							}
 

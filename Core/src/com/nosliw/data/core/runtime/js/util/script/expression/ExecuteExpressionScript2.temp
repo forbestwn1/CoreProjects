@@ -1,0 +1,23 @@
+var expressionService = nosliw.runtime.getExpressionService();
+	expressionService.executeExecuteExpressionRequest(||expression||, "||itemName||", ||variables||, ||constants||, ||references||, {
+
+		success : function(requestInfo, data){
+			var parms = {};
+			parms.||parmTaskId|| = "||taskId||";
+			parms.||parmResponseData|| = data;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("||gatewayId||", "||successCommand||", parms);
+		},
+		error : function(requestInfo, serviceData){
+			var parms = {};
+			parms.||parmTaskId|| = "||taskId||";
+			parms.||parmResponseData|| = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("||gatewayId||", "||errorCommand||", parms);
+		},
+		exception : function(requestInfo, serviceData){
+			var parms = {};
+			parms.||parmTaskId|| = "||taskId||";
+			parms.||parmResponseData|| = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("||gatewayId||", "||exceptionCommand||", parms);
+		}
+	}, undefined);
+			

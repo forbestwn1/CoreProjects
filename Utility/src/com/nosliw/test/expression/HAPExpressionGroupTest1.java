@@ -27,7 +27,7 @@ import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 
-public class HAPExpressionGroupTest {
+public class HAPExpressionGroupTest1 {
 
 	public static void main(String[] args) {
 

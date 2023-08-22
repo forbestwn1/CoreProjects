@@ -41,8 +41,8 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataOperationRhino;
 import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
+import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataOperationRhino;
 
 @HAPEntityWithAttribute
 public class HAPRuntimeImpRhino implements HAPRuntime{
@@ -258,6 +258,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.error", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtime", null)));
 		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.runtimerhino", null)));
+		resourceIds.add(HAPResourceHelper.getInstance().buildResourceIdFromIdData(new HAPJSLibraryId("nosliw.uidata", null)));
 		
 		resourceIdInfos = new ArrayList<HAPResourceInfo>();
 		for(HAPResourceIdSimple resourceId : resourceIds){
@@ -324,7 +325,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			
 			ContextFactory factory = ContextFactory.getGlobal(); 
 
-//			this.debug(factory);
+			this.debug(factory);
 			
 		    Context context = factory.enterContext();
 			

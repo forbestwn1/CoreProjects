@@ -52,7 +52,7 @@
 		"element": [
 			{
 				"name" : "normal_cleardatatype",
-				"status": "disabled",
+				"status": "disabled1",
 				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			},
 			{

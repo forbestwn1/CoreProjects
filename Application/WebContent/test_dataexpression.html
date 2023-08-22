@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Application !!</title>
+
+    	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+        <script src="libresources/external/framework7/4.3.1/framework7.bundle.js"></script>
+        <script src="libresources/external/jQuery/3.4.1/jquery.js"></script>
+        
+        <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+		<script src="libresources/nosliw/core/nosliw.js"></script>
+
+ 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+</head>
+
+<body>
+	<div id="mainDiv" style="overflow-y: scroll; height:400px;"></div>
+</body>
+
+<script>
+
+//when nosliw active
+$(document).on("nosliwActive", function(){
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
+	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExpressionService_ExecuteScript"));
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "test1"), undefined, undefined, undefined, {
+		success : function(request, application){
+			var expressionGroupCore = application.getMainEntityRuntime().getCoreEntity();
+			var appInterface = node_getApplicationInterface(expressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+			return appInterface.getExecuteItemnRequest("normal_cleardatatype", {
+				success : function(request, result){
+					console.log(JSON.stringify(result));		
+				}
+			});
+		}
+	}));
+	node_requestServiceProcessor.processRequest(out);
+});
+
+</script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+
+</html>
