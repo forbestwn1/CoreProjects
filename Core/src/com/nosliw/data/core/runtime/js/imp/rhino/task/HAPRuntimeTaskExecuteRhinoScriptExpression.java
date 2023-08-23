@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime.js.imp.rhino.task;
 import java.util.List;
 
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpression;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeTaskRhino;
@@ -13,9 +13,9 @@ public class HAPRuntimeTaskExecuteRhinoScriptExpression extends HAPRuntimeTaskRh
 
 	final public static String TASK = "ExecuteScriptExpression"; 
 	
-	private HAPInfoRuntimeTaskScriptExpression m_taskInfo;
+	private HAPInfoRuntimeTaskScriptExpressionGroup m_taskInfo;
 	
-	public HAPRuntimeTaskExecuteRhinoScriptExpression(HAPInfoRuntimeTaskScriptExpression taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
+	public HAPRuntimeTaskExecuteRhinoScriptExpression(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
 		super(TASK, runtTimeEnv);
 		this.m_taskInfo = taskInfo;
 	}

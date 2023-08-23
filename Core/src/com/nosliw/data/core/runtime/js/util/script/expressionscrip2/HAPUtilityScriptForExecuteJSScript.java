@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpression;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
@@ -53,7 +53,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 	}
 	
 	//build script for execute script expression task 
-	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptTask(HAPInfoRuntimeTaskScriptExpression taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptTask(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, Object> variableValue = taskInfo.getVariablesValue();
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();

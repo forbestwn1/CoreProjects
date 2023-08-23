@@ -311,7 +311,9 @@ var node_utility = function()
 							var rootId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
 							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH], value));
 						});
-						mappingToReferencedExpressionRequest.addRequest(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity).getExecuteDataExpressionRequest());
+						
+						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+						mappingToReferencedExpressionRequest.addRequest(dataExpressionSingleInterface.getExecuteRequest());
 						return mappingToReferencedExpressionRequest;			
 					}
 				});

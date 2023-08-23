@@ -2,17 +2,17 @@ package com.nosliw.test.expression;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpression;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpressionSingle;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpressionSingle;
 
-public class HAPScriptExpressionGroupTest {
+public class HAPDataExpressionSingleTest {
 
 	public static void main(String[] args) {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPInfoRuntimeTaskScriptExpressionGroup taskInfo = new HAPInfoRuntimeTaskScriptExpressionGroup("test1", "literate_datascript");
-		HAPRuntimeTaskExecuteRhinoScriptExpression task = new HAPRuntimeTaskExecuteRhinoScriptExpression(taskInfo, runtimeEnvironment);
+		HAPInfoRuntimeTaskDataExpressionSingle taskInfo = new HAPInfoRuntimeTaskDataExpressionSingle("test1");
+		HAPRuntimeTaskExecuteRhinoDataExpressionSingle task = new HAPRuntimeTaskExecuteRhinoDataExpressionSingle(taskInfo, runtimeEnvironment);
 
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 

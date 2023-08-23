@@ -30,7 +30,7 @@ import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -41,7 +41,7 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataOperationRhino;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpression;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpressionGroup;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 
 @HAPEntityWithAttribute
@@ -110,7 +110,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
 		HAPExecutableEntityExpressionDataGroup expression = this.getRuntimeEnvironment().getExpressionManager().getExpression(expressionStr);
 		//execute task
-		HAPRuntimeTask task = new HAPRuntimeTaskExecuteRhinoDataExpression(new HAPInfoRuntimeTaskDataExpression(expression, null, parmsData, null), this.getRuntimeEnvironment());
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteRhinoDataExpressionGroup(new HAPInfoRuntimeTaskDataExpressionGroup(expression, null, parmsData, null), this.getRuntimeEnvironment());
 		HAPServiceData serviceData = this.executeTaskSync(task);
 		return serviceData;
 		
@@ -325,7 +325,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			
 			ContextFactory factory = ContextFactory.getGlobal(); 
 
-//			this.debug(factory);
+			this.debug(factory);
 			
 		    Context context = factory.enterContext();
 			

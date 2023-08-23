@@ -4,18 +4,18 @@ import java.util.List;
 
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpressionSingle;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeTaskRhino;
 import com.nosliw.data.core.runtime.js.util.script.expressiondata.HAPUtilityRuntimeJSScript;
 
-public class HAPRuntimeTaskExecuteRhinoDataExpression extends HAPRuntimeTaskRhino{
+public class HAPRuntimeTaskExecuteRhinoDataExpressionSingle extends HAPRuntimeTaskRhino{
 	final public static String TASK = "ExecuteExpression"; 
 
-	private HAPInfoRuntimeTaskDataExpression m_taskInfo;
+	private HAPInfoRuntimeTaskDataExpressionSingle m_taskInfo;
 	
-	public HAPRuntimeTaskExecuteRhinoDataExpression(HAPInfoRuntimeTaskDataExpression taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
+	public HAPRuntimeTaskExecuteRhinoDataExpressionSingle(HAPInfoRuntimeTaskDataExpressionSingle taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
 		super(TASK, runtTimeEnv);
 		this.m_taskInfo = taskInfo;
 	}
@@ -32,7 +32,7 @@ public class HAPRuntimeTaskExecuteRhinoDataExpression extends HAPRuntimeTaskRhin
 
 	@Override
 	protected HAPJSScriptInfo buildRuntimeScript() {
-		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionTask(this.m_taskInfo, this, this.getRuntime());
+		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteDataExpressionSingleTask(this.m_taskInfo, this, this.getRuntime());
 		return scriptInfo;
 	}
 }

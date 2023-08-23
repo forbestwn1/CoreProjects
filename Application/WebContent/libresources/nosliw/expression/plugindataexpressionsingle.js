@@ -14,6 +14,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_createServiceRequestInfoSimple;
 	var node_expressionUtility;
+	var node_makeObjectWithApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,6 +40,13 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_referencedRuntime = {};
 	
+	var loc_facade = {
+		getExecuteRequest : function(handlers, request){
+			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONSINGLE_EXPRESSION);
+			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
+		},
+	};
+	
 	var loc_out = {
 		
 		getComplexEntityInitRequest : function(handlers, request){
@@ -63,7 +71,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 		
 	};
 	
-	return loc_out;
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -80,6 +88,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionSinglePlugin", node_createDataExpressionSinglePlugin); 
