@@ -1,10 +1,9 @@
-package com.nosliw.data.core.runtime.js.rhino.task;
+package com.nosliw.data.core.runtime.js.imp.rhino.task;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
@@ -12,17 +11,18 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
-import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
+import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcess;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.structure.data.HAPContextData;
 
-public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
+public class HAPRuntimeTaskExecuteProcessRhino extends HAPRuntimeTaskExecuteProcess{
+
 	private HAPResourceManagerRoot m_resourceManager;
-	
-	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData, HAPResourceManagerRoot resourceManager) {
-		super(process, parentContextData);
+
+	public HAPRuntimeTaskExecuteProcessRhino(HAPExecutableProcess process, HAPContextData input, HAPResourceManagerRoot resourceManager) {
+		super(process, input);
 		this.m_resourceManager = resourceManager;
 	}
 
@@ -48,7 +48,7 @@ public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExec
 			}
 			else {
 				//pppp			
-				HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessEmbededTask(this, rhinoRuntime);
+				HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessTask(this, rhinoRuntime);
 				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 			}
 		}
@@ -60,10 +60,10 @@ public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExec
 	}
 	
 	class HAPRunTaskEventListenerInner implements HAPRunTaskEventListener{
-		private HAPRuntimeTaskExecuteProcessEmbededRhino m_parent;
+		private HAPRuntimeTaskExecuteProcessRhino m_parent;
 		private HAPRuntimeImpRhino m_runtime;
 		
-		public HAPRunTaskEventListenerInner(HAPRuntimeTaskExecuteProcessEmbededRhino parent, HAPRuntimeImpRhino runtime){
+		public HAPRunTaskEventListenerInner(HAPRuntimeTaskExecuteProcessRhino parent, HAPRuntimeImpRhino runtime){
 			this.m_parent = parent;
 			this.m_runtime = runtime;
 		}
@@ -74,7 +74,7 @@ public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExec
 			if(resourceTaskResult.isSuccess()){
 				//after resource loaded, execute expression
 				try{
-					HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessEmbededTask(this.m_parent, this.m_runtime);
+					HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteProcessTask(this.m_parent, this.m_runtime);
 					this.m_runtime.loadTaskScript(scriptInfo, m_parent.getTaskId());
 				}
 				catch(Exception e){

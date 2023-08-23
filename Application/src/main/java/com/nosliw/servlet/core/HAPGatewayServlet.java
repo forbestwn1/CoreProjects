@@ -13,7 +13,7 @@ import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.browser.HAPRuntimeBrowserUtility;
+import com.nosliw.data.core.runtime.js.imp.browser.HAPRuntimeBrowserUtility;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPServiceServlet;

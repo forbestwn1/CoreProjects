@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.rhino;
+package com.nosliw.data.core.runtime.js.imp.rhino;
 
 import java.util.List;
 

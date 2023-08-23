@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.util.script.expression;
+package com.nosliw.data.core.runtime.js.util.script.expressiondata;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -10,15 +10,13 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityRuntimeJSScript {
 
 	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPInfoRuntimeTaskDataExpression taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		
-		
 		
 		templateParms.put("expression", HAPUtilityJson.formatJson(taskInfo.getExpression().toResourceData(runtime.getRuntimeInfo()).toString()));
 		templateParms.put("itemName", taskInfo.getItemName());

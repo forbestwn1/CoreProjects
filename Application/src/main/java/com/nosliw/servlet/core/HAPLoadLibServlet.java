@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
-import com.nosliw.data.core.runtime.js.browser.HAPGatewayBrowserLoadLibrary;
+import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;

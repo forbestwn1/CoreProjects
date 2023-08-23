@@ -23,9 +23,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteDataOperation;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.HAPRuntimeTaskLoadResources;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
-import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityRuntimeJSScript {

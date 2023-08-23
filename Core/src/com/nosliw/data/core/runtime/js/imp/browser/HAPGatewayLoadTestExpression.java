@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.browser;
+package com.nosliw.data.core.runtime.js.imp.browser;
 
 
 import org.json.JSONObject;

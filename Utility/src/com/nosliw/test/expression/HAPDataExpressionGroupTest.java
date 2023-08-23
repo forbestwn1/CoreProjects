@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
 
 public class HAPDataExpressionGroupTest {
 
@@ -17,7 +17,7 @@ public class HAPDataExpressionGroupTest {
 		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "test1");
 		HAPExecutablePackage executablePackage = runtimeEnvironment.getDomainEntityExecutableManager().getExecutablePackage(resourceId);
 
-		HAPInfoRuntimeTaskDataExpression taskInfo = new HAPInfoRuntimeTaskDataExpression(executablePackage, "normal_cleardatatype");
+		HAPInfoRuntimeTaskDataExpression taskInfo = new HAPInfoRuntimeTaskDataExpression(executablePackage, "reference");
 		HAPRuntimeTaskExecuteDataExpressionRhino task = new HAPRuntimeTaskExecuteDataExpressionRhino(taskInfo, runtimeEnvironment);
 
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

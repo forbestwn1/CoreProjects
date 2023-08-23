@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.rhino;
+package com.nosliw.data.core.runtime.js.imp.rhino;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPRuntimeTaskLoadResourcesRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskLoadResourcesRhino;
 
 public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 

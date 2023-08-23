@@ -11,8 +11,8 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityRuntimeJSScriptTask {
 

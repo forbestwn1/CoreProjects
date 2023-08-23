@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.rhino;
+package com.nosliw.data.core.runtime.js.imp.rhino;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;

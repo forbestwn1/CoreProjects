@@ -16,9 +16,9 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableExpress
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
-import com.nosliw.data.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.runtime.js.rhino.task.HAPInfoRuntimeTaskScript;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
+import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPInfoRuntimeTaskScript;
 
 public class HAPUtilityScriptForExecuteJSScript {
 
