@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
 
 //a element refer to another element (on another tree or same tree)
 //it can be use in define value structure by reference to another element

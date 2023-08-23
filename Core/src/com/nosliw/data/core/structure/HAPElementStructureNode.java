@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression.HAPUtilityScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
 
 //branch in value structure tree
 public class HAPElementStructureNode extends HAPElementStructureLeafVariable{

@@ -12,7 +12,7 @@ import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
+import com.nosliw.data.core.script.expression1.HAPDefinitionScriptEntity;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
 

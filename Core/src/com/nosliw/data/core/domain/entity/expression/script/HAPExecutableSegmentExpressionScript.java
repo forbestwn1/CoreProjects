@@ -9,8 +9,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPVariableInScript;
 
 public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentExpression{
 

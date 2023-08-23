@@ -1,8 +1,8 @@
 package com.nosliw.uiresource.page.definition;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptEntity;
-import com.nosliw.data.core.script.expression.HAPScript;
+import com.nosliw.data.core.script.expression1.HAPDefinitionScriptEntity;
+import com.nosliw.data.core.script.expression1.HAPScript;
 
 public class HAPDefinitionUIEmbededScriptExpression extends HAPDefinitionScriptEntity{
 

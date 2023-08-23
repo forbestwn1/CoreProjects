@@ -67,7 +67,7 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayCriteriaOperation;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayPackage;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
-import com.nosliw.data.core.script.expression.HAPManagerScript;
+import com.nosliw.data.core.script.expression1.HAPManagerScript;
 import com.nosliw.data.core.sequence.HAPTaskInfoParserSequence;
 import com.nosliw.data.core.sequence.HAPTaskInfoProcessorSequence;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;

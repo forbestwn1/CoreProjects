@@ -24,8 +24,6 @@ public class HAPUtilityRuntimeJSScript {
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
 		
-		
-		
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
 		templateParms.put("taskId", task.getTaskId());

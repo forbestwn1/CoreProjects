@@ -24,8 +24,8 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPParserEntityComponent;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression.HAPScript;
-import com.nosliw.data.core.script.expression.imp.literate.HAPUtilityScriptLiterate;
+import com.nosliw.data.core.script.expression1.HAPScript;
+import com.nosliw.data.core.script.expression1.imp.literate.HAPUtilityScriptLiterate;
 
 /*
  * This is a utility class that process ui resource file and create ui resource object

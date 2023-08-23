@@ -3,7 +3,7 @@ package com.nosliw.test.expression;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpression;
 
 public class HAPDataExpressionGroupTest {
 
@@ -12,7 +12,7 @@ public class HAPDataExpressionGroupTest {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
 		HAPInfoRuntimeTaskDataExpression taskInfo = new HAPInfoRuntimeTaskDataExpression("test1", "reference");
-		HAPRuntimeTaskExecuteDataExpressionRhino task = new HAPRuntimeTaskExecuteDataExpressionRhino(taskInfo, runtimeEnvironment);
+		HAPRuntimeTaskExecuteRhinoDataExpression task = new HAPRuntimeTaskExecuteRhinoDataExpression(taskInfo, runtimeEnvironment);
 
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 

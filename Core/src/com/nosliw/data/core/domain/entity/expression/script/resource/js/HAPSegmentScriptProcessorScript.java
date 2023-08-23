@@ -7,7 +7,7 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegment
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpressionScript;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableVariableInScript;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
-import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
 
 public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcessor{
 

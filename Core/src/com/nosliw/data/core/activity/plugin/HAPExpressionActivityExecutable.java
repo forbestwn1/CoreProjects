@@ -15,8 +15,8 @@ import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPContextProcessExpressionScript;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 
 public class HAPExpressionActivityExecutable extends HAPExecutableActivity{
 

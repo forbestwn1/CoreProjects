@@ -13,8 +13,8 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionPr
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPProcessorScript;
 
 public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 

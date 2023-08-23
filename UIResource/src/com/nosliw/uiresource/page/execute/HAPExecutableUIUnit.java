@@ -21,8 +21,8 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExp
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPContextProcessExpressionScript;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.definition.HAPElementEvent;

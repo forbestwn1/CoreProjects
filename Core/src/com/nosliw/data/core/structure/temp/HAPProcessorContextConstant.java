@@ -19,10 +19,10 @@ import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptEntity;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPProcessorScript;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstantReference;
@@ -291,7 +291,7 @@ public class HAPProcessorContextConstant {
 		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, constantsValue, runtimeEnv.getExpressionManager(), HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
 
 		//execute script expression
-		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(groupExe, null, null, null);
+		HAPRuntimeTaskExecuteRhinoScriptExpression task = new HAPRuntimeTaskExecuteRhinoScriptExpression(groupExe, null, null, null);
 		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
 		return out.getData();
 	}

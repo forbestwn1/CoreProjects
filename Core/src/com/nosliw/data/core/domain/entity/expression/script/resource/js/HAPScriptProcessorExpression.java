@@ -4,12 +4,12 @@ import java.util.List;
 
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
-import com.nosliw.data.core.script.expression.HAPExecutableScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptWithSegment;
-import com.nosliw.data.core.script.expression.imp.expression.HAPConstantInScript;
-import com.nosliw.data.core.script.expression.imp.expression.HAPExecutableScriptSegExpression;
-import com.nosliw.data.core.script.expression.imp.expression.HAPExecutableScriptSegScript;
-import com.nosliw.data.core.script.expression.imp.expression.HAPVariableInScript;
+import com.nosliw.data.core.script.expression1.HAPExecutableScript;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptWithSegment;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPExecutableScriptSegExpression;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPExecutableScriptSegScript;
+import com.nosliw.data.core.script.expression1.imp.expression.HAPVariableInScript;
 
 public class HAPScriptProcessorExpression implements HAPSegmentScriptProcessor{
 

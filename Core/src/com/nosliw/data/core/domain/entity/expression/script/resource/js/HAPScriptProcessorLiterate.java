@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity.expression.script.resource.js;
 
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
-import com.nosliw.data.core.script.expression.HAPExecutableScript;
-import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptEntityLiterate;
-import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptSegExpressionScript;
-import com.nosliw.data.core.script.expression.imp.literate.HAPExecutableScriptSegText;
+import com.nosliw.data.core.script.expression1.HAPExecutableScript;
+import com.nosliw.data.core.script.expression1.imp.literate.HAPExecutableScriptEntityLiterate;
+import com.nosliw.data.core.script.expression1.imp.literate.HAPExecutableScriptSegExpressionScript;
+import com.nosliw.data.core.script.expression1.imp.literate.HAPExecutableScriptSegText;
 
 public class HAPScriptProcessorLiterate implements HAPSegmentScriptProcessor{
 

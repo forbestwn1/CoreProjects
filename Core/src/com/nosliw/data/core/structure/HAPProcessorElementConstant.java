@@ -20,12 +20,12 @@ import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPInfoRuntimeTaskScript;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteScript;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptEntity;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptEntity;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPProcessorScript;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
@@ -292,7 +292,7 @@ public class HAPProcessorElementConstant {
 		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, constantsValue, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
 
 		//execute script expression
-		HAPRuntimeTaskExecuteScript task = new HAPRuntimeTaskExecuteScript(new HAPInfoRuntimeTaskScript(groupExe, null, null, null), runtimeEnv);
+		HAPRuntimeTaskExecuteRhinoScriptExpression task = new HAPRuntimeTaskExecuteRhinoScriptExpression(new HAPInfoRuntimeTaskScriptExpression(groupExe, null, null, null), runtimeEnv);
 		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
 		return out.getData();
 	}

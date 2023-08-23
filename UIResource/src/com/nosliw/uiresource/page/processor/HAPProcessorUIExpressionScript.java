@@ -10,10 +10,10 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressio
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionComponent;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression.HAPContextProcessExpressionScript;
-import com.nosliw.data.core.script.expression.HAPDefinitionScriptGroupImp;
-import com.nosliw.data.core.script.expression.HAPExecutableScriptGroup;
-import com.nosliw.data.core.script.expression.HAPProcessorScript;
+import com.nosliw.data.core.script.expression1.HAPContextProcessExpressionScript;
+import com.nosliw.data.core.script.expression1.HAPDefinitionScriptGroupImp;
+import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
+import com.nosliw.data.core.script.expression1.HAPProcessorScript;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInAttribute;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIEmbededScriptExpressionInContent;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;

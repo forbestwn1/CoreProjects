@@ -40,8 +40,8 @@ import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataExpressionRhino;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataOperationRhino;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpression;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 
 @HAPEntityWithAttribute
@@ -110,7 +110,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
 		HAPExecutableEntityExpressionDataGroup expression = this.getRuntimeEnvironment().getExpressionManager().getExpression(expressionStr);
 		//execute task
-		HAPRuntimeTask task = new HAPRuntimeTaskExecuteDataExpressionRhino(new HAPInfoRuntimeTaskDataExpression(expression, null, parmsData, null), this.getRuntimeEnvironment());
+		HAPRuntimeTask task = new HAPRuntimeTaskExecuteRhinoDataExpression(new HAPInfoRuntimeTaskDataExpression(expression, null, parmsData, null), this.getRuntimeEnvironment());
 		HAPServiceData serviceData = this.executeTaskSync(task);
 		return serviceData;
 		
