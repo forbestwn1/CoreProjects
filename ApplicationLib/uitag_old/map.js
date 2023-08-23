@@ -28,7 +28,7 @@
 	script : function(env){
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
-		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+		var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 
 		var loc_env = env;
 		//container data variable

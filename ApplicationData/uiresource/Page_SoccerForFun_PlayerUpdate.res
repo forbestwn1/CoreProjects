@@ -86,13 +86,13 @@
 	{
 		update : function(info, env){
 
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var requestInfo = env.getServiceRequest("updateLineupService", {
 				success : function(request){
@@ -103,13 +103,13 @@
 		
 		command_updateData : function(data, request, env){
 
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var requestInfo = env.getServiceRequest("updateLineupService", {
 				success : function(request){

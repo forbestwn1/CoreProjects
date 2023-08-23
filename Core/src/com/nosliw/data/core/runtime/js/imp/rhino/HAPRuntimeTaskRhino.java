@@ -35,8 +35,10 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 				List<HAPResourceDependency> dependencys = this.getResourceDependency();
 				
 				List<HAPResourceInfo> resourcesId = new ArrayList<HAPResourceInfo>();
-				for(HAPResourceDependency dependency : dependencys) {
-					resourcesId.add(new HAPResourceInfo(dependency.getId()));
+				if(dependencys!=null) {
+					for(HAPResourceDependency dependency : dependencys) {
+						resourcesId.add(new HAPResourceInfo(dependency.getId()));
+					}
 				}
 
 				HAPRuntimeTask loadResourcesTask = new HAPRuntimeTaskLoadResourcesRhino(resourcesId);

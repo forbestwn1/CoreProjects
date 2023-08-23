@@ -179,9 +179,9 @@
 			},
 			
 			createContextForDemo : function(id, parentContext, matchersByName, request) {
-				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
-				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
-				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				
 				var dataVarPar;
 				if(parentContext!=undefined)	dataVarPar = parentContext.getContextElement("data");

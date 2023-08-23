@@ -60,9 +60,9 @@
 	script : function(env){
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
-		var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
-		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
+		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
@@ -152,9 +152,9 @@
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-				var node_createData = nosliw.getNodeData("uidata.data.entity.createData");
-				var node_createContextElementInfo = nosliw.getNodeData("uidata.context.createContextElementInfo");
-				var node_createContext = nosliw.getNodeData("uidata.context.createContext");
+				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
+				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				var data = node_createData([1, 2], node_CONSTANT.WRAPPER_TYPE_OBJECT);
 				var elementInfosArray = [node_createContextElementInfo("internal_data", data)];
 				return node_createContext(id, elementInfosArray, request);

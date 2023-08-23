@@ -70,7 +70,7 @@
 			},
 			{
 				"name" : "literate_reference",
-				"status": "disabled1",
+				"status": "disabled",
 				"type" : "literate",
 				"expression" : "HaHaHa  <%=<(dataexpressionsingle|#local_extension)>.with(newBase:<%=?(baseVarNormal)?%>,newFrom:?(parm1)?,newTo:?(parm2)?) %>  End!!!!"
 			}

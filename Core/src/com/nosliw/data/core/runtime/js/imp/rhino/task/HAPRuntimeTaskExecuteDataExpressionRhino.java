@@ -25,7 +25,9 @@ public class HAPRuntimeTaskExecuteDataExpressionRhino extends HAPRuntimeTaskRhin
 
 	@Override
 	protected List<HAPResourceDependency> getResourceDependency() {
-		return this.m_taskInfo.getExpression().getResourceDependency(this.getRuntime().getRuntimeInfo(), this.getRuntimeEnv().getResourceManager());
+		return null;
+		
+//		return this.m_taskInfo.getExpression().getResourceDependency(this.getRuntime().getRuntimeInfo(), this.getRuntimeEnv().getResourceManager());
 	}
 
 	@Override

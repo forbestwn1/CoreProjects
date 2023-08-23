@@ -1,4 +1,4 @@
-var library = nosliw.getPackage("uidata");
+var library = nosliw.getPackage("variable");
 
 
 /**

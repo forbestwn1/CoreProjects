@@ -1,9 +1,9 @@
 	nosliw.registerNodeEvent("runtime1", "active", function(eventName, nodeName){
 
-		var node_buildVariableTree = nosliw.getNodeData("uidata.test.buildVariableTree");
-		var node_buildContext = nosliw.getNodeData("uidata.test.buildContext");
-		var node_createContextVariableInfosGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
-		var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+		var node_buildVariableTree = nosliw.getNodeData("variable.test.buildVariableTree");
+		var node_buildContext = nosliw.getNodeData("variable.test.buildContext");
+		var node_createContextVariableInfosGroup = nosliw.getNodeData("variable.context.createContextVariablesGroup");
+		var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 		
 		  var objectData1 = {
 				 string : "string value",

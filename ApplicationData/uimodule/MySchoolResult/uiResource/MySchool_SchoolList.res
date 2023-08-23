@@ -27,9 +27,9 @@
 				
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
+					var node_createUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createUIDataOperationRequest");
+					var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+					var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
 
 					var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createGetOperationService(""));
 					var opRequest = node_createUIDataOperationRequest(env.context, uiDataOperation, {
@@ -54,8 +54,8 @@
 
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
 			
 			var requestInfo = env.getServiceRequest("getSchoolData", {
 				success : function(request){

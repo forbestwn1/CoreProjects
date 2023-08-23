@@ -5,7 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -18,12 +17,14 @@ public class HAPUtilityRuntimeJSScript {
 	public static HAPJSScriptInfo buildRequestScriptForExecuteExpressionTask(HAPInfoRuntimeTaskDataExpression taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
-		templateParms.put("expression", HAPUtilityJson.formatJson(taskInfo.getExpression().toResourceData(runtime.getRuntimeInfo()).toString()));
-		templateParms.put("itemName", taskInfo.getItemName());
+		templateParms.put("expressionGroupId", taskInfo.getExpressionGroupResourceId());
+		templateParms.put("expressionItemId", taskInfo.getItemName());
 		
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
 		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
 		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		
 		
 		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
 		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);

@@ -21,13 +21,13 @@
 				deleteElementInLoop : function(data, info){
 					event.preventDefault();
 				
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+					var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+					var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+					var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					
@@ -81,13 +81,13 @@
 				deleteElementInLoop : function(data, info){
 					event.preventDefault();
 				
-					var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+					var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-					var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+					var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+					var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+					var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					var requestInfo = node_createServiceRequestInfoSequence({}, {
@@ -163,13 +163,13 @@
 
 			event.preventDefault();
 
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("uidata.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("uidata.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("uidata.uidataoperation.uiDataOperationServiceUtility");
-			var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
+			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
+			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var eleData = {
 				dataTypeId: "test.string;1.0.0",
@@ -183,7 +183,7 @@
 		},
 	
 		testLinkEvent : function(data, info){
-			var node_createContextVariable = nosliw.getNodeData("uidata.context.createContextVariable");
+			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			
 			event.preventDefault();
 			alert("aaaaa");

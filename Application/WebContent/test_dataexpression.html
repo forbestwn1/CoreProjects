@@ -41,7 +41,7 @@ $(document).on("nosliwActive", function(){
 		success : function(request, application){
 			var expressionGroupCore = application.getMainEntityRuntime().getCoreEntity();
 			var appInterface = node_getApplicationInterface(expressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
-			return appInterface.getExecuteItemnRequest("normal_cleardatatype", {
+			return appInterface.getExecuteItemnRequest("reference", {
 				success : function(request, result){
 					console.log(JSON.stringify(result));		
 				}

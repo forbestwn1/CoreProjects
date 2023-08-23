@@ -20,7 +20,7 @@ nosliw.init = function(configure){
 		"nosliw.request",
 		"nosliw.id",
 		"nosliw.resource",
-		"nosliw.uidata",
+		"nosliw.variable",
 		"nosliw.remoteservice",
 		"nosliw.error",
 		"nosliw.runtime",

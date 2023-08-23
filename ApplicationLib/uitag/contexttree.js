@@ -14,9 +14,9 @@
 
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-		var node_createContextVariablesGroup = nosliw.getNodeData("uidata.context.createContextVariablesGroup");
-		var node_createContextVariableInfo = nosliw.getNodeData("uidata.context.createContextVariableInfo");
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_createContextVariablesGroup = nosliw.getNodeData("variable.context.createContextVariablesGroup");
+		var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
+		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
 
 		var loc_env = env;
 	

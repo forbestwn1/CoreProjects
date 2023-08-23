@@ -397,9 +397,9 @@ nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(
 nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.context.createContextVariableInfo", function(){  node_createContextVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.data.utility", function(){  node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){  node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.data.utility", function(){  node_dataUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexTreeDebugView", node_createComplexTreeDebugView); 

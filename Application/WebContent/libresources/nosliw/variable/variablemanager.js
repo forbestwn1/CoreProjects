@@ -101,8 +101,8 @@ var node_createVariableManager = function(){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.variable.ChildVariableInfo", function(){node_ChildVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.variable.newVariable", function(){node_newVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.variable.ChildVariableInfo", function(){node_ChildVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.variable.newVariable", function(){node_newVariable = this.getData();});
 
 
 //Register Node by Name

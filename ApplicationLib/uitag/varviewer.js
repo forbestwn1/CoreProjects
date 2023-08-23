@@ -12,7 +12,7 @@
 	},
 	script : function(env){
 
-		var node_dataUtility = nosliw.getNodeData("uidata.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
 
 		var loc_env = env;
 	
