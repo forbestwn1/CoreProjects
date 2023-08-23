@@ -25,6 +25,7 @@ var packageObj = library;
 	var node_makeObjectWithComponentManagementInterface;
 	var node_createEntityDefinition;
 	var node_getObjectType;
+	var node_createStateBackupService;
 	
     var node_makeObjectWithEmbededEntityInterface;
     var node_getEmbededEntityInterface;
@@ -369,6 +370,7 @@ nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", funct
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 
 nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});

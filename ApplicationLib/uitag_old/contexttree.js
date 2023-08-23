@@ -28,7 +28,7 @@
 		var loc_getVariableTreeInfo = function(eleVar, childInfo){
 			var out = {};
 			out.id = eleVar.prv_id;
-			out.usage = nosliw.runtime.getUIVariableManager().getVariableInfo(eleVar.prv_id).usage;
+			out.usage = nosliw.runtime.getVariableManager().getVariableInfo(eleVar.prv_id).usage;
 
 			out.wrapperId = eleVar.prv_wrapper!=undefined ? eleVar.prv_wrapper.prv_id : "NO WRAPPER"; 
 			if(childInfo!=undefined){

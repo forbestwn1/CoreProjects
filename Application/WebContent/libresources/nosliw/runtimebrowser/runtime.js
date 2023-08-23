@@ -20,11 +20,11 @@ var packageObj = library;
 	var node_createUIPageService;
 	var node_createUIModuleService;
 	var node_createUIAppService;
-	var node_createVariableManager;
 	var node_createRequestServiceProcessor;
 	var node_createErrorManager;
 	var node_createStoreService;
 	var node_createComplexEntityRuntimeService;
+	var node_createVariableManager;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -54,8 +54,6 @@ var node_createRuntime = function(name){
 	var loc_dataService;
 	
 	var loc_uiPageService;
-
-	var loc_uiVariableManager;
 	
 	var loc_uiModuleService;
 
@@ -71,6 +69,8 @@ var node_createRuntime = function(name){
 	
 	var loc_complexEntityService;
 	
+	var loc_variableManager;
+
 	var loc_out = {
 		
 		start : function(){	},
@@ -93,8 +93,6 @@ var node_createRuntime = function(name){
 		
 		getUIPageService(){		return loc_uiPageService;		},
 		
-		getUIVariableManager(){   return loc_uiVariableManager;   },
-
 		getUIModuleService(){   return loc_uiModuleService; },
 
 		getUIAppService(){   return loc_uiAppService; },
@@ -107,7 +105,10 @@ var node_createRuntime = function(name){
 		
 		getStoreService(){   return loc_storeService;   },
 		
-		getComplexEntityService(){    return loc_complexEntityService;    }
+		getComplexEntityService(){    return loc_complexEntityService;    },
+
+		getVariableManager(){   return loc_variableManager;   },
+
 	};
 	
 	var lifecycleCallback = {};
@@ -126,10 +127,10 @@ var node_createRuntime = function(name){
 		
 		loc_uiModuleService = node_createUIModuleService();
 		loc_uiAppService = node_createUIAppService();
-		loc_uiVariableManager = node_createVariableManager();
 		loc_errorManager = node_createErrorManager();
 		loc_storeService = node_createStoreService();
 		loc_complexEntityService = node_createComplexEntityRuntimeService();
+		loc_variableManager = node_createVariableManager();
 		
 		loc_requestProcessor = node_createRequestServiceProcessor();
 		nosliw.createNode("request.requestServiceProcessor", loc_requestProcessor); 
@@ -171,12 +172,12 @@ nosliw.registerSetNodeDataEvent("dataservice.createDataService", function(){node
 nosliw.registerSetNodeDataEvent("uipage.createUIPageService", function(){node_createUIPageService = this.getData();});
 nosliw.registerSetNodeDataEvent("uimodule.service.createUIModuleService", function(){node_createUIModuleService = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.service.createUIAppService", function(){node_createUIAppService = this.getData();});
-nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", function(){ node_createRequestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
 nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_createErrorManager = this.getData();});
 nosliw.registerSetNodeDataEvent("common.createStoreService", function(){ node_createStoreService = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createComplexEntityRuntimeService", function(){ node_createComplexEntityRuntimeService = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

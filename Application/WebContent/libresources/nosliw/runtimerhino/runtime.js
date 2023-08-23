@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createSecurityService;
 	var node_createErrorManager;
 	var node_createComplexEntityRuntimeService;
+	var node_createVariableManager;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -50,6 +51,8 @@ var node_createRuntime = function(name){
 	
 	var loc_errorManager;
 	
+	var loc_variableManager;
+
 	var loc_out = {
 		
 		start : function(){
@@ -76,7 +79,11 @@ var node_createRuntime = function(name){
 		
 		getErrorManager(){   return loc_errorManager;  },
 		
-		getComplexEntityService(){    return loc_complexEntityService;    }
+		getComplexEntityService(){    return loc_complexEntityService;    },
+
+		getVariableManager(){   return loc_variableManager;   },
+
+		getStoreService(){   return undefined;   },
 	};
 	
 	var lifecycleCallback = {};
@@ -90,6 +97,7 @@ var node_createRuntime = function(name){
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
 		loc_complexEntityService = node_createComplexEntityRuntimeService();
+		loc_variableManager = node_createVariableManager();
 		
 		loc_errorManager = node_createErrorManager();
 
@@ -133,6 +141,7 @@ nosliw.registerSetNodeDataEvent("request.createRequestServiceProcessor", functio
 nosliw.registerSetNodeDataEvent("security.createSecurityService", function(){ node_createSecurityService = this.getData();});
 nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_createErrorManager = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createComplexEntityRuntimeService", function(){ node_createComplexEntityRuntimeService = this.getData();});
+nosliw.registerSetNodeDataEvent("uidata.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

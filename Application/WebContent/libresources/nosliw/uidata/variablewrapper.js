@@ -39,7 +39,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		}
 		else{
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
-			loc_out.prv_variable = nosliw.runtime.getUIVariableManager().createVariable(data1, data2, adapterInfo, requestInfo);
+			loc_out.prv_variable = nosliw.runtime.getVariableManager().createVariable(data1, data2, adapterInfo, requestInfo);
 		}
 		
 		//use variable when created

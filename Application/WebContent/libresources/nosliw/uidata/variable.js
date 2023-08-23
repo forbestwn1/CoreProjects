@@ -363,7 +363,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//     id : key in child container for child variable
 			//		path
 			createChildVariable : function(path, adapterInfo, requestInfo){
-				return nosliw.runtime.getUIVariableManager().createChildVariable(this, path, adapterInfo);
+				return nosliw.runtime.getVariableManager().createChildVariable(this, path, adapterInfo);
 			},
 
 			/*
@@ -435,16 +435,16 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			},
 			
 			use : function(){
-				return nosliw.runtime.getUIVariableManager().useVariable(this);
+				return nosliw.runtime.getVariableManager().useVariable(this);
 			},
 			
 			release : function(requestInfo){
-				nosliw.runtime.getUIVariableManager().releaseVariable(this);
+				nosliw.runtime.getVariableManager().releaseVariable(this);
 			},
 			
 			destroy : function(requestInfo){
 				node_getLifecycleInterface(loc_out).destroy(requestInfo);
-//				nosliw.runtime.getUIVariableManager().destroyVariable(this);
+//				nosliw.runtime.getVariableManager().destroyVariable(this);
 			},
 	};
 	

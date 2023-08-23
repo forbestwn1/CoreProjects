@@ -32,7 +32,7 @@ var loc_createComponentVariableInspection = function(){
 		methods : {
 			getVariableValue : function(event){
 				var that = this;
-				var varInfo = nosliw.runtime.getUIVariableManager().getVariableInfo(that.variableId);
+				var varInfo = nosliw.runtime.getVariableManager().getVariableInfo(that.variableId);
 				if(varInfo!=undefined){
 					var request = varInfo.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){

@@ -30,7 +30,7 @@
 				loc_view.append(loc_viewData);
 				
 				loc_viewInput.bind('change', function(){
-					var variableInfo = nosliw.runtime.getUIVariableManager().getVariableInfo(loc_viewInput.val());
+					var variableInfo = nosliw.runtime.getVariableManager().getVariableInfo(loc_viewInput.val());
 					
 					env.executeDataOperationRequestGet(variableInfo.variable, "", {
 						success : function(requestInfo, data){
