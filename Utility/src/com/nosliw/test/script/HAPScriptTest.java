@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionPr
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpression;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression1.resource.HAPResourceDefinitionScriptGroup;
 import com.nosliw.data.core.script.expression1.resource.HAPUtilityScriptResource;
@@ -43,7 +43,7 @@ public class HAPScriptTest {
 				if(varValue!=null)   varInput.put(varName, varValue);					
 			}
 
-			HAPRuntimeTaskExecuteRhinoScriptExpression task = new HAPRuntimeTaskExecuteRhinoScriptExpression(new HAPInfoRuntimeTaskScriptExpressionGroup(scriptExe, script, varInput, null), runtimeEnvironment);
+			HAPRuntimeTaskExecuteRhinoScriptExpressionGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionGroup(new HAPInfoRuntimeTaskScriptExpressionGroup(scriptExe, script, varInput, null), runtimeEnvironment);
 			HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 
 			System.out.println(out);

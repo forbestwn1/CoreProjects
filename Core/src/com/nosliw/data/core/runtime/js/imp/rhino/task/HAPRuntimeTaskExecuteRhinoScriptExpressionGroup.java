@@ -7,15 +7,15 @@ import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeTaskRhino;
-import com.nosliw.data.core.runtime.js.util.script.expressionscrip2.HAPUtilityRuntimeJSScript;
+import com.nosliw.data.core.runtime.js.util.script.expressionscrip.HAPUtilityRuntimeJSScript;
 
-public class HAPRuntimeTaskExecuteRhinoScriptExpression extends HAPRuntimeTaskRhino{
+public class HAPRuntimeTaskExecuteRhinoScriptExpressionGroup extends HAPRuntimeTaskRhino{
 
 	final public static String TASK = "ExecuteScriptExpression"; 
 	
 	private HAPInfoRuntimeTaskScriptExpressionGroup m_taskInfo;
 	
-	public HAPRuntimeTaskExecuteRhinoScriptExpression(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
+	public HAPRuntimeTaskExecuteRhinoScriptExpressionGroup(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
 		super(TASK, runtTimeEnv);
 		this.m_taskInfo = taskInfo;
 	}
@@ -28,7 +28,7 @@ public class HAPRuntimeTaskExecuteRhinoScriptExpression extends HAPRuntimeTaskRh
 
 	@Override
 	protected HAPJSScriptInfo buildRuntimeScript() {
-		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionTask(this.m_taskInfo, this, this.getRuntime());
+		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionGroupTask(this.m_taskInfo, this, this.getRuntime());
 		return scriptInfo;
 	}
 	

@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpressio
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 
-public class HAPUtilityExpressionDefinition {
+public class HAPUtilityScriptExpressionDefinition {
 
 	public static final String LITERATE_TOKEN_OPEN = "<%=";
 	public static final String LITERATE_TOKEN_CLOSE = "%>";

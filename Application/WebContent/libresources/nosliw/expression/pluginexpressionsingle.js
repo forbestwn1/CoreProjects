@@ -18,13 +18,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDataExpressionSinglePlugin = function(){
+var node_createExpressionSinglePlugin = function(){
 	
 	var loc_out = {
 
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createDataExpressionSingleComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createExpressionSingleComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
 		},
 	};
@@ -32,7 +32,7 @@ var node_createDataExpressionSinglePlugin = function(){
 	return loc_out;
 };
 
-var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
+var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
@@ -42,8 +42,8 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 	
 	var loc_facade = {
 		getExecuteRequest : function(handlers, request){
-			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONSINGLE_EXPRESSION);
-			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
+			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTSINGLE_EXPRESSION);
+			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
 		},
 	};
 	
@@ -62,7 +62,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 				}));
 			});
 			return out;
-		}
+		},
 		
 	};
 	
@@ -86,6 +86,6 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionSinglePlugin", node_createDataExpressionSinglePlugin); 
+packageObj.createChildNode("createExpressionSinglePlugin", node_createExpressionSinglePlugin); 
 
 })(packageObj);

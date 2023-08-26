@@ -29,7 +29,7 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpress
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegmentExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegmentExpressionDataScript;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegmentExpressionText;
-import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityExpressionDefinition;
+import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityDefinitionInDomainImp{
@@ -164,7 +164,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 			String text = textNode.text();
 			
 			StringBuffer newText = new StringBuffer();
-			HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(text, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
+			HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(text, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
 			for(HAPDefinitionSegmentExpression segment : expressionDef.getSegments()) {
 				String segmentType = segment.getType();
 				if(segmentType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT)) {
@@ -201,9 +201,9 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			String attrValue = eleAttr.getValue(); 
-			if(!HAPUtilityExpressionDefinition.isText(attrValue)) {
+			if(!HAPUtilityScriptExpressionDefinition.isText(attrValue)) {
 
-				HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(attrValue, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
+				HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(attrValue, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
 				String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
 				
 				HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);

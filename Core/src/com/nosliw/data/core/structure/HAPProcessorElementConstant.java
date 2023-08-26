@@ -22,7 +22,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpression;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression1.HAPProcessorScript;
@@ -292,7 +292,7 @@ public class HAPProcessorElementConstant {
 		groupExe = HAPProcessorScript.processSimpleScript(leafData.toString(), null, null, constantsValue, HAPUtilityExpressionProcessConfigure.setDoDiscovery(null), runtimeEnv, new HAPProcessTracker());		
 
 		//execute script expression
-		HAPRuntimeTaskExecuteRhinoScriptExpression task = new HAPRuntimeTaskExecuteRhinoScriptExpression(new HAPInfoRuntimeTaskScriptExpressionGroup(groupExe, null, null, null), runtimeEnv);
+		HAPRuntimeTaskExecuteRhinoScriptExpressionGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionGroup(new HAPInfoRuntimeTaskScriptExpressionGroup(groupExe, null, null, null), runtimeEnv);
 		HAPServiceData out = runtimeEnv.getRuntime().executeTaskSync(task);
 		return out.getData();
 	}

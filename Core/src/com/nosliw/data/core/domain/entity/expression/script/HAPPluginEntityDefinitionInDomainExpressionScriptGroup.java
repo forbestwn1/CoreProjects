@@ -32,7 +32,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptGroup extends HAPP
 				JSONObject expressionJsonObj = eleArrayJson.getJSONObject(i);
 				if(HAPUtilityEntityInfo.isEnabled(expressionJsonObj)) {
 					String expressionType = (String)expressionJsonObj.opt(HAPDefinitionExpression.TYPE);
-					HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression((String)expressionJsonObj.opt(HAPDefinitionExpression.EXPRESSION), expressionType, dataExpressionGroup, this.getRuntimeEnvironment().getDataExpressionParser());
+					HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression((String)expressionJsonObj.opt(HAPDefinitionExpression.EXPRESSION), expressionType, dataExpressionGroup, this.getRuntimeEnvironment().getDataExpressionParser());
 					expressionDef.buildEntityInfoByJson(expressionJsonObj);
 					expressionGroupEntity.addEntityElement(expressionDef);
 				}

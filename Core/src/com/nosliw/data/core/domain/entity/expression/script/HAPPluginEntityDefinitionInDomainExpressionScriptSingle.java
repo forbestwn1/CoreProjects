@@ -5,13 +5,12 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataSingle;
-import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
+import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainImpComplexWithDataExpressionDataGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAPPluginEntityDefinitionInDomainImpComplex{
+public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAPPluginEntityDefinitionInDomainImpComplexWithDataExpressionDataGroup{
 
 	public HAPPluginEntityDefinitionInDomainExpressionScriptSingle(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, HAPDefinitionEntityExpressionScriptSingle.class, runtimeEnv);
@@ -21,12 +20,9 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAP
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionScriptSingle expressionSingleEntity = (HAPDefinitionEntityExpressionScriptSingle)this.getEntity(entityId, parserContext);
 		HAPDefinitionEntityExpressionDataGroup dataExpressionGroup = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(expressionSingleEntity.getDataExpressionGroup(), parserContext); 
-		
-		String expression = jsonObj.getString(HAPDefinitionEntityExpressionDataSingle.ATTR_EXPRESSION);
+
 		String expressionType = (String)jsonObj.opt(HAPDefinitionEntityExpressionDataSingle.ATTR_TYPE);
-		
-		HAPDefinitionExpression expressionDef = HAPUtilityExpressionDefinition.parseDefinitionExpression(expression, expressionType, dataExpressionGroup, this.getRuntimeEnvironment().getDataExpressionParser());
+		HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(jsonObj.getString(HAPDefinitionEntityExpressionDataSingle.ATTR_EXPRESSION), expressionType, dataExpressionGroup, this.getRuntimeEnvironment().getDataExpressionParser());
 		expressionSingleEntity.setExpression(expressionDef);
-		HAPUtilityDataExpressionDefinition.processReferenceInExpression(entityId, parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 }

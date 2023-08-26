@@ -10,7 +10,7 @@ import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 
-public class HAPUtilityExpressionExecute {
+public class HAPUtilityScriptExpressionExecute {
 
 	public static HAPExecutableExpression processExpression(HAPDefinitionExpression expressionDef, HAPExecutableEntityExpressionScript expressionEntity, HAPContextProcessor processContext, HAPGeneratorId idGenerator) {
 		HAPExecutableExpression out = new HAPExecutableExpression(expressionDef.getType());
