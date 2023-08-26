@@ -39,7 +39,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		node_requestServiceProcessor.processRequest(request);
 	};
 
-	var loc_getCoreTaskContainerInterface = function(coreEntity){
+	var loc_getCoreTaskInterface = function(coreEntity){
 		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 	};
 
