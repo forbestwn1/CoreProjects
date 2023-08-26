@@ -38,12 +38,13 @@ var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueCo
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
-	var loc_referencedRuntime = {};
+	var loc_envInterface = {};
+	var loc_dataExpressionSingleRuntime = {};
 	
 	var loc_facade = {
 		getExecuteRequest : function(handlers, request){
 			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTSINGLE_EXPRESSION);
-			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, loc_referencedRuntime, loc_complexEntityDef, handlers, request);
+			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionSingleRuntime.getCoreEntity(), handlers, request)
 		},
 	};
 	
@@ -51,17 +52,17 @@ var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueCo
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
-			
-			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
-					success : function(request, childNode){
-						loc_referencedRuntime[attrName] = childNode.getChildValue();
-					}
-				}));
-			});
+
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHDATAEXPRESSIONGROUP_DATAEEXPRESSIONGROUP, {
+				success : function(request, childNode){
+					loc_dataExpressionSingleRuntime = childNode.getChildValue();
+				}
+			}));
 			return out;
+		},
+		
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
 		},
 		
 	};
