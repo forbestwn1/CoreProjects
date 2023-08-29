@@ -1,0 +1,35 @@
+{
+	"name" : "test",
+	"type" : "data",
+	"base" : "simpleData",
+	"description" : "",
+	"attributes" : [
+		{
+			"name" : "data"
+		}
+	],
+	"valueContext": [
+		{
+			"groupType" : "public",
+			"valueStructure" : {
+				"internal_data": {
+					"definition": {
+						"link" : {
+							"elementPath": "<%=&(nosliwattribute_data)&%>"
+						},
+						"definition" : {
+							"criteria" : "test.string;1.0.0"
+						}
+					}
+				}
+			}
+		}
+	],
+	"parentRelationConfigure" : {
+	
+	},
+	
+	"childRelationConfigure" : {
+	
+	}
+}

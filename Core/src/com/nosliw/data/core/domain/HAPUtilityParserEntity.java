@@ -71,6 +71,10 @@ public class HAPUtilityParserEntity {
 				}
 			}
 		}
+		else {
+			HAPIdEntityInDomain entityId = parseComplexEntity(obj, entityType, parentEntityId, parentRelationConfigureExternal, parentRelationConfigureDefault, parserContext, domainEntityManager, resourceDefinitionManager); 
+			out = new HAPEmbededDefinition(entityId);
+		}
 		return out;
 	}
 
@@ -146,6 +150,16 @@ public class HAPUtilityParserEntity {
 				entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
 			}
 		}
+		else if(obj instanceof HAPResourceId) {
+			out = parseReferenceResource((HAPResourceId)obj, parserContext, resourceDefinitionManager);
+		}
+		else if(obj instanceof HAPReferenceAttachment) {
+			out = parserContext.getCurrentDomain().addEntityOrReference((HAPReferenceAttachment)obj);
+		}
+		else {
+			out = domainEntityManager.parseDefinition(entityTypeIfNotProvided, obj, parserContext);
+		}
+		
 		return out;
 	}
 	

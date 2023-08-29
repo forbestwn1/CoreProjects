@@ -48,7 +48,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 			HAPDomainEntityDefinitionLocal resourceDomain = globalDomain.newLocalDomain(rootResourceId);
 			
 			//get location information
-			HAPInfoResourceLocation resourceLocInfo = HAPUtilityResourceId.getResourceLocationInfo(rootResourceId);
+			HAPInfoResourceLocation resourceLocInfo = this.getResourceLocationInfo(rootResourceId);
 			resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
 			//read content and parse it
 			rootEntityId = parseEntity(HAPUtilityFile.readFile(resourceLocInfo.getFiile()), new HAPContextParser(globalDomain, resourceDomain.getDomainId()));

@@ -2,7 +2,6 @@ package com.nosliw.ui.tag;
 
 import java.io.File;
 
-import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.resource.HAPInfoResourceLocation;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -10,9 +9,7 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 public class HAPUtilityUITag {
 
 	public static String getUITagDefinitionFolder(String tagId) {
-		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + tagId + "/";
-		File file = new File(fileName);
-		return HAPUtilityFile.readFile(file);
+		return HAPSystemFolderUtility.getTagDefinitionFolder() + tagId + "/";
 	}
 
 	public static File getUITagDefinitionFile(String tagId) {

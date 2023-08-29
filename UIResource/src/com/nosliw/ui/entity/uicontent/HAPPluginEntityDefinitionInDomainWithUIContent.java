@@ -22,7 +22,7 @@ public abstract class HAPPluginEntityDefinitionInDomainWithUIContent extends HAP
 	}
 
 	protected HAPIdEntityInDomain parseUIContent(Element ele, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		return this.parseComplexEntityAttributeSelf(ele, entityId, HAPDefinitionEntityComplexWithUIContent.ATTR_CONTENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, null, null, parserContext);
+		return this.parseComplexEntityAttributeSelf(ele, entityId, HAPDefinitionEntityComplexWithUIContent.ATTR_CONTENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, null, null, parserContext);
 	}
 	
 	@Override
