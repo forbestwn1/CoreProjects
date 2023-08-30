@@ -4,15 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityComplexWithDataExpressionGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
-import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
-public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityComplexWithDataExpressionGroup{
+public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDomainComplex{
 
 	static final public String ATTR_CONTENT = "content";  
 
@@ -34,8 +31,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityComp
 	
 	static final public String ATTR_ATTRIBUTE = "attribute";  
 	
-	static final public String ATTR_SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
-
 
 	public String getUnitType() {    return null;   }
 
@@ -52,9 +47,7 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityComp
 	public void addScriptExpressionInCustomTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE)).add(scriptExpression);    }
 	public void addScriptExpressionInNormalTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINATTRIBUTE)).add(scriptExpression);    }
 	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInContent>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINCONTENT)).add(scriptExpression);    }
-	
-	public HAPDefinitionEntityExpressionDataGroup getDataExpressionGroupEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityExpressionDataGroup)parserContext.getGlobalDomain().getEntityInfoDefinition(this.getAttributeValueEntityId(HAPDefinitionEntityComplexWithDataExpressionGroup.ATTR_DATAEEXPRESSIONGROUP)).getEntity();     }
-	public HAPDefinitionEntityExpressionScriptGroup getScriptExpressionGroupEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityExpressionScriptGroup)parserContext.getGlobalDomain().getEntityInfoDefinition(this.getAttributeValueEntityId(ATTR_SCRIPTEEXPRESSIONGROUP)).getEntity();     }
+	 
 
 	public void setStyle(HAPDefinitionStyle style) {}
 	

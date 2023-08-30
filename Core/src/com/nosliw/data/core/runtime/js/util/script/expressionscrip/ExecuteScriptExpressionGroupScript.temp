@@ -13,7 +13,7 @@
 		success : function(request, application){
 			var expressionGroupCore = application.getMainEntityRuntime().getCoreEntity();
 			var appInterface = node_getApplicationInterface(expressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
-			return appInterface.getExecuteItemnRequest("||expressionItemId||", {
+			return appInterface.getExecuteRequest({
 				success : function(requestInfo, data){
 					var parms = {};
 					parms.||parmTaskId|| = "||taskId||";

@@ -53,7 +53,7 @@ var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueCo
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHDATAEXPRESSIONGROUP_DATAEEXPRESSIONGROUP, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_DATAEEXPRESSIONGROUP, {
 				success : function(request, childNode){
 					loc_dataExpressionSingleRuntime = childNode.getChildValue();
 				}

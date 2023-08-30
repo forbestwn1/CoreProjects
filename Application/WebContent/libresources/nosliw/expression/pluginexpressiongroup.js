@@ -45,6 +45,17 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTGROUP_EXPRESSIONS)[node_COMMONATRIBUTECONSTANT.EXECUTABLECONTAINEREXPRESSION_ELEMENT];
 	};
 	
+	var loc_getExecuteItemRequest = function(expressionId, handlers, request){
+		var expressions = loc_getAllExpressionItems();
+		var expressionItem;		
+		_.each(expressions, function(expression, i){
+			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==expressionId){
+				expressionItem = expression;
+			}
+		});
+		return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionGroupRuntime.getCoreEntity(), handlers, request)
+	};
+	
 	var loc_facade = {
 		getAllItemIds : function(){
 			var out = [];
@@ -55,15 +66,26 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 			return out;
 		},
 		
-		getExecuteItemnRequest : function(expressionId, handlers, request){
-			var expressions = loc_getAllExpressionItems();
-			var expressionItem;		
-			_.each(expressions, function(expression, i){
-				if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==expressionId){
-					expressionItem = expression;
+		getExecuteItemRequest : function(itemId, handlers, request){
+			return loc_getExecuteItemRequest(itemId, handlers, request);
+		},
+		
+		getExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+			var allItemsRequest = node_createServiceRequestInfoSet(undefined, {
+				function(request, result){
+					return result.getResults();
 				}
 			});
-			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionGroupRuntime.getCoreEntity(), handlers, request)
+			var expressions = loc_getAllExpressionItems();
+			_.each(expressions, function(expression, i){
+				var itemId = expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+				allItemsRequest.addRequest(itemId, loc_getExecuteItemRequest(itemId));
+			});
+			
+			out.addRequest(allItemsRequest);
+			return out;
 		}
 	};
 	
@@ -72,7 +94,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHDATAEXPRESSIONGROUP_DATAEEXPRESSIONGROUP, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_DATAEEXPRESSIONGROUP, {
 				success : function(request, childNode){
 					loc_dataExpressionGroupRuntime = childNode.getChildValue();
 				}

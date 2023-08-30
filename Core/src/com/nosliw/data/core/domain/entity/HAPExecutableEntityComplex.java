@@ -19,6 +19,13 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	@HAPAttribute
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
 	
+	@HAPAttribute
+	static final public String DATAEEXPRESSIONGROUP = "dataExpressionGroup";  
+	@HAPAttribute
+	static final public String SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
+	@HAPAttribute
+	static final public String PLAINSCRIPTEEXPRESSIONGROUP = "plainScriptExpressionGroup";  
+
 	private HAPExecutableEntityValueContext m_valueContext;
 
 	private String m_attachmentContainerId;

@@ -43,27 +43,53 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	
 	var loc_referenceContainer;
 
+	var loc_getExecuteItemRequest = function(dataExpressionId, handlers, request){
+		var expressions = loc_getAllExpressionItems();
+		var expressionItem;		
+		_.each(expressions, function(expression, i){
+			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){
+				expressionItem = expression;
+			}
+		});
+		
+		return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
+	};
+
+	var loc_getAllExpressionItems = function(){
+		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);;
+	};
+
 	var loc_facade = {
 		getAllItemIds : function(){
 			var out = [];
-			var expressions = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
+			var expressions = loc_getAllExpressionItems()
 			_.each(expressions, function(expression, i){
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 			});
 			return out;
 		},
 		
-		getExecuteItemnRequest : function(dataExpressionId, handlers, request){
-			var expressions = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);
-			var expressionItem;		
-			_.each(expressions, function(expression, i){
-				if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){
-					expressionItem = expression;
+		getExecuteItemRequest : function(dataExpressionId, handlers, request){
+			return loc_getExecuteItemRequest(dataExpressionId, handlers, request);
+		},
+
+		getExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+			var allItemsRequest = node_createServiceRequestInfoSet(undefined, {
+				function(request, result){
+					return result.getResults();
 				}
 			});
+			var expressions = loc_getAllExpressionItems();
+			_.each(expressions, function(expression, i){
+				var itemId = expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+				allItemsRequest.addRequest(itemId, loc_getExecuteItemRequest(itemId));
+			});
 			
-			return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
-		},
+			out.addRequest(allItemsRequest);
+			return out;
+		}
 	};
 	
 	var loc_out = {

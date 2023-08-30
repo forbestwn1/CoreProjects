@@ -28,8 +28,10 @@ public class HAPRuntimeTaskExecuteRhinoScriptExpressionGroup extends HAPRuntimeT
 
 	@Override
 	protected HAPJSScriptInfo buildRuntimeScript() {
-		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionGroupTask(this.m_taskInfo, this, this.getRuntime());
-		return scriptInfo;
+		HAPJSScriptInfo out = null;
+		if(this.m_taskInfo.getItemName()!=null)	out = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionGroupItemTask(this.m_taskInfo, this, this.getRuntime());
+		else  out = HAPUtilityRuntimeJSScript.buildRequestScriptForExecuteExpressionGroupTask(this.m_taskInfo, this, this.getRuntime());
+		return out;
 	}
 	
 }

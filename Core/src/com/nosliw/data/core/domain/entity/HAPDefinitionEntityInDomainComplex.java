@@ -2,10 +2,20 @@ package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 
 //entity that have data value structure and attachment
 public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueContext, HAPWithAttachment{
+
+	static final public String ATTR_DATAEEXPRESSIONGROUP = "dataExpressionGroup";  
+	
+	static final public String ATTR_SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
+
+	//script expression without any variable
+	static final public String ATTR_PLAINSCRIPTEEXPRESSIONGROUP = "plainScriptExpressionGroup";  
 
 	protected HAPDefinitionEntityInDomainComplex() {}
 	
@@ -24,5 +34,14 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 
 	@Override
 	public void setAttachmentContainerEntity(HAPIdEntityInDomain attachmentEntity) {    this.setAttributeValueSimple(HAPWithAttachment.ATTACHMENT, attachmentEntity);   }
+
+	public HAPIdEntityInDomain getDataExpressionGroup() {    return this.getAttributeValueEntityId(ATTR_DATAEEXPRESSIONGROUP);     }
+	public HAPDefinitionEntityExpressionDataGroup getDataExpressionGroupEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityExpressionDataGroup)parserContext.getGlobalDomain().getEntityInfoDefinition(getDataExpressionGroup()).getEntity();     }
+
+	public HAPIdEntityInDomain getScriptExpressionGroup() {    return this.getAttributeValueEntityId(ATTR_DATAEEXPRESSIONGROUP);     }
+	public HAPDefinitionEntityExpressionScriptGroup getScriptExpressionGroupEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityExpressionScriptGroup)parserContext.getGlobalDomain().getEntityInfoDefinition(getScriptExpressionGroup()).getEntity();     }
+	
+	public HAPIdEntityInDomain getPlainScriptExpressionGroup() {    return this.getAttributeValueEntityId(ATTR_PLAINSCRIPTEEXPRESSIONGROUP);     }
+	public HAPDefinitionEntityExpressionScriptGroup getPlainScriptExpressionGroupEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityExpressionScriptGroup)parserContext.getGlobalDomain().getEntityInfoDefinition(getPlainScriptExpressionGroup()).getEntity();     }
 
 }

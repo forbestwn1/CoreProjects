@@ -32,7 +32,7 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public HAPElementStructureLeafData(HAPDataTypeCriteria dataTypeCriteria){
 		this.m_dataInfo = new HAPVariableDataInfo(dataTypeCriteria);
 		this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN;
-	}
+	}	
 
 	public HAPElementStructureLeafData(HAPVariableDataInfo dataInfo){
 		this.m_dataInfo = dataInfo;

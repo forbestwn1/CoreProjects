@@ -14,7 +14,11 @@ public class HAPInfoRuntimeTaskScriptExpressionGroup{
 		this.m_itemName = itemName;
 		if(HAPUtilityBasic.isStringEmpty(this.m_itemName))   this.m_itemName = HAPConstantShared.NAME_DEFAULT;
 	}
-	
+
+	public HAPInfoRuntimeTaskScriptExpressionGroup(String expressionGroupResourceId){
+		this.m_expressionGroupResourceId = expressionGroupResourceId;
+	}
+
 	public String getExpressionGroupResourceId() {     return this.m_expressionGroupResourceId;     }
 	
 	public String getItemName() {    return this.m_itemName;   }

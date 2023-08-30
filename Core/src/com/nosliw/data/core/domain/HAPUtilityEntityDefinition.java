@@ -16,6 +16,10 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityDefinition {
 
+	public static String addPlainScriptExpressionToComplexEntity() {
+		
+	}
+	
 	public static HAPIdEntityInDomain newTransparentAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionEntityInDomain entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
 		HAPIdEntityInDomain attrEntityId = runtimeEnv.getDomainEntityDefinitionManager().newDefinitionInstance(attrEntityType, parserContext);

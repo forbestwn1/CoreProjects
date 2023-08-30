@@ -449,7 +449,7 @@ var node_utility = function()
 			}
 		});
 		_.each(dataExpressionIds, function(dataExpressionId, i){
-			calDataExpressionsRequest.addRequest(dataExpressionId, node_getApplicationInterface(dataExpressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER).getExecuteItemnRequest(dataExpressionId));
+			calDataExpressionsRequest.addRequest(dataExpressionId, node_getApplicationInterface(dataExpressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER).getExecuteItemRequest(dataExpressionId));
 		});
 		prepareRequest.addRequest("expressionDatas", calDataExpressionsRequest);
 
