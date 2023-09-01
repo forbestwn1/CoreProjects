@@ -8,8 +8,8 @@ public interface HAPWithValueContext {
 	@HAPAttribute
 	public static String VALUECONTEXT = "valueContext";
 
-	HAPIdEntityInDomain getValueContextEntity();
+	HAPIdEntityInDomain getValueContextEntityId();
 
-	void setValueContextEntity(HAPIdEntityInDomain valueContextId);
+	void setValueContextEntityId(HAPIdEntityInDomain valueContextId);
 	
 }

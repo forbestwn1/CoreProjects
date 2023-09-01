@@ -87,7 +87,7 @@ public class HAPProcessorScript2 {
 			HAPScript script = scriptDef.getScript();
 			//if script type not specified, discover it
 			if(HAPUtilityBasic.isStringEmpty(script.getType())) {
-				script = HAPUtilityScriptExpression.newScript(script.getScript());
+				script = HAPUtilityScriptExpression1.newScript(script.getScript());
 				scriptDef.setScript(script);
 			}
 			String type = script.getType();

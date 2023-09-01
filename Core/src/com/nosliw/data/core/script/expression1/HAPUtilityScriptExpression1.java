@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionGroup;
 import com.nosliw.data.core.script.expression1.imp.literate.HAPUtilityScriptLiterate;
 
-public class HAPUtilityScriptExpression {
+public class HAPUtilityScriptExpression1 {
 
 //	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
 //		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);

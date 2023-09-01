@@ -73,7 +73,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 			this.m_constantDefs = new LinkedHashMap<String, HAPDefinitionConstant>();
 			for(HAPExecutableScript seg : this.m_segs) {
 				for(HAPDefinitionConstant constantDef : seg.discoverConstantsDefinition(expressionGroup)) {
-					HAPUtilityScriptExpression.addConstantDefinition(this.m_constantDefs, constantDef);
+					HAPUtilityScriptExpression1.addConstantDefinition(this.m_constantDefs, constantDef);
 				}
 			}
 		}

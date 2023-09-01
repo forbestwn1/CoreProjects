@@ -19,8 +19,12 @@ public class HAPUtilityScriptExpressionDefinition {
 	public static final String EXPRESSION_TOKEN_OPEN = "#|";
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
-	public static boolean isText(String script) {
-		return script.indexOf(LITERATE_TOKEN_OPEN)==-1;
+	public static boolean isText(String content) {
+		return content.indexOf(LITERATE_TOKEN_OPEN)==-1;
+	}
+
+	public static boolean isScriptExpression(String content) {
+		return !isText(content);
 	}
 
 	public static HAPDefinitionExpression parseDefinitionExpression(String content, String scriptType, HAPDefinitionEntityExpressionDataGroup dataExpressionGroup, HAPParserDataExpression expressionParser) {

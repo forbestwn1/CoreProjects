@@ -3,16 +3,19 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp{
+public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{
 
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
@@ -40,6 +43,12 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp{
 	public void setGroupType(String groupType) {    this.m_groupType = groupType;     }
 
 	@Override
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
+		HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)parserContext.getGlobalDomain().getEntityInfoDefinition(m_valueStructureId).getEntity();
+		valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(GROUPTYPE, this.m_groupType);
 		jsonMap.put(GROUPNAME, this.m_groupName);
@@ -61,4 +70,5 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp{
 		out.m_valueStructureId = this.m_valueStructureId.cloneIdEntityInDomain();
 		return out;
 	}
+
 }

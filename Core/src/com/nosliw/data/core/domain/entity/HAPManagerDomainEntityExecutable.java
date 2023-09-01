@@ -153,6 +153,9 @@ public class HAPManagerDomainEntityExecutable {
 		//build attachment domain(build attachment tree, merge attachment value)
 		HAPUtilityAttachment.buildAttachmentDomain(rootEntityIdExe, processContext);
 		
+		//calculate plain script expression
+		calculatePlainScriptExpression(rootEntityIdExe, processContext);
+		
 		//process value structure
 		HAPUtilityValueStructureDomain.buildValueStructureDomain(rootEntityIdExe, processContext);
 		
@@ -172,6 +175,27 @@ public class HAPManagerDomainEntityExecutable {
 		}
 	}
 
+	private void calculatePlainScriptExpression(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
+				complexEntityExecutableId, 
+				new HAPProcessorEntityExecutable() {
+
+					@Override
+					public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,
+							HAPContextProcessor processContext) {
+						// TODO Auto-generated method stub
+						return false;
+					}
+			
+				}, processContext);
+	}
+	
 	private void processComplexEntityInit(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntityExecutableId, 

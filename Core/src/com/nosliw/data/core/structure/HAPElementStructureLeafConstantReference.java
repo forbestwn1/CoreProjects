@@ -3,9 +3,11 @@ package com.nosliw.data.core.structure;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 
 public class HAPElementStructureLeafConstantReference extends HAPElementStructure{
 
@@ -27,13 +29,13 @@ public class HAPElementStructureLeafConstantReference extends HAPElementStructur
 	public void setConstantName(String name) {   this.m_constantName = name;   }
 	
 	@Override
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
+
+	@Override
 	public HAPElementStructure cloneStructureElement() {
 		return new HAPElementStructureLeafConstantReference(this.m_constantName);
 	}
 
-	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this;  }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

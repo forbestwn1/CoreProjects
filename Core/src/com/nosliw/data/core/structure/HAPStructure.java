@@ -3,8 +3,9 @@ package com.nosliw.data.core.structure;
 import java.util.Set;
 
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
-public interface HAPStructure {
+public interface HAPStructure extends HAPWithConstantScriptExpression{
 
 	HAPRootStructure getRoot(String rootName, boolean createIfNotExist);
 

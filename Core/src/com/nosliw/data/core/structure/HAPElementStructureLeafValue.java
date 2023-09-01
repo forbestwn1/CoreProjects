@@ -1,9 +1,9 @@
 package com.nosliw.data.core.structure;
 
-import java.util.Map;
-
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 
 public class HAPElementStructureLeafValue extends HAPElementStructureLeafVariable{
 
@@ -18,7 +18,7 @@ public class HAPElementStructureLeafValue extends HAPElementStructureLeafVariabl
 	}
 
 	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) { return this; }
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
 
 	@Override
 	public void toStructureElement(HAPElementStructure out) {

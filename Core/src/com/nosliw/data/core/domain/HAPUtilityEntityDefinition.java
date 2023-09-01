@@ -9,15 +9,18 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
+import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityDefinition {
 
-	public static String addPlainScriptExpressionToComplexEntity() {
-		
+	public static String addPlainScriptExpressionToComplexEntity(HAPDefinitionExpression expression, HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext) {
+		HAPDefinitionEntityInDomainComplex complexEntity = (HAPDefinitionEntityInDomainComplex)parserContext.getGlobalDomain().getEntityInfoDefinition(complexEntityId).getEntity();
+		return complexEntity.getPlainScriptExpressionGroupEntity(parserContext).addExpression(expression);
 	}
 	
 	public static HAPIdEntityInDomain newTransparentAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {

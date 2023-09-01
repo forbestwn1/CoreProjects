@@ -20,9 +20,7 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpressionLiterate;
@@ -32,7 +30,7 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionSegment
 import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainUIContent(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, HAPDefinitionEntityComplexUIContent.class, runtimeEnv);
@@ -43,13 +41,10 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private HAPGeneratorId m_idGenerator = new HAPGeneratorId();
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		parseUIDefinitionUnit((Element)obj, entityId, parserContext);
 	}
 	
-	@Override
-	public boolean isComplexEntity() {		return true;	}
-
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postNewInstance(entityId, parserContext);
@@ -63,21 +58,22 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInAttribute>());
 
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
-		
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_SCRIPTEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
 	
+	@Override
+	protected void parseValueContextAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		//parse value context
+		parseValueContext((Element)obj, entityId, parserContext);
+	}
+
+	@Override
+	protected void parseAttachmentAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		//parse attachment
+		parseAttachment((Element)obj, entityId, parserContext);
+	}
+
 	private void parseUIDefinitionUnit(Element wrapperEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
-		
-		//parse value context
-		parseValueContext(wrapperEle, uiContentId, parserContext);
-		
-		//parse value context
-		parseAttachment(wrapperEle, uiContentId, parserContext);
 		
 		//process script block
 		this.parseUnitScriptBlocks(wrapperEle, this.getUIContentEntityById(uiContentId, parserContext));

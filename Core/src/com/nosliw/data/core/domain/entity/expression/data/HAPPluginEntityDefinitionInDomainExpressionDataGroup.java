@@ -6,19 +6,19 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplexJson;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
+public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPluginEntityDefinitionInDomainImpComplexJson{
 
 	public HAPPluginEntityDefinitionInDomainExpressionDataGroup(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityExpressionDataGroup.class, runtimeEnv);
 	}
 
 	@Override
-	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
+	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionDataGroup expressionGroupEntity = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(entityId, parserContext);
 
 		//parse expression items

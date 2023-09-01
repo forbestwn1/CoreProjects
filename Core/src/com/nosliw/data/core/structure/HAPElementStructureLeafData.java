@@ -9,7 +9,9 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 
 public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable{
 
@@ -79,7 +81,7 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	}
 
 	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {	return this;}
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
 
 	@Override
 	public boolean equals(Object obj) {

@@ -8,8 +8,6 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
 
 public class HAPElementStructureLeafRelativeForMapping extends HAPElementStructureLeafRelative{
 
@@ -47,15 +45,6 @@ public class HAPElementStructureLeafRelativeForMapping extends HAPElementStructu
 		return out;
 	}
 
-	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		HAPElementStructureLeafRelativeForMapping out = (HAPElementStructureLeafRelativeForMapping)this.cloneStructureElement();
-		this.solidateConstantScript(this, constants, runtimeEnv);
-		out.getReference().setPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getPath(), constants, runtimeEnv));
-		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
-		return out;
-	}
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

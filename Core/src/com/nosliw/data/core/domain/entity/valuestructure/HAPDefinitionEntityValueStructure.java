@@ -9,9 +9,13 @@ import java.util.Set;
 import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPStructure;
 
 @HAPEntityWithAttribute
@@ -65,6 +69,24 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 		HAPRootStructure root = new HAPRootStructure();
 		root.setName(name);
 		return this.addRoot(root);  
+	}
+
+	@Override
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
+		Map<String, HAPRootStructure> roots = this.getRoots();
+		
+		Map<String, String> mapNameToExpId = new LinkedHashMap<String, String>();
+		for(String name : roots.keySet()) {
+			String scriptExpressionId = HAPUtilityScriptExpression.discoverConstantScript(name, complexEntityId, parserContext, expressionParser);
+			if(scriptExpressionId!=null) {
+				mapNameToExpId.put(name, scriptExpressionId);
+			}
+			roots.get(name).discoverConstantScript(complexEntityId, parserContext, expressionParser);
+		}
+		
+		for(String name : mapNameToExpId.keySet()) {
+			roots.put(HAPUtilityScriptExpression.makeIdLiterate(mapNameToExpId.get(name)), roots.remove(name));
+		}
 	}
 
 	@Override

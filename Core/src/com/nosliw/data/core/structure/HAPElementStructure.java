@@ -5,9 +5,10 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 @HAPEntityWithAttribute
-public abstract class HAPElementStructure extends HAPSerializableImp implements HAPWithConstantScript{
+public abstract class HAPElementStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{
 	
 	@HAPAttribute
 	public static final String TYPE = "type";

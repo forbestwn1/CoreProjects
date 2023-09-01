@@ -20,7 +20,7 @@ import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression1.HAPScriptInScriptExpression;
-import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp implements HAPEntityWithName{
@@ -103,7 +103,7 @@ public class HAPExecutableScriptSegScript extends HAPExecutableScriptImp impleme
 			if(ele instanceof HAPConstantInScript) {
 				HAPConstantInScript constantInScript = (HAPConstantInScript)ele;
 				HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantInScript.getConstantName(), constantInScript.getValue());
-				HAPUtilityScriptExpression.addConstantDefinition(out, constantDef);
+				HAPUtilityScriptExpression1.addConstantDefinition(out, constantDef);
 			}
 		}
 		return new HashSet<HAPDefinitionConstant>(out.values());  

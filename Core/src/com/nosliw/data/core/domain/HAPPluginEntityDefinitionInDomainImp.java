@@ -55,7 +55,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		this.parseDefinitionContent(entityId, obj, parserContext);
 		
 		//plugin can do do something after parse
-		postParseDefinitionContent(entityId, parserContext);
+		this.postParseDefinitionContent(entityId, parserContext);
 
 	}
 

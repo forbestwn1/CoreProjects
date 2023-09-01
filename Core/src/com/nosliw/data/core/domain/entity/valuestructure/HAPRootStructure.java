@@ -9,13 +9,17 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 @HAPEntityWithAttribute
-public class HAPRootStructure extends HAPEntityInfoWritableImp{
+public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWithConstantScriptExpression{
 
 	public static final String INHERIT_MODE = "inherit";
 	public static final String INHERIT_MODE_FINAL = "final";
@@ -37,7 +41,7 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp{
 	
 	public HAPRootStructure() {}
 	
-	public HAPRootStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {  
+	public HAPRootStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {
 		this.m_definition = definition;
 		entityInfo.cloneToEntityInfo(this);
 	}
@@ -73,7 +77,12 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp{
 	public HAPElementStructure getDefinition() {   return this.m_definition;   }
 
 	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition;  }
-	
+
+	@Override
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext,	HAPParserDataExpression expressionParser) {
+		this.m_definition.discoverConstantScript(complexEntityId, parserContext, expressionParser);
+	}
+
 	public HAPRootStructure cloneRootBase() {
 		HAPRootStructure out = new HAPRootStructure();
 		this.cloneToEntityInfo(out);

@@ -4,11 +4,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
 //branch in value structure tree
 public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
@@ -75,15 +77,20 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 	}
 	
 	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		HAPElementStructureNode solid = new HAPElementStructureNode();
-		super.toStructureElement(solid);
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
+		Map<String, String> nameToIdMapping = new LinkedHashMap<String, String>();
+		
 		for(String name : this.getChildren().keySet()){
-			String solidName = HAPUtilityScriptExpression.solidateLiterate(name, constants, runtimeEnv);
-			HAPElementStructure child = this.getChildren().get(name);
-			HAPElementStructure solidChild = (HAPElementStructure)child.solidateConstantScript(constants, runtimeEnv);
-			solid.addChild(solidName, solidChild);
+			String scriptExpressionId = HAPUtilityScriptExpression.discoverConstantScript(name, complexEntityId, parserContext, expressionParser);
+			if(scriptExpressionId!=null) {
+				nameToIdMapping.put(name, scriptExpressionId);
+			}
+			
+			this.getChild(name).discoverConstantScript(complexEntityId, parserContext, expressionParser);
 		}
-		return solid;
+		
+		for(String name : nameToIdMapping.keySet()) {
+			this.getChildren().put(HAPUtilityScriptExpression.makeIdLiterate(nameToIdMapping.get(name)), this.getChildren().remove(name));
+		}
 	}
 }

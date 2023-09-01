@@ -42,7 +42,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 
 		HAPResourceDefinition tagDefResourceDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, customTagName), parserContext.getGlobalDomain());
 		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(tagDefResourceDef.getEntityId()).getEntity();
-		uiTagEntity.setValueContextEntity(uiTagDefEntity.getValueContextEntityId());
+		uiTagEntity.setValueContextEntityId(uiTagDefEntity.getValueContextEntityId());
 		uiTagEntity.setParentRelationConfigure(uiTagDefEntity.getParentRelationConfigure());
 		uiTagEntity.setChildRelationConfigure(uiTagDefEntity.getChildRelationConfigure());
 		

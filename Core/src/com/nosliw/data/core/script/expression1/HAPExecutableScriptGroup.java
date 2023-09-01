@@ -66,11 +66,11 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	public Set<HAPDefinitionConstant> getConstantsDefinition() {
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>(); 
 		for(HAPExecutableScriptEntity scriptExe : this.m_elements) {
-			HAPUtilityScriptExpression.addConstantDefinition(out, scriptExe.discoverConstantsDefinition(null));
+			HAPUtilityScriptExpression1.addConstantDefinition(out, scriptExe.discoverConstantsDefinition(null));
 		}
 		
 		for(HAPExecutableExpressionData expressionExe : this.m_expressionExe.getAllExpressionItems().values()) {
-			HAPUtilityScriptExpression.addConstantDefinition(out, expressionExe.getConstantsDefinition());
+			HAPUtilityScriptExpression1.addConstantDefinition(out, expressionExe.getConstantsDefinition());
 		}
 		return new HashSet<HAPDefinitionConstant>(out.values());
 	}

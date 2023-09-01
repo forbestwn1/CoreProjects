@@ -5,8 +5,6 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
 
 //a element refer to another element (on another tree or same tree)
 //it can be use in define value structure by reference to another element
@@ -43,12 +41,4 @@ public class HAPElementStructureLeafRelativeForDefinition extends HAPElementStru
 		return out;
 	}
 
-	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {
-		HAPElementStructureLeafRelativeForDefinition out = (HAPElementStructureLeafRelativeForDefinition)this.cloneStructureElement();
-		this.solidateConstantScript(this, constants, runtimeEnv);
-		out.getReference().setPath(HAPUtilityScriptExpression.solidateLiterate(this.getReference().getPath(), constants, runtimeEnv));
-		out.getReference().setParentValueContextName(this.getReference().getParentValueContextName());
-		return out;
-	}
 }

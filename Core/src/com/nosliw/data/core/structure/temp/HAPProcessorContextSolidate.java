@@ -9,7 +9,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression;
+import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
@@ -60,7 +60,7 @@ public class HAPProcessorContextSolidate {
 			for(String name : contextDefRoots.keySet()) {
 				HAPRootStructure contextDefRoot = contextDefRoots.get(name);
 				if(!contextDefRoot.isConstant()) {
-					String solidName = HAPUtilityScriptExpression.solidateLiterate(name, constantsData, runtimeEnv);
+					String solidName = HAPUtilityScriptExpression1.solidateLiterate(name, constantsData, runtimeEnv);
 					contextDefRoot.setDefinition(contextDefRoot.getDefinition().solidateConstantScript(constantsData, runtimeEnv));
 					out.addRoot(solidName, contextDefRoot, categary);
 				}

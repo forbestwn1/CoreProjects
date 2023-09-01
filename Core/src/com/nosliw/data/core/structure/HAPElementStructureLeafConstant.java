@@ -4,11 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 
 @HAPEntityWithAttribute
 public class HAPElementStructureLeafConstant extends HAPElementStructure{
@@ -44,15 +46,15 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 	}
 
 	@Override
+	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
+
+	@Override
 	public HAPElementStructure cloneStructureElement() {
 		HAPElementStructureLeafConstant out = new HAPElementStructureLeafConstant();
 		this.toStructureElement(out);
 		return out;
 	}
 
-	@Override
-	public HAPElementStructure solidateConstantScript(Map<String, Object> constants, HAPRuntimeEnvironment runtimeEnv) {  return this; }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -79,4 +81,5 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 		}
 		return out;
 	}
+
 }
