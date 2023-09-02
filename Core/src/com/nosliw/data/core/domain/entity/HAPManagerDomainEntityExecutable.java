@@ -199,6 +199,8 @@ public class HAPManagerDomainEntityExecutable {
 						HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
 						HAPDefinitionEntityInDomainComplex definitionEntity = (HAPDefinitionEntityInDomainComplex)defEntityInfo.getEntity();
 						
+						HAPIdEntityInDomain plainScriptExpressionEntityId = executableEntity.getComplexEntityAttributeValue(HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP);
+						m_processorComplexEntityPlugins.get(plainScriptExpressionEntityId.getEntityType()).processEntity(plainScriptExpressionEntityId, processContext);
 						
 						
 					}
