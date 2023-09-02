@@ -1,10 +1,12 @@
 package com.nosliw.data.core.domain.entity;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -18,6 +20,11 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public static final String VALUECONTEXT = "valueContext";
 	@HAPAttribute
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
+
+	@HAPAttribute
+	static final public String VALUECONSTANT = "valueConstant";  
+	@HAPAttribute
+	static final public String DATACONSTANT = "dataConstant";  
 	
 	@HAPAttribute
 	static final public String DATAEEXPRESSIONGROUP = "dataExpressionGroup";  
@@ -34,6 +41,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
 	public HAPExecutableEntityComplex(String entityType) {
 		super(entityType);
+		this.setAttributeValueObject(VALUECONSTANT, new LinkedHashMap<String, Object>());
+		this.setAttributeValueObject(DATACONSTANT, new LinkedHashMap<String, HAPData>());
 	}
 	
 	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {   return (HAPIdEntityInDomain)this.getAttributeEmbeded(attrName).getValue();    }
@@ -43,6 +52,14 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	
 	public void setAttachmentContainerId(String id) {    this.m_attachmentContainerId = id;    }
 	public String getAttachmentContainerId() {    return this.m_attachmentContainerId;    }
+	
+	public Map<String, Object> getAllValueConstants(){    return (Map<String, Object>)this.getAttributeValue(VALUECONSTANT);      }
+	public Object getConstantValue(String name) {   return this.getAllValueConstants().get(name);      }
+	public void addValueConstant(String name, Object value) {    this.getAllValueConstants().put(name, value);        }
+	
+	public Map<String, HAPData> getAllDataConstants(){    return (Map<String, HAPData>)this.getAttributeValue(DATACONSTANT);      }
+	public HAPData getConstantData(String name) {   return this.getAllDataConstants().get(name);      }
+	public void addDataConstant(String name, HAPData data) {    this.getAllDataConstants().put(name, data);        }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	

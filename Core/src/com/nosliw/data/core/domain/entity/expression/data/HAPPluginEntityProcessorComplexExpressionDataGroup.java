@@ -46,7 +46,7 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 	}
 
 	@Override
-	public void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
@@ -100,7 +100,7 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 	}
 	
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 
 		//process referenced expression
 //		HAPUtilityExpressionProcessor.processReferencedExpression(complexEntityExecutableId, processContext);

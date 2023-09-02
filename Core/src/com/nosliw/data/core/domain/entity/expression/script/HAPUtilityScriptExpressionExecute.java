@@ -8,7 +8,6 @@ import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
-import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 
 public class HAPUtilityScriptExpressionExecute {
 
@@ -117,7 +116,7 @@ public class HAPUtilityScriptExpressionExecute {
 			else if(segObj instanceof HAPDefinitionConstantInScript) {
 				HAPDefinitionConstantInScript constantSegDef = (HAPDefinitionConstantInScript)segObj;
 				String contantName = constantSegDef.getConstantName();
-				Object constantValue = HAPUtilityComplexConstant.getConstantValue(contantName, expressionEntity, processContext);
+				Object constantValue =  expressionEntity.getConstantValue(contantName);
 				out.addPart(new HAPExecutableConstantInScript(contantName, constantValue));
 			}
 			else if(segObj instanceof HAPDefinitionVariableInScript) {

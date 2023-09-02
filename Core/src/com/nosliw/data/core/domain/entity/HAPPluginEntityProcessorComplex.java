@@ -11,8 +11,8 @@ public interface HAPPluginEntityProcessorComplex {
 	HAPExecutableEntityComplex newExecutable();
 
 	//process definition before value context
-	void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
-	void postInit(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
+	void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
+	void postProcessValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 
 	//value context extension, variable resolve
 	void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
@@ -23,7 +23,7 @@ public interface HAPPluginEntityProcessorComplex {
 	void postProcessValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 	
 	//process definition after value context
-	void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
-	void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
+	void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
+	void postProcessEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 
 }

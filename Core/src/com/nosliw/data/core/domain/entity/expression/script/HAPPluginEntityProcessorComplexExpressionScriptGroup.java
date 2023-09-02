@@ -15,24 +15,7 @@ public class HAPPluginEntityProcessorComplexExpressionScriptGroup extends HAPPlu
 	}
 
 	@Override
-	public void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		
-	}
-
-	//value context extension, variable resolve
-	@Override
-	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-
-	}
-	
-	//matcher
-	@Override
-	public void postProcessValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		
-	}
-	
-	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		

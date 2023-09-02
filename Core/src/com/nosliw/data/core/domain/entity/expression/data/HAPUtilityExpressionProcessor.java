@@ -19,7 +19,6 @@ import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
@@ -121,7 +120,7 @@ public class HAPUtilityExpressionProcessor {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null) {
-						HAPData constantData = HAPUtilityComplexConstant.getConstantData(constantOperand.getName(), containerComplexEntity, processContext);
+						HAPData constantData = containerComplexEntity.getConstantData(constantOperand.getName());
 						constantOperand.setData(constantData);
 					}
 				}

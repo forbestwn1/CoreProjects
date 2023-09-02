@@ -19,9 +19,9 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	
 	//process definition before value context
 	@Override
-	public void init(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 	@Override
-	public void postInit(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void postProcessValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 
 	//value context extension, variable resolve
 	@Override
@@ -36,9 +36,9 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	public void postProcessValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 	
 	@Override
-	public void process(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
+	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
 	@Override
-	public void postProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
+	public void postProcessEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
 
 	@Override
 	public HAPExecutableEntityComplex newExecutable() {

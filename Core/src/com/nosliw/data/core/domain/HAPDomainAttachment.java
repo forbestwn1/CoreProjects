@@ -34,6 +34,10 @@ public class HAPDomainAttachment extends HAPSerializableImp{
 		return this.m_attachmentContainerByComplexeExeId.get(containerId).getAttachment(valueType, itemName);
 	}
 	
+	public Map<String, HAPAttachment> getAttachmentsByType(String containerId, String valueType){
+		return this.m_attachmentContainerByComplexeExeId.get(containerId).getAttachmentByType(valueType);
+	}
+	
 	public HAPDefinitionEntityContainerAttachment getAttachmentContainer(String attachmentId) {
 		return this.m_attachmentContainerByComplexeExeId.get(attachmentId);
 	}
