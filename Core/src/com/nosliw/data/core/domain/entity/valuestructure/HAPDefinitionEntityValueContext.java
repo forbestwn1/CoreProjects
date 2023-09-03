@@ -35,6 +35,9 @@ public class HAPDefinitionEntityValueContext extends HAPDefinitionEntityInDomain
 	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> valueStructureJsonArray = new ArrayList<String>();

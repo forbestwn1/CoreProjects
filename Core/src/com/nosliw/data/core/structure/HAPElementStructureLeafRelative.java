@@ -61,6 +61,14 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	}
 	
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {
+		String id = HAPUtilityScriptExpression.isIdLterate(this.getReference().getPath());
+		if(id!=null) {
+			this.getReference().setPath(values.get(id));
+		}
+	}
+
+	@Override
 	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
 		HAPElementStructureLeafRelative that = (HAPElementStructureLeafRelative)out;

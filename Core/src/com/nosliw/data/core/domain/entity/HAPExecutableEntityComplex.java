@@ -32,6 +32,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	static final public String SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
 	@HAPAttribute
 	static final public String PLAINSCRIPTEEXPRESSIONGROUP = "plainScriptExpressionGroup";  
+	@HAPAttribute
+	static final public String PLAINSCRIPTEEXPRESSIONGROUPVALUE = "plainScriptExpressionGroupValue";  
 
 	private HAPExecutableEntityValueContext m_valueContext;
 
@@ -43,6 +45,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 		super(entityType);
 		this.setAttributeValueObject(VALUECONSTANT, new LinkedHashMap<String, Object>());
 		this.setAttributeValueObject(DATACONSTANT, new LinkedHashMap<String, HAPData>());
+		this.setAttributeValueObject(PLAINSCRIPTEEXPRESSIONGROUPVALUE, new LinkedHashMap<String, String>());
 	}
 	
 	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {   return (HAPIdEntityInDomain)this.getAttributeEmbeded(attrName).getValue();    }
@@ -60,6 +63,9 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public Map<String, HAPData> getAllDataConstants(){    return (Map<String, HAPData>)this.getAttributeValue(DATACONSTANT);      }
 	public HAPData getConstantData(String name) {   return this.getAllDataConstants().get(name);      }
 	public void addDataConstant(String name, HAPData data) {    this.getAllDataConstants().put(name, data);        }
+	
+	public Map<String, String> getPlainScriptExpressionValues(){   return (Map<String, String>)this.getAttributeValue(PLAINSCRIPTEEXPRESSIONGROUPVALUE);     }
+	public void setPlainScriptExpressionValue(String name, String value) {    this.getPlainScriptExpressionValues().put(name, value);      }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	

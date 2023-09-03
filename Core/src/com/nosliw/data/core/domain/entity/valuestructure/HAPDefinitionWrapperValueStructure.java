@@ -49,6 +49,9 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(GROUPTYPE, this.m_groupType);
 		jsonMap.put(GROUPNAME, this.m_groupName);

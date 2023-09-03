@@ -49,6 +49,9 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {}
+
+	@Override
 	public HAPElementStructure cloneStructureElement() {
 		HAPElementStructureLeafConstant out = new HAPElementStructureLeafConstant();
 		this.toStructureElement(out);

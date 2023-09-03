@@ -8,11 +8,11 @@
 	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataExpression"));
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "||expressionSingleId||"), undefined, undefined, undefined, {
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask"));
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("||resourceType||", "||resourceId||"), undefined, undefined, undefined, {
 		success : function(request, application){
-			var expressionSingleCore = application.getMainEntityRuntime().getCoreEntity();
-			var appInterface = node_getApplicationInterface(expressionSingleCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+			var taskEntityCore = application.getMainEntityRuntime().getCoreEntity();
+			var appInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 			return appInterface.getExecuteRequest({
 				success : function(requestInfo, data){
 					var parms = {};

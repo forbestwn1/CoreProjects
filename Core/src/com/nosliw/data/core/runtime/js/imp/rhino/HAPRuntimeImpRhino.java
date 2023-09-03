@@ -30,7 +30,6 @@ import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -41,7 +40,6 @@ import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteDataOperationRhino;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpressionGroup;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 
 @HAPEntityWithAttribute

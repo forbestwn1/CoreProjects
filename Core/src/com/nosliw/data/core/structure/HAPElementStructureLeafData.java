@@ -84,6 +84,9 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {}
+
+	@Override
 	public boolean equals(Object obj) {
 		if(!super.equals(obj))  return false;
 

@@ -3,18 +3,18 @@ package com.nosliw.data.core.runtime.js.imp.rhino.task;
 import java.util.List;
 
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskGroupItemResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeTaskRhino;
 import com.nosliw.data.core.runtime.js.util.script.HAPUtilityRuntimeJSScript;
 
-public class HAPRuntimeTaskExecuteRhinoTask extends HAPRuntimeTaskRhino{
-	final public static String TASK = "ExecuteTask"; 
+public class HAPRuntimeTaskExecuteRhinoTaskGroupItemResource extends HAPRuntimeTaskRhino{
+	final public static String TASK = "ExecuteTaskGroupItem"; 
 
-	private HAPInfoRuntimeTaskTask m_taskInfo;
+	private HAPInfoRuntimeTaskTaskGroupItemResource m_taskInfo;
 	
-	public HAPRuntimeTaskExecuteRhinoTask(HAPInfoRuntimeTaskTask taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
+	public HAPRuntimeTaskExecuteRhinoTaskGroupItemResource(HAPInfoRuntimeTaskTaskGroupItemResource taskInfo, HAPRuntimeEnvironment runtTimeEnv) {
 		super(TASK, runtTimeEnv);
 		this.m_taskInfo = taskInfo;
 	}
@@ -30,7 +30,7 @@ public class HAPRuntimeTaskExecuteRhinoTask extends HAPRuntimeTaskRhino{
 
 	@Override
 	protected HAPJSScriptInfo buildRuntimeScript() {
-		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildTaskRequestScriptForExecuteTask(m_taskInfo.getResourceType(), m_taskInfo.getResourceId(), this, getRuntime());
+		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildTaskRequestScriptForExecuteTaskGroupItemResource(m_taskInfo.getResourceType(), m_taskInfo.getResourceId(), m_taskInfo.getItemName(), this.getTaskId(), getRuntime());
 		return scriptInfo;
 	}
 }

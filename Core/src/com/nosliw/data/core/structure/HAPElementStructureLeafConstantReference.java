@@ -32,6 +32,9 @@ public class HAPElementStructureLeafConstantReference extends HAPElementStructur
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {}
+	
+	@Override
 	public HAPElementStructure cloneStructureElement() {
 		return new HAPElementStructureLeafConstantReference(this.m_constantName);
 	}

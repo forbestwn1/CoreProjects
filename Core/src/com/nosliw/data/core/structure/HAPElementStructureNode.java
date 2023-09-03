@@ -93,4 +93,20 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 			this.getChildren().put(HAPUtilityScriptExpression.makeIdLiterate(nameToIdMapping.get(name)), this.getChildren().remove(name));
 		}
 	}
+	
+	@Override
+	public void solidateConstantScript(Map<String, String> values) {
+		Map<String, String> idToValueMapping = new LinkedHashMap<String, String>();
+		
+		for(String name : this.getChildren().keySet()){
+			String id = HAPUtilityScriptExpression.isIdLterate(name);
+			if(id!=null) {
+				idToValueMapping.put(name, values.get(id));
+			}
+		}
+		
+		for(String id : idToValueMapping.keySet()) {
+			this.getChildren().put(idToValueMapping.get(id), this.getChildren().remove(id));
+		}
+	}
 }

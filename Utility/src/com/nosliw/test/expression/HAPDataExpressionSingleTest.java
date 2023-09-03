@@ -4,8 +4,8 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTask;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskResource;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTaskResource;
 
 public class HAPDataExpressionSingleTest {
 
@@ -13,8 +13,8 @@ public class HAPDataExpressionSingleTest {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPInfoRuntimeTaskTask taskInfo = new HAPInfoRuntimeTaskTask(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "test1", HAPData.class);
-		HAPRuntimeTaskExecuteRhinoTask task = new HAPRuntimeTaskExecuteRhinoTask(taskInfo, runtimeEnvironment);
+		HAPInfoRuntimeTaskTaskResource taskInfo = new HAPInfoRuntimeTaskTaskResource(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "test1", HAPData.class);
+		HAPRuntimeTaskExecuteRhinoTaskResource task = new HAPRuntimeTaskExecuteRhinoTaskResource(taskInfo, runtimeEnvironment);
 
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.runtime;
 
-public class HAPInfoRuntimeTaskTask{
+public class HAPInfoRuntimeTaskTaskResource{
 
 	private String m_resourceType;
 	
@@ -8,7 +8,7 @@ public class HAPInfoRuntimeTaskTask{
 	
 	private Class m_outputClass;
 	
-	public HAPInfoRuntimeTaskTask(String resourceType, String resourceId, Class outputClass){
+	public HAPInfoRuntimeTaskTaskResource(String resourceType, String resourceId, Class outputClass){
 		this.m_resourceType = resourceType;
 		this.m_resourceId = resourceId;
 		this.m_outputClass = outputClass;

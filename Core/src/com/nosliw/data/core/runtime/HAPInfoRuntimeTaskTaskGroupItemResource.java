@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
-public class HAPInfoRuntimeTaskTaskGroupItem{
+public class HAPInfoRuntimeTaskTaskGroupItemResource{
 
 	private String m_resourceType;
 	
@@ -13,7 +13,7 @@ public class HAPInfoRuntimeTaskTaskGroupItem{
 	
 	private Class m_outputClass;
 	
-	public HAPInfoRuntimeTaskTaskGroupItem(String resourceType, String resourceId, String itemName, Class outputClass){
+	public HAPInfoRuntimeTaskTaskGroupItemResource(String resourceType, String resourceId, String itemName, Class outputClass){
 		this.m_resourceType = resourceType;
 		this.m_resourceId = resourceId;
 		this.m_itemName = itemName;

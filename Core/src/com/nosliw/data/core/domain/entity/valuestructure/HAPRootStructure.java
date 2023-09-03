@@ -83,6 +83,11 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 		this.m_definition.discoverConstantScript(complexEntityId, parserContext, expressionParser);
 	}
 
+	@Override
+	public void solidateConstantScript(Map<String, String> values) {
+		this.m_definition.solidateConstantScript(values);
+	}
+
 	public HAPRootStructure cloneRootBase() {
 		HAPRootStructure out = new HAPRootStructure();
 		this.cloneToEntityInfo(out);

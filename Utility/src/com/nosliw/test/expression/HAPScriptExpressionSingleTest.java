@@ -3,8 +3,8 @@ package com.nosliw.test.expression;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTask;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskResource;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTaskResource;
 
 public class HAPScriptExpressionSingleTest {
 
@@ -12,8 +12,8 @@ public class HAPScriptExpressionSingleTest {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPInfoRuntimeTaskTask taskInfo = new HAPInfoRuntimeTaskTask(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "test1", Object.class);
-		HAPRuntimeTaskExecuteRhinoTask task = new HAPRuntimeTaskExecuteRhinoTask(taskInfo, runtimeEnvironment);
+		HAPInfoRuntimeTaskTaskResource taskInfo = new HAPInfoRuntimeTaskTaskResource(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "test1", Object.class);
+		HAPRuntimeTaskExecuteRhinoTaskResource task = new HAPRuntimeTaskExecuteRhinoTaskResource(taskInfo, runtimeEnvironment);
 		
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 

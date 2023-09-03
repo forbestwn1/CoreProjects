@@ -73,6 +73,9 @@ public class HAPUtilityValueStructureDomain {
 							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
 							valueStructureWrapperExe.cloneFromDefinition(part);
 							wrappers.add(valueStructureWrapperExe);
+
+							//solidate plain script expression
+							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
 						}
 						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault());
 					}

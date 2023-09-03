@@ -109,6 +109,23 @@
 					}
 				}
 			]
+		},
+		{
+			"info": {
+				"name" : "attachment", 
+				"status": "disabled1"
+			},
+			"entity": {
+				"value" : [
+					{
+						"info": {
+							"name" : "pathvalue", 
+							"status": "disabled1"
+						},
+						"entity": "parent_public"
+					}
+				]
+			}
 		}
 	]
 }

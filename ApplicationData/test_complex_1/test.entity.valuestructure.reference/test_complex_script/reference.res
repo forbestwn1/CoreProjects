@@ -47,7 +47,16 @@
 									criteria : "test.string;1.0.0"
 								}
 							}
-						}
+						},
+						"reference_link_constantscript": {
+							"status": "disabled",
+							"definition": {
+								"link" : {
+									"elementPath": "<%=?(pathvalue)?%>"
+								}
+							}
+						},
+						
 					}
 				}
 			]

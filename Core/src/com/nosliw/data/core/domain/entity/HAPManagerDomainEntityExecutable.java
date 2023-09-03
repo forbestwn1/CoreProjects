@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONObject;
 
+import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -28,6 +30,8 @@ import com.nosliw.data.core.domain.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
+import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
+import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.value.HAPDefinitionEntityValue;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructureDomain;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
@@ -36,7 +40,9 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTaskEntity;
 
 public class HAPManagerDomainEntityExecutable {
 
@@ -161,7 +167,7 @@ public class HAPManagerDomainEntityExecutable {
 		//build constant
 		buildConstant(rootEntityIdExe, processContext);
 		
-		//calculate plain script expression
+		//calculate plain script expression value
 		calculatePlainScriptExpression(rootEntityIdExe, processContext);
 		
 		//process value structure
@@ -188,30 +194,40 @@ public class HAPManagerDomainEntityExecutable {
 				complexEntityExecutableId, 
 				new HAPProcessorEntityExecutable() {
 
+					private void calculatePlainScriptExpression(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+						HAPExecutableEntityComplex executableEntity = processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+						HAPIdEntityInDomain plainScriptExpressionEntityId = executableEntity.getComplexEntityAttributeValue(HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP);
+						HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntityExe = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionEntityId).getEntity();
+						m_processorComplexEntityPlugins.get(plainScriptExpressionEntityId.getEntityType()).processEntity(plainScriptExpressionEntityId, processContext);
+
+						//not auto process
+						executableEntity.getAttribute(HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP).setAttributeAutoProcess(false);
+						
+						HAPIdEntityInDomain complexEntityDefinitionId = processContext.getCurrentBundle().getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+						HAPDefinitionEntityExpressionScriptGroup plainScriptExpressionGroupEntityDef = (HAPDefinitionEntityExpressionScriptGroup)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(complexEntityExecutableId).getEntity();
+						if(plainScriptExpressionGroupEntityDef.getEntityElements().size()>0) {
+							HAPInfoRuntimeTaskTaskEntity taskInfo = new HAPInfoRuntimeTaskTaskEntity(processContext.getCurrentBundle(), plainScriptExpressionEntityId, Object.class);
+							HAPRuntimeTaskExecuteRhinoTaskEntity task = new HAPRuntimeTaskExecuteRhinoTaskEntity(taskInfo, processContext.getRuntimeEnvironment());
+							HAPServiceData out = processContext.getRuntimeEnvironment().getRuntime().executeTaskSync(task);
+							JSONObject resultJson = (JSONObject)out.getData();
+							for(Object key : resultJson.keySet()) {
+								String name = (String)key;
+								plainScriptExpressionGroupEntityExe.setPlainScriptExpressionValue(name, resultJson.getString(name));
+							}
+						}
+					}
+					
 					@Override
 					public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
-						HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-						HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
-						
-						HAPExecutableEntityComplex executableEntity = currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
-						
-						HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
-						HAPInfoEntityInDomainDefinition defEntityInfo = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId);
-						HAPDefinitionEntityInDomainComplex definitionEntity = (HAPDefinitionEntityInDomainComplex)defEntityInfo.getEntity();
-						
-						HAPIdEntityInDomain plainScriptExpressionEntityId = executableEntity.getComplexEntityAttributeValue(HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP);
-						m_processorComplexEntityPlugins.get(plainScriptExpressionEntityId.getEntityType()).processEntity(plainScriptExpressionEntityId, processContext);
-						
-						
+						calculatePlainScriptExpression(entityId, processContext);
 					}
 
 					@Override
-					public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,
-							HAPContextProcessor processContext) {
-						// TODO Auto-generated method stub
-						return false;
+					public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+						calculatePlainScriptExpression((HAPIdEntityInDomain)parentEntity.getAttribute(attribute).getValue().getValue(), processContext);
+						if(attribute.equals(HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP))  return false;
+						return true;
 					}
-			
 				}, processContext);
 	}
 	
