@@ -215,14 +215,14 @@ var node_createComplexEntityRuntimeService = function() {
 	
 	var loc_out = {
 
-		getCreateApplicationRequest : function(resourceId, configureInfo, runtimeContext, envInterface, handlers, request){
+		getCreateApplicationRequest : function(parm, configureInfo, runtimeContext, envInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence("getCreateApplicationRequest", handlers, request);
 			
 			out.addRequest(node_complexEntityUtility.getRootConfigureRequest(configureInfo, {
 				success : function(request, configure){
-					var application = node_createApplication(resourceId, configure);
+					var application = node_createApplication(parm, configure);
 		
-					application = loc_buildOtherObject(application, resourceId, configure);
+					application = loc_buildOtherObject(application, parm, configure);
 					
 					node_makeObjectWithComponentManagementInterface(application, application);
 					
@@ -238,7 +238,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 							//update backup state object
 							var backupStateObj = runtimeContext==undefined?undefined:runtimeContext.backupState;
-							if(backupStateObj==undefined)  backupStateObj =	node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
+//							if(backupStateObj==undefined)  backupStateObj =	node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
 							node_getComponentInterface(application).updateBackupStateObject(backupStateObj);
 
 							//update lifecycle entity
@@ -264,48 +264,22 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 			
-		executeCreateApplicationRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
-			var requestInfo = this.getCreateApplicationRequest(packageResourceId, configure, runtimeContext, handlers, request);
+		executeCreateApplicationRequest : function(parm, configure, runtimeContext, handlers, request){
+			var requestInfo = this.getCreateApplicationRequest(parm, configure, runtimeContext, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 
 		//create package runtime object
-		createPackageRuntime : function(packageResourceId, configure, request){
+		createPackageRuntime : function(parm, configure, request){
 			//create runtime object
-			var packageCore = node_createPackageCore(packageResourceId, configure);
-			packageCore = loc_buildOtherObject(packageCore, packageResourceId, configure);
+			var packageCore = node_createPackageCore(parm, configure);
+			packageCore = loc_buildOtherObject(packageCore, parm, configure);
 			return node_createComponentRuntime(packageCore, undefined, request); 
 		},
 				
-		//create package runtime object and init request
-		getCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
-			var packageRuntime = this.createPackageRuntime(packageResourceId, configure, request);
-			
-			//build backup state if not provided
-			if(runtimeContext.backupState==undefined) runtimeContext.backupState = node_createStateBackupService(packageResourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], packageResourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());			
-
-			//init lifecycle entity
-			if(runtimeContext.lifecycleEntity==undefined)	runtimeContext.lifecycleEntity = node_createLifeCycleRuntimeContext("package");
-			
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreatePackageRuntime", {"resourceId":packageResourceId}), handlers, request);
-			//init package runtime
-			out.addRequest(packageRuntime.getInitRequest(runtimeContext, {
-				success : function(request){
-					return packageRuntime;
-				}
-			}));
-
-			return out;
-		},
-		
-		executeCreatePackageRuntimeRequest : function(packageResourceId, configure, runtimeContext, handlers, request){
-			var requestInfo = this.getCreatePackageRuntimeRequest(packageResourceId, configure, runtimeContext, handlers, request);
-			node_requestServiceProcessor.processRequest(requestInfo);
-		},		
-
-		createBundleRuntime : function(globalComplexEntitId, configure, request){
-			var bundleCore = node_createBundleCore(globalComplexEntitId, configure);
-			bundleCore = loc_buildOtherObject(bundleCore, globalComplexEntitId, configure);
+		createBundleRuntime : function(parm, configure, request){
+			var bundleCore = node_createBundleCore(parm, configure);
+			bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
 			return node_createComponentRuntime(bundleCore, undefined);
 		},
 

@@ -8,12 +8,12 @@
 	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
-	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataExpression"));
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "||expressionGroupId||"), undefined, undefined, undefined, {
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTaskGroupItem"));
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("||resourceType||", "||resourceId||"), undefined, undefined, undefined, {
 		success : function(request, application){
-			var expressionGroupCore = application.getMainEntityRuntime().getCoreEntity();
-			var appInterface = node_getApplicationInterface(expressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
-			return appInterface.getExecuteItemRequest("||expressionItemId||", {
+			var taskGroupCore = application.getMainEntityRuntime().getCoreEntity();
+			var appInterface = node_getApplicationInterface(taskGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+			return appInterface.getExecuteItemRequest("||itemId||", {
 				success : function(requestInfo, data){
 					var parms = {};
 					parms.||parmTaskId|| = "||taskId||";

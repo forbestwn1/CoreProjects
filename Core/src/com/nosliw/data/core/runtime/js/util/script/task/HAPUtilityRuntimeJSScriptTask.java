@@ -8,7 +8,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask1;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
@@ -16,7 +16,7 @@ import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityRuntimeJSScriptTask {
 
-	public static HAPJSScriptInfo buildRequestScript(HAPInfoRuntimeTaskTask taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildRequestScript(HAPInfoRuntimeTaskTask1 taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 
 		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);

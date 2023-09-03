@@ -1,9 +1,11 @@
 package com.nosliw.test.expression;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskDataExpressionSingle;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoDataExpressionSingle;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoTask;
 
 public class HAPDataExpressionSingleTest {
 
@@ -11,8 +13,8 @@ public class HAPDataExpressionSingleTest {
 		
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 
-		HAPInfoRuntimeTaskDataExpressionSingle taskInfo = new HAPInfoRuntimeTaskDataExpressionSingle("test1");
-		HAPRuntimeTaskExecuteRhinoDataExpressionSingle task = new HAPRuntimeTaskExecuteRhinoDataExpressionSingle(taskInfo, runtimeEnvironment);
+		HAPInfoRuntimeTaskTask taskInfo = new HAPInfoRuntimeTaskTask(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "test1", HAPData.class);
+		HAPRuntimeTaskExecuteRhinoTask task = new HAPRuntimeTaskExecuteRhinoTask(taskInfo, runtimeEnvironment);
 
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 

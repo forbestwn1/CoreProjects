@@ -59,7 +59,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);;
 	};
 
-	var loc_facade = {
+	var loc_facadeTaskContainer = {
 		getAllItemIds : function(){
 			var out = [];
 			var expressions = loc_getAllExpressionItems()
@@ -72,7 +72,9 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getExecuteItemRequest : function(dataExpressionId, handlers, request){
 			return loc_getExecuteItemRequest(dataExpressionId, handlers, request);
 		},
-
+	};
+	
+	var loc_facadeTask = {
 		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
@@ -124,7 +126,9 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facade);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facadeTaskContainer);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
+	return loc_out;	
 };
 
 //*******************************************   End Node Definition  ************************************** 	

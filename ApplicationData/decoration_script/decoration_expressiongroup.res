@@ -43,7 +43,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_executeAllItems = function(){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var request = loc_getCoreTaskContainerInterface(coreEntity).getExecuteRequest({
+		var request = loc_getCoreTaskInterface(coreEntity).getExecuteRequest({
 			success : function(request, result){
 				loc_resultView.val(JSON.stringify(result));
 			}
@@ -51,8 +51,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		node_requestServiceProcessor.processRequest(request);
 	};
 
-	var loc_getCoreTaskContainerInterface = function(coreEntity){
-		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+	var loc_getCoreTaskInterface = function(coreEntity){
+		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 	};
 
 

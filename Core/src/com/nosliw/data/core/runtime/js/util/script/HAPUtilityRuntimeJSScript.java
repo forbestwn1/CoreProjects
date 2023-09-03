@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime.js.util.script.expressiondata;
+package com.nosliw.data.core.runtime.js.util.script;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -15,6 +15,59 @@ import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityRuntimeJSScript {
 
+	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteTaskGroupItem(String resourceType, String resourceId, String itemId, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		
+		templateParms.put("resourceType", resourceType);
+		templateParms.put("resourceId", resourceId);
+		templateParms.put("itemId", itemId);
+		
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("taskId", task.getTaskId());
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+		
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteTaskGroupItemScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
+		return out;
+	}
+	
+	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteTask(String resourceType, String resourceId, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+		Map<String, String> templateParms = new LinkedHashMap<String, String>();
+		
+		templateParms.put("resourceType", resourceType);
+		templateParms.put("resourceId", resourceId);
+		
+		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
+		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
+		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
+		
+		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
+		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
+		templateParms.put("taskId", task.getTaskId());
+		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
+		
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ExecuteTaskScript.temp");
+		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
+		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, task.getTaskId());
+		return out;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static HAPJSScriptInfo buildRequestScriptForExecuteDataExpressionGroupTask(HAPInfoRuntimeTaskDataExpressionGroup taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		

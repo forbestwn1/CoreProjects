@@ -21,9 +21,9 @@ var loc_PACKAGE_NAME = "package";
 
 //application is main object for application
 //it may multiple package (one is main package, each decoration is package as well)
-var node_createApplication = function(resourceId, configure){
+var node_createApplication = function(parm, configure){
 
-	var loc_resourceId = resourceId;
+	var loc_packageParm = parm;
 	
 	var loc_configure = configure;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
@@ -33,7 +33,7 @@ var node_createApplication = function(resourceId, configure){
 	var loc_envInterface;
 	
 	var loc_createPackageRuntime = function(request){
-		var packageRuntime = nosliw.runtime.getComplexEntityService().createPackageRuntime(loc_resourceId, loc_configure, request);
+		var packageRuntime = nosliw.runtime.getComplexEntityService().createPackageRuntime(loc_packageParm, loc_configure, request);
 		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_PACKAGE_NAME, packageRuntime);
 		return packageRuntime;
 	};

@@ -7,7 +7,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask1;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteTaskRhino;
 import com.nosliw.data.core.task.HAPExecutableTaskSuite;
 import com.nosliw.data.core.task.resource.HAPResourceDefinitionTaskSuite;
@@ -32,7 +32,7 @@ public class HAPActivityMain {
 		Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(activitySuiteDefinition, testData);
 		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(taskSuiteExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
 
-		HAPRuntimeTaskExecuteTaskRhino task = new HAPRuntimeTaskExecuteTaskRhino(new HAPInfoRuntimeTaskTask(taskSuiteExe, taskId, inputById), runtimeEnvironment);
+		HAPRuntimeTaskExecuteTaskRhino task = new HAPRuntimeTaskExecuteTaskRhino(new HAPInfoRuntimeTaskTask1(taskSuiteExe, taskId, inputById), runtimeEnvironment);
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 		
 		System.out.println(out);

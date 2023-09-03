@@ -23,67 +23,67 @@ var packageObj = library;
 var loc_MAIN_NAME = "main";
 
 //bundle is executable resource unit
-var node_createBundleCore = function(globalComplexEntitId, configure){
+var node_createBundleCore = function(parm, configure){
 
-	var loc_globalComplexEntitId = globalComplexEntitId;
+	var loc_globalComplexEntitId;
 	
 	var loc_bundleDef;
+	var loc_mainEntityId;
 	
-	var loc_configure = configure;
-	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
+	var loc_configure;
+	var loc_configureValue;
 	
 	//variable domain for this bundle
 	var loc_variableDomain;
 
 	var loc_envInterface;
 	
-	var loc_debugMode;
-	var loc_debugView;
-
-	
 	var loc_runtimeEnv;
 
 	var loc_parentView;
 	
-	var loc_init = function(){
-		var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug_package")];
-		if("true"==debugConf){
-			//debug mode
-			loc_debugMode = true;
+	var loc_init = function(parm, configure){
+		loc_configure = configure;
+		loc_configureValue = node_createConfigure(loc_configure).getConfigureValue();
+
+		if(parm.bundleDef!=undefined){
+			//parm is bundle entity
+			loc_bundleDef = parm.bundleDef;
+			loc_mainEntityId = parm.mainEntityId;
 		}
-	};
-	
-	var loc_getDebugView = function(){
-		if(loc_debugView==undefined){
-			loc_debugView = node_createPackageDebugView("Bundle: "+loc_out.getDataType()+"_"+loc_out.getId(), "purple");
+		else{
+			//parm is global complex entity id
+			loc_globalComplexEntitId = parm;
+			loc_mainEntityId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN];
 		}
-		return loc_debugView;
-	};
-	
-	var loc_isDebugMode = function(){
-		return loc_debugMode == true;
 	};
 	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
-		//load related resources
-		var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_RESOURCEINFO][node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
-		out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
-			success : function(requestInfo, resourceTree){
-				//get bundle definition
-				loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
-				//build variable domain in bundle
-				loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
-				//build complex entity runtime
-				return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN], undefined, loc_out, configure, {
-					success : function(request, mainCoplexEntity){
-						loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
-//						return mainCoplexEntity.getPreInitRequest();
-					}
-				});
- 			}
+		if(loc_globalComplexEntitId!=undefined){
+			//load related resources
+			var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_RESOURCEINFO][node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
+				success : function(requestInfo, resourceTree){
+					//get bundle definition
+					loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
+	 			}
+			}));
+		}
+		
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			//build variable domain in bundle
+			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
 		}));
+		
+		//build complex entity runtime
+		out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, {
+			success : function(request, mainCoplexEntity){
+				loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
+			}
+		}));
+
 		return out;
 	};
 
@@ -136,7 +136,7 @@ var node_createBundleCore = function(globalComplexEntitId, configure){
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
 
-	loc_init();
+	loc_init(parm, configure);
 	return loc_out;
 };
 

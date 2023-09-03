@@ -21,12 +21,14 @@ var loc_BUNDLE_NAME = "bundle";
 
 //package is runtime unit.
 //
-var node_createPackageCore = function(resourceId, configure){
+var node_createPackageCore = function(parm, configure){
 
 	var loc_resourceId = resourceId;
 	
-	var loc_configure = configure;
-	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
+	var loc_bundleInfo;
+	
+	var loc_configure;
+	var loc_configureValue;
 	
 	var loc_runtimeEnv;
 
@@ -36,28 +38,20 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	var loc_packageDef;
 	
-	var loc_debugMode;
-	var loc_debugView;
+	var loc_init = function(parm, configure){
+		loc_configure = configure;
+		loc_configureValue = node_createConfigure(configure).getConfigureValue();
 
-	var loc_init = function(){
-		var debugConf = loc_configureValue[node_basicUtility.buildNosliwFullName("debug_package")];
-		if("true"==debugConf){
-			//debug mode
-			loc_debugMode = true;
+		if(parm.bundleDef!=undefined){
+			//parm is bundle entity
+			loc_bundleInfo = parm;
+		}
+		else{
+			//parm is resource id
+			loc_resourceId = parm;
 		}
 	};
 	
-	var loc_getDebugView = function(){
-		if(loc_debugView==undefined){
-			loc_debugView = node_createPackageDebugView("Package: "+loc_out.getDataType()+"_"+loc_out.getId(), "blue");
-		}
-		return loc_debugView;
-	};
-	
-	var loc_isDebugMode = function(){
-		return loc_debugMode == true;
-	};
-
 	var loc_createMainBundleRuntime = function(request){
 		var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, request);
 		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
@@ -70,29 +64,40 @@ var node_createPackageCore = function(resourceId, configure){
 
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCorePackage", {}), handlers, request);
-		//load resource first
-		var gatewayParm = {};
-		gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = resourceId;
-		out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
-				node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_PACKAGE, 
-				node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE, 
-				gatewayParm,
-				{
-					success : function(requestInfo, packageDef){
-						loc_packageDef = packageDef;
-						var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
-						
-						//load all related resources first
-						bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
-							success : function(requestInfo, resourceTree){
-								loc_createMainBundleRuntime(requestInfo);
-							}
-						}));
-						
-						return bundleRuntimeRequest;
+
+		if(loc_resourceId!=undefined){
+			//load resource first
+			var gatewayParm = {};
+			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = loc_resourceId;
+			out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
+					node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_PACKAGE, 
+					node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE, 
+					gatewayParm,
+					{
+						success : function(requestInfo, packageDef){
+							loc_packageDef = packageDef;
+							var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
+							
+							//load all related resources first
+							bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
+								success : function(requestInfo, resourceTree){
+									var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYID], loc_configure, request);
+									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
+								}
+							}));
+							
+							return bundleRuntimeRequest;
+						}
 					}
-				}
-		));
+			));
+		}
+		else{
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_bundleInfo, loc_configure, request);
+				loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
+			}));
+		}
+
 		return out;
 	};
 
@@ -131,7 +136,7 @@ var node_createPackageCore = function(resourceId, configure){
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_PACKAGE);
 	
-	loc_init();
+	loc_init(parm, configure);
 	
 	return loc_out;
 };
