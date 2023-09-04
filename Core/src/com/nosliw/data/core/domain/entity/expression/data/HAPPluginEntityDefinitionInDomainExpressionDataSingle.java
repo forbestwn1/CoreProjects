@@ -15,6 +15,9 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataSingle extends HAPPl
 	}
 
 	@Override
+	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	}
+
+	@Override
 	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionDataSingle expressionEntity = (HAPDefinitionEntityExpressionDataSingle)this.getEntity(entityId, parserContext);
 		String expression = jsonObj.getString(HAPDefinitionEntityExpressionDataSingle.ATTR_EXPRESSION);

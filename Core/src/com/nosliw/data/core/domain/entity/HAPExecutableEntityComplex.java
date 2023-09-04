@@ -39,10 +39,16 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
 	private String m_attachmentContainerId;
 	
-	public HAPExecutableEntityComplex() {}
+	public HAPExecutableEntityComplex() {
+		this.init();
+	}
 
 	public HAPExecutableEntityComplex(String entityType) {
 		super(entityType);
+		this.init();
+	}
+
+	private void init() {
 		this.setAttributeValueObject(VALUECONSTANT, new LinkedHashMap<String, Object>());
 		this.setAttributeValueObject(DATACONSTANT, new LinkedHashMap<String, HAPData>());
 		this.setAttributeValueObject(PLAINSCRIPTEEXPRESSIONGROUPVALUE, new LinkedHashMap<String, String>());

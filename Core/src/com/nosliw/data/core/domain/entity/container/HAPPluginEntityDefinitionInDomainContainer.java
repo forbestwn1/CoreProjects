@@ -15,6 +15,9 @@ public class HAPPluginEntityDefinitionInDomainContainer extends HAPPluginEntityD
 	}
 
 	@Override
+	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	}
+
+	@Override
 	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 	}
 

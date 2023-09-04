@@ -14,7 +14,7 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"reference_definition": {
-							"status": "disabled",
+							"status": "disabled1",
 							"definition": {
 								"definition" : {
 									"elementPath": "parent_public"
@@ -38,7 +38,7 @@
 							}
 						},
 						"reference_link_matchers": {
-							"status": "disabled1",
+							"status": "disabled",
 							"definition": {
 								"link" : {
 									"elementPath": "parent_matchers_public"
