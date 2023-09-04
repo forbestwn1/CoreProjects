@@ -20,14 +20,16 @@ public class HAPPluginEntityDefinitionInDomainExpressionDataGroup extends HAPPlu
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postNewInstance(entityId, parserContext);
+	}
+	
+	@Override
+	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	
+		super.setupAttributeForComplexEntity(entityId, parserContext);
 		//create reference container attribute
 		HAPConfigureParentRelationComplex childRelationConfigure = new HAPConfigureParentRelationComplex();
 		childRelationConfigure.getValueStructureRelationMode().getInheritProcessorConfigure().setMode(HAPConstantShared.INHERITMODE_DEFINITION);
 		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPDefinitionEntityExpressionData.ATTR_REFERENCES, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, childRelationConfigure, parserContext, getRuntimeEnvironment());
 	}
-	
-	@Override
-	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	}
 	
 	@Override
 	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {

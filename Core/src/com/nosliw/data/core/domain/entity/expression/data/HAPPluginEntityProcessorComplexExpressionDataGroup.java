@@ -41,8 +41,8 @@ import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPluginEntityProcessorComplexImp{
 
-	public HAPPluginEntityProcessorComplexExpressionDataGroup() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPExecutableEntityExpressionDataGroup.class);
+	public HAPPluginEntityProcessorComplexExpressionDataGroup(String entityType) {
+		super(entityType, HAPExecutableEntityExpressionDataGroup.class);
 	}
 
 	@Override

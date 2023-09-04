@@ -1,6 +1,5 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -10,8 +9,8 @@ import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 
 public class HAPPluginEntityProcessorComplexExpressionScriptGroup extends HAPPluginEntityProcessorComplexImp{
 
-	public HAPPluginEntityProcessorComplexExpressionScriptGroup() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPExecutableEntityExpressionScriptGroup.class);
+	public HAPPluginEntityProcessorComplexExpressionScriptGroup(String entityType) {
+		super(entityType, HAPExecutableEntityExpressionScriptGroup.class);
 	}
 
 	@Override

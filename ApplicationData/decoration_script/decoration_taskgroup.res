@@ -55,6 +55,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 	};
 
+	var loc_getCoreTaskContainerInterface = function(coreEntity){
+		return node_getApplicationInterface(coreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+	};
 
 	var loc_out = {
 

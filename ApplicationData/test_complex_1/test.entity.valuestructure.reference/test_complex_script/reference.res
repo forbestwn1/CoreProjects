@@ -22,7 +22,7 @@
 							}
 						},
 						"reference_link": {
-							"status": "disabled1",
+							"status": "disabled",
 							"definition": {
 								"link" : {
 									"elementPath": "parent_public"

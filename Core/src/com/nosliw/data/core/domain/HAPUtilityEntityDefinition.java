@@ -20,9 +20,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPUtilityEntityDefinition {
 
 	public static void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPExecutableEntityComplex.DATAEEXPRESSIONGROUP, parserContext, runtimeEnv);
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPExecutableEntityComplex.SCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, HAPExecutableEntityComplex.DATAEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, HAPExecutableEntityComplex.SCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
 	}
 
 	

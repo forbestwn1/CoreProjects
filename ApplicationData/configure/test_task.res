@@ -4,7 +4,7 @@
 			"nosliw_info" : {
 				"name" : "firstDec",
 				"type" : "decoration_script",
-				"id": "decoration_expressionsingle",
+				"id": "decoration_task",
 				"description": "this is for testing data expression decoration"
 			},
 			"nosliw_core" : {

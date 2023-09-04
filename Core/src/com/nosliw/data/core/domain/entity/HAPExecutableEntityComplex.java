@@ -65,7 +65,10 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 		this.getAttribute(PLAINSCRIPTEEXPRESSIONGROUPVALUE).setAttributePersistance(false);
 	}
 	
-	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {   return (HAPIdEntityInDomain)this.getAttributeEmbeded(attrName).getValue();    }
+	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {
+		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);
+		return embeded==null?null:(HAPIdEntityInDomain)embeded.getValue();    
+	}
 	
 	public void setValueContext(HAPExecutableEntityValueContext valueContext) {     this.m_valueContext = valueContext;      }
 	public HAPExecutableEntityValueContext getValueContext() {    return this.m_valueContext;    }

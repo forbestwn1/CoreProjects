@@ -49,5 +49,4 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	protected HAPDefinitionEntityInDomainComplex getEntityComplex(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		return (HAPDefinitionEntityInDomainComplex)this.getEntity(entityId, parserContext);
 	}
-
 }

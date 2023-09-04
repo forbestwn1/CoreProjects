@@ -197,22 +197,24 @@ public class HAPManagerDomainEntityExecutable {
 					private void calculatePlainScriptExpression(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
 						HAPExecutableEntityComplex executableEntity = processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
 						HAPIdEntityInDomain plainScriptExpressionEntityId = executableEntity.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);
-						HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntityExe = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionEntityId).getEntity();
-						m_processorComplexEntityPlugins.get(plainScriptExpressionEntityId.getEntityType()).processEntity(plainScriptExpressionEntityId, processContext);
+						if(plainScriptExpressionEntityId!=null) {
+							HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntityExe = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionEntityId).getEntity();
+							m_processorComplexEntityPlugins.get(plainScriptExpressionEntityId.getEntityType()).processEntity(plainScriptExpressionEntityId, processContext);
 
-						//not auto process
-						executableEntity.getAttribute(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP).setAttributeAutoProcess(false);
-						
-						HAPIdEntityInDomain complexEntityDefinitionId = processContext.getCurrentBundle().getDefinitionEntityIdByExecutableEntityId(plainScriptExpressionEntityId);
-						HAPDefinitionEntityExpressionScriptGroup plainScriptExpressionGroupEntityDef = (HAPDefinitionEntityExpressionScriptGroup)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
-						if(plainScriptExpressionGroupEntityDef.getEntityElements().size()>0) {
-							HAPInfoRuntimeTaskTaskEntity taskInfo = new HAPInfoRuntimeTaskTaskEntity(processContext.getCurrentBundle(), plainScriptExpressionEntityId, Object.class);
-							HAPRuntimeTaskExecuteRhinoTaskEntity task = new HAPRuntimeTaskExecuteRhinoTaskEntity(taskInfo, processContext.getRuntimeEnvironment());
-							HAPServiceData out = processContext.getRuntimeEnvironment().getRuntime().executeTaskSync(task);
-							JSONObject resultJson = (JSONObject)out.getData();
-							for(Object key : resultJson.keySet()) {
-								String name = (String)key;
-								plainScriptExpressionGroupEntityExe.setPlainScriptExpressionValue(name, resultJson.getString(name));
+							//not auto process
+							executableEntity.getAttribute(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP).setAttributeAutoProcess(false);
+							
+							HAPIdEntityInDomain complexEntityDefinitionId = processContext.getCurrentBundle().getDefinitionEntityIdByExecutableEntityId(plainScriptExpressionEntityId);
+							HAPDefinitionEntityExpressionScriptGroup plainScriptExpressionGroupEntityDef = (HAPDefinitionEntityExpressionScriptGroup)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+							if(plainScriptExpressionGroupEntityDef.getEntityElements().size()>0) {
+								HAPInfoRuntimeTaskTaskEntity taskInfo = new HAPInfoRuntimeTaskTaskEntity(processContext.getCurrentBundle(), plainScriptExpressionEntityId, Object.class);
+								HAPRuntimeTaskExecuteRhinoTaskEntity task = new HAPRuntimeTaskExecuteRhinoTaskEntity(taskInfo, processContext.getRuntimeEnvironment());
+								HAPServiceData out = processContext.getRuntimeEnvironment().getRuntime().executeTaskSync(task);
+								JSONObject resultJson = (JSONObject)out.getData();
+								for(Object key : resultJson.keySet()) {
+									String name = (String)key;
+									plainScriptExpressionGroupEntityExe.setPlainScriptExpressionValue(name, resultJson.getString(name));
+								}
 							}
 						}
 					}
