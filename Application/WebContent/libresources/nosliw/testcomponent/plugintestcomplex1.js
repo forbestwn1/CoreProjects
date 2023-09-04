@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_getObjectType;
 	var node_complexEntityUtility;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -85,29 +86,34 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			//complex children
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
 				var attrName = child.getChildName();
-				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
-				var attributeView = $('<div>childAttr: '+attrName+'</div>');
-
-				//adapter view
-				if(child.getAdapters!=undefined){
-					_.each(child.getAdapters(), function(adapter, adapterName){
-						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
-						attributeView.append(adapterView);
-						adapterView.click(function() {
-							var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
-							node_requestServiceProcessor.processRequest(adapterExecuteRequest);
-						});
-					});
-				}
-
-				var childView = $('<div style="margin-left:10px;" />');
-				attributeView.append(childView);
-				rootViewWrapper.append(attributeView);
-				loc_mainView.append(rootViewWrapper);
-				loc_childrenViews[attrName] = childView;
 				
-				var childComponentInterface = node_getComponentInterface(child.getChildValue());
-				childComponentInterface.updateView(childView);
+				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
+					//not nosliw attribute
+					var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
+					var attributeView = $('<div>childAttr: '+attrName+'</div>');
+	
+					//adapter view
+					if(child.getAdapters!=undefined){
+						_.each(child.getAdapters(), function(adapter, adapterName){
+							var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
+							attributeView.append(adapterView);
+							adapterView.click(function() {
+								var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
+								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+							});
+						});
+					}
+	
+					var childView = $('<div style="margin-left:10px;" />');
+					attributeView.append(childView);
+					rootViewWrapper.append(attributeView);
+					loc_mainView.append(rootViewWrapper);
+					loc_childrenViews[attrName] = childView;
+					
+					var childComponentInterface = node_getComponentInterface(child.getChildValue());
+					childComponentInterface.updateView(childView);
+				}
+				
 			});
 		},
 		
@@ -200,6 +206,8 @@ nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
+
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

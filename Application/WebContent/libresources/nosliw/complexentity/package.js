@@ -23,7 +23,7 @@ var loc_BUNDLE_NAME = "bundle";
 //
 var node_createPackageCore = function(parm, configure){
 
-	var loc_resourceId = resourceId;
+	var loc_resourceId;
 	
 	var loc_bundleInfo;
 	

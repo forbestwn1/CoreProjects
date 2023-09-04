@@ -22,6 +22,7 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	public final static String VALUETYPEINFO = "valueTypeInfo"; 
 
 	public final static String INFO_AUTOPROCESS = "autoProcess";
+	public final static String INFO_PERSISTANCE = "persistance";
 	
 	private T m_value;
 	
@@ -46,10 +47,17 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 		else return defaultValue;
 	}
 	
-	public void setAttributeAutoProcess(boolean auto) {
-		this.getInfo().setValue(INFO_AUTOPROCESS, auto+"");
+	public void setAttributeAutoProcess(boolean auto) {		this.getInfo().setValue(INFO_AUTOPROCESS, auto+""); 	}
+
+	public boolean isAttributePersistance() {
+		Object value = this.getInfoValue(INFO_PERSISTANCE);
+		if(value!=null)   return Boolean.valueOf((String)value);
+		else return true;
 	}
 
+	public void setAttributePersistance(boolean value) {	this.getInfo().setValue(INFO_PERSISTANCE, value+"");	}
+	
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);

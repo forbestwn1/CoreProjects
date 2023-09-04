@@ -7,7 +7,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplexJson;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataSingle;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -20,7 +20,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAP
 
 	@Override
 	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPExecutableEntityComplex.DATAEEXPRESSIONGROUP, parserContext, getRuntimeEnvironment());
 	}
 
 	@Override

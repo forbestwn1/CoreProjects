@@ -90,6 +90,23 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 	}
 
 	@Override
+	public void solidateConstantScript(Map<String, String> values) {
+		Map<String, HAPRootStructure> roots = this.getRoots();
+		
+		Map<String, String> mapNameToValue = new LinkedHashMap<String, String>();
+		for(String name : roots.keySet()) {
+			String id = HAPUtilityScriptExpression.isIdLterate(name);
+			if(id!=null) {
+				mapNameToValue.put(name, values.get(id));
+			}
+		}
+		
+		for(String name : mapNameToValue.keySet()) {
+			roots.put(mapNameToValue.get(name), roots.remove(name));
+		}
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
 		if(obj instanceof HAPDefinitionEntityValueStructure) {

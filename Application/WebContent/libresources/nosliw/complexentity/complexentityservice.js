@@ -239,7 +239,7 @@ var node_createComplexEntityRuntimeService = function() {
 							//update backup state object
 							var backupStateObj = runtimeContext==undefined?undefined:runtimeContext.backupState;
 //							if(backupStateObj==undefined)  backupStateObj =	node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService());
-							node_getComponentInterface(application).updateBackupStateObject(backupStateObj);
+							if(backupStateObj!=undefined)  node_getComponentInterface(application).updateBackupStateObject(backupStateObj);
 
 							//update lifecycle entity
 							var lifecycleEntity = runtimeContext==undefined?undefined:runtimeContext.lifecycleEntity;

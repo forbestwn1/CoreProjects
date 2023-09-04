@@ -12,6 +12,7 @@ import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
 public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
@@ -22,18 +23,22 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
 
 	@HAPAttribute
-	static final public String VALUECONSTANT = "valueConstant";  
+	static final public String VALUECONSTANT = HAPSystemUtility.buildSystemName("valueConstant");  
 	@HAPAttribute
-	static final public String DATACONSTANT = "dataConstant";  
+	static final public String DATACONSTANT = HAPSystemUtility.buildSystemName("dataConstant");  
 	
 	@HAPAttribute
-	static final public String DATAEEXPRESSIONGROUP = "dataExpressionGroup";  
+	static final public String DATAEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("dataExpressionGroup");  
+	
 	@HAPAttribute
-	static final public String SCRIPTEEXPRESSIONGROUP = "scriptExpressionGroup";  
+	static final public String SCRIPTEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("scriptExpressionGroup");  
+
+	//script expression without any variable
 	@HAPAttribute
-	static final public String PLAINSCRIPTEEXPRESSIONGROUP = "plainScriptExpressionGroup";  
+	static final public String PLAINSCRIPTEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("plainScriptExpressionGroup");  
+
 	@HAPAttribute
-	static final public String PLAINSCRIPTEEXPRESSIONGROUPVALUE = "plainScriptExpressionGroupValue";  
+	static final public String PLAINSCRIPTEEXPRESSIONGROUPVALUE = HAPSystemUtility.buildSystemName("plainScriptExpressionGroupValue");  
 
 	private HAPExecutableEntityValueContext m_valueContext;
 
@@ -50,8 +55,14 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
 	private void init() {
 		this.setAttributeValueObject(VALUECONSTANT, new LinkedHashMap<String, Object>());
+		this.getAttribute(VALUECONSTANT).setAttributeAutoProcess(false);
+		this.getAttribute(VALUECONSTANT).setAttributePersistance(false);
 		this.setAttributeValueObject(DATACONSTANT, new LinkedHashMap<String, HAPData>());
+		this.getAttribute(DATACONSTANT).setAttributeAutoProcess(false);
+		this.getAttribute(DATACONSTANT).setAttributePersistance(false);
 		this.setAttributeValueObject(PLAINSCRIPTEEXPRESSIONGROUPVALUE, new LinkedHashMap<String, String>());
+		this.getAttribute(PLAINSCRIPTEEXPRESSIONGROUPVALUE).setAttributeAutoProcess(false);
+		this.getAttribute(PLAINSCRIPTEEXPRESSIONGROUPVALUE).setAttributePersistance(false);
 	}
 	
 	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {   return (HAPIdEntityInDomain)this.getAttributeEmbeded(attrName).getValue();    }

@@ -11,6 +11,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -19,9 +20,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPUtilityEntityDefinition {
 
 	public static void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_DATAEEXPRESSIONGROUP, parserContext, runtimeEnv);
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_SCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
-		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPDefinitionEntityInDomainComplex.ATTR_PLAINSCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, HAPExecutableEntityComplex.DATAEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPExecutableEntityComplex.SCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
+		HAPUtilityEntityDefinition.newTransparentAttribute(entityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP, parserContext, runtimeEnv);
 	}
 
 	

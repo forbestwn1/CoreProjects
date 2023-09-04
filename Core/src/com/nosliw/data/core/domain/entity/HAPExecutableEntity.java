@@ -85,7 +85,9 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
+			if(this.isAttributePersistance(attribute)) {
+				attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
+			}
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -96,7 +98,9 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			attrArray.add(attribute.toResourceData(runtimeInfo).toString());
+			if(this.isAttributePersistance(attribute)) {
+				attrArray.add(attribute.toResourceData(runtimeInfo).toString());
+			}
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -115,7 +119,9 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			attrArray.add(attribute.toExpandedJsonString(entityDomain));
+			if(this.isAttributePersistance(attribute)) {
+				attrArray.add(attribute.toExpandedJsonString(entityDomain));
+			}
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -123,6 +129,8 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 	}
+
+	private boolean isAttributePersistance(HAPAttributeEntityExecutable attribute) {   return attribute.isAttributePersistance();    }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

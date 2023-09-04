@@ -75,15 +75,23 @@ var node_createBundleCore = function(parm, configure){
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			//build variable domain in bundle
 			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
+
+			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, {
+				success : function(request, mainCoplexEntity){
+					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
+				}
+			});
+
 		}));
 		
 		//build complex entity runtime
+/*
 		out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, {
 			success : function(request, mainCoplexEntity){
 				loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
 			}
 		}));
-
+*/
 		return out;
 	};
 
