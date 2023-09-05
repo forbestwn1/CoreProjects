@@ -49,7 +49,7 @@
 							}
 						},
 						"reference_link_constantscript": {
-							"status": "disabled1",
+							"status": "disabled",
 							"definition": {
 								"link" : {
 									"elementPath": "<%=?(pathvalue)?%>"

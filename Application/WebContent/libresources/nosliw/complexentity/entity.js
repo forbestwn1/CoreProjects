@@ -78,6 +78,8 @@ var loc_createAttributeDefinition = function(attrDef){
 	
 	var loc_out = {
 		
+		getAttributeInfo : function(){   return loc_attrDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];   },
+		
 		getEntityType : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_VALUETYPE];  },
 		
 		isComplex : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_ISCOMPLEX];  },

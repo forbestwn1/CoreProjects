@@ -312,7 +312,7 @@ var node_utility = function()
 							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH], value));
 						});
 						
-						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 						mappingToReferencedExpressionRequest.addRequest(dataExpressionSingleInterface.getExecuteRequest());
 						return mappingToReferencedExpressionRequest;			
 					}
