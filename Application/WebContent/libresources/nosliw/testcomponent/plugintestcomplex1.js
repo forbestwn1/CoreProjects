@@ -72,7 +72,9 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName));
+				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName));
+				}
 			});
 			return out;
 		},
@@ -87,33 +89,30 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
 				var attrName = child.getChildName();
 				
-				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
-					//not nosliw attribute
-					var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
-					var attributeView = $('<div>childAttr: '+attrName+'</div>');
-	
-					//adapter view
-					if(child.getAdapters!=undefined){
-						_.each(child.getAdapters(), function(adapter, adapterName){
-							var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
-							attributeView.append(adapterView);
-							adapterView.click(function() {
-								var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
-								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
-							});
+				//not nosliw attribute
+				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
+				var attributeView = $('<div>childAttr: '+attrName+'</div>');
+
+				//adapter view
+				if(child.getAdapters!=undefined){
+					_.each(child.getAdapters(), function(adapter, adapterName){
+						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
+						attributeView.append(adapterView);
+						adapterView.click(function() {
+							var adapterExecuteRequest = node_complexEntityUtility.getAdapterExecuteRequest(loc_out, child.getChildValue(), adapter);
+							node_requestServiceProcessor.processRequest(adapterExecuteRequest);
 						});
-					}
-	
-					var childView = $('<div style="margin-left:10px;" />');
-					attributeView.append(childView);
-					rootViewWrapper.append(attributeView);
-					loc_mainView.append(rootViewWrapper);
-					loc_childrenViews[attrName] = childView;
-					
-					var childComponentInterface = node_getComponentInterface(child.getChildValue());
-					childComponentInterface.updateView(childView);
+					});
 				}
+
+				var childView = $('<div style="margin-left:10px;" />');
+				attributeView.append(childView);
+				rootViewWrapper.append(attributeView);
+				loc_mainView.append(rootViewWrapper);
+				loc_childrenViews[attrName] = childView;
 				
+				var childComponentInterface = node_getComponentInterface(child.getChildValue());
+				childComponentInterface.updateView(childView);
 			});
 		},
 		

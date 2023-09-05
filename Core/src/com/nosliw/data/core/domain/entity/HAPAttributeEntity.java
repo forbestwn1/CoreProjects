@@ -9,6 +9,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 
@@ -21,9 +22,6 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	@HAPAttribute
 	public final static String VALUETYPEINFO = "valueTypeInfo"; 
 
-	public final static String INFO_AUTOPROCESS = "autoProcess";
-	public final static String INFO_PERSISTANCE = "persistance";
-	
 	private T m_value;
 	
 	private HAPInfoValueType m_valueTypeInfo;
@@ -42,22 +40,13 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	public HAPInfoValueType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
 	
 	public boolean isAttributeAutoProcess(boolean defaultValue) {
-		Object value = this.getInfoValue(INFO_AUTOPROCESS);
+		Object value = this.getInfoValue(HAPConstantShared.ENTITYATTRIBUTE_INFO_AUTOPROCESS);
 		if(value!=null)   return Boolean.valueOf((String)value);
 		else return defaultValue;
 	}
 	
-	public void setAttributeAutoProcess(boolean auto) {		this.getInfo().setValue(INFO_AUTOPROCESS, auto+""); 	}
+	public void setAttributeAutoProcess(boolean auto) {		this.getInfo().setValue(HAPConstantShared.ENTITYATTRIBUTE_INFO_AUTOPROCESS, auto+""); 	}
 
-	public boolean isAttributePersistance() {
-		Object value = this.getInfoValue(INFO_PERSISTANCE);
-		if(value!=null)   return Boolean.valueOf((String)value);
-		else return true;
-	}
-
-	public void setAttributePersistance(boolean value) {	this.getInfo().setValue(INFO_PERSISTANCE, value+"");	}
-	
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);

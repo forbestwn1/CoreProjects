@@ -530,7 +530,8 @@ var COMMONCONSTANT=
   "EMBEDED_TYPE_DEFINITION_VALUE": "value",
   "EMBEDED_TYPE_EXECUTABLE_ID": "id",
   "EMBEDED_TYPE_EXECUTABLE_ENTITY": "entity",
-  "EMBEDED_TYPE_EXECUTABLE_VALUE": "value"
+  "EMBEDED_TYPE_EXECUTABLE_VALUE": "value",
+  "ENTITYATTRIBUTE_INFO_AUTOPROCESS": "autoProcess"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

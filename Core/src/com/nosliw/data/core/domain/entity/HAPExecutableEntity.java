@@ -85,9 +85,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			if(this.isAttributePersistance(attribute)) {
-				attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
-			}
+			attrArray.add(attribute.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -98,9 +96,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			if(this.isAttributePersistance(attribute)) {
-				attrArray.add(attribute.toResourceData(runtimeInfo).toString());
-			}
+			attrArray.add(attribute.toResourceData(runtimeInfo).toString());
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -119,9 +115,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 		List<String> attrArray = new ArrayList<String>();
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {
-			if(this.isAttributePersistance(attribute)) {
-				attrArray.add(attribute.toExpandedJsonString(entityDomain));
-			}
+			attrArray.add(attribute.toExpandedJsonString(entityDomain));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrArray.toArray(new String[0])));
 	}
@@ -130,8 +124,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
 	}
 
-	private boolean isAttributePersistance(HAPAttributeEntityExecutable attribute) {   return attribute.isAttributePersistance();    }
-	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		for(HAPAttributeEntityExecutable attribute : this.m_attributes) {

@@ -905,6 +905,9 @@
 			<definition name="EMBEDED_TYPE_EXECUTABLE_ENTITY" value="entity"/>
 			<definition name="EMBEDED_TYPE_EXECUTABLE_VALUE" value="value"/>
 
+			<definition type="space"/>
+			<definition name="ENTITYATTRIBUTE_INFO_AUTOPROCESS" value="autoProcess"/>
+
 		</definitions>
 	</constants>
 </root>

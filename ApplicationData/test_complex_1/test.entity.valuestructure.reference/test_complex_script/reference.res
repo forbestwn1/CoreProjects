@@ -14,7 +14,7 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"reference_definition": {
-							"status": "disabled",
+							"status": "disabled1",
 							"definition": {
 								"definition" : {
 									"elementPath": "parent_public"

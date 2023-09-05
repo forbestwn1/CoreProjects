@@ -56,13 +56,10 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	private void init() {
 		this.setAttributeValueObject(VALUECONSTANT, new LinkedHashMap<String, Object>());
 		this.getAttribute(VALUECONSTANT).setAttributeAutoProcess(false);
-		this.getAttribute(VALUECONSTANT).setAttributePersistance(false);
 		this.setAttributeValueObject(DATACONSTANT, new LinkedHashMap<String, HAPData>());
 		this.getAttribute(DATACONSTANT).setAttributeAutoProcess(false);
-		this.getAttribute(DATACONSTANT).setAttributePersistance(false);
 		this.setAttributeValueObject(PLAINSCRIPTEEXPRESSIONGROUPVALUE, new LinkedHashMap<String, String>());
 		this.getAttribute(PLAINSCRIPTEEXPRESSIONGROUPVALUE).setAttributeAutoProcess(false);
-		this.getAttribute(PLAINSCRIPTEEXPRESSIONGROUPVALUE).setAttributePersistance(false);
 	}
 	
 	public HAPIdEntityInDomain getComplexEntityAttributeValue(String attrName) {

@@ -863,4 +863,8 @@ public class HAPConstantShared {
 		public static final String EMBEDED_TYPE_EXECUTABLE_VALUE = "value";
 
 
+
+		public static final String ENTITYATTRIBUTE_INFO_AUTOPROCESS = "autoProcess";
+
+
 }
