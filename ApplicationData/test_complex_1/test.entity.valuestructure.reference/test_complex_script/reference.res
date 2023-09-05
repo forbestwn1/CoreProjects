@@ -14,7 +14,7 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"reference_definition": {
-							"status": "disabled1",
+							"status": "disabled",
 							"definition": {
 								"definition" : {
 									"elementPath": "parent_public"
@@ -49,10 +49,10 @@
 							}
 						},
 						"reference_link_constantscript": {
-							"status": "disabled",
+							"status": "disabled1",
 							"definition": {
 								"link" : {
-									"elementPath": "<%=?(pathvalue)?%>"
+									"elementPath": "<%=&(pathvalue)&%>"
 								}
 							}
 						},

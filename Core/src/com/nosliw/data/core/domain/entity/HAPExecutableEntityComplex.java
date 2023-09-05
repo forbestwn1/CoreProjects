@@ -88,7 +88,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
-		jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_valueContext!=null) jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -96,12 +96,12 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomain);
 		HAPDomainEntityExecutableResourceComplex entityDomainExe = (HAPDomainEntityExecutableResourceComplex)entityDomain;
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
-		jsonMap.put(VALUECONTEXT, this.m_valueContext.toExpandedString(entityDomainExe.getValueStructureDomain()));
+		if(this.m_valueContext!=null)  jsonMap.put(VALUECONTEXT, this.m_valueContext.toExpandedString(entityDomainExe.getValueStructureDomain()));
 	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
+		if(this.m_valueContext!=null)  jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
 	}
 }
