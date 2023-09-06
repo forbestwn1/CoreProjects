@@ -46,11 +46,13 @@ var loc_createComplexEntityContainerComponentCore = function(complexEntityDef, v
 			
 			var attrNames = loc_complexEntityDef.getAllAttributesName();
 			_.each(attrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
-					success : function(request, childNode){
-						loc_childrenEntity[attrName] = childNode.getChildValue();
-					}
-				}));
+				if(attrName.startsWith(node_COMMONCONSTANT.PREFIX_ELEMENTID_COTAINER)){
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+						success : function(request, childNode){
+							loc_childrenEntity[attrName] = childNode.getChildValue();
+						}
+					}));
+				}
 			});
 			return out;
 		},

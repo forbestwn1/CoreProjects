@@ -867,4 +867,8 @@ public class HAPConstantShared {
 		public static final String ENTITYATTRIBUTE_INFO_AUTOPROCESS = "autoProcess";
 
 
+
+		public static final String PREFIX_ELEMENTID_COTAINER = "ContainerElement_";
+
+
 }

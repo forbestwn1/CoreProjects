@@ -908,6 +908,9 @@
 			<definition type="space"/>
 			<definition name="ENTITYATTRIBUTE_INFO_AUTOPROCESS" value="autoProcess"/>
 
+			<definition type="space"/>
+			<definition name="PREFIX_ELEMENTID_COTAINER" value="ContainerElement_"/>
+
 		</definitions>
 	</constants>
 </root>

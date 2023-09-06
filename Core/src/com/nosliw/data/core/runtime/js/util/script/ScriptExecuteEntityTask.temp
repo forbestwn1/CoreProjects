@@ -7,12 +7,12 @@
 	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
 	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-	var node_EntityIdInDomain = nosliw.getNodeData("complexentity.EntityIdInDomain");
+	var node_EntityIdInDomain = nosliw.getNodeData("complexentity.entity.EntityIdInDomain");
 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask"));
 	var bundleInfo = {
 		bundleDef : ||bundleDefinition||,
-		mainEntityId : new node_EntityIdInDomain(||entityType||, ||entityId||)
+		mainEntityId : new node_EntityIdInDomain("||entityType||", "||entityId||")
 	};
 	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(bundleInfo, undefined, undefined, undefined, {
 		success : function(request, application){

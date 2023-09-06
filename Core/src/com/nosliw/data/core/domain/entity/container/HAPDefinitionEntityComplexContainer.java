@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.entity.container;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
@@ -21,7 +22,7 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 
 	public String addElementAttribute(HAPIdEntityInDomain entityId, Boolean autoProcess) {
 		int idIndex = this.getIdIndex();
-		String attrName = "Element_"+idIndex;
+		String attrName = HAPConstantShared.PREFIX_ELEMENTID_COTAINER+idIndex;
 		idIndex++;
 		this.setIdIndex(idIndex);
 		
