@@ -195,7 +195,7 @@ public class HAPManagerDomainEntityExecutable {
 				new HAPProcessorEntityExecutable() {
 
 					private void calculatePlainScriptExpression(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
-						HAPExecutableEntityComplex executableEntity = processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+						HAPExecutableEntityComplex executableEntity = processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(entityId).getEntity();
 						HAPIdEntityInDomain plainScriptExpressionEntityId = executableEntity.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);
 						if(plainScriptExpressionEntityId!=null) {
 							HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntityExe = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionEntityId).getEntity();
