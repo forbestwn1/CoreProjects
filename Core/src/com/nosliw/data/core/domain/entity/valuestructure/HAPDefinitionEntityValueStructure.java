@@ -95,6 +95,7 @@ public class HAPDefinitionEntityValueStructure extends HAPDefinitionEntityInDoma
 		
 		Map<String, String> mapNameToValue = new LinkedHashMap<String, String>();
 		for(String name : roots.keySet()) {
+			roots.get(name).solidateConstantScript(values);
 			String id = HAPUtilityScriptExpression.isIdLterate(name);
 			if(id!=null) {
 				mapNameToValue.put(name, values.get(id));

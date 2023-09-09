@@ -213,7 +213,7 @@ public class HAPManagerDomainEntityExecutable {
 								JSONObject resultJson = (JSONObject)out.getData();
 								for(Object key : resultJson.keySet()) {
 									String name = (String)key;
-									plainScriptExpressionGroupEntityExe.setPlainScriptExpressionValue(name, resultJson.getString(name));
+									executableEntity.setPlainScriptExpressionValue(name, resultJson.getString(name));
 								}
 							}
 						}
