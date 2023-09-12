@@ -1,19 +1,14 @@
 package com.nosliw.ui.entity.uicontent;
 
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 
-public class HAPExecutableEntityComplexUIPage extends HAPDefinitionEntityComplexWithUIContent{
+@HAPEntityWithAttribute
+public class HAPExecutableEntityComplexUIPage extends HAPExecutableEntityComplexWithUIContent{
 
 
 	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {}
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {}
 
 	
-	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

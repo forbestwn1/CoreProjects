@@ -70,7 +70,10 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 
 	public HAPIdEntityInDomain getAttributeValueEntityId(String attrName) {    return (HAPIdEntityInDomain)this.getAttributeValue(attrName);      }
 	public HAPDefinitionEntityInDomain getAttributeValueEntity(String attrName, HAPContextParser parserContext) {
-		return parserContext.getGlobalDomain().getEntityInfoDefinition(this.getAttributeValueEntityId(attrName)).getEntity();
+		HAPDefinitionEntityInDomain out = null;
+		HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)this.getAttributeValue(attrName);
+		if(attrEntityId!=null)   out = parserContext.getGlobalDomain().getEntityDefinition(attrEntityId);
+		return out;
 	}
 	
 	public Object getAttributeValue(String attrName, Object defaultValue) {

@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -40,7 +41,15 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	}
 
 	public Set<HAPResourceIdSimple> getAllSimpleResourceIds(){    return this.m_localDomainIdByResourceId.keySet();     }
+	
 	public HAPInfoEntityInDomainDefinition getEntityInfoDefinition(HAPIdEntityInDomain entityId) {		return this.getLocalDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);	}
+	public HAPDefinitionEntityInDomain getEntityDefinition(HAPIdEntityInDomain entityId) {
+		HAPDefinitionEntityInDomain out = null;
+		HAPInfoEntityInDomainDefinition entityInfo = this.getLocalDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);	
+		if(entityInfo!=null)   out = entityInfo.getEntity();
+		return out;
+	}
+
 	public HAPDomainEntityDefinitionLocal getLocalDomainById(String id) {		return this.m_localDomainById.get(id);	}
 	public String getDomainIdBySimpleResourceId(HAPResourceIdSimple resourceId) {   return this.m_localDomainIdByResourceId.get(resourceId);      }
 	public HAPDomainEntityDefinitionLocal getLocalDomainBySimpleResourceId(HAPResourceIdSimple resourceId) {		return this.getLocalDomainById(this.getDomainIdBySimpleResourceId(resourceId));	}

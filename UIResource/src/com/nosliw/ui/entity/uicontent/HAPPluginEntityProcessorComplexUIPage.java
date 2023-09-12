@@ -9,5 +9,4 @@ public class HAPPluginEntityProcessorComplexUIPage extends HAPPluginEntityProces
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, HAPExecutableEntityComplexUIContent.class);
 	}
 
-	
 }

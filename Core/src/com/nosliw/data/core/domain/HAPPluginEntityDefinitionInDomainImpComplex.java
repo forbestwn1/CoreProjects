@@ -37,7 +37,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 		super.postParseDefinitionContent(entityId, parserContext);
 		HAPDefinitionEntityInDomainComplex complexEntity = this.getEntityComplex(entityId, parserContext);
 		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
-		valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
+		if(valueContextEntity!=null)   valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
 
 	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);

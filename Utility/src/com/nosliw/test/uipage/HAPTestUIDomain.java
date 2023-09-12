@@ -5,7 +5,7 @@ import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPTestDomain {
+public class HAPTestUIDomain {
 
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();

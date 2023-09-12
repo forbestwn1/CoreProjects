@@ -1,9 +1,7 @@
 package com.nosliw.test.domain;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPTestDomain {
 
@@ -11,7 +9,7 @@ public class HAPTestDomain {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 //		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager(), runtimeEnvironment.getResourceDefinitionManager());
 		
-		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "empty");		
+//		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "empty");		
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.adapter.dataassociation");
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.entity.service");
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.reference");

@@ -27,6 +27,6 @@ public class HAPPluginEntityDefinitionInDomainTestComplex1 extends HAPPluginEnti
 
 		HAPDefinitionEntityInDomainComplex complexEntity = (HAPDefinitionEntityInDomainComplex)this.getEntity(entityId, parserContext);
 		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
-		valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
+		if(valueContextEntity!=null)  valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
 }

@@ -11,8 +11,6 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDomainComplex{
 
-	static final public String ATTR_CONTENT = "content";  
-
 	static final public String ATTR_SCRIPT = "script";  
 	
 	static final public String ATTR_CUSTOMERTAG = "tag";  
@@ -36,8 +34,8 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 
 	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure) {}
 	
-	public void setContent(String content) {    this.setAttributeValueObject(ATTR_CONTENT, content);        }
-	public String getContent() {     return (String)this.getAttributeValue(ATTR_CONTENT);     }
+	public void setContent(String content) {    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CONTENT, content);        }
+	public String getContent() {     return (String)this.getAttributeValue(HAPExecutableEntityComplexUIContent.CONTENT);     }
 	
 	public void setJSBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(ATTR_SCRIPT, jsBlock);        }
 

@@ -7,9 +7,9 @@
 		<br>
 		</div>
 		
-		<nosliw-test data="business.a.cc" element="ele" index="index">  
-			<span class="intag">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB</span>
-		</nosliw-test>
+		<br>
+		Content:<%=?(baseVarNormal)?.value + '   6666 ' %>
+		<br>
   
 </body>
 
@@ -42,33 +42,6 @@
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "default value of baseVarNormal"
-						}
-					},
-					"baseVarMatcher": {
-						"definition":{
-							"criteria": "test.url;1.0.0"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.url;1.0.0",
-							"value": "default value of testvar3"
-						}
-					},
-					"parm1" : {
-						"definition": {
-							"criteria" : "test.integer"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 5
-						}
-					},
-					"parm2" : {
-						"definition": {
-							"criteria": "test.integer"
-						},
-						"defaultValue": {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 7
 						}
 					}
 				}

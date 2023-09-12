@@ -1,6 +1,9 @@
 package com.nosliw.data.core.domain.entity;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEntityProcessorComplex{
@@ -40,6 +43,14 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	@Override
 	public void postProcessEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
 
+	
+	public Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+		HAPDefinitionEntityInDomainComplex entityDef = (HAPDefinitionEntityInDomainComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
+		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
+		return Pair.of(entityDef, entityExe);
+	}
+	
 	@Override
 	public HAPExecutableEntityComplex newExecutable() {
 		HAPExecutableEntityComplex out = null;
