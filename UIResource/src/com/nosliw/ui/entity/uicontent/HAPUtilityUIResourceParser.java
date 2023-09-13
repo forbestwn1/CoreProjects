@@ -10,9 +10,11 @@ import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
+import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 
 public class HAPUtilityUIResourceParser {
 
@@ -124,6 +126,7 @@ public class HAPUtilityUIResourceParser {
 	}
 	
 	public static List<Element> getChildElementsByTag(Element parent, String tagName){
+		tagName = tagName.toLowerCase();
 		List<Element> out = new ArrayList<Element>();
 		Elements childEles = parent.children(); 
 		for(int i=0; i<childEles.size(); i++){

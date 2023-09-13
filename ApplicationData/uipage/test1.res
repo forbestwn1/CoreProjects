@@ -13,7 +13,7 @@
   
 </body>
 
-	<scripts>
+	<script>
 	{
 		newElementInLoop : function(data, info, env){
 
@@ -27,9 +27,9 @@
 			return data.data + "   Start";
 		},
 	}
-	</scripts>
+	</script>
 	
-	<valueContext>
+	<valuecontext>
 	{
 		"entity": [
 			{
@@ -48,7 +48,7 @@
 			}
 		]
 	}
-	</valueContext>
+	</valuecontext>
 	
 	<attachment>
 	{
