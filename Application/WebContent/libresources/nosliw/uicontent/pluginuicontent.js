@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
 	var node_createServiceRequestInfoSet;
 	var node_createViewContainer;
+	var node_uiContentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -45,6 +46,11 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	//view container
 	var loc_viewContainer;
 
+	//name space for this ui resource view
+	//every element/customer tag have unique ui id within a web page
+	//during compilation, ui id is unique within ui resoure, however, not guarenteed between different ui resource view within same web page
+	//name space make sure of it as different ui resource view have different name space
+	var loc_idNameSpace = nosliw.generateId();
 
 	/*
 	 * find matched elements according to selection
@@ -57,24 +63,15 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
-				success : function(request, childNode){
-					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
-				}
-			}));
-
-		var viewAttrs = {
-			nosliwdefid : uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID],
-		};
-		loc_viewContainer = node_createViewContainer(loc_idNameSpace, uiResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], viewAttrs);
-		loc_viewContainer.setContentView(node_uiResourceUtility.updateHtmlUIId(_.unescape(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEUIBODY_HTML]), loc_idNameSpace));
-
+			loc_viewContainer = node_createViewContainer(loc_idNameSpace);
+			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_HTML));
+			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
 			
 			return out;
 		},
 		
 		updateView : function(view){
-			return node_getComponentInterface(loc_uiContent).updateView(childView);
+			loc_viewContainer.appendTo(view);
 		},
 
 		setEnvironmentInterface : function(envInterface){
@@ -95,12 +92,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 		//remove all elements from outsiders parents and put them back under parentView
 		detachViews : function(){	 loc_viewContainer.detachViews();		},
-		
 
 	};
 	
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facadeTaskContainer);
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
 	return loc_out;	
 };
 
@@ -121,6 +115,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 
 
 //Register Node by Name

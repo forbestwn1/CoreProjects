@@ -20,7 +20,7 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
 		HAPDefinitionEntityComplexUIContent uiContentDef = (HAPDefinitionEntityComplexUIContent)entityPair.getLeft();
 		HAPExecutableEntityComplexUIContent uiContentExe = (HAPExecutableEntityComplexUIContent)entityPair.getRight();
-		uiContentExe.setContent(uiContentDef.getContent());
+		uiContentExe.setHTML(uiContentDef.getHtml());
 	}
 
 }

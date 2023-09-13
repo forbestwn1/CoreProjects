@@ -51,7 +51,7 @@ var packageObj = library;
 	var node_createExpressionSinglePlugin;
 	var node_createDecorationScriptPlugin;
 	var node_createComplexEntityContainerPlugin;
-	
+
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createComplexEntityRuntimeService = function() {
@@ -188,6 +188,8 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createScriptBasedPlugin());
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER, node_createComplexEntityContainerPlugin());
+
+
 
 
 		//simple entity plugin

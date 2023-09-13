@@ -25,6 +25,7 @@ var packageObj = library;
 	var node_createStoreService;
 	var node_createComplexEntityRuntimeService;
 	var node_createVariableManager;
+	var node_createUIService;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	var loc_mduleName = "runtime";
@@ -52,6 +53,8 @@ var node_createRuntime = function(name){
 	var loc_remoteService;
 	
 	var loc_dataService;
+	
+	var loc_uiService;
 	
 	var loc_uiPageService;
 	
@@ -91,6 +94,8 @@ var node_createRuntime = function(name){
 
 		getTaskRuntimeFactory(){   return loc_taskRuntimeFactory;  },
 		
+		getUIService(){    return loc_uiService;  },
+		
 		getUIPageService(){		return loc_uiPageService;		},
 		
 		getUIModuleService(){   return loc_uiModuleService; },
@@ -125,12 +130,14 @@ var node_createRuntime = function(name){
 		loc_dataService = node_createDataService();
 		loc_securityService = node_createSecurityService();
 		
-		loc_uiModuleService = node_createUIModuleService();
-		loc_uiAppService = node_createUIAppService();
 		loc_errorManager = node_createErrorManager();
 		loc_storeService = node_createStoreService();
 		loc_complexEntityService = node_createComplexEntityRuntimeService();
 		loc_variableManager = node_createVariableManager();
+
+		loc_uiService = node_createUIService(loc_complexEntityService);
+		loc_uiModuleService = node_createUIModuleService();
+		loc_uiAppService = node_createUIAppService();
 		
 		loc_requestProcessor = node_createRequestServiceProcessor();
 		nosliw.createNode("request.requestServiceProcessor", loc_requestProcessor); 
@@ -178,6 +185,7 @@ nosliw.registerSetNodeDataEvent("error.createErrorManager", function(){ node_cre
 nosliw.registerSetNodeDataEvent("common.createStoreService", function(){ node_createStoreService = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createComplexEntityRuntimeService", function(){ node_createComplexEntityRuntimeService = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
+nosliw.registerSetNodeDataEvent("uicommon.createUIService", function(){node_createUIService = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createRuntime", node_createRuntime); 

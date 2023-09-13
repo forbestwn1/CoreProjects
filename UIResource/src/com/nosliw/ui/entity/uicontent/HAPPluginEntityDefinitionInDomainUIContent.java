@@ -86,7 +86,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		
 		HAPUtilityUIResourceParser.addSpanToText(wrapperEle);
 		
-		uiContent.setContent(wrapperEle.html());
+		uiContent.setHtml(wrapperEle.html());
 	}
 
 	/*

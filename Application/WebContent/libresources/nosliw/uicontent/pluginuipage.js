@@ -56,7 +56,7 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 		},
 
 		updateView : function(view){
-			return node_getComponentInterface(loc_uiContent).updateView(childView);
+			return node_getComponentInterface(loc_uiContent).updateView(view);
 		},
 		
 		setEnvironmentInterface : function(envInterface){

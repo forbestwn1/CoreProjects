@@ -1,5 +1,6 @@
 package com.nosliw.ui.entity.uicontent;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
@@ -7,11 +8,11 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 @HAPEntityWithAttribute
 public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityComplex{
 
-	static final public String CONTENT = "content";  
+	@HAPAttribute
+	static final public String HTML = "html";  
 
 	
-	public void setContent(String content) {    this.setAttributeValueObject(CONTENT, content);        }
-	public String getContent() {     return (String)this.getAttributeValue(CONTENT);     }
-	
-	
+	public void setHTML(String content) {    this.setAttributeValueObject(HTML, content);        }
+	public String getHTML() {     return (String)this.getAttributeValue(HTML);     }
+		
 }

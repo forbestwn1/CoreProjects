@@ -30,6 +30,7 @@ nosliw.init = function(configure){
 		"nosliw.uitag",
 		"nosliw.uinode",
 		"nosliw.uipage",
+		"nosliw.uicontent",
 		"nosliw.dataservice",
 		"nosliw.debug",
 		"nosliw.component",

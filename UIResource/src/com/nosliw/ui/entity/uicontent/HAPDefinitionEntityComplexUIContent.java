@@ -3,6 +3,8 @@ package com.nosliw.ui.entity.uicontent;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
@@ -34,8 +36,10 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 
 	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure) {}
 	
-	public void setContent(String content) {    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CONTENT, content);        }
-	public String getContent() {     return (String)this.getAttributeValue(HAPExecutableEntityComplexUIContent.CONTENT);     }
+	public void setHtml(String html) {
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.HTML, StringEscapeUtils.escapeHtml(html).replaceAll("(\\r|\\n)", ""));        
+	}
+	public String getHtml() {     return (String)this.getAttributeValue(HAPExecutableEntityComplexUIContent.HTML);     }
 	
 	public void setJSBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(ATTR_SCRIPT, jsBlock);        }
 
