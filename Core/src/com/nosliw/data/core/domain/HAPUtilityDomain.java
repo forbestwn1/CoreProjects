@@ -28,7 +28,10 @@ public class HAPUtilityDomain {
 			Pair<HAPExecutableEntity, HAPContextProcessor> result = resolveExecutableEntityId((HAPIdEntityInDomain)attrValue, processContext);
 			return Pair.of(result.getLeft(), result.getRight());
 		}
-		else return Pair.of(exeEntity, processContext);
+		else if(attrValue instanceof HAPExecutable) {
+			return Pair.of((HAPExecutable)attrValue, processContext);
+		}
+		return null;
 	}
 	
 	public static Pair<HAPExecutableEntity, HAPContextProcessor> resolveExecutableEntityId(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext){

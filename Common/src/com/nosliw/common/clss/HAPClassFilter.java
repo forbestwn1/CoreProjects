@@ -18,15 +18,20 @@ public abstract class HAPClassFilter {
 		    
 		    //loop all the classes
 			for(ClassPath.ClassInfo classInfo : classeInfos){
-				if(HAPUtilityNosliw.isHAPClass(classInfo.getName())){
-					//only check nosliw package
-					Class checkClass = classInfo.load();
-//					if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers()))
-					{
-						if(this.isValid(checkClass)){
-							this.process(checkClass, data);
+				try {
+					if(HAPUtilityNosliw.isHAPClass(classInfo.getName())){
+						//only check nosliw package
+						Class checkClass = classInfo.load();
+//						if(!checkClass.isInterface() && !Modifier.isAbstract(checkClass.getModifiers()))
+						{
+							if(this.isValid(checkClass)){
+								this.process(checkClass, data);
+							}
 						}
 					}
+				}
+				catch(Throwable e) {
+					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {
