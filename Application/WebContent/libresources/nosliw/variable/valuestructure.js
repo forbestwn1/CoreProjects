@@ -10,7 +10,7 @@ var node_getObjectType;
 var node_createEventObject;
 var node_eventUtility;
 var node_createContextElement;
-var node_createContextVariableInfo;
+var node_createValueStructureVariableInfo;
 var node_createVariable;
 var node_DataOperationService;
 var node_makeObjectWithLifecycle;
@@ -27,7 +27,6 @@ var node_uiDataOperationServiceUtility;
 var node_createUIDataOperationRequest;
 var node_uiDataOperationServiceUtility;
 var node_UIDataOperation;
-var node_createVariableGroup;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -99,7 +98,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	};
 	
 	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, reverseMatchers){
-		var contextVar = node_createContextVariableInfo(rootName, path);
+		var contextVar = node_createValueStructureVariableInfo(rootName, path);
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
 				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
@@ -148,7 +147,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 		loc_out.prv_valueChangeEventEnable = false;
 		loc_out.prv_valueChangeEventSource = node_createEventObject();
-		loc_out.prv_eleVariableGroup = node_createVariableGroup([], function(request){
+		loc_out.prv_eleVariableGroup = loc_createVariableGroup([], function(request){
 			if(loc_out.prv_valueChangeEventEnable == true){
 				if(loc_updateRequest[request.getId()]!=null){
 					//change from update context
@@ -171,7 +170,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 
 	var loc_addValueStructureElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
-		var contextEleVarInfo = node_createValueStructureElement(elementInfo, request);
+		var contextEleVarInfo = loc_createValueStructureElement(elementInfo, request);
 
 		if(contextEleVarInfo!=undefined){
 			var contextEle = {
@@ -226,7 +225,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 		getDataOperationRequest : function(eleName, operationService, handlers, request){
 			var operationPath = operationService.parms.path;
-			var baseVariable = loc_findBaseVariable(node_createContextVariableInfo(eleName, operationPath));
+			var baseVariable = loc_findBaseVariable(node_createValueStructureVariableInfo(eleName, operationPath));
 			if(operationPath!=undefined){
 				operationService.parms.path = baseVariable.path;
 			}
@@ -299,7 +298,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
  * 		variable
  * 		info
  */
-var node_createValueStructureElement = function(elementInfo, requestInfo){
+var loc_createValueStructureElement = function(elementInfo, requestInfo){
 	var loc_out = {
 		name : elementInfo.name,
 		info : elementInfo.info,
@@ -324,6 +323,47 @@ var node_createValueStructureElement = function(elementInfo, requestInfo){
 };
 
 
+var loc_createVariableGroup = function(variablesArray, handler, thisContext){
+
+	//event handler
+	var loc_handler = handler;
+	
+	var loc_requestEventGroupHandler = undefined;
+	
+	var loc_addElement = function(variable, key){
+		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject(), key+"");
+	};
+	
+	var loc_resourceLifecycleObj = {};
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(variablesArray, handler, thisContext){
+		loc_requestEventGroupHandler = node_createRequestEventGroupHandler(loc_handler, thisContext);
+		
+		for(var i in variablesArray){
+			loc_addElement(variablesArray[i], i);
+		}
+	};	
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
+		loc_requestEventGroupHandler.destroy(requestInfo);
+		loc_handler = undefined;
+	};
+
+	var loc_out = {
+
+		addVariable : function(variable, key){	loc_addElement(variable, key);		},
+		
+		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  },
+		
+		destroy : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
+	};
+	
+	//append resource and object life cycle method to out obj
+	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
+	node_getLifecycleInterface(loc_out).init(variablesArray, handler, thisContext);
+	
+	return loc_out;
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -334,7 +374,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElement", function(){node_createContextElement = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariable", function(){node_createVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.dataoperation.DataOperationService", function(){node_DataOperationService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
@@ -351,7 +391,6 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.context.createVariableGroup", function(){node_createVariableGroup = this.getData();});
 
 
 //Register Node by Name

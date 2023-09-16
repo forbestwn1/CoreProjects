@@ -49,7 +49,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, valueContextId, bu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, {
 				success : function(request, childNode){
 					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
 				}
@@ -57,7 +57,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, valueContextId, bu
 			
 			
 			
-			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
+			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
 				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {

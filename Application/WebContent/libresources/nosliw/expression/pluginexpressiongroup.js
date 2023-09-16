@@ -46,14 +46,19 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTGROUP_EXPRESSIONS)[node_COMMONATRIBUTECONSTANT.EXECUTABLECONTAINEREXPRESSION_ELEMENT];
 	};
 	
-	var loc_getExecuteItemRequest = function(expressionId, handlers, request){
+	var loc_getItemById = function(itemId){
 		var expressions = loc_getAllExpressionItems();
-		var expressionItem;		
+		var out;		
 		_.each(expressions, function(expression, i){
 			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==expressionId){
-				expressionItem = expression;
+				out = expression;
 			}
 		});
+		return out;
+	}
+	
+	var loc_getExecuteItemRequest = function(expressionId, handlers, request){
+		var expressionItem = loc_getItemById(expressionId);
 		return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionGroupRuntime.getCoreEntity(), handlers, request)
 	};
 	
@@ -63,6 +68,18 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 			var expressions = loc_getAllExpressionItems();
 			_.each(expressions, function(expression, i){
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+			});
+			return out;
+		},
+		
+		getItemVariableInfos : function(itemId){
+			var variableInfoContainer = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS];
+			var expressionItem = loc_getItemById(itemId);
+			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEKEYS];
+			
+			var out = [];
+			_.each(varKeys, function(key, i){
+				out.push(variableInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key][node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
 			});
 			return out;
 		},

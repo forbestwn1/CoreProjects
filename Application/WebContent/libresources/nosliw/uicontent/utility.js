@@ -13,8 +13,6 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createContextElementInfo;
 	var node_dataUtility;
-	var node_createContext;
-	var node_createContextVariableInfo;
 	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -189,8 +187,6 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name

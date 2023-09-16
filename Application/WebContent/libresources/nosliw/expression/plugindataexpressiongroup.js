@@ -44,20 +44,24 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	
 	var loc_referenceContainer;
 
-	var loc_getExecuteItemRequest = function(dataExpressionId, handlers, request){
+	var loc_getItemById = function(itemId){
 		var expressions = loc_getAllExpressionItems();
-		var expressionItem;		
+		var out;		
 		_.each(expressions, function(expression, i){
 			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){
-				expressionItem = expression;
+				out = expression;
 			}
 		});
-		
+		return out;
+	};
+
+	var loc_getExecuteItemRequest = function(dataExpressionId, handlers, request){
+		var expressionItem = loc_getItemById(dataExpressionId);
 		return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
 	};
 
 	var loc_getAllExpressionItems = function(){
-		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSIONGROUP_EXPRESSIONS);;
+		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATAGROUP_EXPRESSIONS);
 	};
 
 	var loc_facadeTaskContainer = {
@@ -66,6 +70,18 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			var expressions = loc_getAllExpressionItems()
 			_.each(expressions, function(expression, i){
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+			});
+			return out;
+		},
+		
+		getItemVariableInfos : function(itemId){
+			var variableInfoContainer = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_VARIABLEINFOS];
+			var expressionItem = loc_getItemById(itemId);
+			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS];
+			
+			var out = [];
+			_.each(varKeys, function(key, i){
+				out.push(variableInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key][node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
 			});
 			return out;
 		},
@@ -100,7 +116,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXPRESSION_REFERENCES, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, {
 				success : function(request, childNode){
 					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
 				}
@@ -108,7 +124,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			
 			
 			
-			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXPRESSION_ATTRIBUTESREFERENCE);
+			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
 				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {

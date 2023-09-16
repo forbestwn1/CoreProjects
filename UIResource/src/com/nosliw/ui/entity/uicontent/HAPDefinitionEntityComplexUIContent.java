@@ -1,5 +1,6 @@
 package com.nosliw.ui.entity.uicontent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	
 	static final public String ATTR_CUSTOMERTAG = "tag";  
 	
-	static final public String ATTR_SCRIPTEXPRESSIONINCONTENT = "scriptExpressionInContent";
-	
-	static final public String ATTR_SCRIPTEXPRESSIONINATTRIBUTE = "scriptExpressionInAttribute";
-	
-	static final public String ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE = "scriptExpressionInTagAttribute";
-
 	static final public String ATTR_STYPE = "style";  
 	
 	static final public String ATTR_NORMALTAGEVENT = "normalTagEvent";  
@@ -31,7 +26,12 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	
 	static final public String ATTR_ATTRIBUTE = "attribute";  
 	
-
+	public HAPDefinitionEntityComplexUIContent() {
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+	}
+	
 	public String getUnitType() {    return null;   }
 
 	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure) {}
@@ -46,11 +46,14 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	public void addNormalTagEvent(HAPElementEvent event) {   ((List<HAPElementEvent>)this.getAttributeValue(ATTR_NORMALTAGEVENT)).add(event);    }
 	public void addCustomTagEvent(HAPElementEvent event) {   ((List<HAPElementEvent>)this.getAttributeValue(ATTR_CUSTOMTAGEVENT)).add(event);    }
 	
-	public void addScriptExpressionInCustomTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE)).add(scriptExpression);    }
-	public void addScriptExpressionInNormalTagAttribute(HAPDefinitionUIEmbededScriptExpressionInAttribute scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINATTRIBUTE)).add(scriptExpression);    }
-	public void addScriptExpressionInContent(HAPDefinitionUIEmbededScriptExpressionInContent scriptExpression) {  ((List<HAPDefinitionUIEmbededScriptExpressionInContent>)this.getAttributeValue(ATTR_SCRIPTEXPRESSIONINCONTENT)).add(scriptExpression);    }
+	public void addScriptExpressionInCustomTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpression) {  getScriptExpressionInCustomTagAttributes().add(scriptExpression);    }
+	public void addScriptExpressionInNormalTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpression) {  getScriptExpressionInNormalTagAttributes().add(scriptExpression);    }
+	public void addScriptExpressionInContent(HAPUIEmbededScriptExpressionInContent scriptExpression) {  getScriptExpressionInContents().add(scriptExpression);    }
 	 
-
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomTagAttributes() {  return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE);    }
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttributes() {  return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE);    }
+	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContents() {  return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT);    }
+	
 	public void setStyle(HAPDefinitionStyle style) {}
 	
 	public void addAttribute(String attrName, String attrValue) {    ((Map<String, String>)this.getAttributeValue(ATTR_ATTRIBUTE)).put(attrName, attrValue);    }

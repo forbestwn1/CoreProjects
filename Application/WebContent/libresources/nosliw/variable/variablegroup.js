@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("context");    
+var packageObj = library.getChildPackage();    
 
 (function(packageObj){
 //get used node
@@ -10,36 +10,63 @@ var node_makeObjectWithLifecycle;
 var node_getLifecycleInterface;
 var node_createRequestEventGroupHandler;
 //*******************************************   Start Node Definition  ************************************** 	
+/**
+ * this is a factory to create variables group
+ * this group contains context variables: context name + path
+ * this object help to build event response for context variable
+ * 		variables : a group of context variables
+ * 		handler : function(contextVariableEventInfo) handle all context variables events
+ * 		thisContext : the this context for event handler
+ */
 
-var node_createVariableGroup = function(variablesArray, handler, thisContext){
+var node_createVariablesGroup = function(valueContext, variableIdsArray, handler, thisContext){
 
+	//value context
+	var loc_valueContext;
 	//event handler
-	var loc_handler = handler;
+	var loc_handler;
 	//variables
 	var loc_variables = {};
 	
 	var loc_requestEventGroupHandler = undefined;
 	
-	var loc_addElement = function(variable, key){
-		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject(), key+"");
+	var loc_addElement = function(variableId){
+		var variable = loc_valueContext.createVariableById(variableId);
+		loc_variables[variableId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_KEY]] = variable;
+		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject());
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(variablesArray, handler, thisContext){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(valueContext, variableIdsArray, handler, thisContext){
+		loc_valueContext = valueContext;
+		loc_handler = handler;
+
 		loc_requestEventGroupHandler = node_createRequestEventGroupHandler(loc_handler, thisContext);
 		
-		for(var i in variablesArray){
-			loc_addElement(variablesArray[i], i);
+		for(var i in variableIdsArray){
+			loc_addElement(variableIdsArray[i]);
 		}
 	};	
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		loc_requestEventGroupHandler.destroy(requestInfo);
+		
+		_.each(loc_variables, function(variable, key){
+			variable.release(requestInfo);
+		});
+		
+		loc_valueContext = undefined;
 		loc_handler = undefined;
 	};
 
 	var loc_out = {
-
-		addVariable : function(variable, key){	loc_addElement(variable, key);		},
+		/*
+		 * add 
+		 */
+		addVariable : function(contextVariable){	loc_addElement(contextVariable);		},
+		
+		getVariable : function(fullPath){	return loc_variables[fullPath];		},
+		
+		getVariables : function(){  return loc_variables;  },
 		
 		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  },
 		
@@ -48,7 +75,7 @@ var node_createVariableGroup = function(variablesArray, handler, thisContext){
 	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
-	node_getLifecycleInterface(loc_out).init(variablesArray, handler, thisContext);
+	node_getLifecycleInterface(loc_out).init(valueContext, variableIdsArray, handler, thisContext);
 	
 	return loc_out;
 };
@@ -64,6 +91,6 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createVariableGroup", node_createVariableGroup); 
+packageObj.createChildNode("createVariablesGroup", node_createVariablesGroup); 
 
 })(packageObj);

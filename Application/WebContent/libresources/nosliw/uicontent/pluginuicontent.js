@@ -43,6 +43,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	
+	var loc_expressionContents = [];
+
+	
 	//view container
 	var loc_viewContainer;
 
@@ -53,19 +56,51 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_idNameSpace = nosliw.generateId();
 
 	/*
+	 * update ui id by adding space name ahead of them
+	 */
+	var loc_getUpdateUIId = function(uiId){	return loc_idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME+uiId;	};
+
+
+	/*
 	 * find matched elements according to selection
 	 */
 	var loc_findLocalElement = function(select){return loc_viewContainer.findElement(select);};
 
+	/*
+	 * find matched element according to uiid
+	 */
+	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
+
 
 	var loc_out = {
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
+		},
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
+
+			//content view			
 			loc_viewContainer = node_createViewContainer(loc_idNameSpace);
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_HTML));
 			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
+			
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP));
+
+			
+						
+			//init expression content
+			_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContent, i){
+				var embededContent = node_createEmbededScriptExpressionInContent(embededContent);
+				var viewEle = loc_uiResourceView.prv_getLocalElementByUIId(embededContent.getUIId());
+				
+				var scriptGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP).getCoreEntity();
+				
+				node_getLifecycleInterface(embededContent).init(scriptGroupCore, viewEle, requestInfo);
+				loc_expressionContents.push(embededContent);
+			});
+
+			
 			
 			return out;
 		},

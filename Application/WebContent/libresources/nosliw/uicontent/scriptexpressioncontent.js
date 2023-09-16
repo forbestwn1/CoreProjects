@@ -9,7 +9,6 @@ var packageObj = library;
 	var node_makeObjectWithLifecycle;
 	var node_createEventObject;
 	var node_getLifecycleInterface
-	var node_createUIResourceEmbededScriptExpression;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -17,7 +16,17 @@ var packageObj = library;
 	 * type: 
 	 * 		text, attribute, tagAttribute
 	 */
-	var node_createEmbededScriptExpressionInContent = function(embededScriptExpression, scriptGroup, uiResourceView, requestInfo){
+	var node_createEmbededScriptExpressionInContent = function(embededScriptExpression){
+		
+		var m_embededScriptExpression = embededScriptExpression;
+
+		var loc_ele;
+
+		var m_embededSScriptExpressionWatch;
+
+		var loc_dataEventObject = node_createEventObject();
+		
+
 		
 		//parent resource view
 		var loc_uiResourceView = uiResourceView;
@@ -30,8 +39,6 @@ var packageObj = library;
 		var loc_embededScriptExpression = node_createUIResourceEmbededScriptExpression(embededScriptExpression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], scriptGroup, uiResourceView.getConstants(), uiResourceView.getContext(), requestInfo);
 		
 
-		var loc_dataEventObject = node_createEventObject();
-		
 		var loc_scriptExpressionEventHandler = function(eventName, data){
 			switch(eventName){
 			case node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS:
@@ -47,8 +54,11 @@ var packageObj = library;
 		};
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(embededScriptExpression, uiResourceView, requestInfo){
-			loc_embededScriptExpression.registerListener(loc_dataEventObject, loc_scriptExpressionEventHandler);
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(viewElement, scriptExpressionGroupCore){
+			loc_ele = viewElement;
+			m_embededSScriptExpressionWatch = node_createTaskGroupItemWatch(scriptExpressionGroupCore, m_embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_SCRIPTID]);
+			
+			m_embededSScriptExpressionWatch.registerListener(loc_dataEventObject, loc_scriptExpressionEventHandler);
 			loc_out.refresh(requestInfo);
 		};
 			
@@ -62,6 +72,11 @@ var packageObj = library;
 		};
 
 		var loc_out = {
+			
+			getUIId : function(){
+				return m_embededScriptExpression[node_COMMONATRIBUTECONSTANT.WITHUIID_UIID];
+			},
+			
 			refresh : function(requestInfo){
 				loc_embededScriptExpression.refresh(requestInfo);
 			},
@@ -85,7 +100,6 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
-	nosliw.registerSetNodeDataEvent("uiexpression.createUIResourceEmbededScriptExpression", function(){node_createUIResourceEmbededScriptExpression = this.getData();});
 
 	//Register Node by Name
 	packageObj.createChildNode("createEmbededScriptExpressionInContent", node_createEmbededScriptExpressionInContent); 

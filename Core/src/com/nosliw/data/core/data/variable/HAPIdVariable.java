@@ -7,7 +7,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPIdVariable extends HAPSerializableImp{
@@ -18,6 +20,9 @@ public class HAPIdVariable extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
 	
+	@HAPAttribute
+	public static final String KEY = "key";
+
 	private HAPIdRootElement m_rootElementId;
 	
 	private HAPPath m_elementPath;
@@ -31,9 +36,13 @@ public class HAPIdVariable extends HAPSerializableImp{
 	
 	public HAPPath getElementPath() {    return this.m_elementPath;   }
 
+	public String getKey() {
+		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_elementPath.toString(), this.getRootElementId().getKey()}, HAPConstantShared.SEPERATOR_LEVEL1); 
+	}
+	
 	@Override
 	public int hashCode() {
-		return this.m_rootElementId.hashCode()+this.m_elementPath.hashCode();
+		return this.getKey().hashCode();
 	}
 	
 	@Override
@@ -54,5 +63,6 @@ public class HAPIdVariable extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ROOTELEMENTID, this.m_rootElementId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ELEMENTPATH, this.m_elementPath.getPath());
+		jsonMap.put(KEY, this.getKey());
 	}
 }

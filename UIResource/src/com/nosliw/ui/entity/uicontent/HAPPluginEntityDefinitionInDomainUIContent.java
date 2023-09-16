@@ -53,9 +53,9 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 		
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInContent>());
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInAttribute>());
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPDefinitionUIEmbededScriptExpressionInAttribute>());
+		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
 	}
@@ -173,7 +173,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 					literateExpression.addSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segment);
 					String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
 
-					HAPDefinitionUIEmbededScriptExpressionInContent expressionContent = new HAPDefinitionUIEmbededScriptExpressionInContent(this.generateId(), scriptExpressionId);
+					HAPUIEmbededScriptExpressionInContent expressionContent = new HAPUIEmbededScriptExpressionInContent(this.generateId(), scriptExpressionId);
 					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					uiContent.addScriptExpressionInContent(expressionContent);
 				}
@@ -203,7 +203,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(attrValue, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
 				String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
 				
-				HAPDefinitionUIEmbededScriptExpressionInAttribute eAttr = new HAPDefinitionUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
+				HAPUIEmbededScriptExpressionInAttribute eAttr = new HAPUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
 				if(isCustomerTag)  uiContent.addScriptExpressionInCustomTagAttribute(eAttr);
 				else  uiContent.addScriptExpressionInNormalTagAttribute(eAttr);
 				ele.attr(eleAttrKey, "");

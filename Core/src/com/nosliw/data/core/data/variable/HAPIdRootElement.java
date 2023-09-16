@@ -52,10 +52,12 @@ public class HAPIdRootElement extends HAPSerializableImp{
 
 	public HAPComplexPath getPath() {    return new HAPComplexPath(this.m_valueStructureId, this.m_rootName);     }
 	
-	@Override
-	protected String buildLiterate(){  
+	public String getKey() {
 		return HAPUtilityNamingConversion.cascadeElements(new String[] {this.m_rootName, this.m_valueStructureId}, HAPConstantShared.SEPERATOR_LEVEL1); 
 	}
+	
+	@Override
+	protected String buildLiterate(){  return this.getKey();	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

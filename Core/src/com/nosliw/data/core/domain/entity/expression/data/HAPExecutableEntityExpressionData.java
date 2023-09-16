@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityComplexContainer;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
-@HAPEntityWithAttribute(baseName="EXPRESSION")
+@HAPEntityWithAttribute
 public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEntityComplex{
 
 	@HAPAttribute

@@ -17,7 +17,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-@HAPEntityWithAttribute(baseName="EXPRESSIONGROUP")
+@HAPEntityWithAttribute
 public class HAPExecutableEntityExpressionDataGroup extends HAPExecutableEntityExpressionData{
 
 	@HAPAttribute

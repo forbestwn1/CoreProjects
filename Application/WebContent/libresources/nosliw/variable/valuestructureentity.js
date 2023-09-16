@@ -31,11 +31,11 @@ var node_createValueStructureElementInfo = function(name, data1, data2, adapterI
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTURE){
 		//input is value structure + value structure variable
 		loc_out.valueStructure = data1;
-		loc_out.valueStructureVariable = node_createContextVariableInfo(data2);
+		loc_out.valueStructureVariable = node_createValueStructureVariableInfo(data2);
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_EXTENDEDCONTEXT){
 		//input is extended context + context variable
-		var contextVarInfo = node_createContextVariableInfo(data2);
+		var contextVarInfo = node_createValueStructureVariableInfo(data2);
 		loc_out.variable = data1.findeVariable(contextVarInfo.name);
 		loc_out.path = contextVarInfo.path;
 	}
