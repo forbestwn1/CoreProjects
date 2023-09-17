@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 
@@ -23,6 +24,16 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	@HAPAttribute
 	static final public String SCRIPTEXPRESSIONINTAGATTRIBUTE = "scriptExpressionInTagAttribute";
 
+	@HAPAttribute
+	static final public String NORMALTAGEVENT = "normalTagEvent";  
+	
+	@HAPAttribute
+	static final public String CUSTOMTAGEVENT = "customTagEvent";  
+	
+	@HAPAttribute
+	static final public String SCRIPT = "script";  
+	
+
 	public HAPExecutableEntityComplexUIContent() {
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
@@ -40,5 +51,13 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttributes() {  return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE);    }
 	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContents() {  return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT);    }
 
+	public void addNormalTagEvent(HAPElementEvent event) {   this.getNormalTagEvents().add(event);    }
+	public void addCustomTagEvent(HAPElementEvent event) {   this.getCustomTagEvent().add(event);    }
 	
+	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT);     }
+	public List<HAPElementEvent> getCustomTagEvent(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT);     }
+
+	public void setScriptBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPT, jsBlock);        }
+	public HAPJsonTypeScript getScriptBlock() {   return (HAPJsonTypeScript)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPT);     }
+
 }

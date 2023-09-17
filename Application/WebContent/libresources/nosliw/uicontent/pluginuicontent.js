@@ -45,9 +45,15 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
-	
-	var loc_expressionContents = [];
 
+	//object store all the functions for js block
+	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_SCRIPT);
+
+	//all embeded script expression(in content, attribute, ...)
+	var loc_expressionContents = [];
+	
+	//all events on regular elements
+	var loc_elementEvents = [];
 	
 	//view container
 	var loc_viewContainer;
@@ -57,6 +63,36 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	//during compilation, ui id is unique within ui resoure, however, not guarenteed between different ui resource view within same web page
 	//name space make sure of it as different ui resource view have different name space
 	var loc_idNameSpace = nosliw.generateId();
+
+
+	/*
+	 * init element event object
+	 */
+	var loc_initElementEvent = function(eleEvent){
+		//get element for this event
+		var ele = loc_getLocalElementByUIId(loc_getUpdateUIId(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]));
+		var subEle = ele;
+		//if have sel attribute set, then find sub element according to sel
+		var selection = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_SELECTION];
+		if(!node_basicUtility.isStringEmpty(selection))		subEle = ele.find(selection);
+
+		//register event
+		var eventValue = eleEvent;
+		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
+		subEle.bind(eventName, function(event){
+			var info = {
+				event : event, 
+				source : this,
+			};
+			event.preventDefault();
+			loc_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
+		});
+		
+		return {
+			source : subEle,
+			event :  eventName,
+		};
+	};
 
 	/*
 	 * update ui id by adding space name ahead of them
@@ -74,6 +110,54 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	 */
 	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
 
+    var loc_callHandlerUp = function(handlerName){
+		var args = Array.prototype.slice.call(arguments, 1)
+		var handlerInfo = loc_findHandlerUp(handlerName);
+		loc_executeHandler(handlerInfo, args);
+	};
+		
+	var loc_findHandlerUp = function(handlerName){
+		var handlerInfo = loc_findHandlerLocally(handlerName);
+		if(handlerInfo==undefined){
+			handlerInfo = loc_parentResourveView.prv_findHandlerUp(handlerName);
+		}
+		return handlerInfo;
+	};
+
+	var loc_findHandlerLocally = function(handlerName){
+		var handlerInfo;
+/*		
+		//search task first
+		var taskSuite;
+		if(loc_tasks!=undefined){
+			if(loc_tasks[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
+				taskSuite = loc_tasks;
+			}
+		}
+		if(taskSuite!=undefined){
+			handlerInfo = {
+				handlerSuite : taskSuite,
+				handlerName : handlerName,
+				handlerType : node_CONSTANT.HANDLER_TYPE_TASK,
+				uiUnit : loc_out,
+			};
+		}
+*/
+		
+		if(handlerInfo==null){
+			//if not found in task, try to find in script function
+			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[handlerName];
+			if(fun!=undefined){
+				handlerInfo = {
+					handlerSuite : loc_scriptObject,
+					handlerName : handlerName,
+					handlerType : node_CONSTANT.HANDLER_TYPE_SCRIPT,
+					uiUnit : loc_out,
+				};
+			}
+		}
+		return handlerInfo;
+	};
 
 	var loc_out = {
 		setEnvironmentInterface : function(envInterface){
@@ -113,6 +197,12 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					node_getLifecycleInterface(embededContent).init(viewEle, scriptGroupCore);
 					loc_expressionContents.push(embededContent);
 				});
+				
+				//init regular tag event
+				_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_ELEMENTEVENTS], function(eleEvent, key, list){
+					loc_elementEvents.push(loc_initElementEvent(eleEvent));
+				});
+				
 
 			}));
 			

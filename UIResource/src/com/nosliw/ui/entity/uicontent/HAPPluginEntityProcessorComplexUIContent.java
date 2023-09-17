@@ -24,12 +24,24 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 		
 		uiContentExe.setHTML(uiContentDef.getHtml());
 
+		//script expression in content
 		for(HAPUIEmbededScriptExpressionInContent uiEmbed : uiContentDef.getScriptExpressionInContents()) {
 			uiContentExe.addScriptExpressionInContent(uiEmbed);
 		}
 		
+		//script expression in normal tag
 		for(HAPUIEmbededScriptExpressionInAttribute uiEmbed : uiContentDef.getScriptExpressionInNormalTagAttributes()) {
 			uiContentExe.addScriptExpressionInNormalTagAttribute(uiEmbed);
+		}
+		
+		//event in normal tag
+		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {
+			uiContentExe.addNormalTagEvent(event);
+		}
+
+		//event in custom tag
+		for(HAPElementEvent event : uiContentDef.getCustomTagEvent()) {
+			uiContentExe.addCustomTagEvent(event);;
 		}
 	}
 

@@ -50,8 +50,8 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		super.postNewInstance(entityId, parserContext);
 		HAPDefinitionEntityComplexUIContent uiContentEntity = (HAPDefinitionEntityComplexUIContent)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
 
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
+		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 		
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
@@ -279,7 +279,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
 		for(Element scriptEle : scirptEles){
 			HAPJsonTypeScript jsBlock = new HAPJsonTypeScript(scriptEle.html());
-			resource.setJSBlock(jsBlock);
+			resource.setScriptBlock(jsBlock);
 			break;
 		}
 		

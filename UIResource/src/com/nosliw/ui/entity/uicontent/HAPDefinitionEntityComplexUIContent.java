@@ -14,15 +14,9 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
 public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDomainComplex{
 
-	static final public String ATTR_SCRIPT = "script";  
-	
 	static final public String ATTR_CUSTOMERTAG = "tag";  
 	
 	static final public String ATTR_STYPE = "style";  
-	
-	static final public String ATTR_NORMALTAGEVENT = "normalTagEvent";  
-	
-	static final public String ATTR_CUSTOMTAGEVENT = "customTagEvent";  
 	
 	static final public String ATTR_ATTRIBUTE = "attribute";  
 	
@@ -30,6 +24,8 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 	}
 	
 	public String getUnitType() {    return null;   }
@@ -41,10 +37,14 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	}
 	public String getHtml() {     return (String)this.getAttributeValue(HAPExecutableEntityComplexUIContent.HTML);     }
 	
-	public void setJSBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(ATTR_SCRIPT, jsBlock);        }
+	public void setScriptBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPT, jsBlock);        }
+	public HAPJsonTypeScript getScriptBlock() {   return (HAPJsonTypeScript)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPT);     }
 
-	public void addNormalTagEvent(HAPElementEvent event) {   ((List<HAPElementEvent>)this.getAttributeValue(ATTR_NORMALTAGEVENT)).add(event);    }
-	public void addCustomTagEvent(HAPElementEvent event) {   ((List<HAPElementEvent>)this.getAttributeValue(ATTR_CUSTOMTAGEVENT)).add(event);    }
+	public void addNormalTagEvent(HAPElementEvent event) {   this.getNormalTagEvents().add(event);    }
+	public void addCustomTagEvent(HAPElementEvent event) {   this.getCustomTagEvent().add(event);    }
+	
+	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT);     }
+	public List<HAPElementEvent> getCustomTagEvent(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT);     }
 	
 	public void addScriptExpressionInCustomTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpression) {  getScriptExpressionInCustomTagAttributes().add(scriptExpression);    }
 	public void addScriptExpressionInNormalTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpression) {  getScriptExpressionInNormalTagAttributes().add(scriptExpression);    }

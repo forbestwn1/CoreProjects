@@ -13,6 +13,9 @@
   	<br>
 	Attribute:<span style="color:<%=?(attr1)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
 	<br>
+		<br>
+		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
+		<br>
   
 </body>
 
