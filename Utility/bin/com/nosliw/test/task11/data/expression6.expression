@@ -1,0 +1,51 @@
+
+{
+	"name": "expression6",
+	"description" : "expression need convert from url to string",
+	"tasks": [
+		{
+			"type" : "expression",
+			"name" : "main",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "?(baseVarUrl)?.subString(from:?(fromVar)?,to:&(to)&)",
+				}
+			]
+		}
+	],
+	"constants": {
+		"base": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+		"from": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"to": {
+			"dataTypeId": "test.integer",
+			"value": "7"
+		}
+	},
+	"variables" : {
+		"baseVarUrl": "test.url",
+		"fromVar": "test.integer"
+	},
+	"variablesData" : {
+		"fromVar": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"baseVarUrl": {
+			"dataTypeId": "test.url",
+			"value": "This is my world!"
+		}
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+		"value": "p:Thfff",
+		"wapperType": "JSON"
+	}
+}
+

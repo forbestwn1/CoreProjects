@@ -1,0 +1,37 @@
+{
+	"name": "expression1",
+	"description" : "constant",
+	"tasks": [
+		{
+			"type" : "expression",
+			"name" : "main",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(&(base)&,from:&(from)&,to:&(to)&)",
+				}
+			]
+		}
+	],
+	"constants": {
+		"base": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+		"from": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"to": {
+			"dataTypeId": "test.integer",
+			"value": "7"
+		}
+	},
+	"variables" : {
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "s isfff",
+		"wapperType": "JSON"
+	}
+}

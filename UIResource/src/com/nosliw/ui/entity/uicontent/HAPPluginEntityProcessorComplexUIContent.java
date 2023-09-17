@@ -28,6 +28,9 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 			uiContentExe.addScriptExpressionInContent(uiEmbed);
 		}
 		
+		for(HAPUIEmbededScriptExpressionInAttribute uiEmbed : uiContentDef.getScriptExpressionInNormalTagAttributes()) {
+			uiContentExe.addScriptExpressionInNormalTagAttribute(uiEmbed);
+		}
 	}
 
 }

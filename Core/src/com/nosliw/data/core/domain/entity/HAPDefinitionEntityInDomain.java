@@ -115,7 +115,15 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public void setAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false));}
 	public void setAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true));}
 
-	public void setAttribute(HAPAttributeEntityDefinition attribute) {    this.m_attributes.add(attribute);    }
+	public void setAttribute(HAPAttributeEntityDefinition attribute) {    
+		for(int i=0; i<this.m_attributes.size(); i++) {
+			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
+				this.m_attributes.remove(i);
+				break;
+			}
+		}
+		this.m_attributes.add(attribute);    
+	}
 
 	public HAPIdEntityInDomain getChild(String childName) {	
 		return (HAPIdEntityInDomain)this.getAttribute(childName).getValue().getValue();

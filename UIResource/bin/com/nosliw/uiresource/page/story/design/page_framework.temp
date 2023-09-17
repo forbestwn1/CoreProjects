@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	||htmlContent||
+
+	<br>
+	<br>
+
+<!--<nosliw-contextvalue/>--> 
+	
+</body>
+
+	<scripts>
+	{
+		||script||
+	
+	}
+	</scripts>
+	
+	<valuestructure>
+	{
+		group : {
+			public : 
+					||valuestructure||
+			
+		}
+	}
+	</valuestructure>
+	
+	<services>
+		||serviceUse||
+	</services>
+	
+	<events>
+	[
+	]
+	</events>
+	
+	<commands>
+	[
+	]
+	</commands>
+	
+	<attachment>
+	{
+		"service" : 
+			||serviceProvider||
+		,
+		"expression" : [
+		],
+		
+		"data": [
+					
+		]
+	}
+	</attachment>
+
+</html>

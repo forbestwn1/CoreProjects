@@ -55,7 +55,7 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 	private String createId() {
 		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
 		idIndex++;
-		this.setAttributeValueObject(ATTR_IDINDEX, idIndex);
+		this.setAttributeValueObject(ATTR_IDINDEX, Integer.valueOf(idIndex));
 		return "generatedId_"+ idIndex;
 	}
 

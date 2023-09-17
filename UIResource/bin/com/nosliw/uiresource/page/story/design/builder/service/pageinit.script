@@ -1,0 +1,23 @@
+		command_init : function(data, request, env){
+
+			event.preventDefault();
+
+			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+			var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+			var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+			
+			var out = node_createServiceRequestInfoSequence(undefined);
+			out.addRequest(env.getUIValidationRequest(env.getTagsByAttribute(node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP, node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION), {
+				success : function(request, errorMessages){
+					if(errorMessages==null){
+						return env.getServiceRequest("service", {
+							success : function(request){
+							}
+						});
+					}
+				}
+			}));
+			
+			node_requestServiceProcessor.processRequest(out, false);
+		},

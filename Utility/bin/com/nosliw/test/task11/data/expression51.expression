@@ -1,0 +1,47 @@
+{
+	"name": "expression51",
+	"description" : "task with steps",
+	"tasks": [
+		{
+			"type" : "expression",
+			"name" : "main",
+			"steps" : [
+				{
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(?(baseVar)?,from:?(fromVar)?,to:?(toVar)?)",
+					"outputVariable" : "expression1"
+				},
+				{
+					"type" : "expression",
+					"expression": "!(test.string)!.subString(?(expression1)?,from:?(fromVar)?,to:?(toVar)?)",
+				}
+			],
+		}
+	],
+	"constants": {
+	},
+	"variables": {
+		"baseVar": "test.string",
+		"fromVar": "test.integer",
+		"toVar": "test.integer"
+	},
+	"variablesData": {
+		"fromVar": {
+			"dataTypeId": "test.integer",
+			"value": "3"
+		},
+		"baseVar": {
+			"dataTypeId": "test.string",
+			"value": "This is my world!"
+		},
+		"toVar": {
+			"dataTypeId": "test.integer",
+			"value": "7"
+		}
+	},
+	"result" : {
+		"dataTypeId": "test.string;1.0.0",
+ 		"value": "sffffff",
+		"wapperType": "JSON"
+	}
+}

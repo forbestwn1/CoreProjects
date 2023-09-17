@@ -10,6 +10,9 @@
 		<br>
 		Content:<%=?(baseVarNormal)?.value + '   6666 ' %>
 		<br>
+  	<br>
+	Attribute:<span style="color:<%=?(attr1)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
+	<br>
   
 </body>
 
@@ -42,6 +45,16 @@
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "default value of baseVarNormal"
+						}
+					},
+					
+					"attr1": {
+						"definition":{
+							"criteria": "test.string;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "1234"
 						}
 					}
 				}
