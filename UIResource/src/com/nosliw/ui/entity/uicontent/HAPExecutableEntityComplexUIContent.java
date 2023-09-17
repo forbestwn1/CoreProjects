@@ -1,5 +1,6 @@
 package com.nosliw.ui.entity.uicontent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -22,6 +23,11 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	@HAPAttribute
 	static final public String SCRIPTEXPRESSIONINTAGATTRIBUTE = "scriptExpressionInTagAttribute";
 
+	public HAPExecutableEntityComplexUIContent() {
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+	}
 	
 	public void setHTML(String content) {    this.setAttributeValueObject(HTML, content);        }
 	public String getHTML() {     return (String)this.getAttributeValue(HTML);     }

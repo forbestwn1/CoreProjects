@@ -18,6 +18,8 @@ var packageObj = library;
 	var node_createServiceRequestInfoSet;
 	var node_createViewContainer;
 	var node_uiContentUtility;
+	var node_createEmbededScriptExpressionInContent;
+	var node_getLifecycleInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -87,20 +89,18 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP));
 
-			
-						
-			//init expression content
-			_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContent, i){
-				var embededContent = node_createEmbededScriptExpressionInContent(embededContent);
-				var viewEle = loc_uiResourceView.prv_getLocalElementByUIId(embededContent.getUIId());
-				
-				var scriptGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP).getCoreEntity();
-				
-				node_getLifecycleInterface(embededContent).init(scriptGroupCore, viewEle, requestInfo);
-				loc_expressionContents.push(embededContent);
-			});
-
-			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				//init expression content
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContentDef, i){
+					var embededContent = node_createEmbededScriptExpressionInContent(embededContentDef);
+					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
+					
+					var scriptGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP).getChildValue().getCoreEntity();
+					
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptGroupCore);
+					loc_expressionContents.push(embededContent);
+				});
+			}));
 			
 			return out;
 		},
@@ -151,6 +151,8 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", 
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
+	nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 
 
 //Register Node by Name

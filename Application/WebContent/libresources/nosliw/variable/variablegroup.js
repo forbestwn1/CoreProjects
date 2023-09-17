@@ -3,12 +3,14 @@ var packageObj = library.getChildPackage();
 
 (function(packageObj){
 //get used node
-var node_CONSTANT;
-var node_makeObjectWithType;
-var node_getObjectType;
-var node_makeObjectWithLifecycle;
-var node_getLifecycleInterface;
-var node_createRequestEventGroupHandler;
+	var node_CONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
+	var node_COMMONCONSTANT;
+	var node_makeObjectWithType;
+	var node_getObjectType;
+	var node_makeObjectWithLifecycle;
+	var node_getLifecycleInterface;
+	var node_createRequestEventGroupHandler;
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * this is a factory to create variables group
@@ -84,6 +86,8 @@ var node_createVariablesGroup = function(valueContext, variableIdsArray, handler
 
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});

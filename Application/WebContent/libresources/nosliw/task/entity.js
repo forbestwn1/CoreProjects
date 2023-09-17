@@ -3,6 +3,18 @@ var packageObj = library.getChildPackage();
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
+	var node_COMMONATRIBUTECONSTANT;
+	var node_COMMONCONSTANT;
+	var node_makeObjectWithLifecycle;
+	var node_createEventObject;
+	var node_getLifecycleInterface;
+	var node_getApplicationInterface;
+	var node_getComplexEntityObjectInterface;
+	var node_createVariablesGroup;
+	var node_createServiceRequestInfoSequence;
+	var node_ServiceInfo;
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //process output
@@ -61,10 +73,10 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 	
 		loc_dataEventObject = node_createEventObject();
 	
-		loc_taskGroupInterface = node_getApplicationInterface(loc_taskGroupEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+		loc_taskGroupInterface = node_getApplicationInterface(loc_taskGroupEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
 
 		var valueContext = node_getComplexEntityObjectInterface(loc_taskGroupEntityCore).getValueContext()
-		loc_contextVarGroup = node_createContextVariablesGroup(valueContext, loc_taskGroupInterface.getItemVariableInfos(loc_taskItemId), loc_contextVarsGroupHandler, this);
+		loc_contextVarGroup = node_createVariablesGroup(valueContext, loc_taskGroupInterface.getItemVariableInfos(loc_taskItemId), loc_contextVarsGroupHandler, this);
 	};
 		
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -107,6 +119,18 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.createVariablesGroup", function(){  node_createVariablesGroup = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ExecutableResult", node_ExecutableResult); 

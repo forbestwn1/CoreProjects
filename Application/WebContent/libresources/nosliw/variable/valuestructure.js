@@ -27,6 +27,7 @@ var node_uiDataOperationServiceUtility;
 var node_createUIDataOperationRequest;
 var node_uiDataOperationServiceUtility;
 var node_UIDataOperation;
+var node_createRequestEventGroupHandler;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -391,6 +392,7 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 
 
 //Register Node by Name

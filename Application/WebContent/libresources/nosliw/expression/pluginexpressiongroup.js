@@ -50,7 +50,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		var expressions = loc_getAllExpressionItems();
 		var out;		
 		_.each(expressions, function(expression, i){
-			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==expressionId){
+			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==itemId){
 				out = expression;
 			}
 		});
@@ -73,7 +73,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		},
 		
 		getItemVariableInfos : function(itemId){
-			var variableInfoContainer = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS];
+			var variableInfoContainer = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS);
 			var expressionItem = loc_getItemById(itemId);
 			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEKEYS];
 			

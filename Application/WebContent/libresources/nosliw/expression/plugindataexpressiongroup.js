@@ -48,7 +48,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		var expressions = loc_getAllExpressionItems();
 		var out;		
 		_.each(expressions, function(expression, i){
-			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==dataExpressionId){
+			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==itemId){
 				out = expression;
 			}
 		});
