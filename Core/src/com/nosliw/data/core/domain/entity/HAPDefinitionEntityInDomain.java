@@ -15,6 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
 public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
@@ -22,6 +23,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 	
+	final private static String ATTR_IDINDEX = HAPSystemUtility.buildSystemName("idIndex"); 
+
 	//all attributes, two types, simple and container
 	private List<HAPAttributeEntityDefinition> m_attributes;
 	
@@ -42,6 +45,13 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public String getEntityType() {  return this.m_entityType;	}
 
 	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
+
+	public String generateId() {
+		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
+		idIndex++;
+		this.setAttributeValueObject(ATTR_IDINDEX, idIndex);
+		return "generatedId_"+ idIndex;
+	}
 	
 	public List<HAPAttributeEntityDefinition> getAttributes(){    return this.m_attributes;    }
 	

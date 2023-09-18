@@ -93,12 +93,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	 * process all the descendant tags under element
 	 */
 	private void parseDescendantTags(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		List<Element> removes = new ArrayList<Element>();
 		Elements eles = ele.children();
 		for(Element e : eles){
 			if(HAPUtilityBasic.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
 				//if tag have no ui id, then create ui id for it
-				String id = this.m_idGenerator.generateId();
+				String id = uiContent.generateId();
 				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);
 			}
 			
@@ -173,7 +174,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 					literateExpression.addSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segment);
 					String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
 
-					HAPUIEmbededScriptExpressionInContent expressionContent = new HAPUIEmbededScriptExpressionInContent(this.generateId(), scriptExpressionId);
+					HAPUIEmbededScriptExpressionInContent expressionContent = new HAPUIEmbededScriptExpressionInContent(uiContent.generateId(), scriptExpressionId);
 					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
 					uiContent.addScriptExpressionInContent(expressionContent);
 				}
@@ -303,6 +304,4 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private HAPDefinitionEntityComplexUIContent getUIContentEntityById(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		return (HAPDefinitionEntityComplexUIContent)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
 	}
-	
-	private String generateId() {     return this.m_idGenerator.generateId();      }
 }

@@ -22,7 +22,7 @@
 	<script>
 	{
 		newElementInLoop : function(data, info, env){
-
+			console.log(data);
 		},
 		
 		textInputValueChanged : function(info, env){

@@ -21,6 +21,8 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInContent;
 	var node_createEmbededScriptExpressionInTagAttribute;
 	var node_getLifecycleInterface;
+	var node_basicUtility;
+	var node_uiContentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -70,7 +72,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	 */
 	var loc_initElementEvent = function(eleEvent){
 		//get element for this event
-		var ele = loc_getLocalElementByUIId(loc_getUpdateUIId(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]));
+		var ele = loc_getLocalElementByUIId(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]);
 		var subEle = ele;
 		//if have sel attribute set, then find sub element according to sel
 		var selection = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_SELECTION];
@@ -111,7 +113,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
 
     var loc_callHandlerUp = function(handlerName){
-		var args = Array.prototype.slice.call(arguments, 1)
+		var args = Array.prototype.slice.call(arguments, 1);
 		var handlerInfo = loc_findHandlerUp(handlerName);
 		loc_executeHandler(handlerInfo, args);
 	};
@@ -159,6 +161,109 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		return handlerInfo;
 	};
 
+	var loc_executeHandler = function(handlerInfo, args){
+		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
+			loc_callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
+		}
+		else if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
+//			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO);
+		}
+	};
+	
+	var loc_callScriptFunction = function(funName, args){
+		var that = this;
+		var fun = loc_scriptObject[funName];
+		var env = {
+//				context : that.getContext(),
+				uiUnit : that,
+				trigueEvent : function(eventName, eventData, requestInfo){
+					that.prv_trigueEvent(eventName, eventData, requestInfo);
+				},
+				trigueNosliwEvent : function(eventName, eventData, requestInfo){
+					that.prv_trigueEvent(node_basicUtility.buildNosliwFullName(eventName), eventData, requestInfo);
+				},
+				getServiceRequest : function(serviceName, handlers, request){
+					return that.prv_getExecuteServiceRequest(serviceName, handlers, request);
+				},
+				getTagsByAttribute : function(attributeName, attributeValue){
+					return that.getTags({
+						attribute : [
+							{
+								name : attributeName,
+								value : attributeValue,
+							}
+						]
+					}, true);
+				},
+				getUIValidationRequest1 : function(uiTags, handlers, request){
+					var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
+
+					var clearErrorRequest = node_createBatchUIDataOperationRequest(that.getContext());
+					clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+					out.addRequest(clearErrorRequest);
+
+					var allSetRequest = node_createServiceRequestInfoSet(undefined, {
+						success : function(requestInfo, validationsResult){
+							var results = validationsResult.getResults();
+							var allMessages = {};
+							var opsRequest = node_createBatchUIDataOperationRequest(that.getContext(), {
+								success : function(request){
+									return allMessages;
+								}
+							}, requestInfo);
+							_.each(results, function(message, uiTagId){
+								if(message!=undefined){
+									allMessages[uiTagId] = message;
+									opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
+								}
+							});
+							if(!opsRequest.isEmpty())	return opsRequest;
+							else return node_requestUtility.getEmptyRequest();
+
+						},
+					});
+					_.each(uiTags, function(uiTag, i){
+						var uiTagDataValidationRequest = node_createServiceRequestInfoSequence();
+						var varName = uiTag.getAttribute("data");
+						uiTagDataValidationRequest.addRequest(node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
+							success : function(request, uiData){
+								var dataEleDef = node_contextUtility.getContextElementDefinitionFromFlatContext(loc_uiResource[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], varName);
+								var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
+														[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_DEFINITION]
+														[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONELEMENT_CRITERIA]
+														[node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_RULE];
+								var data;
+								if(uiData!=undefined)  data = uiData.value;
+								return node_dataRuleUtility.getDataValidationByRulesRequest(data, rules);
+							}
+						}));
+
+						allSetRequest.addRequest(uiTag.getId(), uiTagDataValidationRequest);
+					});
+					out.addRequest(allSetRequest);
+					return out;
+				},
+				
+				
+				getUIValidationRequest : function(uiTags, handlers, request){
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+
+					//clear previous error data
+					out.addRequest(node_utilityUIError.getClearUIValidationErrorRequest(this));
+
+					//
+					out.addRequest(node_utilityUIError.getUITagsValidationRequest(uiTags));
+					
+					return out;
+				},
+
+		};
+		if(args==undefined)  args = [];
+		args.push(env);
+		return fun.apply(this, args);
+	};
+
+
 	var loc_out = {
 		setEnvironmentInterface : function(envInterface){
 			loc_envInterface = envInterface;
@@ -199,7 +304,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				});
 				
 				//init regular tag event
-				_.each(loc_uiBody[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_ELEMENTEVENTS], function(eleEvent, key, list){
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_NORMALTAGEVENT), function(eleEvent, key, list){
 					loc_elementEvents.push(loc_initElementEvent(eleEvent));
 				});
 				
@@ -258,6 +363,8 @@ nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUt
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 

@@ -10,8 +10,6 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 //normal expression group
 public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityExpressionData implements HAPWithEntityElement<HAPDefinitionExpressionData>{
 
-	final private static String ATTR_IDINDEX = "idIndex"; 
-	
 	public HAPDefinitionEntityExpressionDataGroup() {
 		this.setAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpressionData>());
 	}
@@ -19,7 +17,7 @@ public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityE
 	public String addExpression(HAPDefinitionExpressionData expression) {
 		if(expression!=null) {
 			if(HAPUtilityBasic.isStringEmpty(expression.getId())){
-				expression.setId(this.createId());
+				expression.setId(this.generateId());
 			}
 			this.getAllExpressionItems().add(expression);
 			return expression.getId();
@@ -40,13 +38,6 @@ public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityE
 		return null;
 	}
 
-	private String createId() {
-		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
-		idIndex++;
-		this.setAttributeValueObject(ATTR_IDINDEX, idIndex);
-		return "generatedId_"+ idIndex;
-	}
-	
 	@Override
 	public List<HAPDefinitionExpressionData> getAllExpressionItems(){	return (List<HAPDefinitionExpressionData>)this.getAttributeValue(ELEMENT);	}
 

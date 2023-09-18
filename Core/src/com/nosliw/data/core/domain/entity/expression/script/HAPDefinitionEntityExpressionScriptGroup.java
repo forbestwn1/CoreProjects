@@ -9,8 +9,6 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 
 public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityExpressionScript implements HAPWithEntityElement<HAPDefinitionExpression>{
 	
-	final private static String ATTR_IDINDEX = "idIndex"; 
-	
 	public HAPDefinitionEntityExpressionScriptGroup() {
 		this.setAttributeValueObject(ELEMENT, new ArrayList<HAPDefinitionExpression>());
 	}
@@ -21,7 +19,7 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 	public String addExpression(HAPDefinitionExpression expression) {
 		if(expression!=null) {
 			if(HAPUtilityBasic.isStringEmpty(expression.getId())){
-				expression.setId(this.createId());
+				expression.setId(this.generateId());
 			}
 			this.getEntityElements().add(expression);
 			return expression.getId();
@@ -51,12 +49,4 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}
-
-	private String createId() {
-		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
-		idIndex++;
-		this.setAttributeValueObject(ATTR_IDINDEX, Integer.valueOf(idIndex));
-		return "generatedId_"+ idIndex;
-	}
-
 }
