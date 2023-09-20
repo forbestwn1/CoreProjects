@@ -496,6 +496,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uipage";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uitag";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAGDEFINITION = "uitagdefinition";
+		public static final String RUNTIME_RESOURCE_TYPE_UITAGSCRIPT = "uitagscript";
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULE = "uiModule";
 		public static final String RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION = "uiModuleDecoration";

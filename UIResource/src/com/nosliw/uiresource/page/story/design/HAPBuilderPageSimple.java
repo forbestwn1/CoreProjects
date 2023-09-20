@@ -40,11 +40,11 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITag;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilderShow{
 

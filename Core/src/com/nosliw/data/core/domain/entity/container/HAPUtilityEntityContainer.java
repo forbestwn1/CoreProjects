@@ -14,6 +14,7 @@ public class HAPUtilityEntityContainer {
 		HAPIdEntityInDomain containerEntityId = HAPUtilityEntityDefinition.newTransparentAttribute(parentEntityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER, attrName, parserContext, runtimeEnv);
 		HAPDefinitionEntityComplexContainer containerEntity = (HAPDefinitionEntityComplexContainer)parserContext.getGlobalDomain().getEntityInfoDefinition(containerEntityId).getEntity();
 		containerEntity.setElementValueTypeInfo(new HAPInfoValueType(childEntityType, true));
+		if(childRelationConfigure!=null)   containerEntity.setElementRelationConfigure(childRelationConfigure);
 	}
 
 	public static String addElementAttribute(HAPIdEntityInDomain containerEntityId, HAPIdEntityInDomain elementId, HAPContextParser parserContext) {
@@ -23,4 +24,14 @@ public class HAPUtilityEntityContainer {
 		return attrName;
 	}
 	
+	public static String addElementAttribute(HAPIdEntityInDomain containerEntityId, HAPIdEntityInDomain elementId, HAPConfigureParentRelationComplex childRelationConfigure, HAPContextParser parserContext) {
+		HAPDefinitionEntityComplexContainer containerEntity = (HAPDefinitionEntityComplexContainer)parserContext.getGlobalDomain().getEntityInfoDefinition(containerEntityId).getEntity();
+		String attrName = containerEntity.addElementAttribute(elementId, true);
+		
+		HAPConfigureParentRelationComplex relationConfigure = childRelationConfigure;
+		if(relationConfigure==null)   relationConfigure = containerEntity.getElementRelationConfigure();
+		
+		HAPUtilityEntityDefinition.buildParentRelation(elementId, containerEntityId, relationConfigure, parserContext);
+		return attrName;
+	}
 }

@@ -14,8 +14,8 @@ import com.nosliw.data.core.story.change.HAPChangeItem;
 import com.nosliw.data.core.story.change.HAPHandlerChange;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.change.HAPUtilityChange;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 

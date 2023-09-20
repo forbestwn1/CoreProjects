@@ -18,7 +18,7 @@ public class HAPDefinitionUIUnitPage extends HAPDefinitionUIUnit{
 
 	@Override
 	public void addAttribute(String name, String value){
-		super.addAttribute(name, value);
+		super.addTagAttribute(name, value);
 		if(HAPConstantShared.UIRESOURCE_ATTRIBUTE_CONTEXT.equals(name)){
 			//process "context" attribute, value are multiple data input seperated by ";"
 			HAPSegmentParser contextSegs = new HAPSegmentParser(value, HAPConstantShared.SEPERATOR_ELEMENT);

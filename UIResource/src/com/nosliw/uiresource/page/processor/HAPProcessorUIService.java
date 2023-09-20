@@ -7,10 +7,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
 import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPProcessorUIService {

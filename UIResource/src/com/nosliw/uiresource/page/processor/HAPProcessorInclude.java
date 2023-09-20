@@ -53,7 +53,7 @@ public class HAPProcessorInclude {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
 				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
-				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_CONTEXT, mappingStr);
+				if(mappingStr!=null)   includeTagUnit.addTagAttribute(HAPConstantShared.UITAG_PARM_CONTEXT, mappingStr);
 			}
 
 			{
@@ -64,7 +64,7 @@ public class HAPProcessorInclude {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
 				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
-				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_EVENT, mappingStr);
+				if(mappingStr!=null)   includeTagUnit.addTagAttribute(HAPConstantShared.UITAG_PARM_EVENT, mappingStr);
 			}
 		
 			{
@@ -75,7 +75,7 @@ public class HAPProcessorInclude {
 					mapping.put((String)key, mappingObj.getString((String)key));
 				}
 				String mappingStr = HAPUtilityNamingConversion.cascadePropertyValuePairs(mapping);
-				if(mappingStr!=null)   includeTagUnit.addAttribute(HAPConstantShared.UITAG_PARM_COMMAND, mappingStr);
+				if(mappingStr!=null)   includeTagUnit.addTagAttribute(HAPConstantShared.UITAG_PARM_COMMAND, mappingStr);
 			}
 		}
 	}

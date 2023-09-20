@@ -17,7 +17,16 @@ public class HAPUtilityUITag {
 		return new File(fileName);
 	}
 	
+	public static File getUITagScriptFile(String tagId) {
+		String fileName = getUITagDefinitionFolder(tagId) + "script.js";
+		return new File(fileName);
+	}
+	
 	public static HAPInfoResourceLocation getUITagDefinitionLocationInfo(String uiTagId) {
 		return new HAPInfoResourceLocation(getUITagDefinitionFile(uiTagId), new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
+	}
+
+	public static HAPInfoResourceLocation getUITagScriptLocationInfo(String uiTagId) {
+		return new HAPInfoResourceLocation(getUITagScriptFile(uiTagId), new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
 	}
 }

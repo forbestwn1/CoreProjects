@@ -7,15 +7,15 @@ import java.util.Map;
 import org.apache.commons.lang.StringEscapeUtils;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 
 public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDomainComplex{
 
-	static final public String ATTR_CUSTOMERTAG = "tag";  
-	
 	static final public String ATTR_STYPE = "style";  
 	
 	static final public String ATTR_ATTRIBUTE = "attribute";  
@@ -30,7 +30,9 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	
 	public String getUnitType() {    return null;   }
 
-	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure) {}
+	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure, HAPContextParser parserContext) {
+		HAPUtilityEntityContainer.addElementAttribute(this.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.CUSTOMERTAG), customTagId, relationConfigure, parserContext);
+	}
 	
 	public void setHtml(String html) {
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.HTML, StringEscapeUtils.escapeHtml(html).replaceAll("(\\r|\\n)", ""));        

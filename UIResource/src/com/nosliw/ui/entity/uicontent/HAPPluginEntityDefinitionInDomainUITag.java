@@ -15,7 +15,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.ui.entity.uitag.HAPDefinitionEntityUITagDefinition;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
+import com.nosliw.ui.tag.HAPManagerUITag;
 
 public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefinitionInDomainWithUIContent{
 
@@ -28,7 +28,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		super.postNewInstance(entityId, parserContext);
 		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
 
-		uiTagEntity.setAttributeValueObject(HAPDefinitionEntityComplexUITag.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
+		uiTagEntity.setAttributeValueObject(HAPExecutableEntityComplexUITag.ATTRIBUTE, new LinkedHashMap<String, String>());
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		//parse 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
-			uiTagEntity.addAttribute(eleAttr.getKey(), eleAttr.getValue());
+			uiTagEntity.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
 		}
 
 		//add placeholder element to the customer tag's postion and then remove the original tag from html structure 

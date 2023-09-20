@@ -1,4 +1,4 @@
-package com.nosliw.uiresource.page.tag;
+package com.nosliw.ui.tag;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,6 +15,14 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.uiresource.page.tag.HAPParserUITagDefinition;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
+import com.nosliw.uiresource.page.tag.HAPUITagDefinitionData;
+import com.nosliw.uiresource.page.tag.HAPUITagId;
+import com.nosliw.uiresource.page.tag.HAPUITagInfo;
+import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
+import com.nosliw.uiresource.page.tag.HAPUITagQueryResultSet;
+import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 
 public class HAPManagerUITag {
 
@@ -26,6 +34,20 @@ public class HAPManagerUITag {
 	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
+	
+	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
+//		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
+//		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
+//		out.setSourceFile(file);
+//		
+		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
+		File file = new File(fileName);
+		
+		HAPUITagDefinition out = HAPParserUITagDefinition.parseFromFile(file);
+		out.setSourceFile(file);
+		
+		return out;
+	}	
 	
 	private void readAllTags() {
 		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
@@ -94,20 +116,6 @@ public class HAPManagerUITag {
 		File file = new File(fileName);
 		return HAPUtilityFile.readFile(file);
 	}
-	
-	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-//		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
-//		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
-//		out.setSourceFile(file);
-//		
-		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
-		File file = new File(fileName);
-		
-		HAPUITagDefinition out = HAPParserUITagDefinition.parseFromFile(file);
-		out.setSourceFile(file);
-		
-		return out;
-	}	
 	
 	class HAPUITagCandidate{
 		private HAPUITagDefinition m_uiTagDef;

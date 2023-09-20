@@ -11,6 +11,7 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntityThin;
+import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBased;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
@@ -42,10 +43,12 @@ import com.nosliw.ui.entity.uicontent.HAPPluginEntityProcessorComplexUIContent;
 import com.nosliw.ui.entity.uicontent.HAPPluginEntityProcessorComplexUIPage;
 import com.nosliw.ui.entity.uicontent.HAPPluginEntityProcessorComplexUITag;
 import com.nosliw.ui.entity.uitag.HAPPluginEntityDefinitionInDomainUITagDefinition;
+import com.nosliw.ui.entity.uitag.HAPPluginEntityDefinitionInDomainUITagScript;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.ui.tag.HAPPluginResourceDefinitionUITagDefinition;
+import com.nosliw.ui.tag.HAPPluginResourceDefinitionUITagScript;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -127,6 +130,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainUIPage(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainUITag(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainUITagDefinition(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainUITagScript(this));
 		
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexUIContent());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexUIPage());
@@ -134,10 +138,12 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntityThin(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionUITagDefinition(this));
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionUITagScript(this));
 
 		
 		
 		this.getResourceManager().registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, new HAPResourceManagerImpComplex(this.getDomainEntityExecutableManager(), this.getResourceManager()));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, false, this));
 
 		
 		//resource definition plugin
@@ -146,7 +152,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 //		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginApp(this.m_uiResourceManager.getMinitAppParser()));
 //		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginAppEntry(this.getResourceDefinitionManager()));
 
-		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionUITagDefinition(this));
 		
 		//story builder
 //		this.getStoryManager().registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(this.m_uiResourceManager.getUITagManager(), this));

@@ -586,6 +586,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uipage"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uitag"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAGDEFINITION" value="uitagdefinition"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UITAGSCRIPT" value="uitagscript"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UIRESOURCE" value="uiResource"/>

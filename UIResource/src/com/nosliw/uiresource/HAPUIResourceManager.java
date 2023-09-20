@@ -12,6 +12,7 @@ import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPParserElement;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 import com.nosliw.uiresource.application.HAPExecutableAppEntry;
@@ -29,7 +30,6 @@ import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUIResourceManager {
 

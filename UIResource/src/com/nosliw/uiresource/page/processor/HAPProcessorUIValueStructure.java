@@ -20,13 +20,13 @@ import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 

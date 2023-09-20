@@ -4,6 +4,7 @@ import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPProcessorComponent;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnit;
@@ -12,7 +13,6 @@ import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUITag;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnit1;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPProcessorUIPage {
 

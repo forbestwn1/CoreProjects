@@ -18,10 +18,10 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPUINode {
 

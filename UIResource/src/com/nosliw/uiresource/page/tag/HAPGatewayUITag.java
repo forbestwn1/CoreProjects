@@ -8,6 +8,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.ui.tag.HAPManagerUITag;
 
 @HAPEntityWithAttribute
 public class HAPGatewayUITag extends HAPGatewayImp{

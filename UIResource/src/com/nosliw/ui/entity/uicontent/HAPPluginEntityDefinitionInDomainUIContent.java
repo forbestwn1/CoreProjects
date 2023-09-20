@@ -21,6 +21,7 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpressionLiterate;
@@ -58,6 +59,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 
 		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
+	}
+	
+	@Override
+	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	
+		super.setupAttributeForComplexEntity(entityId, parserContext);
+		//create customer tag container attribute
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, null, parserContext, getRuntimeEnvironment());
 	}
 	
 	@Override
@@ -133,7 +141,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, parserContext);
 				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
 				uiTag.setUIId(uiId);
-				uiContent.addCustomTag(tagEntityId, uiTag.getChildRelationConfigure());
+				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
 			}
 			return false;
 		}

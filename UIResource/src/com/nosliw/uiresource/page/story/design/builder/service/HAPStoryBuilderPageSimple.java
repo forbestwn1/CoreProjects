@@ -53,6 +53,7 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutput;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
@@ -61,7 +62,6 @@ import com.nosliw.uiresource.page.story.model.HAPUIDataInfo;
 import com.nosliw.uiresource.page.story.model.HAPUINode;
 import com.nosliw.uiresource.page.story.model.HAPUITree;
 import com.nosliw.uiresource.page.story.model.HAPUtility;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagInfo;
 import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 

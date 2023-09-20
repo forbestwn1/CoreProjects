@@ -6,22 +6,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 
-public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexWithUIContent{
+public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexWithUIContent implements HAPWithUIId{
 
-	@HAPAttribute
-	public static final String ATTR_UIID = "uiUid";
-	
-	@HAPAttribute
-	public static final String ATTR_TAGNAME = "tagName";
-	
-	@HAPAttribute
-	public static final String ATTR_PARENTRELATIONCONFIGURE = "parentRelationConfigure";
-	
-	@HAPAttribute
-	public static final String ATTR_CHILDRELATIONCONFIGURE = "childRelationConfigure";
-
-	@HAPAttribute
-	public static final String ATTR_ATTRIBUTE = "attribute";
 
 	
 	@HAPAttribute
@@ -33,17 +19,21 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	@HAPAttribute
 	public static final String EVENT = "event";
 	
-	public void setTagName(String tagName) {   this.setAttributeValueObject(ATTR_TAGNAME, tagName);      }
+	public void setTagName(String tagName) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.TAGNAME, tagName);      }
+	public String getTagName() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.TAGNAME);     }
 
-	public void setUIId(String uiId) {    this.setAttributeValueObject(ATTR_UIID, uiId);    }
+	@Override
+	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }
+	public void setUIId(String uiId) {    this.setAttributeValueObject(HAPWithUIId.UIID, uiId);    }
 
-	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {   this.setAttributeValueObject(ATTR_PARENTRELATIONCONFIGURE, parentRelationConfigure);    }
-	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_PARENTRELATIONCONFIGURE);   }
+	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.PARENTRELATIONCONFIGURE, parentRelationConfigure);    }
+	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(HAPExecutableEntityComplexUITag.PARENTRELATIONCONFIGURE);   }
 
-	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {this.setAttributeValueObject(ATTR_CHILDRELATIONCONFIGURE, childRelationConfigure);    }
-	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_CHILDRELATIONCONFIGURE);   }
+	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {this.setAttributeValueObject(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE, childRelationConfigure);    }
+	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE);   }
 
-	public void addAttribute(String attrName, String attrValue) {     ((Map<String, String>)this.getAttributeValue(ATTR_ATTRIBUTE)).put(attrName, attrValue);        }
+	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
+	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValue(HAPExecutableEntityComplexUITag.ATTRIBUTE);      }
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

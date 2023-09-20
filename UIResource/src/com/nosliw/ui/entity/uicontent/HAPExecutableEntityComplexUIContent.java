@@ -13,8 +13,11 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityComplex{
 
 	@HAPAttribute
-	static final public String HTML = "html";  
+	static final public String HTML = "html";
 
+	@HAPAttribute
+	static final public String CUSTOMERTAG = "customerTag";  
+	
 	@HAPAttribute
 	static final public String SCRIPTEXPRESSIONINCONTENT = "scriptExpressionInContent";
 	

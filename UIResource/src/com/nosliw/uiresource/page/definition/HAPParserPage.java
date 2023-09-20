@@ -264,7 +264,7 @@ public class HAPParserPage implements HAPParserResourceEntity{
 	private void parseUIUnitAttribute(Element unitEle, HAPDefinitionUIUnit uiUnit){
 		Attributes eleAttrs = unitEle.attributes();
 		for(Attribute eleAttr : eleAttrs){
-			uiUnit.addAttribute(eleAttr.getKey(), eleAttr.getValue());
+			uiUnit.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
 		}
 	}
 	

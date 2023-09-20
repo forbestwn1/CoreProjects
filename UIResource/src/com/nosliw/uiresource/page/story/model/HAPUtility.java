@@ -17,13 +17,13 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.processor.HAPUtilityConfiguration;
 import com.nosliw.uiresource.page.processor.HAPUtilityProcess;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUI;
 import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
 import com.nosliw.uiresource.page.story.element.HAPUIDataStructureInfo;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagId;
 
 public class HAPUtility {

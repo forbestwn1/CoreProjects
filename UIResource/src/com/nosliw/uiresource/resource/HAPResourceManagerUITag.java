@@ -11,8 +11,8 @@ import com.nosliw.data.core.resource.HAPResourceManagerImp;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
-import com.nosliw.uiresource.page.tag.HAPManagerUITag;
 
 public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 
