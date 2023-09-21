@@ -24,48 +24,39 @@ var node_createUITagPlugin = function(){
 	var loc_out = {
 
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createUITagComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
-			}, handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
+
+			var tagId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_TAGID);
+			var resourceId = new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, tagId);
+			
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
+				success : function(requestInfo, resourceData){
+					var scriptFun = resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
+					var tagDefObj = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
+					return loc_createUITagComponentCore(tagDefObj, complexEntityDef, valueContextId, bundleCore, configure);
+	 			}
+			}));
+			
+			return out;
 		},
 	};
 
 	return loc_out;
 };
 
-var loc_createUITagComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
+var loc_createUITagComponentCore = function(tagDefObj, complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
-	var loc_referencedRuntime = {};
-	
-	var loc_referenceContainer;
 
 	var loc_out = {
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, {
-				success : function(request, childNode){
-					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
-				}
-			}));
-			
-			
-			
-			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
-			
-			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
-					success : function(request, childNode){
-						loc_referencedRuntime[attrName] = childNode.getChildValue();
-					}
-				}));
-			});
 			
 			return out;
 		},
@@ -76,8 +67,6 @@ var loc_createUITagComponentCore = function(complexEntityDef, valueContextId, bu
 		
 	};
 	
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facadeTaskContainer);
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
 	return loc_out;	
 };
 

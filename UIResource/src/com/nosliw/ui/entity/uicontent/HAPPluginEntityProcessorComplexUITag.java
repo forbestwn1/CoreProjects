@@ -25,7 +25,7 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		
 		uiTagExe.setUIId(uiTagDef.getUIId());
 		
-		uiTagExe.setTagName(uiTagDef.getTagName());
+		uiTagExe.setTagId(uiTagDef.getTagId());
 		
 		Map<String, String> attrs = uiTagDef.getTagAttributes();
 		for(String attrName : attrs.keySet()) {

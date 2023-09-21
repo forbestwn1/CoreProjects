@@ -13,7 +13,6 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.common.HAPWithValueContext;
@@ -33,14 +32,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityDefinitionInDomainImpComplex{
 
+	public static final String SCRIPT = "script";
+
 	public HAPPluginEntityDefinitionInDomainUIContent(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, HAPDefinitionEntityComplexUIContent.class, runtimeEnv);
 	}
 
-	public static final String SCRIPT = "script";
-
-	private HAPGeneratorId m_idGenerator = new HAPGeneratorId();
-	
 	@Override
 	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		parseUIDefinitionUnit((Element)obj, entityId, parserContext);

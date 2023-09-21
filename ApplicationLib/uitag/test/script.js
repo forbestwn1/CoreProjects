@@ -1,5 +1,5 @@
 
-	script : function(base){
+	function(base){
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");

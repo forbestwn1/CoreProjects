@@ -35,7 +35,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		
 		Element ele = (Element)obj;
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
-		uiTagEntity.setTagName(customTagName);
+		uiTagEntity.setTagId(customTagName);
 
 		HAPManagerUITag uiTagMan = ((HAPRuntimeEnvironmentImpBrowser)this.getRuntimeEnvironment()).getUIResourceManager().getUITagManager();
 		HAPIdEntityInDomain uiTagDefEntityId = uiTagMan.getUITagDefinition(customTagName, parserContext.getGlobalDomain());

@@ -1,15 +1,23 @@
 package com.nosliw.ui.entity.uicontent;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
+@HAPEntityWithAttribute
 public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexWithUIContent implements HAPWithUIId{
 
 	@HAPAttribute
-	public static final String TAGNAME = "tagName";
+	public static final String TAGID = "tagId";
 	
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
@@ -43,7 +51,8 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 		this.setAttributeValueObject(ATTRIBUTE, new LinkedHashMap<String, String>());
 	}
 	
-	public void setTagName(String tagName) {}
+	public void setTagId(String tagId) {   this.setAttributeValueObject(TAGID, tagId);    }
+	public String getTagId() {   return (String)this.getAttributeValue(TAGID);  }
 
 	@Override
 	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }
@@ -57,5 +66,11 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 
 	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {this.setAttributeValueObject(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE, childRelationConfigure);    }
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE);   }
+
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
+		dependency.add(new HAPResourceDependency(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, this.getTagId())));
+	}
 
 }

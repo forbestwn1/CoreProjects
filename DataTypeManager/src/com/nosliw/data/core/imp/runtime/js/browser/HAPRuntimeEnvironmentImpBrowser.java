@@ -145,7 +145,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		this.getResourceManager().registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, new HAPResourceManagerImpComplex(this.getDomainEntityExecutableManager(), this.getResourceManager()));
 		this.getResourceManager().registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, new HAPResourceManagerImpScriptBased(this.getDomainEntityDefinitionManager(), this.getResourceDefinitionManager(), this.getResourceManager()));
 
-		
 
 		
 		//resource definition plugin

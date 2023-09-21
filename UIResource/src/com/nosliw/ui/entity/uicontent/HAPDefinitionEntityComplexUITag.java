@@ -19,8 +19,8 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	@HAPAttribute
 	public static final String EVENT = "event";
 	
-	public void setTagName(String tagName) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.TAGNAME, tagName);      }
-	public String getTagName() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.TAGNAME);     }
+	public void setTagId(String tagName) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.TAGID, tagName);      }
+	public String getTagId() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.TAGID);     }
 
 	@Override
 	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }

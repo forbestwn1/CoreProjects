@@ -151,12 +151,22 @@ var node_createResourceService = function(resourceManager){
 			return out;
 		},
 			
-			
 		executeRequireResourcesRequest : function(resourcesInfo, handlers, requester_parent){
 			var requestInfo = this.getRequireResourcesRequest(resourcesInfo, handlers, requester_parent);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
+
+		getGetResourceDataRequest : function(resourceId, handlers, requester_parent){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("GetResourceData", {"resourcesId":resourceId}), handlers, loc_out.getRequestInfo(requester_parent));
+			out.addRequest(this.getGetResourcesRequest(resourceId, {
+				success : function(request, resourceTree){
+					return node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
+				}
+			}));
 			
+			return out;
+		},
+
 		//resource discovery + get
 		getGetResourcesRequest : function(resourceIds, handlers, requester_parent){
 			resourceIds = loc_validateResourceId(resourceIds);
