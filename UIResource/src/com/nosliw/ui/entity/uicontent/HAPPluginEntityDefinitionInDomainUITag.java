@@ -11,8 +11,6 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
-import com.nosliw.data.core.resource.HAPResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.ui.entity.uitag.HAPDefinitionEntityUITagDefinition;
 import com.nosliw.ui.tag.HAPManagerUITag;
@@ -35,13 +33,14 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)this.getEntity(entityId, parserContext);
 		
-		HAPManagerUITag uiTagMan = ((HAPRuntimeEnvironmentImpBrowser)this.getRuntimeEnvironment()).getUIResourceManager().getUITagManager();
 		Element ele = (Element)obj;
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
 		uiTagEntity.setTagName(customTagName);
 
-		HAPResourceDefinition tagDefResourceDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, customTagName), parserContext.getGlobalDomain());
-		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(tagDefResourceDef.getEntityId()).getEntity();
+		HAPManagerUITag uiTagMan = ((HAPRuntimeEnvironmentImpBrowser)this.getRuntimeEnvironment()).getUIResourceManager().getUITagManager();
+		HAPIdEntityInDomain uiTagDefEntityId = uiTagMan.getUITagDefinition(customTagName, parserContext.getGlobalDomain());
+		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(uiTagDefEntityId).getEntity();
+
 		uiTagEntity.setValueContextEntityId(uiTagDefEntity.getValueContextEntityId());
 		uiTagEntity.setParentRelationConfigure(uiTagDefEntity.getParentRelationConfigure());
 		uiTagEntity.setChildRelationConfigure(uiTagDefEntity.getChildRelationConfigure());

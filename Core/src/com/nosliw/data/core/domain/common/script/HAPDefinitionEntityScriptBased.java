@@ -4,10 +4,6 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public interface HAPDefinitionEntityScriptBased {
 
-	public static final String ATTR_SCRIPT = "script";
-	
-	public static final String ATTR_RESOURCEID = "resourceId";
-	
 	void setScript(String script);
 	String getScript();
 	

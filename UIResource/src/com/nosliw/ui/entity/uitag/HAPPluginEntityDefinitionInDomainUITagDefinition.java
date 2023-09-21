@@ -12,7 +12,6 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.ui.entity.uicontent.HAPDefinitionEntityComplexUITag;
 
 public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginEntityDefinitionInDomainImp{
 
@@ -37,14 +36,14 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		
 		
 		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex(); 
-		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.ATTR_PARENTRELATIONCONFIGURE);
+		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.PARENTRELATIONCONFIGURE);
 		if(parentRelationConfigureJson!=null) {
 			parentRelationConfigure.buildObject(parentRelationConfigureJson, HAPSerializationFormat.JSON);
 		}
 		uiTagDefinition.setParentRelationConfigure(parentRelationConfigure);
 		
 		HAPConfigureParentRelationComplex childRelationConfigure = new HAPConfigureParentRelationComplex(); 
-		JSONObject childRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityComplexUITag.ATTR_CHILDRELATIONCONFIGURE);
+		JSONObject childRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.CHILDRELATIONCONFIGURE);
 		if(childRelationConfigureJson!=null) {
 			childRelationConfigure.buildObject(childRelationConfigureJson, HAPSerializationFormat.JSON);
 		}

@@ -9,14 +9,14 @@ public class HAPDefinitionEntityScriptBasedSimple extends HAPDefinitionEntityInD
 	public HAPDefinitionEntityScriptBasedSimple() {}
 
 	@Override
-	public void setScript(String script) {    this.setAttributeObject(ATTR_SCRIPT, new HAPEmbededDefinition(script));    }
+	public void setScript(String script) {    this.setAttributeObject(HAPExecutableEntityScriptBased.SCRIPT, new HAPEmbededDefinition(script));    }
 	@Override
-	public String getScript() {   return (String)this.getAttributeValue(ATTR_SCRIPT);     }
+	public String getScript() {   return (String)this.getAttributeValue(HAPExecutableEntityScriptBased.SCRIPT);     }
 
 	@Override
-	public void setScriptResourceId(HAPResourceId resourceId) {   this.setAttributeObject(ATTR_RESOURCEID, new HAPEmbededDefinition(resourceId));     }
+	public void setScriptResourceId(HAPResourceId resourceId) {   this.setAttributeObject(HAPExecutableEntityScriptBased.RESOURCEID, new HAPEmbededDefinition(resourceId));     }
 	@Override
-	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValue(ATTR_RESOURCEID);     }
+	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValue(HAPExecutableEntityScriptBased.RESOURCEID);     }
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

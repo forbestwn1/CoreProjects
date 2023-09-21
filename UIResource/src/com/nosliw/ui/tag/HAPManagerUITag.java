@@ -13,12 +13,16 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPResourceDefinition;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 import com.nosliw.uiresource.page.tag.HAPParserUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinition;
 import com.nosliw.uiresource.page.tag.HAPUITagDefinitionData;
-import com.nosliw.uiresource.page.tag.HAPUITagId;
 import com.nosliw.uiresource.page.tag.HAPUITagInfo;
 import com.nosliw.uiresource.page.tag.HAPUITagQueryResult;
 import com.nosliw.uiresource.page.tag.HAPUITagQueryResultSet;
@@ -26,27 +30,20 @@ import com.nosliw.uiresource.page.tag.HAPUITageQueryData;
 
 public class HAPManagerUITag {
 
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
 	private Map<String, HAPUITagDefinition> m_otherTagDefs;
 	
-	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
+	public HAPManagerUITag(HAPRuntimeEnvironment runtimeEnv, HAPDataTypeHelper dataTypeHelper) {
+		this.m_runtimeEnv = runtimeEnv;
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 	
-	public HAPUITagDefinition getUITagDefinition(HAPUITagId id){
-//		HAPUITagDefinition out = this.m_dataTagDefs.get(id.getId());
-//		if(out==null)  out = this.m_otherTagDefs.get(id.getId());
-//		out.setSourceFile(file);
-//		
-		String fileName = HAPSystemFolderUtility.getTagDefinitionFolder() + id.getId() + ".js";
-		File file = new File(fileName);
-		
-		HAPUITagDefinition out = HAPParserUITagDefinition.parseFromFile(file);
-		out.setSourceFile(file);
-		
-		return out;
+	public HAPIdEntityInDomain getUITagDefinition(String tagId, HAPDomainEntityDefinitionGlobal globalDomain){
+		HAPResourceDefinition tagDefResourceDef = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, tagId), globalDomain);
+		return tagDefResourceDef.getEntityId();
 	}	
 	
 	private void readAllTags() {
