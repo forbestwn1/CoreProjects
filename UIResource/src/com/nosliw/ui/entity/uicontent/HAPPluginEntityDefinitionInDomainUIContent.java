@@ -66,13 +66,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	}
 	
 	@Override
-	protected void parseValueContextAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+	protected void parseValueContextAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		//parse value context
 		parseValueContext((Element)obj, entityId, parserContext);
 	}
 
 	@Override
-	protected void parseAttachmentAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+	protected void parseAttachmentAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		//parse attachment
 		parseAttachment((Element)obj, entityId, parserContext);
 	}

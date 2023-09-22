@@ -22,13 +22,13 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplexJson extends HA
 	abstract protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext);
 
 	@Override
-	protected void parseValueContextAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+	protected void parseValueContextAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		JSONObject jsonObj = this.convertToJsonObject(obj);
 		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 	}
 
 	@Override
-	protected void parseAttachmentAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+	protected void parseAttachmentAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		JSONObject jsonObj = this.convertToJsonObject(obj);
 		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 	}

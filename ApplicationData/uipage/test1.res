@@ -17,7 +17,7 @@
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
 		
-		<!-nosliw-test></nosliw-test-->  
+		<nosliw-test></nosliw-test>  
 		<br>
   
 </body>

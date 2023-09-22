@@ -26,11 +26,17 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		super.postParseDefinitionContent(entityId, parserContext);
-		this.parseAttachmentAttribute(obj, entityId, parserContext);
-		this.parseValueContextAttribute(obj, entityId, parserContext);
+		super.parseDefinition(entityId, obj, parserContext);
+		this.parseAttachmentAttribute(entityId, obj, parserContext);
+		this.parseValueContextAttribute(entityId, obj, parserContext);
 		this.parseComplexDefinitionContent(entityId, obj, parserContext);
 	}
+
+	abstract protected void parseValueContextAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
+
+	abstract protected void parseAttachmentAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
+
+	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
 
 	@Override
 	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
@@ -40,11 +46,6 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 		if(valueContextEntity!=null)   valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
 
-	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
-
-	abstract protected void parseValueContextAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext);
-
-	abstract protected void parseAttachmentAttribute(Object obj, HAPIdEntityInDomain entityId, HAPContextParser parserContext);
 
 	protected HAPDefinitionEntityInDomainComplex getEntityComplex(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		return (HAPDefinitionEntityInDomainComplex)this.getEntity(entityId, parserContext);
