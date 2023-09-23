@@ -15,7 +15,7 @@ public class HAPPluginEntityDefinitionInDomainUIPage extends HAPPluginEntityDefi
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		String content = (String)obj;
 		try{
 			Document doc = Jsoup.parse(content, "UTF-8");

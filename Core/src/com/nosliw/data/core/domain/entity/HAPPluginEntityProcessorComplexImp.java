@@ -19,6 +19,9 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 
 	@Override
 	public String getEntityType() {    return this.m_entityType;    }
+
+	@Override
+	public void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
 	
 	//process definition before value context
 	@Override

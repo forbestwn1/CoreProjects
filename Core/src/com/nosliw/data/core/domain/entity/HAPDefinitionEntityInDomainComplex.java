@@ -23,7 +23,10 @@ public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEn
 	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {  return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
 	
 	@Override
-	public void setValueContextEntityId(HAPIdEntityInDomain valueContextEntity) {		this.setAttributeValueSimple(HAPWithValueContext.VALUECONTEXT, valueContextEntity);      }
+	public void setValueContextEntityId(HAPIdEntityInDomain valueContextEntity) {		
+		this.setAttributeValueSimple(HAPWithValueContext.VALUECONTEXT, valueContextEntity);
+		this.getAttribute(HAPWithValueContext.VALUECONTEXT).setAttributeAutoProcess(false);
+	}
 
 	@Override
 	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithAttachment.ATTACHMENT);  }

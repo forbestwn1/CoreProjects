@@ -14,9 +14,21 @@ import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcessorComplexImp{
 
 	public HAPPluginEntityProcessorComplexUITag() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, HAPExecutableEntityComplexUIContent.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, HAPExecutableEntityComplexUITag.class);
 	}
 
+	@Override
+	public void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
+		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
+		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
+		
+		Map<String, String> attrs = uiTagDef.getTagAttributes();
+		for(String attrName : attrs.keySet()) {
+			uiTagExe.addValueConstant(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE+attrName, attrs.get(attrName)); 
+		}
+	}
+	
 	@Override
 	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	
 		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
@@ -30,6 +42,7 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		Map<String, String> attrs = uiTagDef.getTagAttributes();
 		for(String attrName : attrs.keySet()) {
 			uiTagExe.addTagAttribute(attrName, attrs.get(attrName));
+			uiTagExe.addValueConstant(attrName, attrs.get(attrName));
 		}
 	}
 	

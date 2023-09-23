@@ -26,7 +26,6 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 
 	@Override
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		super.parseDefinition(entityId, obj, parserContext);
 		this.parseAttachmentAttribute(entityId, obj, parserContext);
 		this.parseValueContextAttribute(entityId, obj, parserContext);
 		this.parseComplexDefinitionContent(entityId, obj, parserContext);

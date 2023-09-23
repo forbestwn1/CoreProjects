@@ -7,7 +7,6 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegment
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpressionScript;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableVariableInScript;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
-import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
 
 public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcessor{
 
@@ -29,7 +28,7 @@ public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcesso
 				Object constantValue = constantInScript.getValue();
 				if(constantValue==null) {
 					//if constant value not processed, then wait until runtime
-					funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
+					funScript.append(constantsDataParmName + "[\"" + ((HAPExecutableConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 				}
 				else {
 					funScript.append("("+HAPUtilityRuntimeJS.buildConstantValue(constantValue)+")");

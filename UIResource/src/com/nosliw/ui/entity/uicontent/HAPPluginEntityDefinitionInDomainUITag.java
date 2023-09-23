@@ -24,13 +24,12 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postNewInstance(entityId, parserContext);
-		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
-
+		HAPDefinitionEntityComplexUITag uiTagEntity = this.getUITagEntity(entityId, parserContext);
 		uiTagEntity.setAttributeValueObject(HAPExecutableEntityComplexUITag.ATTRIBUTE, new LinkedHashMap<String, String>());
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)this.getEntity(entityId, parserContext);
 		
 		Element ele = (Element)obj;
@@ -60,5 +59,8 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		ele.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
 		ele.remove();
 	}
-
+	
+	private HAPDefinitionEntityComplexUITag getUITagEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		return (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
+	}
 }

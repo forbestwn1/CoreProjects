@@ -10,6 +10,9 @@ public interface HAPPluginEntityProcessorComplex {
 	//new executable
 	HAPExecutableEntityComplex newExecutable();
 
+	//supply custom constant value
+	void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
+	
 	//process definition before value context
 	void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);
 	void postProcessValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext);

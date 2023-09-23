@@ -164,6 +164,9 @@ public class HAPManagerDomainEntityExecutable {
 		//build attachment domain(build attachment tree, merge attachment value)
 		HAPUtilityAttachment.buildAttachmentDomain(rootEntityIdExe, processContext);
 		
+		//build custom constant value
+		extendConstantValue(rootEntityIdExe, processContext);
+		
 		//build constant
 		buildConstant(rootEntityIdExe, processContext);
 		
@@ -230,6 +233,29 @@ public class HAPManagerDomainEntityExecutable {
 						if(attribute.equals(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP))  return false;
 						return true;
 					}
+				}, processContext);
+	}
+	
+	private void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
+				complexEntityExecutableId, 
+				new HAPProcessorEntityExecutable() {
+
+					@Override
+					public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
+						HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+						HAPExecutableEntityComplex executableEntity = currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+						m_processorComplexEntityPlugins.get(executableEntity.getEntityType()).extendConstantValue(entityId, processContext);
+					}
+
+					@Override
+					public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+						HAPIdEntityInDomain childId = (HAPIdEntityInDomain)parentEntity.getAttributeValue(attribute);
+						HAPExecutableEntityComplex executableEntity = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(childId).getEntity();
+						m_processorComplexEntityPlugins.get(executableEntity.getEntityType()).extendConstantValue(childId, processContext);
+						return true;
+					}
+			
 				}, processContext);
 	}
 	
