@@ -10,6 +10,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
+import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 
 public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcessorComplexImp{
 
@@ -23,9 +24,10 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
 		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
 		
+		HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntity = uiTagExe.getPlainScriptExpressionGroupEntity(processContext);
 		Map<String, String> attrs = uiTagDef.getTagAttributes();
 		for(String attrName : attrs.keySet()) {
-			uiTagExe.addValueConstant(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE+attrName, attrs.get(attrName)); 
+			plainScriptExpressionGroupEntity.addValueConstant(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE+attrName, attrs.get(attrName)); 
 		}
 	}
 	

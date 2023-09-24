@@ -27,6 +27,33 @@
 			}
 		]
 	}, 
+	"attachment": {
+		"extra": {
+			"status": "disabled1",
+			"name": "parent attachment" 
+		},
+		"entity": {
+			"value" : [
+				{
+					"name" : "constantValueData",
+					"entity": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "012345678901234567890"
+					}
+				},
+				{
+					"name" : "constantValueString",
+					"entity": "String value"
+				},
+				{
+					"name" : "constantValueObject",
+					"entity": {
+						"value": 1000
+					}
+				}
+			]
+		}
+	},
 	"parentRelationConfigure" : {
 	
 	},

@@ -6,10 +6,12 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemUtility;
@@ -84,6 +86,16 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public Map<String, String> getPlainScriptExpressionValues(){   return (Map<String, String>)this.getAttributeValue(PLAINSCRIPTEEXPRESSIONGROUPVALUE);     }
 	public void setPlainScriptExpressionValue(String name, String value) {    this.getPlainScriptExpressionValues().put(name, value);      }
 	
+	public HAPIdEntityInDomain getPlainScriptExpressionGroupEntityId() {    return this.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);     }
+	public HAPExecutableEntityExpressionScriptGroup getPlainScriptExpressionGroupEntity(HAPContextProcessor processContext) {
+		HAPExecutableEntityExpressionScriptGroup out = null;
+		HAPIdEntityInDomain plainScriptExpressionGroupEntityId = getPlainScriptExpressionGroupEntityId();
+		if(plainScriptExpressionGroupEntityId!=null) {
+			out = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionGroupEntityId).getEntity();
+		}
+		return out;
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
