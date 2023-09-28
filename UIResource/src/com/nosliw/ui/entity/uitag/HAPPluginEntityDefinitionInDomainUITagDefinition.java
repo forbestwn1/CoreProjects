@@ -31,9 +31,11 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 		
 		HAPEntityInfoImp info = new HAPEntityInfoImp();
-		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.ATTR_INFO), HAPSerializationFormat.JSON);
+		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);
 		uiTagDefinition.setInfo(info);
 		
+		String baseName = (String)jsonObj.opt(HAPDefinitionEntityUITagDefinition.BASE);
+		if(baseName!=null)   uiTagDefinition.setBaseName(baseName);
 		
 		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex(); 
 		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.PARENTRELATIONCONFIGURE);

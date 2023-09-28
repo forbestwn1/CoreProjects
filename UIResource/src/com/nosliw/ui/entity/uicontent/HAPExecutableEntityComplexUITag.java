@@ -28,12 +28,14 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	@HAPAttribute
 	public static final String CHILDRELATIONCONFIGURE = "childRelationConfigure";
 
+	@HAPAttribute
+	public static final String BASE = "base";
 
+	
+	
 	
 	@HAPAttribute
 	public static final String TYPE = "type";
-	@HAPAttribute
-	public static final String BASE = "base";
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 	@HAPAttribute
@@ -54,6 +56,9 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	public void setTagId(String tagId) {   this.setAttributeValueObject(TAGID, tagId);    }
 	public String getTagId() {   return (String)this.getAttributeValue(TAGID);  }
 
+	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
+	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }
+	
 	@Override
 	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }
 	public void setUIId(String uiId) {    this.setAttributeValueObject(HAPWithUIId.UIID, uiId);    }

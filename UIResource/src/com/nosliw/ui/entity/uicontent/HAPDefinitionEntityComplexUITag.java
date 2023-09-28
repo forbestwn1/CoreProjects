@@ -8,12 +8,8 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 
 public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexWithUIContent implements HAPWithUIId{
 
-
-	
 	@HAPAttribute
 	public static final String TYPE = "type";
-	@HAPAttribute
-	public static final String BASE = "base";
 	@HAPAttribute
 	public static final String REQUIRES = "requires";
 	@HAPAttribute
@@ -21,6 +17,9 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	
 	public void setTagId(String tagName) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.TAGID, tagName);      }
 	public String getTagId() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.TAGID);     }
+
+	public void setBaseName(String baseName) {    this.setAttributeValueObject(HAPExecutableEntityComplexUITag.BASE, baseName);     }
+	public String getBaseName() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.BASE);     }
 
 	@Override
 	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }

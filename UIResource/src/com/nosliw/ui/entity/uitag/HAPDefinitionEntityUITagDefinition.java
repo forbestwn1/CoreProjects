@@ -10,13 +10,18 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 
 public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDomain{
 
-	public static final String ATTR_INFO = "info";
+	public static final String INFO = "info";
 	
 	public static final String PARENTRELATIONCONFIGURE = "parentRelationConfigure";
 	
 	public static final String CHILDRELATIONCONFIGURE = "childRelationConfigure";
 
-	public void setInfo(HAPEntityInfo entityInfo) {}
+	public static final String BASE = "base";
+
+	public void setInfo(HAPEntityInfo entityInfo) {   this.setAttributeValueObject(INFO, entityInfo);    }
+	
+	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
+	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }
 	
 	public HAPIdEntityInDomain getValueContextEntityId() {    return this.getAttributeValueEntityId(HAPWithValueContext.VALUECONTEXT);         }
 	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);   }

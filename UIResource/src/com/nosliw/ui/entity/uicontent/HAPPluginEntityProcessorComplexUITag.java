@@ -36,6 +36,8 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
 		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
 		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
+	
+		uiTagExe.setBaseName(uiTagDef.getBaseName());
 		
 		uiTagExe.setUIId(uiTagDef.getUIId());
 		

@@ -23,6 +23,7 @@ var packageObj = library;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
 	var node_uiContentUtility;
+	var node_getEntityTreeNodeInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -311,11 +312,26 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 			}));
 			
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG));
+			
 			return out;
 		},
 		
 		updateView : function(view){
 			loc_viewContainer.appendTo(view);
+			
+			var customTagGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG).getChildValue().getCoreEntity();
+			var customTagGroupCoreTreeNodeInterface = node_getEntityTreeNodeInterface(customTagGroupCore);
+			var customTagKeys = customTagGroupCoreTreeNodeInterface.getChildrenName();
+			_.each(customTagKeys, function(customTagKey, i){
+				var uiCustomTag = customTagGroupCoreTreeNodeInterface.getChild(customTagKey).getChildValue().getCoreEntity();
+				
+				var uiId = loc_getUpdateUIId(uiCustomTag.getUIId());
+				var tagWrapperView = $("<span>BBBBBBBBBBBBBBBBBBBBBB</span>");
+				var tagPostfix = loc_getLocalElementByUIId(uiCustomTag.getUIId()+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX);
+				tagWrapperView.insertAfter(tagPostfix);
+				uiCustomTag.updateView(tagWrapperView);
+			});
 		},
 
 		setEnvironmentInterface : function(envInterface){
@@ -365,6 +381,7 @@ nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInTagAtt
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 

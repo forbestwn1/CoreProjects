@@ -31,9 +31,8 @@ var node_createUITagPlugin = function(){
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
 				success : function(requestInfo, resourceData){
-					var scriptFun = resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
-					var tagDefObj = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
-					return loc_createUITagComponentCore(tagDefObj, complexEntityDef, valueContextId, bundleCore, configure);
+					var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
+					return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure);
 	 			}
 			}));
 			
@@ -44,13 +43,73 @@ var node_createUITagPlugin = function(){
 	return loc_out;
 };
 
-var loc_createUITagComponentCore = function(tagDefObj, complexEntityDef, valueContextId, bundleCore, configure){
-
+var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure){
+	var loc_tagDefScriptFun = tagDefScriptFun;
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
+	var loc_uiTagCore;
+
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(handlers, requestInfo){
+		var uiTagCore;
+		var uiTagBase = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE];
+		if(uiTagBase==undefined){
+			uiTagCore = loc_tagDefScriptFun.call(loc_out, loc_envObj);
+		}
+		else if(uiTagBase=="simpleData"){
+			uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_envObj, loc_complexEntityDef);
+		}
+		else if(uiTagBase=="arrayData"){
+			uiTagCore = node_createUITagOnBaseArray(loc_tagDefScriptFun, loc_envObj, loc_complexEntityDef);
+		}
+		
+		loc_uiTagCore = node_buildUITagCoreObject(uiTagCore); 
+
+		loc_uiTagCore.created();
+		
+		var uiTagInitRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"), handlers, requestInfo);
+		
+		//overriden method before view is attatched to dom
+		var initObj = loc_uiTagCore.preInit(requestInfo);
+		if(initObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initObj)){
+			uiTagInitRequest.addRequest(initObj);
+		}
+		
+		//overridden method to create init view
+		uiTagInitRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
+			var initRequest = node_createServiceRequestInfoSequence(undefined);
+			var initViewsResult = loc_uiTagObj.initViews({
+				success : function(request, view){
+					loc_viewContainer.setContentView(view);
+				}
+			}, requestInfo);
+
+			if(initViewsResult!=undefined){
+				if( node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initViewsResult)){
+					initRequest.addRequest(initViewsResult);
+				}
+				else{
+					loc_viewContainer.setContentView(initViewsResult);
+				}
+			}
+
+			//overridden method to do sth after view is attatched to dom
+			if(loc_uiTagObj.postInit!=undefined){
+				var postInitObj = loc_uiTagObj.postInit(requestInfo);
+				if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
+					initRequest.addRequest(postInitObj);
+				}
+			}
+
+			return initRequest;
+		}));
+
+		return uiTagInitRequest;
+	};
+
 
 	var loc_out = {
 		
@@ -59,6 +118,14 @@ var loc_createUITagComponentCore = function(tagDefObj, complexEntityDef, valueCo
 			
 			
 			return out;
+		},
+		
+		updateView : function(view){
+			view.append(loc_tagDefObj.initViews());
+		},
+		
+		getUIId : function(){
+			return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHUIID_UIID);
 		},
 		
 		setEnvironmentInterface : function(envInterface){
