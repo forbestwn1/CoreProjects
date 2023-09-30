@@ -12,8 +12,14 @@ var node_dataUtility;
 var node_createValueStructureVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var loc_createValueStructureDataOperationRequest = function(valueStructure, valueStructureVarInfo, operationService, handlers, requester_parent){
+	operationService.parms.path = node_dataUtility.combinePath(valueStructureVarInfo.path, operationService.parms.path);
+	return valueStructure.getDataOperationRequest(valueStructureVarInfo.name, operationService, handlers, requester_parent);
+};
+
 //create request for data operation
-var node_createUIDataOperationRequest = function(valueStructure, uiDataOperation, handlers, requester_parent){
+//operationBase:  where store variable, valueStructure or valueContext 
+var node_createUIDataOperationRequest = function(operationBase, uiDataOperation, handlers, requester_parent){
 	var target = uiDataOperation.target;
 	var targetType = node_getObjectType(target);
 	var operationService = uiDataOperation.operationService;
@@ -29,15 +35,16 @@ var node_createUIDataOperationRequest = function(valueStructure, uiDataOperation
 	case node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER:
 		request = target.getDataOperationRequest(operationService, handlers, requester_parent);
 		break;
-	case node_CONSTANT.TYPEDOBJECT_TYPE_CONTEXTVARIABLE:
-		operationService.parms.path = node_dataUtility.combinePath(target.path, operationService.parms.path);
-		request = valueStructure.getDataOperationRequest(target.name, operationService, handlers, requester_parent);
+	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTUREVARIABLE:
+		request = loc_createValueStructureDataOperationRequest(operationBase, target, operationService, handlers, requester_parent);
+		break;
+	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUECONTEXTVARIABLE:
+		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(target.valueStructureRuntimeId), target.valueStructureVariableInfo, operationService, handlers, requester_parent);
 		break;
 	default : 
-		//target is context element name
-		var targeContextVar = node_createValueStructureVariableInfo(target);
-		operationService.parms.path = node_dataUtility.combinePath(targeContextVar.path, operationService.parms.path);
-		request = valueStructure.getDataOperationRequest(targeContextVar.name, operationService, handlers, requester_parent);
+		//target is value context element name
+		var valueContextVarInfo = node_createValueContextVariableInfo(target);
+		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(valueContextVarInfo.valueStructureRuntimeId), valueContextVarInfo.valueStructureVariableInfo, operationService, handlers, requester_parent);
 	}
 	return request;
 };
@@ -47,20 +54,20 @@ var node_createUIDataOperationRequest = function(valueStructure, uiDataOperation
  * It contains a set of data operation service, so that this request is a batch of data operation as a whole
  * 
  */
-var node_createBatchUIDataOperationRequest = function(valueStructure, handlers, requester_parent){
+var node_createBatchUIDataOperationRequest = function(valueContext, handlers, requester_parent){
 
 	//all the child requests service  
 	var loc_uiDataOperations = [];
 	
 	//data context
-	var loc_valueStructure = valueStructure;
+	var loc_valueContext = valueContext;
 	
 	var loc_index = 0;
 	
 	var loc_out = node_createServiceRequestInfoSet(new node_ServiceInfo("BatchUIDataOperation", {}), handlers, requester_parent);
 	
 	loc_out.addUIDataOperation = function(uiDataOperation){
-		this.addRequest(loc_index+"", node_createUIDataOperationRequest(loc_valueStructure, uiDataOperation));
+		this.addRequest(loc_index+"", node_createUIDataOperationRequest(loc_valueContext, uiDataOperation));
 		loc_index++;
 
 		//for debugging purpose
@@ -76,8 +83,8 @@ var node_createBatchUIDataOperationRequest = function(valueStructure, handlers, 
 //operate on targe
 //   target : variable, wrapper, context variable
 //   operationService : service for operation
-var node_UIDataOperation = function(target, operationService){
-	this.target = target;
+var node_UIDataOperation = function(targetInfo, operationService){
+	this.target = targetInfo;
 	this.operationService = operationService;
 };
 

@@ -61,10 +61,10 @@ var node_createUITagOnBaseSimple = function(tagDefScriptFun, envObj){
 				}
 			}
 			
-			loc_env.executeBatchDataOperationRequest([
-				loc_env.getDataOperationSet(loc_dataVariable, "", loc_currentData)
+			loc_envObj.executeBatchDataOperationRequest([
+				loc_envObj.getDataOperationSet(loc_dataVariable, "", loc_currentData)
 			]);
-			loc_env.trigueEvent("valueChanged", loc_currentData);
+			loc_envObj.trigueEvent("valueChanged", loc_currentData);
 		},
 		
 		trigueEvent : function(eventName, eventData){

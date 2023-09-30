@@ -19,6 +19,10 @@ var packageObj = library;
 	var node_createUITagOnBaseSimple;
 	var node_buildUITagCoreObject;
 	var node_getObjectType;
+	var node_UIDataOperation;
+	var node_uiDataOperationServiceUtility;
+	var node_createBatchUIDataOperationRequest;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -57,11 +61,30 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	
 	
 	var loc_coreEnvObj = {
+		
 		createVariableByName : function(variableName){
 			var varsByName = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_VARIABLEBYNAME); 
 			var varId = varsByName[variableName];
 			return loc_valueContext.createVariableById(varId);
 		},
+		
+		getBatchDataOperationRequest : function(operations, handlers, request){
+			var requestInfo = node_createBatchUIDataOperationRequest(loc_valueContext, handlers, request);
+			_.each(operations, function(operation, i){
+				requestInfo.addUIDataOperation(operation);						
+			});
+			return requestInfo;
+		},
+		executeBatchDataOperationRequest : function(operations, handlers, request){		this.processRequest(this.getBatchDataOperationRequest(operations, handlers, request));		},
+		
+		getDataOperationSet : function(target, path, value){  
+			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); 
+		},
+		
+		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
+
+		//--------------------------------- event
+		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
 	};
 
 	var loc_out = {
@@ -135,6 +158,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("uitag.createUITagOnBaseSimple", function(){node_createUITagOnBaseSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.buildUITagCoreObject", function(){node_buildUITagCoreObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

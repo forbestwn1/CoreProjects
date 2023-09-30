@@ -143,27 +143,6 @@ var node_createValueStructureElement = function(elementInfo, requestInfo){
 };
 
 
-
-
-
-
-//extended context is context + extra variables
-var node_createExtendedContext = function(context, exVars){
-	var loc_context = context;
-	var loc_exVars = exVars;
-	
-	var loc_out = {
-		findeVariable : function(eleName){
-			var out = loc_context.getContextElement(eleName);
-			if(out==undefined)  out = exVars[eleName].variable.prv_getVariable();
-			return out;
-		}
-	};
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_EXTENDEDCONTEXT);
-	return loc_out;
-};
-
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
