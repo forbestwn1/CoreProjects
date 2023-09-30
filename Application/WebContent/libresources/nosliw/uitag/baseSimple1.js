@@ -278,6 +278,6 @@ nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRule
 nosliw.registerSetNodeDataEvent("uitag.uiTagUtility", function(){node_uiTagUtility = this.getData();	});
 
 //Register Node by Name
-packageObj.createChildNode("createUITagOnBaseSimple", node_createUITagOnBaseSimple); 
+packageObj.createChildNode("createUITagOnBaseSimple1", node_createUITagOnBaseSimple); 
 
 })(packageObj);

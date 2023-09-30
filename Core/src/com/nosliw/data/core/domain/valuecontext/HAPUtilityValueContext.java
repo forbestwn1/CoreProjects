@@ -3,7 +3,9 @@ package com.nosliw.data.core.domain.valuecontext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueContext;
@@ -51,6 +53,23 @@ public class HAPUtilityValueContext {
 		return out;
 	}
 
+	public static Set<String> getSelfValueStructures(HAPExecutableEntityValueContext valueContext){
+		Set<String> out = new HashSet<String>();
+		for(HAPExecutablePartValueContext part : valueContext.getParts()) {
+			String partType = part.getPartType();
+			if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
+				HAPExecutablePartValueContextSimple simplePart = (HAPExecutablePartValueContextSimple)part;
+				String partName = simplePart.getPartInfo().getName();
+				if(HAPConstantShared.VALUESTRUCTUREPART_NAME_DEFAULT.equals(partName)||HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION.equals(partName)) {
+					for(HAPWrapperExecutableValueStructure valueStructureWrapper : simplePart.getValueStructures()) {
+						out.add(valueStructureWrapper.getValueStructureRuntimeId());
+					}
+				}
+			}
+		}
+		return out;
+	}
+	
 	private static void sortValueStructureInfos(List<HAPInfoValueStructureSorting> valueStructures) {
 		Collections.sort(valueStructures, new Comparator<HAPInfoValueStructureSorting>() {
 			@Override

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -31,6 +32,9 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	@HAPAttribute
 	public static final String BASE = "base";
 
+	@HAPAttribute
+	public static final String VARIABLEBYNAME = "variableByName";
+
 	
 	
 	
@@ -51,6 +55,7 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	
 	public HAPExecutableEntityComplexUITag() {
 		this.setAttributeValueObject(ATTRIBUTE, new LinkedHashMap<String, String>());
+		this.setAttributeValueObject(VARIABLEBYNAME, new LinkedHashMap<String, HAPIdVariable>());
 	}
 	
 	public void setTagId(String tagId) {   this.setAttributeValueObject(TAGID, tagId);    }
@@ -72,6 +77,9 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {this.setAttributeValueObject(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE, childRelationConfigure);    }
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE);   }
 
+	public Map<String, HAPIdVariable> getVariablesByName(){    return (Map<String, HAPIdVariable>)this.getAttributeValue(VARIABLEBYNAME);       }
+	public void addVariableByName(String name, HAPIdVariable variableId) {    this.getVariablesByName().put(name, variableId);     }
+	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);

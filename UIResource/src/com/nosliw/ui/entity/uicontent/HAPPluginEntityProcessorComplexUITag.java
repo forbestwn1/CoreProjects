@@ -1,16 +1,23 @@
 package com.nosliw.ui.entity.uicontent;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.data.variable.HAPIdRootElement;
+import com.nosliw.data.core.data.variable.HAPIdVariable;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 
 public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcessorComplexImp{
 
@@ -37,6 +44,17 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
 		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
 	
+		//build name to variable id mapping
+		Map<String, HAPIdVariable> nameToVariableId = new LinkedHashMap<String, HAPIdVariable>();
+		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentValueStructureDomain();
+		Set<String> valueStructureIds = HAPUtilityValueContext.getSelfValueStructures(uiTagExe.getValueContext());
+		for(String valueStructureId : valueStructureIds) {
+			HAPDefinitionEntityValueStructure valueStructureDef = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureId);
+			for(String rootName : valueStructureDef.getRootNames()) {
+				uiTagExe.addVariableByName(rootName, new HAPIdVariable(new HAPIdRootElement(null, valueStructureId, rootName), null));
+			}
+		}
+		
 		uiTagExe.setBaseName(uiTagDef.getBaseName());
 		
 		uiTagExe.setUIId(uiTagDef.getUIId());

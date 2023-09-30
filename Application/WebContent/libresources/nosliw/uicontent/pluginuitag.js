@@ -51,75 +51,51 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_uiTagCore;
-
-	var lifecycleCallback = {};
-	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT]  = function(handlers, requestInfo){
-		var uiTagCore;
-		var uiTagBase = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE];
-		if(uiTagBase==undefined){
-			uiTagCore = loc_tagDefScriptFun.call(loc_out, loc_envObj);
-		}
-		else if(uiTagBase=="simpleData"){
-			uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_envObj, loc_complexEntityDef);
-		}
-		else if(uiTagBase=="arrayData"){
-			uiTagCore = node_createUITagOnBaseArray(loc_tagDefScriptFun, loc_envObj, loc_complexEntityDef);
-		}
-		
-		loc_uiTagCore = node_buildUITagCoreObject(uiTagCore); 
-
-		loc_uiTagCore.created();
-		
-		var uiTagInitRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"), handlers, requestInfo);
-		
-		//overriden method before view is attatched to dom
-		var initObj = loc_uiTagCore.preInit(requestInfo);
-		if(initObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initObj)){
-			uiTagInitRequest.addRequest(initObj);
-		}
-		
-		//overridden method to create init view
-		uiTagInitRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-			var initRequest = node_createServiceRequestInfoSequence(undefined);
-			var initViewsResult = loc_uiTagObj.initViews({
-				success : function(request, view){
-					loc_viewContainer.setContentView(view);
-				}
-			}, requestInfo);
-
-			if(initViewsResult!=undefined){
-				if( node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initViewsResult)){
-					initRequest.addRequest(initViewsResult);
-				}
-				else{
-					loc_viewContainer.setContentView(initViewsResult);
-				}
-			}
-
-			//overridden method to do sth after view is attatched to dom
-			if(loc_uiTagObj.postInit!=undefined){
-				var postInitObj = loc_uiTagObj.postInit(requestInfo);
-				if(postInitObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(postInitObj)){
-					initRequest.addRequest(postInitObj);
-				}
-			}
-
-			return initRequest;
-		}));
-
-		return uiTagInitRequest;
+	
+	
+	var loc_coreEnvObj = {
+		createVariableByName : function(variableName){
+			var varsByName = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_VARIABLEBYNAME); 
+			var varId = varsByName[variableName];
+			return loc_context.createVariableById(varId);
+		},
 	};
-
 
 	var loc_out = {
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
+			var uiTagCore;
+			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE); 
+			if(uiTagBase==undefined){
+				uiTagCore = loc_tagDefScriptFun.call(loc_out, loc_coreEnvObj);
+			}
+			else if(uiTagBase=="simpleData"){
+				uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_coreEnvObj);
+			}
+			else if(uiTagBase=="arrayData"){
+				uiTagCore = node_createUITagOnBaseArray(loc_tagDefScriptFun, loc_coreEnvObj);
+			}
+			
+			loc_uiTagCore = node_buildUITagCoreObject(uiTagCore); 
+	
+			loc_uiTagCore.created();
 			
 			return out;
 		},
 		
+		getPreInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("UITagInit"), handlers, request);
+			
+			//overriden method before view is attatched to dom
+			var initObj = loc_uiTagCore.preInit(requestInfo);
+			if(initObj!=undefined && node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST==node_getObjectType(initObj)){
+				out.addRequest(initObj);
+			}
+			return out;
+		},
+
 		updateView : function(view){
 			view.append(loc_tagDefObj.initViews());
 		},

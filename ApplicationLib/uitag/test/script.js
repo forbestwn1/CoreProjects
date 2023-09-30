@@ -21,7 +21,7 @@ function(evnObj){
 		initViews : function(requestInfo){
 			loc_view = $('<input type="text" style="display:inline;background:#e6dedc"/>');	
 			loc_view.bind('change', function(){
-				loc_base.onDataChange(loc_getViewData());
+				loc_evnObj.onDataChange(loc_getViewData());
 			});					
 			return loc_view;
 		},
@@ -33,13 +33,6 @@ function(evnObj){
 		
 		getViewData : function(){
 			return loc_getViewData();
-		},
-		
-		getDataForDemo : function(){
-			return {
-				value:"This is data for demo", 
-				dataTypeId:"test.string;1.0.0"
-			};
 		},
 		
 		destroy : function(){
