@@ -20,9 +20,8 @@ var packageObj = library;
 
 var node_createUITagOnBaseSimple = function(tagDefScriptFun, envObj){
 	var loc_tagDefScriptFun = tagDefScriptFun;
-	
 	var loc_envObj = envObj;
-	var loc_tagEntityDef = tagEntityDef;
+
 	var loc_coreObj;
 	
 	var loc_dataVariable;
@@ -101,9 +100,6 @@ var node_createUITagOnBaseSimple = function(tagDefScriptFun, envObj){
 			loc_coreObj.destroy();
 		},
 	};
-	
-	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
-	node_getLifecycleInterface(loc_out).init(env, uiTagDef);
 	
 	return loc_out;
 };
