@@ -35,6 +35,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	}
 	
 	public HAPIdEntityInDomain getValueStructureId() {	return this.m_valueStructureId;	}
+	public void setValueStructureId(HAPIdEntityInDomain valueStructureId) {   this.m_valueStructureId = valueStructureId;       }
 	
 	public String getGroupName() {   return this.m_groupName;   }
 	public void setGroupName(String groupName) {   this.m_groupName = groupName;    }

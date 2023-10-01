@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-<!--
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
 		<div>
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
@@ -17,7 +16,7 @@
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
--->	
+
 		
 		<nosliw-test data="baseVarNormal"></nosliw-test>  
 		<br>

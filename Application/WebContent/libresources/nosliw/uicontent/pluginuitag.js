@@ -24,6 +24,7 @@ var packageObj = library;
 	var node_createBatchUIDataOperationRequest;
 	var node_requestServiceProcessor;
 	var node_createUIDataOperationRequest;
+	var node_createEventObject;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -60,7 +61,8 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_envInterface = {};
 	var loc_uiTagCore;
 	
-	
+	var loc_tagEventObject = node_createEventObject();
+
 	var loc_coreEnvObj = {
 		
 		createVariableByName : function(variableName){
@@ -182,6 +184,7 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

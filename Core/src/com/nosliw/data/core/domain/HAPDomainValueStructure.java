@@ -69,7 +69,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public String newValueStructure(HAPInfoEntityInDomainDefinition valueStructureDefInfo) {
 		String id = this.m_idGenerator.generateId();
 		
-		this.m_valueStructure.put(id, new HAPInfoValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity().cloneEntityDefinitionInDomain(), valueStructureDefInfo.getExtraInfo().cloneExtraInfo()));
+		this.m_valueStructure.put(id, new HAPInfoValueStructure(((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity()).cloneValueStructure(), valueStructureDefInfo.getExtraInfo().cloneExtraInfo()));
 		return this.newRuntime(id);
 	}
 	

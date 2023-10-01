@@ -9,7 +9,12 @@ import org.jsoup.nodes.Element;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
+import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.ui.entity.uitag.HAPDefinitionEntityUITagDefinition;
@@ -41,9 +46,39 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(uiTagDefEntityId).getEntity();
 
 		uiTagEntity.setBaseName(uiTagDefEntity.getBaseName());
-		uiTagEntity.setValueContextEntityId(uiTagDefEntity.getValueContextEntityId());
 		uiTagEntity.setParentRelationConfigure(uiTagDefEntity.getParentRelationConfigure());
 		uiTagEntity.setChildRelationConfigure(uiTagDefEntity.getChildRelationConfigure());
+
+		//clone value context
+		HAPManagerDomainEntityDefinition domainEntityDefMan = this.getRuntimeEnvironment().getDomainEntityDefinitionManager();
+
+		HAPInfoEntityInDomainDefinition valueContextEntityInfo1 = parserContext.getGlobalDomain().getEntityInfoDefinition(uiTagDefEntity.getValueContextEntityId());
+		HAPDefinitionEntityValueContext valueContextEntity1 = (HAPDefinitionEntityValueContext)valueContextEntityInfo1.getEntity();
+		
+		HAPIdEntityInDomain valueContextEntityId = domainEntityDefMan.newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, parserContext);
+		HAPDefinitionEntityValueContext valueContextEntity = (HAPDefinitionEntityValueContext)parserContext.getGlobalDomain().getEntityDefinition(valueContextEntityId);
+
+		for(HAPDefinitionWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
+
+			HAPDefinitionWrapperValueStructure valueStructureWrapper = new HAPDefinitionWrapperValueStructure();
+			valueStructureWrapper.setGroupName(valueStructureWrapper1.getGroupName());
+			valueStructureWrapper.setGroupType(valueStructureWrapper1.getGroupType());
+
+			HAPInfoEntityInDomainDefinition valueStructureEntityInfo1 = parserContext.getGlobalDomain().getEntityInfoDefinition(valueStructureWrapper1.getValueStructureId());
+			HAPDefinitionEntityValueStructure valueStructure1 = (HAPDefinitionEntityValueStructure)valueStructureEntityInfo1.getEntity();
+
+			HAPIdEntityInDomain valueStructureEntityId = domainEntityDefMan.newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext);
+			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)parserContext.getGlobalDomain().getEntityDefinition(valueStructureEntityId);
+			
+			for(String rootName : valueStructure1.getRootNames()) {
+				valueStructure.addRoot(valueStructure1.getRootByName(rootName).cloneRoot());
+			}
+			valueStructureWrapper.setValueStructureId(valueStructureEntityId);
+			
+			valueContextEntity.addValueStructure(valueStructureWrapper);
+		}
+		uiTagEntity.setValueContextEntityId(valueContextEntityId);
+		
 		
 		HAPIdEntityInDomain uiContentId = this.parseUIContent(ele, entityId, parserContext);
 		HAPUtilityEntityDefinition.buildParentRelation(uiContentId, entityId, uiTagEntity.getChildRelationConfigure(), parserContext);

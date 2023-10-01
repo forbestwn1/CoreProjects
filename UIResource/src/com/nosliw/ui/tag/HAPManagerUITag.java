@@ -42,7 +42,7 @@ public class HAPManagerUITag {
 	}
 	
 	public HAPIdEntityInDomain getUITagDefinition(String tagId, HAPDomainEntityDefinitionGlobal globalDomain){
-		HAPResourceDefinition tagDefResourceDef = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, tagId), globalDomain);
+		HAPResourceDefinition tagDefResourceDef = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGDEFINITION, tagId), globalDomain, null);
 		return tagDefResourceDef.getEntityId();
 	}	
 	
