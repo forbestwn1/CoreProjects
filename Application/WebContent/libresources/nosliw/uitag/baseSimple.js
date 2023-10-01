@@ -32,7 +32,7 @@ var node_createUITagOnBaseSimple = function(tagDefScriptFun, envObj){
 	};
 	
 	var loc_updateView = function(request){
-		loc_env.executeDataOperationRequestGet(loc_dataVariable, "", {
+		loc_envObj.executeDataOperationRequestGet(loc_dataVariable, "", {
 			success : function(requestInfo, data){
 				if(data==undefined){
 					loc_currentData = undefined;

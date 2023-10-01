@@ -68,8 +68,7 @@ public class HAPUtilityValueStructureDomain {
 						List<HAPWrapperExecutableValueStructure> wrappers = new ArrayList<HAPWrapperExecutableValueStructure>();
 						for(HAPDefinitionWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
 							HAPInfoEntityInDomainDefinition valueStructureDefInfo = definitionGlobalDomain.getEntityInfoDefinition(part.getValueStructureId());
-//							String valueStructureExeId = valueStructureDomain.newValueStructure(valueStructureDefInfo, part.getValueStructureId().getEntityId());
-							String valueStructureExeId = valueStructureDomain.newValueStructure(valueStructureDefInfo, null);
+							String valueStructureExeId = valueStructureDomain.newValueStructure(valueStructureDefInfo);
 							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
 							valueStructureWrapperExe.cloneFromDefinition(part);
 							wrappers.add(valueStructureWrapperExe);

@@ -70,7 +70,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure();
 		out.m_groupName = this.m_groupName;
 		out.m_groupType = this.m_groupType;
-		out.m_valueStructureId = this.m_valueStructureId.cloneIdEntityInDomain();
+		out.m_valueStructureId = this.m_valueStructureId.cloneValue();
 		return out;
 	}
 

@@ -1,6 +1,5 @@
 package com.nosliw.ui.entity.uicontent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,11 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	static final public String ATTR_ATTRIBUTE = "attribute";  
 	
 	public HAPDefinitionEntityComplexUIContent() {
-		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
-		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
-		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
+//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 	}
 	
 	public String getUnitType() {    return null;   }

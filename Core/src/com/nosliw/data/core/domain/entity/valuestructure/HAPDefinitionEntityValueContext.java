@@ -7,7 +7,6 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
@@ -47,16 +46,6 @@ public class HAPDefinitionEntityValueContext extends HAPDefinitionEntityInDomain
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
 	}
 	
-	@Override
-	protected void buildExpandedJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPDomainEntityDefinitionGlobal entityDefDomain){
-		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDefDomain);
-		List<String> valueStructureJsonArray = new ArrayList<String>();
-		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
-			valueStructureJsonArray.add(part.toExpandedJsonString(entityDefDomain));
-		}
-		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
-	}
-
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityValueContext out = new HAPDefinitionEntityValueContext();

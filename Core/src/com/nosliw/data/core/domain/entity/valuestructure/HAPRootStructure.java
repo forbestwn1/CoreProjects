@@ -108,7 +108,9 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 	}
 
 	@Override
-	public Object cloneValue() {    return this.cloneRoot();     }
+	public Object cloneValue() {
+		return this.cloneRoot();     
+	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
