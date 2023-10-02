@@ -9,13 +9,17 @@ import org.json.JSONObject;
 public class HAPFactoryResourceId {
 
 	//newInstance when not sure obj including resource type or not.
-	public static HAPResourceId tryNewInstance(String resourceType, Object obj) {
+	public static HAPResourceId tryNewInstance(String resourceType, Object obj, boolean resourceTypeRestrict) {
 		HAPResourceId out = null;
 		out = newInstance(obj);
 		if(out==null) out = newInstance(resourceType, obj);
-		if(!out.getResourceType().equals(resourceType))  
+		if(resourceTypeRestrict==true&&!out.getResourceType().equals(resourceType))  
 			throw new RuntimeException();
 		return out;
+	}
+	
+	public static HAPResourceId tryNewInstance(String resourceType, Object obj) {
+		return tryNewInstance(resourceType, obj, true);
 	}
 	
 	public static HAPResourceId newInstance(String resourceType, Object obj) {

@@ -23,6 +23,33 @@
 		<nosliw-test data="baseVarNormal">
 		
 		    Hello world!!!!
+
+			<br>
+			Content:<%=?(inTagVar)?.value + '   6666 ' %>
+			<br>
+
+			<valuecontext>
+			{
+				"entity": [
+					{
+						"groupType" : "public",
+						"valueStructure" : {
+							"inTagVar": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of inTagVar"
+								}
+							},
+						}
+					}
+				]
+			}
+			</valuecontext>
+
+
 		</nosliw-test>  
 		<br>
   

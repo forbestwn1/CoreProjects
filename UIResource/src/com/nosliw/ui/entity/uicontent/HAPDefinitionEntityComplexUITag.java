@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexWithUIContent implements HAPWithUIId{
 
@@ -18,6 +19,9 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	public void setTagId(String tagName) {   this.setAttributeValueObject(HAPExecutableEntityComplexUITag.TAGID, tagName);      }
 	public String getTagId() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.TAGID);     }
 
+	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeValueObject(HAPExecutableEntityComplexUITag.SCRIPTRESOURCEID, resourceId);         }
+	public HAPResourceId getScriptResourceId() {    return (HAPResourceId)this.getAttributeValue(HAPExecutableEntityComplexUITag.SCRIPTRESOURCEID);      }
+	
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(HAPExecutableEntityComplexUITag.BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(HAPExecutableEntityComplexUITag.BASE);     }
 

@@ -36,7 +36,10 @@ var node_createUITagPlugin = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
 			var tagId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_TAGID);
-			var resourceId = new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, tagId);
+			
+			var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_SCRIPTRESOURCEID);
+			
+//			var resourceId = new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, tagId);
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
 				success : function(requestInfo, resourceData){

@@ -7,6 +7,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDomain{
 
@@ -18,10 +19,15 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 
 	public static final String BASE = "base";
 
+	public static final String SCRIPTRESOURCEID = "scriptResourceId";
+	
 	public void setInfo(HAPEntityInfo entityInfo) {   this.setAttributeValueObject(INFO, entityInfo);    }
 	
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }
+	
+	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeValueObject(SCRIPTRESOURCEID, resourceId);         }
+	public HAPResourceId getScriptResourceId() {    return (HAPResourceId)this.getAttributeValue(SCRIPTRESOURCEID);      }
 	
 	public HAPIdEntityInDomain getValueContextEntityId() {    return this.getAttributeValueEntityId(HAPWithValueContext.VALUECONTEXT);         }
 	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);   }

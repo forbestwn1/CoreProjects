@@ -11,6 +11,9 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginEntityDefinitionInDomainImp{
@@ -36,6 +39,21 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		
 		String baseName = (String)jsonObj.opt(HAPDefinitionEntityUITagDefinition.BASE);
 		if(baseName!=null)   uiTagDefinition.setBaseName(baseName);
+		
+		Object scriptResourceObj = jsonObj.opt(HAPDefinitionEntityUITagDefinition.SCRIPTRESOURCEID);
+		if(scriptResourceObj==null) {
+		}
+		else {
+			HAPResourceId scriptResourceId = null;
+			if(scriptResourceObj instanceof String) {
+				scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, scriptResourceObj, false);
+			}
+			else if(scriptResourceObj instanceof JSONObject){
+				scriptResourceId = new HAPResourceIdSimple();
+				scriptResourceId.buildObject(scriptResourceObj, HAPSerializationFormat.JSON);
+			}
+			uiTagDefinition.setScriptResourceId(scriptResourceId);
+		}
 		
 		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex(); 
 		JSONObject parentRelationConfigureJson = jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.PARENTRELATIONCONFIGURE);

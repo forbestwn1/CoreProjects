@@ -2,6 +2,7 @@
 	"name" : "test",
 	"type" : "data",
 	"description" : "",
+	"scriptResourceId" : "script|customtag_test",
 	"attributes" : [
 		{
 			"name" : "data"

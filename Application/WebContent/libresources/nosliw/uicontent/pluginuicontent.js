@@ -102,7 +102,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	 */
 	var loc_getUpdateUIId = function(uiId){	return loc_idNameSpace+node_COMMONCONSTANT.SEPERATOR_FULLNAME+uiId;	};
 
-
 	/*
 	 * find matched elements according to selection
 	 */

@@ -1,6 +1,5 @@
 package com.nosliw.ui.entity.uicontent;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,7 +44,6 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
 	
 		//build name to variable id mapping
-		Map<String, HAPIdVariable> nameToVariableId = new LinkedHashMap<String, HAPIdVariable>();
 		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentValueStructureDomain();
 		Set<String> valueStructureIds = HAPUtilityValueContext.getSelfValueStructures(uiTagExe.getValueContext());
 		for(String valueStructureId : valueStructureIds) {
@@ -54,6 +52,8 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 				uiTagExe.addVariableByName(rootName, new HAPIdVariable(new HAPIdRootElement(null, valueStructureId, rootName), null));
 			}
 		}
+		
+		uiTagExe.setScriptResourceId(uiTagDef.getScriptResourceId());
 		
 		uiTagExe.setBaseName(uiTagDef.getBaseName());
 		

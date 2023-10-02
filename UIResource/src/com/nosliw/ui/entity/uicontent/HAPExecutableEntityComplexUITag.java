@@ -10,6 +10,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -35,6 +36,8 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	@HAPAttribute
 	public static final String VARIABLEBYNAME = "variableByName";
 
+	@HAPAttribute
+	public static final String SCRIPTRESOURCEID = "scriptResourceId";
 	
 	
 	
@@ -63,6 +66,9 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }
+	
+	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeValueObject(SCRIPTRESOURCEID, resourceId);         }
+	public HAPResourceId getScriptResourceId() {    return (HAPResourceId)this.getAttributeValue(SCRIPTRESOURCEID);      }
 	
 	@Override
 	public String getUIId() {    return (String)this.getAttributeValue(HAPWithUIId.UIID);  }

@@ -16,6 +16,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.ui.entity.uitag.HAPDefinitionEntityUITagDefinition;
 import com.nosliw.ui.tag.HAPManagerUITag;
@@ -45,6 +46,9 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		HAPIdEntityInDomain uiTagDefEntityId = uiTagMan.getUITagDefinition(customTagName, parserContext.getGlobalDomain());
 		HAPDefinitionEntityUITagDefinition uiTagDefEntity = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(uiTagDefEntityId).getEntity();
 
+		if(uiTagDefEntity.getScriptResourceId()!=null)   uiTagEntity.setScriptResourceId(uiTagDefEntity.getScriptResourceId());
+		else  uiTagEntity.setScriptResourceId(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, customTagName));
+		
 		uiTagEntity.setBaseName(uiTagDefEntity.getBaseName());
 		uiTagEntity.setParentRelationConfigure(uiTagDefEntity.getParentRelationConfigure());
 		uiTagEntity.setChildRelationConfigure(uiTagDefEntity.getChildRelationConfigure());
