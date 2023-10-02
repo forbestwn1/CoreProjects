@@ -1,6 +1,7 @@
 {
 	"name" : "test",
 	"type" : "data",
+	"base" : "simpleData",
 	"description" : "",
 	"attributes" : [
 		{

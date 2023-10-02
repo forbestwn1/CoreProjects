@@ -197,6 +197,11 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		getChild : function(childName){   return loc_children.getElement(childName);	},
 
 		addChild : function(childName, entityRuntime, adapters, isComplex){
+			//avoid duplicated name
+			while(this.getChild(childName)!=null){
+				childName = childName + "_1";
+			}
+			
 			var child = loc_createTreeNodeChild(childName, entityRuntime, adapters, isComplex);
 			loc_children.addElement(childName, child);
 			return child;

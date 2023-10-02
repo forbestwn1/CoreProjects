@@ -20,7 +20,10 @@
 		
 		<nosliw-test data="baseVarNormal"></nosliw-test>  
 		<br>
-		<nosliw-test data="baseVarNormal"></nosliw-test>  
+		<nosliw-test data="baseVarNormal">
+		
+		    Hello world!!!!
+		</nosliw-test>  
 		<br>
   
 </body>

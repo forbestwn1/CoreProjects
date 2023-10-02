@@ -64,13 +64,18 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_tagEventObject = node_createEventObject();
 
 	var loc_coreEnvObj = {
-		
+
+		//--------------------------------- utility
+		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
+
+		//---------------------------------variable
 		createVariableByName : function(variableName){
 			var varsByName = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_VARIABLEBYNAME); 
 			var varId = varsByName[variableName];
 			return loc_valueContext.createVariableById(varId);
 		},
 		
+		//---------------------------------operation request
 		getBatchDataOperationRequest : function(operations, handlers, request){
 			var requestInfo = node_createBatchUIDataOperationRequest(loc_valueContext, handlers, request);
 			_.each(operations, function(operation, i){
@@ -93,10 +98,30 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		},
 
 		
-		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
-
 		//--------------------------------- event
 		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
+
+		//---------------------------------ui resource view
+		getCreateUIContentRequest : function(id, context, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
+				success : function(request, childNode){
+					return childNode;
+				}
+			}));
+			return out;
+		},
+
+		getCreateDefaultUIContentRequest : function(handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
+				success : function(request, childNode){
+					return childNode;
+				}
+			}));
+			return out;
+		},
+
 	};
 
 	var loc_out = {
