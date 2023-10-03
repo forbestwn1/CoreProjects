@@ -50,6 +50,7 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
 				success : function(request, childNode){
 					loc_uiContent = childNode.getChildValue().getCoreEntity();
+					loc_uiContent.setParentUIEntity(loc_out);
 				}
 			}));
 			return out;

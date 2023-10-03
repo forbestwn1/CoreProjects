@@ -39,6 +39,7 @@ var packageObj = library;
     var node_getEntityTreeNodeInterface;
 	var node_makeObjectWithId;
 	var node_complexEntityUtility;
+	var node_makeObjectWithType;
     
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
@@ -86,6 +87,8 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				simpleEntity = node_makeObjectWithId(simpleEntity);
 				
+				simpleEntity = node_makeObjectWithType(simpleEntity, entityType);
+				
 			}
 		}));
 		return out;
@@ -111,6 +114,9 @@ var node_createComplexEntityRuntimeService = function() {
 				complexEntityCore = node_makeObjectWithComponentInterface(entityType, complexEntityCore, false);
 				
 				complexEntityCore = node_makeObjectWithId(complexEntityCore);
+				
+				complexEntityCore = node_makeObjectWithType(complexEntityCore, entityType);
+				
 				
 				var out = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
@@ -366,6 +372,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createScriptBasedPlugin", function(){node_createScriptBasedPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});

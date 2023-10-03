@@ -46,8 +46,6 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 	@HAPAttribute
-	public static final String ATTRIBUTES = "attributes";
-	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
 	@HAPAttribute
 	public static final String VALUESTRUCTUREEXE = "valueStructureExe";

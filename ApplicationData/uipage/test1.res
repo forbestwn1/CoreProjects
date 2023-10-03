@@ -58,7 +58,7 @@
 	<script>
 	{
 		newElementInLoop : function(data, info, env){
-			console.log(data);
+			console.log(JSON.stringify(arguments));
 		},
 		
 		textInputValueChanged : function(info, env){

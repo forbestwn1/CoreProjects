@@ -63,13 +63,29 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_uiTagCore;
+
+	var loc_parentUIEntity;
 	
 	var loc_tagEventObject = node_createEventObject();
+
+	var loc_getAttributeValue = function(name){  
+		var out = loc_attributes[name];
+		if(out==undefined){
+			var attrDef = loc_attributeDefinition[name];
+			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
+		}
+		return out;
+	};
+
+
 
 	var loc_coreEnvObj = {
 
 		//--------------------------------- utility
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
+
+		getAttributeValue : function(name){  return loc_getAttributeValue(name); },
+		getAttributes : function(){   return loc_attributes;   },
 
 		//---------------------------------variable
 		createVariableByName : function(variableName){
@@ -105,20 +121,11 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
 
 		//---------------------------------ui resource view
-		getCreateUIContentRequest : function(id, context, handlers, requestInfo){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
-				success : function(request, childNode){
-					return childNode;
-				}
-			}));
-			return out;
-		},
-
 		getCreateDefaultUIContentRequest : function(handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
 				success : function(request, childNode){
+					childNode.getChildValue().getCoreEntity().setParentUIEntity(loc_out);
 					return childNode;
 				}
 			}));
@@ -128,6 +135,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	};
 
 	var loc_out = {
+
+		setParentUIEntity : function(parentUIEntity){	loc_parentUIEntity = parentUIEntity;	},
+		
+		getParentUIEntity : function(){   return loc_parentUIEntity;     },
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

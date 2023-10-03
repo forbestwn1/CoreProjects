@@ -14,9 +14,35 @@ var packageObj = library;
 	var node_createContextElementInfo;
 	var node_dataUtility;
 	var node_basicUtility;
+	var node_getObjectType;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_utility = {
+var node_utility = function(){
+	
+	
+	
+	var loc_out = {
+		
+		findHandlerUp : function(currentUIContent, handlerName){
+			var handlerInfo;
+			var currentEntity = currentUIContent;
+			while(handlerInfo==undefined){
+				var objType = node_getObjectType(currentEntity);
+				if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT){
+					var handlerInfo = currentEntity.findHandlerLocally(handlerName);
+					if(handlerInfo==undefined){
+						currentEntity = currentEntity.getParentUIEntity();
+					}
+				}
+				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG){
+					currentEntity = currentEntity.getParentUIEntity();
+				}
+				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE){
+					break;
+				}
+			}
+			return handlerInfo;
+		},
 		
 		/*
 		 * create place holder html with special ui id 
@@ -170,9 +196,12 @@ var node_utility = {
 			return fun.apply(this, args);
 		},
 		
-
+	};
+	
+	
+	return loc_out;		
 		
-};
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -188,6 +217,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
