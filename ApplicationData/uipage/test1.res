@@ -25,7 +25,10 @@
 		    Hello world!!!!
 
 			<br>
-			Content:<%=?(inTagVar)?.value + '   6666 ' %>
+			Content:<%=?(inTagVar)?.value + '   7777 ' %>
+			<br>
+			<br>
+			<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 			<br>
 
 			<valuecontext>

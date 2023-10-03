@@ -314,7 +314,13 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 			}));
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG));
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, {
+				success: function(request, attrNode){
+					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
+						child.getCoreEntity().setParentUIEntity(loc_out);
+					});
+				}
+			}));
 			
 			return out;
 		},
