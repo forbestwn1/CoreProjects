@@ -50,7 +50,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_envInterface = {};
 
 	//object store all the functions for js block
-	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_SCRIPT);
+	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT);
 
 	//all embeded script expression(in content, attribute, ...)
 	var loc_expressionContents = [];
@@ -114,7 +114,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
 
     var loc_callHandlerUp = function(handlerName){
-		var handlerInfo = node_uiContentUtility.findHandlerUp(handlerName);
+		var handlerInfo = node_uiContentUtility.findHandlerUp(loc_out, handlerName);
 		if(handlerInfo!=undefined){
 			var args = Array.prototype.slice.call(arguments, 1);
 			loc_executeHandler(handlerInfo, args);
