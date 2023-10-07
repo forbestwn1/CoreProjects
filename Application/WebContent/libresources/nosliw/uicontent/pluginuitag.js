@@ -64,6 +64,9 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_envInterface = {};
 	var loc_uiTagCore;
 
+	var loc_attributes = {};
+	var loc_attributeDefinition = {};
+
 	var loc_parentUIEntity;
 	
 	var loc_tagEventObject = node_createEventObject();
@@ -72,12 +75,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		var out = loc_attributes[name];
 		if(out==undefined){
 			var attrDef = loc_attributeDefinition[name];
-			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
+			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGATTRIBUTEDEFINITION_DEFAULTVALUE];
 		}
 		return out;
 	};
-
-
 
 	var loc_coreEnvObj = {
 
@@ -85,6 +86,13 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
 
 		getAttributeValue : function(name){  return loc_getAttributeValue(name); },
+		getAllAttributeNames : function(){   
+			var out = [];
+			_.each(loc_attributeDefinition, function(attrDef, name){
+				out.push(name);
+			});
+			return out;
+		},
 		getAttributes : function(){   return loc_attributes;   },
 
 		//---------------------------------variable
@@ -142,6 +150,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_ATTRIBUTE);
+			
+			loc_attributeDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_ATTRIBUTEDEFINITION);
 			
 			var uiTagCore;
 			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE); 

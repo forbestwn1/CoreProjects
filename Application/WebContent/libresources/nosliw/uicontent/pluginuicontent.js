@@ -217,7 +217,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				});
 
 
-				//init expression in tag attribute
+				//init expression in regular tag attribute
 				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINATTRIBUTE), function(embededContentDef, i){
 					var embededContent = node_createEmbededScriptExpressionInTagAttribute(embededContentDef);
 					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());

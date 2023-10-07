@@ -13,6 +13,7 @@
   	<br>
 	Attribute:<span style="color:<%=?(attr1)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
 	<br>
+	Attribute:<span style="color:<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
 		<br>
 		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
 		<br>
@@ -20,7 +21,7 @@
 		
 		<nosliw-test data="baseVarNormal"></nosliw-test>  
 		<br>
-		<nosliw-test data="baseVarNormal">
+		<nosliw-test data="baseVarNormal" attr1="<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">
 		
 		    Hello world!!!!
 

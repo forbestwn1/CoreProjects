@@ -1,5 +1,7 @@
 package com.nosliw.ui.entity.uitag;
 
+import java.util.Map;
+
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -13,6 +15,8 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 
 	public static final String INFO = "info";
 	
+	public static final String ATTRIBUTEDEFINITION = "attribute";
+	
 	public static final String PARENTRELATIONCONFIGURE = "parentRelationConfigure";
 	
 	public static final String CHILDRELATIONCONFIGURE = "childRelationConfigure";
@@ -22,6 +26,9 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 	public static final String SCRIPTRESOURCEID = "scriptResourceId";
 	
 	public void setInfo(HAPEntityInfo entityInfo) {   this.setAttributeValueObject(INFO, entityInfo);    }
+	
+	public void setAttributeDefinition(Map<String, HAPUITagAttributeDefinition> attributes) {   this.setAttributeValueObject(ATTRIBUTEDEFINITION, attributes);    }
+	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinition() {   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValue(ATTRIBUTEDEFINITION);    }
 	
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }

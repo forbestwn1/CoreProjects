@@ -1,5 +1,9 @@
 package com.nosliw.ui.entity.uitag;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
@@ -36,6 +40,17 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		HAPEntityInfoImp info = new HAPEntityInfoImp();
 		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);
 		uiTagDefinition.setInfo(info);
+		
+		Map<String, HAPUITagAttributeDefinition> attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
+		JSONArray attrArray = jsonObj.optJSONArray(HAPDefinitionEntityUITagDefinition.ATTRIBUTEDEFINITION);
+		if(attrArray!=null) {
+			for(int i=0; i<attrArray.length(); i++) {
+				HAPUITagAttributeDefinition attr = new HAPUITagAttributeDefinition();
+				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				attributes.put(attr.getName(), attr);
+			}
+		}
+		uiTagDefinition.setAttributeDefinition(attributes);
 		
 		String baseName = (String)jsonObj.opt(HAPDefinitionEntityUITagDefinition.BASE);
 		if(baseName!=null)   uiTagDefinition.setBaseName(baseName);

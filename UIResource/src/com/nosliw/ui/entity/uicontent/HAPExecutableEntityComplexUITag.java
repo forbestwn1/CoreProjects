@@ -14,6 +14,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.ui.entity.uitag.HAPUITagAttributeDefinition;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexWithUIContent implements HAPWithUIId{
@@ -21,6 +22,9 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	@HAPAttribute
 	public static final String TAGID = "tagId";
 	
+	@HAPAttribute
+	public static final String ATTRIBUTEDEFINITION = "attributeDefinition";
+
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
 
@@ -61,6 +65,8 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	
 	public void setTagId(String tagId) {   this.setAttributeValueObject(TAGID, tagId);    }
 	public String getTagId() {   return (String)this.getAttributeValue(TAGID);  }
+
+	public void setAttributeDefinition(Map<String, HAPUITagAttributeDefinition> attributes) {   this.setAttributeValueObject(ATTRIBUTEDEFINITION, attributes);    }
 
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }

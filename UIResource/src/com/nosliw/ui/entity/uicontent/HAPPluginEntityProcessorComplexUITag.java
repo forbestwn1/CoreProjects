@@ -55,6 +55,8 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 		
 		uiTagExe.setScriptResourceId(uiTagDef.getScriptResourceId());
 		
+		uiTagExe.setAttributeDefinition(uiTagDef.getAttributeDefinition());
+		
 		uiTagExe.setBaseName(uiTagDef.getBaseName());
 		
 		uiTagExe.setUIId(uiTagDef.getUIId());

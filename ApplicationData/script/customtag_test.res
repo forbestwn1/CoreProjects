@@ -15,6 +15,8 @@ function(envObj){
 	var loc_currentData;
 
 	var loc_uiContent;
+	
+	var loc_attributes = {};
 
 	var loc_getViewData = function(){
 		var value = loc_inputView.val();
@@ -82,6 +84,11 @@ function(envObj){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
 			loc_dataVariable = loc_envObj.createVariableByName("internal_data");
 			
+			_.each(loc_envObj.getAllAttributeNames(), function(name, i){
+				var attrValue = loc_envObj.getAttributeValue(name);
+				console.log(name + " : " + attrValue);
+			});
+			
 			out.addRequest(loc_envObj.getCreateDefaultUIContentRequest({
 				success: function(request, uiConentNode){
 					loc_uiContent = uiConentNode.getChildValue().getCoreEntity();
@@ -112,6 +119,12 @@ function(envObj){
 			loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, request){
 				loc_updateView(request);
 			}, this);
+		},
+
+		updateAttributes : function(attributes, request){
+			_.each(attributes, function(name, attrValue){
+				console.log(name + " : " + attrValue);
+			});
 		},
 
 		destroy : function(request){

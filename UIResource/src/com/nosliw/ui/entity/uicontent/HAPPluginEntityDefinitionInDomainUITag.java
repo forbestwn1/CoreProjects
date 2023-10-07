@@ -48,7 +48,8 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 
 		if(uiTagDefEntity.getScriptResourceId()!=null)   uiTagEntity.setScriptResourceId(uiTagDefEntity.getScriptResourceId());
 		else  uiTagEntity.setScriptResourceId(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, customTagName));
-		
+
+		uiTagEntity.setAttributeDefinition(uiTagDefEntity.getAttributeDefinition());
 		uiTagEntity.setBaseName(uiTagDefEntity.getBaseName());
 		uiTagEntity.setParentRelationConfigure(uiTagDefEntity.getParentRelationConfigure());
 		uiTagEntity.setChildRelationConfigure(uiTagDefEntity.getChildRelationConfigure());

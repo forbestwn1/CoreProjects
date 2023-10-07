@@ -3,9 +3,17 @@
 	"type" : "data",
 	"description" : "",
 	"scriptResourceId" : "script|customtag_test",
-	"attributes" : [
+	"attribute" : [
 		{
 			"name" : "data"
+		},
+		{
+			"name" : "attr1",
+			"defaultValue" : "attr1DefaultValue"
+		},
+		{
+			"name" : "attr2",
+			"defaultValue" : "attr2DefaultValue"
 		}
 	],
 	"valueContext": {
