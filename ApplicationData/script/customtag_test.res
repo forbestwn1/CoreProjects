@@ -122,7 +122,7 @@ function(envObj){
 		},
 
 		updateAttributes : function(attributes, request){
-			_.each(attributes, function(name, attrValue){
+			_.each(attributes, function(attrValue, name){
 				console.log(name + " : " + attrValue);
 			});
 		},

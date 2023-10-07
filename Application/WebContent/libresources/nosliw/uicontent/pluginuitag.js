@@ -148,6 +148,8 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		getParentUIEntity : function(){   return loc_parentUIEntity;     },
 		
+		updateAttributes : function(attributes){    loc_uiTagCore.updateAttributes(attributes);       },
+		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			

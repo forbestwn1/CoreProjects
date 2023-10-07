@@ -36,7 +36,12 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 		for(HAPUIEmbededScriptExpressionInAttribute uiEmbed : uiContentDef.getScriptExpressionInNormalTagAttributes()) {
 			uiContentExe.addScriptExpressionInNormalTagAttribute(uiEmbed);
 		}
-		
+
+		//script expression in custom tag
+		for(HAPUIEmbededScriptExpressionInAttribute uiEmbed : uiContentDef.getScriptExpressionInCustomTagAttributes()) {
+			uiContentExe.addScriptExpressionInCustomTagAttribute(uiEmbed);
+		}
+
 		//event in normal tag
 		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {
 			uiContentExe.addNormalTagEvent(event);

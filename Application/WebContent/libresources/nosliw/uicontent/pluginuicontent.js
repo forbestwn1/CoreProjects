@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_uiContentUtility;
 	var node_createEmbededScriptExpressionInContent;
 	var node_createEmbededScriptExpressionInTagAttribute;
+	var node_createEmbededScriptExpressionInCustomTagAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
 	var node_uiContentUtility;
@@ -68,6 +69,8 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_idNameSpace = nosliw.generateId();
 
 	var loc_parentUIEntity;
+	
+	var loc_customerTagByUIId = {};
 
 	/*
 	 * init element event object
@@ -232,16 +235,29 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_NORMALTAGEVENT), function(eleEvent, key, list){
 					loc_elementEvents.push(loc_initElementEvent(eleEvent));
 				});
-				
-
 			}));
 			
+			//init custom tag
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, {
 				success: function(request, attrNode){
 					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
-						child.getCoreEntity().setParentUIEntity(loc_out);
+						var customTag = child.getCoreEntity();
+						loc_customerTagByUIId[customTag.getUIId()] = customTag;
+						customTag.setParentUIEntity(loc_out);
 					});
 				}
+			}));
+
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				//init expression in custom tag attribute
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINTAGATTRIBUTE), function(embededContentDef, i){
+					var embededContent = node_createEmbededScriptExpressionInCustomTagAttribute(embededContentDef);
+					var customTag = loc_customerTagByUIId[embededContent.getUIId()];
+					var scriptGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP).getChildValue().getCoreEntity();
+					
+					node_getLifecycleInterface(embededContent).init(customTag, scriptGroupCore);
+					loc_expressionContents.push(embededContent);
+				});
 			}));
 			
 			return out;
@@ -308,6 +324,7 @@ nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_
 nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInCustomTagAttribute", function(){node_createEmbededScriptExpressionInCustomTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});

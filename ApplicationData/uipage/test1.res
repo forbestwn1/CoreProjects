@@ -19,7 +19,7 @@
 		<br>
 
 		
-		<nosliw-test data="baseVarNormal"></nosliw-test>  
+		<!--nosliw-test data="baseVarNormal"></nosliw-test-->  
 		<br>
 		<nosliw-test data="baseVarNormal" attr1="<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">
 		
