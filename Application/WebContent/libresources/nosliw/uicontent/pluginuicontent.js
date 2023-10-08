@@ -59,6 +59,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	//all events on regular elements
 	var loc_elementEvents = [];
 	
+	//all events on custom tag elements
+	var loc_customTagEvents = [];
+	
 	//view container
 	var loc_viewContainer;
 
@@ -92,12 +95,37 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				source : this,
 			};
 			event.preventDefault();
-			loc_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], info);
+			loc_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
 			source : subEle,
 			event :  eventName,
+		};
+	};
+
+	/*
+	 * init element event object
+	 */
+	var loc_initCustomTagEvent = function(eleEvent){
+		//get custom tag for this event
+		var customTag = loc_customerTagByUIId[eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]];
+		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
+		
+		var listener = customTag.registerTagEventListener(eventName, function(event, eventData, requestInfo){
+			var info = {
+				event : event,
+				eventData : eventData,
+				source : tag,
+				requestInfo: requestInfo,
+			};
+			loc_out.prv_callScriptFunctionUp(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+		});
+		
+		return {
+			source : customTag,
+			event :  eventName,
+			listener: listener,
 		};
 	};
 
@@ -235,6 +263,12 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_NORMALTAGEVENT), function(eleEvent, key, list){
 					loc_elementEvents.push(loc_initElementEvent(eleEvent));
 				});
+
+				//init regular tag event
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMTAGEVENT), function(eleEvent, key, list){
+					loc_elementEvents.push(loc_initCustomTagEvent(eleEvent));
+				});
+
 			}));
 			
 			//init custom tag

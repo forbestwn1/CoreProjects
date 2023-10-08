@@ -70,6 +70,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_parentUIEntity;
 	
 	var loc_tagEventObject = node_createEventObject();
+	var loc_eventObject = node_createEventObject();
 
 	var loc_getAttributeValue = function(name){  
 		var out = loc_attributes[name];
@@ -204,9 +205,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHUIID_UIID);
 		},
 		
-		setEnvironmentInterface : function(envInterface){
-			loc_envInterface = envInterface;
-		},
+		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
+		
+		registerTagEventListener : function(eventName, handler, thisContext){	return loc_tagEventObject.registerListener(eventName, undefined, handler, thisContext);	},
+		registerEventListener : function(listener, handler, thisContext){	return loc_eventObject.registerListener(undefined, listener, handler, thisContext);	},
 		
 	};
 	

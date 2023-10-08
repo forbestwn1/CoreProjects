@@ -17,6 +17,8 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 	
 	public static final String ATTRIBUTEDEFINITION = "attribute";
 	
+	public static final String EVENTDEFINITION = "event";
+	
 	public static final String PARENTRELATIONCONFIGURE = "parentRelationConfigure";
 	
 	public static final String CHILDRELATIONCONFIGURE = "childRelationConfigure";
@@ -29,6 +31,9 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 	
 	public void setAttributeDefinition(Map<String, HAPUITagAttributeDefinition> attributes) {   this.setAttributeValueObject(ATTRIBUTEDEFINITION, attributes);    }
 	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinition() {   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValue(ATTRIBUTEDEFINITION);    }
+	
+	public Map<String, HAPUITagEventDefinition> getEventDefinition(){   return (Map<String, HAPUITagEventDefinition>)this.getAttributeValue(EVENTDEFINITION);    }
+	public void setEventDefinition(Map<String, HAPUITagEventDefinition> events) {   this.setAttributeValueObject(EVENTDEFINITION, events);    }
 	
 	public void setBaseName(String baseName) {    this.setAttributeValueObject(BASE, baseName);     }
 	public String getBaseName() {    return (String)this.getAttributeValue(BASE);     }

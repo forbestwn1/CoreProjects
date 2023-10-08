@@ -41,6 +41,7 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);
 		uiTagDefinition.setInfo(info);
 		
+		//attribute
 		Map<String, HAPUITagAttributeDefinition> attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
 		JSONArray attrArray = jsonObj.optJSONArray(HAPDefinitionEntityUITagDefinition.ATTRIBUTEDEFINITION);
 		if(attrArray!=null) {
@@ -51,6 +52,18 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 			}
 		}
 		uiTagDefinition.setAttributeDefinition(attributes);
+		
+		//event
+		Map<String, HAPUITagEventDefinition> events = new LinkedHashMap<String, HAPUITagEventDefinition>();
+		JSONArray eventArray = jsonObj.optJSONArray(HAPDefinitionEntityUITagDefinition.EVENTDEFINITION);
+		if(eventArray!=null) {
+			for(int i=0; i<eventArray.length(); i++) {
+				HAPUITagEventDefinition event = new HAPUITagEventDefinition();
+				event.buildObject(eventArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				events.put(event.getName(), event);
+			}
+		}
+		uiTagDefinition.setEventDefinition(events);
 		
 		String baseName = (String)jsonObj.opt(HAPDefinitionEntityUITagDefinition.BASE);
 		if(baseName!=null)   uiTagDefinition.setBaseName(baseName);
@@ -83,8 +96,6 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 			childRelationConfigure.buildObject(childRelationConfigureJson, HAPSerializationFormat.JSON);
 		}
 		uiTagDefinition.setChildRelationConfigure(childRelationConfigure);
-
-		
 	}
 
 }
