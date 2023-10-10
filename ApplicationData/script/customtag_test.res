@@ -125,6 +125,7 @@ function(envObj){
 			_.each(attributes, function(attrValue, name){
 				console.log(name + " : " + attrValue);
 			});
+			loc_envObj.trigueEvent("attrchange", attributes, request);
 		},
 
 		destroy : function(request){

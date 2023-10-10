@@ -15,13 +15,13 @@
 	<br>
 	Attribute:<span style="color:<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
 		<br>
-		<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
+		<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
 		<br>
 
 		
 		<!--nosliw-test data="baseVarNormal"></nosliw-test-->  
 		<br>
-		<nosliw-test data="baseVarNormal" attr1="<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">
+		<nosliw-test data="baseVarNormal" nosliw-event="attrchange:customTagAttrChangeHandler:" attr1="<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">
 		
 		    Hello world!!!!
 
@@ -29,7 +29,7 @@
 			Content:<%=?(inTagVar)?.value + '   7777 ' %>
 			<br>
 			<br>
-			<br><a href='' nosliw-event="click:newElementInLoop:">New</a><br>
+			<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
 			<br>
 
 			<valuecontext>
@@ -61,7 +61,11 @@
 
 	<script>
 	{
-		newElementInLoop : function(data, info, env){
+		tagEventHandler : function(event, info, env){
+			console.log(JSON.stringify(arguments));
+		},
+		
+		customTagAttrChangeHandler : function(event, info, env){
 			console.log(JSON.stringify(arguments));
 		},
 		

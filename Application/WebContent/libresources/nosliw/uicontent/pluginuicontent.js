@@ -107,19 +107,19 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	/*
 	 * init element event object
 	 */
-	var loc_initCustomTagEvent = function(eleEvent){
+	var loc_initCustomTagEvent = function(tagEvent){
 		//get custom tag for this event
-		var customTag = loc_customerTagByUIId[eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]];
-		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
+		var customTag = loc_customerTagByUIId[tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_UIID]];
+		var eventName = tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_EVENT];
 		
 		var listener = customTag.registerTagEventListener(eventName, function(event, eventData, requestInfo){
 			var info = {
 				event : event,
 				eventData : eventData,
-				source : tag,
+				source : customTag,
 				requestInfo: requestInfo,
 			};
-			loc_out.prv_callScriptFunctionUp(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+			loc_callHandlerUp(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
@@ -264,11 +264,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					loc_elementEvents.push(loc_initElementEvent(eleEvent));
 				});
 
-				//init regular tag event
-				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMTAGEVENT), function(eleEvent, key, list){
-					loc_elementEvents.push(loc_initCustomTagEvent(eleEvent));
-				});
-
 			}));
 			
 			//init custom tag
@@ -291,6 +286,11 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					
 					node_getLifecycleInterface(embededContent).init(customTag, scriptGroupCore);
 					loc_expressionContents.push(embededContent);
+				});
+
+				//init regular tag event
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMTAGEVENT), function(eleEvent, key, list){
+					loc_elementEvents.push(loc_initCustomTagEvent(eleEvent));
 				});
 			}));
 			
