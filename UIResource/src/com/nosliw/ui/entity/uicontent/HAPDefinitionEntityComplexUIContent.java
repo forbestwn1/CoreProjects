@@ -1,7 +1,6 @@
 package com.nosliw.ui.entity.uicontent;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -17,8 +16,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 
 	static final public String ATTR_STYPE = "style";  
 	
-	static final public String ATTR_ATTRIBUTE = "attribute";  
-	
 	public HAPDefinitionEntityComplexUIContent() {
 //		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 //		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
@@ -30,7 +27,7 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	public String getUnitType() {    return null;   }
 
 	public void addCustomTag(HAPIdEntityInDomain customTagId, HAPConfigureParentRelationComplex relationConfigure, HAPContextParser parserContext) {
-		HAPUtilityEntityContainer.addElementAttribute(this.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.CUSTOMERTAG), customTagId, relationConfigure, parserContext);
+		HAPUtilityEntityContainer.addComplexElementAttribute(this.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.CUSTOMERTAG), customTagId, relationConfigure, parserContext);
 	}
 	
 	public void setHtml(String html) {
@@ -56,8 +53,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContents() {  return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT);    }
 	
 	public void setStyle(HAPDefinitionStyle style) {}
-	
-	public void addAttribute(String attrName, String attrValue) {    ((Map<String, String>)this.getAttributeValue(ATTR_ATTRIBUTE)).put(attrName, attrValue);    }
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {

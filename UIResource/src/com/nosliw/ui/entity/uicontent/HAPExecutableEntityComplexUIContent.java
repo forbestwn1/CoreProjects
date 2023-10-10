@@ -36,6 +36,9 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	@HAPAttribute
 	static final public String SCRIPT = "script";  
 	
+	@HAPAttribute
+	static final public String SERVICE = "service";  
+	
 
 	public HAPExecutableEntityComplexUIContent() {
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());

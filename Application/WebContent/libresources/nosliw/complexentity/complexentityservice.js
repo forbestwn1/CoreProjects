@@ -193,7 +193,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createScriptBasedPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_COMPLEXCONTAINER, node_createComplexEntityContainerPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, node_createComplexEntityContainerPlugin());
 
 
 

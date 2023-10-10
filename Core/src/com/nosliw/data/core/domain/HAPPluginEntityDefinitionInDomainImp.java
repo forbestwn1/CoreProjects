@@ -114,6 +114,12 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(isAttributeEnabled(attrEntityObj)) {
 			HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntity.parseEmbededEntity(attrEntityObj, attrEntityType, adapterType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			
+			if(attributeName==null) {
+				HAPIdEntityInDomain attrEntityId = (HAPIdEntityInDomain)attributeEntity.getValue();
+				attributeName = parserContext.getGlobalDomain().getEntityInfoDefinition(attrEntityId).getExtraInfo().getName();
+			}
+			
 			entity.setAttribute(attributeName, attributeEntity, new HAPInfoValueType(attrEntityType, false));
 			processReservedAttribute(entity, attributeName);
 		}

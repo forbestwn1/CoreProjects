@@ -1,9 +1,9 @@
 package com.nosliw.ui.entity.uicontent;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -55,7 +55,6 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 
-		uiContentEntity.setAttributeValueObject(HAPDefinitionEntityComplexUIContent.ATTR_ATTRIBUTE, new LinkedHashMap<String, String>());
 	}
 	
 	@Override
@@ -63,6 +62,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		super.setupAttributeForComplexEntity(entityId, parserContext);
 		//create customer tag container attribute
 		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, null, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityContainer.newSimpleEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SERVICE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, parserContext, getRuntimeEnvironment());
 	}
 	
 	@Override
@@ -80,10 +80,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseUIDefinitionUnit(Element wrapperEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		
-		//process script block
+		//parse service
+		this.parseService(wrapperEle, uiContentId, parserContext);
+		
+		//parse script block
 		this.parseUnitScriptBlocks(wrapperEle, this.getUIContentEntityById(uiContentId, parserContext));
 
-		//process contents within customer ele
+		//parse contents within customer ele
 		parseDescendantTags(wrapperEle, uiContentId, parserContext);
 		
 		//parse script in content
@@ -253,6 +256,19 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 					//remove this attribute from element
 					ele.removeAttr(eleAttrName);
 				}
+			}
+		}
+	}
+
+	private void parseService(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext) {
+		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
+
+		List<Element> serviceEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPExecutableEntityComplexUIContent.SERVICE);
+		for(Element serviceEle : serviceEles) {
+			JSONArray serviceArray = new JSONArray(serviceEle.html());
+			for(int i=0; i<serviceArray.length(); i++) {
+				JSONObject serviceObj = serviceArray.getJSONObject(i);
+				this.parseSimpleEntityAttributeSelf(serviceObj, uiContent.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.SERVICE), null, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, null, parserContext);
 			}
 		}
 	}

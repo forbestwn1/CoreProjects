@@ -54,7 +54,7 @@ public class HAPUtilityDataExpressionDefinition {
 						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, referenceOperand.getReference());
 						HAPIdEntityInDomain refExpId = HAPUtilityParserEntity.parseReferenceResource(resourceId, parserContext, resourceDefMan);
 						
-						String refAttrName = HAPUtilityEntityContainer.addElementAttribute(expressionEntity.getReferencesContainerId(), refExpId, parserContext);
+						String refAttrName = HAPUtilityEntityContainer.addComplexElementAttribute(expressionEntity.getReferencesContainerId(), refExpId, parserContext);
 						referenceOperand.setReferenceExpressionAttributeName(refAttrName);
 					}
 					return true;

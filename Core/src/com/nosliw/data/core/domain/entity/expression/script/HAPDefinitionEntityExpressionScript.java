@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityComplexContainer;
+import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
 
 public abstract class HAPDefinitionEntityExpressionScript extends HAPDefinitionEntityInDomainComplex{
 
@@ -15,7 +15,7 @@ public abstract class HAPDefinitionEntityExpressionScript extends HAPDefinitionE
 
 	public HAPIdEntityInDomain getReferencesContainerId() {    return (HAPIdEntityInDomain)this.getAttributeValue(ATTR_REFERENCES);     }
 	
-	public HAPDefinitionEntityComplexContainer getReferencesContainer(HAPDomainEntityDefinitionGlobal globalDomain){
-		return (HAPDefinitionEntityComplexContainer)globalDomain.getEntityInfoDefinition(getReferencesContainerId()).getEntity();    
+	public HAPDefinitionEntityContainerComplex getReferencesContainer(HAPDomainEntityDefinitionGlobal globalDomain){
+		return (HAPDefinitionEntityContainerComplex)globalDomain.getEntityInfoDefinition(getReferencesContainerId()).getEntity();    
 	}
 }

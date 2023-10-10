@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityComplexContainer;
+import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityContainerComplex;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
@@ -33,7 +33,7 @@ public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEnt
 	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getAttributeValue(VARIABLEINFOS);    }
 	
-	public HAPExecutableEntityComplexContainer getReferences(HAPContextProcessor processContext) {   return(HAPExecutableEntityComplexContainer) processContext.getCurrentExecutableDomain().getEntityInfoExecutable(this.getComplexEntityAttributeValue(REFERENCES)).getEntity();    }
+	public HAPExecutableEntityContainerComplex getReferences(HAPContextProcessor processContext) {   return(HAPExecutableEntityContainerComplex) processContext.getCurrentExecutableDomain().getEntityInfoExecutable(this.getComplexEntityAttributeValue(REFERENCES)).getEntity();    }
 	
 	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getAttributeValue(ATTRIBUTESREFERENCE);     }
 	

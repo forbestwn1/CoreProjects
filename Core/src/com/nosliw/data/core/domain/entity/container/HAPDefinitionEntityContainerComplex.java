@@ -8,7 +8,7 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPInfoValueType;
 
-public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDomainComplex{
+public class HAPDefinitionEntityContainerComplex extends HAPDefinitionEntityInDomainComplex{
 
 	public static final String ATTR_ELEMENTRELATIONCONFIGURE = "elementRelationCoonfigure";
 
@@ -23,7 +23,12 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 		this.setAttribute(attrName, new HAPEmbededDefinition(entityId), this.getElmentValueTypeInfo(), autoProcess);
 		return attrName;
 	}
-	
+
+	public String addElementAttribute(String eleId, HAPIdEntityInDomain entityId, Boolean autoProcess) {
+		this.setAttribute(eleId, new HAPEmbededDefinition(entityId), this.getElmentValueTypeInfo(), autoProcess);
+		return eleId;
+	}
+
 	public HAPInfoValueType getElmentValueTypeInfo() {     return (HAPInfoValueType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
 	public void setElementValueTypeInfo(HAPInfoValueType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
 	
@@ -32,7 +37,7 @@ public class HAPDefinitionEntityComplexContainer extends HAPDefinitionEntityInDo
 	
 	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityComplexContainer out = new HAPDefinitionEntityComplexContainer();
+		HAPDefinitionEntityContainerComplex out = new HAPDefinitionEntityContainerComplex();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}
