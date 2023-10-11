@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
+		<br>
+		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
+		<br>
+
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
 		<div>
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
@@ -61,6 +65,10 @@
 
 	<script>
 	{
+		invokeService : function(event, info, env){
+			env.executeGetInvokeServiceRequest("service1", "default");
+		},
+	
 		tagEventHandler : function(event, info, env){
 			console.log(JSON.stringify(arguments));
 		},
@@ -80,8 +88,50 @@
 	</script>
 	
 	<service>
-		
-	
+	[
+		{
+			"embeded": {
+				"info": {
+					"name" : "service1",
+					"status": "disabled1"
+				},
+				"entity" : {
+					"serviceKey" : {
+						"id" : "TestBasicService"
+					}
+				}
+			},
+			"adapter":[
+				{
+					"name" : "default",
+					"status": "disabled1",
+					"entityType" : "dataAssociationInteractive",
+					"entity" : {
+						"in" : {
+							"serviceParm1" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "parm1"
+									}
+								}
+							}
+						},
+						"out" : {
+							"success" : {
+								"output1" : {
+									"definition" : {
+										"mapping" : {
+											"elementPath": "outputInService1"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+	]
 	</service>
 	
 	<valuecontext>
@@ -90,6 +140,24 @@
 			{
 				"groupType" : "public",
 				"valueStructure" : {
+					"parm1": {
+						"definition":{
+							"criteria": "test.string;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of parm1"
+						}
+					},
+					"output1": {
+						"definition":{
+							"criteria": "test.string;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of outputInService1"
+						}
+					},
 					"baseVarNormal": {
 						"definition":{
 							"criteria": "test.string;1.0.0"

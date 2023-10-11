@@ -25,6 +25,7 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_uiContentUtility;
 	var node_getEntityTreeNodeInterface;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -61,6 +62,8 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	
 	//all events on custom tag elements
 	var loc_customTagEvents = [];
+	
+	var loc_services;
 	
 	//view container
 	var loc_viewContainer;
@@ -203,6 +206,15 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		var that = this;
 		var fun = loc_scriptObject[funName];
 		var env = {
+			getInvokeServiceRequest : function(serviceName, adapterName, handlers, request){
+				var serviceChild = node_getEntityTreeNodeInterface(loc_services).getChild(serviceName);
+				var adapter = serviceChild.getAdapters()[adapterName]
+				return node_complexEntityUtility.getAdapterExecuteRequest(loc_services, serviceChild.getChildValue(), adapter, handlers, request);
+			},
+			executeGetInvokeServiceRequest : function(serviceName, handlers, request){
+				node_requestServiceProcessor.processRequest(this.getInvokeServiceRequest(serviceName, handlers, request));
+			}
+			
 //				context : that.getContext(),
 //				uiUnit : that,
 		};
@@ -276,6 +288,14 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					});
 				}
 			}));
+
+			//init service
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SERVICE, {
+				success: function(request, attrNode){
+					loc_services = attrNode.getChildValue().getCoreEntity();
+				}
+			}));
+
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//init expression in custom tag attribute
@@ -363,6 +383,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 
