@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+		<nosliw-test data="parm1"></nosliw-test>  
 		<br>
 		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
+		<br>
+		<br>
+		Service return:<%=?(output1)?.value%>
 		<br>
 
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>

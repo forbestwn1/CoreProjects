@@ -63,7 +63,7 @@ var node_createValueStructureElementInfo = function(name, data1, data2, adapterI
 /*
  * entity for context based variable description
  * It contains : 
- * 		name : context element name
+ * 		name : valuestructure root element name
  * 		path : path from context element
  * possible parms: 
  * 		name + path

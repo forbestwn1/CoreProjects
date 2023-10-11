@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_expressionUtility;
 	var node_makeObjectWithApplicationInterface;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -46,7 +47,7 @@ var loc_createSimpleEntityContainerComponentCore = function(complexEntityDef, va
 			
 			var attrNames = loc_complexEntityDef.getAllAttributesName();
 			_.each(attrNames, function(attrName, i){
-				if(attrName.startsWith(node_COMMONCONSTANT.PREFIX_ELEMENTID_COTAINER)){
+				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
 					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
 						success : function(request, childNode){
 							loc_childrenEntity[attrName] = childNode.getChildValue();
@@ -83,6 +84,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 
 //Register Node by Name
