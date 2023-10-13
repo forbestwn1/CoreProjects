@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
 <body>
+		Url value:<%=?(url)?.value%>Hello<%=?(url)?.value%>
+
+<!--
+
 		<nosliw-test data="parm1"></nosliw-test>  
 		<br>
 		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
 		<br>
 		<br>
 		Service return:<%=?(output1)?.value%>
+		<br>
+
+		Url convert : <nosliw-test data="url"></nosliw-test>  
+		<br>
+		<br>
+		Url value:<%=?(url)?.value%>
+		<br>
+		<br>
+		Url datatype:<%=?(url)?.dataTypeId%>
+		<br>
+		<br>
 		<br>
 
 		<span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
@@ -18,6 +33,7 @@
 		<br>
 		Content:<%=?(baseVarNormal)?.value + '   6666 ' %>
 		<br>
+
   	<br>
 	Attribute:<span style="color:<%=?(attr1)?.value=='1234'?'red':'blue'%>">Phone Number : </span> 
 	<br>
@@ -27,7 +43,7 @@
 		<br>
 
 		
-		<!--nosliw-test data="baseVarNormal"></nosliw-test-->  
+		<nosliw-test data="baseVarNormal"></nosliw-test>  
 		<br>
 		<nosliw-test data="baseVarNormal" nosliw-event="attrchange:customTagAttrChangeHandler:" attr1="<%=?(baseVarNormal)?.value=='1234'?'red':'blue'%>">
 		
@@ -64,7 +80,7 @@
 
 		</nosliw-test>  
 		<br>
-  
+-->
 </body>
 
 	<script>
@@ -144,6 +160,15 @@
 			{
 				"groupType" : "public",
 				"valueStructure" : {
+					"url": {
+						"definition":{
+							"criteria": "test.url;1.0.0"
+						},
+						"defaultValue": {
+							"dataTypeId": "test.url;1.0.0",
+							"value": "default value of url"
+						}
+					},
 					"parm1": {
 						"definition":{
 							"criteria": "test.string;1.0.0"

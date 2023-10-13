@@ -180,7 +180,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				else if(segmentType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
 					HAPDefinitionExpressionLiterate literateExpression = new HAPDefinitionExpressionLiterate();
 					literateExpression.addSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segment);
-					String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
+					String scriptExpressionId = scriptEntityGroupEntity.addExpression(literateExpression);
 
 					HAPUIEmbededScriptExpressionInContent expressionContent = new HAPUIEmbededScriptExpressionInContent(uiContent.generateId(), scriptExpressionId);
 					newText.append("<span "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+expressionContent.getUIId()+"></span>");
@@ -271,6 +271,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				this.parseSimpleEntityAttributeSelf(serviceObj, uiContent.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.SERVICE), null, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, null, parserContext);
 			}
 		}
+		for(Element serviceEle : serviceEles)  serviceEle.remove();
 	}
 
 	
