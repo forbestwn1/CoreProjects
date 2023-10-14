@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body>
-		Url value:<%=?(url)?.value%>Hello<%=?(url)?.value%>
+
+		<br>
+		<br>
+		Url convert : <nosliw-test data="url"></nosliw-test>  
+		<br>
+		<br>
+		Url value:<%=?(url)?.value%>
+		<br>
+		<br>
+		Url datatype:<%=?(url)?.dataTypeId%>
+		<br>
+		<br>
+
 
 <!--
 

@@ -23,7 +23,6 @@ var node_createVariableWrapper;
 var node_getHandleEachElementRequest;
 var node_createServiceRequestInfoSequence;
 var node_createServiceRequestInfoSet;
-var node_uiDataOperationServiceUtility;
 var node_createUIDataOperationRequest;
 var node_uiDataOperationServiceUtility;
 var node_UIDataOperation;
@@ -388,7 +387,6 @@ nosliw.registerSetNodeDataEvent("variable.variable.createVariableWrapper", funct
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
