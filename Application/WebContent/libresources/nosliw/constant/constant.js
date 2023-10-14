@@ -328,6 +328,9 @@ var node_CONSTANT=
 	  "COMPONENT_INTERFACE_LIFECYCLE" : "getLifeCycleRequest",
 	  "COMPONENT_INTERFACE_" : "",
 	  
+	  "UICONTENT_ENTITYTYPE_HANDLER" : "handler",
+	  "UICONTENT_ENTITYTYPE_SERVICE" : "service",
+	  
 };
 
 //*******************************************   End Node Definition  ************************************** 	

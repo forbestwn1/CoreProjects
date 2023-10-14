@@ -99,7 +99,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				source : this,
 			};
 			event.preventDefault();
-			loc_callHandlerUp(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
@@ -123,7 +123,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				source : customTag,
 				requestInfo: requestInfo,
 			};
-			loc_callHandlerUp(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+			node_uiContentUtility.callHandlerUp(loc_out, tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
@@ -148,76 +148,63 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	 */
 	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
 
-    var loc_callHandlerUp = function(handlerName){
-		var handlerInfo = node_uiContentUtility.findHandlerUp(loc_out, handlerName);
-		if(handlerInfo!=undefined){
-			var args = Array.prototype.slice.call(arguments, 1);
-			loc_executeHandler(handlerInfo, args);
-		}
-	};
-
-	var loc_executeHandler = function(handlerInfo, args){
-		if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
-			handlerInfo.uiUnit.callScriptFunction(handlerInfo.handlerName, args);
-			
-			
-//			loc_callScriptFunction.apply(handlerInfo.uiUnit, [handlerInfo.handlerName, args]);
-		}
-		else if(handlerInfo.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
-//			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO);
-		}
-	};
-		
-	var loc_findHandlerLocally = function(handlerName){
-		var handlerInfo;
-/*		
-		//search task first
-		var taskSuite;
-		if(loc_tasks!=undefined){
-			if(loc_tasks[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
-				taskSuite = loc_tasks;
+	var loc_findEntityLocally = function(entityType, entityName){
+		var out;
+		if(entityType==node_CONSTANT.UICONTENT_ENTITYTYPE_HANDLER){
+	/*		
+			//search task first
+			var taskSuite;
+			if(loc_tasks!=undefined){
+				if(loc_tasks[node_COMMONATRIBUTECONSTANT.EXECUTABLETASKSUITE_TASK][handlerName]!=undefined){
+					taskSuite = loc_tasks;
+				}
 			}
-		}
-		if(taskSuite!=undefined){
-			handlerInfo = {
-				handlerSuite : taskSuite,
-				handlerName : handlerName,
-				handlerType : node_CONSTANT.HANDLER_TYPE_TASK,
-				uiUnit : loc_out,
-			};
-		}
-*/
-		
-		if(handlerInfo==null){
-			//if not found in task, try to find in script function
-			var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[handlerName];
-			if(fun!=undefined){
+			if(taskSuite!=undefined){
 				handlerInfo = {
-					handlerSuite : loc_scriptObject,
+					handlerSuite : taskSuite,
 					handlerName : handlerName,
-					handlerType : node_CONSTANT.HANDLER_TYPE_SCRIPT,
+					handlerType : node_CONSTANT.HANDLER_TYPE_TASK,
 					uiUnit : loc_out,
 				};
 			}
+	*/
+			
+			if(out==null){
+				//if not found in task, try to find in script function
+				var fun = loc_scriptObject==undefined?undefined:loc_scriptObject[entityName];
+				if(fun!=undefined){
+					out = {
+						handlerSuite : loc_scriptObject,
+						handlerName : entityName,
+						handlerType : node_CONSTANT.HANDLER_TYPE_SCRIPT,
+					};
+				}
+			}
 		}
-		return handlerInfo;
+		else if(entityType==node_CONSTANT.UICONTENT_ENTITYTYPE_SERVICE){
+			if(loc_services!=undefined){
+				var serviceChild = node_getEntityTreeNodeInterface(loc_services).getChild(entityName);
+				if(serviceChild!=undefined){
+					out = {
+						parent : loc_services,
+						serviceNode : serviceChild
+					};
+				}
+			}
+		}
+		return out;
 	};
-
+		
 	var loc_callScriptFunction = function(funName, args){
 		var that = this;
 		var fun = loc_scriptObject[funName];
 		var env = {
 			getInvokeServiceRequest : function(serviceName, adapterName, handlers, request){
-				var serviceChild = node_getEntityTreeNodeInterface(loc_services).getChild(serviceName);
-				var adapter = serviceChild.getAdapters()[adapterName]
-				return node_complexEntityUtility.getAdapterExecuteRequest(loc_services, serviceChild.getChildValue(), adapter, handlers, request);
+				return node_uiContentUtility.getInvokeServiceRequest(loc_out, serviceName, adapterName, handlers, request);
 			},
 			executeGetInvokeServiceRequest : function(serviceName, handlers, request){
 				node_requestServiceProcessor.processRequest(this.getInvokeServiceRequest(serviceName, handlers, request));
 			}
-			
-//				context : that.getContext(),
-//				uiUnit : that,
 		};
 		if(args==undefined)  args = [];
 		args.push(env);
@@ -231,7 +218,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		
 		getParentUIEntity : function(){   return loc_parentUIEntity;     },
 		
-		findHandlerLocally : function(handlerName){   return loc_findHandlerLocally(handlerName);  },
+		findEntityLocally : function(entityType, entityName){  return loc_findEntityLocally(entityType, entityName);  },
+		
+//		findHandlerLocally : function(handlerName){   return loc_findHandlerLocally(handlerName);  },
 		
 		callScriptFunction : function(funName, args){   return loc_callScriptFunction(funName, args);     },
 		

@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_ResourceId;
 	var node_resourceUtility;
 	var node_createConfigure;
+	var node_getEntityTreeNodeInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -36,6 +37,12 @@ var node_complexEntityUtility = {
 			return parm;
 		}
 	},
+	
+	getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, handlers, request){
+		var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);
+		var adapter = attrNode.getAdapters()[adapterName!=undefined?adapterName:node_COMMONCONSTANT.NAME_DEFAULT];
+		return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, handlers, request);
+	},	
 	
 	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, handlers, request){
 		var childInput;
@@ -116,6 +123,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("complexEntityUtility", node_complexEntityUtility); 

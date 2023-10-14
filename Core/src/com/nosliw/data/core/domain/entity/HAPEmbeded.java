@@ -11,6 +11,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.value.HAPUtilityClone;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
@@ -51,6 +53,7 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public HAPInfoAdapter getAdapter(String name) {	return m_adapters.get(name);	}
 	public void addAdapter(HAPInfoAdapter adapter) {
 		String name = adapter.getName();
+		if(HAPUtilityBasic.isStringEmpty(name))  name = HAPConstantShared.NAME_DEFAULT;
 		this.m_adapters.put(name, adapter);	
 	}
 

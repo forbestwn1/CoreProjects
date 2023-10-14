@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoService;
@@ -15,6 +16,7 @@ var packageObj = library;
 	var node_dataUtility;
 	var node_basicUtility;
 	var node_getObjectType;
+	var node_complexEntityUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -22,26 +24,54 @@ var node_utility = function(){
 	
 	
 	var loc_out = {
-		
-		findHandlerUp : function(currentUIContent, handlerName){
-			var handlerInfo;
-			var currentEntity = currentUIContent;
-			while(handlerInfo==undefined){
-				var objType = node_getObjectType(currentEntity);
+
+		findEntityUp : function(currentUIContent, entityType, entityName){
+			var entityInfo;
+			var currentUIEntity = currentUIContent;
+			while(entityInfo==undefined){
+				var objType = node_getObjectType(currentUIEntity);
 				if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT){
-					var handlerInfo = currentEntity.findHandlerLocally(handlerName);
-					if(handlerInfo==undefined){
-						currentEntity = currentEntity.getParentUIEntity();
+					entityInfo = currentUIEntity.findEntityLocally(entityType, entityName);
+					if(entityInfo==undefined){
+						currentUIEntity = currentUIEntity.getParentUIEntity();
 					}
 				}
 				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG){
-					currentEntity = currentEntity.getParentUIEntity();
+					currentUIEntity = currentUIEntity.getParentUIEntity();
 				}
 				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE){
 					break;
 				}
 			}
-			return handlerInfo;
+			if(entityInfo!=undefined){
+				return {
+					owner : currentUIEntity,
+					info : entityInfo
+				};
+			}
+		},
+
+		getInvokeServiceRequest : function(currentUIContent, serviceName, adapterName, handlers, request){
+			var serviceInfo = this.findEntityUp(currentUIContent, node_CONSTANT.UICONTENT_ENTITYTYPE_SERVICE, serviceName);
+			return node_complexEntityUtility.getAttributeAdapterExecuteRequest(serviceInfo.info.parent, serviceName, adapterName, handlers, request);
+		},
+
+	    callHandlerUp : function(currentUIContent, handlerName){
+			var handlerInfo = this.findEntityUp(currentUIContent, node_CONSTANT.UICONTENT_ENTITYTYPE_HANDLER, handlerName);
+			if(handlerInfo!=undefined){
+				var args = Array.prototype.slice.call(arguments, 2);
+				this.executeHandler(handlerInfo, args);
+			}
+		},
+	
+		executeHandler : function(handlerInfo, args){
+			var info = handlerInfo.info;
+			if(info.handlerType==node_CONSTANT.HANDLER_TYPE_SCRIPT){
+				handlerInfo.owner.callScriptFunction(info.handlerName, args);
+			}
+			else if(info.handlerType==node_CONSTANT.HANDLER_TYPE_TASK){
+	//			loc_taskRuntime.executeExecuteEmbededTaskInSuiteRequest(handlerInfo.handlerSuite, handlerInfo.handlerName, loc_viewIO);
+			}
 		},
 		
 		/*
@@ -206,6 +236,7 @@ var node_utility = function(){
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoService", function(){node_createServiceRequestInfoService = this.getData();});
@@ -218,6 +249,7 @@ nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", fun
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

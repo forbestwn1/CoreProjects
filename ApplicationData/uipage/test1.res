@@ -2,18 +2,22 @@
 <html>
 <body>
 
+		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
 		<br>
-		<br>
-		Url convert : <nosliw-test data="url"></nosliw-test>  
-		<br>
-		<br>
-		Url value:<%=?(url)?.value%>
-		<br>
-		<br>
-		Url datatype:<%=?(url)?.dataTypeId%>
-		<br>
+		Service return:<%=?(output1)?.value%>
 		<br>
 
+		<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
+
+		<nosliw-test data="baseVarNormal">
+		
+			<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
+		
+			<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
+			<br>
+			Service return:<%=?(output1)?.value%>
+			<br>
+		</nosliw-test>  
 
 <!--
 
