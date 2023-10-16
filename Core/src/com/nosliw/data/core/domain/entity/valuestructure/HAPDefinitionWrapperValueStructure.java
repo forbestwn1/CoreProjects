@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain.entity.valuestructure;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -19,6 +21,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 
 	public static final String GROUPNAME = "groupName";
 	public static final String GROUPTYPE = "groupType";
+	public static final String INFO = "info";
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
 	private String m_groupName;
@@ -26,13 +29,21 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	//group type for value structure (public, private, protected, internal)
 	private String m_groupType;
 	
+	private HAPInfoImpSimple m_info;
+	
 	private HAPIdEntityInDomain m_valueStructureId;
 	
-	public HAPDefinitionWrapperValueStructure() {}
+	public HAPDefinitionWrapperValueStructure() {
+		this.m_info = new HAPInfoImpSimple();
+	}
 
 	public HAPDefinitionWrapperValueStructure(HAPIdEntityInDomain valueStructureId) {
+		this();
 		this.m_valueStructureId = valueStructureId;
 	}
+	
+	public HAPInfo getInfo() {    return this.m_info;     }
+	public void setInfo(HAPInfoImpSimple info) {   this.m_info = info;     }
 	
 	public HAPIdEntityInDomain getValueStructureId() {	return this.m_valueStructureId;	}
 	public void setValueStructureId(HAPIdEntityInDomain valueStructureId) {   this.m_valueStructureId = valueStructureId;       }
@@ -56,13 +67,13 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(GROUPTYPE, this.m_groupType);
 		jsonMap.put(GROUPNAME, this.m_groupName);
+		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(GROUPTYPE, this.m_groupType);
-		jsonMap.put(GROUPNAME, this.m_groupName);
+		this.buildJsonMap(jsonMap, null);
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityDomain.getEntityExpandedJsonString(this.m_valueStructureId, entityDefDomain));
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
@@ -71,6 +82,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure();
 		out.m_groupName = this.m_groupName;
 		out.m_groupType = this.m_groupType;
+		out.m_info = this.m_info.cloneInfo();
 		out.m_valueStructureId = this.m_valueStructureId.cloneValue();
 		return out;
 	}

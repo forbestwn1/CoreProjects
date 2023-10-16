@@ -2,24 +2,16 @@
 <html>
 <body>
 
+		<nosliw-test data="parm1"></nosliw-test>  
+		<br>
 		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
+		<br>
 		<br>
 		Service return:<%=?(output1)?.value%>
 		<br>
 
-		<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
-
-		<nosliw-test data="baseVarNormal">
-		
-			<br><a href='' nosliw-event="click:tagEventHandler:">New</a><br>
-		
-			<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
-			<br>
-			Service return:<%=?(output1)?.value%>
-			<br>
-		</nosliw-test>  
-
 <!--
+		<nosliw-loop data="array" element="ele123456" index="index3456789"/>
 
 		<nosliw-test data="parm1"></nosliw-test>  
 		<br>
@@ -29,7 +21,7 @@
 		Service return:<%=?(output1)?.value%>
 		<br>
 
-		Url convert : <nosliw-test data="url"></nosliw-test>  
+		Url convert : <nosliw-test data="url"></nosliw-test>
 		<br>
 		<br>
 		Url value:<%=?(url)?.value%>
@@ -220,6 +212,24 @@
 						"defaultValue": {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "1234"
+						}
+					},
+					array : {
+						definition: {
+							criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"
+						},
+						defaultValue: {
+							dataTypeId: "test.array;1.0.0",
+							value: [
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 1111!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 2222!"
+								}
+							]
 						}
 					}
 				}

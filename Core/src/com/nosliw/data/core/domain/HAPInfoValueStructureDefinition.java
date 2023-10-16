@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 
 @HAPEntityWithAttribute
-public class HAPInfoValueStructure extends HAPSerializableImp{
+public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
@@ -21,9 +21,8 @@ public class HAPInfoValueStructure extends HAPSerializableImp{
 	
 	private HAPExtraInfoEntityInDomainDefinition m_extraInfo;
 	
-	public HAPInfoValueStructure(HAPDefinitionEntityValueStructure valueStructure, HAPExtraInfoEntityInDomainDefinition extraInfo) {
+	public HAPInfoValueStructureDefinition(HAPDefinitionEntityValueStructure valueStructure) {
 		this.m_valueStructure = valueStructure;
-		this.m_extraInfo = extraInfo;
 	}
 	
 	public HAPDefinitionEntityValueStructure getValueStructure() {    return this.m_valueStructure;     }

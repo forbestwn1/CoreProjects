@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -18,14 +19,20 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String VALUESTRUCTURE = "valueStructure";
+	public static final String VALUESTRUCTUREDEFINITION = "valueStructureDefinition";
+
+	@HAPAttribute
+	public static final String VALUESTRUCTURERUNTIME = "valueStructureRuntime";
 
 	@HAPAttribute
 	public static final String DEFINITIONBYRUNTIME = "definitionByRuntime";
 
 	//value structure definitions by id
-	private Map<String, HAPInfoValueStructure> m_valueStructure;
+	private Map<String, HAPInfoValueStructureDefinition> m_valueStructureDefinition;
 	
+	//value structure runtime by id
+	private Map<String, HAPInfoValueStructureRuntime> m_valueStructureRuntime;
+
 	//value structure definition id by value structure runtime id 
 	private Map<String, String> m_definitionIdByRuntimeId;
 
@@ -36,7 +43,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_valueStructure = new LinkedHashMap<String, HAPInfoValueStructure>();
+		this.m_valueStructureDefinition = new LinkedHashMap<String, HAPInfoValueStructureDefinition>();
+		this.m_valueStructureRuntime = new LinkedHashMap<String, HAPInfoValueStructureRuntime>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_isDirty = false;
 	}
@@ -44,49 +52,58 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public void setIsDirty(boolean isDirty) {    this.m_isDirty = isDirty;     }
 	public boolean getIsDirty() {     return this.m_isDirty;   }
 	
-	public HAPInfoValueStructure getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
+	public HAPInfoValueStructureDefinition getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
 	public HAPDefinitionEntityValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
 	public HAPDefinitionEntityValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
-	public HAPInfoValueStructure getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructure.get(valueStructureDefId);     }
+	public HAPInfoValueStructureDefinition getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructureDefinition.get(valueStructureDefId);     }
+
 	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
+	
+	
 	
 	//create another runtime that has common definition
 	//return new runtime id
 	public String cloneRuntime(String runtimeId) {
 		String definitionId = this.m_definitionIdByRuntimeId.get(runtimeId);
-		return this.newRuntime(definitionId);
+		return this.newRuntime(definitionId, null);
 	}
 
 	public String newValueStructure() {
 		HAPDefinitionEntityValueStructure valueStructureEntityDef = new HAPDefinitionEntityValueStructure();
 		String defId = this.m_idGenerator.generateId();
-		this.m_valueStructure.put(defId, new HAPInfoValueStructure(valueStructureEntityDef, null));
-		return this.newRuntime(defId);
+		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition(valueStructureEntityDef));
+		return this.newRuntime(defId, null);
 	}
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(HAPInfoEntityInDomainDefinition valueStructureDefInfo) {
+	public String newValueStructure(HAPDefinitionEntityValueStructure valueStructureDef, HAPInfo info) {
 		String id = this.m_idGenerator.generateId();
-		
-		this.m_valueStructure.put(id, new HAPInfoValueStructure(((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity()).cloneValueStructure(), valueStructureDefInfo.getExtraInfo().cloneExtraInfo()));
-		return this.newRuntime(id);
+		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(valueStructureDef.cloneValueStructure()));
+		return this.newRuntime(id, info);
 	}
-	
+
 	//create new runtime according to definition id 
-	private String newRuntime(String definitionId) {
+	private String newRuntime(String definitionId, HAPInfo info) {
 		String runtimeId = this.m_idGenerator.generateId();
 		this.m_definitionIdByRuntimeId.put(runtimeId, definitionId);
+		this.m_valueStructureRuntime.put(runtimeId, new HAPInfoValueStructureRuntime(runtimeId, info));
 		return runtimeId;
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		Map<String, String> valueStructureJson = new LinkedHashMap<String, String>();
-		for(String id : this.m_valueStructure.keySet()) {
-			valueStructureJson.put(id, this.m_valueStructure.get(id).toStringValue(HAPSerializationFormat.JSON));
+		Map<String, String> valueStructureDefJson = new LinkedHashMap<String, String>();
+		for(String id : this.m_valueStructureDefinition.keySet()) {
+			valueStructureDefJson.put(id, this.m_valueStructureDefinition.get(id).toStringValue(HAPSerializationFormat.JSON));
 		}
-		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildMapJson(valueStructureJson));
+		jsonMap.put(VALUESTRUCTUREDEFINITION, HAPUtilityJson.buildMapJson(valueStructureDefJson));
+		
+		Map<String, String> valueStructureRuntimeJson = new LinkedHashMap<String, String>();
+		for(String id : this.m_valueStructureRuntime.keySet()) {
+			valueStructureRuntimeJson.put(id, this.m_valueStructureRuntime.get(id).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(VALUESTRUCTURERUNTIME, HAPUtilityJson.buildMapJson(valueStructureRuntimeJson));
 		
 		jsonMap.put(DEFINITIONBYRUNTIME, HAPUtilityJson.buildMapJson(this.m_definitionIdByRuntimeId));
 	}

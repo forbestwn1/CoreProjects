@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPInfoValueStructure;
+import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
 import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
@@ -32,7 +32,7 @@ public class HAPContextStructureReferenceValueStructure implements HAPContextStr
 			HAPWrapperExecutableValueStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
 
-			HAPInfoValueStructure valueStructureDefInfo = m_valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
+			HAPInfoValueStructureDefinition valueStructureDefInfo = m_valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
 
 			//check runtime id
 			if(isValid) {

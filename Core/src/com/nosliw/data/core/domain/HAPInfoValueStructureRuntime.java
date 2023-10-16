@@ -1,0 +1,42 @@
+package com.nosliw.data.core.domain;
+
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+
+@HAPEntityWithAttribute
+public class HAPInfoValueStructureRuntime extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String ID = "id";
+	
+	@HAPAttribute
+	public static final String INFO = "info";
+
+	private String m_id;
+	
+	private HAPInfo m_info;
+
+	public HAPInfoValueStructureRuntime(String id, HAPInfo info) {
+		this.m_id = id;
+		this.m_info = info;
+	}
+	
+	public String getId() {   return this.m_id;    }
+	
+	public String getInfoValue(String name) {   return (String)this.m_info.getValue(name);     }
+	
+	public void setInfoValue(String name, String value) {    this.m_info.setValue(name, value);     }
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ID, this.m_id);
+		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
+	}
+
+}

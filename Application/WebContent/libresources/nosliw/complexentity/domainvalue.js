@@ -85,8 +85,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		var valueStructureElementInfosArray = [];
 		
 		var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
-		var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURE][valueStructureDefId];
-		var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURE_VALUESTRUCTURE]
+		var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
+		var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_VALUESTRUCTURE]
 							[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_ATTRIBUTE]
 							[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYVALUESTRUCTURE_VALUE]
 							[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE]
