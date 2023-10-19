@@ -43,8 +43,8 @@ public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEnti
 
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure(valueStructureEntityId);
 
-		String groupName = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.GROUPNAME);
-		out.setGroupName(groupName);
+		String groupName = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.NAME);
+		out.setName(groupName);
 
 		String groupType = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.GROUPTYPE);
 		if(groupType==null)  groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;

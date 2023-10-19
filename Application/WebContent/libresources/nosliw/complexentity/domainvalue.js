@@ -78,30 +78,30 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 	
 	//valueStructures in the context
 	var loc_valueStructures = {};
-	
-	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef){
+
+
+	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, buildRootEle){
 
 		//build context element first
 		var valueStructureElementInfosArray = [];
 		
-		var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
-		var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
-		var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_VALUESTRUCTURE]
-							[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_ATTRIBUTE]
-							[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYVALUESTRUCTURE_VALUE]
-							[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE]
-							[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
-		_.each(roots, function(valueStructureDefRootObj, rootName){
-			var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFINITION];
-			
-			var info = {
-				matchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS],
-				reverseMatchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS]
-			};
-			var type = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
-			var valueStructureInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-			//if context.info.instantiate===manual, context does not need to create in the framework
-			if(valueStructureInfo==undefined || valueStructureInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
+		if(buildRootEle!=false){
+			var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
+			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
+			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_VALUESTRUCTURE]
+								[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_ATTRIBUTE]
+								[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYVALUESTRUCTURE_VALUE]
+								[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE]
+								[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
+			_.each(roots, function(valueStructureDefRootObj, rootName){
+				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFINITION];
+				
+				var info = {
+					matchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS],
+					reverseMatchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS]
+				};
+				var type = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
+				var valueStructureInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 				if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE && 
 						(valueStructureInfo==undefined||valueStructureInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL)){
 					//physical relative
@@ -140,8 +140,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 						else valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, undefined, info));
 					}
 				}
-			}
-		});
+			});
+		}
 		
 		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
@@ -157,7 +157,19 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			var valueStructure;
 			if(loc_parentValueContext==undefined || loc_parentValueContext.getValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
-				valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef);
+				var valueStructureRuntime = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
+				var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INFO];
+				var initMode = valueStructureRuntimeInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE];
+				if(initMode==undefined)   initMode = node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO;
+				
+				if(initMode == node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO){
+					//build with all variable
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef);
+				}
+				else{
+					//build empty value structure
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, false);
+				}
 			}
 			else{
 				//value structure from parent
@@ -169,7 +181,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 	
 	var loc_out = {
 		
-		prv_getSolidValueStrucute : function(valueStructureRuntimeId){
+		prv_getSolidValueStrucute1 : function(valueStructureRuntimeId){
 			var out = loc_valueStructures[valueStructureRuntimeId];
 			if(out!=undefined){
 				if(!out.isSold()){
@@ -199,6 +211,17 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_STRUCTUREID]);
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEELEMENTINVALUECONTEXT_ELEMENTPATH]));
 		},
+
+		getValueStructureRuntimeIdByName : function(valueStructureName){
+			var out;
+			out = valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYVALUECONTEXT_VALUESTRUCTURERUNTIMEIDBYNAME][valueStructureName];
+			if(out==undefined){
+				if(loc_parentValueContext!=undefined){
+					out = loc_parentValueContext.getValueStructureRuntimeIdByName(valueStructureName);
+				}
+			}
+			return out;
+		},
 		
 		getValueStructureRuntimeIds : function(){
 			var solid = [];
@@ -219,7 +242,6 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		},
 		
 		getValueStructureWrapper : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
-		
 		
 		
 		

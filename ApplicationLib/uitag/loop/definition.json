@@ -35,6 +35,7 @@
 			},
 			{
 				"groupType" : "protected",
+				"name" : "nosliw_internal",
 				"valueStructure" : {
 					"<%=&(nosliwattribute_element)&%>" : {
 						"definition" : {

@@ -59,35 +59,36 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
 	
+	public HAPInfoValueStructureRuntime getValueStructureRuntimeInfo(String runtimeId) {    return this.m_valueStructureRuntime.get(runtimeId);     }
 	
 	
 	//create another runtime that has common definition
 	//return new runtime id
 	public String cloneRuntime(String runtimeId) {
 		String definitionId = this.m_definitionIdByRuntimeId.get(runtimeId);
-		return this.newRuntime(definitionId, null);
+		return this.newRuntime(definitionId, null, null);
 	}
 
 	public String newValueStructure() {
 		HAPDefinitionEntityValueStructure valueStructureEntityDef = new HAPDefinitionEntityValueStructure();
 		String defId = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition(valueStructureEntityDef));
-		return this.newRuntime(defId, null);
+		return this.newRuntime(defId, null, null);
 	}
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(HAPDefinitionEntityValueStructure valueStructureDef, HAPInfo info) {
+	public String newValueStructure(HAPDefinitionEntityValueStructure valueStructureDef, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(valueStructureDef.cloneValueStructure()));
-		return this.newRuntime(id, info);
+		return this.newRuntime(id, info, name);
 	}
 
 	//create new runtime according to definition id 
-	private String newRuntime(String definitionId, HAPInfo info) {
+	private String newRuntime(String definitionId, HAPInfo info, String name) {
 		String runtimeId = this.m_idGenerator.generateId();
 		this.m_definitionIdByRuntimeId.put(runtimeId, definitionId);
-		this.m_valueStructureRuntime.put(runtimeId, new HAPInfoValueStructureRuntime(runtimeId, info));
+		this.m_valueStructureRuntime.put(runtimeId, new HAPInfoValueStructureRuntime(runtimeId, info, name));
 		return runtimeId;
 	}
 	

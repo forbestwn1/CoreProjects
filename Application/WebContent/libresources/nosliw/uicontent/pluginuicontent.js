@@ -235,7 +235,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_HTML));
 			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP));
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP, undefined));
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//init expression in content
@@ -269,7 +269,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			}));
 			
 			//init custom tag
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
 				success: function(request, attrNode){
 					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
 						var customTag = child.getCoreEntity();
@@ -280,7 +280,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			}));
 
 			//init service
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SERVICE, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SERVICE, undefined, {
 				success: function(request, attrNode){
 					loc_services = attrNode.getChildValue().getCoreEntity();
 				}

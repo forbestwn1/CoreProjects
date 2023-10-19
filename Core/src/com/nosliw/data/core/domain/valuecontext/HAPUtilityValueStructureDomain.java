@@ -68,7 +68,7 @@ public class HAPUtilityValueStructureDomain {
 						List<HAPWrapperExecutableValueStructure> wrappers = new ArrayList<HAPWrapperExecutableValueStructure>();
 						for(HAPDefinitionWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
 							HAPInfoEntityInDomainDefinition valueStructureDefInfo = definitionGlobalDomain.getEntityInfoDefinition(part.getValueStructureId());
-							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity(), part.getInfo());
+							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity(), part.getInfo(), part.getName());
 							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
 							valueStructureWrapperExe.cloneFromDefinition(part);
 							wrappers.add(valueStructureWrapperExe);
@@ -76,7 +76,7 @@ public class HAPUtilityValueStructureDomain {
 							//solidate plain script expression
 							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
 						}
-						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault());
+						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault(), valueStructureDomain);
 					}
 				}
 				complexEntityExe.setValueContext(valueContextExe);
@@ -102,10 +102,9 @@ public class HAPUtilityValueStructureDomain {
 			String valueStructureExeId = valueStructureDomain.newValueStructure();
 			HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
 			valueStructureWrapperExe.setGroupType(groupType);
-			valueStructureWrapperExe.setGroupName(groupType);
 			wrappers.add(valueStructureWrapperExe);
 		}
-		valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoExtension());
+		valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoExtension(), valueStructureDomain);
 	}
 
 	//merge value structure between paren and child

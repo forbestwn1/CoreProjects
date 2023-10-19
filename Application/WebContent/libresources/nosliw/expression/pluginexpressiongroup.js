@@ -114,7 +114,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_DATAEEXPRESSIONGROUP, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_DATAEEXPRESSIONGROUP, undefined, {
 				success : function(request, childNode){
 					loc_dataExpressionGroupRuntime = childNode.getChildValue();
 				}

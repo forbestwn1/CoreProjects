@@ -55,7 +55,7 @@ var loc_createDataExpressionSingleComponentCore = function(complexEntityDef, val
 			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
 					success : function(request, childNode){
 						loc_referencedRuntime[attrName] = childNode.getChildValue();
 					}

@@ -19,12 +19,12 @@ import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 //extra info for value structure, group name
 public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{
 
-	public static final String GROUPNAME = "groupName";
+	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";
 	public static final String INFO = "info";
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
-	private String m_groupName;
+	private String m_name;
 
 	//group type for value structure (public, private, protected, internal)
 	private String m_groupType;
@@ -48,8 +48,8 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	public HAPIdEntityInDomain getValueStructureId() {	return this.m_valueStructureId;	}
 	public void setValueStructureId(HAPIdEntityInDomain valueStructureId) {   this.m_valueStructureId = valueStructureId;       }
 	
-	public String getGroupName() {   return this.m_groupName;   }
-	public void setGroupName(String groupName) {   this.m_groupName = groupName;    }
+	public String getName() {   return this.m_name;   }
+	public void setName(String groupName) {   this.m_name = groupName;    }
 	
 	public String getGroupType() {   return this.m_groupType;    }
 	public void setGroupType(String groupType) {    this.m_groupType = groupType;     }
@@ -66,7 +66,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(GROUPTYPE, this.m_groupType);
-		jsonMap.put(GROUPNAME, this.m_groupName);
+		jsonMap.put(NAME, this.m_name);
 		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureId.toStringValue(HAPSerializationFormat.JSON));
 	}
@@ -80,7 +80,7 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 
 	public HAPDefinitionWrapperValueStructure cloneValueStructureWrapper() {
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure();
-		out.m_groupName = this.m_groupName;
+		out.m_name = this.m_name;
 		out.m_groupType = this.m_groupType;
 		out.m_info = this.m_info.cloneInfo();
 		out.m_valueStructureId = this.m_valueStructureId.cloneValue();

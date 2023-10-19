@@ -89,7 +89,7 @@ function(envObj){
 				console.log(name + " : " + attrValue);
 			});
 			
-			out.addRequest(loc_envObj.getCreateDefaultUIContentRequest({
+			out.addRequest(loc_envObj.getCreateDefaultUIContentRequest(undefined, {
 				success: function(request, uiConentNode){
 					loc_uiContent = uiConentNode.getChildValue().getCoreEntity();
 				}

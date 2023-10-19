@@ -66,7 +66,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		for(HAPDefinitionWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
 
 			HAPDefinitionWrapperValueStructure valueStructureWrapper = new HAPDefinitionWrapperValueStructure();
-			valueStructureWrapper.setGroupName(valueStructureWrapper1.getGroupName());
+			valueStructureWrapper.setName(valueStructureWrapper1.getName());
 			valueStructureWrapper.setGroupType(valueStructureWrapper1.getGroupType());
 
 			HAPInfoEntityInDomainDefinition valueStructureEntityInfo1 = parserContext.getGlobalDomain().getEntityInfoDefinition(valueStructureWrapper1.getValueStructureId());

@@ -124,7 +124,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 			},
 */
 
-			createAttributeRequest : function(attrName, handlers, request){
+			createAttributeRequest : function(attrName, variationPoints, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				
 				var complexEntityDef = basicEntityInterface.getEntityDefinition();
@@ -139,7 +139,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					//complex attribute
 					var childEntitId = attrValue;
 
-					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, {
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, variationPoints, {
 						success : function(request, complexEntityRuntime){
 							
 							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
@@ -273,6 +273,17 @@ var loc_createTreeNodeChild = function(childName, entityRuntime, adapters, isCom
 	return loc_out;
 };
 
+//interface for ui tag core object
+var node_buildComplexEntityCreationVariationPointObject = function(rawEntity){
+	var loc_rawEntity = rawEntity;
+	
+	var loc_out = {
+		afterValueContext : function(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request){   return loc_rawEntity.afterValueContext==undefined?undefined:loc_rawEntity.afterValueContext(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request);   },
+	};
+	
+	return loc_out;
+};
+
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -301,6 +312,7 @@ packageObj.createChildNode("makeObjectBasicEntityObjectInterface", node_makeObje
 packageObj.createChildNode("getBasicEntityObjectInterface", node_getBasicEntityObjectInterface); 
 packageObj.createChildNode("makeObjectEntityTreeNodeInterface", node_makeObjectEntityTreeNodeInterface); 
 packageObj.createChildNode("getEntityTreeNodeInterface", node_getEntityTreeNodeInterface); 
+packageObj.createChildNode("buildComplexEntityCreationVariationPointObject", node_buildComplexEntityCreationVariationPointObject); 
 
 
 })(packageObj);

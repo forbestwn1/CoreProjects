@@ -16,16 +16,26 @@ function(envObj){
 	var loc_getUpdateViewRequest = function(handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-			for(var i in loc_childVaraibles){
-				loc_out.prv_deleteEle(0, requestInfo);
-			}
-		}));
-
 		out.addRequest(loc_handleEachElementProcessor.getLoopRequest({
 			success : function(requestInfo, eles){
 				var addEleRequest = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 				_.each(eles, function(ele, index){
+					var variationPoints = {
+						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
+							var loc_valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
+							var valueStructureRuntimeId = loc_valueContext.getValueStructureRuntimeIdByName("nosliw_internal");
+							var valueStructure = loc_valueContext.getValueStructure();
+							
+						}
+					}
+					addEleRequest.addRequest(loc_envObj.getCreateDefaultUIContentRequest(variationPoints, {
+						success: function(request, uiConentNode){
+							loc_uiContent = uiConentNode.getChildValue().getCoreEntity();
+						}
+					}));
+					
+				
+				
 					addEleRequest.addRequest(loc_getAddEleRequest(ele.elementVar, ele.indexVar, index));
 				});
 				addEleRequest.setParmData("processMode", "promiseBased");

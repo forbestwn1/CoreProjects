@@ -73,7 +73,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
 				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
-					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName));
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined));
 				}
 			});
 			return out;

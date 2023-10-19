@@ -76,7 +76,7 @@ var node_createBundleCore = function(parm, configure){
 			//build variable domain in bundle
 			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
 
-			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, {
+			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, undefined, {
 				success : function(request, mainCoplexEntity){
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
 				}

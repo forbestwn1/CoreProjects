@@ -130,9 +130,9 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
 
 		//---------------------------------ui resource view
-		getCreateDefaultUIContentRequest : function(handlers, requestInfo){
+		getCreateDefaultUIContentRequest : function(variationPoints, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, variationPoints, {
 				success : function(request, childNode){
 					childNode.getChildValue().getCoreEntity().setParentUIEntity(loc_out);
 					return childNode;

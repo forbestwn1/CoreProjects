@@ -48,7 +48,7 @@ var loc_createSimpleEntityContainerComponentCore = function(complexEntityDef, va
 			var attrNames = loc_complexEntityDef.getAllAttributesName();
 			_.each(attrNames, function(attrName, i){
 				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
-					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
 						success : function(request, childNode){
 							loc_childrenEntity[attrName] = childNode.getChildValue();
 						}

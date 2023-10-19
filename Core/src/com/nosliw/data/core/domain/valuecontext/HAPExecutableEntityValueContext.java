@@ -23,12 +23,18 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	public static String VALUESTRUCTURE = "valueStructure";
 
 	@HAPAttribute
+	public static String VALUESTRUCTURERUNTIMEIDBYNAME = "valueStructureRuntimeIdByName";
+
+	@HAPAttribute
 	public static String ISBORDER = "isBorder";
 
 	private List<HAPExecutablePartValueContext> m_parts;
 	
+	private Map<String, String> m_valueStructureRuntimeIdByName;
+	
 	public HAPExecutableEntityValueContext() {
 		this.m_parts = new ArrayList<HAPExecutablePartValueContext>();
+		this.m_valueStructureRuntimeIdByName = new LinkedHashMap<String, String>();
 	}
 	
 	public List<HAPExecutablePartValueContext> getParts(){   return this.m_parts;  }
@@ -41,10 +47,14 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		return out;
 	}
 
-	public void addPartSimple(List<HAPWrapperExecutableValueStructure> valueStructureExeWrappers, HAPInfoPartValueStructure partInfo) {
+	public void addPartSimple(List<HAPWrapperExecutableValueStructure> valueStructureExeWrappers, HAPInfoPartValueStructure partInfo, HAPDomainValueStructure valueStructureDomain) {
 		HAPExecutablePartValueContextSimple part = new HAPExecutablePartValueContextSimple(partInfo);
 		for(HAPWrapperExecutableValueStructure wrapper : valueStructureExeWrappers) {
 			part.addValueStructure(wrapper);
+			
+			//build id by name
+			String name = valueStructureDomain.getValueStructureRuntimeInfo(wrapper.getValueStructureRuntimeId()).getName();
+			if(name!=null)   this.m_valueStructureRuntimeIdByName.put(name, wrapper.getValueStructureRuntimeId());
 		}
 		this.addPart(part);
 	}
@@ -57,7 +67,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		this.addPart(part);
 	}
 	
-	public void addPart(HAPExecutablePartValueContext part) {
+	private void addPart(HAPExecutablePartValueContext part) {
 		this.m_parts.add(part);
 		HAPUtilityValueContext.sortParts(m_parts);
 	}
@@ -72,6 +82,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		for(HAPExecutablePartValueContext part : this.m_parts) {
 			this.m_parts.add(part.cloneValueContextPart());
 		}
+		out.m_valueStructureRuntimeIdByName.putAll(this.m_valueStructureRuntimeIdByName);
 		return out;
 	}
 	
@@ -93,6 +104,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partArrayJson.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
 	}
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
@@ -104,6 +116,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 			jsonArray.add(valueStructureInfo.toExpandedString(valueStructureDomain));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
 		
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
@@ -116,5 +129,6 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 			valueStructureIds.add(valueStructureInfo.getValueStructure().getValueStructureRuntimeId());
 		}
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureIds.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
 	}
 }
