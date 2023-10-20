@@ -40,6 +40,7 @@ var packageObj = library;
 	var node_makeObjectWithId;
 	var node_complexEntityUtility;
 	var node_makeObjectWithType;
+	var node_buildComplexEntityCreationVariationPointObject;
     
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
@@ -159,7 +160,7 @@ var node_createComplexEntityRuntimeService = function() {
 			//get runtime configure & decoration info from configure
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			
-			out.addRequest(variationPoints.afterValueContext(complexEntityDef, valueContextId, bundleCore, coreConfigure));
+			out.addRequest(variationPoints.afterValueContext(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
 			
 			//new complexCore through complex plugin
 			out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
@@ -379,6 +380,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createScriptBasedPlugin", function(){node_createScriptBasedPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityCreationVariationPointObject", function(){node_buildComplexEntityCreationVariationPointObject = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});

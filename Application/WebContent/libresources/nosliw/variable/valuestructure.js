@@ -207,6 +207,14 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		getElement : function(name){
 			return loc_getContextElementVariable(name);
 		},
+		
+		addVariable : function(variable, name, request){
+			loc_out.prv_eleVariableGroup.addVariable(variable, name);
+			loc_out.prv_elements[name] = {
+				name : name,
+				variable : variable
+			};
+		},
 			
 		addElement : function(elementInfo, request){		
 			var flatedelEmentInfosArray = [];

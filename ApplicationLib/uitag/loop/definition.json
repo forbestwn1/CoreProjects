@@ -42,17 +42,11 @@
 							"link" : {
 								"elementPath": "<%=&(nosliwattribute_data)&%>.element"
 							}
-						},
-						"info":{
-							"instantiate" : "manual"
 						}
 					},
 					"<%=&(nosliwattribute_index)&%>" : {
 						"definition" : {
 							"criteria" : "test.integer;1.0.0"
-						},
-						"info":{
-							"instantiate" : "manual"
 						}
 					}		
 				},

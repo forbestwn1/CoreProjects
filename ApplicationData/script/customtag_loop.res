@@ -13,6 +13,8 @@ function(envObj){
 	
 	var loc_handleEachElementProcessor;
 	
+	var loc_elements = [];
+	
 	var loc_getUpdateViewRequest = function(handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 
@@ -25,18 +27,15 @@ function(envObj){
 							var loc_valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
 							var valueStructureRuntimeId = loc_valueContext.getValueStructureRuntimeIdByName("nosliw_internal");
 							var valueStructure = loc_valueContext.getValueStructure();
-							
+							valueStructure.addVariable(loc_envObj.getAttributeValue("element"), ele.elementVar);
+							valueStructure.addVariable(loc_envObj.getAttributeValue("index"), ele.indexVar);
 						}
 					}
 					addEleRequest.addRequest(loc_envObj.getCreateDefaultUIContentRequest(variationPoints, {
 						success: function(request, uiConentNode){
-							loc_uiContent = uiConentNode.getChildValue().getCoreEntity();
+							loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
 						}
 					}));
-					
-				
-				
-					addEleRequest.addRequest(loc_getAddEleRequest(ele.elementVar, ele.indexVar, index));
 				});
 				addEleRequest.setParmData("processMode", "promiseBased");
 				return addEleRequest;
@@ -55,12 +54,18 @@ function(envObj){
 		preInit : function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
 			loc_containerVariable = loc_envObj.createVariableByName("internal_data");
-			
+			loc_handleEachElementProcessor = node_createHandleEachElementProcessor(loc_containerVariable, ""); 
+			out.addRequest(loc_getUpdateViewRequest());
 			return out;
 		},
 		
 		initViews : function(handlers, request){
-			loc_view = $('<div></div>');				}
+			loc_view = $('<div></div>');
+			_.each(loc_elements, function(element, i){
+				var eleWrapperview = $('<div></div>');
+				element.updateView(eleWrapperview);					
+				loc_view.append(eleWrapperview);
+			});
 			return loc_view;
 		},
 
