@@ -1,0 +1,20 @@
+{
+	"name" : "debug_contextvalue",
+	"type" : "data",
+	"description" : "",
+	"scriptResourceId" : "script|customtag_debug_contextvalue",
+	"attribute" : [
+	],
+	"valueContext": {
+		"entity" : [
+		]
+	}, 
+	"attachment": {
+	},
+	"parentRelationConfigure" : {
+	},
+	
+	"childRelationConfigure" : {
+	
+	}
+}

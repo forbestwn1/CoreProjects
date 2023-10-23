@@ -39,12 +39,12 @@ var node_createUIDataOperationRequest = function(operationBase, uiDataOperation,
 		request = loc_createValueStructureDataOperationRequest(operationBase, target, operationService, handlers, requester_parent);
 		break;
 	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUECONTEXTVARIABLE:
-		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(target.valueStructureRuntimeId), target.valueStructureVariableInfo, operationService, handlers, requester_parent);
+		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(target.getValueStructureRuntimeId()), target.getValueStructureVariableInfo(), operationService, handlers, requester_parent);
 		break;
 	default : 
 		//target is value context element name
 		var valueContextVarInfo = node_createValueContextVariableInfo(target);
-		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(valueContextVarInfo.valueStructureRuntimeId), valueContextVarInfo.valueStructureVariableInfo, operationService, handlers, requester_parent);
+		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(valueContextVarInfo.getValueStructureRuntimeId()), valueContextVarInfo.getValueStructureVariableInfo(), operationService, handlers, requester_parent);
 	}
 	return request;
 };

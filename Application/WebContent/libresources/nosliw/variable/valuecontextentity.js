@@ -24,10 +24,18 @@ var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p
 
 	var loc_init = function(valueStructureRuntimeId, n, p){
 		if(n==undefined&&p==undefined){
-			var index = valueStructureRuntimeId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-			if(index!=-1){
-				loc_valueStructureRuntimeId = valueStructureRuntimeId.substring(0, index);
-				loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(valueStructureRuntimeId.substring(index+1));
+			if(basicUtility.isStringValue(valueStructureRuntimeId)){
+				var index = valueStructureRuntimeId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+				if(index!=-1){
+					loc_valueStructureRuntimeId = valueStructureRuntimeId.substring(0, index);
+					loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(valueStructureRuntimeId.substring(index+1));
+				}
+			}
+			else{
+				//variable id object
+				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+				loc_valueStructureRuntimeId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
+				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID_ELEMENTPATH]);
 			}
 		}
 		else{
@@ -39,6 +47,19 @@ var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p
 
 	var loc_out = {
 
+		getValueStructureRuntimeId : function(){   return  loc_valueStructureRuntimeId;    },
+		
+		getValueStructureVariableInfo : function(){    return loc_valueStructureVariableInfo;    },
+
+		getRootName : function(){   return loc_valueStructureVariableInfo.name;   },
+		
+		getElementPath : function(){    return  loc_valueStructureVariableInfo.path;   },
+
+		getKey : function(){  return loc_key;    },
+
+		getFullPath : function(){	return this.getKey();	},
+		
+
 		valueStructureRuntimeId : valueStructureRuntimeId,
 
 		valueStructureVariableInfo : loc_valueStructureVariableInfo,
@@ -46,7 +67,6 @@ var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p
 		//key
 		key : loc_key,
 		
-		getFullPath : function(){	return loc_key;	}
 	};
 	
 	loc_init(valueStructureRuntimeId, n, p);

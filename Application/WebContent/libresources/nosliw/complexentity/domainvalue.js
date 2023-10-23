@@ -143,7 +143,9 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			});
 		}
 		
-		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, node_createValueStructure(id, valueStructureElementInfosArray));
+		var valueStructureName = valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYVALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
+
+		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, valueStructureName, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
 	
 	
@@ -192,6 +194,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			}
 			return out;
 		},
+
+		getParentValueContext : function(){   return loc_parentValueContext;    },
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
@@ -243,7 +247,10 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		
 		getValueStructureWrapper : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
 		
-		
+		getSolidValueStrcutreWrapper : function(valueStructureRuntimeId){
+			var out = this.getValueStructureWrapper(valueStructureRuntimeId);
+			if(out.isSolid==true)  return out;
+		},
 		
 			
 		getId : function(){  return loc_id;   },
@@ -261,9 +268,10 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 };
 
 
-var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, valueStrucutre){
+var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, valueStructureName, valueStrucutre){
 	
 	var loc_runtimeId = valueStructureRuntimeId;
+	var loc_runtimeName = valueStructureName;
 
 	var loc_valueStrucutre = valueStrucutre;
 	
@@ -279,6 +287,7 @@ var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, val
 			return loc_out.getValueStructure().createVariable(valueStructureVariableInfo);
 		},
 			
+		getName : function(){   return loc_runtimeName;     },
 	};
 	
 	return loc_out;
@@ -304,6 +313,16 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 			return loc_parentValueContext.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
 		},
 			
+		getName : function(){    
+			var currentValueContext = loc_parentValueContext;
+			while(currentValueContext!=undefined){
+				var valueStructureWrapper = currentValueContext.getSolidValueStrcutreWrapper(loc_runtimeId);
+				if(valueStructureWrapper!=null)   return valueStructureWrapper.getName();
+				else{
+					currentValueContext = currentValueContext.getParentValueContext();
+				}
+			}
+		},
 	};
 	
 	return loc_out;

@@ -120,6 +120,11 @@ var node_basicUtility =
 			  return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
 			         !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 		},
+		
+		isStringValue : function(value){
+			if (typeof value === 'string' || value instanceof String)  return true;
+			else return false;
+		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	
