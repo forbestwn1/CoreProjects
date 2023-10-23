@@ -25,6 +25,8 @@ var packageObj = library;
 	var node_valueContextUtility;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
+	var node_createValueContextVariableInfo;
+	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function() 
@@ -307,9 +309,8 @@ var node_utility = function()
 						var mappingToReferencedExpressionRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("MappingToReferencedExpression", {}), {});
 						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOLVED_VARIABLE];
 						_.each(refVarsInMatchResult.getResults(), function(value, name){
-							var varId = varsId[name];
-							var rootId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
-							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], rootId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH], value));
+							var varId = node_createValueContextVariableInfo(varsId[name]);
+							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, varId.getValueStructureRuntimeId(), varId.getRootName(), varId.getElementPath(), value));
 						});
 						
 						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
@@ -379,12 +380,11 @@ var node_utility = function()
 		_.each(varKeys, function(key, i){
 			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key];
 			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
-			var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
-			var rootElemId = varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+			var varId = node_createValueContextVariableInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
 			var variable = valueContext.createVariable(
-					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID], 
-					rootElemId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME],
-					varId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
+					varId.getValueStructureRuntimeId(), 
+					varId.getRootName(),
+					varId.getElementPath());
 			variables[varKey] = variable;
 		});
 		
@@ -572,6 +572,7 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("complexentity.valueContextUtility", function(){node_valueContextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

@@ -10,9 +10,10 @@ script : function(env){
 
 	var loc_view;
 	var loc_viewValueStructures;
-	var loc_viewVariableTree;
 	
 	var loc_contextVariableGroup = {};
+
+	var loc_valueStructureInfo = [];
 	
 	var loc_updateView = function(requestInfo){
 		//context data
@@ -38,10 +39,22 @@ script : function(env){
 			var valueContext = loc_env.getValueContext();
 			var valueStructures = valueContext.getValueStructureRuntimeIds();
 			_.each(valueStructures.solid, function(vsId, i){
-				
-			
+				var wrapper = valueContext.getValueStructureWrapper();
+				loc_valueStructureInfo.push({
+					name : wrapper.getName(),
+					id : vsId,
+					valueStructure : wrapper.getValueStructure();
+				});
 			});
 		
+			_.each(valueStructures.soft, function(vsId, i){
+				var wrapper = valueContext.getValueStructureWrapper();
+				loc_valueStructureInfo.push({
+					name : wrapper.getName(),
+					id : vsId,
+					valueStructure : wrapper.getValueStructure();
+				});
+			});
 		
 		
 			loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function(request){

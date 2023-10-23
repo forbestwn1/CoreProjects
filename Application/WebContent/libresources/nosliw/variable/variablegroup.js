@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage();
 	var node_makeObjectWithLifecycle;
 	var node_getLifecycleInterface;
 	var node_createRequestEventGroupHandler;
+	var node_createValueContextVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * this is a factory to create variables group
@@ -33,8 +34,9 @@ var node_createVariablesGroup = function(valueContext, variableIdsArray, handler
 	var loc_requestEventGroupHandler = undefined;
 	
 	var loc_addElement = function(variableId){
+		variableId = node_createValueContextVariableInfo(variableId);
 		var variable = loc_valueContext.createVariableById(variableId);
-		loc_variables[variableId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_KEY]] = variable;
+		loc_variables[variableId.getKey()] = variable;
 		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject());
 	};
 	
@@ -93,6 +95,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariablesGroup", node_createVariablesGroup); 

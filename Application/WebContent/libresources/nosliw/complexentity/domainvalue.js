@@ -13,6 +13,7 @@ var packageObj = library;
 	var node_createValueStructureElementInfo;
 	var node_dataUtility;
 	var node_complexEntityUtility;
+	var node_createValueContextVariableInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -203,11 +204,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		},
 
 		createVariableById : function(variableIdEntity){
-			var rootEleId = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
-			var elePath = variableIdEntity[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID_ELEMENTPATH];
-			var valueStructureId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-			var rootName = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME];
-			return this.createVariable(valueStructureId, rootName, elePath);
+			var variableInfo = node_createValueContextVariableInfo(variableIdEntity);
+			return this.createVariable(variableInfo.getValueStructureRuntimeId(), variableInfo.getRootName(), variableInfo.getElementPath());
 		},
 		
 		//
@@ -371,6 +369,7 @@ nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVar
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
 
 
 //Register Node by Name

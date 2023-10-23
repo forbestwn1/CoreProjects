@@ -7,8 +7,10 @@ var node_basicUtility;
 var node_namingConvensionUtility;
 var node_CONSTANT;
 var node_COMMONCONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_makeObjectWithType;
 var node_getObjectType;
+var node_createValueStructureVariableInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -24,7 +26,7 @@ var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p
 
 	var loc_init = function(valueStructureRuntimeId, n, p){
 		if(n==undefined&&p==undefined){
-			if(basicUtility.isStringValue(valueStructureRuntimeId)){
+			if(node_basicUtility.isStringValue(valueStructureRuntimeId)){
 				var index = valueStructureRuntimeId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
 				if(index!=-1){
 					loc_valueStructureRuntimeId = valueStructureRuntimeId.substring(0, index);
@@ -35,7 +37,7 @@ var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p
 				//variable id object
 				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
 				loc_valueStructureRuntimeId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID_ELEMENTPATH]);
+				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
 			}
 		}
 		else{
@@ -84,8 +86,10 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createValueContextVariableInfo", node_createValueContextVariableInfo); 
