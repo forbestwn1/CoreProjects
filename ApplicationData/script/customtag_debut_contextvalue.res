@@ -15,7 +15,7 @@ script : function(env){
 
 	var loc_valueStructureInfo = [];
 	
-	var loc_updateView = function(requestInfo){
+	var loc_updateValuStructureView = function(vsInfo, requestInfo){
 		//context data
 		var contextContent = {};
 		var setRequest = node_createServiceRequestInfoSet({}, {
@@ -26,54 +26,68 @@ script : function(env){
 				loc_viewData.val(JSON.stringify(contextContent, null, 4));
 			}
 		}, requestInfo);
-		var eleVars = loc_contextVariableGroup.getVariables();
+		var eleVars = vsInfo.valueStructureVariableGroup.getVariables();
 		_.each(eleVars, function(eleVar, eleName){
 			setRequest.addRequest(eleName, loc_env.getDataOperationRequestGet(eleVar));
 		});
 		node_requestProcessor.processRequest(setRequest, false);
 	};
 
+
 	var loc_out = 
 	{
 		preInit : function(requestInfo){
 			var valueContext = loc_env.getValueContext();
 			var valueStructures = valueContext.getValueStructureRuntimeIds();
-			_.each(valueStructures.solid, function(vsId, i){
+			
+			var vsIds = valueStructures.solid.concat(valueStructures.soft);
+			_.each(vsIds, function(vsId, i){
 				var wrapper = valueContext.getValueStructureWrapper();
-				loc_valueStructureInfo.push({
+				var valueStructure = wrapper.getValueStructure();
+
+				var varDefIds = [];
+				_.each(valueStructure.getElementsName(), function(rootName, i){
+					varDefIds.push(node_createValueContextVariableInfo(vsId, rootName));
+				});
+				
+				var valueStructureInfo = {
 					name : wrapper.getName(),
 					id : vsId,
-					valueStructure : wrapper.getValueStructure();
-				});
-			});
-		
-			_.each(valueStructures.soft, function(vsId, i){
-				var wrapper = valueContext.getValueStructureWrapper();
-				loc_valueStructureInfo.push({
-					name : wrapper.getName(),
-					id : vsId,
-					valueStructure : wrapper.getValueStructure();
-				});
-			});
-		
-		
-			loc_contextVariableGroup = node_createContextVariablesGroup(loc_env.getContext(), undefined, function(request){
-				loc_updateView(request);
-			});
-			_.each(loc_env.getContext().getElementsName(), function(eleName, index){
-				loc_contextVariableGroup.addVariable(node_createContextVariableInfo(eleName));
+					valueStructure : valueStructure,
+					valueStructureVariableGroup : node_createContextVariablesGroup(valueContext, varDefIds, function(request){
+						loc_updateValuStructureView(this, request)
+					}, valueStructureInfo)
+				};
+
+				loc_valueStructureInfo.push(valueStructureInfo);
 			});
 		},
 			
 		initViews : function(requestInfo){
 			loc_view = $('<div/>');
-			loc_viewData = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
-			loc_view.append(loc_viewData);
+			
+			_.each(loc_valueStructureInfo, function(vsInfo, i){
+				var vsViewWrapper = $('<div/>');
+				vsInfo.wrapperView = vsViewWrapper;
+				
+				var viewName = $('<div>Name:'+vsInfo.name+'</div>');
+				vsViewWrapper.append(viewName);
+				var viewId = $('<div>Id:'+vsInfo.id+'</div>');
+				vsViewWrapper.append(viewId);
+				
+				var viewData = $('<textarea rows="15" cols="150" id="aboutDescription" style="resize: none;" data-role="none"></textarea>');
+				vsInfo.viewData = viewData;
+				vsViewWrapper.append(viewData);
+			
+				loc_view.append(vsViewWrapper);
+			});
 			return loc_view;
 		},
 			
 		postInit : function(requestInfo){
-			loc_updateView(requestInfo);
+			_.each(loc_valueStructureInfo, function(vsInfo, i){
+				loc_updateValuStructureView(vsInfo, requestInfo);
+			});
 		},
 	};
 	return loc_out;
