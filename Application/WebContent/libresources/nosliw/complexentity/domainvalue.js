@@ -247,7 +247,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		
 		getSolidValueStrcutreWrapper : function(valueStructureRuntimeId){
 			var out = this.getValueStructureWrapper(valueStructureRuntimeId);
-			if(out.isSolid==true)  return out;
+			if(out.isSolid()==true)  return out;
 		},
 		
 			

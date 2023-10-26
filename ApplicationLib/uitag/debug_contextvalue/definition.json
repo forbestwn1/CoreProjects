@@ -12,6 +12,11 @@
 	"attachment": {
 	},
 	"parentRelationConfigure" : {
+		"valuestructure":{
+			"inherit":{
+				"mode" : "runtime"
+			}
+		}
 	},
 	
 	"childRelationConfigure" : {
