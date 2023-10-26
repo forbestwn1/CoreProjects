@@ -114,10 +114,12 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partArrayJson.toArray(new String[0])));
 		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
+		jsonMap.put(VALUESTRUCTURERUNTIMENAMEBYID, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeNameById));
 	}
 	
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
+		this.buildJsonMap(jsonMap, null);
 		
 		List<String> jsonArray = new ArrayList<String>();
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(this);
@@ -125,20 +127,19 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 			jsonArray.add(valueStructureInfo.toExpandedString(valueStructureDomain));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0])));
-		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
 		
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		this.buildJsonMap(jsonMap, typeJsonMap);
+		
 		List<String> valueStructureIds = new ArrayList<String>();
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(this);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 			valueStructureIds.add(valueStructureInfo.getValueStructure().getValueStructureRuntimeId());
 		}
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureIds.toArray(new String[0])));
-		jsonMap.put(VALUESTRUCTURERUNTIMEIDBYNAME, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeIdByName));
-		jsonMap.put(VALUESTRUCTURERUNTIMENAMEBYID, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeNameById));
 	}
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
@@ -17,18 +15,16 @@ public class HAPDefinitionEntityValueContext extends HAPDefinitionEntityInDomain
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
-	private List<HAPDefinitionWrapperValueStructure> m_valueStructures;
-	
 	public HAPDefinitionEntityValueContext() {
-		this.m_valueStructures = new ArrayList<HAPDefinitionWrapperValueStructure>();
+		this.setAttributeValueObject(VALUESTRUCTURE, new ArrayList<HAPDefinitionWrapperValueStructure>());
 	}
 	
-	public List<HAPDefinitionWrapperValueStructure> getValueStructures(){   return this.m_valueStructures;  }
-	public void addValueStructure(HAPDefinitionWrapperValueStructure valueStructure) {    this.m_valueStructures.add(valueStructure);    }
+	public List<HAPDefinitionWrapperValueStructure> getValueStructures(){   return (List<HAPDefinitionWrapperValueStructure>)this.getAttributeValue(VALUESTRUCTURE);  }
+	public void addValueStructure(HAPDefinitionWrapperValueStructure valueStructure) {    this.getValueStructures().add(valueStructure);    }
 	
 	@Override
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext,	HAPParserDataExpression expressionParser) {
-		for(HAPDefinitionWrapperValueStructure valueStructure : this.m_valueStructures) {
+		for(HAPDefinitionWrapperValueStructure valueStructure : this.getValueStructures()) {
 			valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
 		}
 	}
@@ -37,21 +33,9 @@ public class HAPDefinitionEntityValueContext extends HAPDefinitionEntityInDomain
 	public void solidateConstantScript(Map<String, String> values) {}
 
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		List<String> valueStructureJsonArray = new ArrayList<String>();
-		for(HAPDefinitionWrapperValueStructure part : this.m_valueStructures) {
-			valueStructureJsonArray.add(part.toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(valueStructureJsonArray.toArray(new String[0])));
-	}
-	
-	@Override
 	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityValueContext out = new HAPDefinitionEntityValueContext();
-		for(HAPDefinitionWrapperValueStructure valueStructure : this.m_valueStructures) {
-			out.m_valueStructures.add(valueStructure.cloneValueStructureWrapper());
-		}
+		this.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}
 

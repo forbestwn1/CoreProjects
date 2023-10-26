@@ -1,9 +1,9 @@
-script : function(env){
+function(env){
 
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 	var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-	var node_createContextVariablesGroup = nosliw.getNodeData("variable.context.createContextVariablesGroup");
-	var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
+	var node_createVariablesGroup = nosliw.getNodeData("variable.createVariablesGroup");
+	var node_createValueContextVariableInfo = nosliw.getNodeData("variable.valuecontext.createValueContextVariableInfo");
 	var node_dataUtility = nosliw.getNodeData("variable.data.utility");
 
 	var loc_env = env;
@@ -23,7 +23,7 @@ script : function(env){
 				_.each(result.getResults(), function(contextData, name){
 					contextContent[name] = contextData!=undefined?node_dataUtility.getValueOfData(contextData):"EMPTY VARIABLE";
 				});
-				loc_viewData.val(JSON.stringify(contextContent, null, 4));
+				vsInfo.viewData.val(JSON.stringify(contextContent, null, 4));
 			}
 		}, requestInfo);
 		var eleVars = vsInfo.valueStructureVariableGroup.getVariables();
@@ -42,24 +42,27 @@ script : function(env){
 			
 			var vsIds = valueStructures.solid.concat(valueStructures.soft);
 			_.each(vsIds, function(vsId, i){
-				var wrapper = valueContext.getValueStructureWrapper();
+				var wrapper = valueContext.getValueStructureWrapper(vsId);
 				var valueStructure = wrapper.getValueStructure();
 
 				var varDefIds = [];
-				_.each(valueStructure.getElementsName(), function(rootName, i){
-					varDefIds.push(node_createValueContextVariableInfo(vsId, rootName));
-				});
-				
-				var valueStructureInfo = {
-					name : wrapper.getName(),
-					id : vsId,
-					valueStructure : valueStructure,
-					valueStructureVariableGroup : node_createContextVariablesGroup(valueContext, varDefIds, function(request){
-						loc_updateValuStructureView(this, request)
-					}, valueStructureInfo)
-				};
-
-				loc_valueStructureInfo.push(valueStructureInfo);
+				var rootNames = valueStructure.getElementsName();
+				if(rootNames.length>0){
+					_.each(rootNames, function(rootName, i){
+						varDefIds.push(node_createValueContextVariableInfo(vsId, rootName));
+					});
+					
+					var valueStructureInfo = {
+						name : wrapper.getName(),
+						id : vsId,
+						valueStructure : valueStructure,
+						valueStructureVariableGroup : node_createVariablesGroup(valueContext, varDefIds, function(request){
+							loc_updateValuStructureView(this, request)
+						}, valueStructureInfo)
+					};
+	
+					loc_valueStructureInfo.push(valueStructureInfo);
+				}
 			});
 		},
 			

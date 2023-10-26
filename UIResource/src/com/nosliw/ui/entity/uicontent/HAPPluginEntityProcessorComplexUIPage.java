@@ -6,7 +6,7 @@ import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 public class HAPPluginEntityProcessorComplexUIPage extends HAPPluginEntityProcessorComplexImp{
 
 	public HAPPluginEntityProcessorComplexUIPage() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, HAPExecutableEntityComplexUIContent.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, HAPExecutableEntityComplexUIPage.class);
 	}
 
 }

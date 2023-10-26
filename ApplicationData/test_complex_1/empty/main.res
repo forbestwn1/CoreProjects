@@ -29,6 +29,7 @@
 			"entity": [
 				{
 					"groupType" : "public",
+					"name" : "maintest",
 					"valueStructure" : {
 						"<%=&(rootconstant)&%>": {
 							"definition":{

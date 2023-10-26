@@ -9,7 +9,9 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
@@ -17,7 +19,7 @@ import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{
+public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression, HAPExpandable{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";
@@ -71,12 +73,17 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 		jsonMap.put(VALUESTRUCTURE, this.m_valueStructureId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
-	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
+	@Override
+	public String toExpandedJsonString(HAPDomainEntity entityDomain) {
+		HAPDomainEntityDefinitionGlobal entityDefDomain = (HAPDomainEntityDefinitionGlobal)entityDomain;
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		this.buildJsonMap(jsonMap, null);
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityDomain.getEntityExpandedJsonString(this.m_valueStructureId, entityDefDomain));
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
+
+	@Override
+	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}
 
 	public HAPDefinitionWrapperValueStructure cloneValueStructureWrapper() {
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure();
@@ -86,5 +93,4 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 		out.m_valueStructureId = this.m_valueStructureId.cloneValue();
 		return out;
 	}
-
 }

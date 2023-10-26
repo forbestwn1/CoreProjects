@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+		
+		12345
+
+		<nosliw-debug_contextvalue></nosliw-debug_contextvalue>  
 
 		<nosliw-test data="parm1"></nosliw-test>  
-		<br>
-		<br><a href='' nosliw-event="click:invokeService:">InvokeService</a><br>
-		<br>
-		<br>
-		Service return:<%=?(output1)?.value%>
-		<br>
 
 <!--
 		<nosliw-loop data="array" element="ele123456" index="index3456789">
@@ -173,6 +171,7 @@
 		"entity": [
 			{
 				"groupType" : "public",
+				"name" : "mainTest",
 				"valueStructure" : {
 					"url": {
 						"definition":{
