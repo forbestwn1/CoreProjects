@@ -55,11 +55,12 @@ function(env){
 					var valueStructureInfo = {
 						name : wrapper.getName(),
 						id : vsId,
-						valueStructure : valueStructure,
-						valueStructureVariableGroup : node_createVariablesGroup(valueContext, varDefIds, function(request){
-							loc_updateValuStructureView(this, request)
-						}, valueStructureInfo)
+						valueStructure : valueStructure
 					};
+	
+					valueStructureInfo.valueStructureVariableGroup = node_createVariablesGroup(valueContext, varDefIds, function(request){
+							loc_updateValuStructureView(this, request)
+					}, valueStructureInfo);
 	
 					loc_valueStructureInfo.push(valueStructureInfo);
 				}
