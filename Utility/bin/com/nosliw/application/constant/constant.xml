@@ -321,6 +321,7 @@
 			<definition name="CONTEXT_ELEMENTTYPE_CONSTANTREF" value="constantReference"/>
 			<definition name="CONTEXT_ELEMENTTYPE_NODE" value="node"/>
 			<definition name="CONTEXT_ELEMENTTYPE_UNKNOW" value="unknow"/>
+			<definition name="CONTEXT_ELEMENTTYPE_PROVIDE" value="provide"/>
 			<definition type="space"/>
 			<definition name="ENTITY_CRITICALVALUE_OTHER" value="other"/>
 			<definition type="space"/>
@@ -912,6 +913,11 @@
 
 			<definition type="space"/>
 			<definition name="PREFIX_ELEMENTID_COTAINER" value="ContainerElement_"/>
+
+			<definition type="space"/>
+			<definition name="IODATASET_VALUECONTEXT" value="VALUECONTEXT"/>
+			<definition name="IODATASET_PROVIDE" value="PROVIDE"/>
+
 
 		</definitions>
 	</constants>

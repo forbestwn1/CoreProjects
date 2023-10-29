@@ -191,6 +191,7 @@ public class HAPConstantShared {
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANTREF = "constantReference";
 		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
 		public static final String CONTEXT_ELEMENTTYPE_UNKNOW = "unknow";
+		public static final String CONTEXT_ELEMENTTYPE_PROVIDE = "provide";
 
 
 
@@ -871,6 +872,11 @@ public class HAPConstantShared {
 
 
 		public static final String PREFIX_ELEMENTID_COTAINER = "ContainerElement_";
+
+
+
+		public static final String IODATASET_VALUECONTEXT = "VALUECONTEXT";
+		public static final String IODATASET_PROVIDE = "PROVIDE";
 
 
 }

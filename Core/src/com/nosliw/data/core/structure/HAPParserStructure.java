@@ -14,6 +14,7 @@ public class HAPParserStructure {
 		Object defRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForDefinition.REFERENCE);
 		Object linkRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForValue.LINK);
 		Object mappingRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForMapping.MAPPING);
+		Object provideObj = eleDefJson.opt(HAPElementStructureLeafProvide.PROVIDE);
 		Object criteriaDef = eleDefJson.opt(HAPElementStructureLeafData.CRITERIA);
 		Object valueJsonObj = eleDefJson.opt(HAPElementStructureLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPElementStructureNode.CHILD);
@@ -37,6 +38,21 @@ public class HAPParserStructure {
 			//relative for mapping
 			out = new HAPElementStructureLeafRelativeForMapping();
 			parseRelativeElement((HAPElementStructureLeafRelativeForMapping)out, mappingRefObj, eleDefJson);
+		}
+		else if(provideObj!=null) {
+			HAPElementStructureLeafProvide provideElement = new HAPElementStructureLeafProvide();
+			if(provideObj instanceof String) {
+				provideElement.setName((String)provideObj);
+			}
+			else if(provideObj instanceof JSONObject) {
+				JSONObject provideEleJsonObj = (JSONObject)provideObj;
+				provideElement.setName(provideEleJsonObj.getString(HAPElementStructureLeafProvide.NAME));
+				JSONObject defJsonObj = provideEleJsonObj.optJSONObject(HAPElementStructureLeafProvide.DEFINITION);
+				if(defJsonObj!=null) {
+					provideElement.setDefinition(HAPParserStructure.parseStructureElement(defJsonObj));
+				}
+			}
+			out = provideElement;
 		}
 		else if(criteriaDef!=null) {
 			//data

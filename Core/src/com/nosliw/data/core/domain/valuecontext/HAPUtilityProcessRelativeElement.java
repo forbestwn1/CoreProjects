@@ -32,6 +32,7 @@ import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
 import com.nosliw.data.core.structure.HAPPathElementMapping;
+import com.nosliw.data.core.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
@@ -210,7 +211,8 @@ public class HAPUtilityProcessRelativeElement {
 			HAPUtilityStructure.mergeElement(defStructureElementRelative.getResolveInfo().getSolidElement(), relativeContextEle, false, mappingPaths, null, runtimeEnv);
 			//remove all the void matchers
 			Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
-			for(HAPPathElementMapping mappingPath : mappingPaths){
+			for(HAPPathElementMapping mappingPath1 : mappingPaths){
+				HAPPathElementMappingVariableToVariable mappingPath = (HAPPathElementMappingVariableToVariable)mappingPath1; 
 				HAPMatchers match = mappingPath.getMatcher();
 				if(!match.isVoid()){
 					noVoidMatchers.put(mappingPath.getPath(), match);

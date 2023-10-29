@@ -23,6 +23,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafProvide;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForMapping;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
@@ -54,7 +55,7 @@ public class HAPProcessorDataAssociationMapping {
 			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueStructureContext);
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processRelativeInStructureElement(mappingItem.getDefinition(), inValueStructureContext, null, null, null);
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), inValueStructureContext, null, null, null, runtimeEnv);
 			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
@@ -66,7 +67,7 @@ public class HAPProcessorDataAssociationMapping {
 		}
 	}
 
-	private static HAPElementStructure processRelativeInStructureElement(HAPElementStructure defStructureElement, HAPContextStructureReference valueStructureRefContext, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPContextStructureReference inValueStructureRefContext, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
@@ -76,7 +77,7 @@ public class HAPProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElementInValueContext pathReference = defStructureElementRelative.getReference();
-				HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, valueStructureRefContext, null);
+				HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, inValueStructureRefContext, null);
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
@@ -89,12 +90,37 @@ public class HAPProcessorDataAssociationMapping {
 			}
 			break;
 		}
+		case HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE:
+		{
+			HAPElementStructureLeafProvide provideStructureElement = (HAPElementStructureLeafProvide)defStructureElement;
+
+//			String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
+//			HAPComplexPath toItemPath = new HAPComplexPath(eleInfo.getElementPath().getFullName());
+//				
+//			HAPDefinitionEntityValueStructure toValueStructure = valueStructureRefContext.getValueStructureDefintion(toValueStructureId); 
+//			HAPElementStructure toElement = HAPUtilityStructure.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
+//			
+//			
+//			//figure out matchers
+//			List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
+//			HAPUtilityStructure.mergeElement(provideStructureElement.getDefinition(), relativeContextEle, false, mappingPaths, null, runtimeEnv);
+//			//remove all the void matchers
+//			Map<String, HAPMatchers> noVoidMatchers = new LinkedHashMap<String, HAPMatchers>();
+//			for(HAPPathElementMapping mappingPath : mappingPaths){
+//				HAPMatchers match = mappingPath.getMatcher();
+//				if(!match.isVoid()){
+//					noVoidMatchers.put(mappingPath.getPath(), match);
+//				}
+//			}
+//			provideStructureElement.setMatchers(noVoidMatchers);
+			break;
+		}
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
 		{
 			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
 			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
 			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processRelativeInStructureElement(nodeStructureElement.getChild(childName), valueStructureRefContext, relativeEleProcessConfigure, dependency, errors));
+				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), inValueStructureRefContext, relativeEleProcessConfigure, dependency, errors, runtimeEnv));
 			}
 			nodeStructureElement.setChildren(processedChildren);
 			break;

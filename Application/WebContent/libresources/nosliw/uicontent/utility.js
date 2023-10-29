@@ -53,7 +53,7 @@ var node_utility = function(){
 
 		getInvokeServiceRequest : function(currentUIContent, serviceName, adapterName, handlers, request){
 			var serviceInfo = this.findEntityUp(currentUIContent, node_CONSTANT.UICONTENT_ENTITYTYPE_SERVICE, serviceName);
-			return node_complexEntityUtility.getAttributeAdapterExecuteRequest(serviceInfo.info.parent, serviceName, adapterName, handlers, request);
+			return node_complexEntityUtility.getAttributeAdapterExecuteRequest(serviceInfo.info.parent, serviceName, adapterName, undefined, handlers, request);
 		},
 
 	    callHandlerUp : function(currentUIContent, handlerName){

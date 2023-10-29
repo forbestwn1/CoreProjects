@@ -38,13 +38,13 @@ var node_complexEntityUtility = {
 		}
 	},
 	
-	getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, handlers, request){
+	getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
 		var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);
 		var adapter = attrNode.getAdapters()[adapterName!=undefined?adapterName:node_COMMONCONSTANT.NAME_DEFAULT];
-		return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, handlers, request);
+		return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, extraInfo, handlers, request);
 	},	
 	
-	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, handlers, request){
+	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, extraInfo, handlers, request){
 		var childInput;
 		var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
 		if(childCore==undefined)   childInput = childRuntime;
@@ -58,7 +58,7 @@ var node_complexEntityUtility = {
 			}
 		}
 		
-		return adapter.getExecuteRequest(parentCoreEntity, childInput, handlers, request);
+		return adapter.getExecuteRequest(parentCoreEntity, childInput, extraInfo, handlers, request);
 	},
 
 	getRootConfigureRequest : function(configure, handlers, request){

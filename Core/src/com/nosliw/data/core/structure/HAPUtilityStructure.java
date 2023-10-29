@@ -1,5 +1,6 @@
 package com.nosliw.data.core.structure;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -311,17 +312,17 @@ public class HAPUtilityStructure {
 		//merge is about solid
 		HAPElementStructure fromDef = fromDef1.getSolidStructureElement();
 		HAPElementStructure toDef = toDef1.getSolidStructureElement();
-		String type = toDef.getType();
+		String toType = toDef.getType();
 		
 		if(fromDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-			switch(type) {
+			switch(toType) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
 				HAPElementStructureLeafConstant dataFrom = (HAPElementStructureLeafConstant)fromDef.getSolidStructureElement();
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(new HAPDataTypeCriteriaId(dataFrom.getDataValue().getDataTypeId(), null)), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				mappingPaths.add(new HAPPathElementMapping(dataFrom.getValue(), matcher));
+				mappingPaths.add(new HAPPathElementMappingConstantToVariable(dataFrom.getValue(), path, matcher));
 				break;
 			}
 			default:
@@ -329,6 +330,12 @@ public class HAPUtilityStructure {
 				HAPErrorUtility.invalid("");
 			}
 			}
+		}
+		if(fromDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE)) {
+			HAPElementStructureLeafProvide dataFrom = (HAPElementStructureLeafProvide)fromDef.getSolidStructureElement();
+			List<HAPPathElementMapping> providerMappingPaths = new ArrayList<HAPPathElementMapping>();
+			mergeElement(dataFrom.getDefinition(), toDef1, modifyStructure, providerMappingPaths, path, runtimeEnv);
+			mappingPaths.add(new HAPPathElementMappingProvideToVariable(path, providerMappingPaths));
 		}
 		else if(toDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
 			HAPErrorUtility.invalid("");
@@ -345,15 +352,15 @@ public class HAPUtilityStructure {
 //			}
 		}
 		else {
-			if(!fromDef.getType().equals(type))   HAPErrorUtility.invalid("");   //not same type, error
-			switch(type) {
+			if(!fromDef.getType().equals(toType))   HAPErrorUtility.invalid("");   //not same type, error
+			switch(toType) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
 				HAPElementStructureLeafData dataFrom = (HAPElementStructureLeafData)fromDef.getSolidStructureElement();
 				HAPElementStructureLeafData dataTo = (HAPElementStructureLeafData)toDef;
 				//cal matchers
 				HAPMatchers matcher = HAPUtilityCriteria.mergeVariableInfo(HAPInfoCriteria.buildCriteriaInfo(dataFrom.getCriteria()), dataTo.getCriteria(), runtimeEnv.getDataTypeHelper()); 
-				mappingPaths.add(new HAPPathElementMapping(path, matcher==null?new HAPMatchers():matcher));
+				mappingPaths.add(new HAPPathElementMappingVariableToVariable(path, matcher==null?new HAPMatchers():matcher));
 				break;
 			}
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
@@ -399,7 +406,7 @@ public class HAPUtilityStructure {
 			}
 			default : 
 			{
-				mappingPaths.add(new HAPPathElementMapping(path, new HAPMatchers()));
+				mappingPaths.add(new HAPPathElementMappingVariableToVariable(path, new HAPMatchers()));
 			}
 			}
 		}

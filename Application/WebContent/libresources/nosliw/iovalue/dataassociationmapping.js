@@ -46,6 +46,9 @@ var node_getExecuteMappingDataAssociationRequest = function(inputIODataSet, asso
 
 		var fromConstant = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMCONSTANT];
 		
+		var fromProvideName = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMPROVIDENAME];
+		var fromProvidePath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_FROMPROVIDEPATH];
+		
 		var matchers = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_MATCHERS];
 		
 		if(fromConstant!=undefined){
@@ -54,6 +57,18 @@ var node_getExecuteMappingDataAssociationRequest = function(inputIODataSet, asso
 			else{
 				mappingRequest.addRequest(nosliw.runtime.getExpressionService().getMatchDataRequest(fromConstant, matchers));
 			}
+		}
+		else if(fromProvideName!=undefined){
+			//from provide
+			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromProvideName, fromProvidePath));
+			mappingRequest.addRequest(inputIODataSet.getDataOperationRequest(node_COMMONCONSTANT.IODATASET_PROVIDE, dataOperationService, {
+				success : function(request, value){
+					if(matchers==undefined)   return value;
+					else{
+						return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers)
+					}
+				}
+			}));
 		}
 		else{
 			//from variable

@@ -55,6 +55,7 @@ public class HAPParserValueMapping {
 		if(targetObj!=null) {
 			HAPReferenceElementInValueContext target = new HAPReferenceElementInValueContext();
 			target.buildObject(targetObj, HAPSerializationFormat.JSON);
+			out.setTarget(target);
 		}
 		
 		//definition

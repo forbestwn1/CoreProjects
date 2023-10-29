@@ -148,6 +148,7 @@ var COMMONCONSTANT=
   "CONTEXT_ELEMENTTYPE_CONSTANTREF": "constantReference",
   "CONTEXT_ELEMENTTYPE_NODE": "node",
   "CONTEXT_ELEMENTTYPE_UNKNOW": "unknow",
+  "CONTEXT_ELEMENTTYPE_PROVIDE": "provide",
   "ENTITY_CRITICALVALUE_OTHER": "other",
   "ATTRIBUTE_PATH_CRITICAL": "critical",
   "ATTRIBUTE_PATH_ELEMENT": "element",
@@ -534,7 +535,9 @@ var COMMONCONSTANT=
   "EMBEDED_TYPE_EXECUTABLE_ENTITY": "entity",
   "EMBEDED_TYPE_EXECUTABLE_VALUE": "value",
   "ENTITYATTRIBUTE_INFO_AUTOPROCESS": "autoProcess",
-  "PREFIX_ELEMENTID_COTAINER": "ContainerElement_"
+  "PREFIX_ELEMENTID_COTAINER": "ContainerElement_",
+  "IODATASET_VALUECONTEXT": "VALUECONTEXT",
+  "IODATASET_PROVIDE": "PROVIDE"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

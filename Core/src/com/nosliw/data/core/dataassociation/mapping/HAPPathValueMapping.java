@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -16,6 +17,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPPathElementMapping;
 
 @HAPEntityWithAttribute
 public class HAPPathValueMapping extends HAPExecutableImp{
@@ -31,6 +33,11 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	public static String FROMCONSTANT = "fromConstant";
 	
 	@HAPAttribute
+	public static String FROMPROVIDENAME = "fromProvideName";
+	@HAPAttribute
+	public static String FROMPROVIDEPATH = "fromProvidePath";
+
+	@HAPAttribute
 	public static String MATCHERS = "matchers";
 
 	@HAPAttribute
@@ -45,6 +52,11 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	private String m_fromItemPath;
 	
 	private Object m_fromConstant;
+	
+	private String m_fromProvideName;
+	private String m_fromProvidePath;
+	
+	private List<HAPPathElementMapping> m_fromProvideValueMappingPath;
 	
 	private HAPMatchers m_matchers;
 	
@@ -70,14 +82,29 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 		this.m_toItemPath = toItemPath;
 	}
 
+	public HAPPathValueMapping(String fromProvideName, String fromProvidePath, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
+		this.m_fromDomainName = HAPConstantShared.IODATASET_PROVIDE;
+		this.m_fromProvideName = fromProvideName;
+		this.m_matchers = matchers;
+		this.m_toDomainName = toDomainName;
+		this.m_toValueStructureId = toValueStructureId;
+		this.m_toItemPath = toItemPath;
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(FROMCONSTANT, HAPUtilityJson.buildJson(m_fromConstant, HAPSerializationFormat.JSON));
+		
+		jsonMap.put(FROMPROVIDENAME, this.m_fromProvideName);
+		jsonMap.put(FROMPROVIDEPATH, this.m_fromProvidePath);
+		
 		jsonMap.put(FROMDOMAINNAME, this.m_fromDomainName);
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);
+
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(m_matchers, HAPSerializationFormat.JSON));
+
 		jsonMap.put(TODOMAINNAME, this.m_toDomainName);
 		jsonMap.put(TOVALUESTRUCTUREID, m_toValueStructureId);
 		jsonMap.put(TOITEMPATH, this.m_toItemPath);

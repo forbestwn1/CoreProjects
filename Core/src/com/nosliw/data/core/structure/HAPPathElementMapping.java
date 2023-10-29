@@ -1,29 +1,43 @@
 package com.nosliw.data.core.structure;
 
-import com.nosliw.data.core.matcher.HAPMatchers;
+import java.util.Map;
 
-public class HAPPathElementMapping {
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 
-	private Object m_fromConstant;
+@HAPEntityWithAttribute
+abstract public class HAPPathElementMapping extends HAPExecutableImp{
+
+	public final static String VARIABLE2VARIABLE = "VARIABLE2VARIABLE";
+
+	public final static String CONSTANT2VARIABLE = "CONSTANT2VARIABLE";
 	
-	private HAPMatchers m_matchers;
+	public final static String PROVIDE2VARIABLE = "PROVIDE2VARIABLE";
+	
+	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String PATH = "path";
+	
+	private String m_type;
 	
 	private String m_path;
 	
-	public HAPPathElementMapping(String path, HAPMatchers matchers) {
+	public HAPPathElementMapping(String type, String path) {
 		this.m_path = path;
-		this.m_matchers = matchers;
+		this.m_type = type;
 	}
-	
-	public HAPPathElementMapping(Object fromConstant, HAPMatchers matchers) {
-		this.m_fromConstant = fromConstant;
-		this.m_matchers = matchers;
-	}
+
+	public String getType() {   return this.m_type;     } 
 	
 	public String getPath() {    return this.m_path;      }
 	
-	public HAPMatchers getMatcher() {   return this.m_matchers;    }
-	
-	public Object getFromConstant() {    return this.m_fromConstant;     }
-	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.m_type);
+		jsonMap.put(PATH, this.m_path);
+	}
 }

@@ -21,6 +21,38 @@
 			},
 			"adapter":[
 				{
+					"name" : "provide",
+					"status": "disabled1",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"mapping" : {
+							"child_tree_public" : {
+								"definition" : {
+									"child" : {
+										"a" : {
+											"child" : {
+												"ac" : {
+													"mapping" : {
+														"elementPath": "parent_tree_public.a.ac"
+													}
+												},
+												"aa" : {
+													"provide" : {
+														"name" : "testProvide",
+														"definition" : {
+															"criteria":"test.string;1.0.0"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				{
 					"name" : "parent.child.data.value",
 					"status": "disabled1",
 					"entityType" : "dataAssociation",

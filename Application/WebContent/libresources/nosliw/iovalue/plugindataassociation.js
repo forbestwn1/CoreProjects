@@ -41,9 +41,22 @@ var loc_createDataAssociationAdapter = function(dataAssociation){
 	
 	var loc_out = {
 		
-		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
+		getExecuteRequest : function(parentCore, childRuntime, extraInfo, handlers, request){
 			var parentDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
 			var childDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(childRuntime.getCoreEntity()));
+
+			extraInfo = {
+				"provide" : {
+					"testProvide" : {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "test provide data"
+					}
+				}
+			};
+			var provideData = extraInfo.provide;
+			if(provideData!=undefined){
+				parentDataIoSet.setData(node_COMMONCONSTANT.IODATASET_PROVIDE, provideData);
+			}
 
 			var da = node_createDataAssociation(parentDataIoSet, loc_dataAssociation, childDataIoSet);
 			return da.getExecuteRequest(handlers, request);

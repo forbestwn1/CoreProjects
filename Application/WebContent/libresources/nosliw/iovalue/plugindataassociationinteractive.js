@@ -44,7 +44,7 @@ var loc_createDataAssociationInteractiveAdapter = function(dataAssociationIntera
 	
 	var loc_out = {
 		
-		getExecuteRequest : function(parentCore, childRuntime, handlers, request){
+		getExecuteRequest : function(parentCore, childRuntime, extraInfo, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var inIO = node_createIODataSet();
