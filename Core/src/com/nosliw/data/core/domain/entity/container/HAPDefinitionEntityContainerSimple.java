@@ -12,12 +12,12 @@ public class HAPDefinitionEntityContainerSimple extends HAPDefinitionEntityInDom
 
 	public String addElementAttribute(HAPIdEntityInDomain entityId) {
 		String attrName = HAPConstantShared.PREFIX_ELEMENTID_COTAINER+this.generateId();
-		this.setAttributeSimple(attrName, new HAPEmbededDefinition(entityId), this.getElmentValueTypeInfo());
+		this.setAttributeSimple(attrName, new HAPEmbededDefinition(entityId));
 		return attrName;
 	}
 
 	public String addElementAttribute(String eleId, HAPIdEntityInDomain entityId) {
-		this.setAttributeSimple(eleId, new HAPEmbededDefinition(entityId), this.getElmentValueTypeInfo());
+		this.setAttributeSimple(eleId, new HAPEmbededDefinition(entityId));
 		return eleId;
 	}
 

@@ -82,7 +82,11 @@ var node_makeObjectWithComponentInterface = function(entityType, rawEntity, debu
 	var loc_rawComponentCore = rawEntity;
 	var loc_backupState;
 	var loc_lifecycleEntity;
-	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
+	
+	var loc_configureValue = node_createConfigure(node_getBasicEntityObjectInterface(loc_rawComponentCore).getConfigure()).getConfigureValue();
+//	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
+	
+//	var loc_configureValue = node_createConfigure(loc_rawComponentCore.getConfigure!=null?loc_rawComponentCore.getConfigure():undefined).getConfigureValue();
 	var loc_debugMode = false;
 	var loc_debugView;
 	

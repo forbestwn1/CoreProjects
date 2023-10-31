@@ -139,7 +139,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					//complex attribute
 					var childEntitId = attrValue;
 
-					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, childConfigure, variationPoints, {
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, complexEntityRuntime){
 							
 							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
@@ -278,7 +278,10 @@ var node_buildComplexEntityCreationVariationPointObject = function(rawEntity){
 	var loc_rawEntity = rawEntity;
 	
 	var loc_out = {
-		afterValueContext : function(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request){   return loc_rawEntity.afterValueContext==undefined?undefined:loc_rawEntity.afterValueContext(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request);   },
+		afterValueContext : function(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request){
+			if(loc_rawEntity==undefined)  return;   
+			return loc_rawEntity.afterValueContext==undefined?undefined:loc_rawEntity.afterValueContext(complexEntityDef, valueContextId, bundleCore, coreConfigure, handlers, request);   
+		},
 	};
 	
 	return loc_out;

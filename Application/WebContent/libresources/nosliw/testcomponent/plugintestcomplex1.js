@@ -29,20 +29,6 @@ var node_createTestComplex1Plugin = function(){
 				return loc_createTestComplex1ComponentCore(complexEntityDef, configure);
 			}, handlers, request);
 			
-			
-//			var rawComplexEntityCore = loc_createTestComplex1ComponentCore(complexEntityDef, configure);
-//			
-//			var complexEntityCore = node_componentUtility.makeComplexEntityCored(rawComplexEntityCore, valueContextId, bundleCore);
-//			
-//			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-//
-//			out.addRequest(rawComplexEntityCore.getInitAttributeRequest());
-//			
-//			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-//				return complexEntityCore;
-//			}));
-//			
-//			return out;
 		},
 			
 	};

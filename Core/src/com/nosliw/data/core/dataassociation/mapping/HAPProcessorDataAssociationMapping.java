@@ -64,9 +64,28 @@ public class HAPProcessorDataAssociationMapping {
 			
 			//build constant assignment
 			
+			//collect provide
+			collectProvide(out,  mappingItem.getDefinition());
 		}
 	}
 
+	private static void collectProvide(HAPExecutableDataAssociationMapping mapping,  HAPElementStructure root) {
+		HAPUtilityStructure.traverseElement(root, null, new HAPProcessorContextDefinitionElement() {
+			@Override
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE)) {
+					HAPElementStructureLeafProvide provideEle = (HAPElementStructureLeafProvide)eleInfo.getElement();
+					mapping.addProvide(provideEle.getName(), provideEle.getDefinition());
+					return Pair.of(false, null);
+				}
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoElement eleInfo, Object value) {	}}, null);
+		
+	}
+	
 	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPContextStructureReference inValueStructureRefContext, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {

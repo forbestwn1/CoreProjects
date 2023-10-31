@@ -2,6 +2,7 @@ package com.nosliw.data.core.dataassociation.mapping;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,8 @@ import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureUnknown;
 
 @HAPEntityWithAttribute
 public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssociationImp{
@@ -25,11 +28,16 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	@HAPAttribute
 	public static String MAPPINGPATH = "mappingPath";
 
+	@HAPAttribute
+	public static String PROVIDE = "provide";
+
 	//data association output context
 	private List<HAPItemValueMapping<HAPIdRootElement>> m_items;
 	
 	//path mapping for relative node (output path in context - input path in context) during runtime
 	private List<HAPPathValueMapping> m_relativePathMapping;
+	
+	private Map<String, HAPElementStructure> m_providers;
 	
 	private Map<String, Object> m_constantAssignment;
 	
@@ -41,6 +49,7 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 		super(definition);
 		this.m_items = new ArrayList<HAPItemValueMapping<HAPIdRootElement>>();
 		this.m_relativePathMapping = new ArrayList<HAPPathValueMapping>();
+		this.m_providers = new LinkedHashMap<String, HAPElementStructure>();
 		this.m_inputDependency = new HashSet<String>();
 	}
 	
@@ -55,11 +64,17 @@ public class HAPExecutableDataAssociationMapping extends HAPExecutableDataAssoci
 	public void addRelativePathMappings(List<HAPPathValueMapping> mappingPaths) {    this.m_relativePathMapping.addAll(mappingPaths);    }
 	public List<HAPPathValueMapping> getRelativePathMappings() {  return this.m_relativePathMapping;  }
 
+	public void addProvide(String name, HAPElementStructure def) {
+		if(def==null)  def = new HAPElementStructureUnknown();
+		this.m_providers.put(name, def);
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(MAPPINGPATH, HAPSerializeManager.getInstance().toStringValue(this.m_relativePathMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(ITEM, HAPSerializeManager.getInstance().toStringValue(this.m_items, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDE, HAPSerializeManager.getInstance().toStringValue(this.m_providers, HAPSerializationFormat.JSON));
 	}
 
 	@Override

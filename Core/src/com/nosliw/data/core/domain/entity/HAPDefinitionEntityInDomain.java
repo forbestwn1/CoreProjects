@@ -89,7 +89,7 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	public Object getAttributeValue(String attrName, Object defaultValue) {
 		HAPAttributeEntityDefinition att = this.getAttribute(attrName);
 		if(att==null) {
-			this.setAttributeSimple(attrName, new HAPEmbededDefinition(defaultValue), null);
+			this.setAttributeObject(attrName, new HAPEmbededDefinition(defaultValue));
 			att = this.getAttribute(attrName);
 		}
 		return att.getValue().getValue();
@@ -122,8 +122,8 @@ public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp imp
 	
 	
 	public void setAttributeObject(String attributeName, HAPEmbededDefinition embededEntity) {setAttribute(attributeName, embededEntity, new HAPInfoValueType());}
-	public void setAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false));}
-	public void setAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity, String valueType) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, true));}
+	public void setAttributeSimple(String attributeName, HAPEmbededDefinition embededEntity) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(((HAPIdEntityInDomain)embededEntity.getValue()).getEntityType(), false));}
+	public void setAttributeComplex(String attributeName, HAPEmbededDefinition embededEntity) {setAttribute(attributeName, embededEntity, new HAPInfoValueType(((HAPIdEntityInDomain)embededEntity.getValue()).getEntityType(), true));}
 
 	public void setAttribute(HAPAttributeEntityDefinition attribute) {    
 		for(int i=0; i<this.m_attributes.size(); i++) {

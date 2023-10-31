@@ -2,20 +2,23 @@
 <html>
 <body>
 		
-		12345
-
+<!--
 		<nosliw-debug_contextvalue></nosliw-debug_contextvalue>  
 
 		<nosliw-test data="parm1"></nosliw-test>  
 
-<!--
-		<nosliw-loop data="array" element="ele123456" index="index3456789">
 			loop <%=?(ele123456)?.value%> <%=?(index3456789)?.value%>
-		</nosliw-loop>
 -->
 
+		<nosliw-loop data="array1" element="ele123456" index="index3456789">
+			<nosliw-test data="ele123456"></nosliw-test>  
+			
+			<nosliw-debug_contextvalue></nosliw-debug_contextvalue>  
+			
+		</nosliw-loop>
+
 <!--
-		<nosliw-loop data="array" element="ele123456" index="index3456789"/>
+		<nosliw-loop data="array1" element="ele123456" index="index3456789"/>
 
 		<nosliw-test data="parm1"></nosliw-test>  
 		<br>
@@ -219,7 +222,21 @@
 							"value": "1234"
 						}
 					},
-					array : {
+					array1 : {
+						definition: {
+							criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"
+						},
+						defaultValue: {
+							dataTypeId: "test.array;1.0.0",
+							value: [
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 1111!"
+								}
+							]
+						}
+					},
+					array2 : {
 						definition: {
 							criteria:"test.array;1.0.0%||element:test.string;1.0.0||%"
 						},

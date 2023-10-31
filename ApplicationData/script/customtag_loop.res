@@ -26,7 +26,7 @@ function(envObj){
 						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
 							var loc_valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
 							var valueStructureRuntimeId = loc_valueContext.getValueStructureRuntimeIdByName("nosliw_internal");
-							var valueStructure = loc_valueContext.getValueStructure();
+							var valueStructure = loc_valueContext.getValueStructure(valueStructureRuntimeId);
 							valueStructure.addVariable(loc_envObj.getAttributeValue("element"), ele.elementVar);
 							valueStructure.addVariable(loc_envObj.getAttributeValue("index"), ele.indexVar);
 						}

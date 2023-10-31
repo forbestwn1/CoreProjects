@@ -50,6 +50,8 @@ import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityProce
 import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityProcessorComplexExpressionScriptSingle;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginEntityDefinitionInDomainServiceProvider;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginSimpleEntityProcessorServiceProvider;
+import com.nosliw.data.core.domain.entity.task.HAPPluginEntityDefinitionInDomainTask;
+import com.nosliw.data.core.domain.entity.task.HAPPluginEntityProcessorTask;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityProcessorComplexTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityDefinitionInDomainTestComplex1;
@@ -229,7 +231,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
-		
+
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASK, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
+
 //		this.m_dataSourceManager.registerDataSourceFactory(HAPDataSourceFactoryTask.FACTORY_TYPE, new HAPDataSourceFactoryTask(this.getTaskManager()));
 //		this.getTaskManager().registerTaskManager(HAPConstant.DATATASK_TYPE_DATASOURCE, new HAPManagerTaskDatasource(this.getDataSourceManager().getDataSourceDefinitionManager(), this.getDataSourceManager(), runtime));
 		
@@ -269,6 +273,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, this));
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, this));
+
+		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASK, this));
 
 		this.getResourceDefinitionManager().registerPlugin(new HAPResourceDefinitionPluginServiceDefinition(this.getServiceManager().getServiceDefinitionManager()));
 
@@ -311,6 +317,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValue(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainContainerComplex(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainContainerSimple(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainTask(this));
 
 		//complex entity processor
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexTestComplex1());
@@ -324,6 +331,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT));
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorContainerComplex());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorContainerSimple());
+		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorTask());
 
 		//simple entity processor
 		this.getDomainEntityExecutableManager().registerSimpleEntityProcessorPlugin(new HAPPluginSimpleEntityProcessorInteractive(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE));

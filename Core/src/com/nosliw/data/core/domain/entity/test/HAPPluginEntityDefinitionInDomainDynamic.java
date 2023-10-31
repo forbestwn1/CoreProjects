@@ -45,7 +45,7 @@ public class HAPPluginEntityDefinitionInDomainDynamic extends HAPPluginEntityDef
 
 			if(HAPUtilityEntityInfo.isEnabled(info)) {
 				String attrName = info.getName();
-				System.out.println(attrName);
+//				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
 						this.parseSimpleEntityAttributeSelf(jsonObj, entityId, attrName, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
