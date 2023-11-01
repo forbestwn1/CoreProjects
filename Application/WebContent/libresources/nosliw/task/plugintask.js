@@ -47,7 +47,7 @@ var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bun
 			var impType = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_TYPE);
 			var implement = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION);
 			
-			var impCoreEntity = node_getEntityTreeNodeInterface(loc_out).getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION).getChildValue();
+			var impCoreEntity = node_getEntityTreeNodeInterface(loc_out).getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION).getChildValue().getCoreEntity();
 			var taskInterface = node_getApplicationInterface(impCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 			return taskInterface.getExecuteRequest(handlers, request);
 		},
