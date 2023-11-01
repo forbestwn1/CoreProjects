@@ -9,7 +9,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_namingConvensionUtility;
 var node_dataUtility;
-var node_createValueStructureVariableInfo;
+var node_createValueContextVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createValueStructureDataOperationRequest = function(valueStructure, valueStructureVarInfo, operationService, handlers, requester_parent){
@@ -189,7 +189,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
 
 
 //Register Node by Name

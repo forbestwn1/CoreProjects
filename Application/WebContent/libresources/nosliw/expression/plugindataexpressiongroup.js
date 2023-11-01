@@ -116,18 +116,16 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, undefined, {
 				success : function(request, childNode){
 					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
 				}
 			}));
 			
-			
-			
 			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, {
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
 					success : function(request, childNode){
 						loc_referencedRuntime[attrName] = childNode.getChildValue();
 					}
