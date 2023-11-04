@@ -31,7 +31,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_calcuateExpression = function(expressionId){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var request = loc_getCoreTaskInterface(coreEntity).getExecuteRequest({
+		var request = loc_getCoreTaskInterface(coreEntity).getExecuteRequest(undefined, {
 			success : function(request, result){
 				loc_expressionResultView.val(JSON.stringify(result));
 			}

@@ -37,12 +37,12 @@ var node_complexEntityUtility = {
 			return parm;
 		}
 	},
-	
+
 	getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
 		var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);
 		var adapter = attrNode.getAdapters()[adapterName!=undefined?adapterName:node_COMMONCONSTANT.NAME_DEFAULT];
-		return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, extraInfo, handlers, request);
-	},	
+		if(adpater!=undefined)	return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, extraInfo, handlers, request);
+	},
 	
 	getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, extraInfo, handlers, request){
 		var childInput;

@@ -42,7 +42,7 @@ var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueCo
 	var loc_dataExpressionSingleRuntime = {};
 	
 	var loc_facade = {
-		getExecuteRequest : function(handlers, request){
+		getExecuteRequest : function(extraInfo, handlers, request){
 			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTSINGLE_EXPRESSION);
 			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionSingleRuntime.getCoreEntity(), handlers, request)
 		},
