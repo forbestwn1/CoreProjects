@@ -14,23 +14,26 @@ public class HAPPluginResourceDefinitionImpEntity extends HAPPluginResourceDefin
 	}
 
 	@Override
-	protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext) {
-		JSONObject jsonObj = null;
-		if(content instanceof JSONObject) jsonObj = (JSONObject)content;
-		else if(content instanceof String)  jsonObj = new JSONObject(HAPUtilityJson.formatJson((String)content));
+	protected HAPIdEntityInDomain parseEntity(Object content, HAPSerializationFormat format, HAPContextParser parserContext) {
+		HAPIdEntityInDomain entityId = null;
+		switch(format) {
+		case JSON:
+			JSONObject jsonObj = null;
+			if(content instanceof JSONObject) jsonObj = (JSONObject)content;
+			else if(content instanceof String)  jsonObj = new JSONObject(HAPUtilityJson.formatJson((String)content));
 
-		Object entityObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.ENTITY);
-		if(entityObj==null)  entityObj = jsonObj;    //if no entity node, then using root
-		HAPIdEntityInDomain entityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(this.getResourceType(), entityObj, parserContext);
-	
-		//entity info (name, description, ...)
-		HAPInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId);
-		HAPExtraInfoEntityInDomainDefinition entityInfoDef = entityInfo.getExtraInfo();
-		JSONObject infoObj = jsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.INFO);
-		if(infoObj==null)   infoObj = jsonObj;
-		entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
+			Object entityObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.ENTITY);
+			if(entityObj==null)  entityObj = jsonObj;    //if no entity node, then using root
+			entityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(this.getResourceType(), entityObj, format, parserContext);
 		
-//		HAPIdEntityInDomain entityId = HAPUtilityParserEntity.parseEntity(jsonObj, this.getResourceType(), parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager()); 
+			//entity info (name, description, ...)
+			HAPInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId);
+			HAPExtraInfoEntityInDomainDefinition entityInfoDef = entityInfo.getExtraInfo();
+			JSONObject infoObj = jsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.INFO);
+			if(infoObj==null)   infoObj = jsonObj;
+			entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
+		}
+		
 		return entityId;
 	}
 }

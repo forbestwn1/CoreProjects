@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPPluginResourceDefinitionImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -10,8 +11,8 @@ public class HAPPluginResourceDefinitionImpEntityThin extends HAPPluginResourceD
 	}
 
 	@Override
-	protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext) {
-		HAPIdEntityInDomain out = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(getResourceType(), content, parserContext);
+	protected HAPIdEntityInDomain parseEntity(Object content, HAPSerializationFormat format, HAPContextParser parserContext) {
+		HAPIdEntityInDomain out = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(getResourceType(), content, format, parserContext);
 		return out;
 	}
 

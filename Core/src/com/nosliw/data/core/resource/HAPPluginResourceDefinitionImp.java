@@ -1,5 +1,6 @@
 package com.nosliw.data.core.resource;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -51,7 +52,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 			HAPInfoResourceLocation resourceLocInfo = this.getResourceLocationInfo(rootResourceId);
 			resourceDomain.setLocationBase(resourceLocInfo.getBasePath());
 			//read content and parse it
-			rootEntityId = parseEntity(HAPUtilityFile.readFile(resourceLocInfo.getFiile()), new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
+			rootEntityId = parseEntity(HAPUtilityFile.readFile(resourceLocInfo.getFiile()), resourceLocInfo.getFormat(), new HAPContextParser(globalDomain, resourceDomain.getDomainId()));
 			resourceDomain.setRootEntityId(rootEntityId);
 			resourceDomain.getEntityInfoDefinition(rootEntityId).setResourceId(rootResourceId);
 		}
@@ -78,8 +79,12 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		if(rootResourceDef==null) {
 			//if root resource not loaded in domain, load it
 			HAPPathLocationBase localRefBase = currentDomain.getLocationBase();
-			String path = localRefBase.getPath() + rootResourceId.getResourceType() + "/" + rootResourceId.getName() + ".res";
-			rootEntityId = this.parseEntity(HAPUtilityFile.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
+			
+			HAPInfoResourceLocation resourceLocationInfo = HAPUtilityResourceId.getResourceLocationInfo(localRefBase.getPath() + "/" + rootResourceId.getResourceType(), rootResourceId.getName());
+			rootEntityId = this.parseEntity(HAPUtilityFile.readFile(resourceLocationInfo.getFiile()), resourceLocationInfo.getFormat(), new HAPContextParser(globalDomain, currentDomainId));
+			
+//			String path = localRefBase.getPath() + rootResourceId.getResourceType() + "/" + rootResourceId.getName() + ".res";
+//			rootEntityId = this.parseEntity(HAPUtilityFile.readFile(path), new HAPContextParser(globalDomain, currentDomainId));
 		}
 		else {
 			//if root resource already loaded
@@ -91,7 +96,7 @@ public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourc
 		return out;
 	}
 
-	abstract protected HAPIdEntityInDomain parseEntity(Object content, HAPContextParser parserContext);
+	abstract protected HAPIdEntityInDomain parseEntity(Object content, HAPSerializationFormat format, HAPContextParser parserContext);
 
 	protected HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
 		return HAPUtilityResourceId.getResourceLocationInfo(resourceId);
