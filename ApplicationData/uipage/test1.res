@@ -91,36 +91,44 @@
 				]
 			}
 			</valuecontext>
-
+ 
 
 		</nosliw-test>  
 		<br>
 -->
 </body>
 
-	<script>
+	<scripttaskgroup>
 	{
-		invokeService : function(event, info, env){
-			env.executeGetInvokeServiceRequest("service1", "default");
-		},
-	
-		tagEventHandler : function(event, info, env){
-			console.log(JSON.stringify(arguments));
-		},
+		"definition" : [
+			{
+			
+			}
 		
-		customTagAttrChangeHandler : function(event, info, env){
-			console.log(JSON.stringify(arguments));
-		},
+		],
+		"script" : {
+			invokeService : function(event, info, env){
+				env.executeGetInvokeServiceRequest("service1", "default");
+			},
 		
-		textInputValueChanged : function(info, env){
-			env.trigueEvent("changeInputText", info.eventData);
-		},
-		
-		command_Start :function(data, env){
-			return data.data + "   Start";
-		},
+			tagEventHandler : function(event, info, env){
+				console.log(JSON.stringify(arguments));
+			},
+			
+			customTagAttrChangeHandler : function(event, info, env){
+				console.log(JSON.stringify(arguments));
+			},
+			
+			textInputValueChanged : function(info, env){
+				env.trigueEvent("changeInputText", info.eventData);
+			},
+			
+			command_Start :function(data, env){
+				return data.data + "   Start";
+			},
+		}
 	}
-	</script>
+	</scripttaskgroup>
 	
 	<service>
 	[

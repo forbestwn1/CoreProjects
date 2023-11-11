@@ -5,10 +5,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainDataAssociationInteractive  extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainDataAssociationInteractive  extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	public HAPPluginEntityDefinitionInDomainDataAssociationInteractive(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, HAPDefinitionEntityDataAssociationInteractive.class, runtimeEnv);
@@ -21,8 +21,4 @@ public class HAPPluginEntityDefinitionInDomainDataAssociationInteractive  extend
 		da.buildObject(obj, HAPSerializationFormat.JSON);
 		entity.setDataAssciation(da);
 	}
-
-	@Override
-	public boolean isComplexEntity() {   return false;  }
-	
 }

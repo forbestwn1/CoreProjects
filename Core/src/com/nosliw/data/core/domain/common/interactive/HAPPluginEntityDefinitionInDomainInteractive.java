@@ -5,11 +5,11 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntityDefinitionInDomainImp{
+public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntityDefinitionInDomainImpSimple{
 
 	private Class<? extends HAPDefinitionInteractive> m_interactiveClass;
 	
@@ -32,6 +32,4 @@ public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntit
 		}
 	}
 
-	@Override
-	public boolean isComplexEntity() {   return false;  }
 }
