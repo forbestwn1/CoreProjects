@@ -1,5 +1,7 @@
 package com.nosliw.data.core.domain.entity.script;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -13,9 +15,9 @@ public class HAPPluginEntityDefinitionInDomainScript extends HAPPluginEntityDefi
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityScript entity = (HAPDefinitionEntityScript)this.getEntity(entityId, parserContext);
-		entity.setScript(obj+"");
+		entity.setScript(jsonObj+"");
 	}
 
 }

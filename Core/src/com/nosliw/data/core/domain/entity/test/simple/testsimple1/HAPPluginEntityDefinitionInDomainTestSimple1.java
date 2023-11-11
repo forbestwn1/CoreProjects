@@ -18,10 +18,11 @@ public class HAPPluginEntityDefinitionInDomainTestSimple1 extends HAPPluginEntit
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityTestSimple1 entity = (HAPDefinitionEntityTestSimple1)this.getEntity(entityId, parserContext);
-		JSONObject jsonObj = (JSONObject)obj;
 
+		JSONObject jsonObj = (JSONObject)jsonValue;
+		
 		//script
 		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestSimple1.ATTR_SCRIPTNAME);
 		entity.setScriptName(scriptName);

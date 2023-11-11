@@ -3,6 +3,8 @@ package com.nosliw.data.core.domain;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
 public class HAPManagerDomainEntityDefinition {
 
 	private Map<String, HAPPluginEntityDefinitionInDomain> m_entityDefinitionPlugin;
@@ -21,12 +23,12 @@ public class HAPManagerDomainEntityDefinition {
 		return plugin.newInstance(parseContext);
 	}
 	
-	public HAPIdEntityInDomain parseDefinition(String entityType, Object obj, HAPContextParser parseContext) {
+	public HAPIdEntityInDomain parseDefinition(String entityType, Object obj, HAPSerializationFormat format, HAPContextParser parseContext) {
 		if(obj==null)  return null;
 		
 		HAPPluginEntityDefinitionInDomain plugin = this.m_entityDefinitionPlugin.get(entityType);
 		HAPIdEntityInDomain out = plugin.newInstance(parseContext);
-		plugin.parseDefinition(out, obj, parseContext);		
+		plugin.parseDefinition(out, obj, format, parseContext);		
 		return out;
 	}
 	

@@ -15,10 +15,10 @@ public class HAPPluginEntityDefinitionInDomainDataAssociationInteractive  extend
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityDataAssociationInteractive entity = (HAPDefinitionEntityDataAssociationInteractive)this.getEntity(entityId, parserContext);
 		HAPDefinitionGroupDataAssociationForTask da = new HAPDefinitionGroupDataAssociationForTask();
-		da.buildObject(obj, HAPSerializationFormat.JSON);
+		da.buildObject(jsonValue, HAPSerializationFormat.JSON);
 		entity.setDataAssciation(da);
 	}
 }

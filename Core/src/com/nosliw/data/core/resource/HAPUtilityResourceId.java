@@ -1,13 +1,20 @@
 package com.nosliw.data.core.resource;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.io.Files;
 import com.nosliw.common.exception.HAPErrorUtility;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPPathLocationBase;
@@ -109,32 +116,68 @@ public class HAPUtilityResourceId {
 	}
 	
 
-	
-	
-	
 	public static HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
-		File file = null;
-		
 		String localFile = isFileBased(resourceId);
 		if(localFile!=null) {
 			//if file base
-			return new HAPInfoResourceLocation(new File(localFile), new HAPPathLocationBase(localFile));
+			return new HAPInfoResourceLocation(new File(localFile), null, new HAPPathLocationBase(localFile));
 		}
 		else {
 			//check single file first
 			String basePath = HAPSystemFolderUtility.getResourceFolder(resourceId.getResourceType());
-			file = new File(basePath+resourceId.getId()+".res");
-			if(!file.exists()) {
-				basePath = basePath+resourceId.getId()+"/";
-				file = new File(basePath+"/main.res");
-				if(!file.exists()) {
-					HAPErrorUtility.invalid("Cannot find module resource " + resourceId.getId());
-				}
-			}
-			return new HAPInfoResourceLocation(file, new HAPPathLocationBase(basePath));
+			return getResourceLocationInfo(basePath, resourceId.getId());
 		}
 	}
 	
+	public static HAPInfoResourceLocation getResourceLocationInfo(String basePath, String resourceId) {
+		String newBasePath = basePath+"/"+resourceId;
+		File folder = new File(newBasePath);
+		Pair<File, HAPSerializationFormat> result;
+		if(folder.isDirectory()&&folder.exists()) {
+			//from folder
+			result = findResourceFile(folder, "main");
+		}
+		else {
+			//from file
+			newBasePath = basePath;
+			result = findResourceFile(new File(newBasePath), resourceId);
+		}
+		
+		if(result!=null) {
+			return new HAPInfoResourceLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
+		}
+		else {
+			HAPErrorUtility.invalid("Cannot find module resource " + resourceId);
+		}
+		return null;
+	}
+
+	private static Pair<File, HAPSerializationFormat> findResourceFile(File dir, String fileName){
+		File[] matches = dir.listFiles(new FilenameFilter(){
+		  @Override
+			public boolean accept(File dir, String name){
+			  return fileName.equals(Files.getNameWithoutExtension(name));
+		  	}
+		});
+		
+		if(matches!=null&&matches.length>0) {
+			File file = matches[0];
+			HAPSerializationFormat format = m_extensionToFormat.get(Files.getFileExtension(file.getName()));
+			if(format==null)  format = HAPSerializationFormat.JSON;
+			return Pair.of(file, format); 
+		}
+		return null;
+	}
+	
+	private static Map<String, HAPSerializationFormat> m_extensionToFormat = new LinkedHashMap<String, HAPSerializationFormat>(); 
+	
+	static {
+		m_extensionToFormat.put("json", HAPSerializationFormat.JSON);
+		m_extensionToFormat.put("html", HAPSerializationFormat.HTML);
+		m_extensionToFormat.put("js", HAPSerializationFormat.JAVASCRIPT);
+	}
+	
+
 	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		for(HAPResourceIdSimple id : ids) 	out.add(new HAPResourceDependency(id));

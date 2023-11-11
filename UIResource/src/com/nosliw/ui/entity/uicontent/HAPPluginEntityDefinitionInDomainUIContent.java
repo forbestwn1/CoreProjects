@@ -12,6 +12,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -39,7 +40,13 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	}
 
 	@Override
-	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentHtml(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+		//parse value context
+		parseValueContext((Element)obj, entityId, parserContext);
+
+		//parse attachment
+		parseAttachment((Element)obj, entityId, parserContext);
+
 		parseUIDefinitionUnit((Element)obj, entityId, parserContext);
 	}
 	
@@ -65,18 +72,6 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		HAPUtilityEntityContainer.newSimpleEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SERVICE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, parserContext, getRuntimeEnvironment());
 	}
 	
-	@Override
-	protected void parseValueContextAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		//parse value context
-		parseValueContext((Element)obj, entityId, parserContext);
-	}
-
-	@Override
-	protected void parseAttachmentAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		//parse attachment
-		parseAttachment((Element)obj, entityId, parserContext);
-	}
-
 	private void parseUIDefinitionUnit(Element wrapperEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 		
@@ -138,7 +133,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
 				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
 				
-				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, parserContext);
+				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, HAPSerializationFormat.HTML, parserContext);
 				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
 				uiTag.setUIId(uiId);
 				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
@@ -268,7 +263,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 			JSONArray serviceArray = new JSONArray(serviceEle.html());
 			for(int i=0; i<serviceArray.length(); i++) {
 				JSONObject serviceObj = serviceArray.getJSONObject(i);
-				this.parseSimpleEntityAttributeSelf(serviceObj, uiContent.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.SERVICE), null, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, null, parserContext);
+				this.parseSimpleEntityAttributeSelfJson(serviceObj, uiContent.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.SERVICE), null, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, null, parserContext);
 			}
 		}
 		for(Element serviceEle : serviceEles)  serviceEle.remove();
@@ -278,7 +273,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseValueContext(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			this.parseSimpleEntityAttributeSelf(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+			this.parseSimpleEntityAttributeSelfJson(new JSONObject(valueContextEle.html()), parentEntityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 			break;
 		}
 		for(Element valueContextEle : valueContextEles)  valueContextEle.remove();
@@ -287,7 +282,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseAttachment(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
 		List<Element> attachmentEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithAttachment.ATTACHMENT);
 		for(Element attachmentEle : attachmentEles){
-			this.parseSimpleEntityAttributeSelf(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+			this.parseSimpleEntityAttributeSelfJson(new JSONObject(attachmentEle.html()), parentEntityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 			break;
 		}
 		for(Element attachmentEle : attachmentEles)  attachmentEle.remove();

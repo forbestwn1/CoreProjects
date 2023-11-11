@@ -17,8 +17,8 @@ public class HAPPluginEntityDefinitionInDomainValueStructure extends HAPPluginEn
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPContextParser parserContext) {
-		JSONObject structureJson = (JSONObject)obj;
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue,	HAPContextParser parserContext) {
+		JSONObject structureJson = (JSONObject)jsonValue;
 		if(structureJson!=null) {
 			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)this.getEntity(entityId, parserContext);
 			Object elementsObj = structureJson.opt(HAPDefinitionEntityValueStructure.VALUE);

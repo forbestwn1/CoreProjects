@@ -9,7 +9,7 @@ import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
-import com.nosliw.data.core.domain.HAPUtilityParserEntity;
+import com.nosliw.data.core.domain.HAPUtilityParserEntityFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntityDefinitionInDomainImpSimple{
@@ -19,16 +19,17 @@ public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntity
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityContainerAttachment attachmentContainer = (HAPDefinitionEntityContainerAttachment)this.getEntity(entityId, parserContext);
 		
-		JSONObject jsonObj = (JSONObject)obj;
+		JSONObject jsonObj = (JSONObject)jsonValue;
+		
 		for(Object key : jsonObj.keySet()) {
 			String valueType = (String)key;
 			JSONArray byNameArray = jsonObj.getJSONArray(valueType);
 			for(int i=0; i<byNameArray.length(); i++) {
 				JSONObject attachmentJson = byNameArray.getJSONObject(i);
-				HAPIdEntityInDomain attaEntityId = HAPUtilityParserEntity.parseEntity(attachmentJson, valueType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+				HAPIdEntityInDomain attaEntityId = HAPUtilityParserEntityFormatJson.parseEntity(attachmentJson, valueType, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 				HAPInfoEntityInDomainDefinition entityInDomainInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(attaEntityId);				
 				HAPExtraInfoEntityInDomainDefinition entityInfo = entityInDomainInfo.getExtraInfo();
 				HAPAttachment attachment = new HAPAttachmentImpEntity(valueType, attachmentJson, attaEntityId, entityInfo, entityInDomainInfo.getEntity());

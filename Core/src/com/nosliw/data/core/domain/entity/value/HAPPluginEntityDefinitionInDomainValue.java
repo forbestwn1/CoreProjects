@@ -13,8 +13,8 @@ public class HAPPluginEntityDefinitionInDomainValue extends HAPPluginEntityDefin
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityValue entity = (HAPDefinitionEntityValue)this.getEntity(entityId, parserContext);
-		entity.setValue(obj);
+		entity.setValue(jsonValue);
 	}
 }

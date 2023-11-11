@@ -1,5 +1,10 @@
 package com.nosliw.data.core.domain;
 
+import org.json.JSONObject;
+
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
@@ -25,17 +30,15 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
-		this.parseAttachmentAttribute(entityId, obj, parserContext);
-		this.parseValueContextAttribute(entityId, obj, parserContext);
-		this.parseComplexDefinitionContent(entityId, obj, parserContext);
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
+		JSONObject jsonObj = (JSONObject)jsonValue;
+		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+		
+		this.parseComplexDefinitionContentJson(entityId, jsonObj, parserContext);
 	}
 
-	abstract protected void parseValueContextAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
-
-	abstract protected void parseAttachmentAttribute(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
-
-	abstract protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext);
+	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {}
 
 	@Override
 	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
@@ -44,7 +47,6 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
 		if(valueContextEntity!=null)   valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
-
 
 	protected HAPDefinitionEntityInDomainComplex getEntityComplex(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		return (HAPDefinitionEntityInDomainComplex)this.getEntity(entityId, parserContext);

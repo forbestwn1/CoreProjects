@@ -142,7 +142,6 @@ public class HAPUtilityJson {
 		try {
 			JsonParser parser = new JsonParser();
 			JsonElement el = parser.parse(jsonString);
-
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			String out = gson.toJson(el); // done
 
@@ -154,6 +153,12 @@ public class HAPUtilityJson {
 		}
 	}
 
+	public static Object toJsonObject(String jsonString) {
+		if(isObject(jsonString)) return new JSONObject(jsonString);
+		if(isArray(jsonString)) return new JSONArray(jsonString);
+		return jsonString;
+	}
+	
 	private static Map<String, String> clearMap(Map<String, String> jsonMap) {
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for (String key : jsonMap.keySet()) {

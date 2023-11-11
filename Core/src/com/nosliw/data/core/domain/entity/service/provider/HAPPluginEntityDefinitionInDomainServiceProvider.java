@@ -14,8 +14,8 @@ public class HAPPluginEntityDefinitionInDomainServiceProvider extends HAPPluginE
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityInDomainServiceProvider entity = (HAPDefinitionEntityInDomainServiceProvider)this.getEntity(entityId, parserContext);
-		entity.buildObject(obj, HAPSerializationFormat.JSON);
+		entity.buildObject(jsonValue, HAPSerializationFormat.JSON);
 	}
 }

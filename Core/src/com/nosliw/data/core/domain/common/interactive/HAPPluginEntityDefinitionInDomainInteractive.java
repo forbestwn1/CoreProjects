@@ -19,12 +19,11 @@ public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntit
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		try {
-			JSONObject jsonObj = (JSONObject)obj; 
-			
 			HAPDefinitionEntityInteractive entity = (HAPDefinitionEntityInteractive)this.getEntity(entityId, parserContext);
 			HAPDefinitionInteractive interactiveDef = this.m_interactiveClass.newInstance();
+			JSONObject jsonObj = (JSONObject)jsonValue;
 			interactiveDef.buildObject(jsonObj.getJSONObject(HAPDefinitionEntityInteractive.ATTR_INTERACTIVE), HAPSerializationFormat.JSON);
 			entity.setInteractive(interactiveDef);
 		} catch (Exception e) {

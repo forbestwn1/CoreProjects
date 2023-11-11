@@ -17,9 +17,9 @@ public class HAPPluginEntityDefinitionInDomainDataAssociation  extends HAPPlugin
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityDataAssciation entity = (HAPDefinitionEntityDataAssciation)this.getEntity(entityId, parserContext);
-		HAPDefinitionDataAssociation da = HAPParserDataAssociation.buildDefinitionByJson((JSONObject)obj);
+		HAPDefinitionDataAssociation da = HAPParserDataAssociation.buildDefinitionByJson((JSONObject)jsonValue);
 		entity.setDataAssciation(da);
 	}
 

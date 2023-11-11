@@ -6,4 +6,6 @@ public enum HAPSerializationFormat {
 	JSON_FULL,
 	XML,
 	LITERATE,
+	HTML,
+	JAVASCRIPT
 }

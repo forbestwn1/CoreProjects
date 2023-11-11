@@ -35,7 +35,7 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 	}
 
 	@Override
-	protected void parseComplexDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentHtml(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUITag uiTagEntity = (HAPDefinitionEntityComplexUITag)this.getEntity(entityId, parserContext);
 		
 		Element ele = (Element)obj;

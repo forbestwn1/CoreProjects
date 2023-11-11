@@ -27,12 +27,13 @@ public class HAPPluginEntityDefinitionInDomainUITagDefinition extends HAPPluginE
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
 		HAPDefinitionEntityUITagDefinition uiTagDefinition = (HAPDefinitionEntityUITagDefinition)parserContext.getGlobalDomain().getEntityInfoDefinition(entityId).getEntity();
 		
-		JSONObject jsonObj = this.convertToJsonObject(obj);
-		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
-		this.parseSimpleEntityAttribute(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
+		JSONObject jsonObj = (JSONObject)jsonValue;
+		
+		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 		
 		HAPEntityInfoImp info = new HAPEntityInfoImp();
 		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);

@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
-import com.nosliw.data.core.domain.HAPUtilityParserEntity;
+import com.nosliw.data.core.domain.HAPUtilityParserEntityFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEntityDefinitionInDomainImpSimple{
@@ -19,19 +19,19 @@ public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEnti
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj,	HAPContextParser parserContext) {
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue,	HAPContextParser parserContext) {
 		HAPDefinitionEntityValueContext valueContext = (HAPDefinitionEntityValueContext)this.getEntity(entityId, parserContext);
 
-		if(obj instanceof JSONArray) {
-			JSONArray partJsonArray = (JSONArray)obj;
+		if(jsonValue instanceof JSONArray) {
+			JSONArray partJsonArray = (JSONArray)jsonValue;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
 				HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parserContext);
 				valueContext.addValueStructure(valueStructureWrapper);
 			}
 		}
-		else if(obj instanceof JSONObject) {
-			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)obj, parserContext);
+		else if(jsonValue instanceof JSONObject) {
+			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parserContext);
 			valueContext.addValueStructure(valueStructureWrapper);
 		}
 	}
@@ -39,7 +39,7 @@ public class HAPPluginEntityDefinitionInDomainValueContext extends HAPPluginEnti
 	private HAPDefinitionWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPContextParser parserContext) {
 		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPDefinitionWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null)   valueStructureJsonObj = wrapperObj;
-		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntity.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPIdEntityInDomain valueStructureEntityId = HAPUtilityParserEntityFormatJson.parseEntity(valueStructureJsonObj, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 
 		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure(valueStructureEntityId);
 
