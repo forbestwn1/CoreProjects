@@ -16,7 +16,7 @@ public class HAPPluginEntityDefinitionInDomainScriptBased extends HAPPluginEntit
 	}
 	
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJavascript(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		HAPDefinitionEntityScriptBased entity = (HAPDefinitionEntityScriptBased)this.getEntity(entityId, parserContext);
 		entity.setScript(obj+"");
 	}
