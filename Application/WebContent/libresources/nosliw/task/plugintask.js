@@ -42,9 +42,31 @@ var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bun
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface;
 	
-	var loc_facade = {
+	var loc_facadeTask = {
+		getItemVariableInfos : function(){
+		},
+
+		getRequirement : function(){
+			
+		},
+
 		getExecuteRequest : function(extraInfo, handlers, request){
 			return loc_taskUtility.getTaskAttributeExecuteRequest(loc_out, node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, extraInfo, handlers, request);
+		},
+	};
+	
+	var loc_facadeTaskContainer = {
+		getAllItemIds : function(){
+		},
+		
+		getItemVariableInfos : function(itemId){
+		},
+		
+		getItemRequirement : function(itemId){
+			
+		},
+		
+		getExecuteItemRequest : function(itemId, extraInfo, handlers, request){
 		},
 	};
 	
@@ -53,6 +75,9 @@ var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bun
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, undefined));
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				
+			}));
 			return out;
 		},
 		
@@ -61,7 +86,7 @@ var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bun
 		},
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
 };
 
 //*******************************************   End Node Definition  ************************************** 	

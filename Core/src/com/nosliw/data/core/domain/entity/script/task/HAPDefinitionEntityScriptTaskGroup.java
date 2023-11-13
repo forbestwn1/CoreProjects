@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 
-public class HAPDefinitionEntityScriptTaskGroup extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityScriptTaskGroup extends HAPDefinitionEntityInDomainComplex{
 
 	public HAPDefinitionEntityScriptTaskGroup() {
 		this.setAttributeValueObject(HAPExecutableEntityScriptTaskGroup.DEFINITION, new ArrayList<HAPDefinitionTaskScript>());

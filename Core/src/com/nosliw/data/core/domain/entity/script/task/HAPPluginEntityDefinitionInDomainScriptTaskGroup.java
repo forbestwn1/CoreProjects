@@ -12,29 +12,29 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginEntityDefinitionInDomainScriptTaskGroup extends HAPPluginEntityDefinitionInDomainImpSimple{
+public class HAPPluginEntityDefinitionInDomainScriptTaskGroup extends HAPPluginEntityDefinitionInDomainImpComplex{
 
 	public HAPPluginEntityDefinitionInDomainScriptTaskGroup(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, HAPDefinitionEntityScriptTaskGroup.class, runtimeEnv);
 	}
 
 	@Override
-	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
+	protected void parseDefinitionContentJavascript(HAPIdEntityInDomain entityId, Object obj, HAPContextParser parserContext) {
 		try {
 			HAPDefinitionEntityScriptTaskGroup scriptTaskGroupDef = (HAPDefinitionEntityScriptTaskGroup)parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-			
-			String content = (String)obj;
 			
 			Context cx = Context.enter();
 	        Scriptable scope = cx.initStandardObjects(null);
 
+			String varName = "varName";
+			String content = "var "+varName+"="+(String)obj+";";
 	        cx.evaluateString(scope, content, null, 1, null);
-	        NativeObject scriptObj = (NativeObject)scope.get("nosliw", scope);
+	        NativeObject scriptObj = (NativeObject)scope.get(varName, scope);
 
-	        Object defScriptObj = scriptObj.get(HAPDefinitionEntityScriptTaskGroup.DEFINITION);
+	        Object defScriptObj = scriptObj.get(HAPExecutableEntityScriptTaskGroup.DEFINITION);
 	        if(defScriptObj!=null) {
 	            JSONArray defJsonArray = (JSONArray)HAPUtilityRhinoValue.toJson(defScriptObj);
 	            for(int i=0; i<defJsonArray.length(); i++) {
@@ -45,12 +45,23 @@ public class HAPPluginEntityDefinitionInDomainScriptTaskGroup extends HAPPluginE
 	            }
 	        }
 	        
-	        Object scriptScriptObj = scriptObj.get(HAPDefinitionEntityScriptTaskGroup.SCRIPT);
-	        scriptTaskGroupDef.setScript(new HAPJsonTypeScript(scriptScriptObj.toString()));
+	        Object scriptScriptObj = scriptObj.get(HAPExecutableEntityScriptTaskGroup.SCRIPT);
+	        String script = HAPUtilityRhinoValue.toJSStringValue(scriptScriptObj);
+	        scriptTaskGroupDef.setScript(new HAPJsonTypeScript(script));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+	@Override
+	protected void parseDefinitionContentJson(HAPIdEntityInDomain entityId, Object jsonValue, HAPContextParser parserContext) {
+		try {
+			HAPDefinitionEntityScriptTaskGroup scriptTaskGroupDef = (HAPDefinitionEntityScriptTaskGroup)parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,14 +1,15 @@
 package com.nosliw.data.core.domain.entity.script.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 @HAPEntityWithAttribute
-public class HAPExecutableEntityScriptTaskGroup extends HAPExecutableEntitySimple{
+public class HAPExecutableEntityScriptTaskGroup extends HAPExecutableEntityComplex{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -16,6 +17,9 @@ public class HAPExecutableEntityScriptTaskGroup extends HAPExecutableEntitySimpl
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 	
+	public HAPExecutableEntityScriptTaskGroup() {
+		this.setAttributeValueObject(DEFINITION, new ArrayList<HAPDefinitionTaskScript>());
+	}
 
 	public List<HAPDefinitionTaskScript> getDefinitions(){   return (List<HAPDefinitionTaskScript>)this.getAttributeValue(DEFINITION);    }
 	public void addDefinition(HAPDefinitionTaskScript def) {   this.getDefinitions().add(def);      }
@@ -23,6 +27,4 @@ public class HAPExecutableEntityScriptTaskGroup extends HAPExecutableEntitySimpl
 	public HAPJsonTypeScript getScript() {   return (HAPJsonTypeScript)this.getAttributeValue(SCRIPT);     }
 	public void setScript(HAPJsonTypeScript script) {   this.setAttributeValueObject(SCRIPT, script);     }
 
-	
-	
 }

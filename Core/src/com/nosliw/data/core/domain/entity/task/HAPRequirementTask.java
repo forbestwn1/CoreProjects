@@ -2,6 +2,8 @@ package com.nosliw.data.core.domain.entity.task;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -22,4 +24,12 @@ public class HAPRequirementTask extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INTERFACE, this.m_interface);
 	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		this.m_interface = (String)jsonObj.opt(INTERFACE);
+		return true;  
+	}
+
 }

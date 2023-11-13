@@ -22,9 +22,9 @@ import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.Undefined;
 
 import com.nosliw.common.serialization.HAPJsonTypeUnchange;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager; 
+import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPUtilityJson; 
  
 /**
  * Collection of JSON Utility methods. 
@@ -90,6 +90,16 @@ public class HAPUtilityRhinoValue
     	return json;
     }
 	
+    public static String toJSStringValue(Object nativeObject) {
+    	String jsonString;
+		try {
+			jsonString = toJson(nativeObject) + "";
+			return HAPUtilityJson.unescape(jsonString);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+    }
 	
     /**
      * Converts a given JavaScript native object and converts it to the relevant JSON string. 

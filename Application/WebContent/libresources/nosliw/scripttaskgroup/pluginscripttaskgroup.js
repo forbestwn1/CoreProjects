@@ -35,15 +35,30 @@ var node_createScriptTaskGroupEntityPlugin = function(){
 
 var loc_createScriptTaskGroup = function(scriptTaskGroupDef, configure){
 	
-	var loc_serviceProvider = serviceProvider;
+	var loc_scriptTaskGroupDef = scriptTaskGroupDef;
 	
 	var loc_configure = configure;
 	
 	var loc_out = {
 		
-		getExecuteTaskRequest: function(taskInput, handlers, request){
-			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
-		},	
+		getComplexEntityInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
+			
+			_.each(refAttrNames, function(attrName, i){
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
+					success : function(request, childNode){
+						loc_referencedRuntime[attrName] = childNode.getChildValue();
+					}
+				}));
+			});
+			return out;
+		},
+		
+		getRequirement : function(){
+			
+		}
 	};
 		
 	return loc_out;

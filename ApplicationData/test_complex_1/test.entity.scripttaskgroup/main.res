@@ -19,7 +19,7 @@
 							},
 							{
 								"interface" : "interface2"
-							},
+							}
 						]
 					}
 				

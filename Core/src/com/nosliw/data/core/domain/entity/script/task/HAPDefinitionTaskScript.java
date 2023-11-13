@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfoImpSimple;
@@ -30,4 +33,21 @@ public class HAPDefinitionTaskScript extends HAPInfoImpSimple{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REQUIREMENT, HAPSerializeManager.getInstance().toStringValue(m_requirement, HAPSerializationFormat.JSON));
 	}
+
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(jsonObj);
+		JSONArray requireArray = jsonObj.optJSONArray(REQUIREMENT);
+		if(requireArray!=null) {
+			for(int i=0; i<requireArray.length(); i++) {
+				JSONObject requireJsonObj = requireArray.getJSONObject(i);
+				HAPRequirementTask require = new HAPRequirementTask();
+				require.buildObject(requireJsonObj, HAPSerializationFormat.JSON);
+				this.m_requirement.add(require);
+			}
+		}
+		return true;  
+	}
+
 }

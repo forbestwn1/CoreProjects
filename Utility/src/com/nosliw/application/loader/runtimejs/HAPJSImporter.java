@@ -17,7 +17,6 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -257,8 +256,11 @@ public class HAPJSImporter {
     	}
     	else if(resourceType.equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER)) {
 			try {
-				String helperScript = new HAPUtilityRhinoValue().toJson(resourceObjJS)+""; 
-				helperScript = HAPUtilityJson.unescape(helperScript);
+				String helperScript = HAPUtilityRhinoValue.toJSStringValue(resourceObjJS);
+				
+//				String helperScript = new HAPUtilityRhinoValue().toJson(resourceObjJS)+""; 
+//				helperScript = HAPUtilityJson.unescape(helperScript);
+				
 				HAPResourceDataHelperImp helperResource = new HAPResourceDataHelperImp(helperScript);
 				helperResource = (HAPResourceDataHelperImp)this.m_jsRuntimeDataAccess.saveEntity(helperResource);
 				resourceId = new HAPResourceIdJSHelper(helperResource.getId());
