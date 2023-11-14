@@ -54,6 +54,8 @@ var packageObj = library;
 	var node_createTaskPlugin;
 	var node_createDecorationScriptPlugin;
 	var node_createComplexEntityContainerPlugin;
+	var node_createScriptTaskGroupEntityPlugin;
+	
 	var node_createSimpleEntityContainerPlugin;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -204,6 +206,8 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, node_createComplexEntityContainerPlugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, node_createSimpleEntityContainerPlugin());
+
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, node_createScriptTaskGroupEntityPlugin());
 
 
 		//simple entity plugin
@@ -397,6 +401,8 @@ nosliw.registerSetNodeDataEvent("task.createTaskPlugin", function(){node_createT
 nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createExpressionSinglePlugin", function(){node_createExpressionSinglePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("entitycontainer.createComplexEntityContainerPlugin", function(){node_createComplexEntityContainerPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlugin", function(){node_createScriptTaskGroupEntityPlugin = this.getData();});
+
 nosliw.registerSetNodeDataEvent("entitycontainer.createSimpleEntityContainerPlugin", function(){node_createSimpleEntityContainerPlugin = this.getData();});
 
 

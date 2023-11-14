@@ -17,6 +17,7 @@ nosliw.init = function(configure){
 		"nosliw.process",
 		"nosliw.sequence",
 		"nosliw.task",
+		"nosliw.scripttaskgroup",
 		"nosliw.request",
 		"nosliw.id",
 		"nosliw.resource",

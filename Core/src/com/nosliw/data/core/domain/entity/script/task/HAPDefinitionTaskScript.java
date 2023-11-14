@@ -9,13 +9,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.domain.entity.task.HAPRequirementTask;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionTaskScript extends HAPInfoImpSimple{
+public class HAPDefinitionTaskScript extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static final String REQUIREMENT = "requirement";
@@ -37,7 +37,7 @@ public class HAPDefinitionTaskScript extends HAPInfoImpSimple{
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
-		super.buildObjectByJson(jsonObj);
+		this.buildEntityInfoByJson(jsonObj);
 		JSONArray requireArray = jsonObj.optJSONArray(REQUIREMENT);
 		if(requireArray!=null) {
 			for(int i=0; i<requireArray.length(); i++) {

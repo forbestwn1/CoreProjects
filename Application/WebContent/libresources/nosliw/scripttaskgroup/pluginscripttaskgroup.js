@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createDataAssociation;
 	var node_createIODataSet;
+	var node_makeObjectWithApplicationInterface;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -22,37 +24,82 @@ var node_createScriptTaskGroupEntityPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityRequest : function(entityDef, configure, handlers, request){
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createScriptTaskGroup(entityDef, configure);
+				return loc_createScriptTaskGroup(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
 		},
+
 	};
 
 	return loc_out;
 };
 
 
-var loc_createScriptTaskGroup = function(scriptTaskGroupDef, configure){
+var loc_createScriptTaskGroup = function(scriptTaskGroupDef, valueContextId, bundleCore, configure){
 	
-	var loc_scriptTaskGroupDef = scriptTaskGroupDef;
+	var loc_scriptTaskGroupDef;
 	
-	var loc_configure = configure;
+	var loc_tasksDefByName = {};
+	
+	var loc_scriptObj;
+	
+	var loc_configure;
+	
+	var loc_init = function(scriptTaskGroupDef, configure){
+		loc_scriptTaskGroupDef = scriptTaskGroupDef;
+		loc_configure = configure;
+		
+		_.each(loc_scriptTaskGroupDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTTASKGROUP_DEFINITION), function(taskDef, i){
+			loc_tasksDefByName[taskDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = taskDef;
+		});
+		
+		var scriptAttrValue = loc_scriptTaskGroupDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYSCRIPTTASKGROUP_SCRIPT);
+		if (typeof scriptAttrValue === 'function') {
+			loc_scriptObj = scriptAttrValue();
+		}
+		else  loc_scriptObj = scriptAttrValue; 
+	};
+	
+	var loc_facadeTaskContainer = {
+		
+		getAllItemIds : function(){
+			var out = [];
+			_.each(loc_tasksDefByName, function(taskDef, name){
+				out.push(name);
+			});
+			return out;
+		},
+		
+		getItemVariableInfos : function(itemId){
+			
+		},
+		
+		getItemRequirement : function(itemId){
+			return loc_tasksDefByName[itemId][node_COMMONATRIBUTECONSTANT.DEFINITIONTASKSCRIPT_REQUIREMENT];
+		},
+		
+		getExecuteItemRequest : function(itemId, extraInfo, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var result = loc_scriptObj[itemId].call(extraInfo);
+			if(node_getObjectType(result)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
+				out.addRequest(result);				
+			}
+			else{
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return result;
+				}));
+			}
+			return out;
+		},
+	};
+	
 	
 	var loc_out = {
 		
 		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
-			
-			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
-					success : function(request, childNode){
-						loc_referencedRuntime[attrName] = childNode.getChildValue();
-					}
-				}));
-			});
 			return out;
 		},
 		
@@ -60,7 +107,11 @@ var loc_createScriptTaskGroup = function(scriptTaskGroupDef, configure){
 			
 		}
 	};
-		
+
+	loc_init(scriptTaskGroupDef, configure);
+
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER, loc_facadeTaskContainer);
+
 	return loc_out;
 };
 
@@ -79,6 +130,8 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createScriptTaskGroupEntityPlugin", node_createScriptTaskGroupEntityPlugin); 
