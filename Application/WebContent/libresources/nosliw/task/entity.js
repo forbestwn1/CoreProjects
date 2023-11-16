@@ -21,7 +21,23 @@ var packageObj = library.getChildPackage();
 var node_ExecutableResult = function(resultName, value){
 	this.resultName = resultName;
 	this.resultValue = value;
-}
+};
+
+var node_createTaskInput = function(info, requirement){
+	
+	var loc_requirement = requirement;
+	
+	var loc_info = info;
+	
+	var loc_out = {
+		
+		getRequirement : function(){    return loc_requirement;    },
+			
+		getInfo : function(){   return loc_info;   },	
+		
+	};
+	return loc_out;
+};
 
 
 var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, requestInfo){
@@ -135,5 +151,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 //Register Node by Name
 packageObj.createChildNode("ExecutableResult", node_ExecutableResult); 
 packageObj.createChildNode("createTaskGroupItemWatch", node_createTaskGroupItemWatch); 
+packageObj.createChildNode("createTaskInput", node_createTaskInput); 
 
 })(packageObj);

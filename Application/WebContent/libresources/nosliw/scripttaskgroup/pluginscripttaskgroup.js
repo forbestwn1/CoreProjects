@@ -79,9 +79,9 @@ var loc_createScriptTaskGroup = function(scriptTaskGroupDef, valueContextId, bun
 			return loc_tasksDefByName[itemId][node_COMMONATRIBUTECONSTANT.DEFINITIONTASKSCRIPT_REQUIREMENT];
 		},
 		
-		getExecuteItemRequest : function(itemId, extraInfo, handlers, request){
+		getExecuteItemRequest : function(itemId, taskInput, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var result = loc_scriptObj[itemId].call(extraInfo);
+			var result = loc_scriptObj[itemId](taskInput, handlers, request);
 			if(node_getObjectType(result)==node_CONSTANT.TYPEDOBJECT_TYPE_REQUEST){
 				out.addRequest(result);				
 			}

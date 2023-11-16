@@ -11,6 +11,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createUIDecorationRequest = nosliw.getNodeData("uipage.createUIDecorationRequest");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createTaskInput = nosliw.getNodeData("task.createTaskInput");
 	 
 	var loc_parentView;
 	var loc_mainView;
@@ -32,7 +33,25 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_executeItem = function(itemId){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var request = loc_getCoreTaskContainerInterface(coreEntity).getExecuteItemRequest(itemId, {
+		var taskContainerInterface = loc_getCoreTaskContainerInterface(coreEntity);
+		
+		//collect requirement
+		var taskInputRequirement = {
+			interface : {
+				
+			}
+		};
+		var taskRequirements = taskContainerInterface.getItemRequirement(itemId);
+		_.each(taskRequirements, function(taskRequirement, i){
+			if(taskRequirement.interface!=undefined){
+				taskInputRequirement.interface[taskRequirement.interface] = function(){
+					return "This is from interface: " + taskRequirement.interface;
+				}
+			}
+		});
+
+		var taskInput = node_createTaskInput({}, taskInputRequirement);
+		var request = taskContainerInterface.getExecuteItemRequest(itemId, taskInput, {
 			success : function(request, result){
 				loc_resultView.val(JSON.stringify(result));
 			}
@@ -66,12 +85,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Task Group</div>');
 			loc_wrapperView = $('<div></div>');
 
-
 			loc_executeView = $('<a>Execute</a>');
 			loc_executeView.on("click",function(){
 				loc_executeAllItems();
 			});
-
 
 			loc_itemListView = $('<div></div>');
 			loc_resultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
