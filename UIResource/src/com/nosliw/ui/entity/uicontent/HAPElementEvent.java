@@ -19,7 +19,7 @@ public class HAPElementEvent extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String EVENT = "event";
 	@HAPAttribute
-	public static final String FUNCTION = "function";
+	public static final String HANDLERNAME = "handlerName";
 	@HAPAttribute
 	public static final String SELECTION = "selection";
 	
@@ -28,8 +28,8 @@ public class HAPElementEvent extends HAPSerializableImp{
 
 	//event name
 	private String m_event;
-	//response function name
-	private String m_function;
+	//response handler name
+	private String m_handlerName;
 	//this attribute only appliable to regular element
 	//with this attribute set, then the event is based on all child element that meet this selection, rath than the element itself
 	private String m_selection;
@@ -39,15 +39,17 @@ public class HAPElementEvent extends HAPSerializableImp{
 		
 		HAPSegmentParser events = new HAPSegmentParser(eventInfos, HAPConstantShared.SEPERATOR_PART);
 		this.m_event = events.next();
-		this.m_function = events.next();
+		this.m_handlerName = events.next();
 		this.m_selection = events.next();
 	}
+	
+	public String getHandlerName() {    return this.m_handlerName;     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(UIID, this.m_uiId);
 		jsonMap.put(EVENT, this.m_event);
-		jsonMap.put(FUNCTION, this.m_function);
+		jsonMap.put(HANDLERNAME, this.m_handlerName);
 		jsonMap.put(SELECTION, this.m_selection);
 	}
 	

@@ -20,7 +20,7 @@ import com.nosliw.data.core.domain.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutable;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
@@ -40,7 +40,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutableDownward() {
 			
 			private void process(HAPIdEntityInDomain entityIdExe) {
 				HAPExecutableBundle bundleExe = processContext.getCurrentBundle();
@@ -109,7 +109,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//merge value structure between paren and child
 	private static void buildExtensionValueStructure(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutableDownward() {
 			@Override
 			public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
 				createExtensionPart(processContext.getCurrentExecutableDomain().getEntityInfoExecutable(entityId).getEntity().getValueContext(), processContext.getCurrentValueStructureDomain());
@@ -144,7 +144,7 @@ public class HAPUtilityValueStructureDomain {
 	
 	//merge value structure between paren and child
 	private static void mergeValueStructure(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutableDownward() {
 			@Override
 			public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {	}
 

@@ -13,7 +13,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutable;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 public class HAPUtilityAttachment {
@@ -40,7 +40,7 @@ public class HAPUtilityAttachment {
 
 	//add attachment container to attachment domain
 	private static void buildAttachmentTree(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutableDownward() {
 			
 			private void process(HAPIdEntityInDomain entityIdExe) {
 				HAPExecutableBundle complexEntityPackage = processContext.getCurrentBundle();
@@ -76,7 +76,7 @@ public class HAPUtilityAttachment {
 
 	//merge attachment between paren and child
 	private static void mergeAttachment(HAPIdEntityInDomain rootComplexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutable() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutableId, new HAPProcessorEntityExecutableDownward() {
 			@Override
 			public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {	}
 

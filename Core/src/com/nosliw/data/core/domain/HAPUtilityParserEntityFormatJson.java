@@ -105,63 +105,6 @@ public class HAPUtilityParserEntityFormatJson {
 		else return domainEntityManager.getDefaultAdapterByEntity(entityType);
 	}
 
-/*	
-	//parse entity into domain
-	public static HAPIdEntityInDomain parseEntity(Object obj, String entityTypeIfNotProvided, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
-		HAPIdEntityInDomain out = null;
-		if(obj instanceof JSONObject) {
-			JSONObject jsonObj = (JSONObject)obj;
-
-			String entityType = (String)jsonObj.opt(HAPInfoEntityInDomainDefinition.ENTITYTYPE);   //if entity type is defined in entity, then override provided
-			if(entityType==null)  entityType = entityTypeIfNotProvided;
-			
-			JSONObject infoObj = jsonObj.optJSONObject(HAPInfoEntityInDomainDefinition.INFO);
-			if(infoObj==null)   infoObj = jsonObj;
-
-			if(HAPUtilityEntityInfo.isEnabled(infoObj)) {
-				//resource id
-				if(out==null) {
-					Object resourceObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.RESOURCEID);
-					if(resourceObj!=null) {
-						HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityType, resourceObj);
-						out = parseReferenceResource(resourceId, parserContext, resourceDefinitionManager);
-					}
-				}
-				//reference
-				if(out==null) {
-					Object referenceObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.REFERENCE);
-					if(referenceObj!=null) {
-						HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityType);
-						out = parserContext.getCurrentDomain().addEntityOrReference(reference);
-					}
-				}
-				//entity
-				if(out==null) {
-					Object entityObj = jsonObj.opt(HAPInfoEntityInDomainDefinition.ENTITY);
-					if(entityObj==null)  entityObj = jsonObj;    //if no entity node, then using root
-					out = domainEntityManager.parseDefinition(entityType, entityObj, parserContext);
-				}
-				
-				//entity info (name, description, ...)
-				HAPInfoEntityInDomainDefinition entityInfo = parserContext.getCurrentDomain().getEntityInfoDefinition(out);
-				HAPExtraInfoEntityInDomainDefinition entityInfoDef = entityInfo.getExtraInfo();
-				entityInfoDef.buildObject(infoObj, HAPSerializationFormat.JSON);
-			}
-		}
-		else if(obj instanceof HAPResourceId) {
-			out = parseReferenceResource((HAPResourceId)obj, parserContext, resourceDefinitionManager);
-		}
-		else if(obj instanceof HAPReferenceAttachment) {
-			out = parserContext.getCurrentDomain().addEntityOrReference((HAPReferenceAttachment)obj);
-		}
-		else {
-			out = domainEntityManager.parseDefinition(entityTypeIfNotProvided, obj, parserContext);
-		}
-		
-		return out;
-	}
-*/
-
 	//parse entity into domain
 	public static HAPIdEntityInDomain parseEntity(JSONObject jsonObj, String entityTypeIfNotProvided, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		HAPIdEntityInDomain out = null;

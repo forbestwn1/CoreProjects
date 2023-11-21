@@ -195,7 +195,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void calculatePlainScriptExpression(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
 				complexEntityExecutableId, 
-				new HAPProcessorEntityExecutable() {
+				new HAPProcessorEntityExecutableDownward() {
 
 					private void calculatePlainScriptExpression(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
 						HAPExecutableEntityComplex executableEntity = processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(entityId).getEntity();
@@ -239,7 +239,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
 				complexEntityExecutableId, 
-				new HAPProcessorEntityExecutable() {
+				new HAPProcessorEntityExecutableDownward() {
 
 					@Override
 					public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
@@ -262,7 +262,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void buildConstant(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
 				complexEntityExecutableId, 
-				new HAPProcessorEntityExecutable() {
+				new HAPProcessorEntityExecutableDownward() {
 
 					private void buildConstant(HAPExecutableEntityComplex executableEntity) {
 						{
@@ -305,7 +305,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityInit(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntityExecutableId, 
-			new HAPProcessorEntityExecutable() {
+			new HAPProcessorEntityExecutableDownward() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
@@ -362,7 +362,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntityExecutableId, 
-			new HAPProcessorEntityExecutable() {
+			new HAPProcessorEntityExecutableDownward() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
@@ -413,7 +413,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntityExecutableId, 
-			new HAPProcessorEntityExecutable() {
+			new HAPProcessorEntityExecutableDownward() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
@@ -464,7 +464,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityProcess(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 			complexEntityExecutableId, 
-			new HAPProcessorEntityExecutable() {
+			new HAPProcessorEntityExecutableDownward() {
 
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {

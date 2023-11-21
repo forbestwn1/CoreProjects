@@ -19,17 +19,21 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPExecutableEntity extends HAPExecutableImp implements HAPExpandable{
+public abstract class HAPExecutableEntity extends HAPExecutableImp implements HAPExpandable, HAPEntity{
 
 	@HAPAttribute
 	public static final String ENTITYTYPE = "entityType";
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
+	@HAPAttribute
+	public static final String PARENT = "parent";
 
 	private String m_entityType;
 	
 	private List<HAPAttributeEntityExecutable> m_attributes;
 
+	private HAPExecutableEntity m_parent;
+	
 	private HAPIdEntityInDomain m_definitionEntityId;
 	
 	public HAPExecutableEntity() {
@@ -45,8 +49,11 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public HAPIdEntityInDomain getDefinitionEntityId() {    return this.m_definitionEntityId;     }
 	
 	public String getEntityType() {    return this.m_entityType;   }
-
 	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
+
+	public HAPExecutableEntity getParent() {    return this.m_parent;     }
+	public void setParent(HAPExecutableEntity parent) {    this.m_parent = parent;      }
+	
 	
 	public List<HAPAttributeEntityExecutable> getAttributes(){    return this.m_attributes;     }
 	
@@ -71,7 +78,10 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return out;
 	}
 	
-	public void setAttribute(HAPAttributeEntityExecutable attrObj) {    this.m_attributes.add(attrObj);    }
+	public void setAttribute(HAPAttributeEntityExecutable attrObj) {
+		attrObj.setParentEntity(this);
+		this.m_attributes.add(attrObj);    
+	}
 	
 	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
 	

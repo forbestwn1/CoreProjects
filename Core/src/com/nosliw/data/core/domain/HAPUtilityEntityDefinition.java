@@ -12,7 +12,7 @@ import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinition;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinitionDownward;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -64,12 +64,12 @@ public class HAPUtilityEntityDefinition {
 		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(childEntityId, parentInfo);
 	}
 
-	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
+	public static void traverseDefinitionComplexEntityTree(HAPIdEntityInDomain entityId, HAPProcessorEntityDefinitionDownward processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
 		processor.processComplexRoot(entityId, globalObj);
 		traverseDefinitionEntityTreeLeaf(entityId, processor, definitionDomain, globalObj);
 	}
 
-	private static void traverseDefinitionEntityTreeLeaf(HAPIdEntityInDomain parentEntityId, HAPProcessorEntityDefinition processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
+	private static void traverseDefinitionEntityTreeLeaf(HAPIdEntityInDomain parentEntityId, HAPProcessorEntityDefinitionDownward processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
 		//process current entity
 		HAPInfoEntityInDomainDefinition parentEntityInfo = definitionDomain.getEntityInfoDefinition(parentEntityId);
 		HAPDefinitionEntityInDomain complexEntity = parentEntityInfo.getEntity();
@@ -93,7 +93,7 @@ public class HAPUtilityEntityDefinition {
 	public static void solidateLocalResourceReference(HAPIdEntityInDomain rootEntityDefinitionId, HAPDomainEntityDefinitionGlobal definitionDomain, HAPManagerResourceDefinition resourceDefinitionManager) {
 		HAPUtilityEntityDefinition.traverseDefinitionComplexEntityTree(
 			rootEntityDefinitionId, 
-			new HAPProcessorEntityDefinition() {
+			new HAPProcessorEntityDefinitionDownward() {
 				@Override
 				public void processComplexRoot(HAPIdEntityInDomain entityId, Object globalObj) {	}
 

@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
-public interface HAPProcessorEntityDefinition {
+public interface HAPProcessorEntityDefinitionDownward {
 
 	void processComplexRoot(HAPIdEntityInDomain entityId, Object globalObj);
 

@@ -39,6 +39,7 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	
 	public HAPInfoValueType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
 	
+	
 	public boolean isAttributeAutoProcess(boolean defaultValue) {
 		Object value = this.getInfoValue(HAPConstantShared.ENTITYATTRIBUTE_INFO_AUTOPROCESS);
 		if(value!=null)   return Boolean.valueOf((String)value);

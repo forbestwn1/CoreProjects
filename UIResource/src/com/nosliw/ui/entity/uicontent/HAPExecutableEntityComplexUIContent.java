@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 
@@ -64,8 +63,5 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	
 	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT);     }
 	public List<HAPElementEvent> getCustomTagEvent(){    return (List<HAPElementEvent>)this.getAttributeValue(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT);     }
-
-	public void setScriptBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPT, jsBlock);        }
-	public HAPJsonTypeScript getScriptBlock() {   return (HAPJsonTypeScript)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPT);     }
 
 }

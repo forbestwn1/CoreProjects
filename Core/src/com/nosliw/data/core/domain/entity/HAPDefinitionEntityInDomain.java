@@ -18,7 +18,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
-public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference{
+public abstract class HAPDefinitionEntityInDomain extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
 
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 

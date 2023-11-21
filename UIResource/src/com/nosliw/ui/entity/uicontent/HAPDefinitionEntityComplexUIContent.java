@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
@@ -17,11 +16,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	static final public String ATTR_STYPE = "style";  
 	
 	public HAPDefinitionEntityComplexUIContent() {
-//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
-//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
-//		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 	}
 	
 	public String getUnitType() {    return null;   }
@@ -35,9 +29,6 @@ public class HAPDefinitionEntityComplexUIContent extends HAPDefinitionEntityInDo
 	}
 	public String getHtml() {     return (String)this.getAttributeValue(HAPExecutableEntityComplexUIContent.HTML);     }
 	
-	public void setScriptBlock(HAPJsonTypeScript jsBlock){    this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPT, jsBlock);        }
-	public HAPJsonTypeScript getScriptBlock() {   return (HAPJsonTypeScript)this.getAttributeValue(HAPExecutableEntityComplexUIContent.SCRIPT);     }
-
 	public void addNormalTagEvent(HAPElementEvent event) {   this.getNormalTagEvents().add(event);    }
 	public void addCustomTagEvent(HAPElementEvent event) {   this.getCustomTagEvent().add(event);    }
 	

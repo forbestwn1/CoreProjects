@@ -15,6 +15,9 @@ import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededExecutable> implements HAPExecutable{
 
+	private HAPExecutableEntity m_parentEntity;
+	
+
 	public HAPAttributeEntityExecutable(String name, HAPEmbededExecutable value, HAPInfoValueType valueTypeInfo) {
 		super(name, value, valueTypeInfo);
 	}
@@ -23,6 +26,20 @@ public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededE
 
 	public boolean isAttributeAutoProcess() {	return this.isAttributeAutoProcess(false);	}
 
+	public HAPExecutableEntity getParentEntity() {    return this.m_parentEntity;   }
+	public void setParentEntity(HAPExecutableEntity parent) {     
+		this.m_parentEntity = parent;
+		this.setEntityParentInfo();
+	}
+	
+	private void setEntityParentInfo() {
+		HAPEmbededExecutable executableEmbeded = this.getValue();
+		Object value = executableEmbeded.getValue();
+		if(value instanceof HAPExecutableEntity) {
+			((HAPExecutableEntity)value).setParent(m_parentEntity);
+		}
+	}
+	
 	protected void cloneToEntityAttribute(HAPAttributeEntityExecutable attr) {
 		super.cloneToEntityAttribute(attr);
 		this.setValue((HAPEmbededExecutable)this.getValue().cloneEmbeded());

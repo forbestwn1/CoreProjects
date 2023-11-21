@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
@@ -21,6 +20,7 @@ import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
@@ -61,7 +61,6 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		uiContentEntity.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-
 	}
 	
 	@Override
@@ -70,6 +69,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		//create customer tag container attribute
 		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, null, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityContainer.newSimpleEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SERVICE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SCRIPT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, null, parserContext, getRuntimeEnvironment());
 	}
 	
 	private void parseUIDefinitionUnit(Element wrapperEle, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
@@ -79,7 +79,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		this.parseService(wrapperEle, uiContentId, parserContext);
 		
 		//parse script block
-		this.parseUnitScriptBlocks(wrapperEle, this.getUIContentEntityById(uiContentId, parserContext));
+		this.parseUnitScriptBlocks(wrapperEle, this.getUIContentEntityById(uiContentId, parserContext), parserContext);
 
 		//parse contents within customer ele
 		parseDescendantTags(wrapperEle, uiContentId, parserContext);
@@ -92,6 +92,26 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		uiContent.setHtml(wrapperEle.html());
 	}
 
+
+	/*
+	 * process all script blocks under unit
+	 */
+	private void parseUnitScriptBlocks(Element ele, HAPDefinitionEntityComplexUIContent resource, HAPContextParser parserContext){
+		List<Element> scirptEles = new ArrayList<Element>();
+		
+		HAPDefinitionEntityContainerComplex scriptContainerEntity = (HAPDefinitionEntityContainerComplex)resource.getAttributeValueEntity(SCRIPT, parserContext);
+		
+		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
+		for(Element scriptEle : scirptEles){
+			String scriptHtml = scriptEle.html();
+			HAPIdEntityInDomain scriptTaskGroupEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, scriptHtml, HAPSerializationFormat.JAVASCRIPT, parserContext);
+			scriptContainerEntity.addElementAttribute(scriptTaskGroupEntityId);
+		}
+		
+		for(Element scriptEle : scirptEles)  scriptEle.remove();
+	}
+
+	
 	/*
 	 * process all the descendant tags under element
 	 */
@@ -288,22 +308,6 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 		for(Element attachmentEle : attachmentEles)  attachmentEle.remove();
 	}
 	
-	/*
-	 * process all script blocks under unit
-	 */
-	private void parseUnitScriptBlocks(Element ele, HAPDefinitionEntityComplexUIContent resource){
-		List<Element> scirptEles = new ArrayList<Element>();
-		
-		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
-		for(Element scriptEle : scirptEles){
-			HAPJsonTypeScript jsBlock = new HAPJsonTypeScript(scriptEle.html());
-			resource.setScriptBlock(jsBlock);
-			break;
-		}
-		
-		for(Element scriptEle : scirptEles)  scriptEle.remove();
-	}
-
 	//parse style 
 	private void parseStyle(Element ele, HAPIdEntityInDomain uiContentId, String uiId, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
