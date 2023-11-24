@@ -27,12 +27,17 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	public static String VALUE = "value";
 
 	@HAPAttribute
+	public static String VALUETYPE = "valueType";
+
+	@HAPAttribute
 	public static String VALUEEXPANDED = "valueExpanded";
 
 	@HAPAttribute
 	public static String ADAPTER = "adapter";
 
 	private Object m_value;
+	
+	private String m_valueType;
 	
 	//multiple adapters by name
 	private Map<String, HAPInfoAdapter> m_adapters;
@@ -46,8 +51,15 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 		this.m_value = value;
 	}
 	
+	public HAPEmbeded(Object value, String valueType) {
+		this(value);
+		this.m_valueType = valueType;
+	}
+	
 	public Object getValue() {   return this.m_value;   }
 	public void setValue(Object value) {    this.m_value = value;    }
+	
+	public String getValueType() {   return this.m_valueType;    }
 	
 	public Set<HAPInfoAdapter> getAdapters(){   return new HashSet(this.m_adapters.values());     }
 	public HAPInfoAdapter getAdapter(String name) {	return m_adapters.get(name);	}
@@ -80,6 +92,7 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapters(), HAPSerializationFormat.JSON));
 		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
+		jsonMap.put(VALUETYPE, this.m_valueType);
 	}
 	
 	public abstract HAPEmbeded cloneEmbeded();

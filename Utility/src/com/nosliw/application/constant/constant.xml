@@ -923,6 +923,12 @@
 			<definition type="space"/>
 			<definition name="NAME_PARENT" value="pppppparentttttt"/>
 
+			<definition type="space"/>
+			<definition name="EMBEDEDVALUE_TYPE_ENTITYID" value="entityId"/>
+			<definition name="EMBEDEDVALUE_TYPE_ENTITY" value="entity"/>
+			<definition name="EMBEDEDVALUE_TYPE_EXTERNALREFERENCE" value="externalReference"/>
+			<definition name="EMBEDEDVALUE_TYPE_VALUE" value="value"/>
+
 
 		</definitions>
 	</constants>

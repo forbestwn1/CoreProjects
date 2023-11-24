@@ -84,11 +84,11 @@ public class HAPUtilityExport {
 
 	private static String toExpandedJsonStringExecutableDomain(HAPExecutableBundle resourceBundle) {
 		HAPDomainEntityExecutableResourceComplex executableDomain = resourceBundle.getExecutableDomain();
-		return executableDomain.getEntityInfoExecutable(resourceBundle.getExecutableRootEntityId()).toExpandedJsonString(executableDomain);
+		return executableDomain.getRootEntity().toExpandedJsonString(executableDomain);		
 	}
 
 	private static String toResourceJsonStringExecutableDomain(HAPExecutableBundle resourceBundle, HAPRuntimeInfo runtimeInfo) {
 		HAPDomainEntityExecutableResourceComplex executableDomain = resourceBundle.getExecutableDomain();
-		return executableDomain.getEntityInfoExecutable(resourceBundle.getExecutableRootEntityId()).toResourceData(runtimeInfo).toString();
+		return executableDomain.getRootEntity().toResourceData(runtimeInfo).toString();
 	}
 }

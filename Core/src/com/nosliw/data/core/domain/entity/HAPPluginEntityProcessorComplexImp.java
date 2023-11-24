@@ -21,30 +21,30 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	public String getEntityType() {    return this.m_entityType;    }
 
 	@Override
-	public void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void extendConstantValue(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	
 	//process definition before value context
 	@Override
-	public void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void processValueContext(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	@Override
-	public void postProcessValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void postProcessValueContext(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 
 	//value context extension, variable resolve
 	@Override
-	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void processValueContextExtension(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	@Override
-	public void postProcessValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void postProcessValueContextExtension(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	
 	//matcher
 	@Override
-	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void processValueContextDiscovery(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	@Override
-	public void postProcessValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {}
+	public void postProcessValueContextDiscovery(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {}
 	
 	@Override
-	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
+	public void processEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	}
 	@Override
-	public void postProcessEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	}
+	public void postProcessEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	}
 
 	
 	public Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
@@ -65,5 +65,4 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 		}
 		return out; 
 	}
-	
 }

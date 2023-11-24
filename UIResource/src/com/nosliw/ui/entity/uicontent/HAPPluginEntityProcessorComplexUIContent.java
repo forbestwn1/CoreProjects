@@ -65,7 +65,7 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 			public boolean process(HAPExecutableEntity entity, HAPPath path, HAPContextProcessor processContext) {
 				if(entity.getEntityType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT)){
 					HAPExecutableEntityComplexUIContent uiContentEntity = (HAPExecutableEntityComplexUIContent)entity;
-					
+					uiContentEntity.getS
 				}
 				else if(entity.getEntityType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE)){
 					return true;

@@ -540,7 +540,11 @@ var COMMONCONSTANT=
   "PREFIX_ELEMENTID_COTAINER": "ContainerElement_",
   "IODATASET_VALUECONTEXT": "VALUECONTEXT",
   "IODATASET_PROVIDE": "PROVIDE",
-  "NAME_PARENT": "pppppparentttttt"
+  "NAME_PARENT": "pppppparentttttt",
+  "EMBEDEDVALUE_TYPE_ENTITYID": "entityId",
+  "EMBEDEDVALUE_TYPE_ENTITY": "entity",
+  "EMBEDEDVALUE_TYPE_EXTERNALREFERENCE": "externalReference",
+  "EMBEDEDVALUE_TYPE_VALUE": "value"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

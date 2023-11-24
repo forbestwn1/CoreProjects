@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -77,13 +78,15 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		}
 		return out;
 	}
+
+	public HAPExecutableEntity getAttributeValueEntity(String attrName) {   return (HAPExecutableEntity)this.getAttributeValue(attrName);      }
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {
 		attrObj.setParentEntity(this);
 		this.m_attributes.add(attrObj);    
 	}
 	
-	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value), new HAPInfoValueType());   }
+	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value, HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE), new HAPInfoValueType());   }
 	
 	public void setAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoValueType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
 	public void setAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoValueType(valueType, false)); }

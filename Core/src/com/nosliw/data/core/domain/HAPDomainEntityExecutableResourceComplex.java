@@ -24,30 +24,37 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 
 	@HAPAttribute
 	public static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
+//	@HAPAttribute
+//	public static String COMPLEXENTITY = "complexEntity";
 	@HAPAttribute
-	public static String COMPLEXENTITY = "complexEntity";
+	public static String ROOTENTITY = "rootEntity";
 	@HAPAttribute
 	public static String EXTERNALENTITY = "externalEntity";
 
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 
-	//all executable entity 
-	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
-	
 	//all other complex resource this resource depend on, external dependency
 	private Map<String, HAPIdComplexEntityInGlobal> m_externalComplexEntityDpendency;
-	
+
 	//id generator
 	private HAPGeneratorId m_idGenerator;
+
+	private HAPExecutableEntityComplex m_rootEntity;
+	
+	//all executable entity 
+//	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
+	
 	
 	public HAPDomainEntityExecutableResourceComplex() {
 		this.m_idGenerator = new HAPGeneratorId();
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
-		this.m_executableEntity = new LinkedHashMap<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable>();
 		this.m_externalComplexEntityDpendency = new LinkedHashMap<String, HAPIdComplexEntityInGlobal>();
 	}
 
+	public void setRootEntity(HAPExecutableEntityComplex rootEntity) {   this.m_rootEntity = rootEntity;     }
+	public HAPExecutableEntityComplex getRootEntity() {    return this.m_rootEntity;     }
+	
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
 	
 	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
@@ -69,7 +76,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 
 	@Override
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return this.getEntityInfoExecutable(entityId);     }
-	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPIdEntityInDomain entityId) {	return this.m_executableEntity.get(entityId);	}
+//	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPIdEntityInDomain entityId) {	return this.m_executableEntity.get(entityId);	}
 
 	public HAPIdComplexEntityInGlobal getExternalEntityGlobalId(HAPIdEntityInDomain entityId) {
 		return this.m_externalComplexEntityDpendency.get(this.getEntityInfoExecutable(entityId).getExternalComplexEntityId());
@@ -87,34 +94,21 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUESTRUCTUREDOMAIN, HAPUtilityJson.buildJson(this.m_valueStructureDomain, HAPSerializationFormat.JSON));
-		
-		Map<String, String> entityJsonObj = new LinkedHashMap<String, String>();
-		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
-			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(COMPLEXENTITY, HAPUtilityJson.buildMapJson(entityJsonObj));
-		
+		jsonMap.put(ROOTENTITY, this.m_rootEntity.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTERNALENTITY, HAPUtilityJson.buildJson(this.m_externalComplexEntityDpendency, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-
-		Map<String, String> entityJsonObj = new LinkedHashMap<String, String>();
-		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
-			entityJsonObj.put(entityId.toStringValue(HAPSerializationFormat.LITERATE), this.m_executableEntity.get(entityId).toResourceData(runtimeInfo).toString());
-		}
-		jsonMap.put(COMPLEXENTITY, HAPUtilityJson.buildMapJson(entityJsonObj));
+		jsonMap.put(ROOTENTITY, this.m_rootEntity.toResourceData(runtimeInfo).toString());
 	}
 
 	@Override
 	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
-		for(HAPIdEntityInDomain entityId : this.m_executableEntity.keySet()) {
-			this.buildResourceDependencyForExecutable(out, this.m_executableEntity.get(entityId), runtimeInfo, resourceManager);
-		}
+		this.buildResourceDependencyForExecutable(out, this.m_rootEntity, runtimeInfo, resourceManager);
 		return out;
 	}
 }

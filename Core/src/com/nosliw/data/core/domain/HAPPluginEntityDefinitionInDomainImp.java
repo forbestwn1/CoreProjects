@@ -89,7 +89,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 	protected void parseDefinitionContent(HAPIdEntityInDomain entityId, Object obj, HAPSerializationFormat format, HAPContextParser parserContext) {}
 	
 	protected Object convertToJsonObject(Object obj) {
-		if(obj instanceof String)  return HAPUtilityJson.toJsonObject(HAPUtilityJson.formatJson((String)obj));  
+		if(obj instanceof String)  return HAPUtilityJson.toJsonObject((String)obj);  
 		return obj;
 	}
 

@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
@@ -26,7 +27,7 @@ public class HAPExecutablePackage extends HAPExecutableImp{
 	private Set<HAPResourceIdSimple> m_dependency;
 	
 	//main global entity
-	private HAPIdComplexEntityInGlobal m_mainEntityId;
+	private HAPInfoResourceIdNormalize m_mainEntityId;
 	
 	public HAPExecutablePackage() {
 		this.m_dependency = new HashSet<HAPResourceIdSimple>();
@@ -35,9 +36,9 @@ public class HAPExecutablePackage extends HAPExecutableImp{
 	public Set<HAPResourceIdSimple> getDependency() {     return this.m_dependency;      }
 	public void addDependency(HAPResourceIdSimple resourceId) {   this.m_dependency.add(resourceId);   }
 	
-	public HAPIdComplexEntityInGlobal getMainEntityId() {    return this.m_mainEntityId;     }
+	public HAPInfoResourceIdNormalize getMainEntityId() {    return this.m_mainEntityId;     }
 	
-	public void setMainEntityId(HAPIdComplexEntityInGlobal mainEntityId) {    this.m_mainEntityId = mainEntityId;     }
+	public void setMainEntityId(HAPInfoResourceIdNormalize mainEntityId) {    this.m_mainEntityId = mainEntityId;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -18,10 +18,10 @@ public class HAPEmbededExecutable extends HAPEmbeded implements HAPExecutable{
 
 	public HAPEmbededExecutable() {}
 	
-	public HAPEmbededExecutable(Object entity) {
-		super(entity);
+	public HAPEmbededExecutable(Object value, String valueType) {
+		super(value, valueType);
 	}
-
+	
 	public Set<HAPInfoAdapterExecutable> getExecutableAdapters(){   return (Set)this.getAdapters();     }
 	public HAPInfoAdapterExecutable getExecutableAdapter(String name) {	return (HAPInfoAdapterExecutable)this.getAdapter(name);	}
 	

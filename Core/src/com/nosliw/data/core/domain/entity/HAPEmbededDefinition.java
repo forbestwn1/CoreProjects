@@ -10,6 +10,10 @@ public class HAPEmbededDefinition extends HAPEmbeded{
 		super(value);
 	}
 
+	public HAPEmbededDefinition(Object value, String valueType) {
+		super(value, valueType);
+	}
+	
 	public Set<HAPInfoAdapterDefinition> getDefinitionAdapters(){   return (Set)this.getAdapters();     }
 	public HAPInfoAdapterDefinition getDefinitionAdapter(String name) {	return (HAPInfoAdapterDefinition)this.getAdapter(name);	}
 	

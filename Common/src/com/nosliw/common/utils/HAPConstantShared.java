@@ -885,4 +885,11 @@ public class HAPConstantShared {
 		public static final String NAME_PARENT = "pppppparentttttt";
 
 
+
+		public static final String EMBEDEDVALUE_TYPE_ENTITYID = "entityId";
+		public static final String EMBEDEDVALUE_TYPE_ENTITY = "entity";
+		public static final String EMBEDEDVALUE_TYPE_EXTERNALREFERENCE = "externalReference";
+		public static final String EMBEDEDVALUE_TYPE_VALUE = "value";
+
+
 }
