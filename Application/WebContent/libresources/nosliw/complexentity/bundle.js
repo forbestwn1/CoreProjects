@@ -25,10 +25,9 @@ var loc_MAIN_NAME = "main";
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
 
-	var loc_globalComplexEntitId;
+	var loc_globalComplexEntityRef;
 	
 	var loc_bundleDef;
-	var loc_mainEntityId;
 	
 	var loc_configure;
 	var loc_configureValue;
@@ -49,21 +48,19 @@ var node_createBundleCore = function(parm, configure){
 		if(parm.bundleDef!=undefined){
 			//parm is bundle entity
 			loc_bundleDef = parm.bundleDef;
-			loc_mainEntityId = parm.mainEntityId;
 		}
 		else{
 			//parm is global complex entity id
-			loc_globalComplexEntitId = parm;
-			loc_mainEntityId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_ENTITYIDINDOMAIN];
+			loc_globalComplexEntityRef = parm;
 		}
 	};
 	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
-		if(loc_globalComplexEntitId!=undefined){
+		if(loc_globalComplexEntityRef!=undefined){
 			//load related resources
-			var resourceId = loc_globalComplexEntitId[node_COMMONATRIBUTECONSTANT.IDCOMPLEXENTITYINGLOBAL_RESOURCEINFO][node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
+			var resourceId = loc_globalComplexEntityRef[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					//get bundle definition
@@ -73,10 +70,12 @@ var node_createBundleCore = function(parm, configure){
 		}
 		
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			//build variable domain in bundle
-			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN][node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
+			var exeEntityDomain = loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN];
 
-			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, undefined, loc_configure, {
+			//build variable domain in bundle
+			loc_variableDomain = nod_createVariableDomain(exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
+
+			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_ROOTENTITY], undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainCoplexEntity){
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
 				}

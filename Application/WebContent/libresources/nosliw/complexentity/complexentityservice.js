@@ -142,8 +142,6 @@ var node_createComplexEntityRuntimeService = function() {
 		
 		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
 		
-		var complexEntityDef = complexEntityInfo[node_COMMONATRIBUTECONSTANT.INFOENTITYINDOMAINEXECUTABLE_ENTITY];
-
 		//internal entity
 		//build variableGroup
 		var valueContextId = null;
@@ -357,8 +355,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
 		},
 		
-		getCreateComplexEntityRuntimeRequest : function(complexEntityId, parentCore, bundleCore, variationPoints, configure, handlers, request){
-			return loc_getCreateComplexEntityRuntimeRequest(complexEntityId, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		getCreateComplexEntityRuntimeRequest : function(complexEntityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateComplexEntityRuntimeRequest(complexEntityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
 		},
 
 		getCreateSimpleEntityRequest : function(entityType, entityDef, configure, handlers, request){

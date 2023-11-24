@@ -29,7 +29,7 @@ public class HAPUtilityExport {
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
-		mainInfoJson.put(HAPExecutablePackage.MAINENTITYID, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
+		mainInfoJson.put(HAPExecutablePackage.MAINENTITYREF, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPUtilityJson.buildMapJson(mainInfoJson));
 		
 		//write package group
