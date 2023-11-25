@@ -14,10 +14,8 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
@@ -29,14 +27,14 @@ import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
+import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveReferenceVariableMapping(HAPIdEntityInDomain expreesionEntityIdExe, HAPContextProcessor processContext) {
-		HAPExecutableEntityExpressionData expressionGroupExe = (HAPExecutableEntityExpressionData)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionEntityIdExe).getEntity();
+	public static void resolveReferenceVariableMapping(HAPExecutableEntityExpressionData expressionGroupExe, HAPContextProcessor processContext) {
 		
 		List<HAPExecutableExpressionData> expressionExeItems = expressionGroupExe.getAllExpressionItems();
 		
@@ -51,15 +49,11 @@ public class HAPUtilityExpressionProcessor {
 						Map<String, HAPWrapperOperand> referenceMapping = referenceOperand.getMapping();
 						
 						String refAttributeName = referenceOperand.getReferenceExpressionAttributeName();
-						HAPIdEntityInDomain referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getAttributeValue(refAttributeName);
 						
-						referedExperssionEntityId = (HAPIdEntityInDomain)expressionGroupExe.getReferences(processContext).getAttributeValue(refAttributeName);
-						
-						
-						Pair<HAPExecutableEntity, HAPContextProcessor> referencedEntityInfo = HAPUtilityDomain.resolveExecutableEntityId(referedExperssionEntityId, processContext);
+						Pair<HAPExecutable, HAPContextProcessor> referencedEntityInfo = HAPUtilityDomain.resolveAttributeExecutableEntity(expressionGroupExe.getReferences(), refAttributeName, processContext);
 						HAPDomainValueStructure valueStructureDomain = referencedEntityInfo.getRight().getCurrentValueStructureDomain();
 						
-						HAPExecutableEntityExpressionDataSingle referedExpressionExe = (HAPExecutableEntityExpressionDataSingle)referencedEntityInfo.getRight().getCurrentExecutableDomain().getEntityInfoExecutable(referedExperssionEntityId).getEntity();
+						HAPExecutableEntityExpressionDataSingle referedExpressionExe = (HAPExecutableEntityExpressionDataSingle)referencedEntityInfo.getLeft();
 						referenceOperand.setOutputCriteria(referedExpressionExe.getExpression().getOutputCriteria());
 						
 						for(String varName : referenceMapping.keySet()) {
@@ -147,9 +141,7 @@ public class HAPUtilityExpressionProcessor {
 	}
 
 	//build variable into within expression item
-	public static void buildVariableInfoInExpression(HAPIdEntityInDomain expreesionGroupEntityIdExe, HAPContextProcessor processContext) {
-		HAPExecutableEntityExpressionData expressionGroupExe = (HAPExecutableEntityExpressionData)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(expreesionGroupEntityIdExe).getEntity();
-		
+	public static void buildVariableInfoInExpression(HAPExecutableEntityExpressionData expressionGroupExe, HAPContextProcessor processContext) {
 		List<HAPExecutableExpressionData> items = expressionGroupExe.getAllExpressionItems();
 		for(HAPExecutableExpressionData item : items) {
 			Set<String> varKeys = HAPUtilityOperand.discoverVariableKeys(item.getOperand());

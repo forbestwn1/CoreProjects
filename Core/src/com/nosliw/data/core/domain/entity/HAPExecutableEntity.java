@@ -70,6 +70,8 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		return attr==null?null:attr.getValue(); 
 	}
 
+	public String getAttributeValueType(String attrName) {    return this.getAttributeEmbeded(attrName).getValueType();     }
+	
 	public Object getAttributeValue(String attrName) {
 		Object out = null;
 		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);
@@ -80,6 +82,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	}
 
 	public HAPExecutableEntity getAttributeValueEntity(String attrName) {   return (HAPExecutableEntity)this.getAttributeValue(attrName);      }
+	public HAPReferenceExternal getAttributeReferenceExternal(String attrName) {   return (HAPReferenceExternal)this.getAttributeValue(attrName);     }
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {
 		attrObj.setParentEntity(this);

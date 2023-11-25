@@ -20,6 +20,7 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
@@ -39,13 +40,13 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 
 	@Override
-	public void processValueContext(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processValueContext(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
-		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)complexEntityExecutable;
 		
-		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPIdEntityInDomain complexEntityDefinitionId = executableEntity.getDefinitionEntityId();
 		HAPDefinitionEntityTestComplexScript definitionEntity = (HAPDefinitionEntityTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		Map<String, Object> parms = definitionEntity.getParms();
 		
@@ -68,16 +69,16 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 	
 	@Override
-	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)complexEntityExecutable;
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
-		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPIdEntityInDomain complexEntityDefinitionId = complexEntityExecutable.getDefinitionEntityId();
 		HAPDefinitionEntityTestComplexScript definitionEntity = (HAPDefinitionEntityTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		Map<String, Object> parms = definitionEntity.getParms();
 
@@ -124,13 +125,13 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 
 	@Override
-	public void processValueContextExtension(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		super.processValueContextExtension(complexEntityExecutableId, processContext);
+	public void processValueContextExtension(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+		super.processValueContextExtension(complexEntityExecutable, processContext);
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)complexEntityExecutable;
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
 		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
@@ -144,12 +145,12 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 	}
 	
 	@Override
-	public void processValueContextDiscovery(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		super.processValueContextDiscovery(complexEntityExecutableId, processContext);
+	public void processValueContextDiscovery(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+		super.processValueContextDiscovery(complexEntityExecutable, processContext);
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
-		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)complexEntityExecutable;
 		
 		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
 		if(expectedVars!=null) {
@@ -162,5 +163,4 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginE
 			}
 		}
 	}
-	
 }

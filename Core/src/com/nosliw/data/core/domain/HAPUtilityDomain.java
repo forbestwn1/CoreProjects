@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -13,6 +14,8 @@ import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachm
 import com.nosliw.data.core.domain.entity.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPReferenceExternal;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
@@ -23,15 +26,35 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPUtilityDomain {
 
 	public static Pair<HAPExecutable, HAPContextProcessor> resolveAttributeExecutableEntity(HAPExecutableEntity exeEntity, String attribute, HAPContextProcessor processContext){
-		Object attrValue = exeEntity.getAttributeEmbeded(attribute).getValue();
-		if(attrValue instanceof HAPIdEntityInDomain) {
-			Pair<HAPExecutableEntity, HAPContextProcessor> result = resolveExecutableEntityId((HAPIdEntityInDomain)attrValue, processContext);
-			return Pair.of(result.getLeft(), result.getRight());
+		HAPExecutable outExe = null;
+		HAPContextProcessor outContextProcessor = processContext;
+
+		String attrEntityValueType = exeEntity.getAttributeValueType(attribute);
+		if(attrEntityValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY)) {
+			outExe = exeEntity.getAttributeValueEntity(attribute);
 		}
-		else if(attrValue instanceof HAPExecutable) {
-			return Pair.of((HAPExecutable)attrValue, processContext);
+		else if(attrEntityValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE)) {
+			HAPReferenceExternal externalRef = exeEntity.getAttributeReferenceExternal(attribute);
+			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(externalRef.getNormalizedResourceId().getRootResourceIdSimple());
+
+			HAPExecutableEntityComplex rootEntity = childBundle.getExecutableDomain().getRootEntity();
+			HAPPath childEntityPath = externalRef.getNormalizedResourceId().getPath();
+			if(childEntityPath.isEmpty()) {
+				outExe = rootEntity;
+			}
+			else {
+				HAPExecutableEntity entity = rootEntity;
+				for(String seg : childEntityPath.getPathSegments()) {
+					Pair<HAPExecutable, HAPContextProcessor> result = resolveAttributeExecutableEntity(entity, seg, outContextProcessor);
+					entity = (HAPExecutableEntity)result.getLeft();
+					outContextProcessor = result.getRight();
+				}
+			}
 		}
-		return null;
+		else if(attrEntityValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE)) {
+			outExe = (HAPExecutable)exeEntity.getAttributeValue(attribute);
+		}
+		return Pair.of(outExe, outContextProcessor);
 	}
 	
 	public static Pair<HAPExecutableEntity, HAPContextProcessor> resolveExecutableEntityId(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext){
