@@ -16,6 +16,8 @@ var packageObj = library;
 	var node_expressionUtility;
 	var node_makeObjectWithApplicationInterface;
 	var node_createServiceRequestInfoSet;
+	var node_createTaskContainerInterface;
+	var node_createTaskInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -64,7 +66,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATAGROUP_EXPRESSIONS);
 	};
 
-	var loc_facadeTaskContainer = {
+	var loc_facadeTaskContainer = node_createTaskContainerInterface({
 		getAllItemIds : function(){
 			var out = [];
 			var expressions = loc_getAllExpressionItems()
@@ -86,12 +88,12 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			return out;
 		},
 		
-		getExecuteItemRequest : function(dataExpressionId, handlers, request){
+		getExecuteItemRequest : function(dataExpressionId, taskInput, handlers, request){
 			return loc_getExecuteItemRequest(dataExpressionId, handlers, request);
 		},
-	};
+	});
 	
-	var loc_facadeTask = {
+	var loc_facadeTask = node_createTaskInterface({
 		getExecuteRequest : function(extraInfo, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
@@ -109,7 +111,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			out.addRequest(allItemsRequest);
 			return out;
 		}
-	};
+	});
 	
 	var loc_out = {
 		
@@ -162,6 +164,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 
 
 //Register Node by Name

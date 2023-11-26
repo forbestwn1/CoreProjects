@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_expressionUtility;
 	var node_makeObjectWithApplicationInterface;
+    var node_createTaskContainerInterface;
+	var node_createTaskInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -84,6 +86,8 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionSinglePlugin", node_createDataExpressionSinglePlugin); 

@@ -61,7 +61,7 @@ var loc_createScriptTaskGroup = function(scriptTaskGroupDef, valueContextId, bun
 		else  loc_scriptObj = scriptAttrValue; 
 	};
 	
-	var loc_facadeTaskContainer = {
+	var loc_facadeTaskContainer = node_createTaskContainerInterface({
 		
 		getAllItemIds : function(){
 			var out = [];
@@ -92,7 +92,7 @@ var loc_createScriptTaskGroup = function(scriptTaskGroupDef, valueContextId, bun
 			}
 			return out;
 		},
-	};
+	});
 	
 	
 	var loc_out = {

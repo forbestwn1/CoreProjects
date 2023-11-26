@@ -4,6 +4,7 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 
 public class HAPPluginEntityProcessorComplexScriptBased extends HAPPluginEntityProcessorComplexImp{
@@ -13,15 +14,15 @@ public class HAPPluginEntityProcessorComplexScriptBased extends HAPPluginEntityP
 	}
  
 	@Override
-	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
+	public void processEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
-		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
+		HAPIdEntityInDomain complexEntityDefinitionId = complexEntityExecutable.getDefinitionEntityId();
 		HAPDefinitionEntityScriptBasedComplex definitionEntity = (HAPDefinitionEntityScriptBasedComplex)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
-		HAPExecutableEntityScriptBasedComplex executableEntity = (HAPExecutableEntityScriptBasedComplex)currentBundle.getExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getEntity();
+		HAPExecutableEntityScriptBasedComplex executableEntity = (HAPExecutableEntityScriptBasedComplex)complexEntityExecutable;
 		executableEntity.setScript(definitionEntity.getScript());
 	}
 
