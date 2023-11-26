@@ -23,6 +23,8 @@ var node_ExecutableResult = function(resultName, value){
 	this.resultValue = value;
 };
 
+//info
+//requirement: resource to support the execute the task, for instance, interface, 
 var node_createTaskInput = function(info, requirement){
 	
 	var loc_requirement = requirement;

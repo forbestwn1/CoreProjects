@@ -11,12 +11,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createUIDecorationRequest = nosliw.getNodeData("uipage.createUIDecorationRequest");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createTaskInput = nosliw.getNodeData("task.createTaskInput");
 	 
 	var loc_parentView;
 	var loc_mainView;
 	var loc_wrapperView;
 	var loc_expressionListView;
 	var loc_expressionResultView;
+	var loc_infoView;
 	
 	var loc_configure = configure;
 
@@ -31,7 +33,28 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_calcuateExpression = function(expressionId){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
-		var request = loc_getCoreTaskInterface(coreEntity).getExecuteRequest(undefined, {
+		var taskInterface = loc_getCoreTaskInterface(coreEntity);
+		
+		//collect requirement
+		var taskInputRequirement = {
+			interface : {
+				
+			}
+		};
+		var taskRequirements = taskInterface.getItemRequirement();
+		_.each(taskRequirements, function(taskRequirement, i){
+			if(taskRequirement.interface!=undefined){
+				taskInputRequirement.interface[taskRequirement.interface] = function(){
+					return "This is from interface: " + taskRequirement.interface;
+				}
+			}
+		});
+
+		var info = eval(loc_infoView.val());
+
+		var taskInput = node_createTaskInput(info, taskInputRequirement);
+		
+		var request = taskInterface.getExecuteRequest(taskInput, {
 			success : function(request, result){
 				loc_expressionResultView.val(JSON.stringify(result));
 			}
@@ -56,9 +79,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				loc_calcuateExpression();
 			});
 
+			var infoViewWapper = $('<div>Input: </div>');
+			loc_infoView = $('<textarea rows="10" cols="50" style="resize: none;" data-role="none"></textarea>');
+			infoViewWapper.append(loc_infoView);
+
 			loc_expressionResultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
 
 			loc_mainView.append(loc_executeView);
+			loc_mainView.append(infoViewWapper);
 			loc_mainView.append(loc_expressionResultView);
 			loc_mainView.append(loc_wrapperView);
 			loc_parentView.append(loc_mainView);

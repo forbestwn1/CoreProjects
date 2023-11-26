@@ -19,6 +19,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_executeView;
 	var loc_itemListView;
 	var loc_resultView;
+	var loc_infoView;
 	
 	var loc_configure = configure;
 
@@ -50,7 +51,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			}
 		});
 
-		var taskInput = node_createTaskInput({}, taskInputRequirement);
+		var info = eval(loc_infoView.val());
+
+		var taskInput = node_createTaskInput(info, taskInputRequirement);
 		var request = taskContainerInterface.getExecuteItemRequest(itemId, taskInput, {
 			success : function(request, result){
 				loc_resultView.val(JSON.stringify(result));
@@ -90,10 +93,15 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				loc_executeAllItems();
 			});
 
+			var infoViewWapper = $('<div>Input: </div>');
+			loc_infoView = $('<textarea rows="10" cols="50" style="resize: none;" data-role="none"></textarea>');
+			infoViewWapper.append(loc_infoView);
+
 			loc_itemListView = $('<div></div>');
 			loc_resultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
 
 			loc_mainView.append(loc_executeView);
+			loc_mainView.append(infoViewWapper);
 			loc_mainView.append(loc_itemListView);
 			loc_mainView.append(loc_resultView);
 			loc_mainView.append(loc_wrapperView);

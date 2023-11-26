@@ -41,12 +41,12 @@ var loc_createExpressionSingleComponentCore = function(complexEntityDef, valueCo
 	var loc_envInterface = {};
 	var loc_dataExpressionSingleRuntime = {};
 	
-	var loc_facade = {
-		getExecuteRequest : function(extraInfo, handlers, request){
+	var loc_facade = node_createTaskInterface({
+		getExecuteRequest : function(taskInput, handlers, request){
 			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPTSINGLE_EXPRESSION);
 			return node_expressionUtility.getExecuteExpressionItemRequest(expressionItem, loc_valueContext, undefined, loc_complexEntityDef, loc_dataExpressionSingleRuntime.getCoreEntity(), handlers, request)
 		},
-	};
+	});
 	
 	var loc_out = {
 		

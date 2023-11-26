@@ -91,7 +91,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 		},
 	});
 	
-	var loc_facadeTask = {
+	var loc_facadeTask = node_createTaskInterface({
 		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
@@ -109,7 +109,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 			out.addRequest(allItemsRequest);
 			return out;
 		}
-	};
+	});
 	
 	var loc_out = {
 		

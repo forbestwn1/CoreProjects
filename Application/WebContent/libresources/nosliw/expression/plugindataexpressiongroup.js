@@ -94,7 +94,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	});
 	
 	var loc_facadeTask = node_createTaskInterface({
-		getExecuteRequest : function(extraInfo, handlers, request){
+		getExecuteRequest : function(taskInput, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 			var allItemsRequest = node_createServiceRequestInfoSet(undefined, {
