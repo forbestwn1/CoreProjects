@@ -25,7 +25,7 @@ var loc_MAIN_NAME = "main";
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
 
-	var loc_globalComplexEntityRef;
+	var loc_normalizedResourceId;
 	
 	var loc_bundleDef;
 	
@@ -51,16 +51,16 @@ var node_createBundleCore = function(parm, configure){
 		}
 		else{
 			//parm is global complex entity id
-			loc_globalComplexEntityRef = parm;
+			loc_normalizedResourceId = parm;
 		}
 	};
 	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
-		if(loc_globalComplexEntityRef!=undefined){
+		if(loc_normalizedResourceId!=undefined){
 			//load related resources
-			var resourceId = loc_globalComplexEntityRef[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
+			var resourceId = loc_normalizedResourceId[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					//get bundle definition

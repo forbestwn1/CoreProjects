@@ -10,7 +10,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -37,9 +36,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	//all other complex resource this resource depend on, external dependency
 	private Set<HAPInfoResourceIdNormalize> m_externalComplexEntityDpendency;
 
-	//id generator
-	private HAPGeneratorId m_idGenerator;
-
 	private HAPExecutableEntityComplex m_rootEntity;
 	
 	//all executable entity 
@@ -47,7 +43,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	
 	
 	public HAPDomainEntityExecutableResourceComplex() {
-		this.m_idGenerator = new HAPGeneratorId();
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_externalComplexEntityDpendency = new HashSet<HAPInfoResourceIdNormalize>();
 	}

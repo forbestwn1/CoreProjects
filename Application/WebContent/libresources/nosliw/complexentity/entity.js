@@ -83,6 +83,8 @@ var loc_createAttributeDefinition = function(attrDef){
 		getEntityType : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_VALUETYPE];  },
 		
 		isComplex : function(){  return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUETYPEINFO][node_COMMONATRIBUTECONSTANT.INFOVALUETYPE_ISCOMPLEX];  },
+
+		isExternalReference : function(){   return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUETYPE]==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE;     },
 		
 		getValue : function(){		return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];	},
 

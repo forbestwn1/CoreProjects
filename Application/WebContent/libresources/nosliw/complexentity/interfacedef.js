@@ -135,7 +135,21 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				var entityType = attr.getEntityType();
 				var adaptersInfo = attr.getAdaptersInfo();
 				var childConfigure = configure.getChildConfigure(attrName);
-				if(attr.isComplex()==true){
+				if(attr.isExternalReference()==true){
+					//external bundle reference attribute
+					var externalBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(attrValue[node_COMMONATRIBUTECONSTANT.REFERENCEEXTERNAL_NORMALIZEDRESOURCEID], childConfigure, request);
+					var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+						success : function(request, adaptersResult){
+							return treeNodeEntityInterface.addChild(attrName, externalBundleRuntime, adaptersResult.getResults(), true);
+						}
+					});
+					
+					_.each(adaptersInfo, function(adapterInfo){
+						adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+					});
+					out.addRequest(adaptersRequest);
+				}
+				else if(attr.isComplex()==true){
 					//complex attribute
 					var childEntitId = attrValue;
 
@@ -181,6 +195,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPLEXENTITY, loc_interfaceEntity);
 	return loc_out;
 };
+
 
 var node_getComplexEntityObjectInterface = function(baseObject){
 	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
