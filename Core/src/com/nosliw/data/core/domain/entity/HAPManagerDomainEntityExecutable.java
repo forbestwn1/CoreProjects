@@ -185,6 +185,7 @@ public class HAPManagerDomainEntityExecutable {
 		this.processComplexEntityProcess(rootComplexEntityExe, processContext);
 		
 		complexResourceBundle.getExecutableDomain().setRootEntity(rootComplexEntityExe);
+		HAPUtilityDomain.buildExternalResourceDependency(complexResourceBundle.getExecutableDomain(), processContext);
 	}
 
 	private void calculatePlainScriptExpression(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {

@@ -8,6 +8,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 //normalized resource id:
 //    root simple resource id
@@ -53,5 +54,22 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 		jsonMap.put(PATH, this.m_path.getPath());
 		jsonMap.put(RESOURCEENTITYTYPE, this.m_resourceEntityType);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof HAPInfoResourceIdNormalize) {
+			HAPInfoResourceIdNormalize nResourceId = (HAPInfoResourceIdNormalize)obj;
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_path, this.m_path))  return false;
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_resourceEntityType, this.m_resourceEntityType))  return false;
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_rootResourceId, this.m_rootResourceId))  return false;
+			return true;
+		}
+		return false;
+	}
 
+	@Override
+	public int hashCode() {
+		return (this.m_rootResourceId.buildLiterate()+this.m_path.getPath()).hashCode();
+	}
+	
 }

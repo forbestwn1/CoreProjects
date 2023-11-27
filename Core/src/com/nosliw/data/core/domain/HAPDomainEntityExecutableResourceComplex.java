@@ -2,7 +2,6 @@ package com.nosliw.data.core.domain;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -35,7 +35,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	private HAPDomainValueStructure m_valueStructureDomain;
 
 	//all other complex resource this resource depend on, external dependency
-	private Map<String, HAPIdComplexEntityInGlobal> m_externalComplexEntityDpendency;
+	private Set<HAPInfoResourceIdNormalize> m_externalComplexEntityDpendency;
 
 	//id generator
 	private HAPGeneratorId m_idGenerator;
@@ -49,7 +49,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	public HAPDomainEntityExecutableResourceComplex() {
 		this.m_idGenerator = new HAPGeneratorId();
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
-		this.m_externalComplexEntityDpendency = new LinkedHashMap<String, HAPIdComplexEntityInGlobal>();
+		this.m_externalComplexEntityDpendency = new HashSet<HAPInfoResourceIdNormalize>();
 	}
 
 	public void setRootEntity(HAPExecutableEntityComplex rootEntity) {   this.m_rootEntity = rootEntity;     }
@@ -57,35 +57,15 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
 	
-	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(this.m_idGenerator.generateId(), executableEntity.getEntityType());
-		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(executableEntity, entityId, extraInfo);
-		this.m_executableEntity.put(entityId, entityInfo);
-		return entityId;
-	}
-
+	public void addExternalResourceDependency(HAPInfoResourceIdNormalize normlizedResourceId) {   this.m_externalComplexEntityDpendency.add(normlizedResourceId);      }
 	
-	public HAPIdEntityInDomain addExecutableEntity(HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		String id = this.m_idGenerator.generateId();
-		this.m_externalComplexEntityDpendency.put(id, complexEntityIdInGloabal);
-		HAPIdEntityInDomain entityId = new HAPIdEntityInDomain(id, complexEntityIdInGloabal.getResourceInfo().getResourceEntityType());
-		HAPInfoEntityInDomainExecutable entityInfo = new HAPInfoEntityInDomainExecutable(id, entityId, extraInfo);
-		this.m_executableEntity.put(entityId, entityInfo);
-		return entityId;
-	}
-
 	@Override
-	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return this.getEntityInfoExecutable(entityId);     }
-//	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPIdEntityInDomain entityId) {	return this.m_executableEntity.get(entityId);	}
+	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return null;     }
 
-	public HAPIdComplexEntityInGlobal getExternalEntityGlobalId(HAPIdEntityInDomain entityId) {
-		return this.m_externalComplexEntityDpendency.get(this.getEntityInfoExecutable(entityId).getExternalComplexEntityId());
-	}
-	
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();
-		for(String id : this.m_externalComplexEntityDpendency.keySet()) {
-			out.add(this.m_externalComplexEntityDpendency.get(id).getResourceInfo().getRootResourceIdSimple());
+		for(HAPInfoResourceIdNormalize normalizedResourceId : this.m_externalComplexEntityDpendency) {
+			out.add(normalizedResourceId.getRootResourceIdSimple());
 		}
 		return out;
 	}

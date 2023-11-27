@@ -22,6 +22,10 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
 
+	public static boolean isEqual(HAPResource resource1, HAPResource resource2) {
+		return resource1.equals(resource2);
+	}
+	
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
 		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceType(), buildResourceCoreIdLiterate(resourceId)});
 	}

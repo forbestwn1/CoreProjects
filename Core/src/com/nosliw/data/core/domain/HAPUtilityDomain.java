@@ -15,6 +15,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
 import com.nosliw.data.core.domain.entity.HAPReferenceExternal;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -25,6 +26,23 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityDomain {
 
+	public static void buildExternalResourceDependency(HAPDomainEntityExecutableResourceComplex executableDomain, HAPContextProcessor processContext) {
+		HAPExecutableEntityComplex rootEntity = executableDomain.getRootEntity();
+		HAPUtilityEntityExecutable.traverseExecutableEntityTree(rootEntity, new HAPProcessorEntityExecutableDownward() {
+
+			@Override
+			public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {}
+
+			@Override
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				String attrValueType = parentEntity.getAttributeEmbeded(attribute).getValueType();
+				if(HAPConstantShared.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE.equals(attrValueType)) {
+					executableDomain.addExternalResourceDependency(parentEntity.getAttributeReferenceExternal(attribute).getNormalizedResourceId());
+				}
+				return true;
+			}}, processContext);
+	}
+	
 	public static Pair<HAPExecutable, HAPContextProcessor> resolveAttributeExecutableEntity(HAPExecutableEntity exeEntity, String attribute, HAPContextProcessor processContext){
 		HAPExecutable outExe = null;
 		HAPContextProcessor outContextProcessor = processContext;
