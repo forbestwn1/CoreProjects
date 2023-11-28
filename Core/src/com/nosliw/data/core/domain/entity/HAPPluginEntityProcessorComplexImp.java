@@ -46,6 +46,9 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	@Override
 	public void postProcessEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	}
 
+	protected HAPDefinitionEntityInDomain getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
+		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
+	}
 	
 	public Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();

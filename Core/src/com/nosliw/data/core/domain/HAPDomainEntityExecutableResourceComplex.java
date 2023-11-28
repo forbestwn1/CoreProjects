@@ -23,8 +23,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 
 	@HAPAttribute
 	public static String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
-//	@HAPAttribute
-//	public static String COMPLEXENTITY = "complexEntity";
 	@HAPAttribute
 	public static String ROOTENTITY = "rootEntity";
 	@HAPAttribute
@@ -37,9 +35,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	private Set<HAPInfoResourceIdNormalize> m_externalComplexEntityDpendency;
 
 	private HAPExecutableEntityComplex m_rootEntity;
-	
-	//all executable entity 
-//	private Map<HAPIdEntityInDomain, HAPInfoEntityInDomainExecutable> m_executableEntity;
 	
 	
 	public HAPDomainEntityExecutableResourceComplex() {

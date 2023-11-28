@@ -21,14 +21,14 @@ public class HAPUtilityEntityExecutable {
 		return true;
 	}
 
-	public static void trasversExecutableEntityTreeUpward(HAPExecutableEntity entity, HAPProcessorEntityExecutableUpward processor, HAPContextProcessor processContext) {
+	public static void trasversExecutableEntityTreeUpward(HAPExecutableEntity entity, HAPProcessorEntityExecutableUpward processor, HAPContextProcessor processContext, Object object) {
 		HAPPath path = new HAPPath();
-		boolean result =  processor.process(entity, null, processContext);
+		boolean result =  processor.process(entity, null, processContext, object);
 		while(result) {
 			HAPExecutableEntity parent = entity.getParent();
 			if(parent==null)  break;
 			else {
-				result = processor.process(parent, path.appendSegment(HAPConstantShared.NAME_PARENT), processContext);
+				result = processor.process(parent, path.appendSegment(HAPConstantShared.NAME_PARENT), processContext, object);
 			}
 		}
 	}

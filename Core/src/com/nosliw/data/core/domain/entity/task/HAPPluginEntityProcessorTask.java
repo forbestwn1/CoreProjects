@@ -1,11 +1,7 @@
 package com.nosliw.data.core.domain.entity.task;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 
@@ -16,11 +12,9 @@ public class HAPPluginEntityProcessorTask extends HAPPluginEntityProcessorComple
 	}
 
 	@Override
-	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	
-		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
-		HAPDefinitionEntityTask taskEntityDef = (HAPDefinitionEntityTask)entityPair.getLeft();
-		HAPExecutableEntityTask taskEntityExe = (HAPExecutableEntityTask)entityPair.getRight();
+	public void processEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	
+		HAPDefinitionEntityTask taskEntityDef = (HAPDefinitionEntityTask)this.getEntityDefinition(complexEntityExecutable, processContext);
+		HAPExecutableEntityTask taskEntityExe = (HAPExecutableEntityTask)complexEntityExecutable;
 		taskEntityExe.setImpEntityType(taskEntityDef.getImpEntityType());
 	}
-	
 }

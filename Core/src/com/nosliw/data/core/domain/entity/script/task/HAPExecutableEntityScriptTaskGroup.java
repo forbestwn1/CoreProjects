@@ -24,6 +24,13 @@ public class HAPExecutableEntityScriptTaskGroup extends HAPExecutableEntityCompl
 	public List<HAPDefinitionTaskScript> getDefinitions(){   return (List<HAPDefinitionTaskScript>)this.getAttributeValue(DEFINITION);    }
 	public void addDefinition(HAPDefinitionTaskScript def) {   this.getDefinitions().add(def);      }
 	
+	public HAPDefinitionTaskScript getDefinitionByName(String name) {
+		for(HAPDefinitionTaskScript def : this.getDefinitions()) {
+			if(name.equals(def.getName()))  return def;
+		}
+		return null;
+	}
+	
 	public HAPJsonTypeScript getScript() {   return (HAPJsonTypeScript)this.getAttributeValue(SCRIPT);     }
 	public void setScript(HAPJsonTypeScript script) {   this.setAttributeValueObject(SCRIPT, script);     }
 

@@ -3,15 +3,11 @@ package com.nosliw.ui.entity.uicontent;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
@@ -25,10 +21,9 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 	}
 
 	@Override
-	public void extendConstantValue(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
-		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
-		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
+	public void extendConstantValue(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)this.getEntityDefinition(complexEntityExecutable, processContext);
+		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)complexEntityExecutable;
 		
 		HAPExecutableEntityExpressionScriptGroup plainScriptExpressionGroupEntity = uiTagExe.getPlainScriptExpressionGroupEntity(processContext);
 		Map<String, String> attrs = uiTagDef.getTagAttributes();
@@ -38,10 +33,9 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcess
 	}
 	
 	@Override
-	public void processEntity(HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {	
-		Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> entityPair = this.getEntityPair(complexEntityExecutableId, processContext);
-		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)entityPair.getLeft();
-		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)entityPair.getRight();
+	public void processEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	
+		HAPDefinitionEntityComplexUITag uiTagDef = (HAPDefinitionEntityComplexUITag)this.getEntityDefinition(complexEntityExecutable, processContext);
+		HAPExecutableEntityComplexUITag uiTagExe = (HAPExecutableEntityComplexUITag)complexEntityExecutable;
 	
 		//build name to variable id mapping
 		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentValueStructureDomain();

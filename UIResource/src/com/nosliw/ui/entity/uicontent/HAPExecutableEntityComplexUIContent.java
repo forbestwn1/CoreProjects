@@ -7,7 +7,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
-
 @HAPEntityWithAttribute
 public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityComplex{
 
@@ -38,7 +37,6 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	@HAPAttribute
 	static final public String SERVICE = "service";  
 	
-
 	public HAPExecutableEntityComplexUIContent() {
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueObject(HAPExecutableEntityComplexUIContent.SCRIPTEXPRESSIONINATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
