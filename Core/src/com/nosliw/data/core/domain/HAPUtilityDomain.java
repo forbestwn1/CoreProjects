@@ -15,7 +15,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
 import com.nosliw.data.core.domain.entity.HAPReferenceExternal;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -28,10 +28,10 @@ public class HAPUtilityDomain {
 
 	public static void buildExternalResourceDependency(HAPDomainEntityExecutableResourceComplex executableDomain, HAPContextProcessor processContext) {
 		HAPExecutableEntityComplex rootEntity = executableDomain.getRootEntity();
-		HAPUtilityEntityExecutable.traverseExecutableEntityTree(rootEntity, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableEntityTree(rootEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {}
+			public void processRootEntity(HAPExecutableEntity entity, HAPContextProcessor processContext) {}
 
 			@Override
 			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {

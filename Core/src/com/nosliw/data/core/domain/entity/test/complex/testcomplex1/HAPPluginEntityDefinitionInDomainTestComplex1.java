@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinitionComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.test.HAPPluginEntityDefinitionInDomainDynamic;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
@@ -18,7 +18,7 @@ public class HAPPluginEntityDefinitionInDomainTestComplex1 extends HAPPluginEnti
 	@Override
 	protected void postNewInstance(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postNewInstance(entityId, parserContext);
-		HAPUtilityEntityDefinition.setupAttributeForComplexEntity(entityId, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityDefinitionComplex.setupAttributeForComplexEntity(entityId, parserContext, getRuntimeEnvironment());
 	}
 	
 	@Override

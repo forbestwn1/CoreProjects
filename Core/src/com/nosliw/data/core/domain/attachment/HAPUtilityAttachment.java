@@ -13,7 +13,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 
 public class HAPUtilityAttachment {
@@ -40,7 +40,7 @@ public class HAPUtilityAttachment {
 
 	//add attachment container to attachment domain
 	private static void buildAttachmentTree(HAPExecutableEntityComplex rootComplexEntityExecutable, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutable, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutable, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			
 			private void process(HAPExecutableEntity entityExe) {
 				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
@@ -60,7 +60,7 @@ public class HAPUtilityAttachment {
 			}
 			
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex entityExe, HAPContextProcessor processContext) {
+			public void processRootEntity(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
 				process(entityExe);
 			}
 
@@ -75,9 +75,9 @@ public class HAPUtilityAttachment {
 
 	//merge attachment between paren and child
 	private static void mergeAttachment(HAPExecutableEntityComplex rootComplexEntityExecutable, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutable, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(rootComplexEntityExecutable, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex entityExe, HAPContextProcessor processContext) {	}
+			public void processRootEntity(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {	}
 
 			@Override
 			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {

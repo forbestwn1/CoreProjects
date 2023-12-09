@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
@@ -44,12 +44,12 @@ public class HAPUtilityRuntimeJSScript {
 	}
 
 
-	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteTaskEntity(HAPExecutableBundle bundle, HAPIdEntityInDomain mainEntityId, String taskId, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteTaskEntity(HAPExecutableBundle bundle, HAPPath mainEntityPath, String taskId, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
 		templateParms.put("bundleDefinition", bundle.toResourceData(runtime.getRuntimeInfo()).toString());
-		templateParms.put("entityType", mainEntityId.getEntityType());
-		templateParms.put("entityId", mainEntityId.getEntityId());
+		if(mainEntityPath==null||mainEntityPath.isEmpty())   templateParms.put("mainEntityPath", "");
+		else templateParms.put("mainEntityPath", mainEntityPath.getPath());
 		
 		buildCommonTemplateParms(templateParms, taskId, runtime);
 		

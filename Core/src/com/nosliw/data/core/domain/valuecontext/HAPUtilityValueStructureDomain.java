@@ -20,7 +20,7 @@ import com.nosliw.data.core.domain.attachment.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownward;
+import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
@@ -40,7 +40,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			
 			private void process(HAPExecutableEntityComplex complexEntityExe) {
 				HAPExecutableBundle bundleExe = processContext.getCurrentBundle();
@@ -82,8 +82,8 @@ public class HAPUtilityValueStructureDomain {
 			}
 			
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-				process(complexEntity);
+			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+				process((HAPExecutableEntityComplex)complexEntity);
 			}
 
 			@Override
@@ -108,10 +108,10 @@ public class HAPUtilityValueStructureDomain {
 
 	//merge value structure between paren and child
 	private static void buildExtensionValueStructure(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-				createExtensionPart(complexEntity.getValueContext(), processContext.getCurrentValueStructureDomain());
+			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+				createExtensionPart(((HAPExecutableEntityComplex)complexEntity).getValueContext(), processContext.getCurrentValueStructureDomain());
 			}
 
 			@Override
@@ -142,9 +142,9 @@ public class HAPUtilityValueStructureDomain {
 	
 	//merge value structure between paren and child
 	private static void mergeValueStructure(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownward() {
+		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
-			public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {	}
+			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {	}
 
 			@Override
 			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {

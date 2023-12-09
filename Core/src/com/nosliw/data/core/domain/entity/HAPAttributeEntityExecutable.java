@@ -26,6 +26,8 @@ public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededE
 
 	public boolean isAttributeAutoProcess() {	return this.isAttributeAutoProcess(false);	}
 
+	public HAPExecutableEntity getEmbededValueEntity() {   return this.getValue().getEntityValue();    }
+	
 	public HAPExecutableEntity getParentEntity() {    return this.m_parentEntity;   }
 	public void setParentEntity(HAPExecutableEntity parent) {     
 		this.m_parentEntity = parent;

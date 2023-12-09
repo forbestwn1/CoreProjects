@@ -17,6 +17,8 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_basicUtility;
 	var node_componentUtility;
+	var node_namingConvensionUtility;
+	var node_createEntityDefinition;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -28,6 +30,7 @@ var node_createBundleCore = function(parm, configure){
 	var loc_normalizedResourceId;
 	
 	var loc_bundleDef;
+	var loc_mainEntityPath;
 	
 	var loc_configure;
 	var loc_configureValue;
@@ -48,6 +51,7 @@ var node_createBundleCore = function(parm, configure){
 		if(parm.bundleDef!=undefined){
 			//parm is bundle entity
 			loc_bundleDef = parm.bundleDef;
+			loc_mainEntityPath = parm.mainEntityPath;
 		}
 		else{
 			//parm is global complex entity id
@@ -61,6 +65,7 @@ var node_createBundleCore = function(parm, configure){
 		if(loc_normalizedResourceId!=undefined){
 			//load related resources
 			var resourceId = loc_normalizedResourceId[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
+			loc_mainEntityPath = loc_normalizedResourceId[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_PATH];
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					//get bundle definition
@@ -75,7 +80,15 @@ var node_createBundleCore = function(parm, configure){
 			//build variable domain in bundle
 			loc_variableDomain = nod_createVariableDomain(exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
 
-			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_ROOTENTITY], undefined, loc_out, undefined, loc_configure, {
+			var entityDef = exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_ROOTENTITY];
+			if(!node_basicUtility.isStringEmpty(loc_mainEntityPath)){
+				var pathSegs = node_namingConvensionUtility.parsePathInfos(loc_mainEntityPath);
+				for(var i in pathSegs){
+					 entityDef = new node_createEntityDefinition(entityDef).getAttributeValue(pathSegs[i]);
+				}
+			}
+
+			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainCoplexEntity){
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
 				}
@@ -163,6 +176,8 @@ nosliw.registerSetNodeDataEvent("debug.createPackageDebugView", function(){node_
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 

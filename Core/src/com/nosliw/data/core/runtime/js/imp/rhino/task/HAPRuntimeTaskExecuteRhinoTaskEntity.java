@@ -30,7 +30,7 @@ public class HAPRuntimeTaskExecuteRhinoTaskEntity extends HAPRuntimeTaskRhino{
 
 	@Override
 	protected HAPJSScriptInfo buildRuntimeScript() {
-		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildTaskRequestScriptForExecuteTaskEntity(m_taskInfo.getBundle(), this.m_taskInfo.getMainEntityId(), this.getTaskId(), getRuntime());
+		HAPJSScriptInfo scriptInfo = HAPUtilityRuntimeJSScript.buildTaskRequestScriptForExecuteTaskEntity(m_taskInfo.getBundle(), this.m_taskInfo.getMainEntityPath(), this.getTaskId(), getRuntime());
 		return scriptInfo;
 	}
 }

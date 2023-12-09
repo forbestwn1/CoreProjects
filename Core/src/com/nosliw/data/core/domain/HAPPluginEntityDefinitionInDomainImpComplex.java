@@ -26,7 +26,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	}
 	
 	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		HAPUtilityEntityDefinition.setupAttributeForComplexEntity(entityId, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityDefinitionComplex.setupAttributeForComplexEntity(entityId, parserContext, getRuntimeEnvironment());
 	}
 
 	@Override

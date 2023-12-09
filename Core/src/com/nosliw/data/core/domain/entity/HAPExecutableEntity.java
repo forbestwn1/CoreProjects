@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -55,6 +56,20 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public HAPExecutableEntity getParent() {    return this.m_parent;     }
 	public void setParent(HAPExecutableEntity parent) {    this.m_parent = parent;      }
 	
+	public HAPAttributeEntityExecutable getDescendantAttribute(HAPPath path) {
+		HAPAttributeEntityExecutable out = null;
+		for(int i=0; i<path.getLength(); i++) {
+			String attribute = path.getPathSegments()[i];
+			if(i==0)  out = this.getAttribute(attribute);
+			else out = ((HAPExecutableEntity)out.getValue().getValue()).getAttribute(attribute);
+		}
+		return out;
+	}
+
+	public HAPExecutableEntity getDescendantEntity(HAPPath path) {
+		if(path==null||path.isEmpty())  return this;
+		else return (HAPExecutableEntity)this.getDescendantAttribute(path).getValue().getValue();
+	}
 	
 	public List<HAPAttributeEntityExecutable> getAttributes(){    return this.m_attributes;     }
 	

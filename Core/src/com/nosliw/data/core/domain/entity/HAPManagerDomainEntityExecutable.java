@@ -10,6 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -156,6 +157,7 @@ public class HAPManagerDomainEntityExecutable {
 		
 		//build complex entity tree
 		HAPExecutableEntityComplex rootComplexEntityExe = (HAPExecutableEntityComplex)buildExecutableTree(complexResourceBundle.getDefinitionRootEntityId(), processContext).getRight();
+		complexResourceBundle.getExecutableDomain().setRootEntity(rootComplexEntityExe);
 		
 		//build attachment domain(build attachment tree, merge attachment value)
 		HAPUtilityAttachment.buildAttachmentDomain(rootComplexEntityExe, processContext);
@@ -167,7 +169,7 @@ public class HAPManagerDomainEntityExecutable {
 		buildConstant(rootComplexEntityExe, processContext);
 		
 		//calculate plain script expression value
-//		calculatePlainScriptExpression(rootComplexEntityExe, processContext);
+		calculatePlainScriptExpression(rootComplexEntityExe, processContext);
 		
 		//process value structure
 		HAPUtilityValueStructureDomain.buildValueStructureDomain(rootComplexEntityExe, processContext);
@@ -184,7 +186,6 @@ public class HAPManagerDomainEntityExecutable {
 	
 		this.processComplexEntityProcess(rootComplexEntityExe, processContext);
 		
-		complexResourceBundle.getExecutableDomain().setRootEntity(rootComplexEntityExe);
 		HAPUtilityDomain.buildExternalResourceDependency(complexResourceBundle.getExecutableDomain(), processContext);
 	}
 
@@ -193,51 +194,55 @@ public class HAPManagerDomainEntityExecutable {
 				complexEntityExecutable, 
 				new HAPProcessorEntityExecutableDownward() {
 
-					private void calculatePlainScriptExpression(HAPExecutableEntityComplex executableEntity, HAPContextProcessor processContext) {
-						HAPExecutableEntityComplex plainScriptExpressionGroupEntityExe = executableEntity.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);
+					private void calculatePlainScriptExpression(HAPExecutableEntityComplex parentExecutableEntity, HAPPath pathFromRoot, HAPContextProcessor processContext) {
+						HAPExecutableEntityComplex plainScriptExpressionGroupEntityExe = parentExecutableEntity.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);
 						if(plainScriptExpressionGroupEntityExe!=null) {
 							m_processorComplexEntityPlugins.get(plainScriptExpressionGroupEntityExe.getEntityType()).processEntity(plainScriptExpressionGroupEntityExe, processContext);
 
 							//not auto process
-							executableEntity.getAttribute(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP).setAttributeAutoProcess(false);
+							parentExecutableEntity.getAttribute(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP).setAttributeAutoProcess(false);
 							
 							HAPIdEntityInDomain complexEntityDefinitionId = plainScriptExpressionGroupEntityExe.getDefinitionEntityId(); 
 							HAPDefinitionEntityExpressionScriptGroup plainScriptExpressionGroupEntityDef = (HAPDefinitionEntityExpressionScriptGroup)processContext.getCurrentDefinitionDomain().getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 							if(plainScriptExpressionGroupEntityDef.getEntityElements().size()>0) {
-								HAPInfoRuntimeTaskTaskEntity taskInfo = new HAPInfoRuntimeTaskTaskEntity(processContext.getCurrentBundle(), plainScriptExpressionEntityId, Object.class);
+								HAPInfoRuntimeTaskTaskEntity taskInfo = new HAPInfoRuntimeTaskTaskEntity(processContext.getCurrentBundle(), pathFromRoot, Object.class);
 								HAPRuntimeTaskExecuteRhinoTaskEntity task = new HAPRuntimeTaskExecuteRhinoTaskEntity(taskInfo, processContext.getRuntimeEnvironment());
 								HAPServiceData out = processContext.getRuntimeEnvironment().getRuntime().executeTaskSync(task);
 								JSONObject resultJson = (JSONObject)out.getData();
 								for(Object key : resultJson.keySet()) {
 									String name = (String)key;
-									executableEntity.setPlainScriptExpressionValue(name, resultJson.getString(name));
+									parentExecutableEntity.setPlainScriptExpressionValue(name, resultJson.getString(name));
 								}
 							}
 						}
 					}
 					
 					@Override
-					public void processComplexRoot(HAPIdEntityInDomain entityId, HAPContextProcessor processContext) {
-						calculatePlainScriptExpression(entityId, processContext);
+					public boolean processEntityNode(HAPExecutableEntity rootEntity, HAPPath path, HAPContextProcessor processContext) {
+						if(!this.isRoot(path)) {
+							Pair<HAPExecutableEntity, String> attrInfo = this.getParentAttributeInfo(rootEntity, path);
+							if(attrInfo.getRight().equals(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP)) {
+								this.calculatePlainScriptExpression((HAPExecutableEntityComplex)attrInfo.getLeft(), path, processContext);
+								return false;
+							}
+							return true;
+						}
+						return true;
 					}
 
 					@Override
-					public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
-						calculatePlainScriptExpression((HAPIdEntityInDomain)parentEntity.getAttribute(attribute).getValue().getValue(), processContext);
-						if(attribute.equals(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP))  return false;
-						return true;
-					}
+					public void postProcessEntityNode(HAPExecutableEntity rootEntity, HAPPath path,	HAPContextProcessor processContext) {	}
 				}, processContext);
 	}
 	
 	private void extendConstantValue(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(
 				complexEntityExecutable, 
-				new HAPProcessorEntityExecutableDownward() {
+				new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 					@Override
-					public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-						m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).extendConstantValue(complexEntity, processContext);
+					public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+						m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).extendConstantValue((HAPExecutableEntityComplex)complexEntity, processContext);
 					}
 
 					@Override
@@ -253,7 +258,7 @@ public class HAPManagerDomainEntityExecutable {
 	private void buildConstant(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(
 				complexEntityExecutable, 
-				new HAPProcessorEntityExecutableDownward() {
+				new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 					private void buildConstant(HAPExecutableEntityComplex executableEntity) {
 						{
@@ -276,8 +281,8 @@ public class HAPManagerDomainEntityExecutable {
 					}
 					
 					@Override
-					public void processComplexRoot(HAPExecutableEntityComplex executableEntity, HAPContextProcessor processContext) {
-						this.buildConstant(executableEntity);
+					public void processRootEntity(HAPExecutableEntity executableEntity, HAPContextProcessor processContext) {
+						this.buildConstant((HAPExecutableEntityComplex)executableEntity);
 					}
 
 					@Override
@@ -293,11 +298,11 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityInit(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntity, 
-			new HAPProcessorEntityExecutableDownward() {
+			new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 				@Override
-				public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContext(complexEntity, processContext);
+				public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContext((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 
 				@Override
@@ -337,8 +342,8 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public void postProcessComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContext(complexEntity, processContext);
+				public void postProcessRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContext((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 			}, 
 			processContext);
@@ -347,11 +352,11 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityValueContextExtension(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntity, 
-			new HAPProcessorEntityExecutableDownward() {
+			new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 				@Override
-				public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContextExtension(complexEntity, processContext);
+				public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContextExtension((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 
 				@Override
@@ -386,8 +391,8 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public void postProcessComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContextExtension(complexEntity, processContext);
+				public void postProcessRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContextExtension((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 			}, 
 			processContext);
@@ -396,11 +401,11 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityValueContextDiscovery(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 			complexEntity, 
-			new HAPProcessorEntityExecutableDownward() {
+			new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 				@Override
-				public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContextDiscovery(complexEntity, processContext);
+				public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processValueContextDiscovery((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 
 				@Override
@@ -435,8 +440,8 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public void postProcessComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContextDiscovery(complexEntity, processContext);
+				public void postProcessRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessValueContextDiscovery((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 			}, 
 			processContext);
@@ -445,11 +450,11 @@ public class HAPManagerDomainEntityExecutable {
 	private void processComplexEntityProcess(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableEntityTree(
 				complexEntity, 
-			new HAPProcessorEntityExecutableDownward() {
+			new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 				@Override
-				public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processEntity(complexEntity, processContext);
+				public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).processEntity((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 
 				@Override
@@ -484,8 +489,8 @@ public class HAPManagerDomainEntityExecutable {
 				}
 
 				@Override
-				public void postProcessComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessEntity(complexEntity, processContext);
+				public void postProcessRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+					m_processorComplexEntityPlugins.get(complexEntity.getEntityType()).postProcessEntity((HAPExecutableEntityComplex)complexEntity, processContext);
 				}
 			}, 
 			processContext);

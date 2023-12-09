@@ -2,7 +2,7 @@ package com.nosliw.data.core.scriptexpression;
 
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.HAPUtilityEntityDefinitionComplex;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
@@ -16,8 +16,7 @@ public class HAPUtilityScriptExpression {
 		String out = null;
 		if(HAPUtilityScriptExpressionDefinition.isScriptExpression(content)) {
 			HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpressionLiterate(content, null, expressionParser);
-			HAPDefinitionEntityInDomainComplex complexEntity = (HAPDefinitionEntityInDomainComplex)parserContext.getGlobalDomain().getEntityInfoDefinition(complexEntityId).getEntity();
-			out = complexEntity.getPlainScriptExpressionGroupEntity(parserContext).addExpression(expressionDef);
+			return HAPUtilityEntityDefinitionComplex.addPlainScriptExpressionToComplexEntity(expressionDef, complexEntityId, parserContext);
 		}
 		return out;
 	}

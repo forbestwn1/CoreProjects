@@ -64,9 +64,9 @@ public class HAPUtilityEntityExecutable {
 	}
 	
 	//traverse only entity leaves that marked as auto process
-	public static void traverseExecutableEntityTree(HAPExecutableEntityComplex complexEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
+	public static void traverseExecutableEntityTree(HAPExecutableEntity rootEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
 		traverseExecutableTree(
-			complexEntity, 
+			rootEntity, 
 			new HAPProcessorEntityExecutableWrapper(processor) {
 				@Override
 				protected boolean isValidAttribute(HAPAttributeEntityExecutable attr) {
@@ -80,25 +80,29 @@ public class HAPUtilityEntityExecutable {
 	}
 	
 	//traverse all leave (complex, simiple, solid, not solid ...)
-	public static void traverseExecutableTree(HAPExecutableEntityComplex complexEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
-		processor.processComplexRoot(complexEntity, processContext);
-		traverseExecutableTreeLeaves(complexEntity, processor, processContext);
-		processor.postProcessComplexRoot(complexEntity, processContext);
+	public static void traverseExecutableTree(HAPExecutableEntity rootEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
+		traverseExecutableTreeLeaves(rootEntity, null, processor, processContext);
 	}
 	
-	private static void traverseExecutableTreeLeaves(HAPExecutableEntity parentEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
-		HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain(); 
-		List<HAPAttributeEntityExecutable> attrsExe = parentEntity.getAttributes();
-		for(HAPAttributeEntityExecutable attrExe : attrsExe) {
-			if(processor.processAttribute(parentEntity, attrExe.getName(), processContext)) {
+	private static void traverseExecutableTreeLeaves(HAPExecutableEntity rootEntity, HAPPath path, HAPProcessorEntityExecutableDownward processor, HAPContextProcessor processContext) {
+		if(path==null)  path = new HAPPath();
+		if(processor.processEntityNode(rootEntity, path, processContext)) {
+			HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
+			HAPExecutableEntity leafEntity = null;
+			if(path.isEmpty())  leafEntity = rootEntity;
+			else leafEntity = rootEntity.getDescendantEntity(path);
+			
+			List<HAPAttributeEntityExecutable> attrsExe = leafEntity.getAttributes();
+			for(HAPAttributeEntityExecutable attrExe : attrsExe) {
+				HAPPath attrPath = path.appendSegment(attrExe.getName());
 				HAPEmbededExecutable embeded = attrExe.getValue();
 				Object attrValue = embeded.getValue();
 				if(attrValue instanceof HAPExecutableEntity) {
-					traverseExecutableTreeLeaves((HAPExecutableEntity)attrValue, processor, processContext);
+					traverseExecutableTreeLeaves(rootEntity, attrPath, processor, processContext);
 				}
 			}
-			processor.postProcessAttribute(parentEntity, attrExe.getName(), processContext);
 		}
+		processor.postProcessEntityNode(rootEntity, path, processContext);
 	}
 }
 
@@ -113,31 +117,29 @@ abstract class HAPProcessorEntityExecutableWrapper extends HAPProcessorEntityExe
 	abstract protected boolean isValidAttribute(HAPAttributeEntityExecutable attr);
 	
 	@Override
-	public void processComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		this.m_processor.processComplexRoot(complexEntity, processContext);
-	}
-
-	@Override
-	public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
-		HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
-		if(this.isValidAttribute(attr)) {
-			return this.m_processor.processAttribute(parentEntity, attribute, processContext);
+	public boolean processEntityNode(HAPExecutableEntity rootEntity, HAPPath path, HAPContextProcessor processContext) {
+		if(this.isRoot(path)) {
+			return this.m_processor.processEntityNode(rootEntity, path, processContext);
 		}
-		return false;
-	}
-
-	@Override
-	public void postProcessAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
-		HAPAttributeEntityExecutable attr = parentEntity.getAttribute(attribute);
-		if(this.isValidAttribute(attr)) {
-			this.m_processor.postProcessAttribute(parentEntity, attribute, processContext);
+		else {
+			HAPAttributeEntityExecutable attr = rootEntity.getDescendantAttribute(path);
+			if(this.isValidAttribute(attr)) {
+				return this.m_processor.processEntityNode(rootEntity, path, processContext);
+			}
+			return false;
 		}
 	}
 
 	@Override
-	public void postProcessComplexRoot(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		this.m_processor.postProcessComplexRoot(complexEntity, processContext);
+	public void postProcessEntityNode(HAPExecutableEntity rootEntity, HAPPath path, HAPContextProcessor processContext) {
+		if(this.isRoot(path)) {
+			this.m_processor.postProcessEntityNode(rootEntity, path, processContext);
+		}
+		else {
+			HAPAttributeEntityExecutable attr = rootEntity.getDescendantAttribute(path);
+			if(this.isValidAttribute(attr)) {
+				this.m_processor.postProcessEntityNode(rootEntity, path, processContext);
+			}
+		}
 	}
-	
 }
-
