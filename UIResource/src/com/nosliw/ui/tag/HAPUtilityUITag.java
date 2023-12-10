@@ -2,6 +2,7 @@ package com.nosliw.ui.tag;
 
 import java.io.File;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.resource.HAPInfoResourceLocation;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -23,10 +24,10 @@ public class HAPUtilityUITag {
 	}
 	
 	public static HAPInfoResourceLocation getUITagDefinitionLocationInfo(String uiTagId) {
-		return new HAPInfoResourceLocation(getUITagDefinitionFile(uiTagId), new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
+		return new HAPInfoResourceLocation(getUITagDefinitionFile(uiTagId), HAPSerializationFormat.JSON, new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
 	}
 
 	public static HAPInfoResourceLocation getUITagScriptLocationInfo(String uiTagId) {
-		return new HAPInfoResourceLocation(getUITagScriptFile(uiTagId), new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
+		return new HAPInfoResourceLocation(getUITagScriptFile(uiTagId), HAPSerializationFormat.JAVASCRIPT, new HAPPathLocationBase(getUITagDefinitionFolder(uiTagId)));
 	}
 }

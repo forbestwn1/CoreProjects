@@ -94,12 +94,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	
 	public HAPIdEntityInDomain getPlainScriptExpressionGroupEntityId() {    return this.getComplexEntityAttributeValue(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);     }
 	public HAPExecutableEntityExpressionScriptGroup getPlainScriptExpressionGroupEntity(HAPContextProcessor processContext) {
-		HAPExecutableEntityExpressionScriptGroup out = null;
-		HAPIdEntityInDomain plainScriptExpressionGroupEntityId = getPlainScriptExpressionGroupEntityId();
-		if(plainScriptExpressionGroupEntityId!=null) {
-			out = (HAPExecutableEntityExpressionScriptGroup)processContext.getCurrentExecutableDomain().getEntityInfoExecutable(plainScriptExpressionGroupEntityId).getEntity();
-		}
-		return out;
+		return (HAPExecutableEntityExpressionScriptGroup)this.getAttributeValueEntity(HAPExecutableEntityComplex.PLAINSCRIPTEEXPRESSIONGROUP);
 	}
 
 	@Override

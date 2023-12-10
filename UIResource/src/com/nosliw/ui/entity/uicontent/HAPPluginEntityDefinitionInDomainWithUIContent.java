@@ -5,7 +5,9 @@ import org.jsoup.nodes.Element;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoParentComplex;
 import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
@@ -19,10 +21,16 @@ public abstract class HAPPluginEntityDefinitionInDomainWithUIContent extends HAP
 		super(entityType, entityClass, runtimeEnv);
 	}
 
-	protected HAPIdEntityInDomain parseUIContent(Element ele, HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
+	protected HAPIdEntityInDomain parseUIContent(Element ele, HAPIdEntityInDomain parentEntityId, HAPContextParser parserContext) {
+		HAPDefinitionEntityInDomain entity = parserContext.getCurrentDomain().getEntityInfoDefinition(parentEntityId).getEntity();
 		HAPIdEntityInDomain contentEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, ele, HAPSerializationFormat.HTML, parserContext);
 		entity.setAttribute(HAPExecutableEntityComplexWithUIContent.UICONTENT, new HAPEmbededDefinition(contentEntityId), new HAPInfoValueType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, true));
+
+		//parent relation
+		HAPInfoParentComplex parentInfo = new HAPInfoParentComplex();
+		parentInfo.setParentId(parentEntityId);
+		((HAPDomainEntityDefinitionLocalComplex)parserContext.getCurrentDomain()).buildComplexParentRelation(contentEntityId, parentInfo);
+		
 		return contentEntityId;
 	}
 }

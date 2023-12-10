@@ -132,7 +132,7 @@ public class HAPUtilityValueStructureDomain {
 				HAPConfigureProcessorValueStructure valueStructureConfig = parentInfo==null?null:parentInfo.getParentRelationConfigure().getValueStructureRelationMode();
 
 				//extension value structure
-				if(!HAPConstantShared.INHERITMODE_RUNTIME.equals(valueStructureConfig.getInheritProcessorConfigure().getMode())) {
+				if(valueStructureConfig==null||!HAPConstantShared.INHERITMODE_RUNTIME.equals(valueStructureConfig.getInheritProcessorConfigure().getMode())) {
 					createExtensionPart(valueContext, valueStructureDomain);
 				}
 				return true;

@@ -35,17 +35,19 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	private List<HAPAttributeEntityExecutable> m_attributes;
 
 	private HAPExecutableEntity m_parent;
+	private HAPPath m_pathFromRoot;
 	
 	private HAPIdEntityInDomain m_definitionEntityId;
 	
 	public HAPExecutableEntity() {
 		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
+		this.m_pathFromRoot = new HAPPath();
 	} 
 
 	public HAPExecutableEntity(String entityType) {
+		this();
 		this.m_entityType = entityType;
-		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
-	} 
+	}
 	
 	public void setDefinitionEntityId(HAPIdEntityInDomain defEntityId) {    this.m_definitionEntityId = defEntityId;      }
 	public HAPIdEntityInDomain getDefinitionEntityId() {    return this.m_definitionEntityId;     }
@@ -54,7 +56,13 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
 
 	public HAPExecutableEntity getParent() {    return this.m_parent;     }
-	public void setParent(HAPExecutableEntity parent) {    this.m_parent = parent;      }
+	public void setParent(String attrName, HAPExecutableEntity parent) {
+		this.m_parent = parent;
+		this.m_pathFromRoot = this.m_pathFromRoot.appendPath(this.m_parent.getPathFromRoot()).appendSegment(attrName);
+	}
+	
+	public HAPPath getPathFromRoot() {    return this.m_pathFromRoot;     }
+	public void setPathFromRoot(HAPPath path) {   this.m_pathFromRoot = path;     }
 	
 	public HAPAttributeEntityExecutable getDescendantAttribute(HAPPath path) {
 		HAPAttributeEntityExecutable out = null;
@@ -100,7 +108,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public HAPReferenceExternal getAttributeReferenceExternal(String attrName) {   return (HAPReferenceExternal)this.getAttributeValue(attrName);     }
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {
-		attrObj.setParentEntity(this);
+		attrObj.setParentEntity(attrObj.getName(), this);
 		this.m_attributes.add(attrObj);    
 	}
 	

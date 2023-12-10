@@ -29,16 +29,13 @@ public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededE
 	public HAPExecutableEntity getEmbededValueEntity() {   return this.getValue().getEntityValue();    }
 	
 	public HAPExecutableEntity getParentEntity() {    return this.m_parentEntity;   }
-	public void setParentEntity(HAPExecutableEntity parent) {     
+	public void setParentEntity(String attrName, HAPExecutableEntity parent) {     
 		this.m_parentEntity = parent;
-		this.setEntityParentInfo();
-	}
-	
-	private void setEntityParentInfo() {
+
 		HAPEmbededExecutable executableEmbeded = this.getValue();
 		Object value = executableEmbeded.getValue();
 		if(value instanceof HAPExecutableEntity) {
-			((HAPExecutableEntity)value).setParent(m_parentEntity);
+			((HAPExecutableEntity)value).setParent(attrName, m_parentEntity);
 		}
 	}
 	
