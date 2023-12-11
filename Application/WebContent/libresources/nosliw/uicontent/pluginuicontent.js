@@ -99,7 +99,12 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				source : this,
 			};
 			event.preventDefault();
-			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+			
+			var taskInput = node_createTaskInput(info);
+			var exeTaskRequest = node_taskUtility.getInvokeTaskRequest(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore, handlers, request);
+			node_requestServiceProcessor.processRequest(exeTaskRequest);
+			
+//			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
@@ -298,7 +303,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					loc_expressionContents.push(embededContent);
 				});
 
-				//init regular tag event
+				//init cystom tag event
 				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMTAGEVENT), function(eleEvent, key, list){
 					loc_elementEvents.push(loc_initCustomTagEvent(eleEvent));
 				});

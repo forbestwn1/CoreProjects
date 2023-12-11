@@ -33,8 +33,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityDefinitionInDomainImpComplex{
 
-	public static final String SCRIPT = "script";
-
 	public HAPPluginEntityDefinitionInDomainUIContent(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, HAPDefinitionEntityComplexUIContent.class, runtimeEnv);
 	}
@@ -99,13 +97,14 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	private void parseUnitScriptBlocks(Element ele, HAPDefinitionEntityComplexUIContent resource, HAPContextParser parserContext){
 		List<Element> scirptEles = new ArrayList<Element>();
 		
-		HAPDefinitionEntityContainerComplex scriptContainerEntity = (HAPDefinitionEntityContainerComplex)resource.getAttributeValueEntity(SCRIPT, parserContext);
+		HAPDefinitionEntityContainerComplex scriptContainerEntity = (HAPDefinitionEntityContainerComplex)resource.getAttributeValueEntity(HAPExecutableEntityComplexUIContent.SCRIPT, parserContext);
 		
-		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, SCRIPT);
+		scirptEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPExecutableEntityComplexUIContent.SCRIPT);
 		for(Element scriptEle : scirptEles){
 			String scriptHtml = scriptEle.html();
 			HAPIdEntityInDomain scriptTaskGroupEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, scriptHtml, HAPSerializationFormat.JAVASCRIPT, parserContext);
-			scriptContainerEntity.addElementAttribute(scriptTaskGroupEntityId);
+			HAPUtilityEntityContainer.addComplexElementAttribute(resource.getAttributeValueEntityId(HAPExecutableEntityComplexUIContent.SCRIPT) , scriptTaskGroupEntityId, parserContext);
+//			scriptContainerEntity.addElementAttribute(scriptTaskGroupEntityId);
 		}
 		
 		for(Element scriptEle : scirptEles)  scriptEle.remove();

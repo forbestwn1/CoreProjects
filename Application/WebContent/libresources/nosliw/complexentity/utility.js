@@ -19,6 +19,24 @@ var packageObj = library;
 
 var node_complexEntityUtility = {
 	
+	getDescendant : function(entity, path){
+		var out = entity;
+		var dataType = node_getObjectType(entity);
+		var entityCore = entity;
+		if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
+			entityCore = entity.getCorenEntity();
+		}
+		
+		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
+		var i = 0;
+		while(i<pathSegs.length){
+			out = node_getEntityTreeNodeInterface(entityCore).getChild(pathSeg[i]).getChildValue();
+			entityCore = out.getCoreEntity();
+			i++;	
+		};
+		return out;
+	},
+	
 	getComplexCoreEntity : function(parm){
 		var dataType = node_getObjectType(parm);
 		if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){

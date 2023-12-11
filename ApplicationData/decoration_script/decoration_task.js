@@ -52,7 +52,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 		var info = eval(loc_infoView.val());
 
-		var taskInput = node_createTaskInput(info, taskInputRequirement);
+		var taskInput = node_createTaskInput(info, undefined, taskInputRequirement);
 		
 		var request = taskInterface.getExecuteRequest(taskInput, {
 			success : function(request, result){

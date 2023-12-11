@@ -32,7 +32,7 @@ public class HAPExecutableEntityComplexUIContent extends  HAPExecutableEntityCom
 	static final public String CUSTOMTAGEVENT = "customTagEvent";  
 	
 	@HAPAttribute
-	static final public String SCRIPT = "script";  
+	static final public String SCRIPT = "scripttaskgroup";  
 	
 	@HAPAttribute
 	static final public String SERVICE = "service";  

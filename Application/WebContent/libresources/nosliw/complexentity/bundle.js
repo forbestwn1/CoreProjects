@@ -143,7 +143,9 @@ var node_createBundleCore = function(parm, configure){
 		},
 		
 		getBundleDefinition : function(){		return loc_bundleDef;	},
-		
+
+		getMainEntityDefinitionPath : function(){   return loc_mainEntityPath;     },
+
 		getVariableDomain : function(){		return loc_variableDomain;	},
 
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){

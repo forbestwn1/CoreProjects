@@ -11,6 +11,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -80,6 +81,17 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	}
 	
 	public List<HAPAttributeEntityExecutable> getAttributes(){    return this.m_attributes;     }
+	
+	public List<HAPAttributeEntityExecutable> getNormalAttributes(){
+		List<HAPAttributeEntityExecutable> out = new ArrayList<HAPAttributeEntityExecutable>();
+		for(HAPAttributeEntityExecutable attr : this.getAttributes()) {
+			if(HAPUtilityNosliw.getNosliwCoreName(attr.getName())==null) {
+				out.add(attr);
+			}
+		}
+		return out;
+	}
+	
 	
 	public HAPAttributeEntityExecutable getAttribute(String attrName) {
 		for(HAPAttributeEntityExecutable attr : this.m_attributes) {

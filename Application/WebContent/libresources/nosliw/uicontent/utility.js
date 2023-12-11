@@ -24,7 +24,7 @@ var node_utility = function(){
 	
 	
 	var loc_out = {
-
+		
 		findEntityUp : function(currentUIContent, entityType, entityName){
 			var entityInfo;
 			var currentUIEntity = currentUIContent;

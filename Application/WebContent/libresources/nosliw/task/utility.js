@@ -19,19 +19,41 @@ var packageObj = library;
 
 var node_taskUtility = {
 	
-	getTaskAttributeExecuteRequest : function(parentCoreEntity, attrName, extraInfo, handlers, request){
+	getInvokeTaskRequest : function(taskInfo, taskInput, bundleCore, handlers, request){
+		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
+		var taskDefPath = taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_PATH];
+		
+		if(!node_basicUtility.isStringEmpty(mainEntityDefPath)){
+			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
+		}
+		
+		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
+		var i = 0;
+		var path = "";
+		while(i<pathSegs.length-1){
+			path = node_namingConvensionUtility.cascadePath(path, pathSegs[i]);
+		}
+		
+		var mainEntityCore = bundleCore.getMainEntity().getCore();
+		return this.getTaskAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path), pathSegs[pathSegs.length-2], taskInput, handlers, request);
+	},
+
+	
+	getTaskAttributeExecuteRequest : function(parentCoreEntity, attrName, taskInput, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var adapterInfo = extraInfo==undefined?undefined:extraInfo.adapterInfo;
-		if(adapterInfo!=undefined)  adapterName = adapterInfo.name;
+		var adapterInfo = taskInput==undefined?undefined:taskInput.adapterInfo;
+		if(adapterInfo!=undefined){
+			adapterName = adapterInfo.name;
+			out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, taskInput));
+		}
 
-		out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, extraInfo));
 		var taskEntityCore = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName).getChildValue().getCoreEntity();
 		var taskInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-		out.addRequest(taskInterface.getExecuteRequest(extraInfo, handlers, request));
+		out.addRequest(taskInterface.getExecuteRequest(taskInput, handlers, request));
 		
-		return out;		
+		return out;
 	},
 	
 };

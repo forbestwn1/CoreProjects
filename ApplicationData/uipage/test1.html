@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <body>
+
+		<br><a href='' nosliw-event="click:testScriptTask:">testScriptTask</a><br>
+		<br>
+
 		
 <!--
 		<nosliw-debug_contextvalue></nosliw-debug_contextvalue>  
@@ -8,7 +12,6 @@
 		<nosliw-test data="parm1"></nosliw-test>  
 
 			loop <%=?(ele123456)?.value%> <%=?(index3456789)?.value%>
--->
 
 		<nosliw-loop data="array1" element="ele123456" index="index3456789">
 			<nosliw-test data="ele123456"></nosliw-test>  
@@ -16,8 +19,9 @@
 			<nosliw-debug_contextvalue></nosliw-debug_contextvalue>  
 			
 		</nosliw-loop>
+-->
 
-<!--
+<!-- 
 		<nosliw-loop data="array1" element="ele123456" index="index3456789"/>
 
 		<nosliw-test data="parm1"></nosliw-test>  
@@ -95,18 +99,23 @@
 
 		</nosliw-test>  
 		<br>
--->
-</body>
+ -->
 
+</body>
+ 
 	<scripttaskgroup>
 	{
 		"definition" : [
 			{
-			
+				"name" : "testScriptTask",
+				"requirement" : [
+				]
 			}
-		
 		],
 		"script" : {
+			"testScriptTask" : function(taskInput, handlers, request){
+				console.log(JSON.stringify(arguments));
+			},
 			invokeService : function(event, info, env){
 				env.executeGetInvokeServiceRequest("service1", "default");
 			},

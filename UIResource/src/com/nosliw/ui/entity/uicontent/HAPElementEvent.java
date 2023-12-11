@@ -36,7 +36,7 @@ public class HAPElementEvent extends HAPSerializableImp{
 	//this attribute only appliable to regular element
 	//with this attribute set, then the event is based on all child element that meet this selection, rath than the element itself
 	private String m_selection;
-	
+	//envent handler info
 	private HAPInfoTask m_taskInfo;
 	
 	public HAPElementEvent(String uiId, String eventInfos){

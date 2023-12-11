@@ -65,7 +65,7 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 				if(entity.getEntityType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT)){
 					HAPExecutableEntityComplexUIContent uiContentEntity = (HAPExecutableEntityComplexUIContent)entity;
 					HAPExecutableEntityContainerComplex containerEntity = (HAPExecutableEntityContainerComplex)uiContentEntity.getAttributeValueEntity(HAPExecutableEntityComplexUIContent.SCRIPT);
-					for(HAPAttributeEntityExecutable attrExe: containerEntity.getAttributes()) {
+					for(HAPAttributeEntityExecutable attrExe: containerEntity.getNormalAttributes()) {
 						HAPExecutableEntityScriptTaskGroup scriptTaskGroup = (HAPExecutableEntityScriptTaskGroup)attrExe.getValue().getValue();
 						if(scriptTaskGroup.getDefinitionByName(taskName)!=null) {
 							List<HAPInfoTask> results = (List<HAPInfoTask>)obj;

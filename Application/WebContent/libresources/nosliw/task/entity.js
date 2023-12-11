@@ -25,17 +25,21 @@ var node_ExecutableResult = function(resultName, value){
 
 //info
 //requirement: resource to support the execute the task, for instance, interface, 
-var node_createTaskInput = function(info, requirement){
+var node_createTaskInput = function(info, adapterInfo, requirement){
 	
 	var loc_requirement = requirement;
 	
 	var loc_info = info;
 	
+	var loc_adapterInfo = adpaterInfo;
+	
 	var loc_out = {
 		
 		getRequirement : function(){    return loc_requirement;    },
 			
-		getInfo : function(){   return loc_info;   },	
+		getInfo : function(){   return loc_info;   },
+		
+		getAdapterInfo : function(){   return loc_adapterInfo;     }	
 		
 	};
 	return loc_out;
