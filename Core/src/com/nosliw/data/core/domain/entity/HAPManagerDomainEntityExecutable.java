@@ -159,6 +159,9 @@ public class HAPManagerDomainEntityExecutable {
 		HAPExecutableEntityComplex rootComplexEntityExe = (HAPExecutableEntityComplex)buildExecutableTree(complexResourceBundle.getDefinitionRootEntityId(), processContext).getRight();
 		complexResourceBundle.getExecutableDomain().setRootEntity(rootComplexEntityExe);
 		
+		//build parent path in entity
+		populateParentPath(rootComplexEntityExe, processContext);
+		
 		//build attachment domain(build attachment tree, merge attachment value)
 		HAPUtilityAttachment.buildAttachmentDomain(rootComplexEntityExe, processContext);
 		
@@ -189,6 +192,22 @@ public class HAPManagerDomainEntityExecutable {
 		HAPUtilityDomain.buildExternalResourceDependency(complexResourceBundle.getExecutableDomain(), processContext);
 	}
 
+	
+	private void populateParentPath(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+		HAPUtilityEntityExecutable.traverseExecutableTree(complexEntityExecutable, new HAPProcessorEntityExecutableDownwardImpAttribute() {
+
+			@Override
+			public void processRootEntity(HAPExecutableEntity rootEntity, HAPContextProcessor processContext) {		}
+
+			@Override
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
+				parentEntity.getAttribute(attribute).setParentEntity(attribute, parentEntity);
+				return true;
+			}
+			
+		}, processContext);
+	}
+	
 	private void calculatePlainScriptExpression(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutable.traverseExecutableComplexEntityTree(
 				complexEntityExecutable, 

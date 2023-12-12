@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_makeObjectWithApplicationInterface;
 	var node_getObjectType;
+	var node_createTaskContainerInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -132,6 +133,7 @@ nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createScriptTaskGroupEntityPlugin", node_createScriptTaskGroupEntityPlugin); 

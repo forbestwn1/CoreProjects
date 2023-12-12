@@ -293,6 +293,12 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				}
 			}));
 
+			//init script task group
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT, undefined, {
+				success: function(request, attrNode){
+				}
+			}));
+
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//init expression in custom tag attribute

@@ -42,7 +42,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	public HAPExecutableEntity() {
 		this.m_attributes = new ArrayList<HAPAttributeEntityExecutable>();
-		this.m_pathFromRoot = new HAPPath();
 	} 
 
 	public HAPExecutableEntity(String entityType) {
@@ -59,7 +58,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public HAPExecutableEntity getParent() {    return this.m_parent;     }
 	public void setParent(String attrName, HAPExecutableEntity parent) {
 		this.m_parent = parent;
-		this.m_pathFromRoot = this.m_pathFromRoot.appendPath(this.m_parent.getPathFromRoot()).appendSegment(attrName);
+		this.m_pathFromRoot = new HAPPath(this.m_parent.getPathFromRoot()).appendSegment(attrName);
 	}
 	
 	public HAPPath getPathFromRoot() {    return this.m_pathFromRoot;     }
@@ -121,7 +120,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	
 	public void setAttribute(HAPAttributeEntityExecutable attrObj) {
 		attrObj.setParentEntity(attrObj.getName(), this);
-		this.m_attributes.add(attrObj);    
+		this.m_attributes.add(attrObj);
 	}
 	
 	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value, HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE), new HAPInfoValueType());   }

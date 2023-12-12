@@ -11,11 +11,21 @@ public class HAPPath {
 
 	public HAPPath(){}
 
+	public HAPPath(HAPPath path) {
+		if(!(path==null||path.isEmpty())){
+			init(path.getPath());
+		}
+	}
+	
 	public HAPPath(String path){
 		if(HAPUtilityBasic.isStringNotEmpty(path)) {
-			this.m_path = path;
-			this.m_pathSegs = HAPUtilityNamingConversion.parsePaths(this.m_path);
+			init(path);
 		}
+	}
+	
+	private void init(String path) {
+		this.m_path = path;
+		this.m_pathSegs = HAPUtilityNamingConversion.parsePaths(this.m_path);
 	}
 	
 	public boolean isEmpty() {  return this.m_pathSegs.length==0;    }

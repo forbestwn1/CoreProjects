@@ -44,6 +44,13 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 			uiContentExe.addScriptExpressionInCustomTagAttribute(uiEmbed);
 		}
 
+	}
+	
+	@Override
+	public void postProcessEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+		HAPDefinitionEntityComplexUIContent uiContentDef = (HAPDefinitionEntityComplexUIContent)this.getEntityDefinition(complexEntityExecutable, processContext);
+		HAPExecutableEntityComplexUIContent uiContentExe = (HAPExecutableEntityComplexUIContent)complexEntityExecutable;
+		
 		//event in normal tag
 		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {
 			uiContentExe.addNormalTagEvent(event);
@@ -55,7 +62,7 @@ public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityPro
 			uiContentExe.addCustomTagEvent(event);;
 		}
 	}
-	
+
 	private HAPInfoTask locateTask(String taskName, HAPExecutableEntityComplexUIContent uiContentExe, HAPContextProcessor processContext) {
 		HAPInfoTask out = null;
 		List<HAPInfoTask> results = new ArrayList<HAPInfoTask>();
