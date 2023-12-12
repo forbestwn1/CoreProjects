@@ -31,7 +31,7 @@ var node_createTaskInput = function(info, adapterInfo, requirement){
 	
 	var loc_info = info;
 	
-	var loc_adapterInfo = adpaterInfo;
+	var loc_adapterInfo = adapterInfo;
 	
 	var loc_out = {
 		

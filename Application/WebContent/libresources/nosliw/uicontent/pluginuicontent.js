@@ -27,6 +27,8 @@ var packageObj = library;
 	var node_getEntityTreeNodeInterface;
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
+	var node_createTaskInput;
+	var node_taskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -101,7 +103,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			event.preventDefault();
 			
 			var taskInput = node_createTaskInput(info);
-			var exeTaskRequest = node_taskUtility.getInvokeTaskRequest(eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore, handlers, request);
+			var exeTaskRequest = node_taskUtility.getInvokeTaskRequest(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore);
 			node_requestServiceProcessor.processRequest(exeTaskRequest);
 			
 //			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
@@ -380,6 +382,8 @@ nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUt
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskInput", function(){node_createTaskInput = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 
