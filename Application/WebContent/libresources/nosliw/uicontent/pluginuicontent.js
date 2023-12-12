@@ -103,7 +103,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			event.preventDefault();
 			
 			var taskInput = node_createTaskInput(info);
-			var exeTaskRequest = node_taskUtility.getInvokeTaskRequest(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore);
+			var exeTaskRequest = node_taskUtility.getInvokeTaskItemRequest(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore);
 			node_requestServiceProcessor.processRequest(exeTaskRequest);
 			
 //			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);

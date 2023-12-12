@@ -43,6 +43,43 @@ var node_taskUtility = {
 		return this.getTaskAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path).getCoreEntity(), attr, taskInput, handlers, request);
 	},
 
+	getInvokeTaskItemRequest : function(taskInfo, taskInput, bundleCore, handlers, request){
+		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
+		var taskDefPath = taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_PATH];
+		
+		if(!node_basicUtility.isStringEmpty(mainEntityDefPath)){
+			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
+		}
+		
+		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
+		var i = 0;
+		var path = "";
+		while(i<pathSegs.length-1){
+			path = node_namingConvensionUtility.cascadePath(path, pathSegs[i]);
+			i++;
+		}
+		var attr = pathSegs[pathSegs.length-1];
+		
+		var mainEntityCore = bundleCore.getMainEntity().getCoreEntity();
+		return this.getTaskItemAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path).getCoreEntity(), attr, taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_NAME], taskInput, handlers, request);
+	},
+
+	getTaskItemAttributeExecuteRequest : function(parentCoreEntity, attrName, itemName, taskInput, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
+		var adapterInfo = taskInput==undefined?undefined:taskInput.adapterInfo;
+		if(adapterInfo!=undefined){
+			adapterName = adapterInfo.name;
+			out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, taskInput));
+		}
+
+		var taskEntityCore = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName).getChildValue().getCoreEntity();
+		var taskInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
+		out.addRequest(taskInterface.getExecuteItemRequest(itemName, taskInput));
+		
+		return out;
+	},
 	
 	getTaskAttributeExecuteRequest : function(parentCoreEntity, attrName, taskInput, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
