@@ -46,7 +46,7 @@ public class HAPUtilityValueContextReference {
 		
 		HAPIdRootElement rootEleId = new HAPIdRootElement(null, refResolve.structureId, refResolve.rootName);
 		
-		return new HAPIdVariable(rootEleId, reference.getElementPath());
+		return new HAPIdVariable(rootEleId, reference.getLeafPath());
 	}
 
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, Set<String> groupType, HAPExecutableEntityValueContext valueContext, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveStructureElementReference resolveConfigure){

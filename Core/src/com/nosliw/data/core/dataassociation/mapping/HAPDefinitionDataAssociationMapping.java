@@ -11,23 +11,23 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
+import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
 
 public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssociation{
 
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 
-	private List<HAPItemValueMapping<HAPReferenceElementInValueContext>> m_items;
+	private List<HAPItemValueMapping<HAPReferenceRootElement>> m_items;
 
 	public HAPDefinitionDataAssociationMapping() {
 		super(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING);
-		this.m_items = new LinkedList<HAPItemValueMapping<HAPReferenceElementInValueContext>>();
+		this.m_items = new LinkedList<HAPItemValueMapping<HAPReferenceRootElement>>();
 	}
  
-	public void addItem(HAPItemValueMapping<HAPReferenceElementInValueContext> item) { 	this.m_items.add(item); 	}
+	public void addItem(HAPItemValueMapping<HAPReferenceRootElement> item) { 	this.m_items.add(item); 	}
 	
-	public List<HAPItemValueMapping<HAPReferenceElementInValueContext>> getItems(){   return this.m_items;    }
+	public List<HAPItemValueMapping<HAPReferenceRootElement>> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 
@@ -60,7 +60,7 @@ public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssoci
 			Object mappingObj = jsonObj.opt(MAPPING);
 			if(mappingObj==null)   mappingObj = jsonObj;
 			
-			List<HAPItemValueMapping<HAPReferenceElementInValueContext>> items = HAPParserValueMapping.parses(mappingObj);
+			List<HAPItemValueMapping<HAPReferenceRootElement>> items = HAPParserValueMapping.parses(mappingObj);
 			this.m_items.addAll(items);
 			return true;  
 		}

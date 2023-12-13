@@ -11,18 +11,19 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.structure.HAPParserStructure;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
+import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
 
 public class HAPParserValueMapping {
 
-	public static List<HAPItemValueMapping<HAPReferenceElementInValueContext>> parses(Object itemsObj){
-		List<HAPItemValueMapping<HAPReferenceElementInValueContext>> out = new ArrayList<>();
+	public static List<HAPItemValueMapping<HAPReferenceRootElement>> parses(Object itemsObj){
+		List<HAPItemValueMapping<HAPReferenceRootElement>> out = new ArrayList<>();
 		if(itemsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)itemsObj;
 			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleKey = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleKey);
-				HAPItemValueMapping<HAPReferenceElementInValueContext> item = parseValueMappingItemFromJson(eleDefJson);
+				HAPItemValueMapping<HAPReferenceRootElement> item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null) {
 					HAPReferenceElementInValueContext target = new HAPReferenceElementInValueContext();
 					target.buildObject(eleKey, HAPSerializationFormat.JSON);
@@ -35,7 +36,7 @@ public class HAPParserValueMapping {
 			JSONArray elementsArray = (JSONArray)itemsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPItemValueMapping<HAPReferenceElementInValueContext> item = parseValueMappingItemFromJson(eleDefJson);
+				HAPItemValueMapping<HAPReferenceRootElement> item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null)  out.add(item);
 			}
 		}
@@ -43,8 +44,8 @@ public class HAPParserValueMapping {
 	}
 	
 	//parse context root
-	public static HAPItemValueMapping<HAPReferenceElementInValueContext> parseValueMappingItemFromJson(JSONObject eleDefJson){
-		HAPItemValueMapping<HAPReferenceElementInValueContext> out = new HAPItemValueMapping<HAPReferenceElementInValueContext>();
+	public static HAPItemValueMapping<HAPReferenceRootElement> parseValueMappingItemFromJson(JSONObject eleDefJson){
+		HAPItemValueMapping<HAPReferenceRootElement> out = new HAPItemValueMapping<HAPReferenceRootElement>();
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
@@ -53,7 +54,7 @@ public class HAPParserValueMapping {
 		//target
 		Object targetObj = eleDefJson.opt(HAPItemValueMapping.TARGET);
 		if(targetObj!=null) {
-			HAPReferenceElementInValueContext target = new HAPReferenceElementInValueContext();
+			HAPReferenceRootElement target = new HAPReferenceRootElement();
 			target.buildObject(targetObj, HAPSerializationFormat.JSON);
 			out.setTarget(target);
 		}

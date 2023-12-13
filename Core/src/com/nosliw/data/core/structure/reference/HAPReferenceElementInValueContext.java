@@ -7,91 +7,69 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //criteria for reference
 @HAPEntityWithAttribute
-public class HAPReferenceElementInValueContext extends HAPSerializableImp{
+public class HAPReferenceElementInValueContext extends HAPReferenceRootElement{
+
+	@HAPAttribute
+	public static final String LEAFPATH = "leafPath";
 
 	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
 
-	@HAPAttribute
-	public static final String VALUESTRUCTUREREFERENCE = "valueStructureReference";
-
-	@HAPAttribute
-	public static final String PARENTVALUECONTEXT = "parentValueContext";
-
-	//parent complex name for referred complex, for instance, self, external context
-	private String m_parentValueContext;
-	
-	//criteria for value structure candidate
-	private HAPReferenceValueStructure m_valueStructureReference;
-	
 	//path to element (root name + path)
-	private String m_elementPath;
+	private String m_leafPath;
 
 	public HAPReferenceElementInValueContext() {}
 	
-	public HAPReferenceElementInValueContext(String refPath) {
-		this.m_elementPath = refPath;
+	public HAPReferenceElementInValueContext(String eleFullPath) {
+		HAPComplexPath complexPath = new HAPComplexPath(eleFullPath);
+		this.setRootName(complexPath.getRoot());
+		this.m_leafPath = complexPath.getPathStr();
 	}
 
-	public HAPReferenceElementInValueContext(String parent, String refPath) {
-		this(refPath);
-		this.m_parentValueContext = parent;
+	public HAPReferenceElementInValueContext(String parent, String eleFullPath) {
+		this(eleFullPath);
+		this.setParentValueContextName(parent);
 	}
 	
-	public String getParentValueContextName() {
-		if(HAPUtilityBasic.isStringNotEmpty(this.m_parentValueContext))   return this.m_parentValueContext;
-		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
+	public String getElementPath() {   return HAPUtilityNamingConversion.buildPath(this.getRootName(), this.m_leafPath);    }
+	public void setElementPath(String path) {
+		HAPComplexPath complexPath = new HAPComplexPath(path);
+		this.m_leafPath = complexPath.getPathStr();
+		this.setRootName(complexPath.getRoot());
 	}
-	
-	public void setParentValueContextName(String parent) {		this.m_parentValueContext = parent;	}
-	
-	public String getPath() {   return this.m_elementPath;    }
-	public void setPath(String path) {  this.m_elementPath = path;	}
 
-	public String getRootName() {   return new HAPComplexPath(this.m_elementPath).getRoot();      }
-	public String getElementPath() {   return new HAPComplexPath(this.m_elementPath).getPathStr();   }
-	
-	public HAPReferenceValueStructure getValueStructureReference() {    return this.m_valueStructureReference;     }
+	public String getLeafPath() {   return this.m_leafPath;   }
 	
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_elementPath = (String)value;
+			this.setElementPath((String)value);
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
-			this.m_parentValueContext = (String)jsonValue.opt(PARENTVALUECONTEXT);
-			Object referencePathObj = jsonValue.get(ELEMENTPATH);
-			
-			if(referencePathObj instanceof String)	this.setPath((String)referencePathObj);
-			else if(referencePathObj instanceof JSONObject){
-				HAPReferenceElementInStructure contextPath = new HAPReferenceElementInStructure();
-				contextPath.buildObject(referencePathObj, HAPSerializationFormat.JSON);
-				this.setPath(contextPath.toStringValue(HAPSerializationFormat.LITERATE));
-			}
+			this.setParentValueContextName((String)jsonValue.opt(PARENTVALUECONTEXT));
+			this.setElementPath(jsonValue.getString(ELEMENTPATH));
 		}
 		return true;
 	}
-
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ELEMENTPATH, this.getPath());
-		jsonMap.put(PARENTVALUECONTEXT, this.getParentValueContextName());
+		jsonMap.put(LEAFPATH, this.m_leafPath);
+		jsonMap.put(ELEMENTPATH, this.getElementPath());
 	}
 	
-	public HAPReferenceElementInValueContext cloneReferenceInfo() {
+	public HAPReferenceElementInValueContext cloneElementReference() {
 		HAPReferenceElementInValueContext out = new HAPReferenceElementInValueContext();
-		out.m_parentValueContext = this.getParentValueContextName();
-		out.m_elementPath = this.getPath();
+		this.cloneToRootReference(out);
+		out.m_leafPath = this.m_leafPath;
 		return out;
 	}
 	
@@ -102,8 +80,7 @@ public class HAPReferenceElementInValueContext extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPReferenceElementInValueContext) {
 			HAPReferenceElementInValueContext ele = (HAPReferenceElementInValueContext)obj;
-			if(!HAPUtilityBasic.isEquals(this.getPath(), ele.getPath()))  return false;
-			if(!HAPUtilityBasic.isEquals(this.getParentValueContextName(), ele.getParentValueContextName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getLeafPath(), ele.getLeafPath()))  return false;
 			out = true;
 		}
 		return out;

@@ -34,6 +34,7 @@ import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
+import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
@@ -47,10 +48,10 @@ public class HAPProcessorDataAssociationMapping {
 			HAPContextStructureReference outValueStructureContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
-		List<HAPItemValueMapping<HAPReferenceElementInValueContext>> mappingItems = valueMapping.getItems();
-		for(HAPItemValueMapping<HAPReferenceElementInValueContext> mappingItem : mappingItems) {
+		List<HAPItemValueMapping<HAPReferenceRootElement>> mappingItems = valueMapping.getItems();
+		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) {
 			
-			HAPReferenceElementInValueContext targetRef = mappingItem.getTarget();
+			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
 			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueStructureContext);
 			

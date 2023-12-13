@@ -26,21 +26,20 @@ public class HAPUtilityStructureElementReference {
 		List<HAPInfoValueStructureReference> valueStructureInfos = valueStructureRefContext.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
-		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getPath(), valueStructureInfos, resolveConfigure);
+		HAPInfoReferenceResolve out =  analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
 		if(out!=null)  out.eleReference = reference;
 		
 		return out;
 	}
 
-	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceElementInValueContext rootEleCriteria, HAPContextStructureReference valueStructureRefContext){
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPContextStructureReference valueStructureRefContext){
 		List<HAPInfoValueStructureReference> candidates = valueStructureRefContext.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
 
 		if(candidates==null||candidates.size()==0)  return null;
 		for(HAPInfoValueStructureReference structureRefInfo : candidates) {
 			String valueStructureExeId = structureRefInfo.getValueStructureId();
 			HAPDefinitionEntityValueStructure valueStructure = structureRefInfo.getValueStructureDefinition();
-			HAPComplexPath complexPath = new HAPComplexPath(rootEleCriteria.getPath());
-			String rootName = complexPath.getRoot();
+			String rootName = rootEleCriteria.getRootName();
 			if(valueStructure.getRootByName(rootName)!=null) {
 				return new HAPIdRootElement(valueStructureExeId, rootName);
 			}

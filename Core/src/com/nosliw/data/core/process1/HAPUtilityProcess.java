@@ -110,7 +110,7 @@ public class HAPUtilityProcess {
 				}
 				HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)currentEle;
 				HAPReferenceElementInStructure relativeElePath = relativeEle.getPathFormat();
-				String fullName = relativeElePath.getFullPath();
+				String fullName = relativeElePath.getElementPath();
 				for(int i=0;i<pathSegs.length; i++) {
 					fullName = HAPUtilityNamingConversion.buildPath(fullName, pathSegs[i]);
 				}

@@ -69,7 +69,7 @@ public class HAPUtilityContext {
 	
 	public static HAPElementStructure getDescendant(HAPValueStructure context, HAPReferenceElementInStructure path) {
 		if(context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
-			return getDescendant((HAPValueStructureDefinitionGroup)context, path.getFullPath());
+			return getDescendant((HAPValueStructureDefinitionGroup)context, path.getElementPath());
 		}
 		else {
 			return getDescendant((HAPValueStructureDefinitionFlat)context, path.getPath());
