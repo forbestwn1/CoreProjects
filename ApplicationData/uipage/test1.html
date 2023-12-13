@@ -114,7 +114,7 @@
 		],
 		"script" : {
 			"testScriptTask" : function(taskInput, handlers, request){
-				console.log(JSON.stringify(arguments));
+				console.log(JSON.stringify(taskInput.getInfo()));
 			},
 			invokeService : function(event, info, env){
 				env.executeGetInvokeServiceRequest("service1", "default");

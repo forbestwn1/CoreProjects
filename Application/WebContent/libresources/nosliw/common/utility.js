@@ -5,6 +5,7 @@ var packageObj = library.getChildPackage("utility");
 	//get used node
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
+	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_basicUtility = 
@@ -125,6 +126,32 @@ var node_basicUtility =
 			if (typeof value === 'string' || value instanceof String)  return true;
 			else return false;
 		},
+		
+		isArray : function(value){
+			return Array.isArray(value);
+		},
+		
+		parsePostSegment : function(value){
+			var segments;
+			if(node_basicUtility.isArray(value)){
+				segments = value;
+			}
+			else{
+				if(node_basicUtility.isStringEmpty(value)) return;
+				segments = node_namingConvensionUtility.parsePathInfos(value);
+			}
+			
+			var i = 0;
+			var path = [];
+			while(i<segments.length-1){
+				path.push(segments[i]);
+				i++;
+			}
+			return {
+				segments : path,
+				post : segments[segments.length-1],
+			}			
+		},
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -132,6 +159,7 @@ var node_basicUtility =
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 
 //Register Node by Name

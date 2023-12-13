@@ -51,17 +51,9 @@ var node_taskUtility = {
 			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
 		}
 		
-		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
-		var i = 0;
-		var path = "";
-		while(i<pathSegs.length-1){
-			path = node_namingConvensionUtility.cascadePath(path, pathSegs[i]);
-			i++;
-		}
-		var attr = pathSegs[pathSegs.length-1];
-		
+		var postSegInfo = node_basicUtility.parsePostSegment(taskDefPath);
 		var mainEntityCore = bundleCore.getMainEntity().getCoreEntity();
-		return this.getTaskItemAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path).getCoreEntity(), attr, taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_NAME], taskInput, handlers, request);
+		return this.getTaskItemAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, postSegInfo.segments).getCoreEntity(), postSegInfo.post, taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_NAME], taskInput, handlers, request);
 	},
 
 	getTaskItemAttributeExecuteRequest : function(parentCoreEntity, attrName, itemName, taskInput, handlers, request){

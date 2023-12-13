@@ -21,22 +21,21 @@ var packageObj = library;
 var node_complexEntityUtility = {
 	
 	getDescendant : function(entity, path){
-		if(node_basicUtility.isStringEmpty(path)) return entity;
-		
-		var out = entity;
-		var dataType = node_getObjectType(entity);
-		var entityCore = entity;
-		if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
-			entityCore = entity.getCorenEntity();
+		var pathSegs;
+		if(node_basicUtility.isArray(path)){
+			pathSegs = path;
+		}
+		else{
+			if(node_basicUtility.isStringEmpty(path)) return entity;
+			pathSegs = node_namingConvensionUtility.parsePathInfos(path);
 		}
 		
-		var pathSegs = node_namingConvensionUtility.parsePathInfos(path);
-		var i = 0;
-		while(i<pathSegs.length){
-			out = node_getEntityTreeNodeInterface(entityCore).getChild(pathSegs[i]).getChildValue();
+		var out = entity;
+		var entityCore = node_getObjectType(entity)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?entity.getCorenEntity():entity;
+		_.each(pathSegs, function(pathSeg, i){
+			out = node_getEntityTreeNodeInterface(entityCore).getChild(pathSeg).getChildValue();
 			entityCore = out.getCoreEntity();
-			i++;	
-		};
+		})
 		return out;
 	},
 	

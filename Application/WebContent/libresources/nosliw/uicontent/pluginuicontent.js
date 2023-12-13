@@ -105,8 +105,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			var taskInput = node_createTaskInput(info);
 			var exeTaskRequest = node_taskUtility.getInvokeTaskItemRequest(eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore);
 			node_requestServiceProcessor.processRequest(exeTaskRequest);
-			
-//			node_uiContentUtility.callHandlerUp(loc_out, eventValue[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
 		});
 		
 		return {
@@ -130,7 +128,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				source : customTag,
 				requestInfo: requestInfo,
 			};
-			node_uiContentUtility.callHandlerUp(loc_out, tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_FUNCTION], eventName, info);
+			var taskInput = node_createTaskInput(info);
+			var exeTaskRequest = node_taskUtility.getInvokeTaskItemRequest(tagEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_TASKINFO], taskInput, loc_bundleCore);
+			node_requestServiceProcessor.processRequest(exeTaskRequest);
 		});
 		
 		return {
