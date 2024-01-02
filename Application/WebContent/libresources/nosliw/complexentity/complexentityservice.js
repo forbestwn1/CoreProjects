@@ -46,6 +46,7 @@ var packageObj = library;
 	var node_createTestComplexScriptPlugin;
 	var node_createDataAssociationAdapterPlugin;
 	var node_createDataAssociationInteractiveAdapterPlugin;
+	var node_createDataAssociationTaskAdapterPlugin;
 	var node_createDataServiceEntityPlugin;
 	var node_createDataExpressionGroupPlugin;
 	var node_createDataExpressionSinglePlugin;
@@ -197,6 +198,7 @@ var node_createComplexEntityRuntimeService = function() {
 		//adapter plugin
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, node_createDataAssociationAdapterPlugin());
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, node_createDataAssociationInteractiveAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONTASK, node_createDataAssociationTaskAdapterPlugin());
 	};
 
 
@@ -372,6 +374,7 @@ nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", functi
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationTaskAdapterPlugin", function(){node_createDataAssociationTaskAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataServiceEntityPlugin", function(){node_createDataServiceEntityPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionGroupPlugin", function(){node_createDataExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});

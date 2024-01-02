@@ -18,9 +18,9 @@
 			},
 			"adapter":[
 				{
-					"name" : "serviceAdapter",
+					"name1" : "serviceAdapter",
 					"status": "disabled1",
-					"entityType" : "dataAssociationInteractive",
+					"entityType" : "dataAssociationTask",
 					"entity" : {
 						"in" : {
 							"serviceParm1" : {

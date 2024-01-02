@@ -14,6 +14,7 @@ import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableUpward;
 import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityContainerComplex;
 import com.nosliw.data.core.domain.entity.script.task.HAPExecutableEntityScriptTaskGroup;
+import com.nosliw.data.core.domain.entity.task.HAPInfoTask;
 
 public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginEntityProcessorComplexImp{
 

@@ -27,13 +27,15 @@ var node_createTaskContainerInterface = function(rawInterfaceObj){
 };
 
 var node_createTaskInterface = function(rawInterfaceObj){
+	
 	var interfaceDef = {
 		
 		getVariableInfos : function(){},
 		
 		getRequirement : function(){},
 		
-		getExecuteRequest : function(taskInput, handlers, request){}
+		getExecuteRequest : function(taskInput, requirement, handlers, request){}
+		
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
 };

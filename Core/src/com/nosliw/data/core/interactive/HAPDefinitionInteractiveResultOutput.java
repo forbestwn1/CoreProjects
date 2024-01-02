@@ -22,9 +22,6 @@ public class HAPDefinitionInteractiveResultOutput extends HAPEntityInfoWritableI
 	public static String CRITERIA = "criteria";
 
 	@HAPAttribute
-	public static String REFERENCE = "reference";
-
-	@HAPAttribute
 	public static String DATA = "data";
 
 	//data type

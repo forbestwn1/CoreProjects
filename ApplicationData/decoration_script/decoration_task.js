@@ -7,17 +7,24 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
-	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createUIDecorationRequest = nosliw.getNodeData("uipage.createUIDecorationRequest");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
-	var node_createTaskInput = nosliw.getNodeData("task.createTaskInput");
-	 
+	var node_createTaskInfo = nosliw.getNodeData("task.createTaskInfo");
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
+	var node_getEntityTreeNodeInterface = nosliw.getNodeData("complexentity.getEntityTreeNodeInterface");
+	var node_getBasicEntityObjectInterface = nosliw.getNodeData("complexentity.getBasicEntityObjectInterface");
+	var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
+	var node_getComplexEntityObjectInterface = nosliw.getNodeData("complexentity.getComplexEntityObjectInterface");
+	var node_taskUtility = nosliw.getNodeData("task.taskUtility");
+
 	var loc_parentView;
 	var loc_mainView;
 	var loc_wrapperView;
-	var loc_expressionListView;
-	var loc_expressionResultView;
+	var loc_taskListView;
+	var loc_taskResultView;
 	var loc_infoView;
 	
 	var loc_configure = configure;
@@ -30,9 +37,42 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_logContent = loc_logContent + JSON.stringify(loc_configure.getConfigureValue(), null, 4) + "\n";
 	};
 
-	var loc_calcuateExpression = function(expressionId){
+	var loc_postInit = function(){
 		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
 		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
+		
+		node_complexEntityUtility.traverseNode(coreEntity, {
+			processRoot : function(entityCore){
+				var taskInterface = loc_getCoreTaskInterface(entityCore);
+				if(taskInterface!=undefined){
+					loc_taskListView.append($('<option value="">'+'Root'+'</option>'));
+					return false;	
+				}
+			},
+			
+			processLeaf : function(parentEntityCore, childName){
+				var treeNodeInterface = node_getEntityTreeNodeInterface(parentEntityCore);
+				var childNode = treeNodeInterface.getChild(childName);
+				var childValue = childNode.getChildValue();
+				var childEntityCore = node_complexEntityUtility.getCoreEntity(childValue);
+				var taskInterface = loc_getCoreTaskInterface(childEntityCore);
+				if(taskInterface!=undefined){
+					var parentEntityDef = node_getBasicEntityObjectInterface(parentEntityCore).getEntityDefinition();
+					var pathFromRoot = node_namingConvensionUtility.cascadePath(parentEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_PATHFROMROOT], childName);
+					loc_taskListView.append($('<option value="'+pathFromRoot+'">'+pathFromRoot+'</option>'));
+					return false;
+				}
+			}
+		});
+	
+	};
+
+	var loc_executeTask = function(){
+		var decorationInterface = loc_envInterface[node_CONSTANT.INTERFACE_ENV_DECORATION];
+		var coreEntity = decorationInterface[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE]();
+		var complexEntityInterface = node_getComplexEntityObjectInterface(coreEntity);
+
+/*		
 		var taskInterface = loc_getCoreTaskInterface(coreEntity);
 		
 		//collect requirement
@@ -49,16 +89,21 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				}
 			}
 		});
+*/
+		var taskInput = eval(loc_infoView.val());
 
-		var info = eval(loc_infoView.val());
-
-		var taskInput = node_createTaskInput(info, undefined, taskInputRequirement);
+		var taskInfo = node_createTaskInfo(loc_taskListView.val());
 		
+		var request = node_taskUtility.getInvokeTaskRequest(taskInfo, taskInput, undefined, complexEntityInterface.getBundle());
+
+/*		
 		var request = taskInterface.getExecuteRequest(taskInput, {
 			success : function(request, result){
-				loc_expressionResultView.val(JSON.stringify(result));
+				loc_taskResultView.val(JSON.stringify(result));
 			}
 		});
+*/
+		
 		node_requestServiceProcessor.processRequest(request);
 	};
 
@@ -71,23 +116,28 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 		updateView : function(view){
 			loc_parentView = $(view);
-			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Expression</div>');
+			loc_mainView = $('<div class="dock" style="border-width:thick; border-style:solid; border-color:green">Decoration Task</div>');
 			loc_wrapperView = $('<div></div>');
 
 			loc_executeView = $('<a>Execute</a>');
 			loc_executeView.on("click",function(){
-				loc_calcuateExpression();
+				loc_executeTask();
 			});
+
+			var taskListViewWapper = $('<div>Select task: </div>');
+			loc_taskListView = $('<select id="taskList"/>');
+			taskListViewWapper.append(loc_taskListView);
 
 			var infoViewWapper = $('<div>Input: </div>');
 			loc_infoView = $('<textarea rows="10" cols="50" style="resize: none;" data-role="none"></textarea>');
 			infoViewWapper.append(loc_infoView);
 
-			loc_expressionResultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
+			loc_taskResultView = $('<textarea rows="10" cols="150" style="resize: none;" data-role="none"></textarea>');
 
 			loc_mainView.append(loc_executeView);
+			loc_mainView.append(taskListViewWapper);
 			loc_mainView.append(infoViewWapper);
-			loc_mainView.append(loc_expressionResultView);
+			loc_mainView.append(loc_taskResultView);
 			loc_mainView.append(loc_wrapperView);
 			loc_parentView.append(loc_mainView);
 
@@ -95,6 +145,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		},
 		
 		getPostInitRequest : function(handlers, request){
+			loc_postInit();
 		},
 		
 		setEnvironmentInterface : function(envInterface){

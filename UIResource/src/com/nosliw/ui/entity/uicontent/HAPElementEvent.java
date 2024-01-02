@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPSegmentParser;
+import com.nosliw.data.core.domain.entity.task.HAPInfoTask;
 
 /*
  * store 

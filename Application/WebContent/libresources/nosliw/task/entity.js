@@ -15,7 +15,38 @@ var packageObj = library.getChildPackage();
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
+	var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
+
+var node_createTaskInfo = function(entityPath, adapterInfo){
+	
+	var loc_entityPath;
+	
+	var loc_adapterInfo;
+
+	var loc_init = function(entityPath, adapterInfo){
+		if(node_basicUtility.isStringValue(entityPath)){
+			loc_entityPath = entityPath;
+			loc_adapterInfo = adapterInfo;
+		}
+		else{
+			loc_entityPath = entityPath[node_COMMONATRIBUTECONSTANT.INFOTASK_ENTITYPATH];
+			loc_adapterInfo = entityPath[node_COMMONATRIBUTECONSTANT.INFOTASK_ADAPTERINFO];
+		}
+	};
+	
+	var loc_out = {
+		
+		getEntityPath : function(){   return loc_entityPath;   },
+		
+		getAdapterInfo : function(){   return loc_adapterInfo;     }	
+		
+	};
+	
+	loc_init(entityPath, adapterInfo);
+	return loc_out;
+};
+
 
 //process output
 var node_ExecutableResult = function(resultName, value){
@@ -25,7 +56,7 @@ var node_ExecutableResult = function(resultName, value){
 
 //info
 //requirement: resource to support the execute the task, for instance, interface, 
-var node_createTaskInput = function(info, adapterInfo, requirement){
+var node_createTaskInput1 = function(info, adapterInfo, requirement){
 	
 	var loc_requirement = requirement;
 	
@@ -153,10 +184,12 @@ nosliw.registerSetNodeDataEvent("variable.createVariablesGroup", function(){  no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ExecutableResult", node_ExecutableResult); 
 packageObj.createChildNode("createTaskGroupItemWatch", node_createTaskGroupItemWatch); 
-packageObj.createChildNode("createTaskInput", node_createTaskInput); 
+packageObj.createChildNode("createTaskInput1", node_createTaskInput1); 
+packageObj.createChildNode("createTaskInfo", node_createTaskInfo); 
 
 })(packageObj);

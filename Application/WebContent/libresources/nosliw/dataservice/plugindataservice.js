@@ -15,6 +15,8 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createDataAssociation;
 	var node_createIODataSet;
+	var node_createTaskInterface;
+	var node_makeObjectWithApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,14 +41,20 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_configure = configure;
 	
+	var loc_facade = node_createTaskInterface({
+		getExecuteRequest : function(taskInput, handlers, request){
+			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
+		},
+	});
+	
 	var loc_out = {
 		
 		getExecuteTaskRequest: function(taskInput, handlers, request){
 			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
 		},	
 	};
-		
-	return loc_out;
+
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -64,6 +72,8 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataServiceEntityPlugin", node_createDataServiceEntityPlugin); 

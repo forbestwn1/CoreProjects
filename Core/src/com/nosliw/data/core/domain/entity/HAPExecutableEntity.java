@@ -30,6 +30,8 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 	public static final String ATTRIBUTE = "attribute";
 	@HAPAttribute
 	public static final String PARENT = "parent";
+	@HAPAttribute
+	public static final String PATHFROMROOT = "pathFromRoot";
 
 	private String m_entityType;
 	
@@ -172,6 +174,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 
 	protected void buildCommonJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		jsonMap.put(ENTITYTYPE, this.m_entityType);
+		if(this.m_pathFromRoot!=null) jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
 	}
 
 	@Override
