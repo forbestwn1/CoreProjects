@@ -42,7 +42,7 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	var loc_configure = configure;
 	
 	var loc_facade = node_createTaskInterface({
-		getExecuteRequest : function(taskInput, handlers, request){
+		getExecuteRequest : function(taskInput, requirement, handlers, request){
 			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
 		},
 	});

@@ -42,7 +42,7 @@ var node_createDataAssociationTaskAdapterPlugin = function(){
 
 var loc_createDataAssociationTaskAdapter = function(dataAssociationTask){
 	
-	var loc_dataAssociationTask = dataAssociationTask.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSOCIATIONINTERACTIVE_ATTR_DATAASSOCIATION);
+	var loc_dataAssociationTask = dataAssociationTask.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSOCIATIONTASK_ATTR_DATAASSOCIATION);
 	
 	var loc_out = {
 		
@@ -57,7 +57,9 @@ var loc_createDataAssociationTaskAdapter = function(dataAssociationTask){
 				out.addRequest(inIO.getDataValueRequest(undefined, {
 					success : function(request, taskInputValue){
 						var taskInterface = node_getApplicationInterface(node_complexEntityUtility.getCoreEntity(childRuntime), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-						return taskInterface.getExecuteRequest(extraInfo.taskInput, extraInfo.requirement, {
+						var taskInput = extraInfo==undefined?undefined:extraInfo.taskInput;
+						var requirement = extraInfo==undefined?undefined:extraInfo.requirement;
+						return taskInterface.getExecuteRequest(taskInputValue.default, requirement, {
 							success : function(request, taskResult){
 								var resultName = taskResult.resultName;
 								outIOs[resultName] = node_createIODataSet();
