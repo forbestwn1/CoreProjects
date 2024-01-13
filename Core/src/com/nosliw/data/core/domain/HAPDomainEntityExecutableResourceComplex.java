@@ -36,7 +36,6 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 
 	private HAPExecutableEntityComplex m_rootEntity;
 	
-	
 	public HAPDomainEntityExecutableResourceComplex() {
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_externalComplexEntityDpendency = new HashSet<HAPInfoResourceIdNormalize>();
@@ -48,7 +47,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	public HAPDomainValueStructure getValueStructureDomain() {    return this.m_valueStructureDomain;     }
 	
 	public void addExternalResourceDependency(HAPInfoResourceIdNormalize normlizedResourceId) {   this.m_externalComplexEntityDpendency.add(normlizedResourceId);      }
-	
+
 	@Override
 	public HAPInfoEntityInDomain getEntityInfo(HAPIdEntityInDomain entityId) {    return null;     }
 

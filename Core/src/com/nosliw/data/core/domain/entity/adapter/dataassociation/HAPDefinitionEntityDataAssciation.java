@@ -2,9 +2,9 @@ package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
+import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainAdapter;
 
-public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDomainAdapter{
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	

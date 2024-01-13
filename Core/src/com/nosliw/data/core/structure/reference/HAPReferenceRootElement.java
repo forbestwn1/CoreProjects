@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 
 public class HAPReferenceRootElement extends HAPSerializableImp{
 
@@ -22,7 +23,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public static final String ROOTNAME = "rootName";
 
 	//parent complex name for referred complex, for instance, self, external context
-	private String m_parentValueContext;
+	private HAPIdValuePort m_valuePortId;
 	
 	//criteria for value structure candidate
 	private HAPReferenceValueStructure m_valueStructureReference;
@@ -35,12 +36,12 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		this.m_rootName = rootName;
 	}
 
-	public HAPReferenceRootElement(String parent, String rootName) {
+	public HAPReferenceRootElement(String parent, HAPIdValuePort valuePortInfo) {
 		this(rootName);
-		this.m_parentValueContext = parent;
+		this.m_valuePortId = valuePortInfo;
 	}
 	
-	public String getParentValueContextName() {
+	public HAPIdValuePort getValuePortId() {
 		if(HAPUtilityBasic.isStringNotEmpty(this.m_parentValueContext))   return this.m_parentValueContext;
 		return HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT;  
 	}
@@ -50,6 +51,8 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public String getRootName() {   return this.m_rootName;      }
 	public void setRootName(String rootName) {    this.m_rootName = rootName;    }
 
+	public HAPIdValuePort getValuePortId() {    return this.m_valuePortId;     }
+	
 	public HAPReferenceValueStructure getValueStructureReference() {    return this.m_valueStructureReference;     }
 	
 	@Override

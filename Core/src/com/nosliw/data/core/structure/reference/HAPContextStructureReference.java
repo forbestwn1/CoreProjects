@@ -6,7 +6,6 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 
 public interface HAPContextStructureReference {
 
-	
 	List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureRef);
 	
 	HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId);

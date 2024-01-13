@@ -15,6 +15,7 @@ import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.valueport.HAPContainerValuePorts;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -51,8 +52,12 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		this.m_entityType = entityType;
 	}
 	
+	public abstract HAPContainerValuePorts getValuePorts();
+	
 	public void setDefinitionEntityId(HAPIdEntityInDomain defEntityId) {    this.m_definitionEntityId = defEntityId;      }
 	public HAPIdEntityInDomain getDefinitionEntityId() {    return this.m_definitionEntityId;     }
+	
+	public String getId() {   return this.m_definitionEntityId.toStringValue(HAPSerializationFormat.LITERATE);    }
 	
 	public String getEntityType() {    return this.m_entityType;   }
 	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }

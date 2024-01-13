@@ -9,12 +9,13 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 
 @HAPEntityWithAttribute
 public class HAPIdRootElement extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String DOMAINID = "domainId";
+	public static final String VALUEPORTID = "valuePortId";
 	
 	@HAPAttribute
 	public static final String VALUESTRUCTUREID = "valueStructureId";
@@ -22,7 +23,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
 	
-	private String m_domainId = HAPConstantShared.NAME_DEFAULT;
+	private HAPIdValuePort m_valuePortId = HAPConstantShared.NAME_DEFAULT;
 	
 	private String m_valueStructureId;
 	
@@ -32,7 +33,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		String[] parts = HAPUtilityNamingConversion.splitTextByTwoPart(reference, HAPConstantShared.SEPERATOR_LEVEL1);
 		this.m_rootName = parts[0];
 		if(parts.length>1)   this.m_valueStructureId = parts[1];
-		if(parts.length>2)   this.m_domainId = parts[2];
+		if(parts.length>2)   this.m_valuePortId = parts[2];
 	}
 	
 	public HAPIdRootElement(String domainId, String valueStructureId, String rootName) {
@@ -44,7 +45,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		this(null, valueStructureId, rootName);
 	}
 
-	public String getDomainId() {    return this.m_domainId;    }
+	public HAPIdValuePort getValuePortId() {    return this.m_valuePortId;    }
 	
 	public String getValueStructureId() {    return this.m_valueStructureId;     }
 	
@@ -62,7 +63,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DOMAINID, this.m_domainId);
+		jsonMap.put(VALUECONTEXTID, this.m_valuePortId);
 		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
 		jsonMap.put(ROOTNAME, this.m_rootName);
 	}

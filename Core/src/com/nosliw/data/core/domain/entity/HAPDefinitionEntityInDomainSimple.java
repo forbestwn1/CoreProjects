@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity;
 
-public abstract class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomain{
+public abstract class HAPDefinitionEntityInDomainSimple extends HAPDefinitionEntityInDomainBlock{
 
 	public HAPDefinitionEntityInDomainSimple() {}
 	

@@ -1,5 +1,9 @@
 package com.nosliw.data.core.domain.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -8,15 +12,26 @@ import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContaine
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.domain.valueport.HAPDefinitionValuePort;
 
 //entity that have data value structure and attachment
-public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomain implements HAPWithValueContext, HAPWithAttachment{
+public abstract class HAPDefinitionEntityInDomainComplex extends HAPDefinitionEntityInDomainBlock implements HAPWithValueContext, HAPWithAttachment{
 
 	protected HAPDefinitionEntityInDomainComplex() {}
 	
 	protected HAPDefinitionEntityInDomainComplex (String entityType) {
 		super(entityType);
 	}
+	
+	@Override
+	public Set<HAPDefinitionValuePort> getValuePorts(){
+		Set<HAPDefinitionValuePort> out = new HashSet<HAPDefinitionValuePort>();
+		out.add(this.getValueContextValuePort());
+		out.addAll(this.getOtherValuePorts());
+		return out;
+	}
+	protected HAPDefinitionValuePort getValueContextValuePort(){		return new HAPDefinitionValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.VALUEPORT_NAME_DEFAULT);	}
+	protected Set<HAPDefinitionValuePort> getOtherValuePorts(){		return new HashSet<HAPDefinitionValuePort>();	}
 	
 	@Override
 	public HAPIdEntityInDomain getValueContextEntityId() {  	return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithValueContext.VALUECONTEXT);	}

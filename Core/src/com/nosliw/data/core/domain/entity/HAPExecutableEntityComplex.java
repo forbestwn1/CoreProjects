@@ -10,9 +10,12 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
+import com.nosliw.data.core.domain.valueport.HAPContainerValuePorts;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
@@ -46,6 +49,8 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 
 	private String m_attachmentContainerId;
 	
+	private HAPDomainValueStructure m_valueStructureDomain; 
+	
 	public HAPExecutableEntityComplex() {
 		this.init();
 	}
@@ -68,6 +73,18 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 //		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);
 //		return embeded==null?null:(HAPIdEntityInDomain)embeded.getValue();    
 //	}
+	
+	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
+	
+	@Override
+	public HAPContainerValuePorts getValuePorts(){
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		out.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain));
+		out.addValuePorts(this.getOtherValuePorts());
+		return out;
+	}
+	
+	protected abstract HAPContainerValuePorts getOtherValuePorts();
 	
 	public HAPExecutableEntityComplex getComplexEntityAttributeValue(String attrName) {
 		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);

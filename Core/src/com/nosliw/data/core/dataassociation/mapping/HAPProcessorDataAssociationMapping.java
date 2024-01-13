@@ -13,12 +13,14 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -30,7 +32,6 @@ import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
@@ -43,25 +44,25 @@ public class HAPProcessorDataAssociationMapping {
 
 	public static void processValueMapping(
 			HAPExecutableDataAssociationMapping out,
-			HAPContextStructureReference inValueStructureContext,
+			HAPContextProcessor inProcessorContext,
 			HAPDefinitionDataAssociationMapping valueMapping,
-			HAPContextStructureReference outValueStructureContext,
+			HAPContextProcessor outProcessorContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
 		List<HAPItemValueMapping<HAPReferenceRootElement>> mappingItems = valueMapping.getItems();
-		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) {
+		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) { 
 			
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outValueStructureContext);
+			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outProcessorContext);
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), inValueStructureContext, null, null, null, runtimeEnv);
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, inProcessorContext);
 			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
 			//build relative assignment path mapping according to relative node
-			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, outValueStructureContext, runtimeEnv));
+			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, outProcessorContext));
 			
 			//build constant assignment
 			
@@ -87,17 +88,17 @@ public class HAPProcessorDataAssociationMapping {
 		
 	}
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPContextStructureReference inValueStructureRefContext, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<String>  dependency, List<HAPServiceData> errors, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPIdValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
 		{
 			HAPElementStructureLeafRelativeForMapping relativeStructureElement = (HAPElementStructureLeafRelativeForMapping)defStructureElement;
-			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getParentValueContextName());
+			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getValuePortId());
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElementInValueContext pathReference = defStructureElementRelative.getReference();
-				HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, inValueStructureRefContext, null);
+				HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, null, processorContext);
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
@@ -140,7 +141,7 @@ public class HAPProcessorDataAssociationMapping {
 			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
 			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
 			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), inValueStructureRefContext, relativeEleProcessConfigure, dependency, errors, runtimeEnv));
+				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, processorContext));
 			}
 			nodeStructureElement.setChildren(processedChildren);
 			break;

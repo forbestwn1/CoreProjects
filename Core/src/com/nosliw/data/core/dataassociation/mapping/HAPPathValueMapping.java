@@ -9,6 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -47,7 +48,7 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	@HAPAttribute
 	public static String TOITEMPATH = "toItemPath";
 
-	private String m_fromDomainName;
+	private HAPIdValuePort m_fromValuePortId;
 	private String m_fromValueStructureId;
 	private String m_fromItemPath;
 	
@@ -60,33 +61,33 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	
 	private HAPMatchers m_matchers;
 	
-	private String m_toDomainName;
+	private HAPIdValuePort m_toValuePortId;
 	private String m_toValueStructureId;
 	private String m_toItemPath;
 	
-	public HAPPathValueMapping(String fromDomainName, String fromValueStructureId, String fromItemPath, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
-		this.m_fromDomainName = fromDomainName;
+	public HAPPathValueMapping(HAPIdValuePort fromValuePortId, String fromValueStructureId, String fromItemPath, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
+		this.m_fromValuePortId = fromValuePortId;
 		this.m_fromValueStructureId = fromValueStructureId;
 		this.m_fromItemPath = fromItemPath;
 		this.m_matchers = matchers;
-		this.m_toDomainName = toDomainName;
+		this.m_toValuePortId = toValuePortId;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
 
-	public HAPPathValueMapping(Object fromConstant, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
+	public HAPPathValueMapping(Object fromConstant, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
 		this.m_fromConstant = fromConstant;
 		this.m_matchers = matchers;
-		this.m_toDomainName = toDomainName;
+		this.m_toValuePortId = toValuePortId;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
 
-	public HAPPathValueMapping(String fromProvideName, String fromProvidePath, HAPMatchers matchers, String toDomainName, String toValueStructureId, String toItemPath) {
-		this.m_fromDomainName = HAPConstantShared.IODATASET_PROVIDE;
+	public HAPPathValueMapping(String fromProvideName, String fromProvidePath, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
+		this.m_fromValuePortId = HAPConstantShared.IODATASET_PROVIDE;
 		this.m_fromProvideName = fromProvideName;
 		this.m_matchers = matchers;
-		this.m_toDomainName = toDomainName;
+		this.m_toValuePortId = toValuePortId;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
