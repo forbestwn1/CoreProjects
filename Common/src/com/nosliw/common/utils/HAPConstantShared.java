@@ -884,8 +884,11 @@ public class HAPConstantShared {
 
 
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
-		public static final String VALUEPORT_NAME_DEFAULT = "default";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
+
+
+
+		public static final String VALUEPORT_NAME_SELF = "self";
 
 
 

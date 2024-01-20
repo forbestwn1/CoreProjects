@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
+import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.structure.HAPParserStructure;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
-import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
 
 public class HAPParserValueMapping {
 
@@ -25,7 +25,7 @@ public class HAPParserValueMapping {
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleKey);
 				HAPItemValueMapping<HAPReferenceRootElement> item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null) {
-					HAPReferenceElementInValueContext target = new HAPReferenceElementInValueContext();
+					HAPReferenceElementInValueStructure target = new HAPReferenceElementInValueStructure();
 					target.buildObject(eleKey, HAPSerializationFormat.JSON);
 					item.setTarget(target);
 					out.add(item);

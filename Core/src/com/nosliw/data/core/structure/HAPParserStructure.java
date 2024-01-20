@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 
 public class HAPParserStructure {
 
@@ -85,7 +85,7 @@ public class HAPParserStructure {
 
 	private static void parseRelativeElement(HAPElementStructureLeafRelative relativeEle, Object refObj, JSONObject eleDefJson) {
 		
-		HAPReferenceElementInValueContext path = new HAPReferenceElementInValueContext();
+		HAPReferenceElementInValueStructure path = new HAPReferenceElementInValueStructure();
 		path.buildObject(refObj, HAPSerializationFormat.JSON);
 		relativeEle.setReference(path);
 

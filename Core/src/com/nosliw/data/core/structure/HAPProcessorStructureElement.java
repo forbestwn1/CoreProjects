@@ -1,11 +1,8 @@
-package com.nosliw.data.core.structure.temp;
+package com.nosliw.data.core.structure;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPInfoElement;
-
-public interface HAPProcessorContextDefinitionElement {
+public interface HAPProcessorStructureElement {
 
 	//return true continue, false break
 	//new element to replace old one

@@ -8,12 +8,12 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 @HAPEntityWithAttribute
 public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
@@ -52,7 +52,7 @@ public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
 
 	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setAttributeValueObject(VARIABLE, vars);	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueContext> unknowns) {   this.setAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueStructure> unknowns) {   this.setAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
 
 	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValue(VARIABLEEXTENDED);         }
 	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setAttributeValueObject(VARIABLEEXTENDED, vars);	}

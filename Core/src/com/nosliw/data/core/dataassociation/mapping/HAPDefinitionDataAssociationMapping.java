@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
+import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 
 public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssociation{
 

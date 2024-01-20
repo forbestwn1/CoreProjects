@@ -28,6 +28,7 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstantReference;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
@@ -136,7 +137,7 @@ public class HAPProcessorContextConstant {
 			Map<String, HAPRootStructure> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {
 				HAPRootStructure contextDefRoot = cotextDefRoots.get(name);
-				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorStructureElement() {
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANTREF.equals(eleInfo.getElement().getType())) {
@@ -171,7 +172,7 @@ public class HAPProcessorContextConstant {
 			Map<String, HAPRootStructure> cotextDefRoots = out.getRootsByCategary(categary);
 			for(String name : cotextDefRoots.keySet()) {
 				HAPRootStructure contextDefRoot = cotextDefRoots.get(name);
-				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityContext.processContextRootElement(contextDefRoot, name, new HAPProcessorStructureElement() {
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 						if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getElement().getType())) {

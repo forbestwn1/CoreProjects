@@ -8,10 +8,10 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -34,9 +34,8 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	//entity domain executable
 	private HAPDomainEntityExecutableResourceComplex m_executableEntityDomain;
 
-	//mapping between complex entity definition id to executable id 
-	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_executableComplexEntityIdByDefinitionComplexEntityId;
-	private Map<HAPIdEntityInDomain, HAPIdEntityInDomain> m_definitionComplexEntityIdByExecutableComplexEntityId;
+	//executable entity by id
+	private Map<String, String> m_exeEntityPathById;
 	
 	//
 	private HAPDomainAttachment m_attachmentDomain;
@@ -46,14 +45,12 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 		this.m_definitionEntityDomain = definitionDomain;
 		this.m_executableEntityDomain = new HAPDomainEntityExecutableResourceComplex();
 		this.m_attachmentDomain = new HAPDomainAttachment();
-		this.m_executableComplexEntityIdByDefinitionComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
-		this.m_definitionComplexEntityIdByExecutableComplexEntityId = new LinkedHashMap<HAPIdEntityInDomain, HAPIdEntityInDomain>();
+		this.m_exeEntityPathById = new LinkedHashMap<String, String>();
 	}
 	
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
 	public HAPIdEntityInDomain getDefinitionRootEntityId() {	return this.m_definitionEntityDomain.getResourceDefinitionByResourceId(this.m_rootResourceId).getEntityId();  }
-	public HAPIdEntityInDomain getExecutableRootEntityId() {    return this.getExecutableEntityIdByDefinitionEntityId(this.getDefinitionRootEntityId());   }
 
 	public HAPDomainEntityDefinitionGlobal getDefinitionDomain() {		return this.m_definitionEntityDomain; 	}
 	
@@ -63,32 +60,13 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	
 	public HAPDomainAttachment getAttachmentDomain() {   return this.m_attachmentDomain;    }
 	
-	public HAPIdEntityInDomain getExecutableEntityIdByDefinitionEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_executableComplexEntityIdByDefinitionComplexEntityId.get(defEntityId);  	}
-	public HAPIdEntityInDomain getDefinitionEntityIdByExecutableEntityId(HAPIdEntityInDomain defEntityId) {   return this.m_definitionComplexEntityIdByExecutableComplexEntityId.get(defEntityId);  	}
-	
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){   return this.m_executableEntityDomain.getComplexResourceDependency();  }
 	
-	public HAPInfoEntityInDomainExecutable getEntityInfoExecutable(HAPInfoResourceIdNormalize normalizedResourceInfo) {
-		HAPIdEntityInDomain entityId = this.m_definitionEntityDomain.getLocalDomainBySimpleResourceId(normalizedResourceInfo.getRootResourceIdSimple()).getRootEntityId();
-		HAPIdEntityInDomain outEntityDefId = HAPUtilityEntityDefinition.getEntityDescent(entityId, normalizedResourceInfo.getPath(), this.m_definitionEntityDomain);
-		HAPIdEntityInDomain outEntityExeId = this.getExecutableEntityIdByDefinitionEntityId(outEntityDefId);
-		return this.m_executableEntityDomain.getEntityInfoExecutable(outEntityExeId);
+	public HAPExecutableEntity getExecutableEntityById(String id) {
+		String path = this.m_exeEntityPathById.get(id);
+		return this.m_executableEntityDomain.getRootEntity().getDescendantEntity(new HAPPath(path));
 	}
-
-	public HAPIdEntityInDomain addExecutableEntity(HAPExecutableEntityComplex executableEntity, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		HAPIdEntityInDomain out = this.m_executableEntityDomain.addExecutableEntity(executableEntity, extraInfo);
-		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
-		this.m_definitionComplexEntityIdByExecutableComplexEntityId.put(out, extraInfo.getEntityDefinitionId());
-		return out;
-	}
-
-	public HAPIdEntityInDomain addExecutableEntity(HAPIdComplexEntityInGlobal complexEntityIdInGloabal, HAPExtraInfoEntityInDomainExecutable extraInfo) {
-		HAPIdEntityInDomain out = this.m_executableEntityDomain.addExecutableEntity(complexEntityIdInGloabal, extraInfo);
-		this.m_executableComplexEntityIdByDefinitionComplexEntityId.put(extraInfo.getEntityDefinitionId(), out);
-		this.m_definitionComplexEntityIdByExecutableComplexEntityId.put(out, extraInfo.getEntityDefinitionId());
-		return out;
-	}
-
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);

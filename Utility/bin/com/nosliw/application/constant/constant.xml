@@ -926,6 +926,10 @@
 			<definition name="VALUEPORT_TYPE_EVENT" value="event"/>
 
 			<definition type="space"/>
+			<definition name="VALUEPORT_NAME_SELF" value="self"/>
+
+
+			<definition type="space"/>
 			<definition name="NAME_PARENT" value="pppppparentttttt"/>
 
 			<definition type="space"/>

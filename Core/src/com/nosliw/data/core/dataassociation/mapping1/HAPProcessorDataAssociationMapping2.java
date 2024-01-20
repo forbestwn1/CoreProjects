@@ -21,10 +21,10 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
@@ -91,7 +91,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		//try to enhance output context
 		if(outputEnhance) {
 			for(String eleName : associationDef.getRootNames()) {
-				HAPUtilityContext.processContextRootElement(associationDef.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityContext.processContextRootElement(associationDef.getRoot(eleName), eleName, new HAPProcessorStructureElement() {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {

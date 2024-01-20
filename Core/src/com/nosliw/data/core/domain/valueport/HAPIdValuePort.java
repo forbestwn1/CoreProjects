@@ -1,25 +1,52 @@
 package com.nosliw.data.core.domain.valueport;
 
-public class HAPIdValuePort {
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
+
+@HAPEntityWithAttribute
+public class HAPIdValuePort extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static final String ENTITYID = "entityId";
+
+	@HAPAttribute
+	public static final String TYPE = "type";
+
+	@HAPAttribute
+	public static final String NAME = "name";
 
 	private String m_entityId;
 	
-	private String m_portType;
+	private String m_type;
 	
-	private String m_valuePortName;
+	private String m_name;
 	
-	public HAPIdValuePort(String entityId, String portType, String valuePortName) {
+	public HAPIdValuePort() {}
+	
+	public HAPIdValuePort(String entityId, String type, String name) {
 		this.m_entityId = entityId;
-		this.m_portType = portType;
-		this.m_valuePortName = valuePortName;
+		this.m_type = type;
+		this.m_name = name;
 	}
 	
 	//which entity this value port belong
 	public String getEntityId() {    return this.m_entityId;     }
 	
-	public String getPortType() {    return this.m_portType;     }
+	public String getType() {    return this.m_type;     }
 	
 	//name of the port within entity
-	public String getValuePortName() {    return this.m_valuePortName;     }
+	public String getValuePortName() {    return this.m_name;     }
 	
+	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_name, this.m_type, this.m_entityId});     }
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ENTITYID, this.m_entityId);
+		jsonMap.put(TYPE, m_type);
+		jsonMap.put(NAME, m_name);
+	}
 }

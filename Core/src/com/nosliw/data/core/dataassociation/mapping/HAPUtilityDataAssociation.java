@@ -30,8 +30,8 @@ import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPPathElementMapping;
 import com.nosliw.data.core.structure.HAPPathElementMappingConstantToVariable;
 import com.nosliw.data.core.structure.HAPPathElementMappingVariableToVariable;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
 public class HAPUtilityDataAssociation {
 
@@ -40,7 +40,7 @@ public class HAPUtilityDataAssociation {
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
 		List<HAPPathValueMapping> out = new ArrayList<HAPPathValueMapping>();
-		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
@@ -115,7 +115,7 @@ public class HAPUtilityDataAssociation {
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping1(HAPItemValueMapping<HAPIdRootElement> valueMappingItem){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getPath().getFullName(), new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getPath().getFullName(), new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
@@ -135,7 +135,7 @@ public class HAPUtilityDataAssociation {
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping1(HAPRootStructure root, String rootName){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		HAPUtilityStructure.traverseElement(root, rootName, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(root, rootName, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -157,7 +157,7 @@ public class HAPUtilityDataAssociation {
 	//build constant assignment mapping
 	public static Map<String, Object> buildConstantAssignment(HAPRootStructure contextRoot, String rootName){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		HAPUtilityStructure.traverseElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(contextRoot, rootName, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {

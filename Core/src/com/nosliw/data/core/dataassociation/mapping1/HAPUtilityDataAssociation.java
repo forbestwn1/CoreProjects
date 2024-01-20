@@ -17,15 +17,15 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
 public class HAPUtilityDataAssociation {
 
 	//each relative context element represent path mapping (output path in context - input path in context) during runtime
 	public static Map<String, String> buildRelativePathMapping(HAPRootStructure root, String rootName){
 		Map<String, String> out = new LinkedHashMap<String, String>();
-		HAPUtilityStructure.traverseElement(root, rootName, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(root, rootName, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -47,7 +47,7 @@ public class HAPUtilityDataAssociation {
 	//build constant assignment mapping
 	public static Map<String, Object> buildConstantAssignment(HAPRootStructure contextRoot, String rootName){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
-		HAPUtilityStructure.traverseElement(contextRoot, rootName, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(contextRoot, rootName, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {

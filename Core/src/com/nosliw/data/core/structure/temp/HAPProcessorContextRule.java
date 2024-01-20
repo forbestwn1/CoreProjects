@@ -7,6 +7,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPInfoElement;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
@@ -18,7 +19,7 @@ public class HAPProcessorContextRule {
 		for(String group : orgContext.getAllCategaries()) {
 			HAPValueStructureDefinitionFlat context = orgContext.getFlat(group);
 			for(String eleName : context.getRootNames()) {
-				HAPUtilityContext.processContextRootElement(context.getRoot(eleName), eleName, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityContext.processContextRootElement(context.getRoot(eleName), eleName, new HAPProcessorStructureElement() {
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

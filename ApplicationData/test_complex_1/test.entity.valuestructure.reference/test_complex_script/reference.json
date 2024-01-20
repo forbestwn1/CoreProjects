@@ -44,7 +44,7 @@
 									"elementPath": "parent_matchers_public"
 								},
 								"definition" : {
-									criteria : "test.string;1.0.0"
+									"criteria" : "test.string;1.0.0"
 								}
 							}
 						},
@@ -55,8 +55,7 @@
 									"elementPath": "<%=&(pathvalue)&%>"
 								}
 							}
-						},
-						
+						}
 					}
 				}
 			]

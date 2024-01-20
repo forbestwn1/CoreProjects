@@ -20,6 +20,7 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -30,7 +31,6 @@ import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 
 public class HAPUtilityExpressionProcessor {
 
@@ -58,7 +58,7 @@ public class HAPUtilityExpressionProcessor {
 						
 						for(String varName : referenceMapping.keySet()) {
 							HAPIdVariable variableId = HAPUtilityValueContextReference.resolveVariableReference(
-									new HAPReferenceElementInValueContext(varName), 
+									new HAPReferenceElementInValueStructure(varName), 
 									Sets.newHashSet(HAPUtilityValueStructure.getVisibleToExternalCategaries()), 
 									((HAPExecutableEntityComplex)referencedEntityInfo.getLeft()).getValueContext(), 
 									valueStructureDomain, 

@@ -18,11 +18,10 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 
 public class HAPUtilityStructure {
 
@@ -123,23 +122,13 @@ public class HAPUtilityStructure {
 		}
 	}
 
-	//traverse through all the structure element under root, and process it
-	public static void traverseElement(HAPRootStructure root, HAPProcessorContextDefinitionElement processor, Object value) {
-		traverseElement(root, root.getLocalId(), processor, value);
-	}
-	
-	public static void traverseElement(HAPRootStructure root, String rootId, HAPProcessorContextDefinitionElement processor, Object value) {
-		HAPElementStructure processedEle = traverseElement(new HAPInfoElement(root.getDefinition(), new HAPComplexPath(rootId)), processor, value);
-		if(processedEle!=null)  root.setDefinition(processedEle);
-	}
-	
-	public static HAPElementStructure traverseElement(HAPElementStructure element, String startPath, HAPProcessorContextDefinitionElement processor, Object value) {
+	public static HAPElementStructure traverseElement(HAPElementStructure element, String startPath, HAPProcessorStructureElement processor, Object value) {
 		return traverseElement(new HAPInfoElement(element, new HAPComplexPath(startPath)), processor, value);
 	}
 	
 	//traverse through all the context definition element, and process it
 	//if return not null, then means new context element
-	private static HAPElementStructure traverseElement(HAPInfoElement elementInfo, HAPProcessorContextDefinitionElement processor, Object value) {
+	private static HAPElementStructure traverseElement(HAPInfoElement elementInfo, HAPProcessorStructureElement processor, Object value) {
 		HAPElementStructure out = null;
 		HAPElementStructure element = elementInfo.getElement(); 
 		HAPComplexPath path = elementInfo.getElementPath();
@@ -172,7 +161,7 @@ public class HAPUtilityStructure {
 	public static HAPRootStructure createRootWithRelativeElement(String refPath, String parentStructure) {
 		HAPRootStructure out = new HAPRootStructure();
 		HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-		relativeEle.setReference(new HAPReferenceElementInValueContext(parentStructure, refPath));
+		relativeEle.setReference(new HAPReferenceElementInValueStructure(parentStructure, refPath));
 		out.setDefinition(relativeEle);
 		return out;
 	}
@@ -187,7 +176,7 @@ public class HAPUtilityStructure {
 			out = new HAPRootStructure();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-			relativeEle.setReference(new HAPReferenceElementInValueContext(parentStructure, elePath));
+			relativeEle.setReference(new HAPReferenceElementInValueStructure(parentStructure, elePath));
 			relativeEle.setResolvedIdPath(new HAPComplexPath(parentNode.getLocalId(), elePath));
 			if(parentNode.getDefinition().isProcessed()) {
 //				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());
@@ -209,7 +198,7 @@ public class HAPUtilityStructure {
 		//discover cosntant value by id
 		Map<String, Object> constantsById = new LinkedHashMap<String, Object>();
 		for(HAPRootStructure root : structure.getAllRoots()) {
-			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+			HAPUtilityStructure.traverseElement(root, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
@@ -249,7 +238,7 @@ public class HAPUtilityStructure {
 	public static Map<String, HAPElementStructureLeafRelative> discoverRelativeElement(HAPRootStructure root) {
 		Map<String, HAPElementStructureLeafRelative> out = new LinkedHashMap<String, HAPElementStructureLeafRelative>();
 		
-		HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(root, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -284,7 +273,7 @@ public class HAPUtilityStructure {
 	public static Map<String, HAPMatchers> mergeRoot(HAPRootStructure origin, HAPRootStructure expect, boolean modifyStructure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPMatchers> matchers = new LinkedHashMap<String, HAPMatchers>();
 		
-		HAPUtilityStructure.traverseElement(expect, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(expect, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				String path = eleInfo.getElementPath().getPathStr();

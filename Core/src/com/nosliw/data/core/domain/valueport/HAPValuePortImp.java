@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
-import com.nosliw.data.core.structure.reference.HAPReferenceValueStructure;
 
 public abstract class HAPValuePortImp implements HAPValuePort{
 

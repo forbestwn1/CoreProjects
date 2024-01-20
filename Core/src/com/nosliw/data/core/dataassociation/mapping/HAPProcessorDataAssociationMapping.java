@@ -21,6 +21,8 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
+import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -31,13 +33,11 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForMapping;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoRelativeResolve;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
-import com.nosliw.data.core.structure.reference.HAPReferenceRootElement;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
 public class HAPProcessorDataAssociationMapping {
@@ -72,7 +72,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 
 	private static void collectProvide(HAPExecutableDataAssociationMapping mapping,  HAPElementStructure root) {
-		HAPUtilityStructure.traverseElement(root, null, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(root, null, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE)) {
@@ -97,7 +97,7 @@ public class HAPProcessorDataAssociationMapping {
 			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getValuePortId());
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
-				HAPReferenceElementInValueContext pathReference = defStructureElementRelative.getReference();
+				HAPReferenceElementInValueStructure pathReference = defStructureElementRelative.getReference();
 				HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, null, processorContext);
 				
 				if(resolveInfo==null) {
@@ -219,7 +219,7 @@ public class HAPProcessorDataAssociationMapping {
 		//try to enhance output context
 		if(outputEnhance) {
 			for(String eleName : mappingItems.keySet()) {
-				HAPUtilityStructure.traverseElement(mappingItems.get(eleName), eleName, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityStructure.traverseElement(mappingItems.get(eleName), eleName, new HAPProcessorStructureElement() {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {

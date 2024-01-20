@@ -3,16 +3,14 @@ package com.nosliw.data.core.domain.valuecontext;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.valueport.HAPValuePortImp;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPInfoValuePort;
+import com.nosliw.data.core.domain.valueport.HAPReferenceValueStructure;
+import com.nosliw.data.core.domain.valueport.HAPValuePortImp;
 import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
-import com.nosliw.data.core.structure.reference.HAPReferenceValueStructure;
 
 public class HAPValuePortValueContext extends HAPValuePortImp{
 
@@ -20,7 +18,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
 	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
-		super(new HAPIdValuePort(complexEntityExe.getId(), HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.NAME_DEFAULT), new HAPInfoValuePort());
+		super(HAPUtilityValuePort.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort());
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}

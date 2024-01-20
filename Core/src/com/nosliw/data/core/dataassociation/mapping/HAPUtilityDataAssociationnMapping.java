@@ -19,9 +19,9 @@ import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoVariable;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.structure.reference.HAPCandidatesValueContext;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPUtilityDataAssociationnMapping {
@@ -43,7 +43,7 @@ public class HAPUtilityDataAssociationnMapping {
 			HAPDefinitionValueMapping mapping = mappings.get(targetName);
 			Map<String, HAPRootStructure> items = mapping.getItems();
 			for(String rootName : items.keySet()) {
-				HAPUtilityStructure.traverseElement(items.get(rootName), rootName, new HAPProcessorContextDefinitionElement() {
+				HAPUtilityStructure.traverseElement(items.get(rootName), rootName, new HAPProcessorStructureElement() {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {

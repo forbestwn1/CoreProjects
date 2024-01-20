@@ -25,9 +25,9 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {
@@ -39,7 +39,7 @@ public class HAPProcessorElementRelative {
 	public static HAPStructure1 process(HAPStructure1 structure, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
-			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+			HAPUtilityStructure.traverseElement(root, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -67,7 +67,7 @@ public class HAPProcessorElementRelative {
 	
 	public static HAPRootStructure process(HAPRootStructure root, String rootId, HAPContainerStructure parents, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPRootStructure out = root.cloneRoot();
-		HAPUtilityStructure.traverseElement(out, rootId, new HAPProcessorContextDefinitionElement() {
+		HAPUtilityStructure.traverseElement(out, rootId, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
@@ -148,7 +148,7 @@ public class HAPProcessorElementRelative {
 						relativeElement.setMatchers(noVoidMatchers);
 						
 						//merge rule from parent
-						HAPUtilityStructure.traverseElement(solvedElement, null, new HAPProcessorContextDefinitionElement() {
+						HAPUtilityStructure.traverseElement(solvedElement, null, new HAPProcessorStructureElement() {
 							@Override
 							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 								if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

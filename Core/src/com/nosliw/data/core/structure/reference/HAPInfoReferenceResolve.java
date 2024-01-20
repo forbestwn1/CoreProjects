@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.structure.HAPElementStructure;
 
 //store result for resolve structure element reference path
@@ -35,7 +36,7 @@ public class HAPInfoReferenceResolve extends HAPSerializableImp{
 	public static final String FINALELEMENT = "finalElement";
 	
 	
-	public HAPReferenceElementInValueContext eleReference;
+	public HAPReferenceElementInValueStructure eleReference;
 	
 	//resolved structure runtime id
 	public String structureId;

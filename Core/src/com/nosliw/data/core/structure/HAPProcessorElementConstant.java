@@ -28,7 +28,6 @@ import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression1.HAPProcessorScript;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.structure.temp.HAPProcessorContextDefinitionElement;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
@@ -141,7 +140,7 @@ public class HAPProcessorElementConstant {
 		if(attachmentContainer==null)   return structure;
 		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
-			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+			HAPUtilityStructure.traverseElement(root, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANTREF.equals(eleInfo.getElement().getType())) {
@@ -166,7 +165,7 @@ public class HAPProcessorElementConstant {
 			HAPRuntimeEnvironment runtimeEnv){
 		HAPStructure1 out = structure.cloneStructure();
 		for(HAPRootStructure root : out.getAllRoots()) {
-			HAPUtilityStructure.traverseElement(root, new HAPProcessorContextDefinitionElement() {
+			HAPUtilityStructure.traverseElement(root, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(eleInfo.getElement().getType())) {

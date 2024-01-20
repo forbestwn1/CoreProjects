@@ -16,8 +16,21 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.data.core.structure.HAPElementStructureNode;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
+import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueStructure {
+
+	//traverse through all the structure element under root, and process it
+	public static void traverseElement(HAPRootStructure root, HAPProcessorStructureElement processor, Object value) {
+		HAPUtilityStructure.traverseElement(root.getDefinition(), root.getName(), processor, value);
+	}
+	
+	public static void traverseElement(HAPDefinitionEntityValueStructure valueStructure, HAPProcessorStructureElement processor, Object value) {
+		for(HAPRootStructure rootStructure : valueStructure.getAllRoots()) {
+			traverseElement(rootStructure, processor, value);
+		}
+	}
 
 	//find all data variables in context 
 	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPDefinitionEntityValueStructure structure){

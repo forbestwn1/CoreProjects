@@ -556,7 +556,10 @@ public class HAPManagerDomainEntityExecutable {
 			HAPDefinitionEntityInDomain entityDef = entityDefInfo.getEntity();
 			String entityType = entityDef.getEntityType();
 			HAPExecutableEntity entityExe = null;
-			if(entityDefInfo.isComplexEntity()) 	entityExe = this.m_processorComplexEntityPlugins.get(entityType).newExecutable();
+			if(entityDefInfo.isComplexEntity()) {
+				entityExe = this.m_processorComplexEntityPlugins.get(entityType).newExecutable();
+				((HAPExecutableEntityComplex)entityExe).setValueStructureDomain(complexResourceBundle.getValueStructureDomain());
+			}
 			else		entityExe = this.m_processorSimpleEntityPlugins.get(entityType).newExecutable();
 			entityExe.setDefinitionEntityId(entityDefinitionId);
 			embededValue = entityExe;

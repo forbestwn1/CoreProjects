@@ -84,7 +84,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 		return out;
 	}
 	
-	protected abstract HAPContainerValuePorts getOtherValuePorts();
+	protected HAPContainerValuePorts getOtherValuePorts() {   return null;   }
 	
 	public HAPExecutableEntityComplex getComplexEntityAttributeValue(String attrName) {
 		HAPEmbededExecutable embeded = this.getAttributeEmbeded(attrName);

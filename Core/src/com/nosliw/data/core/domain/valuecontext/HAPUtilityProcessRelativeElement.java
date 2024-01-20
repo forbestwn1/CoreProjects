@@ -20,6 +20,7 @@ import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
@@ -40,12 +41,11 @@ import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElem
 import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
-import com.nosliw.data.core.structure.reference.HAPReferenceElementInValueContext;
 import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 
 public class HAPUtilityProcessRelativeElement {
 
-	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueContext reference, HAPConfigureResolveStructureElementReference resolveConfigure, HAPContextProcessor processorContext){
+	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueStructure reference, HAPConfigureResolveStructureElementReference resolveConfigure, HAPContextProcessor processorContext){
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortId(), processorContext);
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
@@ -160,7 +160,7 @@ public class HAPUtilityProcessRelativeElement {
 		HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)structureEleInfo.getElement();
 		HAPElementStructureLeafRelative out = defStructureElementRelative;
 		
-		HAPReferenceElementInValueContext pathReference = defStructureElementRelative.getReference();
+		HAPReferenceElementInValueStructure pathReference = defStructureElementRelative.getReference();
 		HAPInfoReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.resolveElementReference(pathReference, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), processContext);
 		
 		if(resolveInfo==null) {
