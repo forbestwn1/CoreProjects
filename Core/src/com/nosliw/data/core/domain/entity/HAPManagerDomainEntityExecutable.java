@@ -201,11 +201,17 @@ public class HAPManagerDomainEntityExecutable {
 		HAPUtilityEntityExecutable.traverseExecutableTree(complexEntityExecutable, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 
 			@Override
-			public void processRootEntity(HAPExecutableEntity rootEntity, HAPContextProcessor processContext) {		}
+			public void processRootEntity(HAPExecutableEntity rootEntity, HAPContextProcessor processContext) {	
+				processContext.getCurrentBundle().setEntityPathById(rootEntity.getId(), new HAPPath().toString());
+			}
 
 			@Override
 			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute,	HAPContextProcessor processContext) {
 				parentEntity.getAttribute(attribute).setParentEntity(attribute, parentEntity);
+				
+				HAPExecutableEntity entityExe =  parentEntity.getAttributeValueEntity(attribute);
+				processContext.getCurrentBundle().setEntityPathById(entityExe.getId(), entityExe.getPathFromRoot().toString());
+
 				return true;
 			}
 			

@@ -7,12 +7,14 @@ import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
 
 public interface HAPValuePort {
 
-	public HAPIdValuePort getValuePortId() {}
+	boolean isDefault();
+	
+	HAPIdValuePort getValuePortId();
 
-	public HAPInfoValuePort getValuePortInfo() {}
+	HAPInfoValuePort getValuePortInfo();
 	
-	public List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureRef);
+	List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureRef);
 	
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId);
+	HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId);
 
 }

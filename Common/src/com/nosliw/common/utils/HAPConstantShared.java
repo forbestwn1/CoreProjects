@@ -885,6 +885,8 @@ public class HAPConstantShared {
 
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
+		public static final String VALUEPORT_TYPE_SERVICE_REQUEST = "serviceRequest";
+		public static final String VALUEPORT_TYPE_SERVICE_RESULT = "serviceResult";
 
 
 

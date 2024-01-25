@@ -924,6 +924,8 @@
 			<definition type="space"/>
 			<definition name="VALUEPORT_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORT_TYPE_EVENT" value="event"/>
+			<definition name="VALUEPORT_TYPE_SERVICE_REQUEST" value="serviceRequest"/>
+			<definition name="VALUEPORT_TYPE_SERVICE_RESULT" value="serviceResult"/>
 
 			<definition type="space"/>
 			<definition name="VALUEPORT_NAME_SELF" value="self"/>

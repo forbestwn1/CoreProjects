@@ -18,8 +18,6 @@ import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntity;
 import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntityThin;
-import com.nosliw.data.core.domain.common.interactive.HAPPluginEntityDefinitionInDomainInteractive;
-import com.nosliw.data.core.domain.common.interactive.HAPPluginSimpleEntityProcessorInteractive;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorComplexScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorSimpleScriptBased;
@@ -66,6 +64,8 @@ import com.nosliw.data.core.domain.entity.value.HAPPluginEntityDefinitionInDomai
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructure;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
+import com.nosliw.data.core.interactive.HAPPluginEntityDefinitionInDomainInteractive;
+import com.nosliw.data.core.interactive.HAPPluginSimpleEntityProcessorInteractive;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPPluginResourceDefinitionProcess;

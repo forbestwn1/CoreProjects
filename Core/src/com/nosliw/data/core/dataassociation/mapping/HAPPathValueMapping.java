@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -24,7 +23,7 @@ import com.nosliw.data.core.structure.HAPPathElementMapping;
 public class HAPPathValueMapping extends HAPExecutableImp{
 
 	@HAPAttribute
-	public static String FROMDOMAINNAME = "fromDomainName";
+	public static String FROMVALUEPORTID = "fromValuePortId";
 	@HAPAttribute
 	public static String FROMVALUESTRUCTUREID = "fromValueStructureId";
 	@HAPAttribute
@@ -42,7 +41,7 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	public static String MATCHERS = "matchers";
 
 	@HAPAttribute
-	public static String TODOMAINNAME = "toDomainName";
+	public static String TOVALUEPORTID = "toValuePortId";
 	@HAPAttribute
 	public static String TOVALUESTRUCTUREID = "toValueStructureId";
 	@HAPAttribute
@@ -83,15 +82,6 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 		this.m_toItemPath = toItemPath;
 	}
 
-	public HAPPathValueMapping(String fromProvideName, String fromProvidePath, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
-		this.m_fromValuePortId = HAPConstantShared.IODATASET_PROVIDE;
-		this.m_fromProvideName = fromProvideName;
-		this.m_matchers = matchers;
-		this.m_toValuePortId = toValuePortId;
-		this.m_toValueStructureId = toValueStructureId;
-		this.m_toItemPath = toItemPath;
-	}
-
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -100,13 +90,13 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 		jsonMap.put(FROMPROVIDENAME, this.m_fromProvideName);
 		jsonMap.put(FROMPROVIDEPATH, this.m_fromProvidePath);
 		
-		jsonMap.put(FROMDOMAINNAME, this.m_fromDomainName);
+		jsonMap.put(FROMVALUEPORTID, this.m_fromValuePortId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);
 
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(m_matchers, HAPSerializationFormat.JSON));
 
-		jsonMap.put(TODOMAINNAME, this.m_toDomainName);
+		jsonMap.put(TOVALUEPORTID, this.m_toValuePortId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TOVALUESTRUCTUREID, m_toValueStructureId);
 		jsonMap.put(TOITEMPATH, this.m_toItemPath);
 	}

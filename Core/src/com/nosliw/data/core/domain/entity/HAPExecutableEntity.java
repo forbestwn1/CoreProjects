@@ -15,9 +15,7 @@ import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.valueport.HAPContainerValuePorts;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
-import com.nosliw.data.core.domain.valueport.HAPValuePort;
+import com.nosliw.data.core.domain.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -25,7 +23,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPExecutableEntity extends HAPExecutableImp implements HAPExpandable, HAPEntity{
+public abstract class HAPExecutableEntity extends HAPExecutableImp implements HAPExpandable, HAPEntity, HAPWithValuePort{
 
 	@HAPAttribute
 	public static final String ENTITYTYPE = "entityType";
@@ -54,9 +52,6 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		this.m_entityType = entityType;
 	}
 	
-	public abstract HAPContainerValuePorts getValuePorts();
-	public HAPValuePort getValuePort(String type, String name) {   return this.getValuePorts().getValuePort(new HAPIdValuePort(this.getId(), type, name));       }
-	
 	public void setDefinitionEntityId(HAPIdEntityInDomain defEntityId) {    this.m_definitionEntityId = defEntityId;      }
 	public HAPIdEntityInDomain getDefinitionEntityId() {    return this.m_definitionEntityId;     }
 	
@@ -71,7 +66,7 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		this.m_pathFromRoot = new HAPPath(this.m_parent.getPathFromRoot()).appendSegment(attrName);
 	}
 	
-	public HAPPath getPathFromRoot() {    return this.m_pathFromRoot;     }
+	public HAPPath getPathFromRoot() {    return this.m_pathFromRoot!=null?this.m_pathFromRoot:new HAPPath();     }
 	public void setPathFromRoot(HAPPath path) {   this.m_pathFromRoot = path;     }
 	
 	public HAPAttributeEntityExecutable getDescendantAttribute(HAPPath path) {

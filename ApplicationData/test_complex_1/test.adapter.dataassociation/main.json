@@ -22,7 +22,7 @@
 			"adapter":[
 				{
 					"name" : "provide",
-					"status": "disabled1",
+					"status": "disabled",
 					"entityType" : "dataAssociation",
 					"entity" : {
 						"mapping" : {

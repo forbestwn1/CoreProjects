@@ -6,6 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -23,7 +24,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
 	
-	private HAPIdValuePort m_valuePortId = HAPConstantShared.NAME_DEFAULT;
+	private HAPIdValuePort m_valuePortId;
 	
 	private String m_valueStructureId;
 	
@@ -36,7 +37,8 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		if(parts.length>2)   this.m_valuePortId = parts[2];
 	}
 	
-	public HAPIdRootElement(String domainId, String valueStructureId, String rootName) {
+	public HAPIdRootElement(HAPIdValuePort valuePortId, String valueStructureId, String rootName) {
+		this.m_valuePortId = valuePortId;
 		this.m_valueStructureId = valueStructureId;
 		this.m_rootName = rootName;
 	}
@@ -63,7 +65,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUECONTEXTID, this.m_valuePortId);
+		if(this.m_valuePortId!=null)  jsonMap.put(VALUEPORTID, this.m_valuePortId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
 		jsonMap.put(ROOTNAME, this.m_rootName);
 	}

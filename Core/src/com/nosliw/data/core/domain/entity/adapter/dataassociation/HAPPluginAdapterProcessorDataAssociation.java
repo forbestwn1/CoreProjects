@@ -9,7 +9,6 @@ import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessorImp;
-import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociation extends HAPPluginAdapterProcessorImp{
@@ -29,8 +28,10 @@ public class HAPPluginAdapterProcessorDataAssociation extends HAPPluginAdapterPr
 		
 		HAPExecutableDataAssociation dataAssociationExe = HAPProcessorDataAssociation.processDataAssociation(
 				dataAssociation,
-				new HAPContextStructureReferenceValueStructure(parentComplexEntityExe.getValueContext(), null, parentContext.getCurrentValueStructureDomain()),
-				new HAPContextStructureReferenceValueStructure(childComplexEntityExe.getValueContext(), null, childContext.getCurrentValueStructureDomain()),
+				parentEntityExecutable,
+				parentContext,
+				(HAPExecutableEntity)childEntityExecutable,
+				childContext,
 				parentContext.getRuntimeEnvironment());
 
 		((HAPExecutableEntityDataAssciation)adapterExe).setDataAssciation(dataAssociationExe);

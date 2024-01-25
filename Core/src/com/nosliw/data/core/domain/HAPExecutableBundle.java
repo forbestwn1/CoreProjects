@@ -62,6 +62,9 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){   return this.m_executableEntityDomain.getComplexResourceDependency();  }
 	
+	public void setEntityPathById(String id, String path) {
+		this.m_exeEntityPathById.put(id, path);
+	}
 	public HAPExecutableEntity getExecutableEntityById(String id) {
 		String path = this.m_exeEntityPathById.get(id);
 		return this.m_executableEntityDomain.getRootEntity().getDescendantEntity(new HAPPath(path));

@@ -10,7 +10,6 @@ import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
-import com.nosliw.data.core.domain.common.interactive.HAPExecutableEntityInteractive;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessorImp;
@@ -19,6 +18,7 @@ import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveR
 import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveResult;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
+import com.nosliw.data.core.interactive.HAPExecutableEntityInteractive;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessorImp{

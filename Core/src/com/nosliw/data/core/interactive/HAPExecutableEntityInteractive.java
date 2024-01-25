@@ -1,12 +1,11 @@
-package com.nosliw.data.core.domain.common.interactive;
+package com.nosliw.data.core.interactive;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
-import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 
 @HAPEntityWithAttribute
-public class HAPExecutableEntityInteractive extends HAPExecutableEntitySimple{
+public abstract class HAPExecutableEntityInteractive extends HAPExecutableEntitySimple{
 
 	@HAPAttribute
 	public static final String ATTR_INTERACTIVE = "interactive";

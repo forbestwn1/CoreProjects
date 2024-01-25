@@ -18,13 +18,12 @@ import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
+import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
-import com.nosliw.data.core.structure.HAPElementStructureLeafProvide;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPInfoElement;
 import com.nosliw.data.core.structure.HAPPathElementMapping;
@@ -81,15 +80,15 @@ public class HAPUtilityDataAssociation {
 					return Pair.of(false, null);
 				}
 				else if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE)) {
-					HAPElementStructureLeafProvide provideEle = (HAPElementStructureLeafProvide)eleInfo.getElement();
-					List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
-					HAPUtilityStructure.mergeElement(provideEle.getDefinition(),  toElement, false, mappingPaths, null, processContext.getRuntimeEnvironment());
-					for(HAPPathElementMapping mappingPath : mappingPaths) {
-						HAPPathElementMappingVariableToVariable mappingPath1 = (HAPPathElementMappingVariableToVariable)mappingPath;
-						HAPMatchers matchers = mappingPath1.getMatcher();
-						if(matchers.isVoid())  matchers = null;
-						out.add(new HAPPathValueMapping(provideEle.getName(), mappingPath1.getPath(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemPath.getFullName()));
-					}
+//					HAPElementStructureLeafProvide provideEle = (HAPElementStructureLeafProvide)eleInfo.getElement();
+//					List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
+//					HAPUtilityStructure.mergeElement(provideEle.getDefinition(),  toElement, false, mappingPaths, null, processContext.getRuntimeEnvironment());
+//					for(HAPPathElementMapping mappingPath : mappingPaths) {
+//						HAPPathElementMappingVariableToVariable mappingPath1 = (HAPPathElementMappingVariableToVariable)mappingPath;
+//						HAPMatchers matchers = mappingPath1.getMatcher();
+//						if(matchers.isVoid())  matchers = null;
+//						out.add(new HAPPathValueMapping(provideEle.getName(), mappingPath1.getPath(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemPath.getFullName()));
+//					}
 				}
 				else if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 				HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();

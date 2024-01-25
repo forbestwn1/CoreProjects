@@ -26,6 +26,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
+import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
@@ -237,7 +238,7 @@ public class HAPUtilityValueStructureDomain {
 							if(valuePortId==null) {
 								String valuePortName = rootRef.getValuePortName();
 								if(valuePortName==null) {
-									valuePortId = HAPUtilityValuePort.createValuePortIdValueContext(parentComplexEntity);
+									valuePortId = HAPUtilityValuePort.getDefaultValuePortIdInEntity(parentComplexEntity);
 								}
 								else if(valuePortName.equals(HAPConstantShared.VALUEPORT_NAME_SELF)) {
 									valuePortId = HAPUtilityValuePort.createValuePortIdValueContext(entityExe);

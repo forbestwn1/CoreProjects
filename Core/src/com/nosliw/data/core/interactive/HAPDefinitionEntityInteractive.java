@@ -1,8 +1,7 @@
-package com.nosliw.data.core.domain.common.interactive;
+package com.nosliw.data.core.interactive;
 
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 
 public class HAPDefinitionEntityInteractive extends HAPDefinitionEntityInDomain{
 

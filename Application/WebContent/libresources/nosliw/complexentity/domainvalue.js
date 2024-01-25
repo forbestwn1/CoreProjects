@@ -70,7 +70,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 var loc_createValueContext = function(id, valueContextDef, variableDomainDef, parentValueContext, variableMan){
 	
 	var loc_variableMan;
-		
+
 	//value context id
 	var loc_id;
 	

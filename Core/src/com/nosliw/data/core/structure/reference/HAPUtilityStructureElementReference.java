@@ -17,10 +17,10 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
-import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
+import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
@@ -48,7 +48,7 @@ public class HAPUtilityStructureElementReference {
 			HAPDefinitionEntityValueStructure valueStructure = structureRefInfo.getValueStructureDefinition();
 			String rootName = rootEleCriteria.getRootName();
 			if(valueStructure.getRootByName(rootName)!=null) {
-				return new HAPIdRootElement(valueStructureExeId, rootName);
+				return new HAPIdRootElement(rootEleCriteria.getValuePortId(), valueStructureExeId, rootName);
 			}
 		}
 		return null;

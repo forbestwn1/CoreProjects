@@ -18,11 +18,15 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
 	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
-		super(HAPUtilityValuePort.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort());
+		this(complexEntityExe, valueStructureDomain, false);
+	}
+
+	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
+		super(HAPUtilityValuePort.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort(), isDefault);
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}
-	
+
 	@Override
 	public List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria) {
 		List<HAPInfoValueStructureReference> out = new ArrayList<HAPInfoValueStructureReference>();

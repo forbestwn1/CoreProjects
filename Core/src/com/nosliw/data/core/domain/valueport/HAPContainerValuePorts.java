@@ -30,7 +30,16 @@ public class HAPContainerValuePorts {
 	}
 	
 	public HAPValuePort getValuePort(HAPIdValuePort valuePortId) {
-		return this.m_valuePortByKey.get(valuePortId.getKey());
+		if(valuePortId!=null) {
+			return this.m_valuePortByKey.get(valuePortId.getKey());
+		}
+		else {
+			//find default one
+			for(HAPValuePort valuePort : this.m_valuePortByKey.values()) {
+				if(valuePort.isDefault())  return valuePort;
+			}
+		}
+		return null;
 	}
 	
 }

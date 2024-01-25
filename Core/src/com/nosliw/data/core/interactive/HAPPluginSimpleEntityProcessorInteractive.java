@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.common.interactive;
+package com.nosliw.data.core.interactive;
 
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;

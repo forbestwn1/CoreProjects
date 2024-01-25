@@ -16,6 +16,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
@@ -23,6 +24,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
+import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -44,13 +46,17 @@ public class HAPProcessorDataAssociationMapping {
 
 	public static void processValueMapping(
 			HAPExecutableDataAssociationMapping out,
+			HAPExecutableEntity inEntityExe,
 			HAPContextProcessor inProcessorContext,
 			HAPDefinitionDataAssociationMapping valueMapping,
+			HAPExecutableEntity outEntityExe,
 			HAPContextProcessor outProcessorContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
 		List<HAPItemValueMapping<HAPReferenceRootElement>> mappingItems = valueMapping.getItems();
-		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) { 
+		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) {
+			
+			normalizeValuePortId(mappingItem, inEntityExe, outEntityExe);
 			
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
@@ -71,6 +77,30 @@ public class HAPProcessorDataAssociationMapping {
 		}
 	}
 
+	private static void normalizeValuePortId(HAPItemValueMapping<HAPReferenceRootElement> mappingItem, HAPExecutableEntity inEntityExe, HAPExecutableEntity outEntityExe) {
+		HAPReferenceRootElement targetRef = mappingItem.getTarget();
+		if(targetRef.getValuePortId()==null) {
+			targetRef.setValuePortId(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe));
+		}
+		
+		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
+
+			@Override
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
+					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
+					if(mappingEle.getReference().getValuePortId()==null) {
+						mappingEle.getReference().setValuePortId(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe));
+					}
+				}
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
+		}, targetRef);
+	}
+	
 	private static void collectProvide(HAPExecutableDataAssociationMapping mapping,  HAPElementStructure root) {
 		HAPUtilityStructure.traverseElement(root, null, new HAPProcessorStructureElement() {
 			@Override

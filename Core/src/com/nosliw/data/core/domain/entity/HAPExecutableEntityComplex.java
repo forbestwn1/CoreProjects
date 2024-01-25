@@ -79,7 +79,7 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	@Override
 	public HAPContainerValuePorts getValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
-		out.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain));
+		out.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain, true));
 		out.addValuePorts(this.getOtherValuePorts());
 		return out;
 	}
