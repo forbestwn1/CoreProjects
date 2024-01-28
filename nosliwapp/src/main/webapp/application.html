@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Application !!</title>
+
+    	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+        <script src="libresources/external/framework7/4.3.1/framework7.bundle.js"></script>
+        <script src="libresources/external/jQuery/3.4.1/jquery.js"></script>
+        
+        <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+		<script src="libresources/nosliw/core/nosliw.js"></script>
+
+ 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+</head>
+
+<body>
+	<div id="mainDiv" style="overflow-y: scroll; height:400px;"></div>
+</body>
+
+<script>
+
+//when nosliw active
+$(document).on("nosliwActive", function(){
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	
+	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	var node_createStateBackupService = nosliw.getNodeData("component.createStateBackupService");
+
+	
+	var parms = node_basicUtility.getParmsInUrl();
+	var resourceType = parms.resourceType;
+	var resourceId = parms.resourceId;
+	var configure = parms.configure;
+	
+	var runtimeContext = {
+		view : $('#mainDiv').get(),
+		backupState : node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService()),
+	};
+
+	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
+
+	var out = node_createServiceRequestInfoSequence(undefined);
+	
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(resourceType, resourceId), configure==""?undefined:configure, runtimeContext, undefined, {
+		success : function(request, application){
+			var event = new CustomEvent("nosliwApplicationActive", {
+				bubbles: true,
+				detail: application
+			});
+		    window.dispatchEvent(event);
+			return application;
+		}
+	}));
+	node_requestServiceProcessor.processRequest(out);
+
+	//ui indicator
+	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
+});
+
+</script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+
+</html>

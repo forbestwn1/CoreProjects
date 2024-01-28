@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+   		<link rel="stylesheet" href="libresources/external/jQuery_Mobile/jquery.mobile-1.4.5.min.css" />
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+        
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+		<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+	<div id="moduleDiv">
+	</div>
+
+</body>
+
+<script>
+
+$(document).on("nosliwActive", function(){
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+
+    // Our initialization code here
+	var currentSearchString = window.location.search;
+	var moduleId = currentSearchString.substring(currentSearchString.indexOf("=")+1);
+
+	//create module runtime
+	var decorations = {};
+	decorations[node_COMMONATRIBUTECONSTANT.DEFINITIONDECORATION_GLOBAL] = ["Decoration_application_jquery"];
+	var statelessData = {
+			root : $('#moduleDiv'),
+		};
+
+	nosliw.runtime.getUIModuleService().executeGetUIModuleRuntimeRequest(moduleId, statelessData, decorations, "module_application_jquery_mobile", {
+		success : function(requestInfo, uiModuleRuntime){
+			uiModuleRuntime.executeStartRequest(undefined, requestInfo);			
+		}
+	});
+
+});
+
+nosliw.init();
+</script>
+
+</html>

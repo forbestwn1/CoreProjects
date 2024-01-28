@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <meta name = "viewport" content = "width = device-width, initial-scale = 1, 
+         maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
+      <meta name = "apple-mobile-web-app-capable" content = "yes" />
+      <meta name = "apple-mobile-web-app-status-bar-style" content = "black" />
+      <title>Swipe Panel</title>
+    	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+        <script src="libresources/external/framework7/4.1.1/framework7.bundle.min.js"></script>
+        <script src="libresources/external/jQuery/2.1.0/jquery.js"></script>
+   </head>
+
+<body>
+    <div class="panel panel-left panel-reveal">
+      <div class="block">
+        <p>Left Panel content here</p>
+        <p><a class="panel-close" href="#">Close me</a></p>
+        <p><a class="panel-open" href="#" data-panel="right">Open Right Panel</a></p>
+      </div>
+    </div>
+    <div class="panel panel-right panel-cover">
+      <div class="block">
+        <p>Right Panel content here</p>
+        <p><a class="panel-close" href="#">Close me</a></p>
+        <p><a class="panel-open" href="#" data-panel="left">Open Left Panel</a></p>
+      </div>
+    </div>
+    <div class="view view-main view-init">
+      <div class="page">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="left"></div>
+            <div class="title">Panels</div>
+            <div class="right"></div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="block">
+            <p><a class="panel-open" href="#" data-panel="left">Open Left Panel</a></p>
+            <p><a class="panel-open" href="#" data-panel="right">Open Right Panel</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>      
+      <script>
+      var app = new Framework7();
+
+      var $$ = Dom7;
+      // Dom Events
+      $$('.panel-left').on('panel:open', function () {
+        console.log('Panel left: open');
+      });
+      $$('.panel-left').on('panel:opened', function () {
+        console.log('Panel left: opened');
+      });
+
+      
+      // Instance Events
+      var panelRight = app.panel.right;
+      panelRight.on('open', function () {
+        console.log('Panel right: open');
+      });
+      panelRight.on('opened', function () {
+        console.log('Panel right: opened');
+      });
+
+      // App Events
+      app.on('panelClose', function (panel) {
+        console.log('Panel ' + panel.side + ': close');
+      });
+      app.on('panelClosed', function (panel) {
+        console.log('Panel ' + panel.side + ': closed');
+      });
+      
+     </script>
+   
+
+</html>

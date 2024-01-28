@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <welcome-file-list>
+    <welcome-file>main.html</welcome-file>
+  </welcome-file-list>
+
+
+<!--  Core service   -->
+  <servlet>
+    <servlet-name>init</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPInitServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>loadLibServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPLoadLibServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loadLibServlet</servlet-name>
+    <url-pattern>/loadlib</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>gatewayServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>gatewayServlet</servlet-name>
+    <url-pattern>/gateway</url-pattern>
+  </servlet-mapping>
+
+	<filter>
+	    <filter-name>SetCacheControl</filter-name>
+	    <filter-class>com.nosliw.servlet.HAPCacheControlFilter</filter-class>
+	</filter>                       
+	<filter-mapping>
+	    <filter-name>SetCacheControl</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+<!--  App service   -->
+
+  <servlet>
+    <servlet-name>loginServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.core.HAPLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>buildStoryServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.story.HAPStoryBuildServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>buildStoryServlet</servlet-name>
+    <url-pattern>/buildstory</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>miniappServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.miniapp.HAPMiniAppServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>miniappServlet</servlet-name>
+    <url-pattern>/miniapp</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>browseComplexEntityServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.browsecomplexentity.HAPBrowseComplexEntityServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>browseComplexEntityServlet</servlet-name>
+    <url-pattern>/browsecomplexentity</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.app.browseresource.HAPBrowseResourceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>browseResourceServlet</servlet-name>
+    <url-pattern>/browseresource</url-pattern>
+  </servlet-mapping>
+
+
+<!--  Utils service   -->
+
+  <servlet>
+    <servlet-name>resetGatewayServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPResetGatewayServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>resetGatewayServlet</servlet-name>
+    <url-pattern>/resetGateway</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>loadFilesServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPLoadFilesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loadFilesServlet</servlet-name>
+    <url-pattern>/loadfile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>clearCacheServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPClearResourceCacheServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>clearCacheServlet</servlet-name>
+    <url-pattern>/clearCache</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>closeConnectionServlet</servlet-name>
+    <servlet-class>com.nosliw.servlet.utils.HAPCloseDBConnection</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>closeConnectionServlet</servlet-name>
+    <url-pattern>/closeConnection</url-pattern>
+  </servlet-mapping>
+
+
+</web-app>

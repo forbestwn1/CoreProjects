@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Nosliw Go Go !!</title>
+
+    	<link rel="stylesheet" href="libresources/external/framework7/css/framework7.bundle.min.css">
+        <script src="libresources/external/framework7/4.3.1/framework7.bundle.js"></script>
+        <script src="libresources/external/jQuery/3.4.1/jquery.js"></script>
+        
+        <script src="libresources/external/Underscore/1.9.1/underscore.js"></script>
+        <script src="libresources/external/Backbone/1.3.3/backbone.js"></script>
+        <script src="libresources/external/log4javascript/1.0.0/log4javascript.js"></script>
+
+		<script src="libresources/nosliw/core/nosliw.js"></script>
+
+ 		<meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+</head>
+
+<body>
+		<div class="panel panel-left panel-cover">
+      		<div class="view panel-view block" id="debugDiv1">
+				<div id="lifecycleDebug"></div>
+				<div id="resetDebug"></div>
+         	</div>
+    	</div>
+
+		<div id="mainDiv" style="overflow-y: scroll; height:400px;"></div>
+	
+		<div class="panel panel-right panel-cover">
+      		<div class="block" id="debugDiv2">
+				<div id="dataDebug"></div>
+				<div id="eventDebug"></div>
+         	</div>
+    	</div>
+	
+</body>
+
+<script>
+
+//when nosliw active
+$(document).on("nosliwActive", function(){
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	
+	var node_createComponentDebugTool = nosliw.getNodeData("debug.createComponentDebugTool");
+	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_getComponentLifecycleInterface = nosliw.getNodeData("component.getComponentLifecycleInterface");
+
+	var parms = node_basicUtility.getParmsInUrl();
+
+	var configure = {
+		"parts" : {
+			"nosliw_decoration1" :{
+				"parts" : [
+					{
+						"parts" : {
+							"nosliw_info" : {
+								"name" : "firstDec",
+								"type" : "test.decoration.1",
+								"id": "decoration1",
+								"description": "this is for testing decoration"
+							},
+							"nosliw_core" : {
+								"nosliw_debug" : "true",
+								"configureDec1" : "configureDec1Value",
+								"configureDec2" : ["configureDec21Value", "configureDec22Value", "configureDec23Value"],
+							}
+						}
+					}
+				],
+			},
+			"nosliw_core" : {
+				"nosliw_debug_package" : "true",
+				"nosliw_debug" : "true",
+				"configure1" : "configure1Value",
+				"configure2" : ["configure21Value", "configure22Value", "configure23Value"],
+				"globalresource2_none_testcomplex1" : {
+					"nosliw_debug_package" : "true",
+					"nosliw_debug" : "true",
+				}
+			}
+		},
+	};
+	
+	var runtimeContext = {
+		view : $('#mainDiv').get()
+	};
+
+/*	
+	nosliw.runtime.getPackageService().executeCreatePackageRuntimeRequest(new node_ResourceId("testcomplex1", "parent"), configure, runtimeContext, {
+		success : function(request, pageRuntime){
+			
+		}
+	});
+*/	
+
+
+	var framework7App = node_framework7Utility.createTypicalFramework7App($("#moduleDiv").get()); 
+
+
+	var debugTool = node_createComponentDebugTool({
+		mainView : $('#mainDiv').get(),
+		lifecycleView : $('#lifecycleDebug').get(),
+		dataView : $('#dataDebug').get(),
+		eventView : $('#eventDebug').get(),
+		resetView : $('#resetDebug').get(), 
+	}, "test_complex_1", "testvalue", undefined, "testcomplex1", undefined, {
+		success : function(request, componentObj){
+			
+			document.application = componentObj;
+			
+			var event = new Event("appActive", {
+		        bubbles: true
+		      });
+		    window.dispatchEvent(event);
+			
+//			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
+//			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
+		}
+	});
+
+/*
+	var debugTool = node_createDebugTool({
+		mainView : $('#mainDiv').get(),
+		lifecycleView : $('#lifecycleDebug').get(),
+		dataView : $('#dataDebug').get(),
+		eventView : $('#eventDebug').get(),
+		resetView : $('#resetDebug').get(), 
+	}, "test.complex.script", "test_value", undefined, "testcomplex1", undefined, {
+		success : function(request, componentObj){
+//			var lifecycleObj = node_getComponentLifecycleInterface(componentObj);
+//			return lifecycleObj.executeTransitRequest(node_CONSTANT.LIFECYCLE_COMPONENT_TRANSIT_COMMAND_ACTIVATE, undefined, request);
+		}
+	});
+*/
+	//ui indicator
+	node_framework7Utility.createRequestStatusIndicatorUI(framework7App);
+
+	
+});
+
+</script>
+
+<script src="libresources/nosliw/runtimebrowserinit/utility.js"></script>
+<script src="libresources/nosliw/runtimebrowserinit/init.js"></script>
+<script src="init_runtime.js"></script>
+
+</html>
