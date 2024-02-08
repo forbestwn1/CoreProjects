@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 
 @HAPEntityWithAttribute
 public class HAPIdRootElement extends HAPSerializableImp{
@@ -24,7 +24,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
 	
-	private HAPIdValuePort m_valuePortId;
+	private HAPRefValuePort m_refValuePort;
 	
 	private String m_valueStructureId;
 	
@@ -33,12 +33,16 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	public HAPIdRootElement(String reference) {
 		String[] parts = HAPUtilityNamingConversion.splitTextByTwoPart(reference, HAPConstantShared.SEPERATOR_LEVEL1);
 		this.m_rootName = parts[0];
-		if(parts.length>1)   this.m_valueStructureId = parts[1];
-		if(parts.length>2)   this.m_valuePortId = parts[2];
+		if(parts.length>1) {
+			this.m_valueStructureId = parts[1];
+		}
+		if(parts.length>2) {
+			this.m_refValuePort = parts[2];
+		}
 	}
 	
-	public HAPIdRootElement(HAPIdValuePort valuePortId, String valueStructureId, String rootName) {
-		this.m_valuePortId = valuePortId;
+	public HAPIdRootElement(HAPRefValuePort valuePortId, String valueStructureId, String rootName) {
+		this.m_refValuePort = valuePortId;
 		this.m_valueStructureId = valueStructureId;
 		this.m_rootName = rootName;
 	}
@@ -47,7 +51,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		this(null, valueStructureId, rootName);
 	}
 
-	public HAPIdValuePort getValuePortId() {    return this.m_valuePortId;    }
+	public HAPRefValuePort getValuePortRef() {    return this.m_refValuePort;    }
 	
 	public String getValueStructureId() {    return this.m_valueStructureId;     }
 	
@@ -65,7 +69,9 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_valuePortId!=null)  jsonMap.put(VALUEPORTID, this.m_valuePortId.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_refValuePort!=null) {
+			jsonMap.put(VALUEPORTID, this.m_refValuePort.toStringValue(HAPSerializationFormat.JSON));
+		}
 		jsonMap.put(VALUESTRUCTUREID, this.m_valueStructureId);
 		jsonMap.put(ROOTNAME, this.m_rootName);
 	}

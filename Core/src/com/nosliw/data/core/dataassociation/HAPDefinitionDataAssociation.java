@@ -21,6 +21,8 @@ public abstract class HAPDefinitionDataAssociation extends HAPEntityInfoImp{
 
 	private String m_type;
 	
+	private String m_baseEntityIdPath;
+	
 	public HAPDefinitionDataAssociation(String type) {
 		this.m_type = type;
 	}
@@ -30,6 +32,9 @@ public abstract class HAPDefinitionDataAssociation extends HAPEntityInfoImp{
 	public String getDirection() {    return this.m_direction;    }
 	public void setDirection(String direction) {    this.m_direction = direction;      }
 
+	public String getBaseEntityIdPath() {    return this.m_baseEntityIdPath;     }
+	public void setBaseEntityIdPath(String idPath) {    this.m_baseEntityIdPath = idPath;     }
+	
 	public abstract HAPDefinitionDataAssociation cloneDataAssocation();
 
 	protected void cloneToDataAssociation(HAPDefinitionDataAssociation dataAssociation) {
@@ -51,7 +56,9 @@ public abstract class HAPDefinitionDataAssociation extends HAPEntityInfoImp{
 		this.buildEntityInfoByJson(daJsonObj);
 		
 		this.m_direction = (String)daJsonObj.opt(HAPDefinitionDataAssociation.DIRECTION);
-		if(HAPUtilityBasic.isStringEmpty(this.m_direction))  this.m_direction = HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM;
+		if(HAPUtilityBasic.isStringEmpty(this.m_direction)) {
+			this.m_direction = HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM;
+		}
 		
 		return true;
 	}

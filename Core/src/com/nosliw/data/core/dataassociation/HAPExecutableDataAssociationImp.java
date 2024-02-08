@@ -1,10 +1,14 @@
 package com.nosliw.data.core.dataassociation;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -14,12 +18,24 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	
 	private String m_direction;
 
-	public HAPExecutableDataAssociationImp() {}
+	private Set<String> m_fromEntities;
+	
+	private Set<String> m_toEntities;
+	
+	public HAPExecutableDataAssociationImp() {
+		init();
+	}
 	
 	public HAPExecutableDataAssociationImp(HAPDefinitionDataAssociation definition) {
 		super(definition);
+		init();
 		this.m_direction = definition.getDirection();
 		this.m_type = definition.getType();
+	}
+	
+	private void init() {
+		this.m_fromEntities = new HashSet<String>();
+		this.m_toEntities = new HashSet<String>();
 	}
 	
 	@Override
@@ -28,7 +44,14 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 	@Override
 	public String getDireciton() {    return this.m_direction;    }
 	
+	@Override
+	public Set<String> getFromEntities(){   return this.m_fromEntities;    }
+	public void addFromEntity(String entityIdPath) {   this.m_fromEntities.add(entityIdPath);    }
 	
+	@Override
+	public Set<String> getToEntities(){    return this.m_toEntities;     }
+	public void addToEntity(String entityIdPath) {    this.m_toEntities.add(entityIdPath);     }
+
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
@@ -43,6 +66,8 @@ public abstract class HAPExecutableDataAssociationImp  extends HAPExecutableImpE
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(DIRECTION, this.m_direction);
+		jsonMap.put(FROMENTITY, HAPUtilityJson.buildJsonStringValue(this.m_fromEntities, HAPSerializationFormat.JSON));
+		jsonMap.put(TOENTITY, HAPUtilityJson.buildJsonStringValue(this.m_toEntities, HAPSerializationFormat.JSON));
 		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 
 //		Map<String, String> outputFlatMap = new LinkedHashMap<String, String>();

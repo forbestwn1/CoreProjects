@@ -32,7 +32,7 @@ public class HAPReferenceElementInValueStructure extends HAPReferenceRootElement
 
 	public HAPReferenceElementInValueStructure(HAPIdValuePort valuePortId, String eleFullPath) {
 		this(eleFullPath);
-		this.setValuePortId(valuePortId);
+		this.setValuePortRef(valuePortId);
 	}
 
 	@Override

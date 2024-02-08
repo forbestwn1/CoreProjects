@@ -11,17 +11,19 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
+import com.nosliw.data.core.domain.HAPRefIdEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
@@ -46,41 +48,101 @@ public class HAPProcessorDataAssociationMapping {
 
 	public static void processValueMapping(
 			HAPExecutableDataAssociationMapping out,
-			HAPExecutableEntity inEntityExe,
-			HAPContextProcessor inProcessorContext,
+			HAPExecutableEntity fromEntityExe,
+			HAPContextProcessor fromProcessorContext,
 			HAPDefinitionDataAssociationMapping valueMapping,
-			HAPExecutableEntity outEntityExe,
-			HAPContextProcessor outProcessorContext,
+			HAPExecutableEntity toEntityExe,
+			HAPContextProcessor toProcessorContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
 		List<HAPItemValueMapping<HAPReferenceRootElement>> mappingItems = valueMapping.getItems();
 		for(HAPItemValueMapping<HAPReferenceRootElement> mappingItem : mappingItems) {
 			
-			normalizeValuePortId(mappingItem, inEntityExe, outEntityExe);
+			normalizeValuePortId(mappingItem, fromEntityExe, toEntityExe);
 			
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, outProcessorContext);
+			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, toProcessorContext);
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, inProcessorContext);
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, fromProcessorContext);
 			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
 			//build relative assignment path mapping according to relative node
-			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, outProcessorContext));
+			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, toProcessorContext));
 			
 			//build constant assignment
 			
-			//collect provide
-			collectProvide(out,  mappingItem.getDefinition());
+		}
+
+		//build relative path in value port id ref
+		buildValuePortEntityRelativePath(valueMapping.getBaseEntityIdPath(), out);
+		
+		//from and to entity
+		collectRelatedEntity(out);
+	}
+
+	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPExecutableDataAssociationMapping mapping) {
+		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
+			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getEntityIdRef();
+			String fromEntityRelativePath = buildRelativePath(baseEntityIdPath, fromEntityIdRef.getIdPath());
+			fromEntityIdRef.setRelativePath(fromEntityRelativePath);
+			
+			HAPRefIdEntity toEntityIdRef = valueMappingPath.getToValuePortRef().getEntityIdRef();
+			String toEntityRelativePath = buildRelativePath(baseEntityIdPath, toEntityIdRef.getIdPath());
+			toEntityIdRef.setRelativePath(toEntityRelativePath);
 		}
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(buildRelativePath("a.b.c", "a.b.c.d.e"));
+	}
+	
+	private static String buildRelativePath(String baseEntityIdPath, String entityIdPath) {
+		String[] baseEntityIdPathSegs = new HAPPath(baseEntityIdPath).getPathSegments();
+		String[] entityIdPathSegs = new HAPPath(entityIdPath).getPathSegments();
+		
+		int i=0;
+		for(; i<baseEntityIdPathSegs.length; i++) {
+			if(i>=entityIdPathSegs.length) {
+				break;
+			} else if(!baseEntityIdPathSegs[i].equals(entityIdPathSegs[i])) {
+				break;
+			}
+		}
+		
+		StringBuffer out = new StringBuffer();
+		for(int j=i; j<baseEntityIdPathSegs.length; j++) {
+			if(j!=i) {
+				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
+			}
+			out.append(HAPConstantShared.NAME_PARENT);
+		}
+		
+		for(int j=i; j<entityIdPathSegs.length; j++) {
+			if(j!=i) {
+				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
+			}
+			out.append(HAPConstantShared.NAME_CHILD);
+			out.append(HAPConstantShared.SEPERATOR_LEVEL1);
+			out.append(entityIdPathSegs[j]);
+		}
+		return out.toString();
+	}
+	
+	private static void collectRelatedEntity(HAPExecutableDataAssociationMapping mapping) {
+		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
+			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getEntityIdRef().getIdPath());
+			mapping.addToEntity(valueMappingPath.getToValuePortRef().getEntityIdRef().getIdPath());
+		}
+	}
+	
 
 	private static void normalizeValuePortId(HAPItemValueMapping<HAPReferenceRootElement> mappingItem, HAPExecutableEntity inEntityExe, HAPExecutableEntity outEntityExe) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
-		if(targetRef.getValuePortId()==null) {
-			targetRef.setValuePortId(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe));
+		if(targetRef.getValuePortRef()==null) {
+			targetRef.setValuePortRef(new HAPRefValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe)));
 		}
 		
 		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
@@ -89,8 +151,8 @@ public class HAPProcessorDataAssociationMapping {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					if(mappingEle.getReference().getValuePortId()==null) {
-						mappingEle.getReference().setValuePortId(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe));
+					if(mappingEle.getReference().getValuePortRef()==null) {
+						mappingEle.getReference().setValuePortRef(new HAPRefValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe)));
 					}
 				}
 				return null;
@@ -118,13 +180,15 @@ public class HAPProcessorDataAssociationMapping {
 		
 	}
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPIdValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
 		{
 			HAPElementStructureLeafRelativeForMapping relativeStructureElement = (HAPElementStructureLeafRelativeForMapping)defStructureElement;
-			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getValuePortId());
+			if(dependency!=null) {
+				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+			}
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElementInValueStructure pathReference = defStructureElementRelative.getReference();
@@ -132,7 +196,9 @@ public class HAPProcessorDataAssociationMapping {
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
-					if(!relativeEleProcessConfigure.isTolerantNoParentForRelative())  throw new RuntimeException();
+					if(!relativeEleProcessConfigure.isTolerantNoParentForRelative()) {
+						throw new RuntimeException();
+					}
 				}
 				else {
 					resolveInfo.finalElement = HAPUtilityProcessRelativeElement.resolveFinalElement(resolveInfo.elementInfoSolid, false);
@@ -235,14 +301,19 @@ public class HAPProcessorDataAssociationMapping {
 					//find referred element defined in output
 					HAPComplexPath path = contextEleInfo.getElementPath();
 					HAPElementStructure sourceContextEle = HAPUtilityStructure.getDescendant(outputStructure.getRoot(path.getRoot()).getDefinition(), path.getPathStr());
-					if(sourceContextEle==null)  throw new RuntimeException();
+					if(sourceContextEle==null) {
+						throw new RuntimeException();
+					}
 					//update input: set referred element defined in output to input
 					HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)contextEleInfo.getElement();
 					HAPElementStructure solidateSourceContextEle = sourceContextEle.getSolidStructureElement();
-					if(solidateSourceContextEle==null)    throw new RuntimeException();
+					if(solidateSourceContextEle==null) {
+						throw new RuntimeException();
+					}
 					HAPUtilityStructure.setDescendantByNamePath(input.getStructure(relativeEle.getReference().getParentValueContextName()), new HAPComplexPath(relativeEle.getReference().getPath()), solidateSourceContextEle.cloneStructureElement());
+				} else {
+					throw new RuntimeException();
 				}
-				else  throw new RuntimeException();
 			}
 		}
 		
@@ -275,8 +346,9 @@ public class HAPProcessorDataAssociationMapping {
 									else if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 										
 									}
+								} else {
+									throw new RuntimeException();
 								}
-								else  throw new RuntimeException();
 							}
 						}
 						return null;

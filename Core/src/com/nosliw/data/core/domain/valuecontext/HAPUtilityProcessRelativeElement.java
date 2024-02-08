@@ -19,7 +19,7 @@ import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.domain.valueport.HAPValuePort;
@@ -46,12 +46,14 @@ import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementRefere
 public class HAPUtilityProcessRelativeElement {
 
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueStructure reference, HAPConfigureResolveStructureElementReference resolveConfigure, HAPContextProcessor processorContext){
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortId(), processorContext);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), processorContext);
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
 		HAPInfoReferenceResolve out =  HAPUtilityStructureElementReference.analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
-		if(out!=null)  out.eleReference = reference;
+		if(out!=null) {
+			out.eleReference = reference;
+		}
 		
 		return out;
 	}
@@ -60,7 +62,9 @@ public class HAPUtilityProcessRelativeElement {
 	//resolve the remain path part
 	public static HAPElementStructure resolveFinalElement(HAPInfoDesendantResolve resolveInfo, Boolean relativeInheritRule) {
 		HAPElementStructure out = null;
-		if(relativeInheritRule==null)   relativeInheritRule = true;
+		if(relativeInheritRule==null) {
+			relativeInheritRule = true;
+		}
 		
 		if(resolveInfo.remainPath.isEmpty()) {
 			//exactly match with path
@@ -83,8 +87,11 @@ public class HAPUtilityProcessRelativeElement {
 							String subPath = null;
 							String rulePath = rule.getPath();
 							String remainPath = resolveInfo.remainPath.getPath();
-							if(HAPUtilityBasic.isEquals(rulePath, remainPath))  subPath = "";
-							else if(remainPath.contains(rulePath+"."))  subPath = remainPath.substring(rulePath.length()+1);
+							if(HAPUtilityBasic.isEquals(rulePath, remainPath)) {
+								subPath = "";
+							} else if(remainPath.contains(rulePath+".")) {
+								subPath = remainPath.substring(rulePath.length()+1);
+							}
 
 							if(subPath!=null) {
 								HAPDataRule newRule = rule.cloneDataRule();
@@ -110,8 +117,10 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	public static void processRelativeInStructure(HAPDefinitionEntityValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPIdValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
-		if(processRelativeConfigure==null)  processRelativeConfigure = new HAPConfigureProcessorRelative(); 
+	public static void processRelativeInStructure(HAPDefinitionEntityValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+		if(processRelativeConfigure==null) {
+			processRelativeConfigure = new HAPConfigureProcessorRelative();
+		} 
 		
 		for(HAPRootStructure rootStructure : valueStructure.getAllRoots()) {
 			HAPElementStructure rootElement = processRelativeInStructureElement(new HAPInfoElement(rootStructure.getDefinition(), new HAPComplexPath(rootStructure.getName())), processRelativeConfigure, dependency, errors, processorContext);
@@ -119,14 +128,16 @@ public class HAPUtilityProcessRelativeElement {
 		}
 	}
 
-	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPIdValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure defStructureElement = structureEleInfo.getElement();
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION:
 		{
 			HAPElementStructureLeafRelativeForDefinition relativeStructureElement = (HAPElementStructureLeafRelativeForDefinition)defStructureElement;
-			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getValuePortId());
+			if(dependency!=null) {
+				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+			}
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, relativeEleProcessConfigure, errors, processorContext);
 			}
@@ -135,7 +146,9 @@ public class HAPUtilityProcessRelativeElement {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE:
 		{
 			HAPElementStructureLeafRelativeForValue relativeStructureElement = (HAPElementStructureLeafRelativeForValue)defStructureElement;
-			if(dependency!=null)  dependency.add(relativeStructureElement.getReference().getValuePortId());
+			if(dependency!=null) {
+				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+			}
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, relativeEleProcessConfigure, errors, processorContext);
 				out = processRelativeStructureElementForValue((HAPElementStructureLeafRelativeForValue)out, relativeEleProcessConfigure, errors, processorContext);
@@ -165,7 +178,9 @@ public class HAPUtilityProcessRelativeElement {
 		
 		if(resolveInfo==null) {
 			errors.add(HAPServiceData.createFailureData(structureEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
-			if(!relativeEleProcessConfigure.isTolerantNoParentForRelative())  throw new RuntimeException();
+			if(!relativeEleProcessConfigure.isTolerantNoParentForRelative()) {
+				throw new RuntimeException();
+			}
 		}
 		else {
 			resolveInfo.finalElement = resolveFinalElement(resolveInfo.elementInfoSolid, relativeEleProcessConfigure.isInheritRule());
@@ -190,7 +205,9 @@ public class HAPUtilityProcessRelativeElement {
 			else {
 				//not find parent node, throw exception
 				errors.add(HAPServiceData.createFailureData(structureEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
-				if(!relativeEleProcessConfigure.isTolerantNoParentForRelative())  throw new RuntimeException();
+				if(!relativeEleProcessConfigure.isTolerantNoParentForRelative()) {
+					throw new RuntimeException();
+				}
 			}
 			
 			out.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));

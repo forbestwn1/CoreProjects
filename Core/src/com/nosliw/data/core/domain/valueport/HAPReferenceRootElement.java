@@ -27,7 +27,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public static final String ROOTNAME = "rootName";
 
 	//value port Id
-	private HAPIdValuePort m_valuePortId;
+	private HAPRefValuePort m_valuePortRef;
 	
 	//sometimes use value port name, need to translate name to value port id
 	private String m_valuePortName;
@@ -43,13 +43,13 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		this.m_rootName = rootName;
 	}
 
-	public HAPReferenceRootElement(String rootName, HAPIdValuePort valuePortInfo) {
+	public HAPReferenceRootElement(String rootName, HAPRefValuePort valuePortRef) {
 		this(rootName);
-		this.m_valuePortId = valuePortInfo;
+		this.m_valuePortRef = valuePortRef;
 	}
 	
-	public HAPIdValuePort getValuePortId() {    return this.m_valuePortId;     }
-	public void setValuePortId(HAPIdValuePort valuePortId) {    this.m_valuePortId = valuePortId;     }
+	public HAPRefValuePort getValuePortRef() {    return this.m_valuePortRef;     }
+	public void setValuePortRef(HAPRefValuePort valuePortRef) {    this.m_valuePortRef = valuePortRef;     }
 	
 	public String getValuePortName() {    return this.m_valuePortName;    }
 	
@@ -67,8 +67,8 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 			JSONObject jsonValue = (JSONObject)value;
 			JSONObject valuePortIdJson = jsonValue.optJSONObject(VALUEPORTID);
 			if(valuePortIdJson!=null) {
-				this.m_valuePortId = new HAPIdValuePort();
-				this.m_valuePortId.buildObject(valuePortIdJson, HAPSerializationFormat.JSON);
+				this.m_valuePortRef = new HAPRefValuePort();
+				this.m_valuePortRef.buildObject(valuePortIdJson, HAPSerializationFormat.JSON);
 			}
 			JSONObject valueStructureRefJson = jsonValue.optJSONObject(VALUESTRUCTUREREFERENCE);
 			if(valueStructureRefJson!=null) {
@@ -84,7 +84,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEPORTID, HAPSerializeManager.getInstance().toStringValue(this.m_valuePortId, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUEPORTID, HAPSerializeManager.getInstance().toStringValue(this.m_valuePortRef, HAPSerializationFormat.JSON));
 		jsonMap.put(VALUEPORTNAME, this.m_valuePortName);
 		jsonMap.put(ROOTNAME, this.getRootName());
 		jsonMap.put(VALUESTRUCTUREREFERENCE, HAPSerializeManager.getInstance().toStringValue(this.m_valueStructureReference, HAPSerializationFormat.JSON));
@@ -98,7 +98,9 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	
 	protected void cloneToRootReference(HAPReferenceRootElement rootEleRef) {
 		rootEleRef.m_valuePortName = this.m_valuePortName;
-		if(this.m_valuePortId!=null) rootEleRef.m_valuePortId = (HAPIdValuePort)this.m_valuePortId.cloneValue();
+		if(this.m_valuePortRef!=null) {
+			rootEleRef.m_valuePortRef = (HAPRefValuePort)this.m_valuePortRef.cloneValue();
+		}
 		rootEleRef.m_rootName = this.getRootName();
 	}
 	
@@ -107,10 +109,18 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPReferenceRootElement) {
 			HAPReferenceRootElement ele = (HAPReferenceRootElement)obj;
-			if(!HAPUtilityBasic.isEquals(this.m_valuePortId, ele.m_valuePortId))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_valuePortName, ele.m_valuePortName))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_valueStructureReference, ele.m_valueStructureReference))  return false;
-			if(!HAPUtilityBasic.isEquals(this.getRootName(), ele.getRootName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_valuePortRef, ele.m_valuePortRef)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_valuePortName, ele.m_valuePortName)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_valueStructureReference, ele.m_valueStructureReference)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.getRootName(), ele.getRootName())) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

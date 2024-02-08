@@ -12,13 +12,19 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueContext {
 
+	public static HAPIdValuePort createValuePortIdValueContext(HAPExecutableEntity complexEntity) {
+		return new HAPIdValuePort(complexEntity.getPathFromRoot().toString(), HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.NAME_DEFAULT);
+	}
+	
 	public static String getExtensionValueStructure(HAPExecutableEntityValueContext valueContext, String groupType) {
 		List<HAPInfoPartSimple> parts = getAllSimpleParts(valueContext);
 		for(HAPInfoPartSimple part : parts) {
@@ -83,8 +89,9 @@ public class HAPUtilityValueContext {
 
 				//compare priority first
 				int out = sortPriority(arg0.getPriority(), arg1.getPriority());
-				if(out!=0)  return out;
-				else {
+				if(out!=0) {
+					return out;
+				} else {
 					//if priority equal, then compare by group type
 					return groupPriority1 - groupPriority0;
 				}
@@ -137,8 +144,12 @@ public class HAPUtilityValueContext {
 
 	private static List<Integer> appendParentInfo(List<Integer> basePriority, List<Integer> priority) {
 		List<Integer> out = new ArrayList<Integer>();
-		if(basePriority!=null)  out.addAll(basePriority);
-		if(priority!=null)   out.addAll(priority);
+		if(basePriority!=null) {
+			out.addAll(basePriority);
+		}
+		if(priority!=null) {
+			out.addAll(priority);
+		}
 		return out;
 	}
 
@@ -153,9 +164,11 @@ public class HAPUtilityValueContext {
 	
 	public static HAPInfoPartValueStructure cascadePartInfo(HAPInfoPartValueStructure info1, HAPInfoPartValueStructure info2) {
 		HAPInfoPartValueStructure out;
-		if(info1==null)   out = info2.cloneValueStructurePartInfo();
-		else if(info2==null)  out = info1.cloneValueStructurePartInfo();
-		else {
+		if(info1==null) {
+			out = info2.cloneValueStructurePartInfo();
+		} else if(info2==null) {
+			out = info1.cloneValueStructurePartInfo();
+		} else {
 			out = info1.cloneValueStructurePartInfo().appendPath(info2.getReference()).appendPriority(info2.getPriority());
 		}
 		return out;
@@ -197,9 +210,13 @@ public class HAPUtilityValueContext {
 		}
 		
 		double out = priority1-priority0;
-		if(out>0)   return 1;
-		else if(out<0)   return -1;
-		else return 0;
+		if(out>0) {
+			return 1;
+		} else if(out<0) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 	
 	public static HAPInfoPartValueStructure createPartInfoDefault() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_DEFAULT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_DEFAULT);	}

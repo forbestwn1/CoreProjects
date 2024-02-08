@@ -65,8 +65,7 @@ public class HAPExecutableBundle extends HAPExecutableImp{
 	public void setEntityPathById(String id, String path) {
 		this.m_exeEntityPathById.put(id, path);
 	}
-	public HAPExecutableEntity getExecutableEntityById(String id) {
-		String path = this.m_exeEntityPathById.get(id);
+	public HAPExecutableEntity getExecutableEntityByPath(String path) {
 		return this.m_executableEntityDomain.getRootEntity().getDescendantEntity(new HAPPath(path));
 	}
 	

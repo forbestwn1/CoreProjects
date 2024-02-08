@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -47,7 +47,7 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	@HAPAttribute
 	public static String TOITEMPATH = "toItemPath";
 
-	private HAPIdValuePort m_fromValuePortId;
+	private HAPRefValuePort m_fromValuePortRef;
 	private String m_fromValueStructureId;
 	private String m_fromItemPath;
 	
@@ -60,28 +60,31 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 	
 	private HAPMatchers m_matchers;
 	
-	private HAPIdValuePort m_toValuePortId;
+	private HAPRefValuePort m_toValuePortRef;
 	private String m_toValueStructureId;
 	private String m_toItemPath;
 	
-	public HAPPathValueMapping(HAPIdValuePort fromValuePortId, String fromValueStructureId, String fromItemPath, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
-		this.m_fromValuePortId = fromValuePortId;
+	public HAPPathValueMapping(HAPRefValuePort fromValuePortId, String fromValueStructureId, String fromItemPath, HAPMatchers matchers, HAPRefValuePort toValuePortId, String toValueStructureId, String toItemPath) {
+		this.m_fromValuePortRef = fromValuePortId;
 		this.m_fromValueStructureId = fromValueStructureId;
 		this.m_fromItemPath = fromItemPath;
 		this.m_matchers = matchers;
-		this.m_toValuePortId = toValuePortId;
+		this.m_toValuePortRef = toValuePortId;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
 
-	public HAPPathValueMapping(Object fromConstant, HAPMatchers matchers, HAPIdValuePort toValuePortId, String toValueStructureId, String toItemPath) {
+	public HAPPathValueMapping(Object fromConstant, HAPMatchers matchers, HAPRefValuePort toValuePortId, String toValueStructureId, String toItemPath) {
 		this.m_fromConstant = fromConstant;
 		this.m_matchers = matchers;
-		this.m_toValuePortId = toValuePortId;
+		this.m_toValuePortRef = toValuePortId;
 		this.m_toValueStructureId = toValueStructureId;
 		this.m_toItemPath = toItemPath;
 	}
 
+	public HAPRefValuePort getFromValuePortRef() {   return this.m_fromValuePortRef;     }
+	public HAPRefValuePort getToValuePortRef() {    return this.m_toValuePortRef;     }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -90,13 +93,13 @@ public class HAPPathValueMapping extends HAPExecutableImp{
 		jsonMap.put(FROMPROVIDENAME, this.m_fromProvideName);
 		jsonMap.put(FROMPROVIDEPATH, this.m_fromProvidePath);
 		
-		jsonMap.put(FROMVALUEPORTID, this.m_fromValuePortId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(FROMVALUEPORTID, this.m_fromValuePortRef.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FROMVALUESTRUCTUREID, m_fromValueStructureId);
 		jsonMap.put(FROMITEMPATH, this.m_fromItemPath);
 
 		jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(m_matchers, HAPSerializationFormat.JSON));
 
-		jsonMap.put(TOVALUEPORTID, this.m_toValuePortId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(TOVALUEPORTID, this.m_toValuePortRef.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(TOVALUESTRUCTUREID, m_toValueStructureId);
 		jsonMap.put(TOITEMPATH, this.m_toItemPath);
 	}

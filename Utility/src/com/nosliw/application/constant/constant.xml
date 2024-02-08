@@ -1,4 +1,4 @@
-<root jsPath="{{projectsPath}}/Application/WebContent/libresources/nosliw/constant"
+<root jsPath="{{projectsPath}}/Application/src/main/webapp/libresources/nosliw/constant"
 	jsAttributeFile="COMMONATRIBUTECONSTANT"
 	jsConstantFile="COMMONCONSTANT"
 >
@@ -933,6 +933,7 @@
 
 			<definition type="space"/>
 			<definition name="NAME_PARENT" value="pppppparentttttt"/>
+			<definition name="NAME_CHILD" value="chilllllllld"/>
 
 			<definition type="space"/>
 			<definition name="EMBEDEDVALUE_TYPE_ENTITYID" value="entityId"/>

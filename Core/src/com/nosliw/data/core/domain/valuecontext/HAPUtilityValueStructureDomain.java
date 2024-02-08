@@ -25,6 +25,7 @@ import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValu
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.structure.HAPElementStructure;
@@ -178,7 +179,7 @@ public class HAPUtilityValueStructureDomain {
 					HAPWrapperExecutableValueStructure valueStructureWrapper = valueStructureInfo.getValueStructure();
 					HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-					Set<HAPIdValuePort> dependency = new HashSet<HAPIdValuePort>();
+					Set<HAPRefValuePort> dependency = new HashSet<HAPRefValuePort>();
 					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
 				}
 
@@ -194,7 +195,9 @@ public class HAPUtilityValueStructureDomain {
 			List<HAPExecutablePartValueContext> newParts = new ArrayList<HAPExecutablePartValueContext>();
 			for(HAPExecutablePartValueContext part : parentValueContext.getParts()) {
 				HAPExecutablePartValueContext newPart = part.inheritValueContextPart(valueStructureDomain, inheritMode, valueStructureInheritConfig.getGroupTypes());
-				if(!newPart.isEmpty()) newParts.add(newPart);
+				if(!newPart.isEmpty()) {
+					newParts.add(newPart);
+				}
 			}
 			valueContext.addPartGroup(newParts, HAPUtilityValueContext.createPartInfoFromParent());
 		}
@@ -234,16 +237,18 @@ public class HAPUtilityValueStructureDomain {
 
 						private void process(HAPElementStructureLeafRelative relativeEle) {
 							HAPReferenceRootElement rootRef = relativeEle.getReference(); 
-							HAPIdValuePort valuePortId = rootRef.getValuePortId();
-							if(valuePortId==null) {
+							HAPRefValuePort valuePortRef = rootRef.getValuePortRef();
+							if(valuePortRef==null) {
 								String valuePortName = rootRef.getValuePortName();
+								HAPIdValuePort valuePortId = null;
 								if(valuePortName==null) {
 									valuePortId = HAPUtilityValuePort.getDefaultValuePortIdInEntity(parentComplexEntity);
 								}
 								else if(valuePortName.equals(HAPConstantShared.VALUEPORT_NAME_SELF)) {
-									valuePortId = HAPUtilityValuePort.createValuePortIdValueContext(entityExe);
+									valuePortId = HAPUtilityValueContext.createValuePortIdValueContext(entityExe);
 								}
-								rootRef.setValuePortId(valuePortId);
+								valuePortRef = new HAPRefValuePort(valuePortId);
+								rootRef.setValuePortRef(valuePortRef);
 							}
 						}
 						
@@ -272,7 +277,7 @@ public class HAPUtilityValueStructureDomain {
 					}, null);
 					
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-					Set<HAPIdValuePort> dependency = new HashSet<HAPIdValuePort>();
+					Set<HAPRefValuePort> dependency = new HashSet<HAPRefValuePort>();
 					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
 				}
 

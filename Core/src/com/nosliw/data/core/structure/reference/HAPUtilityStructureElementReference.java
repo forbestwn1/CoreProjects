@@ -28,7 +28,7 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 public class HAPUtilityStructureElementReference {
 
 	public static HAPInfoReferenceResolve resolveElementReference(HAPReferenceElementInValueStructure reference, HAPConfigureResolveStructureElementReference resolveConfigure, HAPContextProcessor processContext){
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortId(), processContext);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), processContext);
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
@@ -39,7 +39,7 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPContextProcessor processContext){
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(rootEleCriteria.getValuePortId(), processContext);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(rootEleCriteria.getValuePortRef(), processContext);
 		List<HAPInfoValueStructureReference> candidates = valuePort.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
 
 		if(candidates==null||candidates.size()==0)  return null;
@@ -48,7 +48,7 @@ public class HAPUtilityStructureElementReference {
 			HAPDefinitionEntityValueStructure valueStructure = structureRefInfo.getValueStructureDefinition();
 			String rootName = rootEleCriteria.getRootName();
 			if(valueStructure.getRootByName(rootName)!=null) {
-				return new HAPIdRootElement(rootEleCriteria.getValuePortId(), valueStructureExeId, rootName);
+				return new HAPIdRootElement(rootEleCriteria.getValuePortRef(), valueStructureExeId, rootName);
 			}
 		}
 		return null;

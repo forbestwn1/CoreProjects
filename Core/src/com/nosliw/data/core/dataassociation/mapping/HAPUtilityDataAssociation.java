@@ -18,7 +18,7 @@ import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -35,7 +35,7 @@ import com.nosliw.data.core.structure.HAPUtilityStructure;
 public class HAPUtilityDataAssociation {
 
 	public static List<HAPPathValueMapping> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
-		HAPIdValuePort valuePortId = valueMappingItem.getTarget().getValuePortId();
+		HAPRefValuePort valuePortId = valueMappingItem.getTarget().getValuePortRef();
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
 		List<HAPPathValueMapping> out = new ArrayList<HAPPathValueMapping>();
@@ -65,15 +65,19 @@ public class HAPUtilityDataAssociation {
 							//from constant
 							HAPPathElementMappingConstantToVariable mappingPath1 = (HAPPathElementMappingConstantToVariable)mappingPath;
 							HAPMatchers matchers = mappingPath1.getMatcher();
-							if(matchers.isVoid())  matchers = null;
+							if(matchers.isVoid()) {
+								matchers = null;
+							}
 							out.add(new HAPPathValueMapping(mappingPath1.getFromConstant(), matchers, valuePortId, toValueStructureId, toItemFullPath));
 						}
 						else if(mappingPath.getType().equals(HAPPathElementMapping.VARIABLE2VARIABLE)) {
 							//from variable
 							HAPPathElementMappingVariableToVariable mappingPath1 = (HAPPathElementMappingVariableToVariable)mappingPath;
 							HAPMatchers matchers = mappingPath1.getMatcher();
-							if(matchers.isVoid())  matchers = null;
-							out.add(new HAPPathValueMapping(relativeEle.getReference().getValuePortId(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
+							if(matchers.isVoid()) {
+								matchers = null;
+							}
+							out.add(new HAPPathValueMapping(relativeEle.getReference().getValuePortRef(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
 						}
 					}
 					
@@ -98,9 +102,11 @@ public class HAPUtilityDataAssociation {
 						//from constant
 						HAPPathElementMappingConstantToVariable mappingPath1 = (HAPPathElementMappingConstantToVariable)mappingPath;
 						HAPMatchers matchers = mappingPath1.getMatcher();
-						if(matchers.isVoid())  matchers = null;
+						if(matchers.isVoid()) {
+							matchers = null;
+						}
 						String toItemFullPath = HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), mappingPath.getPath());
-						out.add(new HAPPathValueMapping(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemFullPath));
+						out.add(new HAPPathValueMapping(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortRef(), toValueStructureId, toItemFullPath));
 					}
 				}
 				return null;
@@ -175,7 +181,9 @@ public class HAPUtilityDataAssociation {
 	public static HAPConfigureProcessorValueStructure getContextProcessConfigurationForDataAssociation(HAPInfo daProcessConfigure) {
 		HAPConfigureProcessorValueStructure configure = new HAPConfigureProcessorValueStructure();
 		configure.inheritMode = HAPConstant.INHERITMODE_NONE;
-		if(HAPUtilityDAProcess.ifModifyInputStructure(daProcessConfigure))  configure.tolerantNoParentForRelative = true;
+		if(HAPUtilityDAProcess.ifModifyInputStructure(daProcessConfigure)) {
+			configure.tolerantNoParentForRelative = true;
+		}
 		return configure;
 	} 
 

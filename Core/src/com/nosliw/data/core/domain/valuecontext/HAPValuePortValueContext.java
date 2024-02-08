@@ -22,7 +22,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	}
 
 	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
-		super(HAPUtilityValuePort.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort(), isDefault);
+		super(HAPUtilityValueContext.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort(), isDefault);
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}

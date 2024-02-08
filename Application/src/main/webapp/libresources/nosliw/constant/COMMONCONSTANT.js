@@ -547,6 +547,7 @@ var COMMONCONSTANT=
   "VALUEPORT_TYPE_SERVICE_RESULT": "serviceResult",
   "VALUEPORT_NAME_SELF": "self",
   "NAME_PARENT": "pppppparentttttt",
+  "NAME_CHILD": "chilllllllld",
   "EMBEDEDVALUE_TYPE_ENTITYID": "entityId",
   "EMBEDEDVALUE_TYPE_ENTITY": "entity",
   "EMBEDEDVALUE_TYPE_EXTERNALREFERENCE": "externalReference",

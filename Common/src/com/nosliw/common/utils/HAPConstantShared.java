@@ -895,6 +895,7 @@ public class HAPConstantShared {
 
 
 		public static final String NAME_PARENT = "pppppparentttttt";
+		public static final String NAME_CHILD = "chilllllllld";
 
 
 
