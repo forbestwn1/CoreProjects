@@ -15,7 +15,5 @@ public interface HAPExecutable extends HAPSerializable{
 	//resource dependency 
 	List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager);
 
-	//conver to string
-//	String toString(HAPDomainEntityExecutableResourceComplex domain);
 	
 }

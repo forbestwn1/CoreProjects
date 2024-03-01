@@ -8,13 +8,13 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainSimple;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntitySimple;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
-public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityInDomainSimple{
+public class HAPDefinitionEntityContainerAttachment extends HAPManualEntitySimple{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
@@ -98,7 +98,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPDefinitionEntityI
 	}
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		return this.cloneAttachmentContainer();
 	}
 }

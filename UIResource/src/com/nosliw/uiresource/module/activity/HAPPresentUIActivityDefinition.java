@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -53,7 +53,7 @@ public class HAPPresentUIActivityDefinition extends HAPDefinitionActivityNormal{
 	}
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity, HAPSerializationFormat format) {
+	public void parseActivityDefinition(Object obj, HAPManualEntityComplex complexEntity, HAPSerializationFormat format) {
 		this.buildObject(obj, format);
 	}
 

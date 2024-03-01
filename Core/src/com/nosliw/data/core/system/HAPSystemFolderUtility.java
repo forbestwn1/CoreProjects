@@ -27,6 +27,9 @@ public class HAPSystemFolderUtility {
 	public static String getScriptGroupFolder(){  return getApplicationDataFolder() + "script/";  }
 	public static String getCodeTableFolder(){  return getApplicationDataFolder() + "codetable/";  }
 
+	public static String getEntityTextFolder(String entityType) {    return getApplicationDataFolder() + entityType + "/";     }
+	public static String getManualEntityBaseFolder() {    return getApplicationDataFolder();     }
+	
 	public static String getResourceFolder(String resourceType) {    return getApplicationDataFolder() + resourceType + "/";     }
 	
 	public static String getResourceTempFileFolder(){  return HAPSystemUtility.getJSTempFolder() + "resources/";  }

@@ -1,18 +1,14 @@
 package com.nosliw.data.core.resource;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.io.Files;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -36,10 +32,15 @@ public class HAPUtilityResourceId {
 
 		//prefix according to structure
 		String structure = resourceId.getStructure();
-		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE);
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED);
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC);
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL);
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+			out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE);
+		} else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+			out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED);
+		} else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
+			out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC);
+		} else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+			out.append(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL);
+		}
 		
 		//append core id
 		out.append(resourceId.getCoreIdLiterate());
@@ -57,10 +58,15 @@ public class HAPUtilityResourceId {
 	}
 	
 	public static boolean isResourceIdLiterate(String literate) {
-		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED))  return true;
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL))   return true;
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC))  return true;
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE))  return true;
+		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
+			return true;
+		} else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL)) {
+			return true;
+		} else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC)) {
+			return true;
+		} else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE)) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -94,7 +100,9 @@ public class HAPUtilityResourceId {
 			coreIdLiterate = literate;
 		}
 
-		if(structure==null)  return null;
+		if(structure==null) {
+			return null;
+		}
 		
 		HAPResourceId out = newInstanceByType(resourceType, structure);
 		out.buildCoreIdByLiterate(coreIdLiterate);
@@ -103,7 +111,9 @@ public class HAPUtilityResourceId {
 	
 	public static HAPResourceId newInstanceByType(String resourceType, String structure) {
 		HAPResourceId out = null;
-		if(structure==null)   structure = getDefaultResourceStructure();
+		if(structure==null) {
+			structure = getDefaultResourceStructure();
+		}
 		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			out = new HAPResourceIdSimple(resourceType);
 		}
@@ -156,42 +166,21 @@ public class HAPUtilityResourceId {
 		return null;
 	}
 
-	private static Pair<File, HAPSerializationFormat> findResourceFile(File dir, String fileName){
-		File[] matches = dir.listFiles(new FilenameFilter(){
-		  @Override
-			public boolean accept(File dir, String name){
-			  return fileName.equals(Files.getNameWithoutExtension(name));
-		  	}
-		});
-		
-		if(matches!=null&&matches.length>0) {
-			File file = matches[0];
-			HAPSerializationFormat format = m_extensionToFormat.get(Files.getFileExtension(file.getName()));
-			if(format==null)  format = HAPSerializationFormat.JSON;
-			return Pair.of(file, format); 
-		}
-		return null;
-	}
-	
-	private static Map<String, HAPSerializationFormat> m_extensionToFormat = new LinkedHashMap<String, HAPSerializationFormat>(); 
-	
-	static {
-		m_extensionToFormat.put("json", HAPSerializationFormat.JSON);
-		m_extensionToFormat.put("html", HAPSerializationFormat.HTML);
-		m_extensionToFormat.put("js", HAPSerializationFormat.JAVASCRIPT);
-	}
-	
 
 	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPResourceIdSimple id : ids) 	out.add(new HAPResourceDependency(id));
+		for(HAPResourceIdSimple id : ids) {
+			out.add(new HAPResourceDependency(id));
+		}
 		return out;
 	}
 
 
 	public static boolean isLocalReference(HAPResourceId resourceId) {
 		//kkk
-		if(resourceId.getResourceType()==null)   return true;
+		if(resourceId.getResourceType()==null) {
+			return true;
+		}
 		return false;
 	}
 	

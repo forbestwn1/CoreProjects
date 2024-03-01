@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;

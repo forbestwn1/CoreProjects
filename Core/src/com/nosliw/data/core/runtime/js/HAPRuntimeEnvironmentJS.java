@@ -15,13 +15,13 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntity;
-import com.nosliw.data.core.domain.HAPPluginResourceDefinitionImpEntityThin;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorComplexScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorSimpleScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPResourceManagerImpScriptBased;
+import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
+import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntity;
+import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntityThin;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPPluginAdapterProcessorDataAssociation;
@@ -55,14 +55,15 @@ import com.nosliw.data.core.domain.entity.service.provider.HAPPluginEntityDefini
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginSimpleEntityProcessorServiceProvider;
 import com.nosliw.data.core.domain.entity.task.HAPPluginEntityDefinitionInDomainTask;
 import com.nosliw.data.core.domain.entity.task.HAPPluginEntityProcessorTask;
-import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityDefinitionInDomainTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityProcessorComplexTestComplexScript;
-import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityDefinitionInDomainTestComplex1;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityProcessorComplexTestComplex1;
 import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPPluginEntityDefinitionInDomainTestSimple1;
 import com.nosliw.data.core.domain.entity.value.HAPPluginEntityDefinitionInDomainValue;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueContext;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPPluginEntityDefinitionInDomainValueStructure;
+import com.nosliw.data.core.entity.HAPManagerEntity;
+import com.nosliw.data.core.entity.division.manual.test.complex.script.HAPPluginParserEntityImpTestComplexScript;
+import com.nosliw.data.core.entity.division.manual.test.complex.testcomplex1.HAPPluginParserEntityImpTestComplex1;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPPluginParserEntityImpValueContext;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPPluginParserEntityImpValueStructure;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.interactive.HAPPluginEntityDefinitionInDomainInteractive;
 import com.nosliw.data.core.interactive.HAPPluginSimpleEntityProcessorInteractive;
@@ -146,6 +147,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerDomainEntityExecutable m_domainEntityExecutableManager;
  	
+	private HAPManagerEntity m_entityManager;
+	
 	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
 	private HAPManagerCronJob m_cronJobManager;
@@ -173,11 +176,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerResourceDefinition resourceDefManager,
 		    HAPManagerDomainEntityDefinition domainEntityManager,
 			HAPManagerDomainEntityExecutable complexEntityManager,
+			HAPManagerEntity entityManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, entityManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -197,6 +201,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerResourceDefinition resourceDefManager,
 			    HAPManagerDomainEntityDefinition domainEntityDefinitionManager,
 				HAPManagerDomainEntityExecutable complexEntityExecutableManager,
+				HAPManagerEntity entityManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
@@ -213,6 +218,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_domainEntityDefinitionManager = domainEntityDefinitionManager;
 		this.m_domainEntityExecutableManager = complexEntityExecutableManager;
+		this.m_entityManager = entityManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
 		this.m_cronJobManager = cronJobManager;
@@ -302,12 +308,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, this));
 
 		//domain entity definition
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainTestComplex1(this));
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainTestComplexScript(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpTestComplex1(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpTestComplexScript(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainTestSimple1(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainAttachment(this));
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueContext(this));
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainValueStructure(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpValueContext(this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpValueStructure(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionDataGroup(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionDataGroupTemp(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainExpressionDataSingle(this));
@@ -404,6 +410,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@Override
 	public HAPManagerDomainEntityExecutable getDomainEntityExecutableManager() {   return this.m_domainEntityExecutableManager;   }
+
+	@Override
+	public HAPManagerEntity getEntityManager() {   return this.m_entityManager;  }
 
 	@Override
 	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}

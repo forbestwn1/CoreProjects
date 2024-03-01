@@ -7,7 +7,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
+import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginResourceDefinitionImp implements HAPPluginResourceDefinition{

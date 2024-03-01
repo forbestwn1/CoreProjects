@@ -2,11 +2,11 @@ package com.nosliw.data.core.activity;
 
 import org.json.JSONObject;
 
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPParserActivity {
 
-	public static HAPDefinitionActivity parseActivityDefinition(JSONObject activityObjJson, HAPDefinitionEntityInDomainComplex complexEntity, HAPManagerActivityPlugin activityPluginMan) {
+	public static HAPDefinitionActivity parseActivityDefinition(JSONObject activityObjJson, HAPManualEntityComplex complexEntity, HAPManagerActivityPlugin activityPluginMan) {
 		String activityType = activityObjJson.getString(HAPDefinitionActivity.ACTIVITYTYPE);
 		return activityPluginMan.getPlugin(activityType).buildActivityDefinition(activityObjJson, complexEntity);
 	}

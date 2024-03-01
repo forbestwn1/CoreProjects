@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.task.HAPDefinitionTask;
@@ -63,7 +63,7 @@ public class HAPEmbededTaskActivityDefinition extends HAPDefinitionActivityNorma
 	public HAPDefinitionTask cloneTaskDefinition() {  return this.cloneActivityDefinition();  }
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity,
+	public void parseActivityDefinition(Object obj, HAPManualEntityComplex complexEntity,
 			HAPSerializationFormat format) {
 		// TODO Auto-generated method stub
 		

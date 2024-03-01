@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainAdapter;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityAdapter;
 
-public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDomainAdapter{
+public class HAPDefinitionEntityDataAssciation extends HAPManualEntityAdapter{
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	
@@ -13,7 +13,7 @@ public class HAPDefinitionEntityDataAssciation extends HAPDefinitionEntityInDoma
 
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityDataAssciation out = new HAPDefinitionEntityDataAssciation();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

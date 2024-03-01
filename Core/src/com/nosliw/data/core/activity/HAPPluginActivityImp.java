@@ -8,9 +8,9 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginActivityImp implements HAPPluginActivity{
@@ -70,7 +70,7 @@ public class HAPPluginActivityImp implements HAPPluginActivity{
 	}
 
 	@Override
-	public HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity) {
+	public HAPDefinitionActivity buildActivityDefinition(Object obj, HAPManualEntityComplex complexEntity) {
 		HAPDefinitionActivity out = null;
 		try {
 			out = (HAPDefinitionActivity)this.m_activityClass.getConstructor(String.class).newInstance(this.getType());

@@ -1,9 +1,10 @@
 package com.nosliw.data.core.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityDefinitionComplex {
@@ -15,7 +16,7 @@ public class HAPUtilityEntityDefinitionComplex {
 	}
 
 	public static String addPlainScriptExpressionToComplexEntity(HAPDefinitionExpression expression, HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext) {
-		HAPDefinitionEntityInDomainComplex complexEntity = (HAPDefinitionEntityInDomainComplex)parserContext.getGlobalDomain().getEntityInfoDefinition(complexEntityId).getEntity();
+		HAPManualEntityComplex complexEntity = (HAPManualEntityComplex)parserContext.getGlobalDomain().getEntityInfoDefinition(complexEntityId).getEntity();
 		return complexEntity.getPlainScriptExpressionGroupEntity(parserContext).addExpression(expression);
 	}
 	

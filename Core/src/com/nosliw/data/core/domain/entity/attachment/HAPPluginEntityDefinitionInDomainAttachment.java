@@ -8,8 +8,8 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExtraInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
-import com.nosliw.data.core.domain.HAPUtilityParserEntityFormatJson;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.definition.HAPUtilityParserEntityFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainAttachment extends HAPPluginEntityDefinitionInDomainImpSimple{

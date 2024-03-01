@@ -10,11 +10,11 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.HAPInfoParentComplex;
 import com.nosliw.data.core.domain.HAPUtilityEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPUtilityAttachment {
 
@@ -50,7 +50,7 @@ public class HAPUtilityAttachment {
 				HAPInfoEntityInDomainDefinition complexEntityDefInfo = definitionGlobalDomain.getEntityInfoDefinition(entityIdDef);
 				
 				HAPDefinitionEntityContainerAttachment attachmentContainerEntity = null;
-				HAPIdEntityInDomain attachmentContainerEntityId = ((HAPDefinitionEntityInDomainComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
+				HAPIdEntityInDomain attachmentContainerEntityId = ((HAPManualEntityComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
 				if(attachmentContainerEntityId!=null) {
 					attachmentContainerEntity = (HAPDefinitionEntityContainerAttachment)definitionGlobalDomain.getEntityInfoDefinition(attachmentContainerEntityId).getEntity();
 				}

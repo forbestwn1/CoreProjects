@@ -1,9 +1,9 @@
 package com.nosliw.data.core.component;
 
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public interface HAPWithComplexEntity {
 
-	HAPDefinitionEntityInDomainComplex getComplexEntity();
+	HAPManualEntityComplex getComplexEntity();
 	
 }

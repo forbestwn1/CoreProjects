@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.script.expression1.HAPDefinitionScriptEntity;
 
 public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal{
@@ -57,7 +57,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	}
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity, HAPSerializationFormat format) {
+	public void parseActivityDefinition(Object obj, HAPManualEntityComplex complexEntity, HAPSerializationFormat format) {
 		this.buildObject(obj, format);
 		this.m_valueStructure = complexEntity.getValueStructureWrapper();
 		this.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.ui.entity.uitag.HAPUITagAttributeDefinition;
 
@@ -43,7 +43,7 @@ public class HAPDefinitionEntityComplexUITag extends HAPDefinitionEntityComplexW
 	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValue(HAPExecutableEntityComplexUITag.ATTRIBUTE);      }
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexUITag out = new HAPDefinitionEntityComplexUITag();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

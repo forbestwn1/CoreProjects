@@ -1,11 +1,11 @@
 package com.nosliw.ui.entity.uicontent;
 
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public class HAPDefinitionEntityComplexUIPage extends HAPDefinitionEntityComplexWithUIContent{
 
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexUIPage out = new HAPDefinitionEntityComplexUIPage();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

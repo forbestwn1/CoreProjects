@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -18,7 +19,7 @@ public class HAPAttributeEntityExecutable extends HAPAttributeEntity<HAPEmbededE
 	private HAPExecutableEntity m_parentEntity;
 	
 
-	public HAPAttributeEntityExecutable(String name, HAPEmbededExecutable value, HAPInfoValueType valueTypeInfo) {
+	public HAPAttributeEntityExecutable(String name, HAPEmbededExecutable value, HAPInfoEntityType valueTypeInfo) {
 		super(name, value, valueTypeInfo);
 	}
 

@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
+import com.nosliw.data.core.entity.HAPInfoEntityType;
 
 @HAPEntityWithAttribute
 public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements HAPExpandable{
@@ -24,11 +25,11 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 
 	private T m_value;
 	
-	private HAPInfoValueType m_valueTypeInfo;
+	private HAPInfoEntityType m_valueTypeInfo;
 	
 	public HAPAttributeEntity() {}
 
-	public HAPAttributeEntity(String name, T value, HAPInfoValueType valueTypeInfo) {
+	public HAPAttributeEntity(String name, T value, HAPInfoEntityType valueTypeInfo) {
 		this.m_valueTypeInfo = valueTypeInfo;
 		this.setName(name);
 		this.m_value = value;
@@ -37,7 +38,7 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	public T getValue() {    return this.m_value;    }
 	public void setValue(T value) {   this.m_value = value;   }
 	
-	public HAPInfoValueType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
+	public HAPInfoEntityType getValueTypeInfo() {     return this.m_valueTypeInfo;     }
 	
 	
 	public boolean isAttributeAutoProcess(boolean defaultValue) {

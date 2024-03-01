@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPWrapperExecutableValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;
 import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;

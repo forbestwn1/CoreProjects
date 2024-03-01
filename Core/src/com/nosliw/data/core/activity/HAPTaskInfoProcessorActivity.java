@@ -3,7 +3,7 @@ package com.nosliw.data.core.activity;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;

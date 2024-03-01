@@ -15,7 +15,7 @@ import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPDefinitionTaskSuite;

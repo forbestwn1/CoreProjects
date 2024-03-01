@@ -6,16 +6,16 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityActivityComponent {
 
-	public static HAPDefinitionActivitySuiteImp buildActivitySuiteFromComponent(HAPDefinitionEntityInDomainComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionActivitySuiteImp buildActivitySuiteFromComponent(HAPManualEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionActivitySuiteImp out = new HAPDefinitionActivitySuiteImp();
 		
 		//build context

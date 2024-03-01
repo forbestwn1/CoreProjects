@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 //entity domain for resource for complex entity

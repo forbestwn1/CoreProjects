@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 //attachment that have real entity
 public class HAPAttachmentImpEntity extends HAPAttachmentImp{
@@ -18,17 +18,17 @@ public class HAPAttachmentImpEntity extends HAPAttachmentImp{
 	@HAPAttribute
 	public static String ENTITY = "entity";
 
-	private HAPDefinitionEntityInDomain m_entity;
+	private HAPManualEntity m_entity;
 	
 	private HAPAttachmentImpEntity() {}
 	
-	public HAPAttachmentImpEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo, HAPDefinitionEntityInDomain entity) {
+	public HAPAttachmentImpEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo, HAPManualEntity entity) {
 		super(valueType, rawValue, entityId, entityInfo);
 		this.setEntity(entity);
 	}
 	
-	public HAPDefinitionEntityInDomain getEntity() {    return this.m_entity;    }
-	public void setEntity(HAPDefinitionEntityInDomain entityObj) {    this.m_entity = entityObj;    }
+	public HAPManualEntity getEntity() {    return this.m_entity;    }
+	public void setEntity(HAPManualEntity entityObj) {    this.m_entity = entityObj;    }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

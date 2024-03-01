@@ -13,7 +13,9 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
+import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdLocal;
@@ -84,7 +86,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 		String entityType = null; 
 		String type = entityOrRef.getEntityOrReferenceType();
 		if(type.equals(HAPConstantShared.ENTITY)) {
-			HAPDefinitionEntityInDomain entity = (HAPDefinitionEntityInDomain)entityOrRef;
+			HAPManualEntity entity = (HAPManualEntity)entityOrRef;
 			entityType = entity.getEntityType();
 			entityInfo = HAPUtilityEntityDefinition.newEntityDefinitionInfoInDomain(entityType, this.m_entityDefMan); 
 			entityInfo.setEntity(entity);
@@ -107,7 +109,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 	}
 	
 	
-	public HAPIdEntityInDomain addEntity(HAPDefinitionEntityInDomain entity) {		return this.addEntityOrReference(entity);	}
+	public HAPIdEntityInDomain addEntity(HAPManualEntity entity) {		return this.addEntityOrReference(entity);	}
 
 	private String generateId() {    return this.m_idGenerator.generateId();    }
 

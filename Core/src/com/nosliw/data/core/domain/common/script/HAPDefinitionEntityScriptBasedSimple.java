@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.common.script;
 
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPDefinitionEntityScriptBasedSimple extends HAPDefinitionEntityInDomain implements HAPDefinitionEntityScriptBased{
+public class HAPDefinitionEntityScriptBasedSimple extends HAPManualEntity implements HAPDefinitionEntityScriptBased{
 
 	public HAPDefinitionEntityScriptBasedSimple() {}
 
@@ -19,7 +19,7 @@ public class HAPDefinitionEntityScriptBasedSimple extends HAPDefinitionEntityInD
 	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValue(HAPExecutableEntityScriptBased.RESOURCEID);     }
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityScriptBasedSimple out = new HAPDefinitionEntityScriptBasedSimple();
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;

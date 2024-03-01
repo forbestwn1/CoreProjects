@@ -9,7 +9,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionSuite1;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 
 public class HAPContextProcessExpressionScript implements HAPWithValueContext, HAPWithConstantDefinition{
 

@@ -12,8 +12,8 @@ import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 
 public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -53,7 +53,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	}
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity,
+	public void parseActivityDefinition(Object obj, HAPManualEntityComplex complexEntity,
 			HAPSerializationFormat format) {
 		this.buildObject(obj, format);
 		this.m_valueStructure = complexEntity.getValueStructureWrapper();

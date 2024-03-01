@@ -11,8 +11,8 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
 
 public class HAPPluginEntityProcessorComplexUITag extends HAPPluginEntityProcessorComplexImp{
 

@@ -9,9 +9,9 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.component.HAPWithComplexEntity;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -86,7 +86,7 @@ public class HAPProcessorValueStructureInComponent {
 			//resource
 			HAPResourceId resourceId = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, ref);
 			HAPResourceDefinition1 relatedResource = null;
-			HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
+			HAPManualEntityComplex contextComplexEntity = null;
 			if(processContext.getComplexEntity() instanceof HAPResourceDefinition1) relatedResource = (HAPResourceDefinition1)processContext.getComplexEntity();
 			HAPResourceDefinitionValueStructure resourceDefiniton = (HAPResourceDefinitionValueStructure)processContext.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(resourceId, relatedResource);
 			out.addAll(resourceDefiniton.getRoots());

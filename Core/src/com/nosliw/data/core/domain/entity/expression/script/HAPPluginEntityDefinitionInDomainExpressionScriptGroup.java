@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;

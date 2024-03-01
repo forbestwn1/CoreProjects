@@ -3,10 +3,10 @@ package com.nosliw.data.core.domain.entity.service.provider;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
-public class HAPDefinitionEntityInDomainServiceProvider extends HAPDefinitionEntityInDomain{
+public class HAPDefinitionEntityInDomainServiceProvider extends HAPManualEntity{
 
 	public static final String ATTR_SERVICEKEY = "serviceKey";
 
@@ -31,7 +31,7 @@ public class HAPDefinitionEntityInDomainServiceProvider extends HAPDefinitionEnt
 	}
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityInDomainServiceProvider out = new HAPDefinitionEntityInDomainServiceProvider();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 
 public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{

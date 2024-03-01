@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression.script;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 //normal expression
 public class HAPDefinitionEntityExpressionScriptSingle extends HAPDefinitionEntityExpressionScript{
@@ -21,7 +21,7 @@ public class HAPDefinitionEntityExpressionScriptSingle extends HAPDefinitionEnti
 	public List<HAPDefinitionExpression> getAllExpressionItems(){   return Lists.newArrayList(this.getExpression());      }
 
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityExpressionScriptSingle out = new HAPDefinitionEntityExpressionScriptSingle();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

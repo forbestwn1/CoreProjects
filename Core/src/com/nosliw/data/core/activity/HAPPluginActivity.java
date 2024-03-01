@@ -5,9 +5,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //each type of activity should provide a plugin which contains information:
@@ -35,7 +35,7 @@ public interface HAPPluginActivity {
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker);
 	
-	HAPDefinitionActivity buildActivityDefinition(Object obj, HAPDefinitionEntityInDomainComplex complexEntity);
+	HAPDefinitionActivity buildActivityDefinition(Object obj, HAPManualEntityComplex complexEntity);
 	
 	HAPExecutableActivity buildActivityExecutable(Object obj);
 	

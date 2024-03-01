@@ -901,8 +901,19 @@ public class HAPConstantShared {
 
 		public static final String EMBEDEDVALUE_TYPE_ENTITYID = "entityId";
 		public static final String EMBEDEDVALUE_TYPE_ENTITY = "entity";
-		public static final String EMBEDEDVALUE_TYPE_EXTERNALREFERENCE = "externalReference";
 		public static final String EMBEDEDVALUE_TYPE_VALUE = "value";
+		public static final String EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE = "attachmentReference";
+		public static final String EMBEDEDVALUE_TYPE_ENTITYREFERENCE = "entityReference";
+		public static final String EMBEDEDVALUE_TYPE_RESOURCEREFERENCE = "resourceReference";
+
+
+
+		public static final String ENTITY_DIVISION_MANUAL = "manual";
+
+
+
+		public static final String MANUAL_RELATION_TYPE_VALUECONTEXT = "valueContext";
+		public static final String MANUAL_RELATION_TYPE_ATTACHMENT = "attachment";
 
 
 }

@@ -5,6 +5,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEntityProcessorComplex{
 
@@ -46,13 +48,13 @@ public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEnt
 	@Override
 	public void postProcessEntity(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {	}
 
-	protected HAPDefinitionEntityInDomain getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
+	protected HAPManualEntity getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
 		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
 	}
 	
-	public Pair<HAPDefinitionEntityInDomainComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+	public Pair<HAPManualEntityComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-		HAPDefinitionEntityInDomainComplex entityDef = (HAPDefinitionEntityInDomainComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
+		HAPManualEntityComplex entityDef = (HAPManualEntityComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
 		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
 		return Pair.of(entityDef, entityExe);
 	}

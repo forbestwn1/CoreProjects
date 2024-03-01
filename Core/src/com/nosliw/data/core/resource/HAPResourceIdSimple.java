@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
@@ -22,15 +22,15 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	protected String m_id;
 
 	public HAPResourceIdSimple(){
-		super(null);
+		super(null, null);
 	}
 
 	protected HAPResourceIdSimple(String type){
-		super(type);
+		super(type, null);
 	}
 
-	public HAPResourceIdSimple(String type, String id){
-		super(type);
+	public HAPResourceIdSimple(String type, String version, String id){
+		super(type, version);
 		this.m_id = id;
 	}
 
@@ -46,8 +46,12 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;	}
 
 	protected void init(String id, HAPSupplementResourceId supplement){
-		if(id!=null)		this.setId(id);
-		if(supplement!=null)   this.setSupplement(supplement);
+		if(id!=null) {
+			this.setId(id);
+		}
+		if(supplement!=null) {
+			this.setSupplement(supplement);
+		}
 	}
 
 	@Override
@@ -105,8 +109,11 @@ public class HAPResourceIdSimple extends HAPResourceId{
 			buildCoreIdByLiterate(segs[1]);
 		}
 		else if(segs.length==1) {
-			if(this.getResourceType()!=null)  buildCoreIdByLiterate(literateValue);
-			else  this.setResourceType(literateValue);
+			if(this.getResourceType()!=null) {
+				buildCoreIdByLiterate(literateValue);
+			} else {
+				this.setResourceType(literateValue);
+			}
 		}
 		return true;  
 	}

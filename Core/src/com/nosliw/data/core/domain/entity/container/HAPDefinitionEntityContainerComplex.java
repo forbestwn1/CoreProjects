@@ -3,12 +3,12 @@ package com.nosliw.data.core.domain.entity.container;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.domain.entity.HAPInfoValueType;
+import com.nosliw.data.core.entity.HAPInfoEntityType;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
-public class HAPDefinitionEntityContainerComplex extends HAPDefinitionEntityInDomainComplex{
+public class HAPDefinitionEntityContainerComplex extends HAPManualEntityComplex{
 
 	public static final String ATTR_ELEMENTRELATIONCONFIGURE = "elementRelationCoonfigure";
 
@@ -29,14 +29,14 @@ public class HAPDefinitionEntityContainerComplex extends HAPDefinitionEntityInDo
 		return eleId;
 	}
 
-	public HAPInfoValueType getElmentValueTypeInfo() {     return (HAPInfoValueType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
-	public void setElementValueTypeInfo(HAPInfoValueType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
+	public HAPInfoEntityType getElmentValueTypeInfo() {     return (HAPInfoEntityType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
+	public void setElementValueTypeInfo(HAPInfoEntityType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
 	
 	public HAPConfigureParentRelationComplex getElementRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_ELEMENTRELATIONCONFIGURE, new HAPConfigureParentRelationComplex());     }
 	public void setElementRelationConfigure(HAPConfigureParentRelationComplex relationConfigure) {    this.setAttributeValueObject(ATTR_ELEMENTRELATIONCONFIGURE, relationConfigure);      }
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityContainerComplex out = new HAPDefinitionEntityContainerComplex();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

@@ -12,20 +12,26 @@ public class HAPFactoryResourceId {
 	public static HAPResourceId tryNewInstance(String resourceType, Object obj, boolean resourceTypeRestrict) {
 		HAPResourceId out = null;
 		out = newInstance(obj);
-		if(out==null) out = newInstance(resourceType, obj);
-		if(resourceTypeRestrict==true&&!out.getResourceType().equals(resourceType))  
+		if(out==null) {
+			out = newInstance(resourceType, obj);
+		}
+		if(resourceTypeRestrict==true&&!out.getResourceType().equals(resourceType)) {
 			throw new RuntimeException();
+		}
 		return out;
 	}
 	
-	public static HAPResourceId tryNewInstance(String resourceType, Object obj) {
+	public static HAPResourceId tryNewInstance(String resourceType, String version, Object obj) {
 		return tryNewInstance(resourceType, obj, true);
 	}
 	
 	public static HAPResourceId newInstance(String resourceType, Object obj) {
 		HAPResourceId out = null;
-		if(obj instanceof String)  out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj, false);
-		else if(obj instanceof JSONObject)  out = newInstanceByJSONObect(resourceType, (JSONObject)obj);
+		if(obj instanceof String) {
+			out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj, false);
+		} else if(obj instanceof JSONObject) {
+			out = newInstanceByJSONObect(resourceType, (JSONObject)obj);
+		}
 		return out;
 	}
 	
@@ -34,7 +40,9 @@ public class HAPFactoryResourceId {
 		
 		Object typeObj = jsonObj.opt(HAPResourceId.RESOURCETYPE);
 		String structure = (String)jsonObj.opt(HAPResourceId.STRUCUTRE);
-		if(typeObj!=null) resourceType = (String)typeObj;
+		if(typeObj!=null) {
+			resourceType = (String)typeObj;
+		}
 		
 		if(structure!=null || typeObj!=null) {
 			coreIdObj = jsonObj.opt(HAPResourceId.ID);
@@ -68,13 +76,18 @@ public class HAPFactoryResourceId {
 		if(content instanceof String) {
 			String literate = (String)content;
 			String[] idSegs = HAPUtilityResourceId.parseResourceIdLiterate(literate);
-			if(idSegs.length==1)   out = null;
-			else if(idSegs.length==2)   out = newInstance(idSegs[0], idSegs[1]);
+			if(idSegs.length==1) {
+				out = null;
+			} else if(idSegs.length==2) {
+				out = newInstance(idSegs[0], idSegs[1]);
+			}
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;
 			Object resourceType = jsonObj.opt(HAPResourceId.RESOURCETYPE);
-			if(resourceType==null) out = null;
+			if(resourceType==null) {
+				out = null;
+			}
 			out = newInstance((String)resourceType, jsonObj.get(HAPResourceId.ID));
 		}
 		return out;

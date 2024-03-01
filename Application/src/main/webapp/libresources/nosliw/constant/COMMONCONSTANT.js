@@ -550,8 +550,13 @@ var COMMONCONSTANT=
   "NAME_CHILD": "chilllllllld",
   "EMBEDEDVALUE_TYPE_ENTITYID": "entityId",
   "EMBEDEDVALUE_TYPE_ENTITY": "entity",
-  "EMBEDEDVALUE_TYPE_EXTERNALREFERENCE": "externalReference",
-  "EMBEDEDVALUE_TYPE_VALUE": "value"
+  "EMBEDEDVALUE_TYPE_VALUE": "value",
+  "EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE": "attachmentReference",
+  "EMBEDEDVALUE_TYPE_ENTITYREFERENCE": "entityReference",
+  "EMBEDEDVALUE_TYPE_RESOURCEREFERENCE": "resourceReference",
+  "ENTITY_DIVISION_MANUAL": "manual",
+  "MANUAL_RELATION_TYPE_VALUECONTEXT": "valueContext",
+  "MANUAL_RELATION_TYPE_ATTACHMENT": "attachment"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

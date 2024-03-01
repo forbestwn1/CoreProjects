@@ -10,8 +10,7 @@ import com.nosliw.data.core.component.command.HAPWithCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPDefinitionHandlerEvent;
 import com.nosliw.data.core.component.event.HAPWithEvent;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
-port com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.task.HAPManagerTask;
@@ -54,7 +53,7 @@ public class HAPParserEntityComponent {
 		HAPUtilityValueContext.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	
-	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPDefinitionEntityInDomainComplex complexEntity, HAPManagerTask taskMan) {
+	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPManualEntityComplex complexEntity, HAPManagerTask taskMan) {
 		JSONArray tasksArray = jsonObj.optJSONArray(HAPWithTask.TASK);
 		if(tasksArray!=null) {
 			for(int i=0; i<tasksArray.length(); i++) {

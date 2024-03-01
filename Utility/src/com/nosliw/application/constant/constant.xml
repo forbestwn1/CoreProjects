@@ -938,9 +938,17 @@
 			<definition type="space"/>
 			<definition name="EMBEDEDVALUE_TYPE_ENTITYID" value="entityId"/>
 			<definition name="EMBEDEDVALUE_TYPE_ENTITY" value="entity"/>
-			<definition name="EMBEDEDVALUE_TYPE_EXTERNALREFERENCE" value="externalReference"/>
 			<definition name="EMBEDEDVALUE_TYPE_VALUE" value="value"/>
+			<definition name="EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE" value="attachmentReference"/>
+			<definition name="EMBEDEDVALUE_TYPE_ENTITYREFERENCE" value="entityReference"/>
+			<definition name="EMBEDEDVALUE_TYPE_RESOURCEREFERENCE" value="resourceReference"/>
 
+			<definition type="space"/>
+			<definition name="ENTITY_DIVISION_MANUAL" value="manual"/>
+
+			<definition type="space"/>
+			<definition name="MANUAL_RELATION_TYPE_VALUECONTEXT" value="valueContext"/>
+			<definition name="MANUAL_RELATION_TYPE_ATTACHMENT" value="attachment"/>
 
 		</definitions>
 	</constants>

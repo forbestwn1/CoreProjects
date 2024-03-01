@@ -11,14 +11,14 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //component that defined as element of another container component
-public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSerializableImp implements HAPDefinitionEntityInDomainComplex{
+public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSerializableImp implements HAPManualEntityComplex{
 
 	@HAPAttribute
 	public static String CONTAINER = "container";

@@ -19,18 +19,20 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
-import com.nosliw.data.core.domain.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.HAPUtilityEntityExecutable;
 import com.nosliw.data.core.domain.HAPUtilityExport;
 import com.nosliw.data.core.domain.attachment.HAPUtilityAttachment;
+import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
+import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.value.HAPDefinitionEntityValue;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructureDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualAttribute;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -559,7 +561,7 @@ public class HAPManagerDomainEntityExecutable {
 		String embededValueType = null;
 		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getEntityInfoDefinition(entityDefinitionId);
 		if(entityDefInfo.isSolid()) {
-			HAPDefinitionEntityInDomain entityDef = entityDefInfo.getEntity();
+			HAPManualEntity entityDef = entityDefInfo.getEntity();
 			String entityType = entityDef.getEntityType();
 			HAPExecutableEntity entityExe = null;
 			if(entityDefInfo.isComplexEntity()) {
@@ -571,8 +573,8 @@ public class HAPManagerDomainEntityExecutable {
 			embededValue = entityExe;
 			embededValueType = HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY;
 			
-			List<HAPAttributeEntityDefinition> attrsDef = entityDef.getAttributes();
-			for(HAPAttributeEntityDefinition attrDef : attrsDef) {
+			List<HAPManualAttribute> attrsDef = entityDef.getAttributes();
+			for(HAPManualAttribute attrDef : attrsDef) {
 				if(attrDef.isAttributeAutoProcess()) {
 					HAPEmbededDefinition embededAttributeDef = attrDef.getValue();
 

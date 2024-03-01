@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.common.script;
 
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImp;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

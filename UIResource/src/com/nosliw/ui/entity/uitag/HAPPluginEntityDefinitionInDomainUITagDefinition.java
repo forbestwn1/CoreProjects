@@ -13,7 +13,7 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;

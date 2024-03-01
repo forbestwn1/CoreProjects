@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
-public class HAPDefinitionEntityScriptTaskGroup extends HAPDefinitionEntityInDomainComplex{
+public class HAPDefinitionEntityScriptTaskGroup extends HAPManualEntityComplex{
 
 	public HAPDefinitionEntityScriptTaskGroup() {
 		this.setAttributeValueObject(HAPExecutableEntityScriptTaskGroup.DEFINITION, new ArrayList<HAPDefinitionTaskScript>());
@@ -20,7 +20,7 @@ public class HAPDefinitionEntityScriptTaskGroup extends HAPDefinitionEntityInDom
 	public void setScript(HAPJsonTypeScript script) {   this.setAttributeValueObject(HAPExecutableEntityScriptTaskGroup.SCRIPT, script);     }
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityScriptTaskGroup out = new HAPDefinitionEntityScriptTaskGroup();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

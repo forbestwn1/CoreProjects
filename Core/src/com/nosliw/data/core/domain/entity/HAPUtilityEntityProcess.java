@@ -6,6 +6,7 @@ import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualAttribute;
 
 public class HAPUtilityEntityProcess {
 
@@ -21,7 +22,7 @@ public class HAPUtilityEntityProcess {
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
-		HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
+		HAPManualAttribute attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
 		Set<HAPInfoAdapter> adapters = attrDef.getValue().getAdapters();
 
 		for(HAPInfoAdapter adapter : adapters) {
@@ -37,9 +38,9 @@ public class HAPUtilityEntityProcess {
 		HAPIdEntityInDomain complexEntityDefinitionId = currentBundle.getDefinitionEntityIdByExecutableEntityId(complexEntityExecutableId);
 		
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
-		HAPAttributeEntityDefinition attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
+		HAPManualAttribute attrDef = definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity().getAttribute(attrName);
 
-		HAPAttributeEntityDefinition normalAttrDef = attrDef;
+		HAPManualAttribute normalAttrDef = attrDef;
 		HAPExecutableEntity entityExe = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().processSimpleEntity((HAPIdEntityInDomain)normalAttrDef.getValue().getValue(), processContext);
 
 		HAPAttributeEntityExecutable attrNormalExe = new HAPAttributeEntityExecutable(attrName, new HAPEmbededExecutable(entityExe), attrDef.getValueTypeInfo()); 

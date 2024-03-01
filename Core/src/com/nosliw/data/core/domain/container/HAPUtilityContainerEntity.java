@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPManagerDomainEntityDefinition;
+import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 
 public class HAPUtilityContainerEntity {
 

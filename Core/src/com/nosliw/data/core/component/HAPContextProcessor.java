@@ -7,7 +7,6 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
@@ -15,7 +14,8 @@ import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContaine
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;
 import com.nosliw.data.core.domain.entity.attachment1.HAPInfoAttachment;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -58,20 +58,20 @@ public class HAPContextProcessor {
 		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();
 		Object entity = null;
-		HAPDefinitionEntityInDomainComplex contextComplexEntity = null;
+		HAPManualEntityComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
 			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentImpEntity)attachment).getEntity()), this.m_complexEntity);
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId());
-			if(entity instanceof HAPDefinitionEntityInDomainComplex)  contextComplexEntity = (HAPDefinitionEntityInDomainComplex)entity;
+			if(entity instanceof HAPManualEntityComplex)  contextComplexEntity = (HAPManualEntityComplex)entity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceDefinition1 relatedResource = null;
 			if(m_complexEntity instanceof HAPResourceDefinition1)   relatedResource = (HAPResourceDefinition1)m_complexEntity;
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId(), relatedResource);
-			if(entity instanceof HAPDefinitionEntityInDomainComplex)  contextComplexEntity = (HAPDefinitionEntityInDomainComplex)entity;
+			if(entity instanceof HAPManualEntityComplex)  contextComplexEntity = (HAPManualEntityComplex)entity;
 		}
 		
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);

@@ -18,6 +18,7 @@ import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.data.HAPDefinitionEntityData;
 import com.nosliw.data.core.domain.entity.value.HAPDefinitionEntityValue;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.structure.HAPStructure1;
 import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.value.HAPValue;
@@ -54,7 +55,7 @@ public class HAPUtilityComplexConstant {
 	
 	
 	
-	public static Map<String, HAPData> getConstantsData(HAPDefinitionEntityInDomainComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
+	public static Map<String, HAPData> getConstantsData(HAPManualEntityComplex complexEntityDef, HAPDomainValueStructure valueStructureDomain){
 	
 	}
 	

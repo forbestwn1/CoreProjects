@@ -2,7 +2,7 @@ package com.nosliw.data.core.sequence;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPExecutableTask;
 import com.nosliw.data.core.task.HAPManagerTask;

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainInteractive extends HAPPluginEntityDefinitionInDomainImpSimple{

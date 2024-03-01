@@ -5,7 +5,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpSimple;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainDataAssociationTask  extends HAPPluginEntityDefinitionInDomainImpSimple{

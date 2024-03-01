@@ -6,10 +6,10 @@ import java.util.List;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPInfoValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPValuePortImp;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
 
 public class HAPValuePortValueContext extends HAPValuePortImp{

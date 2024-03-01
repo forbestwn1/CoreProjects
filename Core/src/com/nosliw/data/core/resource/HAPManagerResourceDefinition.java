@@ -10,8 +10,8 @@ import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 
 public class HAPManagerResourceDefinition {
@@ -76,7 +76,7 @@ public class HAPManagerResourceDefinition {
 				//get parent resource def first
 				HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), globalDomain, currentDomainResourceId);
 				HAPInfoEntityInDomainDefinition parentEntityInfo = globalDomain.getEntityInfoDefinition(parentResourceDef.getEntityId());
-				HAPDefinitionEntityInDomain parentEntity = parentEntityInfo.getEntity();
+				HAPManualEntity parentEntity = parentEntityInfo.getEntity();
 				//get child resource by path
 //				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
 //				out.setEntityId(entityId);

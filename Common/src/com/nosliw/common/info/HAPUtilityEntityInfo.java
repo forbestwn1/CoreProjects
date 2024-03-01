@@ -12,10 +12,18 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 public class HAPUtilityEntityInfo {
 
 	public static void softMerge(HAPEntityInfo target, HAPEntityInfo source) {
-		if(HAPUtilityBasic.isStringEmpty(target.getId()))  target.setId(source.getId());
-		if(HAPUtilityBasic.isStringEmpty(target.getName()))  target.setName(source.getName());
-		if(HAPUtilityBasic.isStringEmpty(target.getDescription()))  target.setDescription(source.getDescription());
-		if(HAPUtilityBasic.isStringEmpty(target.getDisplayName()))  target.setDisplayName(source.getDisplayName());
+		if(HAPUtilityBasic.isStringEmpty(target.getId())) {
+			target.setId(source.getId());
+		}
+		if(HAPUtilityBasic.isStringEmpty(target.getName())) {
+			target.setName(source.getName());
+		}
+		if(HAPUtilityBasic.isStringEmpty(target.getDescription())) {
+			target.setDescription(source.getDescription());
+		}
+		if(HAPUtilityBasic.isStringEmpty(target.getDisplayName())) {
+			target.setDisplayName(source.getDisplayName());
+		}
 		HAPUtilityInfo.softMerge(target.getInfo(), source.getInfo());
 		enable(target, isEnabled(target) && isEnabled(source));
 	}
@@ -23,6 +31,16 @@ public class HAPUtilityEntityInfo {
 	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj) {
 		HAPEntityInfo out = new HAPEntityInfoImp();
 		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+		return out;
+	}
+	
+	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj, String attrName) {
+		HAPEntityInfo out = new HAPEntityInfoImp();
+		JSONObject entityInfoJson = jsonObj.getJSONObject(attrName);
+		if(entityInfoJson==null) {
+			entityInfoJson = jsonObj;
+		}
+		out.buildObject(entityInfoJson, HAPSerializationFormat.JSON);
 		return out;
 	}
 	
@@ -55,13 +73,18 @@ public class HAPUtilityEntityInfo {
 	}
 
 	public static void enable(HAPEntityInfo entityInfo, boolean enable) {
-		if(enable)  entityInfo.setStatus(HAPConstantShared.ENTITYINFO_STATUS_ENABLED);
-		else entityInfo.setStatus(HAPConstantShared.ENTITYINFO_STATUS_DISABLED);
+		if(enable) {
+			entityInfo.setStatus(HAPConstantShared.ENTITYINFO_STATUS_ENABLED);
+		} else {
+			entityInfo.setStatus(HAPConstantShared.ENTITYINFO_STATUS_DISABLED);
+		}
 	}
 
 	public static void processEntityId(HAPEntityInfo entityInfo) {
 		String id = entityInfo.getId();
-		if(HAPUtilityBasic.isStringEmpty(id)) id = HAPConstantShared.NAME_DEFAULT;
+		if(HAPUtilityBasic.isStringEmpty(id)) {
+			id = HAPConstantShared.NAME_DEFAULT;
+		}
 		entityInfo.setId(id);
 	}
 

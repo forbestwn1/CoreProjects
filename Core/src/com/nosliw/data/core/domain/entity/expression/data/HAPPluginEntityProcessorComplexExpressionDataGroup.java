@@ -19,12 +19,12 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginEntityProcessorComplexImp;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;
@@ -184,7 +184,7 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 	}
 	
 	private static Triple<HAPDefinitionEntityExpressionDataGroup, HAPExecutableEntityExpressionDataGroup, HAPDefinitionEntityValueContext> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
-		Triple<HAPDefinitionEntityInDomainComplex, HAPExecutableEntityComplex, HAPDefinitionEntityValueContext> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
+		Triple<HAPManualEntityComplex, HAPExecutableEntityComplex, HAPDefinitionEntityValueContext> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
 		HAPExecutableEntityExpressionDataGroup expressionGroupExe = (HAPExecutableEntityExpressionDataGroup)triple.getMiddle();
 		HAPDefinitionExpressionGroup1 expressionGroupDef = (HAPDefinitionExpressionGroup1)triple.getLeft();
 		return Triple.of(expressionGroupDef, expressionGroupExe, triple.getRight());

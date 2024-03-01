@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomainComplex;
 import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
-public abstract class HAPDefinitionEntityExpressionData extends HAPDefinitionEntityInDomainComplex{
+public abstract class HAPDefinitionEntityExpressionData extends HAPManualEntityComplex{
 
 	public static final String ATTR_REFERENCES = "references";
 

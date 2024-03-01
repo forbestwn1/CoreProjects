@@ -19,7 +19,7 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;

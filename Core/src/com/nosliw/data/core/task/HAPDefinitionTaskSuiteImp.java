@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.common.HAPWithValueContext;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 
 public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDefinitionTaskSuite{
 

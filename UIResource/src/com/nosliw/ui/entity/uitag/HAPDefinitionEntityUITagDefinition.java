@@ -7,11 +7,11 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDomain{
+public class HAPDefinitionEntityUITagDefinition extends HAPManualEntity{
 
 	public static final String INFO = "info";
 	
@@ -51,7 +51,7 @@ public class HAPDefinitionEntityUITagDefinition extends HAPDefinitionEntityInDom
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(CHILDRELATIONCONFIGURE);     }
 	
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityUITagDefinition out = new HAPDefinitionEntityUITagDefinition();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

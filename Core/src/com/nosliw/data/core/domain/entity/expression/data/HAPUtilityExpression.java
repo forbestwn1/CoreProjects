@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.data.core.component.HAPUtilityComponent;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPInfoVariable;

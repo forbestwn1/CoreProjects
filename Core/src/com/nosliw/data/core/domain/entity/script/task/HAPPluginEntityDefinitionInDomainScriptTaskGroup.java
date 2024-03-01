@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPPluginEntityDefinitionInDomainImpComplex;
+import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainScriptTaskGroup extends HAPPluginEntityDefinitionInDomainImpComplex{

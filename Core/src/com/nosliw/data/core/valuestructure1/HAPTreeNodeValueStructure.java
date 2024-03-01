@@ -1,6 +1,6 @@
 package com.nosliw.data.core.valuestructure1;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 
 public class HAPTreeNodeValueStructure {
 

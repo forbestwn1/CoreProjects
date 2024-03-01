@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.domain.entity.HAPDefinitionEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntityExpressionScript implements HAPWithEntityElement<HAPDefinitionExpression>{
 	
@@ -44,7 +44,7 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 	public void addEntityElement(HAPDefinitionExpression entityElement) {	this.addExpression(entityElement);	}
 
 	@Override
-	public HAPDefinitionEntityInDomain cloneEntityDefinitionInDomain() {
+	public HAPManualEntity cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityExpressionScriptGroup out = new HAPDefinitionEntityExpressionScriptGroup();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

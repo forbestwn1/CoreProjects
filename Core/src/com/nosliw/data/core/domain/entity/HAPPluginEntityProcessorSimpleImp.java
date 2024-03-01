@@ -3,6 +3,7 @@ package com.nosliw.data.core.domain.entity;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
+import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEntityProcessorSimple{
 
@@ -22,7 +23,7 @@ public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEnti
 	public void process(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
-		HAPDefinitionEntityInDomain entityDef = definitionDomain.getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
+		HAPManualEntity entityDef = definitionDomain.getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
 		this.process(entityExe, entityDef, processContext);
 	}
 	
@@ -38,6 +39,6 @@ public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEnti
 		return out; 
 	}
 
-	abstract protected void process(HAPExecutableEntity entityExe, HAPDefinitionEntityInDomain entityDef, HAPContextProcessor processContext);
+	abstract protected void process(HAPExecutableEntity entityExe, HAPManualEntity entityDef, HAPContextProcessor processContext);
 
 }
