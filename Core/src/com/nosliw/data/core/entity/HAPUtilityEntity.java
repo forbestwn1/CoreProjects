@@ -8,6 +8,29 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityEntity {
 
+	public static HAPIdEntity parseEntityIdAgressive(Object obj, String defaultDivision, HAPManagerEntity entityMan) {
+		HAPIdEntity out = new HAPIdEntity();
+		
+		if(obj instanceof String) {
+			out.buildObject(obj, HAPSerializationFormat.LITERATE);
+		}
+		else if(obj instanceof JSONObject) {
+			out.buildObject(obj, HAPSerializationFormat.JSON);
+		}
+		
+		out.setEntityTypeId(normalizeEntityTypeId(out.getEntityTypeId(), entityMan));
+		if(out.getDivision()==null) {
+			out.setDivision(defaultDivision);
+		}
+		
+		return out;
+	}
+	
+	public static HAPIdEntityType parseEntityTypeIdAggresive(Object obj, HAPManagerEntity entityMan) {
+		HAPIdEntityType entityTypeId = parseEntityTypeId(obj);
+		return normalizeEntityTypeId(entityTypeId, entityMan);
+	}
+	
 	public static HAPIdEntityType parseEntityTypeId(Object obj) {
 		HAPIdEntityType out = null;
 		if(obj instanceof String) {
@@ -18,6 +41,15 @@ public class HAPUtilityEntity {
 			out.buildObject(obj, HAPSerializationFormat.JSON);
 		}
 		return out;
+	}
+	
+	public static HAPIdEntityType normalizeEntityTypeId(HAPIdEntityType entityTypeId, HAPManagerEntity entityMan) {
+		HAPIdEntityType out = entityTypeId;
+		if(out.getVersion()==null) {
+			out = entityMan.getLatestVersion(entityTypeId.getEntityType());
+		}
+		return out;
+		
 	}
 
 	public static HAPIdEntity createEntityId(Object obj) {

@@ -105,7 +105,7 @@ public class HAPPluginParserEntityImp implements HAPPluginParserEntity{
 	//*************************************   Json format parse helper
 	protected void parseEntityAttribute(HAPManualEntity parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdEntityType entityTypeIfNotProvided, HAPIdEntityType adapterTypeId, HAPContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualAttribute attribute = HAPUtilityParserEntityFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualDivisionEntityMan, this.m_entityManager);
+			HAPManualAttribute attribute = HAPUtilityParserEntityFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualDivisionEntityMan, this.getEntityManager());
 			parentEntity.setAttribute(attribute);
 		}
 	}

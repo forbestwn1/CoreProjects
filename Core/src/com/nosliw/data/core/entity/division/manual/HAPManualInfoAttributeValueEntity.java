@@ -1,5 +1,8 @@
 package com.nosliw.data.core.entity.division.manual;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 
@@ -17,4 +20,9 @@ public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeVal
 
 	public HAPManualEntity getEntity() {    return this.m_entity;    }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
+	}
 }

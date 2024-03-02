@@ -74,7 +74,7 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.entityType = new HAPIdEntityType(pair.getLeft());
+				out.entityType = HAPUtilityEntity.parseEntityTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
 				str = pair.getRight();
 			}
 		}
@@ -82,12 +82,12 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.adapterType = new HAPIdEntityType(pair.getLeft());
+				out.adapterType = HAPUtilityEntity.parseEntityTypeIdAggresive(pair.getLeft(), this.getEntityManager());
 				str = pair.getRight();
 			}
 		}
 
-		out.isComplex = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().isComplexEntity(out.entityType);
+		out.isComplex = this.getEntityManager().getEntityTypeInfo(out.entityType).getIsComplex();
 		
 		return out;
 	}

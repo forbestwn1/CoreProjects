@@ -37,7 +37,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 		
 		HAPInfoEntityLocation entityLocationInfo = HAPUtilityEntityLocation.getEntityLocationInfo(entityId);
 		
-		HAPContextParse parseContext = new HAPContextParse(entityLocationInfo.getBasePath().getPath());
+		HAPContextParse parseContext = new HAPContextParse(entityLocationInfo.getBasePath().getPath(), entityId.getDivision());
 		
 		HAPSerializationFormat format = entityLocationInfo.getFormat();
 		

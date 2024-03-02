@@ -77,6 +77,20 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		return ((HAPManualInfoAttributeValueValue)att.getInfoValue(attrName)).getValue();
 	}	
 	
+	//normal json
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		Map<String, String> attrMap = new LinkedHashMap<String, String>();
+		for(HAPManualAttribute attribute : this.getAttributes()) {
+			attrMap.put(attribute.getName(),  attribute.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrMap));
+	}
+
+
+	
+	
 	
 	
 	
@@ -157,17 +171,6 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		return (HAPIdEntityInDomain)this.getAttribute(childName).getValue().getValue();
 	}
 	
-	//normal json
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		Map<String, String> attrMap = new LinkedHashMap<String, String>();
-		for(HAPAttributeEntity attribute : this.getAttributes()) {
-			attrMap.put(attribute.getName(),  attribute.toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrMap));
-	}
-
 	public String toExpandedJsonString(HAPDomainEntityDefinitionGlobal entityDefDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>(); 

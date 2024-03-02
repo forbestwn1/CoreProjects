@@ -26,6 +26,7 @@ import com.nosliw.data.core.entity.HAPIdEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.entity.HAPManagerEntity;
+import com.nosliw.data.core.entity.HAPUtilityEntity;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -131,7 +132,7 @@ public class HAPUtilityParserEntityFormatJson {
 		if(out==null) {
 			Object entityRefObj = jsonObj.opt(HAPManualInfoAttributeValueReferenceEntity.ENTITYREFERENCE);
 			if(entityRefObj!=null) {
-				HAPIdEntity entityId = HAPIdEntity.newInstance(entityRefObj);
+				HAPIdEntity entityId = HAPUtilityEntity.parseEntityIdAgressive(entityRefObj, parseContext.getEntityDivision(), entityManager); 
 				out = new HAPManualInfoAttributeValueReferenceEntity(entityTypeInfo, entityId);
 				HAPManualEntity refEntity = parseLocalValue(parseContext.getBasePath(), entityId, manualDivisionEntityMan);
 				((HAPManualInfoAttributeValueReferenceEntity)out).setReferencedEntity(refEntity);

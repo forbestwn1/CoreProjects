@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
@@ -50,6 +51,15 @@ public class HAPManualAttribute extends HAPEntityInfoImp{
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	
 	public void addRealtion(HAPManualEntityRelation relation) {    this.m_relations.add(relation);      }
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VALUEINFO, this.m_valueInfo.toStringValue(HAPSerializationFormat.JSON));
+	}
+
+	
+	
 	
 	
 	protected void cloneToEntityAttribute(HAPManualAttribute attr) {

@@ -1,6 +1,7 @@
 package com.nosliw.data.core.entity;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPIdEntity extends HAPSerializableImp{
 
@@ -20,9 +21,15 @@ public class HAPIdEntity extends HAPSerializableImp{
 	}
 	
 	public HAPIdEntityType getEntityTypeId() {    return this.m_entityTypeId;     }
+	public void setEntityTypeId(HAPIdEntityType entityTypeId) {    this.m_entityTypeId = entityTypeId;      }
 	
 	public String getDivision() {     return this.m_division;     }
+	public void setDivision(String division) {     this.m_division = division;     }
 	
 	public String getId() {    return this.m_id;    }
+	
+	public String getKey() {
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[] {this.m_entityTypeId.getKey(), this.m_id, this.m_division});
+	}
 	
 }
