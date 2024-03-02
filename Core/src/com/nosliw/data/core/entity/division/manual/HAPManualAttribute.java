@@ -23,7 +23,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp{
 	public static final String INFO = "info";
 	
 	//attribute value
-	private HAPManualInfoValue m_valueInfo;
+	private HAPManualInfoAttributeValue m_valueInfo;
 	
 	//multiple adapters by name
 	private Map<String, HAPManualInfoAdapter> m_adapters;
@@ -39,13 +39,13 @@ public class HAPManualAttribute extends HAPEntityInfoImp{
 	
 	public HAPManualAttribute() {}
 
-	public HAPManualAttribute(String name, HAPManualInfoValue valueInfo) {
+	public HAPManualAttribute(String name, HAPManualInfoAttributeValue valueInfo) {
 		this.setName(name);
 		this.m_valueInfo = valueInfo;
 	}
 
-	public HAPManualInfoValue getValueInfo() {    return this.m_valueInfo;     }
-	public void setValueInfo(HAPManualInfoValue valueInfo) {    this.m_valueInfo = valueInfo;     }
+	public HAPManualInfoAttributeValue getValueInfo() {    return this.m_valueInfo;     }
+	public void setValueInfo(HAPManualInfoAttributeValue valueInfo) {    this.m_valueInfo = valueInfo;     }
 	
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	

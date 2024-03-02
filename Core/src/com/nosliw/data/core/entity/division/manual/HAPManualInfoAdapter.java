@@ -5,9 +5,9 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 public class HAPManualInfoAdapter extends HAPEntityInfoImp{
 
 	//attribute value
-	private HAPManualInfoValue m_valueInfo;
+	private HAPManualInfoAttributeValue m_valueInfo;
 	
-	public HAPManualInfoAdapter(HAPManualInfoValue valueInfo) {
+	public HAPManualInfoAdapter(HAPManualInfoAttributeValue valueInfo) {
 		this.m_valueInfo = valueInfo;
 	}
 	

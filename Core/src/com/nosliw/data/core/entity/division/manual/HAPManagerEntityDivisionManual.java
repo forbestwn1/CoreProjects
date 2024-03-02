@@ -3,12 +3,16 @@ package com.nosliw.data.core.entity.division.manual;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.entity.HAPEntityBundle;
 import com.nosliw.data.core.entity.HAPEnumEntityType;
 import com.nosliw.data.core.entity.HAPIdEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
+import com.nosliw.data.core.entity.HAPManagerEntity;
 import com.nosliw.data.core.entity.HAPPluginProcessorEntity;
 import com.nosliw.data.core.entity.division.manual.test.complex.script.HAPPluginParserEntityImpTestComplexScript;
 import com.nosliw.data.core.entity.division.manual.test.complex.testcomplex1.HAPPluginParserEntityImpTestComplex1;
@@ -40,12 +44,14 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 
 		//get definition
-		HAPManualEntity entityDef = this.parseEntityDefinition(content, entityId.getEntityTypeId(), format, parseContext);
+		HAPManualInfoEntity entityDefInfo = this.parseEntityDefinitionInfo(content, entityId.getEntityTypeId(), format, parseContext);
 		
 		//build parent and path from root
 
 		//process definition
-		HAPEntityBundle out = this.getEntityProcessorInfo(entityId.getEntityTypeId()).getProcessorPlugin().process(entityDef);
+		HAPEntityBundle out = new HAPEntityBundle();
+		out.setExtraData(entityDefInfo);
+//		this.getEntityProcessorInfo(entityId.getEntityTypeId()).getProcessorPlugin().process(entityDefInfo);
 		
 		return out;
 	}
@@ -56,11 +62,26 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 
 		this.registerEntityProcessorInfo(HAPEnumEntityType.VALUESTRUCTURE_100, new HAPInfoEntityProcessor(new HAPPluginParserEntityImpValueStructure(this, this.m_runtimeEnv), null));
 		this.registerEntityProcessorInfo(HAPEnumEntityType.VALUECONTEXT_100, new HAPInfoEntityProcessor(new HAPPluginParserEntityImpValueContext(this, this.m_runtimeEnv), null));
-}
+	}
 
 	public HAPManualEntity parseEntityDefinition(Object entityObj, HAPIdEntityType entityTypeId, HAPSerializationFormat format, HAPContextParse parseContext) {
 		HAPPluginParserEntity entityParserPlugin = this.getEntityProcessorInfo(entityTypeId).getParserPlugin();
 		return entityParserPlugin.parse(entityObj, format, parseContext);
+	}
+
+	private HAPManualInfoEntity parseEntityDefinitionInfo(Object entityObj, HAPIdEntityType entityTypeId, HAPSerializationFormat format, HAPContextParse parseContext) {
+		HAPManualInfoEntity out = null;
+		switch(format) {
+		case JSON:
+			out = HAPUtilityParserEntityFormatJson.parseEntityInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), entityTypeId, parseContext, this, this.getEntityManager());
+			break;
+		case HTML:
+			break;
+		case JAVASCRIPT:
+			break;
+		default:
+		}
+		return out;
 	}
 	
 	public void registerEntityProcessorInfo(HAPIdEntityType entityTypeId, HAPInfoEntityProcessor processorInfo) {
@@ -70,4 +91,6 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 	private HAPInfoEntityProcessor getEntityProcessorInfo(HAPIdEntityType entityTypeId) {
 		return this.m_entityProcessorInfo.get(entityTypeId.getKey());
 	}
+	
+	private HAPManagerEntity getEntityManager() {   return this.m_runtimeEnv.getEntityManager();    }
 }

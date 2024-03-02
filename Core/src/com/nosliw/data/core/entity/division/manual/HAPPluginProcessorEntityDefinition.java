@@ -4,6 +4,6 @@ import com.nosliw.data.core.entity.HAPEntityBundle;
 
 public interface HAPPluginProcessorEntityDefinition {
 
-	HAPEntityBundle process(HAPManualEntity entityDef);
+	HAPEntityBundle process(HAPManualInfoEntity entityDef);
 	
 }

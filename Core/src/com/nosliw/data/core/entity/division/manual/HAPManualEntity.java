@@ -65,8 +65,8 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		return out;
 	}
 	
-	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualInfoValueWithValue(attrValue)));	}
-	public Object getAttributeValue(String attributeName){	return ((HAPManualInfoValueWithValue)this.getAttribute(attributeName).getValueInfo()).getValue();	}
+	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualInfoAttributeValueValue(attrValue)));	}
+	public Object getAttributeValue(String attributeName){	return ((HAPManualInfoAttributeValueValue)this.getAttribute(attributeName).getValueInfo()).getValue();	}
 	
 	public Object getAttributeValue(String attrName, Object defaultValue) {
 		HAPManualAttribute att = this.getAttribute(attrName);
@@ -74,7 +74,7 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 			this.setAttributeValue(attrName, defaultValue);
 			att = this.getAttribute(attrName);
 		}
-		return ((HAPManualInfoValueWithValue)att.getInfoValue(attrName)).getValue();
+		return ((HAPManualInfoAttributeValueValue)att.getInfoValue(attrName)).getValue();
 	}	
 	
 	

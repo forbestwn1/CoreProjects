@@ -52,7 +52,7 @@ public class HAPPluginParserEntityImp implements HAPPluginParserEntity{
 			//parse entity content
 			switch(format) {
 			case JSON:
-				this.parseDefinitionContentJson(out, this.convertToJsonObject(content), parseContext);
+				this.parseDefinitionContentJson(out, HAPUtilityJson.toJsonObject(content), parseContext);
 				break;
 			case HTML:
 				this.parseDefinitionContentHtml(out, content, parseContext);
@@ -90,13 +90,6 @@ public class HAPPluginParserEntityImp implements HAPPluginParserEntity{
 	protected void parseDefinitionContentJavascript(HAPManualEntity entityDefinition, Object obj, HAPContextParse parseContext) {}
 
 	protected void parseDefinitionContent(HAPManualEntity entityDefinition, Object obj, HAPSerializationFormat format, HAPContextParse parseContext) {}
-	
-	protected Object convertToJsonObject(Object obj) {
-		if(obj instanceof String) {
-			return HAPUtilityJson.toJsonObject((String)obj);
-		}  
-		return obj;
-	}
 	
 	private void processReservedAttribute(HAPManualEntity entity, String attrName) {
 		String attrEntityValueType = entity.getAttribute(attrName).getValueTypeInfo().getValueType();

@@ -15,7 +15,7 @@ public class HAPAttributeEntityDefinition2 extends HAPAttributeEntity<HAPEmbeded
 	//parent info definition
 	public static final String PARENT = "parent";
 	
-	private HAPManualInfoValue m_valueInfo;
+	private HAPManualInfoAttributeValue m_valueInfo;
 	
 	private HAPEntityInfo m_info;
 

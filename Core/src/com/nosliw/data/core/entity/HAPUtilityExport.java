@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -53,10 +54,10 @@ public class HAPUtilityExport {
 			}
 
 			//write package definition
-			HAPUtilityFile.writeJsonFile(packageFolder, "extra.json", bundle.getExtraData().toStringValue(HAPSerializationFormat.JSON));
+			HAPUtilityFile.writeJsonFile(packageFolder, "extra.json", HAPSerializeManager.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 			
 			//write package executable
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", bundle.getEntity().toStringValue(HAPSerializationFormat.JSON));
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", HAPSerializeManager.getInstance().toStringValue(bundle.getEntity(), HAPSerializationFormat.JSON));
 			
 			//external complex entity dependency
 			Set<HAPResourceIdSimple> dependency = bundle.getComplexResourceDependency();

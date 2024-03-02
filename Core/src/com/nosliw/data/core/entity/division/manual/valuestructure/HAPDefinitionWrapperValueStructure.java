@@ -15,7 +15,7 @@ import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.entity.division.manual.HAPManualInfoValue;
+import com.nosliw.data.core.entity.division.manual.HAPManualInfoAttributeValue;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
@@ -34,13 +34,13 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	
 	private HAPInfoImpSimple m_info;
 	
-	private HAPManualInfoValue m_valueStructureEntityInfo;
+	private HAPManualInfoAttributeValue m_valueStructureEntityInfo;
 	
 	public HAPDefinitionWrapperValueStructure() {
 		this.m_info = new HAPInfoImpSimple();
 	}
 
-	public HAPDefinitionWrapperValueStructure(HAPManualInfoValue valueStructureEntityInfo) {
+	public HAPDefinitionWrapperValueStructure(HAPManualInfoAttributeValue valueStructureEntityInfo) {
 		this();
 		this.m_valueStructureEntityInfo = valueStructureEntityInfo;
 	}
@@ -48,8 +48,8 @@ public class HAPDefinitionWrapperValueStructure extends HAPSerializableImp imple
 	public HAPInfo getInfo() {    return this.m_info;     }
 	public void setInfo(HAPInfoImpSimple info) {   this.m_info = info;     }
 	
-	public HAPDefinitionEntityValueStructure getValueStructureEntity() {	return this.m_valueStructureEntityInfo;	}
-	public void setValueStructureEntity(HAPDefinitionEntityValueStructure valueStructureEntity) {   this.m_valueStructureEntityInfo = valueStructureEntity;   }
+	public HAPManualInfoAttributeValue getValueStructureEntityInfo() {	return this.m_valueStructureEntityInfo;	}
+	public void setValueStructureEntityInfo(HAPManualInfoAttributeValue valueStructureEntityInfo) {   this.m_valueStructureEntityInfo = valueStructureEntityInfo;   }
 	
 	public String getName() {   return this.m_name;   }
 	public void setName(String groupName) {   this.m_name = groupName;    }

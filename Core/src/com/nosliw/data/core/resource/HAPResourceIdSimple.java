@@ -29,7 +29,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 		super(type, null);
 	}
 
-	public HAPResourceIdSimple(String type, String version, String id){
+	public HAPResourceIdSimple(String type, String id, String version){
 		super(type, version);
 		this.m_id = id;
 	}

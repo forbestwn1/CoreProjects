@@ -2,7 +2,7 @@ package com.nosliw.data.core.entity.division.manual;
 
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 
-public class HAPManualInfoValue {
+public class HAPManualInfoAttributeValue {
 
 	public static final String ENTITYTYPE = "entityType";
 	
@@ -10,7 +10,7 @@ public class HAPManualInfoValue {
 	
 	private HAPInfoEntityType m_entityTypeInfo;
 
-	public HAPManualInfoValue(String valueType, HAPInfoEntityType entityTypeInfo) {
+	public HAPManualInfoAttributeValue(String valueType, HAPInfoEntityType entityTypeInfo) {
 		this.m_valueType = valueType;
 		this.m_entityTypeInfo = entityTypeInfo;
 	}

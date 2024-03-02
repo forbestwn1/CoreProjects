@@ -1,7 +1,10 @@
 package com.nosliw.test.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPExecutablePackage;
+import com.nosliw.data.core.entity.HAPEntityPackage;
+import com.nosliw.data.core.entity.HAPIdEntity;
+import com.nosliw.data.core.entity.HAPIdEntityType;
+import com.nosliw.data.core.entity.HAPUtilityEntity;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -11,8 +14,8 @@ public class HAPTestDomain {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 //		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager(), runtimeEnvironment.getResourceDefinitionManager());
 		
-//		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "empty");		
-		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.adapter.dataassociation");
+		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "empty"); 
+//		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.adapter.dataassociation");
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.entity.service");
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.basic.reference");
 
@@ -37,8 +40,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPExecutablePackage executablePackage = runtimeEnvironment.getDomainEntityExecutableManager().getExecutablePackage(resourceId);
-		
+		HAPEntityPackage executablePackage = runtimeEnvironment.getEntityManager().getPackage(resourceId);		
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("*******************************************************************************");
@@ -52,5 +54,10 @@ public class HAPTestDomain {
 //		System.out.println();
 //		System.out.println();
 //		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getExecutableDomain().toString()));
+	}
+	
+	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
+		HAPIdEntity entityId = new HAPIdEntity(new HAPIdEntityType(resourceType, "1.0.0"), HAPConstantShared.ENTITY_DIVISION_MANUAL, id);
+		return HAPUtilityEntity.fromEntityId2ResourceId(entityId);
 	}
 }

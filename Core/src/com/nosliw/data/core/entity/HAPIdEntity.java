@@ -11,8 +11,12 @@ public class HAPIdEntity extends HAPSerializableImp{
 	
 	private String m_id;
 
-	public static HAPIdEntity newInstance(Object obj) {
-		
+	public HAPIdEntity() {}
+	
+	public HAPIdEntity(HAPIdEntityType entityTypeId, String division, String id) {
+		this.m_entityTypeId = entityTypeId;
+		this.m_division = division;
+		this.m_id = id;
 	}
 	
 	public HAPIdEntityType getEntityTypeId() {    return this.m_entityTypeId;     }

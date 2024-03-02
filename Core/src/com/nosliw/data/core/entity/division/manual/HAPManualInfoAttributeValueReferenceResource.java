@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPManualInfoValueWithReferenceResource extends HAPManualInfoValue{
+public class HAPManualInfoAttributeValueReferenceResource extends HAPManualInfoAttributeValue{
 
 	//resource id
 	public static final String RESOURCEID = "resourceId";
@@ -14,7 +14,7 @@ public class HAPManualInfoValueWithReferenceResource extends HAPManualInfoValue{
 
 	private HAPManualEntity m_entity;
 
-	public HAPManualInfoValueWithReferenceResource(HAPInfoEntityType entityTypeInfo, HAPResourceId resourceId) {
+	public HAPManualInfoAttributeValueReferenceResource(HAPInfoEntityType entityTypeInfo, HAPResourceId resourceId) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE, entityTypeInfo);
 		this.m_resourceId = resourceId;
 	}

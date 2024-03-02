@@ -15,7 +15,6 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.common.script.HAPPluginEntityDefinitionInDomainScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorComplexScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPPluginEntityProcessorSimpleScriptBased;
 import com.nosliw.data.core.domain.common.script.HAPResourceManagerImpScriptBased;
@@ -25,47 +24,23 @@ import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEnti
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPPluginAdapterProcessorDataAssociation;
-import com.nosliw.data.core.domain.entity.adapter.dataassociation.HAPPluginEntityDefinitionInDomainDataAssociation;
 import com.nosliw.data.core.domain.entity.adapter.interactive.HAPPluginAdapterProcessorDataAssociationInteractive;
-import com.nosliw.data.core.domain.entity.adapter.interactive.HAPPluginEntityDefinitionInDomainDataAssociationInteractive;
 import com.nosliw.data.core.domain.entity.adapter.task.HAPPluginAdapterProcessorDataAssociationTask;
-import com.nosliw.data.core.domain.entity.adapter.task.HAPPluginEntityDefinitionInDomainDataAssociationTask;
-import com.nosliw.data.core.domain.entity.attachment.HAPPluginEntityDefinitionInDomainAttachment;
-import com.nosliw.data.core.domain.entity.configure.HAPPluginEntityDefinitionInDomainConfigure;
 import com.nosliw.data.core.domain.entity.configure.HAPResourceManagerImpConfigure;
-import com.nosliw.data.core.domain.entity.container.HAPPluginEntityDefinitionInDomainContainerComplex;
-import com.nosliw.data.core.domain.entity.container.HAPPluginEntityDefinitionInDomainContainerSimple;
 import com.nosliw.data.core.domain.entity.container.HAPPluginEntityProcessorContainerComplex;
 import com.nosliw.data.core.domain.entity.container.HAPPluginEntityProcessorContainerSimple;
-import com.nosliw.data.core.domain.entity.data.HAPPluginEntityDefinitionInDomainData;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataGroupTemp;
-import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinitionInDomainExpressionDataSingle;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityProcessorComplexExpressionDataSingle;
-import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityDefinitionInDomainExpressionScriptGroup;
-import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityDefinitionInDomainExpressionScriptGroupTemp;
-import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityDefinitionInDomainExpressionScriptSingle;
 import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityProcessorComplexExpressionScriptGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPPluginEntityProcessorComplexExpressionScriptSingle;
-import com.nosliw.data.core.domain.entity.script.task.HAPPluginEntityDefinitionInDomainScriptTaskGroup;
 import com.nosliw.data.core.domain.entity.script.task.HAPPluginEntityProcessorScriptTaskGroup;
-import com.nosliw.data.core.domain.entity.service.provider.HAPPluginEntityDefinitionInDomainServiceProvider;
 import com.nosliw.data.core.domain.entity.service.provider.HAPPluginSimpleEntityProcessorServiceProvider;
-import com.nosliw.data.core.domain.entity.task.HAPPluginEntityDefinitionInDomainTask;
 import com.nosliw.data.core.domain.entity.task.HAPPluginEntityProcessorTask;
 import com.nosliw.data.core.domain.entity.test.complex.script.HAPPluginEntityProcessorComplexTestComplexScript;
 import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPPluginEntityProcessorComplexTestComplex1;
-import com.nosliw.data.core.domain.entity.test.simple.testsimple1.HAPPluginEntityDefinitionInDomainTestSimple1;
-import com.nosliw.data.core.domain.entity.value.HAPPluginEntityDefinitionInDomainValue;
 import com.nosliw.data.core.entity.HAPManagerEntity;
-import com.nosliw.data.core.entity.division.manual.test.complex.script.HAPPluginParserEntityImpTestComplexScript;
-import com.nosliw.data.core.entity.division.manual.test.complex.testcomplex1.HAPPluginParserEntityImpTestComplex1;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPPluginParserEntityImpValueContext;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPPluginParserEntityImpValueStructure;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
-import com.nosliw.data.core.interactive.HAPPluginEntityDefinitionInDomainInteractive;
 import com.nosliw.data.core.interactive.HAPPluginSimpleEntityProcessorInteractive;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
@@ -86,7 +61,6 @@ import com.nosliw.data.core.sequence.HAPTaskInfoParserSequence;
 import com.nosliw.data.core.sequence.HAPTaskInfoProcessorSequence;
 import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
 import com.nosliw.data.core.service.definition.HAPManagerService;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
@@ -308,6 +282,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getResourceDefinitionManager().registerPlugin(new HAPPluginResourceDefinitionImpEntity(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, this));
 
 		//domain entity definition
+/*		
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpTestComplex1(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginParserEntityImpTestComplexScript(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainTestSimple1(this));
@@ -336,7 +311,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, true, this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainScriptBased(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, false, this));
-
+*/
+		
 		//complex entity processor
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexTestComplex1());
 		this.getDomainEntityExecutableManager().registerComplexEntityProcessorPlugin(new HAPPluginEntityProcessorComplexTestComplexScript());

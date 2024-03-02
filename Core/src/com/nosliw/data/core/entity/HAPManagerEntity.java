@@ -85,7 +85,7 @@ public class HAPManagerEntity {
 		return out;
 	}
 	
-	public HAPEntityPackage getExecutablePackage(HAPResourceId resourceId) {
+	public HAPEntityPackage getPackage(HAPResourceId resourceId) {
 		HAPEntityPackage out = new HAPEntityPackage();
 
 		//figure out root entity
@@ -118,8 +118,7 @@ public class HAPManagerEntity {
 	private void buildDependencyGroup(HAPResourceIdSimple complexEntityResourceId, Set<HAPResourceIdSimple> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
-			
-			
+
 			HAPEntityBundle bundle = this.getEntityBundle(HAPUtilityEntity.createEntityId(complexEntityResourceId));
 			Set<HAPResourceIdSimple> bundleDependency = bundle.getComplexResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {

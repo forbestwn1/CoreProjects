@@ -11,7 +11,7 @@ import com.nosliw.data.core.entity.HAPUtilityEntity;
 import com.nosliw.data.core.entity.division.manual.HAPContextParse;
 import com.nosliw.data.core.entity.division.manual.HAPManagerEntityDivisionManual;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualInfoValue;
+import com.nosliw.data.core.entity.division.manual.HAPManualInfoAttributeValue;
 import com.nosliw.data.core.entity.division.manual.HAPPluginParserEntityImpSimple;
 import com.nosliw.data.core.entity.division.manual.HAPUtilityParserEntityFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -30,12 +30,12 @@ public class HAPPluginParserEntityImpValueContext extends HAPPluginParserEntityI
 			JSONArray partJsonArray = (JSONArray)jsonValue;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
-				HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parserContext);
+				HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parseContext);
 				valueContext.addValueStructure(valueStructureWrapper);
 			}
 		}
 		else if(jsonValue instanceof JSONObject) {
-			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parserContext);
+			HAPDefinitionWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parseContext);
 			valueContext.addValueStructure(valueStructureWrapper);
 		}
 	}
@@ -45,9 +45,9 @@ public class HAPPluginParserEntityImpValueContext extends HAPPluginParserEntityI
 		if(valueStructureJsonObj==null) {
 			valueStructureJsonObj = wrapperObj;
 		}
-		HAPManualInfoValue valueStructureEntityValueInfo = HAPUtilityParserEntityFormatJson.parseEntity(valueStructureJsonObj, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE), parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
+		HAPManualInfoAttributeValue valueStructureEntityValueInfo = HAPUtilityParserEntityFormatJson.parseEntity(valueStructureJsonObj, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE), parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
 
-		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure(valueStructureEntityId);
+		HAPDefinitionWrapperValueStructure out = new HAPDefinitionWrapperValueStructure(valueStructureEntityValueInfo);
 
 		String groupName = (String)wrapperObj.opt(HAPDefinitionWrapperValueStructure.NAME);
 		out.setName(groupName);

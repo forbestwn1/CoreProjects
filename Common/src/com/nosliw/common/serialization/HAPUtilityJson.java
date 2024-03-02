@@ -23,9 +23,13 @@ public class HAPUtilityJson {
 
 	public static void buildJsonMap(String key, Object value, Map<String, String> jsonMap, Map<String, Class<?>> typeMap, HAPSerializationFormat format) {
 		jsonMap.put(key, buildJson(value, format));
-		if(value instanceof Integer)   typeMap.put(key, Integer.class);
-		else if(value instanceof Boolean)   typeMap.put(key, Boolean.class);
-		else if(value instanceof Double)   typeMap.put(key, Double.class);
+		if(value instanceof Integer) {
+			typeMap.put(key, Integer.class);
+		} else if(value instanceof Boolean) {
+			typeMap.put(key, Boolean.class);
+		} else if(value instanceof Double) {
+			typeMap.put(key, Double.class);
+		}
 	}
 	
 	public static String buildJsonStringValue(Object o, HAPSerializationFormat format) {
@@ -40,25 +44,29 @@ public class HAPUtilityJson {
 	}
 	
 	public static String buildJson(Object o, HAPSerializationFormat format) {
-		if (o == null)
+		if (o == null) {
 			return null;
+		}
 		String out = null;
 		if (o instanceof HAPSerializable) {
 			out = ((HAPSerializable) o).toStringValue(format);
 		} else if (o instanceof List) {
 			List<String> arrayJson = new ArrayList<String>();
-			for (Object data : (List) o)
+			for (Object data : (List) o) {
 				arrayJson.add(buildJson(data, format));
+			}
 			out = buildArrayJson(arrayJson.toArray(new String[0]));
 		} else if (o instanceof Set) {
 			List<String> arrayJson = new ArrayList<String>();
-			for (Object data : (Set) o)
+			for (Object data : (Set) o) {
 				arrayJson.add(buildJson(data, format));
+			}
 			out = buildArrayJson(arrayJson.toArray(new String[0]));
 		} else if (o instanceof Object[]) {
 			List<String> arrayJson = new ArrayList<String>();
-			for (Object data : (Object[]) o)
+			for (Object data : (Object[]) o) {
 				arrayJson.add(buildJson(data, format));
+			}
 			out = buildArrayJson(arrayJson.toArray(new String[0]));
 		} else if (o instanceof Map) {
 			Map<String, String> mapJson = new LinkedHashMap<String, String>();
@@ -100,8 +108,9 @@ public class HAPUtilityJson {
 
 			boolean lastOne = i >= map.size() - 1;
 			String json = buildAttributeJson(key, value, lastOne, jsonType);
-			if (json != null)
+			if (json != null) {
 				out.append(json);
+			}
 			i++;
 		}
 		out.append("}");
@@ -118,17 +127,20 @@ public class HAPUtilityJson {
 		out.append("[");
 		for (String json : jsons) {
 			if (json != null) {
-				if (i > 0)
+				if (i > 0) {
 					out.append(",");
+				}
 
 				if (eleType == Boolean.class || eleType == Integer.class || eleType == Double.class) {
 					out.append(json);
 				} else {
-					if (json.indexOf("{") == -1)
+					if (json.indexOf("{") == -1) {
 						out.append("\"");
+					}
 					out.append(json);
-					if (json.indexOf("{") == -1)
+					if (json.indexOf("{") == -1) {
 						out.append("\"");
+					}
 				}
 
 				i++;
@@ -139,6 +151,9 @@ public class HAPUtilityJson {
 	}
 
 	public static String formatJson(String jsonString) {
+		if(jsonString==null) {
+			return jsonString;
+		}
 		try {
 			JsonParser parser = new JsonParser();
 			JsonElement el = parser.parse(jsonString);
@@ -153,18 +168,29 @@ public class HAPUtilityJson {
 		}
 	}
 
-	public static Object toJsonObject(String jsonString) {
-		if(isObject(jsonString)) return new JSONObject(jsonString);
-		if(isArray(jsonString)) return new JSONArray(jsonString);
-		return jsonString;
+	public static Object toJsonObject(Object obj) {
+		if(obj instanceof String) {
+			String jsonString = (String)obj;
+			if(isObject(jsonString)) {
+				return new JSONObject(jsonString);
+			}
+			if(isArray(jsonString)) {
+				return new JSONArray(jsonString);
+			}
+			return jsonString;
+		}
+		else {
+			return obj;
+		}
 	}
 	
 	private static Map<String, String> clearMap(Map<String, String> jsonMap) {
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for (String key : jsonMap.keySet()) {
 			String value = jsonMap.get(key);
-			if (value != null)
+			if (value != null) {
 				out.put(key, value);
+			}
 		}
 		return out;
 	}
@@ -174,7 +200,9 @@ public class HAPUtilityJson {
 		String lastString = lastOne ? "" : ",";
 
 		if (value == null)
+		 {
 			return null; // out.append("\"" + attr+ "\""+": undefined" + lastString);
+		}
 
 		if (type != null && HAPJsonTypeUnchange.class.isAssignableFrom(type)) {
 			// treat the value as it is
