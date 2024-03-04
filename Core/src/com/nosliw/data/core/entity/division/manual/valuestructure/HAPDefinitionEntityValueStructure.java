@@ -13,7 +13,7 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.entity.HAPEnumEntityType;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntitySimple;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 import com.nosliw.data.core.structure.HAPStructure;
@@ -24,7 +24,10 @@ public class HAPDefinitionEntityValueStructure extends HAPManualEntitySimple imp
 	@HAPAttribute
 	public static final String VALUE = "value";
 
+	private Map<String, HAPRootStructure> m_roots;
+	
 	public HAPDefinitionEntityValueStructure() {
+		super(HAPEnumEntityType.VALUESTRUCTURE_100);
 		this.setAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
 	}
 
@@ -35,9 +38,7 @@ public class HAPDefinitionEntityValueStructure extends HAPManualEntitySimple imp
 		return root;
 	}
 
-	public Map<String, HAPRootStructure> getRoots(){  
-		return (Map<String, HAPRootStructure>)this.getAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
-	}
+	public Map<String, HAPRootStructure> getRoots(){	return (Map<String, HAPRootStructure>)this.getAttributeValue(VALUE);    }
 	
 	@Override
 	public HAPRootStructure getRoot(String rootName, boolean createIfNotExist) {
@@ -129,14 +130,5 @@ public class HAPDefinitionEntityValueStructure extends HAPManualEntitySimple imp
 		}
 		return out;
 	}
-
-	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
-		HAPDefinitionEntityValueStructure out = new HAPDefinitionEntityValueStructure();
-		this.cloneToDefinitionEntityInDomain(out);
-		return out;
-	}
-
-	public HAPDefinitionEntityValueStructure cloneValueStructure(){  return (HAPDefinitionEntityValueStructure)this.cloneEntityDefinitionInDomain();	}
 
 }

@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -30,7 +30,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private HAPDefinitionWrapperValueStructure m_valueStructureWrapper;
+	private HAPDefinitionEntityWrapperValueStructure m_valueStructureWrapper;
 	
 	private HAPExecutableEntityExpressionDataGroup m_expressionExe;
 	
@@ -43,9 +43,9 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setValueStructureDefinitionWrapper(HAPDefinitionWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructureDefinitionWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPDefinitionWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
+	public HAPDefinitionEntityWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 	
 	public HAPExecutableEntityExpressionDataGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableEntityExpressionDataGroup expression) {    this.m_expressionExe = expression;    }

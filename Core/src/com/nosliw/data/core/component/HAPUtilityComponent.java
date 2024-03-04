@@ -10,7 +10,7 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.process1.HAPUtilityProcessComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -109,8 +109,8 @@ public class HAPUtilityComponent {
 		return null;
 	}
 	
-	public static HAPDefinitionWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionWrapperValueStructure out = null;
+	public static HAPDefinitionEntityWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDefinitionEntityWrapperValueStructure out = null;
 		if(def instanceof HAPDefinitionEntityElementInContainerComponent) {
 			out = ((HAPDefinitionEntityElementInContainerComponent)def).getValueStructureWrapper();
 		}

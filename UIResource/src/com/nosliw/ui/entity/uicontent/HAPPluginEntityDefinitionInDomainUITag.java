@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -63,9 +63,9 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		HAPIdEntityInDomain valueContextEntityId = domainEntityDefMan.newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, parserContext);
 		HAPDefinitionEntityValueContext valueContextEntity = (HAPDefinitionEntityValueContext)parserContext.getGlobalDomain().getEntityDefinition(valueContextEntityId);
 
-		for(HAPDefinitionWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
+		for(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
 
-			HAPDefinitionWrapperValueStructure valueStructureWrapper = new HAPDefinitionWrapperValueStructure();
+			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = new HAPDefinitionEntityWrapperValueStructure();
 			valueStructureWrapper.setName(valueStructureWrapper1.getName());
 			valueStructureWrapper.setGroupType(valueStructureWrapper1.getGroupType());
 

@@ -13,14 +13,13 @@ import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContaine
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.valueport.HAPDefinitionValuePort;
+import com.nosliw.data.core.entity.HAPIdEntityType;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 
 //entity that have data value structure and attachment
 public abstract class HAPManualEntityComplex extends HAPManualEntityBlock implements HAPWithValueContext, HAPWithAttachment{
 
-	protected HAPManualEntityComplex() {}
-	
-	protected HAPManualEntityComplex (String entityType) {
+	protected HAPManualEntityComplex (HAPIdEntityType entityType) {
 		super(entityType);
 	}
 	

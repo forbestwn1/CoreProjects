@@ -87,7 +87,7 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 			}
 		}
 
-		out.isComplex = this.getEntityManager().getEntityTypeInfo(out.entityType).getIsComplex();
+		out.isComplex = this.getEntityManager().getEntityTypeInfo(out.entityType).getIsComplex(this.getEntityManager());
 		
 		return out;
 	}

@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -38,7 +38,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 
 	private Map<String, HAPExecutableTask> m_tasks;
 
-	private HAPDefinitionWrapperValueStructure m_valueStructureWrapper;
+	private HAPDefinitionEntityWrapperValueStructure m_valueStructureWrapper;
 
 	public HAPExecutableTaskSuite(String id) {
 		this.m_tasks = new LinkedHashMap<String, HAPExecutableTask>();
@@ -54,9 +54,9 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	@Override
 	public void addEntityElement(HAPExecutableTask entityElement) {   this.m_tasks.put(entityElement.getId(), entityElement);  }
 
-	public void setValueStructureDefinitionWrapper(HAPDefinitionWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructureDefinitionWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPDefinitionWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
+	public HAPDefinitionEntityWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 
 	public HAPExecutableValueStructure getValueStructureExe() {
 		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionWrapper().getValueStructure());

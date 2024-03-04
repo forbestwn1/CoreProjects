@@ -3,6 +3,7 @@ package com.nosliw.data.core.entity.division.manual.test.complex.script;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.data.core.entity.HAPEnumEntityType;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
@@ -12,6 +13,7 @@ public class HAPDefinitionEntityTestComplexScript extends HAPManualEntityComplex
 	public static final String ATTR_PARM = "parm";
 
 	public HAPDefinitionEntityTestComplexScript() {
+		super(HAPEnumEntityType.TEST_COMPLEX_SCRIPT_100);
 		this.setAttributeValue(ATTR_PARM, new LinkedHashMap<String, Object>());
 	}
 

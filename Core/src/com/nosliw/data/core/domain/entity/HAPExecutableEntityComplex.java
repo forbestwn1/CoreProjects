@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainEntity;
@@ -17,7 +18,6 @@ import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.domain.valueport.HAPContainerValuePorts;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
 public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
@@ -28,22 +28,22 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	public static final String ATTACHMENTCONTAINERID = "attachmentContainerId";
 
 	@HAPAttribute
-	static final public String VALUECONSTANT = HAPSystemUtility.buildSystemName("valueConstant");  
+	static final public String VALUECONSTANT = HAPUtilityNosliw.buildNosliwFullName("valueConstant");  
 	@HAPAttribute
-	static final public String DATACONSTANT = HAPSystemUtility.buildSystemName("dataConstant");  
+	static final public String DATACONSTANT = HAPUtilityNosliw.buildNosliwFullName("dataConstant");  
 	
 	@HAPAttribute
-	static final public String DATAEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("dataExpressionGroup");  
+	static final public String DATAEEXPRESSIONGROUP = HAPUtilityNosliw.buildNosliwFullName("dataExpressionGroup");  
 	
 	@HAPAttribute
-	static final public String SCRIPTEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("scriptExpressionGroup");  
+	static final public String SCRIPTEEXPRESSIONGROUP = HAPUtilityNosliw.buildNosliwFullName("scriptExpressionGroup");  
 
 	//script expression without any variable
 	@HAPAttribute
-	static final public String PLAINSCRIPTEEXPRESSIONGROUP = HAPSystemUtility.buildSystemName("plainScriptExpressionGroup");  
+	static final public String PLAINSCRIPTEEXPRESSIONGROUP = HAPUtilityNosliw.buildNosliwFullName("plainScriptExpressionGroup");  
 
 	@HAPAttribute
-	static final public String PLAINSCRIPTEEXPRESSIONGROUPVALUE = HAPSystemUtility.buildSystemName("plainScriptExpressionGroupValue");  
+	static final public String PLAINSCRIPTEEXPRESSIONGROUPVALUE = HAPUtilityNosliw.buildNosliwFullName("plainScriptExpressionGroupValue");  
 
 	private HAPExecutableEntityValueContext m_valueContext;
 
@@ -118,7 +118,9 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
-		if(this.m_valueContext!=null) jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_valueContext!=null) {
+			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override
@@ -126,12 +128,16 @@ public abstract class HAPExecutableEntityComplex extends HAPExecutableEntity{
 		super.buildExpandedJsonMap(jsonMap, typeJsonMap, entityDomain);
 		HAPDomainEntityExecutableResourceComplex entityDomainExe = (HAPDomainEntityExecutableResourceComplex)entityDomain;
 		jsonMap.put(ATTACHMENTCONTAINERID, this.m_attachmentContainerId);
-		if(this.m_valueContext!=null)  jsonMap.put(VALUECONTEXT, this.m_valueContext.toExpandedString(entityDomainExe.getValueStructureDomain()));
+		if(this.m_valueContext!=null) {
+			jsonMap.put(VALUECONTEXT, this.m_valueContext.toExpandedString(entityDomainExe.getValueStructureDomain()));
+		}
 	}
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		if(this.m_valueContext!=null)  jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
+		if(this.m_valueContext!=null) {
+			jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
+		}
 	}
 }

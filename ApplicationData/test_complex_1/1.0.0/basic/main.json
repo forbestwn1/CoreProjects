@@ -17,8 +17,29 @@
 					"variable" : ["parent_public", "parent_protected", "parent_private", "parent_internal"]
 				}
 			}
-		}
+		},
 		
-	
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"entity": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"parent_public": {
+							"definition":{
+								"criteria": "test.string;1.0.0"
+							},
+							"defaultValue": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							}
+						}
+					}
+				}
+			]
+		}
 	]
 }

@@ -14,7 +14,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
@@ -51,7 +51,7 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	//context definition
-	private HAPDefinitionWrapperValueStructure m_valueStructureDefinitionWrapper;
+	private HAPDefinitionEntityWrapperValueStructure m_valueStructureDefinitionWrapper;
 
 	//dependency resources
 	private List<HAPResourceDependency> m_resourceDependency;
@@ -77,8 +77,8 @@ public abstract class HAPUITagDefinition extends HAPEntityInfoImp{
 	public void setScript(String script) {  this.m_script = new HAPJsonTypeScript(script);    }
 	
 	public HAPValueStructureDefinitionGroup getValueStructureDefinition(){  return HAPUtilityValueStructure.getGroupFromWrapper(this.m_valueStructureDefinitionWrapper);  }
-	public HAPDefinitionWrapperValueStructure getValueStructureDefinitionWrapper(){  return this.m_valueStructureDefinitionWrapper;  }
-	public void setValueStructureDefinitionWrapper(HAPDefinitionWrapperValueStructure valueStructureWrapper){  this.m_valueStructureDefinitionWrapper = valueStructureWrapper;  }
+	public HAPDefinitionEntityWrapperValueStructure getValueStructureDefinitionWrapper(){  return this.m_valueStructureDefinitionWrapper;  }
+	public void setValueStructureDefinitionWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper){  this.m_valueStructureDefinitionWrapper = valueStructureWrapper;  }
 
 	public List<HAPResourceDependency> getResourceDependency(){   return this.m_resourceDependency;    }
 	public void addResourceDependency(HAPResourceDependency dep){  this.m_resourceDependency.add(dep);  }

@@ -36,7 +36,7 @@ public class HAPUtilityEntityInfo {
 	
 	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj, String attrName) {
 		HAPEntityInfo out = new HAPEntityInfoImp();
-		JSONObject entityInfoJson = jsonObj.getJSONObject(attrName);
+		JSONObject entityInfoJson = jsonObj.optJSONObject(attrName);
 		if(entityInfoJson==null) {
 			entityInfoJson = jsonObj;
 		}

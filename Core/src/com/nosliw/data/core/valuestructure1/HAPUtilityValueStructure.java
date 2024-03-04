@@ -17,7 +17,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.structure.HAPInfoAlias;
 import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
@@ -57,16 +57,16 @@ public class HAPUtilityValueStructure {
 		return null;
 	}
 	
-	public static HAPValueStructure getValueStructureFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
+	public static HAPValueStructure getValueStructureFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
 		return wrapper.getValueStructure();
 	}
 	
-	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
+	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionFlat)getValueStructureFromWrapper(wrapper);
 	}
 	
-	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPDefinitionWrapperValueStructure wrapper) {
+	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionGroup)getValueStructureFromWrapper(wrapper);
 	}
 	

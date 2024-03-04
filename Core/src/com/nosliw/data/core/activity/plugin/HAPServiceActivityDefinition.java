@@ -12,7 +12,7 @@ import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceUse;
 
 public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
@@ -24,7 +24,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	
 	private String m_serviceUseName;
 	
-	private HAPDefinitionWrapperValueStructure m_valueStructure;
+	private HAPDefinitionEntityWrapperValueStructure m_valueStructure;
 	
 	public HAPServiceActivityDefinition(String type) {
 		super(type);
@@ -35,7 +35,7 @@ public class HAPServiceActivityDefinition extends HAPDefinitionActivityNormal{
 	public String getServiceUseName() {    return this.m_serviceUseName;      }
 	
 	@Override
-	public HAPDefinitionWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
+	public HAPDefinitionEntityWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
 	protected void buildConfigureByJson(JSONObject configurJsonObj) {

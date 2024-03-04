@@ -496,6 +496,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1 = "test_complex_1";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT = "test_complex_script";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT = "test.decoration.script";
+		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER = "valuestructurewrapper";
 		public static final String RUNTIME_RESOURCE_TYPE_UICONTENT = "uicontent";
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uipage";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAG = "uitag";

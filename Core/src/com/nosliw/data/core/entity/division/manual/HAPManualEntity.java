@@ -12,14 +12,15 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEntity;
+import com.nosliw.data.core.entity.HAPIdEntityType;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
-import com.nosliw.data.core.system.HAPSystemUtility;
 
 @HAPEntityWithAttribute
 public abstract class HAPManualEntity extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
@@ -27,23 +28,21 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 	
-	final private static String ATTR_IDINDEX = HAPSystemUtility.buildSystemName("idIndex"); 
+	final private static String ATTR_IDINDEX = HAPUtilityNosliw.buildNosliwFullName("idIndex"); 
 
 	//all attributes
 	private List<HAPManualAttribute> m_attributes;
 	
-	private String m_entityType;
+	private HAPIdEntityType m_entityTypeId;
 	
-	protected HAPManualEntity() {
+	protected HAPManualEntity (HAPIdEntityType entityTypeId) {
 		this.m_attributes = new ArrayList<HAPManualAttribute>();
-	}
-	
-	protected HAPManualEntity (String entityType) {
-		this();
-		this.m_entityType = entityType;
+		this.m_entityTypeId = entityTypeId;
 	}
 
-	public void setAttribute(HAPManualAttribute attribute) {    
+	public HAPIdEntityType getEntityTypeId() {  return this.m_entityTypeId;	}
+
+	public void setAttribute(HAPManualAttribute attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
 			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
 				this.m_attributes.remove(i);
@@ -53,7 +52,16 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		this.m_attributes.add(attribute);    
 	}
 
-	public List<HAPManualAttribute> getAttributes(){    return this.m_attributes;    }
+	public List<HAPManualAttribute> getAllAttributes(){    return this.m_attributes;    }
+	public List<HAPManualAttribute> getPublicAttributes(){
+		List<HAPManualAttribute> out = new ArrayList<HAPManualAttribute>();
+		for(HAPManualAttribute attr : this.getAllAttributes()) {
+			if(HAPUtilityNosliw.getNosliwCoreName(attr.getName())==null) {
+				out.add(attr);
+			}
+		}
+		return out;    
+	}
 	
 	public HAPManualAttribute getAttribute(String attrName) {
 		HAPManualAttribute out = null;
@@ -67,22 +75,36 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 	
 	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualInfoAttributeValueValue(attrValue)));	}
 	public Object getAttributeValue(String attributeName){	return ((HAPManualInfoAttributeValueValue)this.getAttribute(attributeName).getValueInfo()).getValue();	}
-	
 	public Object getAttributeValue(String attrName, Object defaultValue) {
 		HAPManualAttribute att = this.getAttribute(attrName);
 		if(att==null) {
 			this.setAttributeValue(attrName, defaultValue);
 			att = this.getAttribute(attrName);
 		}
-		return ((HAPManualInfoAttributeValueValue)att.getInfoValue(attrName)).getValue();
+		return ((HAPManualInfoAttributeValueValue)att.getValueInfo()).getValue();
 	}	
+	
+	public void setAttributeEntity(String attributeName, HAPManualEntity entity) {
+		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualInfoAttributeValueEntity(entity)));	
+	}
+	public HAPManualEntity getAttributeEntity(String attributeName) {
+		return ((HAPManualInfoAttributeValueEntity)this.getAttribute(attributeName).getValueInfo()).getEntity();
+	}
+
+	protected String generateId() {
+		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
+		idIndex++;
+		this.setAttributeValue(ATTR_IDINDEX, idIndex);
+		return "generatedId_"+ idIndex;
+	}
+	
 	
 	//normal json
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		Map<String, String> attrMap = new LinkedHashMap<String, String>();
-		for(HAPManualAttribute attribute : this.getAttributes()) {
+		for(HAPManualAttribute attribute : this.getAllAttributes()) {
 			attrMap.put(attribute.getName(),  attribute.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrMap));
@@ -99,17 +121,8 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.ENTITY;    }
 
-	public String getEntityType() {  return this.m_entityType;	}
+	public void setEntityType(String entityType) {    this.m_entityTypeId = entityType;     }
 
-	public void setEntityType(String entityType) {    this.m_entityType = entityType;     }
-
-	public String generateId() {
-		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
-		idIndex++;
-		this.setAttributeValueObject(ATTR_IDINDEX, idIndex);
-		return "generatedId_"+ idIndex;
-	}
-	
 	public HAPEmbededDefinition getAttributeEmbeded(String attrName) {
 		HAPManualAttribute att = this.getAttribute(attrName);
 		if(att!=null) {
@@ -186,7 +199,7 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 	public abstract HAPManualEntity cloneEntityDefinitionInDomain();
 
 	protected void cloneToDefinitionEntityInDomain(HAPManualEntity entityDefinitionInDomain) {
-		entityDefinitionInDomain.m_entityType = this.m_entityType;
+		entityDefinitionInDomain.m_entityTypeId = this.m_entityTypeId;
 		entityDefinitionInDomain.m_attributes = new ArrayList<HAPManualAttribute>();
 		for(HAPManualAttribute attribute : this.getAttributes()) {
 			entityDefinitionInDomain.setAttribute((HAPManualAttribute)attribute.cloneEntityAttribute());

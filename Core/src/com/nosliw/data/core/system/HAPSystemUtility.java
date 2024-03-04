@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.json.JSONArray;
 
-import com.nosliw.common.utils.HAPConstantShared;
-
 public class HAPSystemUtility {
 	
 	static private Properties prop;
@@ -48,8 +46,4 @@ public class HAPSystemUtility {
 		return prop.getProperty("LoadResourceByFileMode");
 	}
 	
-	public static String buildSystemName(String name) {
-		return HAPConstantShared.NOSLIW_NAME_PREFIX + name;
-	}
-
 }

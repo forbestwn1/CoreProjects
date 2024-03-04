@@ -13,8 +13,8 @@ public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeVal
 
 	private HAPManualEntity m_entity;
 	
-	public HAPManualInfoAttributeValueEntity(HAPInfoEntityType entityTypeInfo, HAPManualEntity entity) {
-		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY, entityTypeInfo);
+	public HAPManualInfoAttributeValueEntity(HAPManualEntity entity) {
+		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY, new HAPInfoEntityType(entity.getEntityTypeId()));
 		this.m_entity = entity;
 	}
 

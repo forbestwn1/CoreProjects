@@ -20,11 +20,10 @@ public class HAPInfoEntityType extends HAPSerializableImp{
 	private HAPIdEntityType m_entityTypeId;
 	
 	//
-	private boolean m_isComplex = false;
+	private Boolean m_isComplex = null;
 	
 	public HAPInfoEntityType() {
 		this.m_entityTypeId = null;
-		this.m_isComplex = false;
 	}
 	
 	public HAPInfoEntityType(HAPIdEntityType entityTypeId, boolean isComplex) {
@@ -32,9 +31,18 @@ public class HAPInfoEntityType extends HAPSerializableImp{
 		this.m_isComplex = isComplex;
 	}
 	
+	public HAPInfoEntityType(HAPIdEntityType entityTypeId) {
+		this.m_entityTypeId = entityTypeId;
+	}
+
 	public HAPIdEntityType getEntityTypeId() {    return this.m_entityTypeId;    }
 	
-	public boolean getIsComplex() {   return this.m_isComplex;    }
+	public Boolean getIsComplex(HAPManagerEntity entityMan) {
+		if(this.m_isComplex==null) {
+			this.m_isComplex = entityMan.getEntityTypeInfo(m_entityTypeId).getIsComplex(entityMan);
+		}
+		return this.m_isComplex;    
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

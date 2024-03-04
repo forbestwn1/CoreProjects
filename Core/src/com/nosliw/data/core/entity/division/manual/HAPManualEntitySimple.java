@@ -1,10 +1,10 @@
 package com.nosliw.data.core.entity.division.manual;
 
+import com.nosliw.data.core.entity.HAPIdEntityType;
+
 public abstract class HAPManualEntitySimple extends HAPManualEntityBlock{
 
-	public HAPManualEntitySimple() {}
-	
-	protected HAPManualEntitySimple (String entityType) {
+	protected HAPManualEntitySimple (HAPIdEntityType entityType) {
 		super(entityType);
 	}
 	

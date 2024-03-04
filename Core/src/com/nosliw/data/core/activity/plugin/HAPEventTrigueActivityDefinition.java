@@ -13,7 +13,7 @@ import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 
 public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNormal{
 
@@ -22,7 +22,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 
 	private String m_eventName;
 	
-	private HAPDefinitionWrapperValueStructure m_valueStructure;
+	private HAPDefinitionEntityWrapperValueStructure m_valueStructure;
 	
 	public HAPEventTrigueActivityDefinition(String type) {
 		super(type);
@@ -31,7 +31,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	public String getEventName() {    return this.m_eventName;      }
 	
 	@Override
-	public HAPDefinitionWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
+	public HAPDefinitionEntityWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
 	protected void buildConfigureByJson(JSONObject configurJsonObj) {

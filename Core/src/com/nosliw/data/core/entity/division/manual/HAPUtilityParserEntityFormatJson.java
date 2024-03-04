@@ -38,7 +38,7 @@ public class HAPUtilityParserEntityFormatJson {
 		
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualInfoEntity.ENTITYTYPE);   //if entity type is defined in entity, then override provided
-		HAPIdEntityType entityTypeId = parseEntityTypeInfo(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdEntityType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		Object entityObj = jsonObj.opt(HAPManualInfoEntity.ENTITY);
 		if(entityObj==null)
@@ -94,39 +94,15 @@ public class HAPUtilityParserEntityFormatJson {
 		return out;
 	}
 	
-	private static HAPIdEntityType parseEntityTypeInfo(Object entityTypeObj, HAPIdEntityType entityTypeIfNotProvided, HAPManagerEntity entityManager) {
-		String entityType = null;
-		String entityTypeVersion = null;
-		if(entityTypeObj!=null) {
-			HAPIdEntityType entityTypeId1 = HAPUtilityParserEntity.parseEntityTypeId(entityTypeObj);
-			entityType = entityTypeId1.getEntityType();
-			entityTypeVersion = entityTypeId1.getVersion();
-		}
-		//try with entityTypeIfNotProvided
-		if(entityTypeIfNotProvided!=null) {
-			if(entityType==null) {
-				entityType = entityTypeIfNotProvided.getEntityType();
-			}
-			if(entityTypeVersion==null) {
-				entityTypeVersion = entityTypeIfNotProvided.getVersion();
-			}
-		}
-		//if version not provided, then use latest version
-		if(entityTypeVersion==null) {
-			entityManager.getLatestVersion(entityType).getVersion();
-		}
-		return new HAPIdEntityType(entityType, entityTypeVersion);
-	}
-	
-	//parse entity into domain
-	private static HAPManualInfoAttributeValue parseAttributeValueInfo(JSONObject jsonObj, HAPIdEntityType entityTypeIfNotProvided, HAPContextParse parseContext, HAPManagerEntityDivisionManual manualDivisionEntityMan, HAPManagerEntity entityManager) {
+	//parse entity as attribute value (value may be entity or reference(resource, attachment, local))
+	public static HAPManualInfoAttributeValue parseAttributeValueInfo(JSONObject jsonObj, HAPIdEntityType entityTypeIfNotProvided, HAPContextParse parseContext, HAPManagerEntityDivisionManual manualDivisionEntityMan, HAPManagerEntity entityManager) {
 		HAPManualInfoAttributeValue out = null;
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualInfoAttributeValue.ENTITYTYPE);   //if entity type is defined in entity, then override provided
-		HAPIdEntityType entityTypeId = parseEntityTypeInfo(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdEntityType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
-		HAPInfoEntityType entityTypeInfo = new HAPInfoEntityType(entityTypeId, entityManager.getEntityTypeInfo(entityTypeId).getIsComplex());
+		HAPInfoEntityType entityTypeInfo = new HAPInfoEntityType(entityTypeId, entityManager.getEntityTypeInfo(entityTypeId).getIsComplex(entityManager));
 		
 		//local entity reference
 		if(out==null) {
@@ -173,12 +149,36 @@ public class HAPUtilityParserEntityFormatJson {
 				entityObj = jsonObj;    //if no entity node, then using root
 			}
 			HAPManualEntity entityDef = manualDivisionEntityMan.parseEntityDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
-			out = new HAPManualInfoAttributeValueEntity(entityTypeInfo, entityDef);
+			out = new HAPManualInfoAttributeValueEntity(entityDef);
 		}
 
 		return out;
 	}
 
+	private static HAPIdEntityType parseEntityTypeId(Object entityTypeObj, HAPIdEntityType entityTypeIfNotProvided, HAPManagerEntity entityManager) {
+		String entityType = null;
+		String entityTypeVersion = null;
+		if(entityTypeObj!=null) {
+			HAPIdEntityType entityTypeId1 = HAPUtilityParserEntity.parseEntityTypeId(entityTypeObj);
+			entityType = entityTypeId1.getEntityType();
+			entityTypeVersion = entityTypeId1.getVersion();
+		}
+		//try with entityTypeIfNotProvided
+		if(entityTypeIfNotProvided!=null) {
+			if(entityType==null) {
+				entityType = entityTypeIfNotProvided.getEntityType();
+			}
+			if(entityTypeVersion==null) {
+				entityTypeVersion = entityTypeIfNotProvided.getVersion();
+			}
+		}
+		//if version not provided, then use latest version
+		if(entityTypeVersion==null) {
+			entityTypeVersion = entityManager.getLatestVersion(entityType).getVersion();
+		}
+		return new HAPIdEntityType(entityType, entityTypeVersion);
+	}
+	
 	private static HAPManualEntity parseLocalValue(String basePath, HAPIdEntity entityId, HAPManagerEntityDivisionManual manualDivisionEntityMan) {
 		HAPInfoEntityLocation entityLocationInfo = HAPUtilityEntityLocation.getEntityLocationInfo(entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());

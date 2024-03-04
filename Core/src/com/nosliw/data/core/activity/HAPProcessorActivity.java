@@ -3,7 +3,7 @@ package com.nosliw.data.core.activity;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionWrapperValueStructure;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public interface HAPProcessorActivity {
@@ -14,7 +14,7 @@ public interface HAPProcessorActivity {
 			HAPDefinitionActivity activityDefinition,
 			String id,
 			HAPContextProcessor processContext,
-			HAPDefinitionWrapperValueStructure valueStructureWrapper,
+			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker

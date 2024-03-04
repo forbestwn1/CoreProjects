@@ -19,7 +19,7 @@ public class HAPPluginParserEntityImpComplex extends HAPPluginParserEntityImp{
 //		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 //		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 //		
-//		this.parseComplexDefinitionContentJson(entityId, jsonObj, parserContext);
+		this.parseComplexDefinitionContentJson(entityDefinition, jsonObj, parseContext);
 	}
 
 	protected void parseComplexDefinitionContentJson(HAPManualEntity entityDefinition, JSONObject jsonObj, HAPContextParse parseContext) {}
