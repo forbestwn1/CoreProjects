@@ -1,15 +1,15 @@
 package com.nosliw.data.core.common;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 
 public interface HAPWithValueContext {
 
 	@HAPAttribute
 	public static String VALUECONTEXT = "valueContext";
 
-	HAPIdEntityInDomain getValueContextEntityId();
+	HAPDefinitionEntityValueContext getValueContextEntity();
 
-	void setValueContextEntityId(HAPIdEntityInDomain valueContextId);
+	void setValueContextEntity(HAPDefinitionEntityValueContext valueContext);
 	
 }

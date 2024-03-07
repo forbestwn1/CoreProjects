@@ -24,10 +24,10 @@ public class HAPProcessorContext {
 		contextGroup = HAPProcessorElementConstant.process(contextGroup, attachmentContainer, configure, runtimeEnv);
 
 		//solidate name in context  
-		contextGroup = HAPProcessorContextSolidate.processEntity(contextGroup, runtimeEnv);
+		contextGroup = HAPProcessorContextSolidate.processTreeNode(contextGroup, runtimeEnv);
 		
 		//process data rule
-		HAPProcessorContextRule.processEntity(contextGroup, runtimeEnv);
+		HAPProcessorContextRule.processTreeNode(contextGroup, runtimeEnv);
 		
 		//process inheritance
 		contextGroup = HAPProcessorContextVariableInheritance.process(contextGroup, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);
@@ -78,10 +78,10 @@ public class HAPProcessorContext {
 		contextGroup = HAPProcessorElementConstant.process(contextGroup, parent, attachmentContainer, configure, runtimeEnv);
 		
 		//solidate name in context  
-		contextGroup = HAPProcessorContextSolidate.processEntity(contextGroup, runtimeEnv);
+		contextGroup = HAPProcessorContextSolidate.processTreeNode(contextGroup, runtimeEnv);
 		
 		//process data rule
-		HAPProcessorContextRule.processEntity(contextGroup, runtimeEnv);
+		HAPProcessorContextRule.processTreeNode(contextGroup, runtimeEnv);
 		
 		//process inheritance
 		contextGroup = HAPProcessorContextVariableInheritance.process(contextGroup, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);

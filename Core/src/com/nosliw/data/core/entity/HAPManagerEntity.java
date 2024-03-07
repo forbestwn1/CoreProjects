@@ -14,6 +14,7 @@ import com.nosliw.data.core.entity.division.manual.HAPManagerEntityDivisionManua
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerEntity {
@@ -89,7 +90,7 @@ public class HAPManagerEntity {
 		HAPEntityPackage out = new HAPEntityPackage();
 
 		//figure out root entity
-		HAPInfoResourceIdNormalize normalizedResourceId = normalizeResourceId(resourceId);
+		HAPInfoResourceIdNormalize normalizedResourceId = HAPUtilityResourceId.normalizeResourceId(resourceId);
 		out.setMainEntityId(normalizedResourceId);
 		
 		//find all related complex resource
@@ -103,18 +104,6 @@ public class HAPManagerEntity {
 		return out;
 	}
 	
-	private HAPInfoResourceIdNormalize normalizeResourceId(HAPResourceId resourceId) {
-		HAPInfoResourceIdNormalize out = null;
-		String resourceType = resourceId.getResourceType();
-		String resourceStructure = resourceId.getStructure();
-		if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
-			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
-			out = new HAPInfoResourceIdNormalize(resourceId, "", resourceId.getResourceType());
-		}
-		
-		return out;
-	}
-
 	private void buildDependencyGroup(HAPResourceIdSimple complexEntityResourceId, Set<HAPResourceIdSimple> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);

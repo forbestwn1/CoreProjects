@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionSuite1;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionComponent;

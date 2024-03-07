@@ -947,6 +947,10 @@
 			<definition name="EMBEDEDVALUE_TYPE_RESOURCEREFERENCE" value="resourceReference"/>
 
 			<definition type="space"/>
+			<definition name="ENTITYATTRIBUTE_VALUETYPE_ENTITY" value="entity"/>
+			<definition name="ENTITYATTRIBUTE_VALUETYPE_RESOURCEID" value="resourceId"/>
+
+			<definition type="space"/>
 			<definition name="ENTITY_DIVISION_MANUAL" value="manual"/>
 
 			<definition type="space"/>

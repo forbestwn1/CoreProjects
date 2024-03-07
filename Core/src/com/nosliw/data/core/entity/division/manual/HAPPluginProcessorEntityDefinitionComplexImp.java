@@ -1,20 +1,20 @@
-package com.nosliw.data.core.domain.entity;
+package com.nosliw.data.core.entity.division.manual;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
-public abstract class HAPPluginEntityProcessorComplexImp implements HAPPluginEntityProcessorComplex{
+public abstract class HAPPluginProcessorEntityDefinitionComplexImp implements HAPPluginProcessorEntityDefinitionComplex{
 
 	private Class<? extends HAPExecutableEntityComplex> m_exeEntityClass;
 	
 	private String m_entityType;
 	
-	public HAPPluginEntityProcessorComplexImp(String entityType, Class<? extends HAPExecutableEntityComplex> exeEntityClass) {
+	public HAPPluginProcessorEntityDefinitionComplexImp(String entityType, Class<? extends HAPExecutableEntityComplex> exeEntityClass) {
 		this.m_entityType = entityType;
 		this.m_exeEntityClass = exeEntityClass;
 	}

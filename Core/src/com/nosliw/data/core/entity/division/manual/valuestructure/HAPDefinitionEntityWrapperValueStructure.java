@@ -4,8 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -61,14 +59,6 @@ public class HAPDefinitionEntityWrapperValueStructure extends HAPManualEntitySim
 
 	@Override
 	public void solidateConstantScript(Map<String, String> values) {}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(GROUPTYPE, this.m_groupType);
-		jsonMap.put(NAME, this.m_name);
-		jsonMap.put(INFO, HAPUtilityJson.buildJson(this.m_info, HAPSerializationFormat.JSON));
-		jsonMap.put(VALUESTRUCTURE, this.m_valueStructure.toStringValue(HAPSerializationFormat.JSON));
-	}
 
 	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}

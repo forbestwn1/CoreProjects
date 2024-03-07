@@ -43,7 +43,9 @@ public class HAPInfoEntityType extends HAPSerializableImp{
 		}
 		return this.m_isComplex;    
 	}
-	
+
+	public Boolean getIsComplex() {   return this.m_isComplex;  }
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		jsonMap.put(ENTITYTYPE, this.m_entityTypeId.toStringValue(HAPSerializationFormat.JSON));

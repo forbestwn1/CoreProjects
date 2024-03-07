@@ -1,17 +1,17 @@
-package com.nosliw.data.core.domain.entity;
+package com.nosliw.data.core.entity.division.manual;
 
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 
-public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEntityProcessorSimple{
+public abstract class HAPPluginProcessorEntityDefinitionSimpleImp implements HAPPluginProcessorEntityDefinitionSimple{
 
 	private Class<? extends HAPExecutableEntity> m_exeEntityClass;
 	
 	private String m_entityType;
 
-	public HAPPluginEntityProcessorSimpleImp(String entityType, Class<? extends HAPExecutableEntity> exeEntityClass) {
+	public HAPPluginProcessorEntityDefinitionSimpleImp(String entityType, Class<? extends HAPExecutableEntity> exeEntityClass) {
 		this.m_entityType = entityType;
 		this.m_exeEntityClass = exeEntityClass;
 	}
@@ -20,7 +20,7 @@ public abstract class HAPPluginEntityProcessorSimpleImp implements HAPPluginEnti
 	public String getEntityType() {  return this.m_entityType;  }
 
 	@Override
-	public void process(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
+	public void process(HAPExecutableEntity entityExe, HAPContextProcess processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPManualEntity entityDef = definitionDomain.getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();

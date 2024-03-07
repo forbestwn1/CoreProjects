@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
@@ -12,6 +11,7 @@ import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationM
 import com.nosliw.data.core.dataassociation.mirror.HAPProcessorDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
 import com.nosliw.data.core.dataassociation.none.HAPProcessorDataAssociationNone;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

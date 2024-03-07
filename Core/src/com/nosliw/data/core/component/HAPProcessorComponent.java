@@ -7,6 +7,7 @@ import com.nosliw.data.core.component.command.HAPProcessorCommand;
 import com.nosliw.data.core.component.event.HAPDefinitionEvent;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.component.event.HAPProcessEvent;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPValueStructureInComplex;
 import com.nosliw.data.core.domain.valuecontext.HAPProcessorValueStructureInComponent;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
@@ -88,7 +89,7 @@ public class HAPProcessorComponent {
 	
 	public static void processCommand(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionCommand command : definition.getCommands()) {
-			HAPExecutableCommand commandExe = HAPProcessorCommand.processAttribute(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPExecutableCommand commandExe = HAPProcessorCommand.processChildLeaf(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
 			executable.addCommand(commandExe);
 		}
 	}

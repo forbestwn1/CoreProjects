@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 
-public class HAPManualInfoAttributeValueAttachment extends HAPManualInfoAttributeValue{
+public class HAPManualInfoAttributeValueAttachment extends HAPManualInfoAttributeValueWithEntity{
 
 	//reference to attachment
 	public static final String REFERENCE = "reference";

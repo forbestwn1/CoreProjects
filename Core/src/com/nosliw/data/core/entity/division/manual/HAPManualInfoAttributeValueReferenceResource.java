@@ -12,12 +12,14 @@ public class HAPManualInfoAttributeValueReferenceResource extends HAPManualInfoA
 	//reference to external resource
 	private HAPResourceId m_resourceId;
 
-	private HAPManualEntity m_entity;
-
 	public HAPManualInfoAttributeValueReferenceResource(HAPInfoEntityType entityTypeInfo, HAPResourceId resourceId) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE, entityTypeInfo);
 		this.m_resourceId = resourceId;
 	}
 
+	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
+	
+	
+	
 	
 }

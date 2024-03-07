@@ -6,7 +6,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 
-public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeValue{
+public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeValueWithEntity{
 
 	//entity definition
 	public static final String ENTITY = "entity";
@@ -18,6 +18,7 @@ public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeVal
 		this.m_entity = entity;
 	}
 
+	@Override
 	public HAPManualEntity getEntity() {    return this.m_entity;    }
 	
 	@Override

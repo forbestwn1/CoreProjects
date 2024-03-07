@@ -13,7 +13,7 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 
 	@Override
 	public com.nosliw.data.core.activity.HAPExecutableActivity process(HAPDefinitionActivity activityDefinition,
-			String id, com.nosliw.data.core.component.HAPContextProcessor processContext,
+			String id, com.nosliw.data.core.domain.entity.HAPContextProcessor processContext,
 			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper, HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, HAPProcessTracker processTracker) {
 		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)activityDefinition;

@@ -3,7 +3,6 @@ package com.nosliw.data.core.domain.entity;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.data.core.component.HAPContextProcessor;
 
 public abstract class HAPProcessorEntityExecutableDownward {
 

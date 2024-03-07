@@ -33,6 +33,13 @@ public abstract class HAPManualEntityComplex extends HAPManualEntityBlock implem
 	protected HAPDefinitionValuePort getValueContextValuePort(){		return new HAPDefinitionValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.VALUEPORT_NAME_DEFAULT);	}
 	protected Set<HAPDefinitionValuePort> getOtherValuePorts(){		return new HashSet<HAPDefinitionValuePort>();	}
 	
+	
+	@Override
+	public HAPDefinitionEntityValueContext getValueContextEntity() {}
+
+	@Override
+	public void setValueContextEntity(HAPDefinitionEntityValueContext valueContext) {}
+
 	@Override
 	public HAPIdEntityInDomain getValueContextEntityId() {  	return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithValueContext.VALUECONTEXT);	}
 	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {  return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  

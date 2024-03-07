@@ -8,6 +8,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -96,6 +97,11 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		idIndex++;
 		this.setAttributeValue(ATTR_IDINDEX, idIndex);
 		return "generatedId_"+ idIndex;
+	}
+	
+	public HAPManualInfoAttributeValue getDescendantValueInfo(HAPPath path) {
+		
+		
 	}
 	
 	

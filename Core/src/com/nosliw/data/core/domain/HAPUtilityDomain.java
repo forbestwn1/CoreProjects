@@ -9,10 +9,10 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.entity.HAPConfigureComplexRelationInfo;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
@@ -156,7 +156,7 @@ public class HAPUtilityDomain {
 		
 		//process definition
 		HAPContextProcessor processorContext = HAPUtilityDomain.createProcessContext(domainContext, runtimeEnv); 
-		HAPIdEntityInDomain exeEntityId = runtimeEnv.getDomainEntityExecutableManager().processEntity(resourceDefinition.getEntityId(), processorContext);
+		HAPIdEntityInDomain exeEntityId = runtimeEnv.getDomainEntityExecutableManager().processTreeNode(resourceDefinition.getEntityId(), processorContext);
 		return new HAPResultExecutableEntityInDomain(exeEntityId, domainContext);
 	}
 

@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
-import com.nosliw.data.core.component.HAPContextProcessor;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;

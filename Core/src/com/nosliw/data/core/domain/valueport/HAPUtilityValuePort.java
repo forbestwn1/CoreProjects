@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.valueport;
 
-import com.nosliw.data.core.component.HAPContextProcessor;
+import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 
 public class HAPUtilityValuePort {

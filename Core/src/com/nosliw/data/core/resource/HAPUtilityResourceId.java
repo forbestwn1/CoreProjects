@@ -18,6 +18,17 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
 
+	public static HAPInfoResourceIdNormalize normalizeResourceId(HAPResourceId resourceId) {
+		HAPInfoResourceIdNormalize out = null;
+		String resourceType = resourceId.getResourceType();
+		String resourceStructure = resourceId.getStructure();
+		if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
+			out = new HAPInfoResourceIdNormalize(resourceId, "", resourceId.getResourceType());
+		}
+		return out;
+	}
+	
 	public static boolean isEqual(HAPResource resource1, HAPResource resource2) {
 		return resource1.equals(resource2);
 	}
