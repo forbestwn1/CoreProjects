@@ -2,6 +2,7 @@ package com.nosliw.data.core.entity;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 
 public abstract class HAPProcessorEntityExecutableDownwardImpTreeNodeChild extends HAPProcessorEntityExecutableDownward{

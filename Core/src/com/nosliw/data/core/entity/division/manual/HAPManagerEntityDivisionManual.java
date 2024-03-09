@@ -34,6 +34,7 @@ import com.nosliw.data.core.entity.HAPIdEntityType;
 import com.nosliw.data.core.entity.HAPInfoAttributeValue;
 import com.nosliw.data.core.entity.HAPInfoAttributeValueEntity;
 import com.nosliw.data.core.entity.HAPInfoAttributeValueReferenceResource;
+import com.nosliw.data.core.entity.HAPInfoEntity;
 import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.entity.HAPManagerEntity;
 import com.nosliw.data.core.entity.HAPPluginProcessorEntity;
@@ -72,7 +73,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 		HAPManualInfoEntity entityDefInfo = this.parseEntityDefinitionInfo(content, entityId.getEntityTypeId(), format, parseContext);
 		
 		//build parent and path from root
-
+		
 		
 		//process definition
 		HAPEntityBundle out = null;
@@ -83,8 +84,11 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 			HAPContextProcess processContext = new HAPContextProcess(complexEntityBundle);
 			
 			//build executable tree
-			HAPEntityExecutable rootEntityExe = buildExecutableTree(entityDefInfo.getEntity(), true, processContext);
-			complexEntityBundle.setEntity(rootEntityExe);
+			HAPEntityExecutableComplex rootEntityExe = (HAPEntityExecutableComplex)buildExecutableTree(entityDefInfo.getEntity(), true, processContext);
+			
+			HAPUtilityValueStructureDomain.buildValueStructureDomain(rootEntityExe, processContext);
+			
+			complexEntityBundle.setEntityInfo(new HAPInfoEntity(rootEntityExe));
 			
 			out = complexEntityBundle;
 		}

@@ -1,6 +1,6 @@
 package com.nosliw.data.core.entity;
 
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.data.core.entity.valuestructure.HAPDomainValueStructure;
 
 public class HAPEntityBundleComplex extends HAPEntityBundle{
 

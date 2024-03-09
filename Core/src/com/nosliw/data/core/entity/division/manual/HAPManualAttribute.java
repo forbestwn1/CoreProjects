@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 //attribute in entity
-public class HAPManualAttribute extends HAPEntityInfoImp{
+public class HAPManualAttribute extends HAPEntityInfoImp implements HAPManualTreeNode{
 
 	public static final String VALUEINFO = "value";
 
@@ -51,7 +51,16 @@ public class HAPManualAttribute extends HAPEntityInfoImp{
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	
 	public void addRealtion(HAPManualEntityRelation relation) {    this.m_relations.add(relation);      }
-	
+
+	@Override
+	public HAPPath getPathFromRoot() {   return this.m_pathFromRoot;  }
+
+	@Override
+	public HAPManualEntity getEntity() {   return this.m
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -73,4 +82,5 @@ public class HAPManualAttribute extends HAPEntityInfoImp{
 		this.cloneToEntityAttribute(out);
 		return out;
 	}
+
 }

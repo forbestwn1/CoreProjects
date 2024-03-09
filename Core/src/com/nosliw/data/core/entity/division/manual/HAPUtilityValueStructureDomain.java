@@ -1,18 +1,43 @@
 package com.nosliw.data.core.entity.division.manual;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
-import com.nosliw.data.core.domain.valuecontext.HAPWrapperExecutableValueStructure;
-import com.nosliw.data.core.entity.HAPEntityBundle;
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.interfac.HAPTreeNode;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
+import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
+import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.data.core.domain.HAPInfoParentComplex;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorInherit;
+import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
+import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
+import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
+import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.entity.HAPEntityBundleComplex;
 import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 import com.nosliw.data.core.entity.HAPProcessorEntityExecutableDownwardImpTreeNode;
-import com.nosliw.data.core.entity.HAPTreeNode;
 import com.nosliw.data.core.entity.HAPUtilityEntityExecutable;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.data.core.entity.valuestructure.HAPDomainValueStructure;
+import com.nosliw.data.core.entity.valuestructure.HAPExecutableEntityValueContext;
+import com.nosliw.data.core.entity.valuestructure.HAPUtilityValueContext;
+import com.nosliw.data.core.entity.valuestructure.HAPWrapperExecutableValueStructure;
+import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
+import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 
 public class HAPUtilityValueStructureDomain {
 
@@ -20,11 +45,11 @@ public class HAPUtilityValueStructureDomain {
 		
 		buildValueStructureComplexTree(complexEntity, processContext);
 		
-		buildExtensionValueStructure(complexEntity, processContext);
+//		buildExtensionValueStructure(complexEntity, processContext);
 		
-		normalizeValuePort(complexEntity, processContext);
+//		normalizeValuePort(complexEntity, processContext);
 		
-		mergeValueStructure(complexEntity, processContext);
+//		mergeValueStructure(complexEntity, processContext);
 	}
 
 	//build value structure in complex tree and add to value structure domain
@@ -35,89 +60,32 @@ public class HAPUtilityValueStructureDomain {
 			protected boolean processTreeNode(HAPTreeNode treeNode, Object data) {
 				HAPContextProcess processContext = (HAPContextProcess)data;
 				HAPEntityBundleComplex bundle = (HAPEntityBundleComplex)processContext.getCurrentBundle();
+				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 				HAPManualEntityComplex rootEntityDef = (HAPManualEntityComplex)bundle.getExtraData();
 				HAPManualInfoAttributeValueWithEntity attrValueInfoDef = (HAPManualInfoAttributeValueWithEntity)rootEntityDef.getDescendantValueInfo(treeNode.getPathFromRoot());
+				HAPEntityExecutableComplex complexEntityExe = (HAPEntityExecutableComplex)treeNode.getEntity();
 				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)attrValueInfoDef.getEntity();
 				HAPDefinitionEntityValueContext valueContextEntityDef = complexEntityDef.getValueContextEntity();
 				
-				
 				//value context
 				HAPExecutableEntityValueContext valueContextExe = new HAPExecutableEntityValueContext();
 				if(valueContextEntityDef!=null) {
 					{
 						List<HAPWrapperExecutableValueStructure> wrappers = new ArrayList<HAPWrapperExecutableValueStructure>();
 						for(HAPDefinitionEntityWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
-							HAPInfoEntityInDomainDefinition valueStructureDefInfo = definitionGlobalDomain.getEntityInfoDefinition(part.getValueStructureId());
-							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity(), part.getInfo(), part.getName());
+							
+							String valueStructureExeId = valueStructureDomain.newValueStructure(part.getValueStructure().getAllRoots(), part.getInfo(), part.getName());
 							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
-							valueStructureWrapperExe.cloneFromDefinition(part);
+							valueStructureWrapperExe.setGroupType(part.getGroupType());
 							wrappers.add(valueStructureWrapperExe);
 
 							//solidate plain script expression
-							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
+//							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
 						}
 						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault(), valueStructureDomain);
 					}
 				}
 				complexEntityExe.setValueContext(valueContextExe);
-				
-			}
-
-
-			
-			
-			private void process(HAPEntityExecutableComplex complexEntityExe, HAPContextProcess processContext) {
-				
-				HAPDefinitionEntityValueContext valueContextEntityDef = complexEntityDef.;
-				
-				
-				
-				
-				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
-				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
-				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
-
-				HAPIdEntityInDomain entityIdDef = complexEntityExe.getDefinitionEntityId();
-
-				HAPInfoEntityInDomainDefinition complexEntityInfoDef = definitionGlobalDomain.getEntityInfoDefinition(entityIdDef);
-				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)complexEntityInfoDef.getEntity();
-				
-				HAPDefinitionEntityValueContext valueContextEntityDef = null;
-				HAPIdEntityInDomain valueContextEntityId = complexEntityDef.getValueContextEntityId();
-				if(valueContextEntityId!=null) {
-					valueContextEntityDef = (HAPDefinitionEntityValueContext)definitionGlobalDomain.getEntityInfoDefinition(valueContextEntityId).getEntity();
-				}
-
-				//value context
-				HAPExecutableEntityValueContext valueContextExe = new HAPExecutableEntityValueContext();
-				if(valueContextEntityDef!=null) {
-					{
-						List<HAPWrapperExecutableValueStructure> wrappers = new ArrayList<HAPWrapperExecutableValueStructure>();
-						for(HAPDefinitionEntityWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
-							HAPInfoEntityInDomainDefinition valueStructureDefInfo = definitionGlobalDomain.getEntityInfoDefinition(part.getValueStructureId());
-							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity(), part.getInfo(), part.getName());
-							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
-							valueStructureWrapperExe.cloneFromDefinition(part);
-							wrappers.add(valueStructureWrapperExe);
-
-							//solidate plain script expression
-							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
-						}
-						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault(), valueStructureDomain);
-					}
-				}
-				complexEntityExe.setValueContext(valueContextExe);
-			}
-			
-			@Override
-			public void processRootEntity(HAPEntityExecutable complexEntity, Object data) {
-				process((HAPEntityExecutableComplex)complexEntity, (HAPContextProcess)data);
-			}
-
-			@Override
-			public boolean processAttribute(HAPEntityExecutable parentEntity, String attribute, Object data) {
-				HAPEntityExecutableComplex parentComplexEntity = (HAPEntityExecutableComplex)parentEntity;
-				process(parentComplexEntity.getComplexEntityAttributeValue(attribute), (HAPContextProcess)data);
 				return true;
 			}
 		}, processContext);

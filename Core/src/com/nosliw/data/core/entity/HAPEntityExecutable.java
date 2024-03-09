@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 public class HAPEntityExecutable extends HAPExecutableImp{
@@ -50,10 +49,10 @@ public class HAPEntityExecutable extends HAPExecutableImp{
 			} else {
 				HAPInfoAttributeValue attrValueInfo = out.getValueInfo();
 				String attrValueType = attrValueInfo.getValueType();
-				if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_ENTITY)) {
-					out = ((HAPInfoAttributeValueEntity)attrValueInfo).getEntity().getAttribute(attribute);
+				if(attrValueInfo instanceof HAPWithEntity) {
+					out = ((HAPWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
 				}
-				else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+				else{
 					throw new RuntimeException();
 				}
 			}
@@ -68,10 +67,10 @@ public class HAPEntityExecutable extends HAPExecutableImp{
 		} else {
 			HAPInfoAttributeValue attrValueInfo = this.getDescendantAttribute(path).getValueInfo();
 			String attrValueType = attrValueInfo.getValueType();
-			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_ENTITY)) {
-				out = ((HAPInfoAttributeValueEntity)attrValueInfo).getEntity();
+			if(attrValueInfo instanceof HAPWithEntity) {
+				out = ((HAPWithEntity)attrValueInfo).getEntity();
 			}
-			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+			else {
 				throw new RuntimeException();
 			}
 		}

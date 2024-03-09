@@ -1,5 +1,6 @@
 package com.nosliw.data.core.entity;
 
+import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 
 public abstract class HAPProcessorEntityExecutableDownwardImpTreeNode extends HAPProcessorEntityExecutableDownward{
