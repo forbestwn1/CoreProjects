@@ -37,13 +37,6 @@ public class HAPInfoEntityType extends HAPSerializableImp{
 
 	public HAPIdEntityType getEntityTypeId() {    return this.m_entityTypeId;    }
 	
-	public Boolean getIsComplex(HAPManagerEntity entityMan) {
-		if(this.m_isComplex==null) {
-			this.m_isComplex = entityMan.getEntityTypeInfo(m_entityTypeId).getIsComplex(entityMan);
-		}
-		return this.m_isComplex;    
-	}
-
 	public Boolean getIsComplex() {   return this.m_isComplex;  }
 
 	@Override

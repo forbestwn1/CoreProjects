@@ -920,6 +920,7 @@ public class HAPConstantShared {
 
 		public static final String MANUAL_RELATION_TYPE_VALUECONTEXT = "valueContext";
 		public static final String MANUAL_RELATION_TYPE_ATTACHMENT = "attachment";
+		public static final String MANUAL_RELATION_TYPE_AUTOPROCESS = "autoProcess";
 
 
 }

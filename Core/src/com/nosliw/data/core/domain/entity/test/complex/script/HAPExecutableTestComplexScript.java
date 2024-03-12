@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
+import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -16,7 +16,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 
 @HAPEntityWithAttribute
-public class HAPExecutableTestComplexScript extends HAPExecutableEntityComplex{
+public class HAPExecutableTestComplexScript extends HAPEntityExecutableComplex{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";

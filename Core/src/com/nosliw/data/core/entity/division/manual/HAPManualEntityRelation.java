@@ -1,6 +1,8 @@
 package com.nosliw.data.core.entity.division.manual;
 
-public class HAPManualEntityRelation {
+import com.nosliw.common.serialization.HAPSerializableImp;
+
+public class HAPManualEntityRelation extends HAPSerializableImp{
 
 	public static String TYPE = "type";
 	

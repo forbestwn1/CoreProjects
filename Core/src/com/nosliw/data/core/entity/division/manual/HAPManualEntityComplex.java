@@ -35,7 +35,7 @@ public abstract class HAPManualEntityComplex extends HAPManualEntityBlock implem
 	
 	
 	@Override
-	public HAPDefinitionEntityValueContext getValueContextEntity() {}
+	public HAPDefinitionEntityValueContext getValueContextEntity() {    return (HAPDefinitionEntityValueContext)this.getAttributeEntity(VALUECONTEXT);       }
 
 	@Override
 	public void setValueContextEntity(HAPDefinitionEntityValueContext valueContext) {}

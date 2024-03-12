@@ -24,7 +24,6 @@ import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPInfoAdapterDefinition;
 import com.nosliw.data.core.entity.HAPIdEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.entity.HAPManagerEntity;
 import com.nosliw.data.core.entity.HAPUtilityEntity;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -86,7 +85,7 @@ public class HAPUtilityParserEntityFormatJson {
 			if(relationObjs!=null) {
 				JSONArray relationArray = (JSONArray)relationObjs;
 				for(int i=0; i<relationArray.length(); i++) {
-					out.addRealtion(parseRelation(relationArray.getJSONObject(i)));
+					out.addRelation(parseRelation(relationArray.getJSONObject(i)));
 				}
 			}
 		}
@@ -99,17 +98,15 @@ public class HAPUtilityParserEntityFormatJson {
 		HAPManualInfoAttributeValue out = null;
 
 		//try with definition
-		Object entityTypeObj = jsonObj.opt(HAPManualInfoAttributeValue.ENTITYTYPE);   //if entity type is defined in entity, then override provided
+		Object entityTypeObj = jsonObj.opt(HAPManualInfoAttributeValue.ENTITYTYPEID);   //if entity type is defined in entity, then override provided
 		HAPIdEntityType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
-		
-		HAPInfoEntityType entityTypeInfo = new HAPInfoEntityType(entityTypeId, entityManager.getEntityTypeInfo(entityTypeId).getIsComplex(entityManager));
 		
 		//local entity reference
 		if(out==null) {
 			Object entityRefObj = jsonObj.opt(HAPManualInfoAttributeValueReferenceEntity.ENTITYREFERENCE);
 			if(entityRefObj!=null) {
 				HAPIdEntity entityId = HAPUtilityEntity.parseEntityIdAgressive(entityRefObj, parseContext.getEntityDivision(), entityManager); 
-				out = new HAPManualInfoAttributeValueReferenceEntity(entityTypeInfo, entityId);
+				out = new HAPManualInfoAttributeValueReferenceEntity(entityId);
 				HAPManualEntity refEntity = parseLocalValue(parseContext.getBasePath(), entityId, manualDivisionEntityMan);
 				((HAPManualInfoAttributeValueReferenceEntity)out).setReferencedEntity(refEntity);
 			}
@@ -120,7 +117,7 @@ public class HAPUtilityParserEntityFormatJson {
 			Object resourceObj = jsonObj.opt(HAPManualInfoAttributeValueReferenceResource.RESOURCEID);
 			if(resourceObj!=null) {
 				HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityTypeId.getEntityType(), entityTypeId.getVersion(), resourceObj);
-				out = new HAPManualInfoAttributeValueReferenceResource(entityTypeInfo, resourceId);
+				out = new HAPManualInfoAttributeValueReferenceResource(resourceId);
 			}
 		}
 		
@@ -129,7 +126,7 @@ public class HAPUtilityParserEntityFormatJson {
 			Object referenceObj = jsonObj.opt(HAPManualInfoAttributeValueAttachment.REFERENCE);
 			if(referenceObj!=null) {
 				HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityTypeId.getEntityType());
-				out = new HAPManualInfoAttributeValueAttachment(entityTypeInfo, reference);
+				out = new HAPManualInfoAttributeValueAttachment(reference);
 			}
 		}
 
@@ -194,6 +191,10 @@ public class HAPUtilityParserEntityFormatJson {
 		else if(type.equals(HAPConstantShared.MANUAL_RELATION_TYPE_ATTACHMENT)) {
 			out = new HAPManualEntityRelationAttachment();
 		}
+		else if(type.equals(HAPConstantShared.MANUAL_RELATION_TYPE_AUTOPROCESS)) {
+			out = new HAPManualEntityRelationAutoProcess();
+		}
+		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}
 	

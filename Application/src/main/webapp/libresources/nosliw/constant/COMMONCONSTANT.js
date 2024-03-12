@@ -559,7 +559,8 @@ var COMMONCONSTANT=
   "ENTITYATTRIBUTE_VALUETYPE_RESOURCEID": "resourceId",
   "ENTITY_DIVISION_MANUAL": "manual",
   "MANUAL_RELATION_TYPE_VALUECONTEXT": "valueContext",
-  "MANUAL_RELATION_TYPE_ATTACHMENT": "attachment"
+  "MANUAL_RELATION_TYPE_ATTACHMENT": "attachment",
+  "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

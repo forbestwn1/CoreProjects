@@ -4,10 +4,15 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityEntity {
 
+	public static boolean isEntityComplex(HAPIdEntityType entityTypeId, HAPManagerEntity entityMan) {
+		return entityMan.getEntityTypeInfo(entityTypeId).getIsComplex();
+	}
+	
 	public static HAPIdEntity parseEntityIdAgressive(Object obj, String defaultDivision, HAPManagerEntity entityMan) {
 		HAPIdEntity out = new HAPIdEntity();
 		
@@ -77,4 +82,8 @@ public class HAPUtilityEntity {
 		return new HAPResourceIdSimple(entityId.getEntityTypeId().getEntityType(), HAPUtilityNamingConversion.cascadeLevel1(entityId.getId(), entityId.getDivision()), entityId.getEntityTypeId().getVersion());
 	}
 
+	public static HAPIdEntityType getEntityTypeIdFromResourceId(HAPResourceId resourceId) {
+		return new HAPIdEntityType(resourceId.getResourceType(), resourceId.getVersion());
+	}
+	
 }

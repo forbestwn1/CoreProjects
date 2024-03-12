@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 
 public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeValueWithEntity{
 
@@ -14,7 +13,7 @@ public class HAPManualInfoAttributeValueEntity extends HAPManualInfoAttributeVal
 	private HAPManualEntity m_entity;
 	
 	public HAPManualInfoAttributeValueEntity(HAPManualEntity entity) {
-		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY, new HAPInfoEntityType(entity.getEntityTypeId()));
+		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY, entity.getEntityTypeId());
 		this.m_entity = entity;
 	}
 

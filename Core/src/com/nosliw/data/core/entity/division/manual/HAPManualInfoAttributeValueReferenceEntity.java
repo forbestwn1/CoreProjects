@@ -2,7 +2,6 @@ package com.nosliw.data.core.entity.division.manual;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.entity.HAPIdEntity;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 
 public class HAPManualInfoAttributeValueReferenceEntity extends HAPManualInfoAttributeValueWithEntity{
 
@@ -14,8 +13,8 @@ public class HAPManualInfoAttributeValueReferenceEntity extends HAPManualInfoAtt
 
 	private HAPManualEntity m_entity;
 
-	public HAPManualInfoAttributeValueReferenceEntity(HAPInfoEntityType entityTypeInfo, HAPIdEntity localEntityId) {
-		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITYREFERENCE, entityTypeInfo);
+	public HAPManualInfoAttributeValueReferenceEntity(HAPIdEntity localEntityId) {
+		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITYREFERENCE, localEntityId.getEntityTypeId());
 		this.m_localEntityId = localEntityId;
 	}
 

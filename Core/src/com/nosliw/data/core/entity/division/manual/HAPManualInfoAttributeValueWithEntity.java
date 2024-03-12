@@ -3,14 +3,14 @@ package com.nosliw.data.core.entity.division.manual;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
+import com.nosliw.data.core.entity.HAPIdEntityType;
 
 public class HAPManualInfoAttributeValueWithEntity extends HAPManualInfoAttributeValue{
 
 	private HAPManualEntity m_entity;
 
-	public HAPManualInfoAttributeValueWithEntity(String valueType, HAPInfoEntityType entityTypeInfo) {
-		super(valueType, entityTypeInfo);
+	public HAPManualInfoAttributeValueWithEntity(String valueType, HAPIdEntityType entityTypeId) {
+		super(valueType, entityTypeId);
 	}
 	
 	public HAPManualEntity getEntity() {	return this.m_entity;	}

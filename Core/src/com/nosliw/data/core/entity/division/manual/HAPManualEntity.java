@@ -14,14 +14,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 
 @HAPEntityWithAttribute
 public abstract class HAPManualEntity extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
@@ -134,18 +128,6 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		return out;
 	}
 
-	
-	
-	
-	
-	
-	
-	public HAPManualInfoAttributeValue getDescendantValueInfo(HAPPath path) {
-		
-		
-	}
-	
-	
 	//normal json
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -162,7 +144,7 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 	
 	
 	
-	
+/*	
 	
 	
 	@Override
@@ -252,4 +234,5 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 			entityDefinitionInDomain.setAttribute((HAPManualAttribute)attribute.cloneEntityAttribute());
 		}
 	}
+*/	
 }

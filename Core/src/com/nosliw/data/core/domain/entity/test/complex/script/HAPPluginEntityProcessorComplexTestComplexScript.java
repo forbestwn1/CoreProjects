@@ -26,6 +26,8 @@ import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
+import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
+import com.nosliw.data.core.entity.division.manual.HAPContextProcess;
 import com.nosliw.data.core.entity.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 import com.nosliw.data.core.entity.division.manual.test.complex.script.HAPDefinitionEntityTestComplexScript;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -40,7 +42,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 	}
 
 	@Override
-	public void processValueContext(HAPExecutableEntityComplex complexEntityExecutable, HAPContextProcessor processContext) {
+	public void processValueContext(HAPEntityExecutableComplex complexEntityExecutable, HAPContextProcess processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
@@ -97,8 +99,11 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				
 				HAPInfoReferenceResolve resolve = HAPUtilityProcessRelativeElement.resolveElementReference(ref, new HAPConfigureResolveStructureElementReference(), processContext);
-				if(resolve!=null)		resolvedVars.add(resolve);
-				else unknownVars.add(ref);
+				if(resolve!=null) {
+					resolvedVars.add(resolve);
+				} else {
+					unknownVars.add(ref);
+				}
 			}
 			executableEntity.setVariables(resolvedVars);
 			executableEntity.setUnknowVariable(unknownVars);
