@@ -7,6 +7,8 @@ import com.nosliw.data.core.entity.HAPIdEntityType;
 
 public class HAPManualInfoAttributeValueWithEntity extends HAPManualInfoAttributeValue{
 
+	public static final String ENTITY = "entity";
+	
 	private HAPManualEntity m_entity;
 
 	public HAPManualInfoAttributeValueWithEntity(String valueType, HAPIdEntityType entityTypeId) {
@@ -20,9 +22,8 @@ public class HAPManualInfoAttributeValueWithEntity extends HAPManualInfoAttribut
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUETYPE, m_valueType);
-		if(this.m_entityTypeInfo!=null) {
-			jsonMap.put(ENTITYTYPE, this.m_entityTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_entity!=null) {
+			jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
 		}
 	}
 }

@@ -80,7 +80,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	//return runtime id
 	public String newValueStructure(Set<HAPRootStructure> roots, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
-		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(valueStructureDef.cloneValueStructure()));
+		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(roots));
 		return this.newRuntime(id, info, name);
 	}
 

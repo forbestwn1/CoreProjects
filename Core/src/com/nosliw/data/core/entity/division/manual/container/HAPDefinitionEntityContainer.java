@@ -17,4 +17,5 @@ public class HAPDefinitionEntityContainer<T extends HAPManualEntity> extends HAP
 		return attrName;
 	}
 
+	
 }
