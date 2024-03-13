@@ -16,13 +16,19 @@ public class HAPUtilityEntityDefinition {
 			return relation.isAutoProcess();
 		}
 		
-		boolean isComplex = HAPUtilityEntity.isEntityComplex(attr.getValueInfo().getEntityTypeId(), entityMan); 
-		
-		if(isComplex) {
-			return true;
+		HAPManualInfoAttributeValue attrValueInfo = attr.getValueInfo();
+		if(attrValueInfo instanceof HAPManualWithEntity) {
+			boolean isComplex = HAPUtilityEntity.isEntityComplex(((HAPManualWithEntity)attrValueInfo).getEntityTypeId(), entityMan); 
+			
+			if(isComplex) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
+		
 	}
 	
 	public static HAPIdEntityType parseEntityTypeId(Object obj) {

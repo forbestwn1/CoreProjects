@@ -34,6 +34,7 @@ import com.nosliw.data.core.entity.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.entity.valuestructure.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.entity.valuestructure.HAPWrapperExecutableValueStructure;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.HAPElementStructure;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
 import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
@@ -42,9 +43,9 @@ import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 
 public class HAPUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPInfoEntity rootEntityInfo, HAPContextProcess processContext) {
+	public static void buildValueStructureDomain(HAPInfoEntity rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
 		
-		buildValueStructureComplexTree(rootEntityInfo, processContext);
+		buildValueStructureComplexTree(rootEntityInfo, processContext, runtimeEnv);
 		
 //		buildExtensionValueStructure(complexEntity, processContext);
 		
@@ -54,7 +55,7 @@ public class HAPUtilityValueStructureDomain {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPInfoEntity rootEntityInfo, HAPContextProcess processContext) {
+	private static void buildValueStructureComplexTree(HAPInfoEntity rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPUtilityEntityExecutable.traverseExecutableTreeLocalComplexEntity(rootEntityInfo, new HAPProcessorEntityExecutableDownwardImpTreeNode() {
 
 			@Override
@@ -91,7 +92,7 @@ public class HAPUtilityValueStructureDomain {
 				complexEntityExe.setValueContext(valueContextExe);
 				return true;
 			}
-		}, processContext);
+		}, runtimeEnv.getEntityManager(), processContext);
 	}
 
 	private static void createExtensionPart(HAPExecutableEntityValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {

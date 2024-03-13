@@ -107,7 +107,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 			
 			complexEntityBundle.setEntityInfo(new HAPInfoEntity(rootEntityExe));
 			
-			HAPUtilityValueStructureDomain.buildValueStructureDomain(complexEntityBundle.getEntityInfo(), processContext);
+			HAPUtilityValueStructureDomain.buildValueStructureDomain(complexEntityBundle.getEntityInfo(), processContext, this.m_runtimeEnv);
 			
 			out = complexEntityBundle;
 		}
@@ -135,6 +135,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorEntity{
 			HAPPluginProcessorEntityDefinitionSimple simplePlugin = (HAPPluginProcessorEntityDefinitionSimple)this.m_entityProcessorInfo.get(entityTypeId.getKey()).getProcessorPlugin();
 			entityExe = simplePlugin.newExecutable();
 		}
+		entityExe.setEntityTypeId(entityTypeId);
 		
 		List<HAPManualAttribute> attrsDef = entityDef.getAllAttributes();
 		for(HAPManualAttribute attrDef : attrsDef) {

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 
 public class HAPInfoAttributeValueReferenceResource extends HAPInfoAttributeValue{
@@ -14,6 +15,7 @@ public class HAPInfoAttributeValueReferenceResource extends HAPInfoAttributeValu
 	private HAPInfoResourceIdNormalize m_normalizedResourceId;
 	
 	public HAPInfoAttributeValueReferenceResource(HAPInfoResourceIdNormalize normalizedResourceId) {
+		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID);
 		this.m_normalizedResourceId = normalizedResourceId;
 	}
 	

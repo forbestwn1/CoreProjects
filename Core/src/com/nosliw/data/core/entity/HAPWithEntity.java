@@ -4,4 +4,6 @@ public interface HAPWithEntity {
 
 	HAPEntityExecutable getEntity();
 	
+	HAPIdEntityType getEntityTypeId();
+	
 }

@@ -40,7 +40,7 @@ public class HAPUtilityEntityExecutable {
 	}
 	
 	//traverse only leaves that is local complex entity
-	public static void traverseExecutableTreeLocalComplexEntity(HAPInfoEntity rootEntityInfo, HAPProcessorEntityExecutableDownward processor, Object data) {
+	public static void traverseExecutableTreeLocalComplexEntity(HAPInfoEntity rootEntityInfo, HAPProcessorEntityExecutableDownward processor, HAPManagerEntity entityMan, Object data) {
 		traverseExecutableTreeComplexEntity(
 				rootEntityInfo, 
 			new HAPProcessorEntityExecutableWrapper(processor) {
@@ -52,18 +52,23 @@ public class HAPUtilityEntityExecutable {
 					return false;
 				}
 			}, 
+			entityMan,
 			data);
 	}
 	
 	
 	//traverse only leafs that is complex entity
-	public static void traverseExecutableTreeComplexEntity(HAPInfoEntity rootEntityInfo, HAPProcessorEntityExecutableDownward processor, Object data) {
+	public static void traverseExecutableTreeComplexEntity(HAPInfoEntity rootEntityInfo, HAPProcessorEntityExecutableDownward processor, HAPManagerEntity entityMan, Object data) {
 		traverseExecutableEntity(
 			rootEntityInfo, 
 			new HAPProcessorEntityExecutableWrapper(processor) {
 				@Override
 				protected boolean isValidAttribute(HAPAttributeExecutable attr) {
-					return attr.getValueInfo().getEntityTypeInfo().getIsComplex();
+					HAPInfoAttributeValue attrValueInfo = attr.getValueInfo();
+					if(attrValueInfo instanceof HAPWithEntity) {
+						return HAPUtilityEntity.isEntityComplex(((HAPWithEntity)attrValueInfo).getEntityTypeId(), entityMan);
+					}
+					return false;
 				}
 			}, 
 			data);

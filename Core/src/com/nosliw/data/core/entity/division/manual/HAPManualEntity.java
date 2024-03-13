@@ -5,8 +5,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -17,10 +15,8 @@ import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
 
-@HAPEntityWithAttribute
 public abstract class HAPManualEntity extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
 
-	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 	
 	final private static String ATTR_IDINDEX = HAPUtilityNosliw.buildNosliwFullName("idIndex"); 
@@ -108,7 +104,7 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 			} else {
 				HAPManualInfoAttributeValue attrValueInfo = out.getValueInfo();
 				if(attrValueInfo instanceof HAPManualWithEntity) {
-					((HAPManualWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
+					out = ((HAPManualWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
 				}
 				else if(attrValueInfo.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 					throw new RuntimeException();

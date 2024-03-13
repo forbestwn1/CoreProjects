@@ -14,7 +14,7 @@ public class HAPManualInfoAttributeValueValue extends HAPManualInfoAttributeValu
 	private Object m_value;
 	
 	public HAPManualInfoAttributeValueValue(Object value) {
-		super(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE, null);
+		super(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE);
 		this.m_value = value;
 	}
 

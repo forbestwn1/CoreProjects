@@ -36,10 +36,10 @@ public class HAPUtilityParserEntityFormatJson {
 		HAPManualInfoEntity out = new HAPManualInfoEntity();
 		
 		//try with definition
-		Object entityTypeObj = jsonObj.opt(HAPManualInfoEntity.ENTITYTYPE);   //if entity type is defined in entity, then override provided
+		Object entityTypeObj = jsonObj.opt(HAPManualWithEntity.ENTITYTYPEID);   //if entity type is defined in entity, then override provided
 		HAPIdEntityType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
-		Object entityObj = jsonObj.opt(HAPManualInfoEntity.ENTITY);
+		Object entityObj = jsonObj.opt(HAPManualWithEntity.ENTITY);
 		if(entityObj==null)
 		{
 			entityObj = jsonObj;    //if no entity node, then using root
@@ -98,7 +98,7 @@ public class HAPUtilityParserEntityFormatJson {
 		HAPManualInfoAttributeValue out = null;
 
 		//try with definition
-		Object entityTypeObj = jsonObj.opt(HAPManualInfoAttributeValue.ENTITYTYPEID);   //if entity type is defined in entity, then override provided
+		Object entityTypeObj = jsonObj.opt(HAPManualWithEntity.ENTITYTYPEID);   //if entity type is defined in entity, then override provided
 		HAPIdEntityType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		//local entity reference

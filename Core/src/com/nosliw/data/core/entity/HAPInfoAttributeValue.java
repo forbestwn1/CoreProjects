@@ -4,11 +4,12 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 public class HAPInfoAttributeValue extends HAPExecutableImp{
 
-	private HAPInfoEntityType m_entityTypeInfo;
-
-	public String getValueType() {
-		
+	private String m_valueType;
+	
+	public HAPInfoAttributeValue(String valueType) {
+		this.m_valueType = valueType;
 	}
 	
-	public HAPInfoEntityType getEntityTypeInfo() {   return this.m_entityTypeInfo;   }
+	public String getValueType() {     return this.m_valueType;    }
+	
 }
