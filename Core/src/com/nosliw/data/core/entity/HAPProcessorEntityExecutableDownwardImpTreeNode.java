@@ -7,24 +7,14 @@ public abstract class HAPProcessorEntityExecutableDownwardImpTreeNode extends HA
 
 	@Override
 	public boolean processEntityNode(HAPInfoEntity rootEntityInfo, HAPPath path, Object data) {
-		if(path.isEmpty()) {
-			return this.processTreeNode(rootEntityInfo, data);
-		}
-		else {
-			HAPAttributeExecutable attr = rootEntityInfo.getEntity().getDescendantAttribute(path);
-			return this.processTreeNode(attr, data);
-		}
+		HAPTreeNode childTreeNode = HAPUtilityEntity.getDescdentTreeNode(rootEntityInfo, path);
+		return this.processTreeNode(childTreeNode, data);
 	}
 
 	@Override
 	public void postProcessEntityNode(HAPInfoEntity rootEntityInfo, HAPPath path, Object data) {
-		if(path.isEmpty()) {
-			this.postProcessTreeNode(rootEntityInfo, data);
-		}
-		else {
-			HAPAttributeExecutable attr = rootEntityInfo.getEntity().getDescendantAttribute(path);
-			this.postProcessTreeNode(attr, data);
-		}
+		HAPTreeNode childTreeNode = HAPUtilityEntity.getDescdentTreeNode(rootEntityInfo, path);
+		this.postProcessTreeNode(childTreeNode, data);
 	}
 
 	//process attribute under entity

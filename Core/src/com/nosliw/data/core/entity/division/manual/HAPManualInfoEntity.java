@@ -3,10 +3,12 @@ package com.nosliw.data.core.entity.division.manual;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.interfac.HAPTreeNode;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.entity.HAPIdEntityType;
 
-public class HAPManualInfoEntity extends HAPEntityInfoImp implements HAPManualWithEntity{
+public class HAPManualInfoEntity extends HAPEntityInfoImp implements HAPManualWithEntity, HAPTreeNode{
 
 	public static final String INFO = "info";
 
@@ -23,10 +25,17 @@ public class HAPManualInfoEntity extends HAPEntityInfoImp implements HAPManualWi
 	@Override
 	public HAPIdEntityType getEntityTypeId() {   return this.getEntity().getEntityTypeId();   }
 
+	
+	@Override
+	public HAPPath getPathFromRoot() {  return null;  }
+
+	@Override
+	public Object getNodeValue() {  return this.m_entity;  }
+
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ENTITY, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
 	}
-
 }

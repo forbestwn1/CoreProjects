@@ -2,6 +2,8 @@ package com.nosliw.data.core.entity;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.interfac.HAPTreeNode;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -9,6 +11,62 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityEntity {
 
+	public static HAPTreeNode getDescdentTreeNode(HAPInfoEntity rootEntityInfo, HAPPath path) {
+		HAPTreeNode out = null;
+		if(path==null || path.isEmpty()) {
+			out = rootEntityInfo;
+		}
+		else {
+			out = getDescendantAttribute(rootEntityInfo.getEntity(), path);
+		}
+		return out;
+	}
+	
+	public static HAPEntityExecutable getDescdentEntity(HAPInfoEntity rootEntityInfo, HAPPath path) {
+		HAPEntityExecutable out = null;
+		if(path==null || path.isEmpty()) {
+			out = rootEntityInfo.getEntity();
+		}
+		else {
+			out = getDescendantEntity(rootEntityInfo.getEntity(), path); 
+		}
+		return out;
+	}
+	
+	public static HAPAttributeExecutable getDescendantAttribute(HAPEntityExecutable entityExe, HAPPath path) {
+		HAPAttributeExecutable out = null;
+		for(int i=0; i<path.getLength(); i++) {
+			String attribute = path.getPathSegments()[i];
+			if(i==0) {
+				out = entityExe.getAttribute(attribute);
+			} else {
+				HAPInfoAttributeValue attrValueInfo = out.getValueInfo();
+				if(attrValueInfo instanceof HAPWithEntity) {
+					out = ((HAPWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
+				}
+				else{
+					throw new RuntimeException();
+				}
+			}
+		}
+		return out;
+	}
+
+	private static HAPEntityExecutable getDescendantEntity(HAPEntityExecutable entityExe, HAPPath path) {
+		HAPEntityExecutable out = null;
+		if(path==null||path.isEmpty()) {
+			out = entityExe;
+		} else {
+			HAPInfoAttributeValue attrValueInfo = getDescendantAttribute(entityExe, path).getValueInfo();
+			if(attrValueInfo instanceof HAPWithEntity) {
+				out = ((HAPWithEntity)attrValueInfo).getEntity();
+			}
+		}
+		return out;
+	}
+	
+	
+	
 	public static boolean isEntityComplex(HAPIdEntityType entityTypeId, HAPManagerEntity entityMan) {
 		return entityMan.getEntityTypeInfo(entityTypeId).getIsComplex();
 	}

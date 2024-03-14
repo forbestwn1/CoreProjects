@@ -1,5 +1,6 @@
 package com.nosliw.data.core.entity.division.manual;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 
 public interface HAPPluginProcessorEntityDefinitionComplex extends HAPPluginProcessorEntityDefinition{
@@ -9,6 +10,12 @@ public interface HAPPluginProcessorEntityDefinitionComplex extends HAPPluginProc
 	//new executable
 	HAPEntityExecutableComplex newExecutable();
 
+
+	void processEntity(HAPPath pathFromRoot, HAPContextProcess processContext);
+
+	
+	
+	
 	//supply custom constant value
 	void extendConstantValue(HAPEntityExecutableComplex complexEntityExecutable, HAPContextProcess processContext);
 	

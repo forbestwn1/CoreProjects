@@ -8,7 +8,7 @@ import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.entity.division.manual.HAPContextProcess;
 
-public class HAPUtilityEntityExecutable {
+public class HAPUtilityEntityExecutableTraverse {
 
 	public static void trasversExecutableEntityTreeUpward(HAPEntityExecutable entity, HAPProcessorEntityExecutableUpward processor, Object object) {
 		HAPPath path = new HAPPath();
@@ -101,17 +101,7 @@ public class HAPUtilityEntityExecutable {
 		}
 		
 		if(processor.processEntityNode(rootEntityInfo, path, data)) {
-			HAPEntityExecutable rootEntity = rootEntityInfo.getEntity();
-			HAPEntityExecutable leafEntity = null;
-			
-			if(path.isEmpty()) {
-				leafEntity = rootEntity;
-			} else {
-				HAPAttributeExecutable leafAttr = rootEntity.getDescendantAttribute(path);
-				if(leafAttr.getValueInfo() instanceof HAPWithEntity) {
-					leafEntity = ((HAPWithEntity)leafAttr.getValueInfo()).getEntity();
-				}
-			}
+			HAPEntityExecutable leafEntity = HAPUtilityEntity.getDescdentEntity(rootEntityInfo, path);
 			
 			if(leafEntity!=null) {
 				List<HAPAttributeExecutable> attrsExe = leafEntity.getAttributes();
@@ -142,7 +132,7 @@ abstract class HAPProcessorEntityExecutableWrapper extends HAPProcessorEntityExe
 			return this.m_processor.processEntityNode(rootEntityInfo, path, data);
 		}
 		else {
-			HAPAttributeExecutable attr = rootEntityInfo.getEntity().getDescendantAttribute(path);
+			HAPAttributeExecutable attr = HAPUtilityEntity.getDescendantAttribute(rootEntityInfo.getEntity(), path); 
 			if(this.isValidAttribute(attr)) {
 				return this.m_processor.processEntityNode(rootEntityInfo, path, data);
 			}
@@ -156,7 +146,7 @@ abstract class HAPProcessorEntityExecutableWrapper extends HAPProcessorEntityExe
 			this.m_processor.postProcessEntityNode(rootEntityInfo, path, data);
 		}
 		else {
-			HAPAttributeExecutable attr = rootEntityInfo.getEntity().getDescendantAttribute(path);
+			HAPAttributeExecutable attr = HAPUtilityEntity.getDescendantAttribute(rootEntityInfo.getEntity(), path);
 			if(this.isValidAttribute(attr)) {
 				this.m_processor.postProcessEntityNode(rootEntityInfo, path, data);
 			}

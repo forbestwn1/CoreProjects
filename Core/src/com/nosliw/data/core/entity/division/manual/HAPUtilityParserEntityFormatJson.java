@@ -156,7 +156,7 @@ public class HAPUtilityParserEntityFormatJson {
 		String entityType = null;
 		String entityTypeVersion = null;
 		if(entityTypeObj!=null) {
-			HAPIdEntityType entityTypeId1 = HAPUtilityEntityDefinition.parseEntityTypeId(entityTypeObj);
+			HAPIdEntityType entityTypeId1 = HAPUtilityDefinitionEntity.parseEntityTypeId(entityTypeObj);
 			entityType = entityTypeId1.getEntityType();
 			entityTypeVersion = entityTypeId1.getVersion();
 		}

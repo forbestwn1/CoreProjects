@@ -30,4 +30,10 @@ public class HAPDefinitionEntityTestComplexScript extends HAPManualEntityComplex
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;
 	}
+
+	@Override
+	public String getEntityOrReferenceType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

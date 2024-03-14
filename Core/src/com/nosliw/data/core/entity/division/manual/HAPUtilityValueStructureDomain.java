@@ -23,10 +23,11 @@ import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.entity.HAPEntityBundleComplex;
+import com.nosliw.data.core.entity.HAPEntityExecutable;
 import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 import com.nosliw.data.core.entity.HAPInfoEntity;
 import com.nosliw.data.core.entity.HAPProcessorEntityExecutableDownwardImpTreeNode;
-import com.nosliw.data.core.entity.HAPUtilityEntityExecutable;
+import com.nosliw.data.core.entity.HAPUtilityEntityExecutableTraverse;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityWrapperValueStructure;
@@ -56,7 +57,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPInfoEntity rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityEntityExecutable.traverseExecutableTreeLocalComplexEntity(rootEntityInfo, new HAPProcessorEntityExecutableDownwardImpTreeNode() {
+		HAPUtilityEntityExecutableTraverse.traverseExecutableTreeLocalComplexEntity(rootEntityInfo, new HAPProcessorEntityExecutableDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNode treeNode, Object data) {
@@ -67,8 +68,11 @@ public class HAPUtilityValueStructureDomain {
 				HAPEntityExecutableComplex complexEntityExe = (HAPEntityExecutableComplex)this.getEntityFromNode(treeNode);
 				
 				HAPManualInfoEntity rootEntityDefInfo = (HAPManualInfoEntity)bundle.getExtraData(); 
+				
+				Pair<HAPManualEntity, HAPEntityExecutable> entityPair = HAPUtilityDefinitionEntity.getEntityPair(treeNode.getPathFromRoot(), bundle);
+				
 				HAPManualEntityComplex rootEntityDef = (HAPManualEntityComplex)rootEntityDefInfo.getEntity();
-				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)rootEntityDef.getDescendantEntity(treeNode.getPathFromRoot());
+				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)entityPair.getLeft();
 				HAPDefinitionEntityValueContext valueContextEntityDef = complexEntityDef.getValueContextEntity();
 				
 				//value context
@@ -108,7 +112,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//create extension part
 	private static void buildExtensionValueStructure(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
+		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
 			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
 				createExtensionPart(((HAPExecutableEntityComplex)complexEntity).getValueContext(), processContext.getCurrentValueStructureDomain());
@@ -141,7 +145,7 @@ public class HAPUtilityValueStructureDomain {
 	
 	//merge value structure between paren and child
 	private static void mergeValueStructure(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
+		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
 			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {	}
 
@@ -196,7 +200,7 @@ public class HAPUtilityValueStructureDomain {
 	}
 	
 	private static void normalizeValuePort(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutable.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
+		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPProcessorEntityExecutableDownwardImpAttribute() {
 			@Override
 			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {	}
 

@@ -1,6 +1,7 @@
-package com.nosliw.data.core.domain.entity.test.complex.testcomplex1;
+package com.nosliw.data.core.entity.division.manual.test.complex.testcomplex1;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.entity.test.complex.testcomplex1.HAPExecutableTestComplex1;
 import com.nosliw.data.core.entity.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 
 public class HAPPluginEntityProcessorComplexTestComplex1 extends HAPPluginProcessorEntityDefinitionComplexImp{

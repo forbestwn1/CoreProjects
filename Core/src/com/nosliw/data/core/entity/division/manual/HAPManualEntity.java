@@ -6,11 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.entity.HAPIdEntityType;
@@ -95,41 +93,6 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 		return "generatedId_"+ idIndex;
 	}
 	
-	public HAPManualAttribute getDescendantAttribute(HAPPath path) {
-		HAPManualAttribute out = null;
-		for(int i=0; i<path.getLength(); i++) {
-			String attribute = path.getPathSegments()[i];
-			if(i==0) {
-				out = this.getAttribute(attribute);
-			} else {
-				HAPManualInfoAttributeValue attrValueInfo = out.getValueInfo();
-				if(attrValueInfo instanceof HAPManualWithEntity) {
-					out = ((HAPManualWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
-				}
-				else if(attrValueInfo.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-					throw new RuntimeException();
-				}
-			}
-		}
-		return out;
-	}
-
-	public HAPManualEntity getDescendantEntity(HAPPath path) {
-		HAPManualEntity out = null;
-		if(path==null||path.isEmpty()) {
-			out = this;
-		} else {
-			HAPManualInfoAttributeValue attrValueInfo = this.getDescendantAttribute(path).getValueInfo();
-			if(attrValueInfo instanceof HAPManualWithEntity) {
-				out = ((HAPManualWithEntity)attrValueInfo).getEntity();
-			}
-			else {
-				throw new RuntimeException();
-			}
-		}
-		return out;
-	}
-
 	//normal json
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

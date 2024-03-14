@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -52,43 +51,6 @@ public class HAPEntityExecutable extends HAPExecutableImp{
 		return null;
 	}
 
-	
-	public HAPAttributeExecutable getDescendantAttribute(HAPPath path) {
-		HAPAttributeExecutable out = null;
-		for(int i=0; i<path.getLength(); i++) {
-			String attribute = path.getPathSegments()[i];
-			if(i==0) {
-				out = this.getAttribute(attribute);
-			} else {
-				HAPInfoAttributeValue attrValueInfo = out.getValueInfo();
-				String attrValueType = attrValueInfo.getValueType();
-				if(attrValueInfo instanceof HAPWithEntity) {
-					out = ((HAPWithEntity)attrValueInfo).getEntity().getAttribute(attribute);
-				}
-				else{
-					throw new RuntimeException();
-				}
-			}
-		}
-		return out;
-	}
-
-	public HAPEntityExecutable getDescendantEntity(HAPPath path) {
-		HAPEntityExecutable out = null;
-		if(path==null||path.isEmpty()) {
-			out = this;
-		} else {
-			HAPInfoAttributeValue attrValueInfo = this.getDescendantAttribute(path).getValueInfo();
-			String attrValueType = attrValueInfo.getValueType();
-			if(attrValueInfo instanceof HAPWithEntity) {
-				out = ((HAPWithEntity)attrValueInfo).getEntity();
-			}
-			else {
-				throw new RuntimeException();
-			}
-		}
-		return out;
-	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

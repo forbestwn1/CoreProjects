@@ -1,12 +1,5 @@
 package com.nosliw.data.core.entity.division.manual;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 
 public abstract class HAPPluginProcessorEntityDefinitionComplexImp implements HAPPluginProcessorEntityDefinitionComplex{
@@ -49,16 +42,16 @@ public abstract class HAPPluginProcessorEntityDefinitionComplexImp implements HA
 	@Override
 	public void postProcessEntity(HAPEntityExecutableComplex complexEntityExecutable, HAPContextProcess processContext) {	}
 
-	protected HAPManualEntity getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
-		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
-	}
-	
-	public Pair<HAPManualEntityComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
-		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-		HAPManualEntityComplex entityDef = (HAPManualEntityComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
-		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
-		return Pair.of(entityDef, entityExe);
-	}
+//	protected HAPManualEntity getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
+//		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
+//	}
+//	
+//	public Pair<HAPManualEntityComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+//		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
+//		HAPManualEntityComplex entityDef = (HAPManualEntityComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
+//		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
+//		return Pair.of(entityDef, entityExe);
+//	}
 	
 	@Override
 	public HAPEntityExecutableComplex newExecutable() {
