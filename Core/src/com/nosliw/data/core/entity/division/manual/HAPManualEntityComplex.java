@@ -40,16 +40,8 @@ public abstract class HAPManualEntityComplex extends HAPManualEntityBlock implem
 	@Override
 	public void setValueContextEntity(HAPDefinitionEntityValueContext valueContext) {}
 
-	@Override
-	public HAPIdEntityInDomain getValueContextEntityId() {  	return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithValueContext.VALUECONTEXT);	}
 	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {  return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
 	
-	@Override
-	public void setValueContextEntityId(HAPIdEntityInDomain valueContextEntity) {		
-		this.setAttributeValueSimple(HAPWithValueContext.VALUECONTEXT, valueContextEntity);
-		this.getAttribute(HAPWithValueContext.VALUECONTEXT).setAttributeAutoProcess(false);
-	}
-
 	@Override
 	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithAttachment.ATTACHMENT);  }
 	public HAPDefinitionEntityContainerAttachment getAttachmentEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityContainerAttachment)this.getAttributeValueEntity(HAPWithAttachment.ATTACHMENT, parserContext);  }

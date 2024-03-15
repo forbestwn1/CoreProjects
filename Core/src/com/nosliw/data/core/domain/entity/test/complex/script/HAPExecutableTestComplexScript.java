@@ -45,14 +45,14 @@ public class HAPExecutableTestComplexScript extends HAPEntityExecutableComplex{
 	
 	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
-	public void setScriptName(String scriptName) {		this.setAttributeValueObject(SCRIPTNAME, scriptName);	}
+	public void setScriptName(String scriptName) {   this.setAttributeValue(SCRIPTNAME, scriptName);  }
 	public String getScriptName() {		return (String)this.getAttributeValue(SCRIPTNAME);	}
 
-	public void setParms(Map<String, Object> parms) {	this.setAttributeValueObject(PARM, parms);	}
+	public void setParms(Map<String, Object> parms) {	this.setAttributeValue(PARM, parms);	}
 
-	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setAttributeValueObject(VARIABLE, vars);	}
+	public void setVariables(List<HAPInfoReferenceResolve> vars) {    this.setAttributeValue(VARIABLE, vars);	}
 	
-	public void setUnknowVariable(List<HAPReferenceElementInValueStructure> unknowns) {   this.setAttributeValueObject(UNKNOWNVARIABLE, unknowns);   }
+	public void setUnknowVariable(List<HAPReferenceElementInValueStructure> unknowns) {   this.setAttributeValue(UNKNOWNVARIABLE, unknowns);   }
 
 	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValue(VARIABLEEXTENDED);         }
 	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setAttributeValueObject(VARIABLEEXTENDED, vars);	}

@@ -77,13 +77,17 @@ public abstract class HAPManualEntity extends HAPSerializableImp implements HAPE
 			att = this.getAttribute(attrName);
 		}
 		return ((HAPManualInfoAttributeValueValue)att.getValueInfo()).getValue();
-	}	
+	}
 	
 	public void setAttributeEntity(String attributeName, HAPManualEntity entity) {
 		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualInfoAttributeValueEntity(entity)));	
 	}
 	public HAPManualEntity getAttributeEntity(String attributeName) {
-		return ((HAPManualInfoAttributeValueEntity)this.getAttribute(attributeName).getValueInfo()).getEntity();
+		HAPManualAttribute attr = this.getAttribute(attributeName);
+		if(attr!=null) {
+			return ((HAPManualInfoAttributeValueEntity)attr.getValueInfo()).getEntity();
+		}
+		return null;
 	}
 
 	protected String generateId() {

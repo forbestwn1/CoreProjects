@@ -910,6 +910,7 @@ public class HAPConstantShared {
 
 
 		public static final String ENTITYATTRIBUTE_VALUETYPE_ENTITY = "entity";
+		public static final String ENTITYATTRIBUTE_VALUETYPE_VALUE = "value";
 		public static final String ENTITYATTRIBUTE_VALUETYPE_RESOURCEID = "resourceId";
 
 

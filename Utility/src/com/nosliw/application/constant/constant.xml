@@ -948,6 +948,7 @@
 
 			<definition type="space"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_ENTITY" value="entity"/>
+			<definition name="ENTITYATTRIBUTE_VALUETYPE_VALUE" value="value"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_RESOURCEID" value="resourceId"/>
 
 			<definition type="space"/>

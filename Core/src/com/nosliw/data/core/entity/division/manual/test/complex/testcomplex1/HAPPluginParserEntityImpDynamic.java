@@ -40,16 +40,16 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseEntityAttribute(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
+						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
-						this.parseEntityAttribute(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
+						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
 					}
 					else {
 						Object entityObj = jsonObj.opt(attrName);
 						if(isAttributeEnabledJson(entityObj)) {
 							HAPAttributeEntityInfo attributeInfo = this.parseAttributeInfo(attrName);
-							this.parseEntityAttribute(entityDefinition, jsonObj, attrName, attributeInfo.entityType, attributeInfo.adapterType, parseContext);							
+							this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, attributeInfo.entityType, attributeInfo.adapterType, parseContext);							
 						}
 					}
 				}

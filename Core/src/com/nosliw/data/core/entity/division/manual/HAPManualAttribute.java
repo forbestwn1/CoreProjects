@@ -67,12 +67,6 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 
 	
 	@Override
-	public HAPManualEntity getEntity() {   return this.m
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUEINFO, this.m_valueInfo.toStringValue(HAPSerializationFormat.JSON));

@@ -7,7 +7,7 @@ import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 public class HAPDefinitionEntityTestComplex1 extends HAPManualEntityComplex{
 
 	public HAPDefinitionEntityTestComplex1() {
-		super(HAPEnumEntityType.TEST_COMPLEX_SCRIPT_100);
+		super(HAPEnumEntityType.TEST_COMPLEX_1_100);
 	}
 
 	@Override

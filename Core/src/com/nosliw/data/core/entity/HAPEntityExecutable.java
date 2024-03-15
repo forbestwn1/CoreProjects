@@ -9,6 +9,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -42,6 +44,8 @@ public class HAPEntityExecutable extends HAPExecutableImp{
 		this.m_attributes.add(attribute);    
 	}
 	
+	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeExecutable(attributeName, new HAPInfoAttributeValueValue(attrValue)));	}
+
 	public HAPAttributeExecutable getAttribute(String attrName) {
 		for(HAPAttributeExecutable attr : this.m_attributes) {
 			if(attrName.equals(attr.getName())) {
@@ -70,5 +74,11 @@ public class HAPEntityExecutable extends HAPExecutableImp{
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrJsonMap));
 	}
-	
+
+	@Override
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+		for(HAPAttributeExecutable attr : this.m_attributes) {
+			dependency.addAll(attr.getResourceDependency(runtimeInfo, resourceManager));
+		}
+	}
 }

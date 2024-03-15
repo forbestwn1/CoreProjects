@@ -103,13 +103,25 @@ public class HAPPluginParserEntityImp implements HAPPluginParserEntity{
 	protected HAPManagerEntityDivisionManual getManualDivisionEntityManager() {    return this.m_manualDivisionEntityMan;     }
 	
 	//*************************************   Json format parse helper
-	protected void parseEntityAttribute(HAPManualEntity parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdEntityType entityTypeIfNotProvided, HAPIdEntityType adapterTypeId, HAPContextParse parserContext) {
+	protected void parseEntityAttributeJson(HAPManualEntity parentEntity, JSONObject jsonObj, String attributeName, HAPIdEntityType entityTypeIfNotProvided, HAPIdEntityType adapterTypeId, HAPContextParse parserContext) {
+		JSONObject attrEntityObj = jsonObj.optJSONObject(attributeName);
+		if(attrEntityObj!=null) {
+			parseEntityAttributeSelfJson(parentEntity, attrEntityObj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);
+		}
+
+	}
+	
+	protected void parseEntityAttributeSelfJson(HAPManualEntity parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdEntityType entityTypeIfNotProvided, HAPIdEntityType adapterTypeId, HAPContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
 			HAPManualAttribute attribute = HAPUtilityParserEntityFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualDivisionEntityMan, this.getEntityManager());
 			parentEntity.setAttribute(attribute);
 		}
 	}
 
+	
+	
+	
+	
 	
 	protected void parseEntityAttributeJson(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPContextParser parserContext) {
 		if(this.m_runtimeEnv.getDomainEntityDefinitionManager().isComplexEntity(attrEntityType)) {

@@ -1,10 +1,16 @@
 package com.nosliw.data.core.entity;
 
+import java.util.Map;
+
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPIdEntityType extends HAPSerializableImp{
 
+	public static final String ENTITYTYPE = "entityType";
+	
+	public static final String VERSION = "version";
+	
 	//type of entity
 	private String m_entityType;
 	
@@ -34,4 +40,11 @@ public class HAPIdEntityType extends HAPSerializableImp{
 	public String getKey() {
 		return HAPUtilityNamingConversion.cascadeLevel1(this.m_entityType, this.m_version);
 	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ENTITYTYPE, this.m_entityType);
+		jsonMap.put(VERSION, this.m_version);
+	}
+
 }

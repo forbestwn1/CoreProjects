@@ -1,5 +1,6 @@
 package com.nosliw.data.core.entity.division.manual;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.data.core.entity.HAPEntityExecutableComplex;
 
 public abstract class HAPPluginProcessorEntityDefinitionComplexImp implements HAPPluginProcessorEntityDefinitionComplex{
@@ -16,6 +17,11 @@ public abstract class HAPPluginProcessorEntityDefinitionComplexImp implements HA
 	@Override
 	public String getEntityType() {    return this.m_entityType;    }
 
+
+	@Override
+	public void processEntity(HAPPath pathFromRoot, HAPContextProcess processContext) {}
+
+	
 	@Override
 	public void extendConstantValue(HAPEntityExecutableComplex complexEntityExecutable, HAPContextProcess processContext) {}
 	

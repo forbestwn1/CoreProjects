@@ -4,9 +4,10 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.entity.division.manual.HAPContextProcess;
+import com.nosliw.data.core.entity.division.manual.HAPManualAttribute;
+import com.nosliw.data.core.entity.division.manual.HAPUtilityDefinitionEntity;
 
 public class HAPUtilityEntityExecutableTraverse {
 
@@ -24,12 +25,16 @@ public class HAPUtilityEntityExecutableTraverse {
 	}
 	
 	//traverse only entity leaves that marked as auto process
-	public static void traverseExecutableTreeAutoProcessed(HAPEntityExecutable rootEntity, HAPProcessorEntityExecutableDownward processor, HAPContextProcess processContext) {
-		traverseExecutableTree(
-			rootEntity, 
+	public static void traverseExecutableTreeAutoProcessed(HAPInfoEntity rootEntityInfo, HAPProcessorEntityExecutableDownward processor, HAPContextProcess processContext) {
+		traverseExecutableEntity(
+				rootEntityInfo, 
 			new HAPProcessorEntityExecutableWrapper(processor) {
 				@Override
-				protected boolean isValidAttribute(HAPAttributeEntityExecutable attr) {
+				protected boolean isValidAttribute(HAPAttributeExecutable attr) {
+					HAPManualAttribute attrDef = (HAPManualAttribute)HAPUtilityDefinitionEntity.getDefTreeNodeFromExeTreeNode(attr, processContext.getCurrentBundle());
+					
+					HAPUtilityDefinitionEntity.isAttributeAutoProcess(attrDef, null)
+					
 					if(attr.isAttributeAutoProcess()) {
 						return true;
 					}

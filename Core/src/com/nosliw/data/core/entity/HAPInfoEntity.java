@@ -16,8 +16,6 @@ public class HAPInfoEntity extends HAPExecutableImp implements HAPTreeNode, HAPW
 
 	private HAPEntityExecutable m_entityExe;
 
-	private HAPIdEntityType m_entityTypeId;
-	
 	public HAPInfoEntity(HAPEntityExecutable entity) {
 		this.m_entityExe = entity;
 	}
@@ -44,6 +42,6 @@ public class HAPInfoEntity extends HAPExecutableImp implements HAPTreeNode, HAPW
 	}
 
 	@Override
-	public HAPIdEntityType getEntityTypeId() {   return this.m_entityTypeId;  }
+	public HAPIdEntityType getEntityTypeId() {   return this.getEntity().getEntityTypeId();  }
 
 }

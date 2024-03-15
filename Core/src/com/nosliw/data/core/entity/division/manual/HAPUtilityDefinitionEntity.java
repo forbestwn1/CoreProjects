@@ -68,8 +68,6 @@ public class HAPUtilityDefinitionEntity {
 	}
 
 	
-	
-	
 	public static HAPTreeNode getDefTreeNodeFromExeTreeNode(HAPTreeNode treeNodeExe, HAPEntityBundle bundle) {
 		HAPManualInfoEntity rootEntityDefInfo = (HAPManualInfoEntity)bundle.getExtraData();
 		return HAPUtilityDefinitionEntity.getDescdentTreeNode(rootEntityDefInfo, treeNodeExe.getPathFromRoot());

@@ -76,7 +76,8 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 				HAPReferenceElementInValueStructure ref = new HAPReferenceElementInValueStructure();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				
-				HAPInfoReferenceResolve resolve = HAPUtilityProcessRelativeElement.resolveElementReference(ref, new HAPConfigureResolveStructureElementReference(), processContext);
+				HAPInfoReferenceResolve resolve = null; 
+//						HAPUtilityProcessRelativeElement.resolveElementReference(ref, new HAPConfigureResolveStructureElementReference(), processContext);
 				if(resolve!=null) {
 					resolvedVars.add(resolve);
 				} else {
