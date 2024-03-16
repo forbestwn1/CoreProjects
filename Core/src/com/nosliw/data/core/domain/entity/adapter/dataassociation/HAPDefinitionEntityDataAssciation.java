@@ -1,8 +1,8 @@
 package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntityAdapter;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityAdapter;
 
 public class HAPDefinitionEntityDataAssciation extends HAPManualEntityAdapter{
 

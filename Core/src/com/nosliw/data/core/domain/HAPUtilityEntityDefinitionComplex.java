@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityDefinitionComplex {

@@ -6,6 +6,8 @@ import java.util.List;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPManualAttribute;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
@@ -15,8 +17,6 @@ import com.nosliw.data.core.domain.HAPInfoParentComplex;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityDefinitionDownward;
-import com.nosliw.data.core.entity.division.manual.HAPManualAttribute;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

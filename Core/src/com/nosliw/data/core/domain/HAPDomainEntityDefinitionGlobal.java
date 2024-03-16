@@ -6,8 +6,8 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;

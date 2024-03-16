@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.task;
 
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 
 public class HAPDefinitionEntityTask extends HAPManualEntityComplex{
 

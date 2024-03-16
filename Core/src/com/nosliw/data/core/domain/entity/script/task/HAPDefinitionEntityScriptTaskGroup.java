@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 
 public class HAPDefinitionEntityScriptTaskGroup extends HAPManualEntityComplex{
 

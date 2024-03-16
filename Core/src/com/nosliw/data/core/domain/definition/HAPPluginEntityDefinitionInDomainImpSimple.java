@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.definition;
 
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImpSimple extends HAPPluginEntityDefinitionInDomainImp{

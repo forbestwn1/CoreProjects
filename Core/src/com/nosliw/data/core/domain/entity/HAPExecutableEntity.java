@@ -12,11 +12,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
+import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.valueport.HAPWithValuePort;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutable;
@@ -129,11 +129,11 @@ public abstract class HAPExecutableEntity extends HAPExecutableImp implements HA
 		this.m_attributes.add(attrObj);
 	}
 	
-	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value, HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE), new HAPInfoEntityType());   }
+	public void setAttributeValueObject(String attributeName, Object value) {    setAttribute(attributeName, new HAPEmbededExecutable(value, HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE), new HAPInfoBrickType());   }
 	
-	public void setAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoEntityType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
-	public void setAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoEntityType(valueType, false)); }
-	public void setAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoEntityType(valueType, true)); }
+	public void setAttribute(String attributeName, HAPEmbededExecutable embededEntity, HAPInfoBrickType valueTypeInfo) {	this.setAttribute(new HAPAttributeEntityExecutable(attributeName, embededEntity, valueTypeInfo));	}
+	public void setAttributeSimple(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoBrickType(valueType, false)); }
+	public void setAttributeComplex(String attributeName, HAPEmbededExecutable embededEntity, String valueType) {  setAttribute(attributeName, embededEntity, new HAPInfoBrickType(valueType, true)); }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

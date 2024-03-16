@@ -1,9 +1,9 @@
 package com.nosliw.data.core.domain.entity.script.task;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.entity.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 
 public class HAPPluginEntityProcessorScriptTaskGroup extends HAPPluginProcessorEntityDefinitionComplexImp{
 

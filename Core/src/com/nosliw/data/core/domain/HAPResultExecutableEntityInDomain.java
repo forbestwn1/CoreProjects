@@ -2,9 +2,9 @@ package com.nosliw.data.core.domain;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueContext;
 
 //
 public class HAPResultExecutableEntityInDomain {

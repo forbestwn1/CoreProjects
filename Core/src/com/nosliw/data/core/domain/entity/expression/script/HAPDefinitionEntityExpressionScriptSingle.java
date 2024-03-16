@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression.script;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 
 //normal expression
 public class HAPDefinitionEntityExpressionScriptSingle extends HAPDefinitionEntityExpressionScript{

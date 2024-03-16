@@ -3,7 +3,7 @@ package com.nosliw.data.core.task;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 
 public class HAPUtilityTask {
 

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.entity.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 
 public class HAPPluginEntityProcessorContainerComplex extends HAPPluginProcessorEntityDefinitionComplexImp{
 

@@ -1,12 +1,12 @@
 package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPInfoBrickType;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPDefinitionEntityContainerComplex extends HAPManualEntityComplex{
 
@@ -29,8 +29,8 @@ public class HAPDefinitionEntityContainerComplex extends HAPManualEntityComplex{
 		return eleId;
 	}
 
-	public HAPInfoEntityType getElmentValueTypeInfo() {     return (HAPInfoEntityType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
-	public void setElementValueTypeInfo(HAPInfoEntityType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
+	public HAPInfoBrickType getElmentValueTypeInfo() {     return (HAPInfoBrickType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
+	public void setElementValueTypeInfo(HAPInfoBrickType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
 	
 	public HAPConfigureParentRelationComplex getElementRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_ELEMENTRELATIONCONFIGURE, new HAPConfigureParentRelationComplex());     }
 	public void setElementRelationConfigure(HAPConfigureParentRelationComplex relationConfigure) {    this.setAttributeValueObject(ATTR_ELEMENTRELATIONCONFIGURE, relationConfigure);      }

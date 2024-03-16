@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.component.HAPPathLocationBase;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
 

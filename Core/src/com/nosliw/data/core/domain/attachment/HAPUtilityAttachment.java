@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.attachment;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -14,7 +15,6 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPUtilityAttachment {
 

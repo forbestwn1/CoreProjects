@@ -1,10 +1,10 @@
 package com.nosliw.test.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.entity.HAPEntityPackage;
-import com.nosliw.data.core.entity.HAPIdEntity;
-import com.nosliw.data.core.entity.HAPIdEntityType;
-import com.nosliw.data.core.entity.HAPUtilityEntity;
+import com.nosliw.core.application.HAPIdBrick;
+import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPPackage;
+import com.nosliw.core.application.HAPUtilityEntity;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -40,7 +40,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPEntityPackage executablePackage = runtimeEnvironment.getEntityManager().getPackage(resourceId);		
+		HAPPackage executablePackage = runtimeEnvironment.getEntityManager().getEntityPackage(resourceId);		
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("*******************************************************************************");
@@ -57,7 +57,7 @@ public class HAPTestDomain {
 	}
 	
 	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
-		HAPIdEntity entityId = new HAPIdEntity(new HAPIdEntityType(resourceType, "1.0.0"), HAPConstantShared.ENTITY_DIVISION_MANUAL, id);
+		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), HAPConstantShared.ENTITY_DIVISION_MANUAL, id);
 		return HAPUtilityEntity.fromEntityId2ResourceId(entityId);
 	}
 }

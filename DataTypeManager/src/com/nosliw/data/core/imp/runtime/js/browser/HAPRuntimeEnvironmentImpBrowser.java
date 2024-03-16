@@ -3,6 +3,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
@@ -16,7 +17,6 @@ import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEnti
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.entity.HAPManagerEntity;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
@@ -94,7 +94,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerDomainEntityExecutable complexEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
 		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
-		HAPManagerEntity entityManager = new HAPManagerEntity(this);
+		HAPManagerApplicationBrick entityManager = new HAPManagerApplicationBrick(this);
 		
 		init(
 			dataTypeManager,

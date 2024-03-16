@@ -1,7 +1,7 @@
 package com.nosliw.data.core.interactive;
 
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public class HAPDefinitionEntityInteractive extends HAPManualEntity{
 

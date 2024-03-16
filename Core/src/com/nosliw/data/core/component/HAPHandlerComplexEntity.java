@@ -1,7 +1,7 @@
 package com.nosliw.data.core.component;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public interface HAPHandlerComplexEntity {
 

@@ -1,8 +1,8 @@
 package com.nosliw.data.core.domain.entity.adapter.interactive;
 
+import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntitySimple;
 
 public class HAPDefinitionEntityDataAssociationInteractive extends HAPManualEntitySimple{
 

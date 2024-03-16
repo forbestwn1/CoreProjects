@@ -6,13 +6,13 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPInfoBrickType;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginEntityDefinition{
@@ -149,7 +149,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 				attributeName = parserContext.getGlobalDomain().getEntityInfoDefinition(attrEntityId).getExtraInfo().getName();
 			}
 			
-			entity.setAttribute(attributeName, attributeEntity, new HAPInfoEntityType(attrEntityType, false));
+			entity.setAttribute(attributeName, attributeEntity, new HAPInfoBrickType(attrEntityType, false));
 			processReservedAttribute(entity, attributeName);
 		}
 	}
@@ -168,7 +168,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImp implements HAPPluginE
 		if(isAttributeEnabledJson(attrEntityObj)) {
 			HAPManualEntity entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
 			HAPEmbededDefinition attributeEntity =  HAPUtilityParserEntityFormatJson.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
-			entity.setAttribute(attributeName, attributeEntity, new HAPInfoEntityType(attrEntityType, true));
+			entity.setAttribute(attributeName, attributeEntity, new HAPInfoBrickType(attrEntityType, true));
 			processReservedAttribute(entity, attributeName);
 			out = (HAPIdEntityInDomain)attributeEntity.getValue();
 		}

@@ -3,8 +3,8 @@ package com.nosliw.data.core.domain.entity.service.provider;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 public class HAPDefinitionEntityInDomainServiceProvider extends HAPManualEntity{
 

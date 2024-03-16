@@ -9,8 +9,8 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 //attachment that have real entity
 public class HAPAttachmentImpEntity extends HAPAttachmentImp{

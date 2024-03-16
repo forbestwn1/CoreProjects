@@ -2,8 +2,8 @@ package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualInfoAttributeValue;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualInfoAttributeValue;
 
 //attribute definition
 public class HAPDefinitionEmbededValue extends HAPSerializableImp{

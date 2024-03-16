@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.script;
 
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
 
 public class HAPDefinitionEntityScript extends HAPManualEntitySimple{
 

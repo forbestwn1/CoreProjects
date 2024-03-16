@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity.service.use;
 
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 
 public class HAPDefinitionEntityInDomainServiceUse extends HAPManualEntity{
 

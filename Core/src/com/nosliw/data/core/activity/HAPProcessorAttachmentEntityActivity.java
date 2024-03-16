@@ -2,9 +2,9 @@ package com.nosliw.data.core.activity;
 
 import org.json.JSONObject;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment1.HAPInfoAttachment;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPProcessorAttachmentEntityActivity implements HAPProcessorAttachmentEntity{
 

@@ -1,9 +1,9 @@
 package com.nosliw.data.core.domain.definition;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 //plug in for entity definition in domain
 //   how to parse json object for entity

@@ -2,10 +2,10 @@ package com.nosliw.data.core.domain.entity.expression.data;
 
 import java.util.List;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public abstract class HAPDefinitionEntityExpressionData extends HAPManualEntityComplex{
 

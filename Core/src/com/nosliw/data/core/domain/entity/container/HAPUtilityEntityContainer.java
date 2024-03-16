@@ -1,11 +1,11 @@
 package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.entity.HAPInfoEntityType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityEntityContainer {
@@ -13,7 +13,7 @@ public class HAPUtilityEntityContainer {
 	public static void newComplexEntityContainerAttribute(HAPIdEntityInDomain parentEntityId, String attrName, String childEntityType, HAPConfigureParentRelationComplex childRelationConfigure, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPIdEntityInDomain containerEntityId = HAPUtilityEntityDefinition.newTransparentAttribute(parentEntityId, HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, attrName, parserContext, runtimeEnv);
 		HAPDefinitionEntityContainerComplex containerEntity = (HAPDefinitionEntityContainerComplex)parserContext.getGlobalDomain().getEntityInfoDefinition(containerEntityId).getEntity();
-		containerEntity.setElementValueTypeInfo(new HAPInfoEntityType(childEntityType, true));
+		containerEntity.setElementValueTypeInfo(new HAPInfoBrickType(childEntityType, true));
 		if(childRelationConfigure!=null)   containerEntity.setElementRelationConfigure(childRelationConfigure);
 	}
 

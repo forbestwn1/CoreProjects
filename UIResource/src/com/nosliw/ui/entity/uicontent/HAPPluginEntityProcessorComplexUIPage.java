@@ -1,7 +1,7 @@
 package com.nosliw.ui.entity.uicontent;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.entity.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 
 public class HAPPluginEntityProcessorComplexUIPage extends HAPPluginProcessorEntityDefinitionComplexImp{
 

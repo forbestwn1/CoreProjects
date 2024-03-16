@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntity;
 
 //normal expression group
 public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityExpressionData implements HAPWithEntityElement<HAPDefinitionExpressionData>{

@@ -2,8 +2,8 @@ package com.nosliw.data.core.domain;
 
 import java.util.Set;
 
+import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.entity.division.manual.HAPManualEntityComplex;
 
 public class HAPInfoComplexEntityDefinition {
 

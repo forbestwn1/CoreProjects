@@ -2,6 +2,7 @@ package com.nosliw.data.core.imp.runtime.js.rhino;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
@@ -11,7 +12,6 @@ import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.entity.HAPManagerEntity;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
@@ -64,7 +64,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
 		HAPManagerDomainEntityExecutable domainEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
-		HAPManagerEntity entityManager = new HAPManagerEntity(this);
+		HAPManagerApplicationBrick entityManager = new HAPManagerApplicationBrick(this);
 		
 		init(
 				dataTypeManager,

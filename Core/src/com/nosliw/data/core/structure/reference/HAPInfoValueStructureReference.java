@@ -1,6 +1,6 @@
 package com.nosliw.data.core.structure.reference;
 
-import com.nosliw.data.core.entity.division.manual.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 
 public class HAPInfoValueStructureReference {
 
