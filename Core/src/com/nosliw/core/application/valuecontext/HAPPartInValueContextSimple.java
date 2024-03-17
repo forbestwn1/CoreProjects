@@ -1,4 +1,4 @@
-package com.nosliw.data.core.entity.valuestructure;
+package com.nosliw.core.application.valuecontext;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,13 +10,13 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
-public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueContext{
+public class HAPPartInValueContextSimple extends HAPPartInValueContext{
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
 	private List<HAPWrapperExecutableValueStructure> m_valueStructures;
 	
-	public HAPExecutablePartValueContextSimple(HAPInfoPartValueStructure partInfo) {
+	public HAPPartInValueContextSimple(HAPInfoPartInValueContext partInfo) {
 		super(partInfo);
 		this.m_valueStructures = new ArrayList<HAPWrapperExecutableValueStructure>();
 	}
@@ -30,8 +30,8 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 	}
 	
 	@Override
-	public HAPExecutablePartValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
-		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
+	public HAPPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPPartInValueContextSimple out = new HAPPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 
 		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
@@ -57,8 +57,8 @@ public class HAPExecutablePartValueContextSimple extends HAPExecutablePartValueC
 	}
 	
 	@Override
-	public HAPExecutablePartValueContext cloneValueContextPart() {
-		HAPExecutablePartValueContextSimple out = new HAPExecutablePartValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
+	public HAPPartInValueContext cloneValueContextPart() {
+		HAPPartInValueContextSimple out = new HAPPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 		for(HAPWrapperExecutableValueStructure valueStructureWrapper : this.m_valueStructures) {
 			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());

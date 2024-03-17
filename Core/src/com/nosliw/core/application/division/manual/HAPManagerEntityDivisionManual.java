@@ -88,13 +88,13 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 			
 			//build executable tree
 			HAPBrickComplex rootEntityExe = (HAPBrickComplex)buildExecutableTree(entityDefInfo.getEntity(), processContext);
-			complexEntityBundle.setEntityInfo(new HAPWrapperBrick(rootEntityExe));
+			complexEntityBundle.setBrickWrapper(new HAPWrapperBrick(rootEntityExe));
 			
 			//value context
-			HAPUtilityValueStructureDomain.buildValueStructureDomain(complexEntityBundle.getEntityInfo(), processContext, this.m_runtimeEnv);
+			HAPUtilityValueStructureDomain.buildValueStructureDomain(complexEntityBundle.getBrickWrapper(), processContext, this.m_runtimeEnv);
 
 			//process entity
-			processEntity(complexEntityBundle.getEntityInfo(), processContext, this.getEntityManager());
+			processEntity(complexEntityBundle.getBrickWrapper(), processContext, this.getEntityManager());
 			
 			out = complexEntityBundle;
 		}

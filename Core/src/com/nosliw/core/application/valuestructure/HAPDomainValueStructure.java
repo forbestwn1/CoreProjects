@@ -1,4 +1,4 @@
-package com.nosliw.data.core.entity.valuestructure;
+package com.nosliw.core.application.valuestructure;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,8 +11,6 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -70,15 +68,14 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	public String newValueStructure() {
-		HAPDefinitionEntityValueStructure valueStructureEntityDef = new HAPDefinitionEntityValueStructure();
 		String defId = this.m_idGenerator.generateId();
-		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition(valueStructureEntityDef));
+		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition());
 		return this.newRuntime(defId, null, null);
 	}
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(Set<HAPRootStructure> roots, HAPInfo info, String name) {
+	public String newValueStructure(Set<HAPRootInValueStructure> roots, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(roots));
 		return this.newRuntime(id, info, name);

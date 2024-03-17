@@ -1,4 +1,4 @@
-package com.nosliw.data.core.entity.valuestructure;
+package com.nosliw.core.application.valuecontext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

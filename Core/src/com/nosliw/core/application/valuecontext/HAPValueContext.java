@@ -1,4 +1,4 @@
-package com.nosliw.data.core.entity.valuestructure;
+package com.nosliw.core.application.valuecontext;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -9,11 +9,13 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.data.core.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableEntityValueContext extends HAPExecutableImp{
+public class HAPValueContext extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String PART = "part";
@@ -30,30 +32,30 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	@HAPAttribute
 	public static String ISBORDER = "isBorder";
 
-	private List<HAPExecutablePartValueContext> m_parts;
+	private List<HAPPartInValueContext> m_parts;
 	
 	private Map<String, String> m_valueStructureRuntimeIdByName;
 	
 	private Map<String, String> m_valueStructureRuntimeNameById;
 	
-	public HAPExecutableEntityValueContext() {
-		this.m_parts = new ArrayList<HAPExecutablePartValueContext>();
+	public HAPValueContext() {
+		this.m_parts = new ArrayList<HAPPartInValueContext>();
 		this.m_valueStructureRuntimeIdByName = new LinkedHashMap<String, String>();
 		this.m_valueStructureRuntimeNameById = new LinkedHashMap<String, String>();
 	}
 	
-	public List<HAPExecutablePartValueContext> getParts(){   return this.m_parts;  }
+	public List<HAPPartInValueContext> getParts(){   return this.m_parts;  }
 	
-	public List<HAPExecutablePartValueContext> getPart(String name) {
-		List<HAPExecutablePartValueContext> out = new ArrayList<HAPExecutablePartValueContext>();
+	public List<HAPPartInValueContext> getPart(String name) {
+		List<HAPPartInValueContext> out = new ArrayList<HAPPartInValueContext>();
 		for(int i : this.findPartByName(name)) {
 			out.add(this.m_parts.get(i));
 		}
 		return out;
 	}
 
-	public void addPartSimple(List<HAPWrapperExecutableValueStructure> valueStructureExeWrappers, HAPInfoPartValueStructure partInfo, HAPDomainValueStructure valueStructureDomain) {
-		HAPExecutablePartValueContextSimple part = new HAPExecutablePartValueContextSimple(partInfo);
+	public void addPartSimple(List<HAPWrapperExecutableValueStructure> valueStructureExeWrappers, HAPInfoPartInValueContext partInfo, HAPDomainValueStructure valueStructureDomain) {
+		HAPPartInValueContextSimple part = new HAPPartInValueContextSimple(partInfo);
 		for(HAPWrapperExecutableValueStructure wrapper : valueStructureExeWrappers) {
 			part.addValueStructure(wrapper);
 			
@@ -67,27 +69,27 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		this.addPart(part);
 	}
 	
-	public void addPartGroup(List<HAPExecutablePartValueContext> children, HAPInfoPartValueStructure partInfo) {
-		HAPExecutablePartValueContextGroupWithEntity part = new HAPExecutablePartValueContextGroupWithEntity(partInfo);
-		for(HAPExecutablePartValueContext child : children) {
+	public void addPartGroup(List<HAPPartInValueContext> children, HAPInfoPartInValueContext partInfo) {
+		HAPPartInValueContextGroupWithEntity part = new HAPPartInValueContextGroupWithEntity(partInfo);
+		for(HAPPartInValueContext child : children) {
 			part.addChild(child.cloneValueContextPart());
 		}
 		this.addPart(part);
 	}
 	
-	private void addPart(HAPExecutablePartValueContext part) {
+	private void addPart(HAPPartInValueContext part) {
 		this.m_parts.add(part);
 		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
-	public void copyPart(HAPExecutablePartValueContext part) {
+	public void copyPart(HAPPartInValueContext part) {
 		this.m_parts.add(part);
 		HAPUtilityValueContext.sortParts(m_parts);
 	}
 	
-	public HAPExecutableEntityValueContext cloneValueStructureComplex() {
-		HAPExecutableEntityValueContext out = new HAPExecutableEntityValueContext();
-		for(HAPExecutablePartValueContext part : this.m_parts) {
+	public HAPValueContext cloneValueStructureComplex() {
+		HAPValueContext out = new HAPValueContext();
+		for(HAPPartInValueContext part : this.m_parts) {
 			this.m_parts.add(part.cloneValueContextPart());
 		}
 		out.m_valueStructureRuntimeIdByName.putAll(this.m_valueStructureRuntimeIdByName);
@@ -97,7 +99,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	private List<Integer> findPartByName(String name) {
 		List<Integer> out = new ArrayList<Integer>();
 		for(int i=0; i<this.m_parts.size(); i++) {
-			HAPExecutablePartValueContext part = this.m_parts.get(i);
+			HAPPartInValueContext part = this.m_parts.get(i);
 			if(name.equals(part.getName())) {
 				out.add(i);
 			}
@@ -108,7 +110,7 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		List<String> partArrayJson = new ArrayList<String>();
-		for(HAPExecutablePartValueContext part : this.m_parts) {
+		for(HAPPartInValueContext part : this.m_parts) {
 			partArrayJson.add(part.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partArrayJson.toArray(new String[0])));
@@ -116,20 +118,6 @@ public class HAPExecutableEntityValueContext extends HAPExecutableImp{
 		jsonMap.put(VALUESTRUCTURERUNTIMENAMEBYID, HAPUtilityJson.buildMapJson(m_valueStructureRuntimeNameById));
 	}
 	
-	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
-		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		this.buildJsonMap(jsonMap, null);
-		
-		List<String> jsonArray = new ArrayList<String>();
-		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(this);
-		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-			jsonArray.add(valueStructureInfo.toExpandedString(valueStructureDomain));
-		}
-		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(jsonArray.toArray(new String[0])));
-		
-		return HAPUtilityJson.buildMapJson(jsonMap);
-	}
-
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		this.buildJsonMap(jsonMap, typeJsonMap);

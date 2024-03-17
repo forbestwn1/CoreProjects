@@ -16,7 +16,7 @@ public class HAPUtilityDefinitionEntity {
 	public static Pair<HAPManualEntity, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle){
 		HAPManualInfoEntity rootEntityDefInfo = (HAPManualInfoEntity)bundle.getExtraData();
 		HAPManualEntity entityDef = getDescdentEntityDefinition(rootEntityDefInfo, path);
-		HAPBrick entityExe = HAPUtilityEntity.getDescdentEntity(bundle.getEntityInfo(), path);
+		HAPBrick entityExe = HAPUtilityEntity.getDescdentEntity(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	

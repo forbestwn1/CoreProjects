@@ -1,4 +1,4 @@
-package com.nosliw.data.core.entity.valuestructure;
+package com.nosliw.core.application.valuecontext;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,26 +7,26 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
-public class HAPInfoValueStructureSorting {
+public class HAPInfoPartSimple {
 
-	public static final String VALUESTRUCTURE = "valueStructure";
+	public static final String PART = "part";
 	
-	private HAPWrapperExecutableValueStructure m_valueStructure;
+	private HAPPartInValueContextSimple m_simpleStructurePart;
 	
 	private List<Integer> m_priority;
 	
-	public HAPInfoValueStructureSorting(HAPWrapperExecutableValueStructure valueStructure) {
-		this.m_valueStructure = valueStructure;
+	public HAPInfoPartSimple(HAPPartInValueContextSimple simpleStructurePart) {
+		this.m_simpleStructurePart = simpleStructurePart;
 	}
 
-	public HAPWrapperExecutableValueStructure getValueStructure() {    return this.m_valueStructure;     }
+	public HAPPartInValueContextSimple getSimpleValueStructurePart() {	return this.m_simpleStructurePart;	}
 	
 	public List<Integer> getPriority(){   return this.m_priority;    }
 	public void setPriority(List<Integer> priority) {     this.m_priority = priority;     }
 
 	public String toExpandedString(HAPDomainValueStructure valueStructureDomain) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-		jsonMap.put(VALUESTRUCTURE, this.m_valueStructure.toExpandedString(valueStructureDomain));
+		jsonMap.put(PART, this.m_simpleStructurePart.toExpandedString(valueStructureDomain));
 		return HAPUtilityJson.buildMapJson(jsonMap);
 	}
 }

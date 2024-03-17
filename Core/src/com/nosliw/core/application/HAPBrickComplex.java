@@ -4,17 +4,17 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.entity.valuestructure.HAPExecutableEntityValueContext;
+import com.nosliw.core.application.valuecontext.HAPValueContext;
 
 public class HAPBrickComplex extends HAPBrick{
 
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
 	
-	private HAPExecutableEntityValueContext m_valueContext;
+	private HAPValueContext m_valueContext;
 
-	public void setValueContext(HAPExecutableEntityValueContext valueContext) {     this.m_valueContext = valueContext;      }
-	public HAPExecutableEntityValueContext getValueContext() {    return this.m_valueContext;    }
+	public void setValueContext(HAPValueContext valueContext) {     this.m_valueContext = valueContext;      }
+	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
 	
 	
 	@Override

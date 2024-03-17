@@ -51,7 +51,9 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
+		if(this.m_pathFromRoot!=null) {
+			jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
+		}
 		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
