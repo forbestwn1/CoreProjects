@@ -15,6 +15,7 @@ import com.nosliw.core.application.HAPBrickComplex;
 import com.nosliw.core.application.HAPBundleComplex;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
+import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPUtilityEntityExecutableTraverse;
 import com.nosliw.core.application.HAPWrapperBrick;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
@@ -62,7 +63,7 @@ public class HAPUtilityValueStructureDomain {
 
 	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityEntityExecutableTraverse.traverseExecutableTreeLocalComplexEntity(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
+		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNode treeNode, Object data) {

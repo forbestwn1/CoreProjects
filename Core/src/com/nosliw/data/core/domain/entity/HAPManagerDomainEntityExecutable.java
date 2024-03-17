@@ -563,7 +563,7 @@ public class HAPManagerDomainEntityExecutable {
 		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getEntityInfoDefinition(entityDefinitionId);
 		if(entityDefInfo.isSolid()) {
 			HAPManualEntity entityDef = entityDefInfo.getEntity();
-			String entityType = entityDef.getEntityType();
+			String entityType = entityDef.getBrickType();
 			HAPExecutableEntity entityExe = null;
 			if(entityDefInfo.isComplexEntity()) {
 				entityExe = this.m_processorComplexEntityPlugins.get(entityType).newExecutable();

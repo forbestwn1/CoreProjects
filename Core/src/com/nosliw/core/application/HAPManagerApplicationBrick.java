@@ -19,14 +19,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerApplicationBrick {
 
-	private Map<String, Map<String, HAPInfoBrickType>> m_entityTypeInfos;
+	private Map<String, Map<String, HAPInfoBrickType>> m_brickTypeInfos;
 	
 	private Map<String, HAPInfoBrickDivision> m_divisionInfo;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_entityTypeInfos = new LinkedHashMap<String, Map<String, HAPInfoBrickType>>();
+		this.m_brickTypeInfos = new LinkedHashMap<String, Map<String, HAPInfoBrickType>>();
 		this.m_divisionInfo = new LinkedHashMap<String, HAPInfoBrickDivision>();
 		this.m_runtimeEnv = runtimeEnv;
 		this.init();
@@ -39,15 +39,15 @@ public class HAPManagerApplicationBrick {
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUESTRUCTURE_100, false));
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUECONTEXT_100, false));
 		
-		this.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryEntityPackageImpDummy(), new HAPManagerEntityDivisionManual(this.m_runtimeEnv)));
+		this.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManagerEntityDivisionManual(this.m_runtimeEnv)));
 	}
 	
-	public HAPInfoBrickType getEntityTypeInfo(HAPIdBrickType entityTypeId) {
-		return this.m_entityTypeInfos.get(entityTypeId.getEntityType()).get(entityTypeId.getVersion());
+	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType entityTypeId) {
+		return this.m_brickTypeInfos.get(entityTypeId.getBrickType()).get(entityTypeId.getVersion());
 	}
 
 	public List<HAPIdBrickType> getAllVersions(String entityType){
-		List<HAPInfoBrickType> entityTypeInfos = new ArrayList<HAPInfoBrickType>(this.m_entityTypeInfos.get(entityType).values());
+		List<HAPInfoBrickType> entityTypeInfos = new ArrayList<HAPInfoBrickType>(this.m_brickTypeInfos.get(entityType).values());
 		Collections.sort(entityTypeInfos, new Comparator<HAPInfoBrickType>(){
 			@Override
 			public int compare(HAPInfoBrickType arg0, HAPInfoBrickType arg1) {
@@ -68,7 +68,7 @@ public class HAPManagerApplicationBrick {
 	}
 
 	public HAPBundle getEntityBundle(HAPResourceIdSimple resourceId) {
-		return this.getEntityBundle(HAPUtilityEntity.createEntityId(resourceId));
+		return this.getEntityBundle(HAPUtilityBrick.parseBrickId(resourceId));
 	}
 
 	public HAPBundle getEntityBundle(HAPIdBrick entityId) {
@@ -108,7 +108,7 @@ public class HAPManagerApplicationBrick {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
 
-			HAPBundle bundle = this.getEntityBundle(HAPUtilityEntity.createEntityId(complexEntityResourceId));
+			HAPBundle bundle = this.getEntityBundle(HAPUtilityBrick.parseBrickId(complexEntityResourceId));
 			Set<HAPResourceIdSimple> bundleDependency = bundle.getComplexResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {
 				buildDependencyGroup(id, dependency);
@@ -123,10 +123,10 @@ public class HAPManagerApplicationBrick {
 	public void registerEntityTypeInfo(HAPInfoBrickType entityTypeInfo) {
 		HAPIdBrickType entityTypeId = entityTypeInfo.getEntityTypeId();
 		
-		Map<String, HAPInfoBrickType> byVersion = this.m_entityTypeInfos.get(entityTypeId.getEntityType());
+		Map<String, HAPInfoBrickType> byVersion = this.m_brickTypeInfos.get(entityTypeId.getBrickType());
 		if(byVersion==null) {
 			byVersion = new LinkedHashMap<String, HAPInfoBrickType>();
-			this.m_entityTypeInfos.put(entityTypeId.getEntityType(), byVersion);
+			this.m_brickTypeInfos.put(entityTypeId.getBrickType(), byVersion);
 		}
 		
 		byVersion.put(entityTypeId.getVersion(), entityTypeInfo);

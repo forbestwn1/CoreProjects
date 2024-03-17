@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPPackage;
-import com.nosliw.core.application.HAPUtilityEntity;
+import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -58,6 +58,6 @@ public class HAPTestDomain {
 	
 	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
 		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), HAPConstantShared.ENTITY_DIVISION_MANUAL, id);
-		return HAPUtilityEntity.fromEntityId2ResourceId(entityId);
+		return HAPUtilityBrick.fromBrickId2ResourceId(entityId);
 	}
 }

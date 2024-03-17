@@ -34,8 +34,8 @@ public class HAPUtilityEntityLocation {
 	}
 
 	private static HAPInfoEntityLocation getEntityLocationInfo(String basePath, HAPIdBrick entityId) {
-		HAPIdBrickType entityTypeId = entityId.getEntityTypeId(); 
-		basePath = basePath + entityTypeId.getEntityType() + "/";
+		HAPIdBrickType entityTypeId = entityId.getBrickTypeId(); 
+		basePath = basePath + entityTypeId.getBrickType() + "/";
 		if(entityTypeId.getVersion()!=null) {
 			basePath = basePath + entityTypeId.getVersion()+ "/";
 		}

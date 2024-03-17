@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPUtilityEntity;
+import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPContextParse;
 import com.nosliw.core.application.division.manual.HAPManagerEntityDivisionManual;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
@@ -40,10 +40,10 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
+						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
-						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityEntity.parseEntityTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
+						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
 					}
 					else {
 						Object entityObj = jsonObj.opt(attrName);
@@ -74,7 +74,7 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.entityType = HAPUtilityEntity.parseEntityTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
+				out.entityType = HAPUtilityBrick.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
 				str = pair.getRight();
 			}
 		}
@@ -82,12 +82,12 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.adapterType = HAPUtilityEntity.parseEntityTypeIdAggresive(pair.getLeft(), this.getEntityManager());
+				out.adapterType = HAPUtilityBrick.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager());
 				str = pair.getRight();
 			}
 		}
 
-		out.isComplex = HAPUtilityEntity.isEntityComplex(out.entityType, getEntityManager()); 
+		out.isComplex = HAPUtilityBrick.isBrickComplex(out.entityType, getEntityManager()); 
 		
 		return out;
 	}

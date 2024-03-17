@@ -139,7 +139,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 		
 		HAPEntityBundle bundle = processContext.getCurrentBundle();
 		HAPUtilityEntityDefinition.getEntityDefinitionFromExeTreeNodeE(null, bundle)
-//		HAPUtilityEntity.getEntityDefinitionFromExeTreeNodeE(bundle., bundle)
+//		HAPUtilityBrick.getEntityDefinitionFromExeTreeNodeE(bundle., bundle)
 		
 		
 		Map<String, Object> parms = definitionEntity.getParms();

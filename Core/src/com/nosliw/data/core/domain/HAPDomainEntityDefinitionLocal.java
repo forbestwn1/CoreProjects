@@ -87,7 +87,7 @@ public class HAPDomainEntityDefinitionLocal extends HAPSerializableImp implement
 		String type = entityOrRef.getEntityOrReferenceType();
 		if(type.equals(HAPConstantShared.ENTITY)) {
 			HAPManualEntity entity = (HAPManualEntity)entityOrRef;
-			entityType = entity.getEntityType();
+			entityType = entity.getBrickType();
 			entityInfo = HAPUtilityEntityDefinition.newEntityDefinitionInfoInDomain(entityType, this.m_entityDefMan); 
 			entityInfo.setEntity(entity);
 		}

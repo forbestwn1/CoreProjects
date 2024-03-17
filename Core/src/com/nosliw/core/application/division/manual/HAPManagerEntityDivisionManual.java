@@ -22,10 +22,10 @@ import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginProcessorBrick;
-import com.nosliw.core.application.HAPUtilityEntity;
-import com.nosliw.core.application.HAPUtilityEntityExecutableTraverse;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrick;
-import com.nosliw.core.application.HAPWrapperValueInAttributeEntity;
+import com.nosliw.core.application.HAPWrapperValueInAttributeBrick;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginEntityProcessorComplexTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginParserEntityImpTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginEntityProcessorComplexTestComplex1;
@@ -58,7 +58,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 
 		//get definition
-		HAPManualInfoEntity entityDefInfo = this.parseEntityDefinitionInfo(content, entityId.getEntityTypeId(), format, parseContext);
+		HAPManualInfoEntity entityDefInfo = this.parseEntityDefinitionInfo(content, entityId.getBrickTypeId(), format, parseContext);
 		
 		//build parent and 
 		
@@ -79,7 +79,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 		//process definition
 		HAPBundle out = null;
 		
-		if(HAPUtilityEntity.isEntityComplex(entityId.getEntityTypeId(), getEntityManager())) {
+		if(HAPUtilityBrick.isBrickComplex(entityId.getBrickTypeId(), getEntityManager())) {
 			//complex entity
 			HAPBundleComplex complexEntityBundle = new HAPBundleComplex();
 			complexEntityBundle.setExtraData(entityDefInfo);
@@ -110,7 +110,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 	}
 
 	private void processEntity(HAPWrapperBrick entityInfo, HAPContextProcess processContext, HAPManagerApplicationBrick entityMan) {
-		HAPUtilityEntityExecutableTraverse.traverseExecutableEntity(
+		HAPUtilityBrickTraverse.traverseTree(
 				entityInfo, 
 			new HAPHandlerDownwardImpTreeNode() {
 					
@@ -129,7 +129,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 					}
 					
 					if(process) {
-						if(HAPUtilityEntity.isEntityComplex(entityTypeId, entityMan)) {
+						if(HAPUtilityBrick.isBrickComplex(entityTypeId, entityMan)) {
 							HAPPluginProcessorEntityDefinitionComplex plugin = (HAPPluginProcessorEntityDefinitionComplex)getEntityProcessPlugin(entityTypeId);
 							plugin.processEntity(treeNode.getPathFromRoot(), processContext);
 						}
@@ -149,7 +149,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 		HAPIdBrickType entityTypeId = entityDef.getEntityTypeId();
 		
 		HAPBrick entityExe = null;
-		boolean isComplex = HAPUtilityEntity.isEntityComplex(entityDef.getEntityTypeId(), getEntityManager());
+		boolean isComplex = HAPUtilityBrick.isBrickComplex(entityDef.getEntityTypeId(), getEntityManager());
 		if(isComplex) {
 			HAPPluginProcessorEntityDefinitionComplex processPlugin = (HAPPluginProcessorEntityDefinitionComplex)this.getEntityProcessPlugin(entityTypeId);
 			entityExe = processPlugin.newExecutable();
@@ -168,7 +168,7 @@ public class HAPManagerEntityDivisionManual implements HAPPluginProcessorBrick{
 				HAPManualInfoAttributeValue attrValueInfo = attrDef.getValueInfo();
 				if(attrValueInfo instanceof HAPManualWithEntity) {
 					HAPBrick attrEntity = buildExecutableTree(((HAPManualWithEntity)attrValueInfo).getEntity(), processContext);
-					attrExe.setValueInfo(new HAPWrapperValueInAttributeEntity(attrEntity));
+					attrExe.setValueInfo(new HAPWrapperValueInAttributeBrick(attrEntity));
 				}
 				entityExe.setAttribute(attrExe);
 				

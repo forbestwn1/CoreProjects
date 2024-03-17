@@ -14,7 +14,7 @@ public class HAPManualInfoAttributeValueReferenceEntity extends HAPManualInfoAtt
 	private HAPManualEntity m_entity;
 
 	public HAPManualInfoAttributeValueReferenceEntity(HAPIdBrick localEntityId) {
-		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITYREFERENCE, localEntityId.getEntityTypeId());
+		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITYREFERENCE, localEntityId.getBrickTypeId());
 		this.m_localEntityId = localEntityId;
 	}
 

@@ -9,14 +9,14 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPUtilityEntity;
+import com.nosliw.core.application.HAPUtilityBrick;
 
 public class HAPUtilityDefinitionEntity {
 
 	public static Pair<HAPManualEntity, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle){
 		HAPManualInfoEntity rootEntityDefInfo = (HAPManualInfoEntity)bundle.getExtraData();
 		HAPManualEntity entityDef = getDescdentEntityDefinition(rootEntityDefInfo, path);
-		HAPBrick entityExe = HAPUtilityEntity.getDescdentEntity(bundle.getBrickWrapper(), path);
+		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	
@@ -86,7 +86,7 @@ public class HAPUtilityDefinitionEntity {
 		
 		HAPManualInfoAttributeValue attrValueInfo = attr.getValueInfo();
 		if(attrValueInfo instanceof HAPManualWithEntity) {
-			boolean isComplex = HAPUtilityEntity.isEntityComplex(((HAPManualWithEntity)attrValueInfo).getEntityTypeId(), entityMan); 
+			boolean isComplex = HAPUtilityBrick.isBrickComplex(((HAPManualWithEntity)attrValueInfo).getEntityTypeId(), entityMan); 
 			
 			if(isComplex) {
 				return true;
