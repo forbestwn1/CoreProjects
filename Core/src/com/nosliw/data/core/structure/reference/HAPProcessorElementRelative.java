@@ -12,6 +12,15 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPInfoPathToSolidRoot;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPStructure1;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
@@ -19,15 +28,6 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStruct
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPInfoPathToSolidRoot;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
-import com.nosliw.data.core.structure.HAPStructure1;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
 public class HAPProcessorElementRelative {

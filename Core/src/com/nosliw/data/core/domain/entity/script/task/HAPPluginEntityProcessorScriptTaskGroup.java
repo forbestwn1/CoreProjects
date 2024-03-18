@@ -1,11 +1,11 @@
 package com.nosliw.data.core.domain.entity.script.task;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
-public class HAPPluginEntityProcessorScriptTaskGroup extends HAPPluginProcessorEntityDefinitionComplexImp{
+public class HAPPluginEntityProcessorScriptTaskGroup extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorScriptTaskGroup() {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, HAPExecutableEntityScriptTaskGroup.class);

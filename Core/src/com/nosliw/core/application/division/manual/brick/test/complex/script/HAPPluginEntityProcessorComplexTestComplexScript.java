@@ -14,9 +14,14 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPContextProcess;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualContextProcess;
 import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPUtilityDefinitionBrick;
 import com.nosliw.core.application.division.manual.HAPUtilityDefinitionEntity;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
@@ -43,18 +48,18 @@ import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 
-public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginProcessorEntityDefinitionComplexImp{
+public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorComplexTestComplexScript() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, HAPExecutableTestComplexScript.class);
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPExecutableTestComplexScript.class);
 	}
 
 	@Override
-	public void processEntity(HAPPath pathFromRoot, HAPContextProcess processContext) {
+	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcess processContext) {
 		
 		HAPBundle bundle = processContext.getCurrentBundle();
 		
-		Pair<HAPManualEntity, HAPBrick> entityPair = HAPUtilityDefinitionEntity.getEntityPair(pathFromRoot, bundle);
+		Pair<HAPManualBrick, HAPBrick> entityPair = HAPUtilityDefinitionBrick.getEntityPair(pathFromRoot, bundle);
 		HAPDefinitionEntityTestComplexScript definitionEntity = (HAPDefinitionEntityTestComplexScript)entityPair.getLeft();
 		HAPExecutableTestComplexScript executableEntity = (HAPExecutableTestComplexScript)entityPair.getRight();
 		

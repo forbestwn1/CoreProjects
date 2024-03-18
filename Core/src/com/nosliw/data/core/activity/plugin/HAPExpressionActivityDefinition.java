@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
@@ -57,7 +57,7 @@ public class HAPExpressionActivityDefinition extends HAPDefinitionActivityNormal
 	}
 
 	@Override
-	public void parseActivityDefinition(Object obj, HAPManualEntityComplex complexEntity, HAPSerializationFormat format) {
+	public void parseActivityDefinition(Object obj, HAPManualBrickComplex complexEntity, HAPSerializationFormat format) {
 		this.buildObject(obj, format);
 		this.m_valueStructure = complexEntity.getValueStructureWrapper();
 		this.setInputDataAssociation(new HAPDefinitionDataAssociationMirror());

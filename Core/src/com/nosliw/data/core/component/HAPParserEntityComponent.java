@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPWithCommand;
@@ -53,7 +53,7 @@ public class HAPParserEntityComponent {
 		HAPUtilityValueContext.setValueStructureDefault(complexResourceDef, HAParserComponentValueStructure.parseComponentValueStructure(contextJsonObj, complexResourceDef.getValueStructureTypeIfNotDefined()));
 	}
 	
-	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPManualEntityComplex complexEntity, HAPManagerTask taskMan) {
+	public static HAPWithTask parseTask(HAPWithTask withTask, JSONObject jsonObj, HAPManualBrickComplex complexEntity, HAPManagerTask taskMan) {
 		JSONArray tasksArray = jsonObj.optJSONArray(HAPWithTask.TASK);
 		if(tasksArray!=null) {
 			for(int i=0; i<tasksArray.length(); i++) {

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
@@ -20,7 +21,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.definition.HAPDefinitionService;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityServiceUse {

@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
+import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
 
 @HAPEntityWithAttribute
 public class HAPReferenceRootInMapping extends HAPSerializableImp implements HAPReferenceRootInStrucutre{

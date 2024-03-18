@@ -3,11 +3,11 @@ package com.nosliw.data.core.structure.temp;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 

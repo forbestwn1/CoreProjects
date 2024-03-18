@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPRequirementContextProcessor;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
-import com.nosliw.data.core.structure.HAPRequirementContextProcessor;
 
 public class HAPUtilityCommon {
 

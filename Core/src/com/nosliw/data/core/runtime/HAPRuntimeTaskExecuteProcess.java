@@ -2,8 +2,8 @@ package com.nosliw.data.core.runtime;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.common.structure.data.HAPContextData;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
-import com.nosliw.data.core.structure.data.HAPContextData;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteProcess extends HAPRuntimeTask{

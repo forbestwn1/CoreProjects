@@ -12,6 +12,15 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPPathElementMapping;
+import com.nosliw.core.application.common.structure.HAPPathElementMappingConstantToVariable;
+import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
@@ -22,15 +31,6 @@ import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafConstant;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPPathElementMapping;
-import com.nosliw.data.core.structure.HAPPathElementMappingConstantToVariable;
-import com.nosliw.data.core.structure.HAPPathElementMappingVariableToVariable;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityDataAssociation {
 

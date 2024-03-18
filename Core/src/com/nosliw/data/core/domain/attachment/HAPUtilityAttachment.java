@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.attachment;
 
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -50,7 +50,7 @@ public class HAPUtilityAttachment {
 				HAPInfoEntityInDomainDefinition complexEntityDefInfo = definitionGlobalDomain.getEntityInfoDefinition(entityIdDef);
 				
 				HAPDefinitionEntityContainerAttachment attachmentContainerEntity = null;
-				HAPIdEntityInDomain attachmentContainerEntityId = ((HAPManualEntityComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
+				HAPIdEntityInDomain attachmentContainerEntityId = ((HAPManualBrickComplex)complexEntityDefInfo.getEntity()).getAttachmentContainerEntity();
 				if(attachmentContainerEntityId!=null) {
 					attachmentContainerEntity = (HAPDefinitionEntityContainerAttachment)definitionGlobalDomain.getEntityInfoDefinition(attachmentContainerEntityId).getEntity();
 				}

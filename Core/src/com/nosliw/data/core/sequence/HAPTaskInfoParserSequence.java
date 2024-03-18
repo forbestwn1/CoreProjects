@@ -3,7 +3,7 @@ package com.nosliw.data.core.sequence;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.task.HAPDefinitionTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.core.task.HAPParserTask;
@@ -18,7 +18,7 @@ public class HAPTaskInfoParserSequence implements HAPParserTask{
 	}
 
 	@Override
-	public HAPDefinitionTask parseTaskDefinition(Object obj, HAPManualEntityComplex complexEntity) {
+	public HAPDefinitionTask parseTaskDefinition(Object obj, HAPManualBrickComplex complexEntity) {
 		HAPDefinitionSequence out = new HAPDefinitionSequence();
 		
 		JSONObject jsonObj = (JSONObject)obj;

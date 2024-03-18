@@ -1,9 +1,9 @@
 package com.nosliw.data.core.domain.entity.configure;
 
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 
-public class HAPDefinitionEntityConfigure extends HAPManualEntitySimple{
+public class HAPDefinitionEntityConfigure extends HAPManualBrickSimple{
 
 	private String m_script;
 	
@@ -14,7 +14,7 @@ public class HAPDefinitionEntityConfigure extends HAPManualEntitySimple{
 	public void setScript(String script) {    this.m_script = script;     }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityConfigure out = new HAPDefinitionEntityConfigure();
 		out.setScript(this.getScript());
 		return out;

@@ -1,9 +1,9 @@
 package com.nosliw.data.core.domain.entity.value;
 
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 
-public class HAPDefinitionEntityValue extends HAPManualEntitySimple{
+public class HAPDefinitionEntityValue extends HAPManualBrickSimple{
 
 	public static final String ATTR_VALUE = "value";
 	
@@ -11,7 +11,7 @@ public class HAPDefinitionEntityValue extends HAPManualEntitySimple{
 	public Object getValue() {   return this.getAttributeValue(ATTR_VALUE);     }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityValue out = new HAPDefinitionEntityValue();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

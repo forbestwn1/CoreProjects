@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -24,13 +24,13 @@ public class HAPManagerDomainEntityDefinition {
 		this.m_defaultAdapter = new LinkedHashMap<String, String>();
 	}
 	
-	public HAPManualEntity getEntityDefinition(HAPResourceIdSimple resourceId) {
+	public HAPManualBrick getEntityDefinition(HAPResourceIdSimple resourceId) {
 		
 	}
 	
 	
 	
-	public HAPManualEntity parseDefinition(String entityType, Object obj, HAPSerializationFormat format) {
+	public HAPManualBrick parseDefinition(String entityType, Object obj, HAPSerializationFormat format) {
 		if(obj==null) {
 			return null;
 		}

@@ -9,7 +9,7 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 //attachment that have real entity
@@ -18,17 +18,17 @@ public class HAPAttachmentImpEntity extends HAPAttachmentImp{
 	@HAPAttribute
 	public static String ENTITY = "entity";
 
-	private HAPManualEntity m_entity;
+	private HAPManualBrick m_entity;
 	
 	private HAPAttachmentImpEntity() {}
 	
-	public HAPAttachmentImpEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo, HAPManualEntity entity) {
+	public HAPAttachmentImpEntity(String valueType, Object rawValue, HAPIdEntityInDomain entityId, HAPEntityInfo entityInfo, HAPManualBrick entity) {
 		super(valueType, rawValue, entityId, entityInfo);
 		this.setEntity(entity);
 	}
 	
-	public HAPManualEntity getEntity() {    return this.m_entity;    }
-	public void setEntity(HAPManualEntity entityObj) {    this.m_entity = entityObj;    }
+	public HAPManualBrick getEntity() {    return this.m_entity;    }
+	public void setEntity(HAPManualBrick entityObj) {    this.m_entity = entityObj;    }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

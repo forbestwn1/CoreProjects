@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 @HAPEntityWithAttribute
 public class HAPItemValueMapping<T> extends HAPEntityInfoWritableImp{

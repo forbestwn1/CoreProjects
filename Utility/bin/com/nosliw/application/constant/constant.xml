@@ -940,14 +940,14 @@
 
 			<definition type="space"/>
 			<definition name="EMBEDEDVALUE_TYPE_ENTITYID" value="entityId"/>
-			<definition name="EMBEDEDVALUE_TYPE_ENTITY" value="entity"/>
+			<definition name="EMBEDEDVALUE_TYPE_BRICK" value="brick"/>
 			<definition name="EMBEDEDVALUE_TYPE_VALUE" value="value"/>
 			<definition name="EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE" value="attachmentReference"/>
-			<definition name="EMBEDEDVALUE_TYPE_ENTITYREFERENCE" value="entityReference"/>
+			<definition name="EMBEDEDVALUE_TYPE_BRICKREFERENCE" value="brickReference"/>
 			<definition name="EMBEDEDVALUE_TYPE_RESOURCEREFERENCE" value="resourceReference"/>
 
 			<definition type="space"/>
-			<definition name="ENTITYATTRIBUTE_VALUETYPE_ENTITY" value="entity"/>
+			<definition name="ENTITYATTRIBUTE_VALUETYPE_BRICK" value="brick"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_VALUE" value="value"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_RESOURCEID" value="resourceId"/>
 

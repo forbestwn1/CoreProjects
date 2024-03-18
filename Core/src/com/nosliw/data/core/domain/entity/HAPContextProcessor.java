@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -57,20 +57,20 @@ public class HAPContextProcessor {
 		HAPAttachment attachment = this.m_complexEntity.getAttachment(attachmentValueType, attachmentName);
 		String attType = attachment.getType();
 		Object entity = null;
-		HAPManualEntityComplex contextComplexEntity = null;
+		HAPManualBrickComplex contextComplexEntity = null;
 		if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_ENTITY)) {
 			entity = this.m_runtimeEnv.getAttachmentManager().parseEntityAttachment(new HAPInfoAttachment(attachmentValueType, attachmentName, ((HAPAttachmentImpEntity)attachment).getEntity()), this.m_complexEntity);
 			contextComplexEntity = this.m_complexEntity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCEEXTERNAL)) {
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId());
-			if(entity instanceof HAPManualEntityComplex)  contextComplexEntity = (HAPManualEntityComplex)entity;
+			if(entity instanceof HAPManualBrickComplex)  contextComplexEntity = (HAPManualBrickComplex)entity;
 		}
 		else if(attType.equals(HAPConstantShared.ATTACHMENT_TYPE_REFERENCELOCAL)) {
 			HAPResourceDefinition1 relatedResource = null;
 			if(m_complexEntity instanceof HAPResourceDefinition1)   relatedResource = (HAPResourceDefinition1)m_complexEntity;
 			entity = this.m_runtimeEnv.getResourceDefinitionManager().getResourceDefinition(((HAPAttachmentReference)attachment).getReferenceId(), relatedResource);
-			if(entity instanceof HAPManualEntityComplex)  contextComplexEntity = (HAPManualEntityComplex)entity;
+			if(entity instanceof HAPManualBrickComplex)  contextComplexEntity = (HAPManualBrickComplex)entity;
 		}
 		
 		return new HAPResultProcessAttachmentReference(entity, attachment.getAdaptor(), contextComplexEntity);

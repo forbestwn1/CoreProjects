@@ -9,6 +9,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.google.common.collect.Sets;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
@@ -29,8 +31,6 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
 
 public class HAPUtilityExpressionProcessor {
 

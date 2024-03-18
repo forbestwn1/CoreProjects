@@ -26,37 +26,37 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public static final String INFO = "info";
 	
 	//attribute value
-	private HAPManualInfoAttributeValue m_valueInfo;
+	private HAPManualWrapperValueInAttribute m_valueInfo;
 	
 	//multiple adapters by name
 	private Map<String, HAPManualInfoAdapter> m_adapters;
 
 	//relationship to parent
-	private List<HAPManualEntityRelation> m_relations;
+	private List<HAPManualBrickRelation> m_relations;
 
 	//path from root
 	private HAPPath m_pathFromRoot;
 
 	//parent entity
-	private HAPManualEntity m_parent;
+	private HAPManualBrick m_parent;
 	
 	public HAPManualAttribute() {
-		this.m_relations = new ArrayList<HAPManualEntityRelation>();
+		this.m_relations = new ArrayList<HAPManualBrickRelation>();
 	}
 
-	public HAPManualAttribute(String name, HAPManualInfoAttributeValue valueInfo) {
+	public HAPManualAttribute(String name, HAPManualWrapperValueInAttribute valueInfo) {
 		this();
 		this.setName(name);
 		this.m_valueInfo = valueInfo;
 	}
 
-	public HAPManualInfoAttributeValue getValueInfo() {    return this.m_valueInfo;     }
-	public void setValueInfo(HAPManualInfoAttributeValue valueInfo) {    this.m_valueInfo = valueInfo;     }
+	public HAPManualWrapperValueInAttribute getValueInfo() {    return this.m_valueInfo;     }
+	public void setValueInfo(HAPManualWrapperValueInAttribute valueInfo) {    this.m_valueInfo = valueInfo;     }
 	
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	
-	public void addRelation(HAPManualEntityRelation relation) {    this.m_relations.add(relation);      }
-	public List<HAPManualEntityRelation> getRelations(){    return this.m_relations;     }
+	public void addRelation(HAPManualBrickRelation relation) {    this.m_relations.add(relation);      }
+	public List<HAPManualBrickRelation> getRelations(){    return this.m_relations;     }
 	
 	@Override
 	public HAPPath getPathFromRoot() {   return this.m_pathFromRoot;  }
@@ -70,6 +70,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUEINFO, this.m_valueInfo.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
 	}
 
 	

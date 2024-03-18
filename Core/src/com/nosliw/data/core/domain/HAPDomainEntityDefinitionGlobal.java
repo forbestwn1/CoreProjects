@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
@@ -44,8 +44,8 @@ public class HAPDomainEntityDefinitionGlobal extends HAPSerializableImp implemen
 	public Set<HAPResourceIdSimple> getAllSimpleResourceIds(){    return this.m_localDomainIdByResourceId.keySet();     }
 	
 	public HAPInfoEntityInDomainDefinition getEntityInfoDefinition(HAPIdEntityInDomain entityId) {		return this.getLocalDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);	}
-	public HAPManualEntity getEntityDefinition(HAPIdEntityInDomain entityId) {
-		HAPManualEntity out = null;
+	public HAPManualBrick getEntityDefinition(HAPIdEntityInDomain entityId) {
+		HAPManualBrick out = null;
 		HAPInfoEntityInDomainDefinition entityInfo = this.getLocalDomainById(entityId.getDomainId()).getEntityInfoDefinition(entityId);	
 		if(entityInfo!=null)   out = entityInfo.getEntity();
 		return out;

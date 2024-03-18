@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPProcessorStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -13,8 +15,6 @@ import com.nosliw.data.core.story.HAPStoryNode;
 import com.nosliw.data.core.story.HAPUtilityStory;
 import com.nosliw.data.core.story.change.HAPManagerChange;
 import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 import com.nosliw.ui.tag.HAPManagerUITag;

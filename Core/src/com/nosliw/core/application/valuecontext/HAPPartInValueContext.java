@@ -2,7 +2,6 @@ package com.nosliw.core.application.valuecontext;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.entity.valuestructure.HAPUtilityValueContext;
 
 public abstract class HAPPartInValueContext extends HAPEntityInfoImp{
 	

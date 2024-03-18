@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.component.HAPDefinitionResourceComplex;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -76,7 +76,7 @@ public class HAPManagerResourceDefinition {
 				//get parent resource def first
 				HAPResourceDefinition parentResourceDef = this.getResourceDefinition(embededId.getParentResourceId(), globalDomain, currentDomainResourceId);
 				HAPInfoEntityInDomainDefinition parentEntityInfo = globalDomain.getEntityInfoDefinition(parentResourceDef.getEntityId());
-				HAPManualEntity parentEntity = parentEntityInfo.getEntity();
+				HAPManualBrick parentEntity = parentEntityInfo.getEntity();
 				//get child resource by path
 //				HAPIdEntityInDomain entityId = HAPUtilityDomain.getEntityDescent(parentEntityInfo.getEntityId(), embededId.getPath(), entityDomain);
 //				out.setEntityId(entityId);

@@ -6,6 +6,7 @@ import java.util.Set;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -18,7 +19,6 @@ import com.nosliw.data.core.domain.entity.expression.data.HAPPluginEntityDefinit
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression1.imp.expression.HAPProcessorScriptExpression;
 import com.nosliw.data.core.script.expression1.imp.literate.HAPProcessorScriptLiterate;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 
 public class HAPProcessorScript {

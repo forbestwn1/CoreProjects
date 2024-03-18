@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPDefinitionEntityWrapperValueStructure extends HAPManualEntitySimple implements HAPWithConstantScriptExpression, HAPExpandable{
+public class HAPDefinitionEntityWrapperValueStructure extends HAPManualBrickSimple implements HAPWithConstantScriptExpression, HAPExpandable{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";
@@ -42,8 +42,8 @@ public class HAPDefinitionEntityWrapperValueStructure extends HAPManualEntitySim
 	public HAPInfo getInfo() {    return (HAPInfo)this.getAttributeValue(INFO);     }
 	public void setInfo(HAPInfoImpSimple info) {   this.setAttributeValue(INFO, info);     }
 	
-	public HAPDefinitionEntityValueStructure getValueStructure() {	return (HAPDefinitionEntityValueStructure)this.getAttributeEntity(VALUESTRUCTURE);   }
-	public void setValueStructure(HAPDefinitionEntityValueStructure valueStructure) {   this.setAttributeEntity(VALUESTRUCTURE, valueStructure);  }
+	public HAPDefinitionEntityValueStructure getValueStructure() {	return (HAPDefinitionEntityValueStructure)this.getAttributeValueWithBrick(VALUESTRUCTURE);   }
+	public void setValueStructure(HAPDefinitionEntityValueStructure valueStructure) {   this.setAttributeWithValueBrick(VALUESTRUCTURE, valueStructure);  }
 	
 	public String getName() {   return (String)this.getAttributeValue(NAME);   }
 	public void setName(String groupName) {   this.setAttributeValue(NAME, groupName);    }

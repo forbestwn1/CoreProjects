@@ -6,15 +6,15 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 
 //store all attachment by type and by name
 @HAPEntityWithAttribute
-public class HAPDefinitionEntityContainerAttachment extends HAPManualEntitySimple{
+public class HAPDefinitionEntityContainerAttachment extends HAPManualBrickSimple{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
@@ -98,7 +98,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPManualEntitySimpl
 	}
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		return this.cloneAttachmentContainer();
 	}
 }

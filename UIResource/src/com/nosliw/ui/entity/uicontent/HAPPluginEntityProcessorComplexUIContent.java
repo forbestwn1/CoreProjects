@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.data.core.domain.HAPUtilityEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntityExecutable;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
@@ -16,7 +16,7 @@ import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityContainer
 import com.nosliw.data.core.domain.entity.script.task.HAPExecutableEntityScriptTaskGroup;
 import com.nosliw.data.core.domain.entity.task.HAPInfoTask;
 
-public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginProcessorEntityDefinitionComplexImp{
+public class HAPPluginEntityProcessorComplexUIContent extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorComplexUIContent() {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, HAPExecutableEntityComplexUIContent.class);

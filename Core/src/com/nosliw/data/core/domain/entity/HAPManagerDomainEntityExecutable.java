@@ -13,9 +13,9 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplex;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionSimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplex;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionSimple;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
@@ -49,9 +49,9 @@ public class HAPManagerDomainEntityExecutable {
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	//pulug in for processing complex entity
-	private Map<String, HAPPluginProcessorEntityDefinitionComplex> m_processorComplexEntityPlugins;
+	private Map<String, HAPPluginProcessorBrickDefinitionComplex> m_processorComplexEntityPlugins;
 
-	private Map<String, HAPPluginProcessorEntityDefinitionSimple> m_processorSimpleEntityPlugins;
+	private Map<String, HAPPluginProcessorBrickDefinitionSimple> m_processorSimpleEntityPlugins;
 	
 	private Map<String, HAPPluginAdapterProcessor> m_processorAdapterPlugins;
 	
@@ -59,8 +59,8 @@ public class HAPManagerDomainEntityExecutable {
 	
 	public HAPManagerDomainEntityExecutable(HAPRuntimeEnvironment runtimeEnv) {
 		this.m_runtimeEnv = runtimeEnv;
-		this.m_processorComplexEntityPlugins = new LinkedHashMap<String, HAPPluginProcessorEntityDefinitionComplex>();
-		this.m_processorSimpleEntityPlugins = new LinkedHashMap<String, HAPPluginProcessorEntityDefinitionSimple>();
+		this.m_processorComplexEntityPlugins = new LinkedHashMap<String, HAPPluginProcessorBrickDefinitionComplex>();
+		this.m_processorSimpleEntityPlugins = new LinkedHashMap<String, HAPPluginProcessorBrickDefinitionSimple>();
 		this.m_processorAdapterPlugins = new LinkedHashMap<String, HAPPluginAdapterProcessor>();
 		this.m_complexResourceBundles = new LinkedHashMap<HAPResourceIdSimple, HAPExecutableBundle>();
 	}
@@ -98,13 +98,13 @@ public class HAPManagerDomainEntityExecutable {
 	public void processComplexEntity(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
 		//only process local entity
 		if(processContext.getCurrentBundle().getExecutableDomain().getEntityInfoExecutable(exeEntityId).isLocalEntity()) {
-			HAPPluginProcessorEntityDefinitionComplex processPlugin = this.m_processorComplexEntityPlugins.get(exeEntityId.getEntityType());
+			HAPPluginProcessorBrickDefinitionComplex processPlugin = this.m_processorComplexEntityPlugins.get(exeEntityId.getEntityType());
 			processPlugin.processTreeNode(exeEntityId, processContext);
 		}
 	}
 	
 	public HAPExecutableEntity processSimpleEntity(HAPIdEntityInDomain defEntityId, HAPContextProcessor processContext) {
-		HAPPluginProcessorEntityDefinitionSimple processPlugin = this.m_processorSimpleEntityPlugins.get(defEntityId.getEntityType());
+		HAPPluginProcessorBrickDefinitionSimple processPlugin = this.m_processorSimpleEntityPlugins.get(defEntityId.getEntityType());
 		return processPlugin.processTreeNode(defEntityId, processContext);
 	}
 	
@@ -125,8 +125,8 @@ public class HAPManagerDomainEntityExecutable {
 		return processPlugin.process(adapterDefinition.getValue(), childExe, childProcessorContext, parentExe, processContext);
 	}
 	
-	public void registerComplexEntityProcessorPlugin(HAPPluginProcessorEntityDefinitionComplex complexEntityProcessorPlugin) {	this.m_processorComplexEntityPlugins.put(complexEntityProcessorPlugin.getEntityType(), complexEntityProcessorPlugin);	}
-	public void registerSimpleEntityProcessorPlugin(HAPPluginProcessorEntityDefinitionSimple simpleEntityProcessorPlugin) {	this.m_processorSimpleEntityPlugins.put(simpleEntityProcessorPlugin.getEntityType(), simpleEntityProcessorPlugin);	}
+	public void registerComplexEntityProcessorPlugin(HAPPluginProcessorBrickDefinitionComplex complexEntityProcessorPlugin) {	this.m_processorComplexEntityPlugins.put(complexEntityProcessorPlugin.getBrickType(), complexEntityProcessorPlugin);	}
+	public void registerSimpleEntityProcessorPlugin(HAPPluginProcessorBrickDefinitionSimple simpleEntityProcessorPlugin) {	this.m_processorSimpleEntityPlugins.put(simpleEntityProcessorPlugin.getEntityType(), simpleEntityProcessorPlugin);	}
 	public void registerAdapterProcessorPlugin(HAPPluginAdapterProcessor processorAdapterPlugin) {	this.m_processorAdapterPlugins.put(processorAdapterPlugin.getAdapterType(), processorAdapterPlugin);	}
 	
 
@@ -562,7 +562,7 @@ public class HAPManagerDomainEntityExecutable {
 		String embededValueType = null;
 		HAPInfoEntityInDomainDefinition entityDefInfo = defDomain.getEntityInfoDefinition(entityDefinitionId);
 		if(entityDefInfo.isSolid()) {
-			HAPManualEntity entityDef = entityDefInfo.getEntity();
+			HAPManualBrick entityDef = entityDefInfo.getEntity();
 			String entityType = entityDef.getBrickType();
 			HAPExecutableEntity entityExe = null;
 			if(entityDefInfo.isComplexEntity()) {

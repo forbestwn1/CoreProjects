@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity.plugin;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPExecutableActivity;
@@ -33,7 +33,7 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 
 		//get event definition
 		HAPDefinitionEvent eventDef = null;
-		HAPManualEntityComplex complexEntity = processContext.getComplexEntity();
+		HAPManualBrickComplex complexEntity = processContext.getComplexEntity();
 		if(complexEntity instanceof HAPDefinitionEntityComponent) {
 			eventDef = ((HAPDefinitionEntityComponent)complexEntity).getEvent(trigueEventActDef.getEventName());
 		}

@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
@@ -18,7 +19,6 @@ import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
 
 public class HAPLoopActivityExecutable extends HAPExecutableActivityNormal{
 

@@ -3,12 +3,14 @@ package com.nosliw.core.application.valuestructure;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPElementStructure;
 
+@HAPEntityWithAttribute
 public class HAPRootInValueStructure extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute

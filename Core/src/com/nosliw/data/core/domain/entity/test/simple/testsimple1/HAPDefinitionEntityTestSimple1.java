@@ -3,10 +3,10 @@ package com.nosliw.data.core.domain.entity.test.simple.testsimple1;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 
-public class HAPDefinitionEntityTestSimple1 extends HAPManualEntitySimple{
+public class HAPDefinitionEntityTestSimple1 extends HAPManualBrickSimple{
 
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_PARM = "parm";
@@ -25,7 +25,7 @@ public class HAPDefinitionEntityTestSimple1 extends HAPManualEntitySimple{
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityTestSimple1 out = new HAPDefinitionEntityTestSimple1();
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;

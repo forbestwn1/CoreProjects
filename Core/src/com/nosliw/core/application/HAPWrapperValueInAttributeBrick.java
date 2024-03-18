@@ -16,7 +16,7 @@ public class HAPWrapperValueInAttributeBrick extends HAPWrapperValueInAttribute 
 	private HAPIdBrickType m_entityTypeId;
 	
 	public HAPWrapperValueInAttributeBrick(HAPBrick entity) {
-		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_ENTITY);
+		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK);
 		this.m_entity = entity;
 		this.m_entityTypeId = this.m_entity.getBrickTypeId();
 	}

@@ -8,6 +8,9 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.structure.HAPStructure1;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
@@ -21,9 +24,6 @@ import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.domain.valueport.HAPValuePort;
-import com.nosliw.data.core.structure.HAPReferenceElementInStructure;
-import com.nosliw.data.core.structure.HAPStructure1;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityStructureElementReference {
 

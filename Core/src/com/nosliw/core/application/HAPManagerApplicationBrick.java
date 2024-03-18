@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManagerEntityDivisionManual;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -39,7 +39,7 @@ public class HAPManagerApplicationBrick {
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUESTRUCTURE_100, false));
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUECONTEXT_100, false));
 		
-		this.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManagerEntityDivisionManual(this.m_runtimeEnv)));
+		this.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManualManagerBrick(this.m_runtimeEnv)));
 	}
 	
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType entityTypeId) {

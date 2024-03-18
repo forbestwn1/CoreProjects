@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 
-public class HAPPluginEntityProcessorComplexUITag extends HAPPluginProcessorEntityDefinitionComplexImp{
+public class HAPPluginEntityProcessorComplexUITag extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorComplexUITag() {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, HAPExecutableEntityComplexUITag.class);

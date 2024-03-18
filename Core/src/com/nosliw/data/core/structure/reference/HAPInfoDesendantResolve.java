@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 @HAPEntityWithAttribute
 public class HAPInfoDesendantResolve extends HAPSerializableImp{

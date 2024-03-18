@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity.plugin;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPBuilderResultContext;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
@@ -35,7 +35,7 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		HAPDefinitionServiceUse serviceUse = serviceActDef.getServiceUse();
 		if(serviceUse==null) {
 			//service use is reference
-			HAPManualEntityComplex complexEntity = processContext.getComplexEntity();
+			HAPManualBrickComplex complexEntity = processContext.getComplexEntity();
 			if(complexEntity instanceof HAPDefinitionEntityComponent) {
 				serviceUse = ((HAPDefinitionEntityComponent)complexEntity).getService(serviceActDef.getServiceUseName());
 			}

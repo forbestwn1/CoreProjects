@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.expression.data;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 
-public class HAPPluginEntityProcessorComplexExpressionDataSingle extends HAPPluginProcessorEntityDefinitionComplexImp{
+public class HAPPluginEntityProcessorComplexExpressionDataSingle extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorComplexExpressionDataSingle() {
 		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, HAPExecutableEntityExpressionDataSingle.class);

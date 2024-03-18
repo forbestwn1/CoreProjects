@@ -9,7 +9,13 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
@@ -28,12 +34,6 @@ import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForValue;
-import com.nosliw.data.core.structure.HAPInfoElement;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 
 public class HAPUtilityValueStructureDomain {
 
@@ -60,7 +60,7 @@ public class HAPUtilityValueStructureDomain {
 				HAPIdEntityInDomain entityIdDef = complexEntityExe.getDefinitionEntityId();
 
 				HAPInfoEntityInDomainDefinition complexEntityInfoDef = definitionGlobalDomain.getEntityInfoDefinition(entityIdDef);
-				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)complexEntityInfoDef.getEntity();
+				HAPManualBrickComplex complexEntityDef = (HAPManualBrickComplex)complexEntityInfoDef.getEntity();
 				
 				HAPDefinitionEntityValueContext valueContextEntityDef = null;
 				HAPIdEntityInDomain valueContextEntityId = complexEntityDef.getValueContextEntityId();

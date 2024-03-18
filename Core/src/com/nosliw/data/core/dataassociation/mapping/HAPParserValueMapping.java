@@ -9,9 +9,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.structure.HAPParserStructure;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
-import com.nosliw.data.core.structure.HAPParserStructure;
 
 public class HAPParserValueMapping {
 

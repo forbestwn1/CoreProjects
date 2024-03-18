@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.definition;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
@@ -13,7 +13,7 @@ public interface HAPPluginEntityDefinition {
 	
 	boolean isComplexEntity();
 
-	HAPManualEntity parse(Object obj, HAPSerializationFormat format);
+	HAPManualBrick parse(Object obj, HAPSerializationFormat format);
 
 	
 	

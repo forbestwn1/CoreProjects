@@ -2,8 +2,8 @@ package com.nosliw.data.core.domain.entity;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualInfoAttributeValue;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualWrapperValueInAttribute;
 
 //attribute definition
 public class HAPDefinitionEmbededValue extends HAPSerializableImp{
@@ -11,11 +11,11 @@ public class HAPDefinitionEmbededValue extends HAPSerializableImp{
 	//parent info definition
 	public static final String PARENT = "parent";
 	
-	private HAPManualInfoAttributeValue m_valueInfo;
+	private HAPManualWrapperValueInAttribute m_valueInfo;
 	
 	private HAPPath m_pathFromRoot;
 
-	private HAPManualEntity m_parent;
+	private HAPManualBrick m_parent;
 	
 	
 }

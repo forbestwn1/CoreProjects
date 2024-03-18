@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
 
-public class HAPDefinitionEntityComplexUIContent extends HAPManualEntityComplex{
+public class HAPDefinitionEntityComplexUIContent extends HAPManualBrickComplex{
 
 	static final public String ATTR_STYPE = "style";  
 	
@@ -46,7 +46,7 @@ public class HAPDefinitionEntityComplexUIContent extends HAPManualEntityComplex{
 	public void setStyle(HAPDefinitionStyle style) {}
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityComplexUIContent out = new HAPDefinitionEntityComplexUIContent();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

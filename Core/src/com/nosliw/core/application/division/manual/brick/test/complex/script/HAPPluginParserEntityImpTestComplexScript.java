@@ -3,20 +3,20 @@ package com.nosliw.core.application.division.manual.brick.test.complex.script;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPContextParse;
-import com.nosliw.core.application.division.manual.HAPManagerEntityDivisionManual;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPPluginParserEntityImpComplex;
+import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserEntityImpTestComplexScript extends HAPPluginParserEntityImpComplex{
+public class HAPPluginParserEntityImpTestComplexScript extends HAPPluginParserBrickImpComplex{
 
-	public HAPPluginParserEntityImpTestComplexScript(HAPManagerEntityDivisionManual manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginParserEntityImpTestComplexScript(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPDefinitionEntityTestComplexScript.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseComplexDefinitionContentJson(HAPManualEntity entityDefinition, JSONObject jsonObj, HAPContextParse parseContext) {
+	protected void parseComplexDefinitionContentJson(HAPManualBrick entityDefinition, JSONObject jsonObj, HAPManualContextParse parseContext) {
 		HAPDefinitionEntityTestComplexScript scriptEntity = (HAPDefinitionEntityTestComplexScript)entityDefinition;
 		//script
 		String scriptName = (String)jsonObj.opt(HAPDefinitionEntityTestComplexScript.ATTR_SCRIPTNAME);

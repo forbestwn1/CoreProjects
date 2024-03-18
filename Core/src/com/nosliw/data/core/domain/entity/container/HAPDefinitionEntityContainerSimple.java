@@ -1,12 +1,12 @@
 package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
-public class HAPDefinitionEntityContainerSimple extends HAPManualEntityComplex{
+public class HAPDefinitionEntityContainerSimple extends HAPManualBrickComplex{
 
 	public static final String ATTR_ELEMENT_TYPEINFO = "eleTypeInfo";
 
@@ -25,7 +25,7 @@ public class HAPDefinitionEntityContainerSimple extends HAPManualEntityComplex{
 	public void setElementValueTypeInfo(String eleValueType) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueType);  }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityContainerSimple out = new HAPDefinitionEntityContainerSimple();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

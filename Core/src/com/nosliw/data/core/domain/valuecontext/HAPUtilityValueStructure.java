@@ -8,16 +8,16 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPElementStructureNode;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForValue;
-import com.nosliw.data.core.structure.HAPElementStructureNode;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPUtilityValueStructure {
 

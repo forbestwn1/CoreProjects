@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionValueMapping;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 

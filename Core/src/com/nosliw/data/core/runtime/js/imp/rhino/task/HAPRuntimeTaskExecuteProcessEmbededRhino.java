@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.core.application.common.structure.data.HAPContextData;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -16,7 +17,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeTaskExecuteProcessEmbeded;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.structure.data.HAPContextData;
 
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
 	private HAPResourceManagerRoot m_resourceManager;

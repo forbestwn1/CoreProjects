@@ -8,12 +8,12 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPParserStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPParserStructure;
-import com.nosliw.data.core.structure.HAPUtilityStructure;
 
 public class HAPValueMapping extends HAPSerializableImp{
 

@@ -2,13 +2,13 @@ package com.nosliw.data.core.domain.entity.container;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPInfoBrickType;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
-public class HAPDefinitionEntityContainerComplex extends HAPManualEntityComplex{
+public class HAPDefinitionEntityContainerComplex extends HAPManualBrickComplex{
 
 	public static final String ATTR_ELEMENTRELATIONCONFIGURE = "elementRelationCoonfigure";
 
@@ -36,7 +36,7 @@ public class HAPDefinitionEntityContainerComplex extends HAPManualEntityComplex{
 	public void setElementRelationConfigure(HAPConfigureParentRelationComplex relationConfigure) {    this.setAttributeValueObject(ATTR_ELEMENTRELATIONCONFIGURE, relationConfigure);      }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityContainerComplex out = new HAPDefinitionEntityContainerComplex();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

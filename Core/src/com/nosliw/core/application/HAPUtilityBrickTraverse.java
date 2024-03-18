@@ -20,15 +20,15 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	//traverse only entity leaves that marked as auto process
-//	public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrick rootEntityInfo, HAPHandlerDownward processor, HAPContextProcess processContext) {
+//	public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrick rootEntityInfo, HAPHandlerDownward processor, HAPManualContextProcess processContext) {
 //		traverseExecutableEntity(
 //				rootEntityInfo, 
 //			new HAPHandlerBrickWrapper(processor) {
 //				@Override
 //				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
-//					HAPManualAttribute attrDef = (HAPManualAttribute)HAPUtilityDefinitionEntity.getDefTreeNodeFromExeTreeNode(attr, processContext.getCurrentBundle());
+//					HAPManualAttribute attrDef = (HAPManualAttribute)HAPUtilityDefinitionBrick.getDefTreeNodeFromExeTreeNode(attr, processContext.getCurrentBundle());
 //					
-//					HAPUtilityDefinitionEntity.isAttributeAutoProcess(attrDef, null)
+//					HAPUtilityDefinitionBrick.isAttributeAutoProcess(attrDef, null)
 //					
 //					if(attr.isAttributeAutoProcess()) {
 //						return true;

@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityActivityComponent {
 
-	public static HAPDefinitionActivitySuiteImp buildActivitySuiteFromComponent(HAPManualEntityComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPDefinitionActivitySuiteImp buildActivitySuiteFromComponent(HAPManualBrickComplex complexEntity, HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionActivitySuiteImp out = new HAPDefinitionActivitySuiteImp();
 		
 		//build context

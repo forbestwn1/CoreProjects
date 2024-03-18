@@ -3,8 +3,8 @@ package com.nosliw.data.core.domain.definition;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPluginEntityDefinitionInDomainImp{
 
-	public HAPPluginEntityDefinitionInDomainImpComplex(String entityType, Class<? extends HAPManualEntity> entityClass, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginEntityDefinitionInDomainImpComplex(String entityType, Class<? extends HAPManualBrick> entityClass, HAPRuntimeEnvironment runtimeEnv) {
 		super(entityType, entityClass, runtimeEnv);
 	}
 
@@ -46,12 +46,12 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	@Override
 	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postParseDefinitionContent(entityId, parserContext);
-		HAPManualEntityComplex complexEntity = this.getEntityComplex(entityId, parserContext);
+		HAPManualBrickComplex complexEntity = this.getEntityComplex(entityId, parserContext);
 		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
 		if(valueContextEntity!=null)   valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
 
-	protected HAPManualEntityComplex getEntityComplex(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
-		return (HAPManualEntityComplex)this.getEntity(entityId, parserContext);
+	protected HAPManualBrickComplex getEntityComplex(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
+		return (HAPManualBrickComplex)this.getEntity(entityId, parserContext);
 	}
 }

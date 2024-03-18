@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity.data;
 
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.data.core.data.HAPData;
 
-public class HAPDefinitionEntityData extends HAPManualEntitySimple{
+public class HAPDefinitionEntityData extends HAPManualBrickSimple{
 
 	public static final String ATTR_DATA = "data";
 	
@@ -12,7 +12,7 @@ public class HAPDefinitionEntityData extends HAPManualEntitySimple{
 	public HAPData getData() {   return (HAPData)this.getAttributeValue(ATTR_DATA);     }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityData out = new HAPDefinitionEntityData();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

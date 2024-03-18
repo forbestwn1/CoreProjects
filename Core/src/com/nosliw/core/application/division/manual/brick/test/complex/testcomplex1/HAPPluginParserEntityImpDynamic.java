@@ -10,25 +10,25 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.division.manual.HAPContextParse;
-import com.nosliw.core.application.division.manual.HAPManagerEntityDivisionManual;
+import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPPluginParserEntityImp;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPPluginParserBrickImp;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
+public class HAPPluginParserEntityImpDynamic extends HAPPluginParserBrickImp{
 
 	public final static String PREFIX_IGNORE = "ignore";
 
-	public HAPPluginParserEntityImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualEntity> entityClass, HAPManagerEntityDivisionManual manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginParserEntityImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(entityTypeId, entityClass, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualEntity entityDefinition, Object jsonValue, HAPContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
 		JSONArray jsonArray = (JSONArray)jsonValue;
 		
 		for(int i=0; i<jsonArray.length(); i++) {
@@ -40,16 +40,16 @@ public class HAPPluginParserEntityImpDynamic extends HAPPluginParserEntityImp{
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
+						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
-						this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
+						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
 					}
 					else {
 						Object entityObj = jsonObj.opt(attrName);
 						if(isAttributeEnabledJson(entityObj)) {
 							HAPAttributeEntityInfo attributeInfo = this.parseAttributeInfo(attrName);
-							this.parseEntityAttributeSelfJson(entityDefinition, jsonObj, attrName, attributeInfo.entityType, attributeInfo.adapterType, parseContext);							
+							this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, attributeInfo.entityType, attributeInfo.adapterType, parseContext);							
 						}
 					}
 				}

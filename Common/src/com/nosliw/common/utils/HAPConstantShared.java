@@ -901,15 +901,15 @@ public class HAPConstantShared {
 
 
 		public static final String EMBEDEDVALUE_TYPE_ENTITYID = "entityId";
-		public static final String EMBEDEDVALUE_TYPE_ENTITY = "entity";
+		public static final String EMBEDEDVALUE_TYPE_BRICK = "brick";
 		public static final String EMBEDEDVALUE_TYPE_VALUE = "value";
 		public static final String EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE = "attachmentReference";
-		public static final String EMBEDEDVALUE_TYPE_ENTITYREFERENCE = "entityReference";
+		public static final String EMBEDEDVALUE_TYPE_BRICKREFERENCE = "brickReference";
 		public static final String EMBEDEDVALUE_TYPE_RESOURCEREFERENCE = "resourceReference";
 
 
 
-		public static final String ENTITYATTRIBUTE_VALUETYPE_ENTITY = "entity";
+		public static final String ENTITYATTRIBUTE_VALUETYPE_BRICK = "brick";
 		public static final String ENTITYATTRIBUTE_VALUETYPE_VALUE = "value";
 		public static final String ENTITYATTRIBUTE_VALUETYPE_RESOURCEID = "resourceId";
 

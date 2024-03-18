@@ -11,9 +11,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.core.application.common.structure.HAPInfoAlias;
+import com.nosliw.core.application.common.structure.HAPInfoVariable;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.structure.HAPInfoAlias;
-import com.nosliw.data.core.structure.HAPInfoVariable;
 
 //store all variable in structure
 @HAPEntityWithAttribute

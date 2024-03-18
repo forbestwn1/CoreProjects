@@ -7,22 +7,22 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPContextParse;
-import com.nosliw.core.application.division.manual.HAPManagerEntityDivisionManual;
+import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPPluginParserEntityImpSimple;
-import com.nosliw.core.application.division.manual.HAPUtilityParserEntityFormatJson;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.HAPUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserEntityImpValueContext extends HAPPluginParserEntityImpSimple{
+public class HAPPluginParserEntityImpValueContext extends HAPPluginParserBrickImpSimple{
 
-	public HAPPluginParserEntityImpValueContext(HAPManagerEntityDivisionManual manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPPluginParserEntityImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.VALUECONTEXT_100, HAPDefinitionEntityValueContext.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualEntity entityDefinition, Object jsonValue, HAPContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
 		HAPDefinitionEntityValueContext valueContext = (HAPDefinitionEntityValueContext)entityDefinition;
 
 		if(jsonValue instanceof JSONArray) {
@@ -39,14 +39,14 @@ public class HAPPluginParserEntityImpValueContext extends HAPPluginParserEntityI
 		}
 	}
 
-	private HAPDefinitionEntityWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPContextParse parseContext) {
+	private HAPDefinitionEntityWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualContextParse parseContext) {
 		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPDefinitionEntityWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null) {
 			valueStructureJsonObj = wrapperObj;
 		}
 
 		HAPDefinitionEntityWrapperValueStructure out = new HAPDefinitionEntityWrapperValueStructure();
-		HAPManualAttribute valueStructureAttr = HAPUtilityParserEntityFormatJson.parseAttribute(HAPDefinitionEntityWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
+		HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(HAPDefinitionEntityWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
 		out.setAttribute(valueStructureAttr);
 
 		String groupName = (String)wrapperObj.opt(HAPDefinitionEntityWrapperValueStructure.NAME);

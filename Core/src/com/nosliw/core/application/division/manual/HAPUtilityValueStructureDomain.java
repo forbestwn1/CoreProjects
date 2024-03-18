@@ -16,12 +16,17 @@ import com.nosliw.core.application.HAPBundleComplex;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
-import com.nosliw.core.application.HAPUtilityEntityExecutableTraverse;
 import com.nosliw.core.application.HAPWrapperBrick;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
+import com.nosliw.core.application.valuecontext.HAPUtilityValueContext;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuecontext.HAPWrapperExecutableValueStructure;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -40,17 +45,11 @@ import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
 import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
 import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
-import com.nosliw.data.core.entity.valuestructure.HAPUtilityValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementStructure;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelative;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.data.core.structure.HAPElementStructureLeafRelativeForValue;
-import com.nosliw.data.core.structure.HAPProcessorStructureElement;
 
 public class HAPUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPWrapperBrick rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueStructureDomain(HAPWrapperBrick rootEntityInfo, HAPManualContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
 		
 		buildValueStructureComplexTree(rootEntityInfo, processContext, runtimeEnv);
 		
@@ -62,23 +61,23 @@ public class HAPUtilityValueStructureDomain {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
+	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPManualContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNode treeNode, Object data) {
-				HAPContextProcess processContext = (HAPContextProcess)data;
+				HAPManualContextProcess processContext = (HAPManualContextProcess)data;
 				HAPBundleComplex bundle = (HAPBundleComplex)processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
 				HAPBrickComplex complexEntityExe = (HAPBrickComplex)this.getBrickFromNode(treeNode);
 				
-				HAPManualInfoEntity rootEntityDefInfo = (HAPManualInfoEntity)bundle.getExtraData(); 
+				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
 				
-				Pair<HAPManualEntity, HAPBrick> entityPair = HAPUtilityDefinitionEntity.getEntityPair(treeNode.getPathFromRoot(), bundle);
+				Pair<HAPManualBrick, HAPBrick> entityPair = HAPUtilityDefinitionBrick.getEntityPair(treeNode.getPathFromRoot(), bundle);
 				
-				HAPManualEntityComplex rootEntityDef = (HAPManualEntityComplex)rootEntityDefInfo.getEntity();
-				HAPManualEntityComplex complexEntityDef = (HAPManualEntityComplex)entityPair.getLeft();
+				HAPManualBrickComplex rootEntityDef = (HAPManualBrickComplex)rootEntityDefInfo.getBrick();
+				HAPManualBrickComplex complexEntityDef = (HAPManualBrickComplex)entityPair.getLeft();
 				HAPDefinitionEntityValueContext valueContextEntityDef = complexEntityDef.getValueContextEntity();
 				
 				//value context
@@ -92,6 +91,7 @@ public class HAPUtilityValueStructureDomain {
 								HAPRootInValueStructure root = new HAPRootInValueStructure();
 								root.setDefinition(r.getDefinition());
 								r.cloneToEntityInfo(root);
+								roots.add(root);
 							}
 							
 							String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getInfo(), part.getName());

@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 
 public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResourceDefinitionOrId, HAPEntityInfo, HAPSerializable{
@@ -23,7 +23,7 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 	private HAPResourceId m_resourceId;
 
 	//data for resource
-	private HAPManualEntity m_entityDef;
+	private HAPManualBrick m_entityDef;
 	
 	public HAPResourceDefinition(HAPResourceId resourceId) {
 		this.m_resourceId = resourceId;
@@ -36,9 +36,9 @@ public class HAPResourceDefinition extends HAPEntityInfoImp implements HAPResour
 
 	public HAPResourceId getResourceId() {   return this.m_resourceId; }
 
-	public HAPManualEntity getEntityDefinition() {  return this.m_entityDef;  }
+	public HAPManualBrick getEntityDefinition() {  return this.m_entityDef;  }
 
-	public void setEntityId(HAPManualEntity entityDef) {   this.m_entityDef = entityDef;  }
+	public void setEntityId(HAPManualBrick entityDef) {   this.m_entityDef = entityDef;  }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -10,16 +10,16 @@ import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.common.structure.HAPStructure;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
-import com.nosliw.data.core.structure.HAPStructure;
 
 @HAPEntityWithAttribute
-public class HAPDefinitionEntityValueStructure extends HAPManualEntitySimple implements HAPStructure{
+public class HAPDefinitionEntityValueStructure extends HAPManualBrickSimple implements HAPStructure{
 
 	@HAPAttribute
 	public static final String VALUE = "value";

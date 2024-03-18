@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.data.HAPContextDataFactory;
+import com.nosliw.core.application.common.structure.data.HAPContextDataFlat;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
@@ -18,8 +20,6 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPSupplementResourceId;
-import com.nosliw.data.core.structure.data.HAPContextDataFactory;
-import com.nosliw.data.core.structure.data.HAPContextDataFlat;
 
 public class HAPUtilityAttachment {
 

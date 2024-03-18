@@ -3,7 +3,7 @@
 		"name": "basic entity",
 		"description": "include all basic feature"
 	},
-	"entity": [
+	"brick": [
 		{
 			"info": {
 				"name" : "merge_runtime_localresource-test_complex_script",
@@ -24,7 +24,7 @@
 				"name": "valueContext",
 				"status": "disabled1"
 			},
-			"entity": [
+			"brick": [
 				{
 					"groupType" : "public",
 					"valueStructure" : {

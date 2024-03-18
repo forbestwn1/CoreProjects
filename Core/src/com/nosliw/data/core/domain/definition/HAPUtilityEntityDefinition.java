@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
@@ -24,7 +24,7 @@ public class HAPUtilityEntityDefinition {
 
 	
 	public static HAPIdEntityInDomain newTransparentAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPManualEntity entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
+		HAPManualBrick entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
 		HAPIdEntityInDomain attrEntityId = runtimeEnv.getDomainEntityDefinitionManager().newDefinitionInstance(attrEntityType, parserContext);
 		
 		HAPConfigureParentRelationComplex parentRelationConfigure = new HAPConfigureParentRelationComplex();
@@ -36,7 +36,7 @@ public class HAPUtilityEntityDefinition {
 	}
 
 	public static HAPIdEntityInDomain newAttribute(HAPIdEntityInDomain parentEntityId, String attrEntityType, String attrName, HAPConfigureParentRelationComplex relationConfigure, HAPContextParser parserContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPManualEntity entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
+		HAPManualBrick entity = parserContext.getGlobalDomain().getEntityInfoDefinition(parentEntityId).getEntity();
 		HAPIdEntityInDomain attrEntityId = runtimeEnv.getDomainEntityDefinitionManager().newDefinitionInstance(attrEntityType, parserContext);
 		HAPUtilityEntityDefinition.buildParentRelation(attrEntityId, parentEntityId, relationConfigure, parserContext);
 		entity.setAttributeValueComplex(attrName, attrEntityId);
@@ -64,7 +64,7 @@ public class HAPUtilityEntityDefinition {
 	private static void traverseDefinitionEntityTreeLeaf(HAPIdEntityInDomain parentEntityId, HAPProcessorEntityDefinitionDownward processor, HAPDomainEntityDefinitionGlobal definitionDomain, Object globalObj) {
 		//process current entity
 		HAPInfoEntityInDomainDefinition parentEntityInfo = definitionDomain.getEntityInfoDefinition(parentEntityId);
-		HAPManualEntity complexEntity = parentEntityInfo.getEntity();
+		HAPManualBrick complexEntity = parentEntityInfo.getEntity();
 		if(complexEntity!=null) {
 			List<HAPManualAttribute> attrsDef = complexEntity.getAttributes();
 			for(HAPManualAttribute attrDef : attrsDef) {
@@ -92,7 +92,7 @@ public class HAPUtilityEntityDefinition {
 				@Override
 				public void processAttribute(HAPIdEntityInDomain parentEntityId, String attrName, Object globalObj) {
 					HAPInfoEntityInDomainDefinition entityInfo = definitionDomain.getEntityInfoDefinition(parentEntityId);
-					HAPManualEntity parentEntity = entityInfo.getEntity();
+					HAPManualBrick parentEntity = entityInfo.getEntity();
 					HAPManualAttribute attrDef = parentEntity.getAttribute(attrName);
 					HAPEmbededDefinition embededDef = attrDef.getValue();
 					Object entityDef = embededDef.getValue();
@@ -147,14 +147,14 @@ public class HAPUtilityEntityDefinition {
 		return new HAPEmbededDefinition(entityId, adapterEntityId);
 	}
 	
-	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPManualEntity entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
+	public static HAPEmbededDefinitionWithId setEntitySimpleAttributeWithId(HAPManualBrick entityDef, String attributeName, HAPIdEntityInDomain attrEntityId, HAPManagerDomainEntityDefinition entityDefDomainMan) {
 		HAPEmbededDefinitionWithId embeded = new HAPEmbededDefinitionWithId(attrEntityId, entityDefDomainMan.isComplexEntity(attrEntityId.getEntityType()));
 		entityDef.setNormalAttribute(attributeName, embeded);
 		return embeded;
 	}
 	
 	//get entity type from class
-	public static String getEntityTypeFromEntityClass(Class<? extends HAPManualEntity> entityClass) {
+	public static String getEntityTypeFromEntityClass(Class<? extends HAPManualBrick> entityClass) {
 		String out = null;
 		try {
 			Field f = entityClass.getField("ENTITY_TYPE");
@@ -175,7 +175,7 @@ public class HAPUtilityEntityDefinition {
 		if(p==null || p.isEmpty())  return entityId;
 		HAPIdEntityInDomain currentEntityId = entityId;
 		HAPInfoEntityInDomainDefinition currentEntityInfo = globalDomain.getEntityInfoDefinition(currentEntityId);
-		HAPManualEntity currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
+		HAPManualBrick currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();
 		for(String seg : p.getPathSegments()) {
 			currentEntityId = currentEntityDef.getChild(seg);
 			currentEntityDef = globalDomain.getEntityInfoDefinition(currentEntityId).getEntity();

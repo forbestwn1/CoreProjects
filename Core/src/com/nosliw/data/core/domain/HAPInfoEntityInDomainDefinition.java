@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -51,7 +51,7 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	private boolean m_isComplex;
 	
 	//solid: entity object itself
-	private HAPManualEntity m_entity;
+	private HAPManualBrick m_entity;
 	
 	//reference to data in attachment
 	private HAPReferenceAttachment m_reference;
@@ -74,8 +74,8 @@ public class HAPInfoEntityInDomainDefinition extends HAPSerializableImp implemen
 	
 	public String getEntityType() {    return this.m_entityType;    }
 	
-	public HAPManualEntity getEntity() {     return this.m_entity;     }
-	public void setEntity(HAPManualEntity entityDef) {   this.m_entity = entityDef;    }
+	public HAPManualBrick getEntity() {     return this.m_entity;     }
+	public void setEntity(HAPManualBrick entityDef) {   this.m_entity = entityDef;    }
 	
 	public HAPReferenceAttachment getAttachmentReference() {   return this.m_reference;    }
 	public void setAttachmentReference(HAPReferenceAttachment attachmentRef) {    this.m_reference = attachmentRef;    }

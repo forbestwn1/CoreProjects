@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 
 //normal expression group
@@ -47,7 +47,7 @@ public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityE
 	}
 
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityExpressionDataGroup out = new HAPDefinitionEntityExpressionDataGroup();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

@@ -3,8 +3,8 @@ package com.nosliw.data.core.dataassociation.mapping1;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.data.core.structure.HAPReferenceRootUnknowType;
+import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
+import com.nosliw.core.application.common.structure.HAPReferenceRootUnknowType;
 
 public class HAPTarget {
 

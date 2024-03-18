@@ -8,12 +8,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafValue;
+import com.nosliw.core.application.common.structure.HAPProcessorEscalate;
+import com.nosliw.core.application.common.structure.HAPProcessorStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.HAPElementStructureLeafValue;
-import com.nosliw.data.core.structure.HAPProcessorEscalate;
-import com.nosliw.data.core.structure.HAPProcessorStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;

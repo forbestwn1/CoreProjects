@@ -18,10 +18,12 @@ public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 
 	private Map<String, HAPRootInValueStructure> m_roots;
 	
-	public HAPInfoValueStructureDefinition() {}
+	public HAPInfoValueStructureDefinition() {
+		this.m_roots = new LinkedHashMap<String, HAPRootInValueStructure>();
+	}
 	
 	public HAPInfoValueStructureDefinition(Set<HAPRootInValueStructure> roots) {
-		this.m_roots = new LinkedHashMap<String, HAPRootInValueStructure>();
+		this();
 		for(HAPRootInValueStructure root : roots) {
 			this.m_roots.put(root.getName(), root);
 		}

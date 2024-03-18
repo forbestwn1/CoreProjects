@@ -3,7 +3,7 @@ package com.nosliw.ui.entity.uitag;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -11,7 +11,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPDefinitionEntityUITagDefinition extends HAPManualEntity{
+public class HAPDefinitionEntityUITagDefinition extends HAPManualBrick{
 
 	public static final String INFO = "info";
 	
@@ -51,7 +51,7 @@ public class HAPDefinitionEntityUITagDefinition extends HAPManualEntity{
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(CHILDRELATIONCONFIGURE);     }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityUITagDefinition out = new HAPDefinitionEntityUITagDefinition();
 		this.cloneToDefinitionEntityInDomain(out);
 		return out;

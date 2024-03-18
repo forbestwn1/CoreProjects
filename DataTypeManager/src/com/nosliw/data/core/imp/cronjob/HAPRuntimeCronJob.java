@@ -3,13 +3,13 @@ package com.nosliw.data.core.imp.cronjob;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.core.application.common.structure.data.HAPContextDataGroup;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.structure.data.HAPContextDataGroup;
 
 public class HAPRuntimeCronJob {
 

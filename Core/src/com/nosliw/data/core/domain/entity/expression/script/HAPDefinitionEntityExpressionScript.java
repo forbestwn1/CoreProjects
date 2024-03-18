@@ -2,12 +2,12 @@ package com.nosliw.data.core.domain.entity.expression.script;
 
 import java.util.List;
 
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
 
-public abstract class HAPDefinitionEntityExpressionScript extends HAPManualEntityComplex{
+public abstract class HAPDefinitionEntityExpressionScript extends HAPManualBrickComplex{
 
 	public static final String ATTR_REFERENCES = "references";
 

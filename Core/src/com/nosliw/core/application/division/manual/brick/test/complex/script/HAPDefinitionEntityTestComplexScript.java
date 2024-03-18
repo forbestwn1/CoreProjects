@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 
-public class HAPDefinitionEntityTestComplexScript extends HAPManualEntityComplex{
+public class HAPDefinitionEntityTestComplexScript extends HAPManualBrickComplex{
 
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_PARM = "parm";
@@ -25,7 +25,7 @@ public class HAPDefinitionEntityTestComplexScript extends HAPManualEntityComplex
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 	@Override
-	public HAPManualEntity cloneEntityDefinitionInDomain() {
+	public HAPManualBrick cloneEntityDefinitionInDomain() {
 		HAPDefinitionEntityTestComplexScript out = new HAPDefinitionEntityTestComplexScript();
 		out.cloneToDefinitionEntityInDomain(out);
 		return out;

@@ -1,10 +1,10 @@
 package com.nosliw.data.core.domain.entity.adapter.interactive;
 
-import com.nosliw.core.application.division.manual.HAPManualEntitySimple;
+import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
-public class HAPDefinitionEntityDataAssociationInteractive extends HAPManualEntitySimple{
+public class HAPDefinitionEntityDataAssociationInteractive extends HAPManualBrickSimple{
 
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	

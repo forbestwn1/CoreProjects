@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity;
 
 import org.json.JSONObject;
 
-import com.nosliw.core.application.division.manual.HAPManualEntityComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPProcessorAttachmentEntity;
 import com.nosliw.data.core.domain.entity.attachment1.HAPInfoAttachment;
 
@@ -15,7 +15,7 @@ public class HAPProcessorAttachmentEntityActivity implements HAPProcessorAttachm
 	}
 	
 	@Override
-	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPManualEntityComplex complexEntity) {
+	public Object parseEntityAttachment(HAPInfoAttachment attachmentInfo, HAPManualBrickComplex complexEntity) {
 		return HAPParserActivity.parseActivityDefinition((JSONObject)attachmentInfo.getEntity(), complexEntity, m_activityPluginMan);	
 	}
 
