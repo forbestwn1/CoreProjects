@@ -59,7 +59,7 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerDomainEntityExecutable getDomainEntityExecutableManager();
 	
-	HAPManagerApplicationBrick getEntityManager();
+	HAPManagerApplicationBrick getBrickManager();
 	
 	HAPManagerDynamicResource getDynamicResourceManager();
 	

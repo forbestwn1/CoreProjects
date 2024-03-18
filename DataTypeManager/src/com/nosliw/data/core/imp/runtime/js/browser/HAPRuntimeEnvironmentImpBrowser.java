@@ -31,7 +31,6 @@ import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeProcessRhinoImp;
 import com.nosliw.data.core.script.expression1.HAPManagerScript;
 import com.nosliw.data.core.service.definition.HAPGatewayService;
 import com.nosliw.data.core.service.definition.HAPManagerService;
@@ -89,12 +88,12 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerTask taskManager = new HAPManagerTask(this);
 		HAPManagerActivity activityMan = new HAPManagerActivity(new HAPManagerActivityPlugin(), this);
 		HAPManagerProcess processMan = new HAPManagerProcess(this);
-		HAPRuntimeProcess processRuntimeMan = new HAPRuntimeProcessRhinoImp(this);
+		HAPRuntimeProcess processRuntimeMan = null;  //new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerDomainEntityExecutable complexEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
 		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
-		HAPManagerApplicationBrick entityManager = new HAPManagerApplicationBrick(this);
+		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
 		
 		init(
 			dataTypeManager,
@@ -113,7 +112,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			resourceDefManager,
 			domainEntityDefinitionManager,
 			complexEntityExecutableManager,
-			entityManager,
+			brickManager,
 			cronJobManager,
 			storyManager,
 			runtime

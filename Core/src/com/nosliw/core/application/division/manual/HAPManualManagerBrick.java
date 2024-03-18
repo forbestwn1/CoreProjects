@@ -219,5 +219,5 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 	private HAPPluginParserBrick getEntityParsePlugin(HAPIdBrickType entityTypeId) {   return this.getEntityProcessorInfo(entityTypeId).getParserPlugin();    }
 	private HAPPluginProcessorBrickDefinition getEntityProcessPlugin(HAPIdBrickType entityTypeId) {   return this.getEntityProcessorInfo(entityTypeId).getProcessorPlugin();    }
 
-	private HAPManagerApplicationBrick getEntityManager() {   return this.m_runtimeEnv.getEntityManager();    }
+	private HAPManagerApplicationBrick getEntityManager() {   return this.m_runtimeEnv.getBrickManager();    }
 }

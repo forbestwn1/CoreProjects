@@ -40,7 +40,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPPackage executablePackage = runtimeEnvironment.getEntityManager().getEntityPackage(resourceId);		
+		HAPPackage executablePackage = runtimeEnvironment.getBrickManager().getEntityPackage(resourceId);		
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("*******************************************************************************");

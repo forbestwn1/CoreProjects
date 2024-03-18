@@ -105,7 +105,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerDomainEntityExecutable m_domainEntityExecutableManager;
  	
-	private HAPManagerApplicationBrick m_entityManager;
+	private HAPManagerApplicationBrick m_brickManager;
 	
 	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
@@ -134,12 +134,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerResourceDefinition resourceDefManager,
 		    HAPManagerDomainEntityDefinition domainEntityManager,
 			HAPManagerDomainEntityExecutable complexEntityManager,
-			HAPManagerApplicationBrick entityManager,
+			HAPManagerApplicationBrick brickManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, entityManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, brickManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -159,7 +159,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerResourceDefinition resourceDefManager,
 			    HAPManagerDomainEntityDefinition domainEntityDefinitionManager,
 				HAPManagerDomainEntityExecutable complexEntityExecutableManager,
-				HAPManagerApplicationBrick entityManager,
+				HAPManagerApplicationBrick brickManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
@@ -176,7 +176,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_domainEntityDefinitionManager = domainEntityDefinitionManager;
 		this.m_domainEntityExecutableManager = complexEntityExecutableManager;
-		this.m_entityManager = entityManager;
+		this.m_brickManager = brickManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
 		this.m_cronJobManager = cronJobManager;
@@ -213,8 +213,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, new HAPResourceManagerImpConfigure(this.m_domainEntityDefinitionManager, this.m_resourceDefinitionManager, this.m_resourceManager));
 
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, new HAPResourceManagerImpBrick(this.m_entityManager, this.m_resourceManager));
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, new HAPResourceManagerImpBrick(this.m_entityManager, this.m_resourceManager));
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, new HAPResourceManagerImpBrick(this.m_brickManager, this.m_resourceManager));
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, new HAPResourceManagerImpBrick(this.m_brickManager, this.m_resourceManager));
 		
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
@@ -373,7 +373,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerDomainEntityExecutable getDomainEntityExecutableManager() {   return this.m_domainEntityExecutableManager;   }
 
 	@Override
-	public HAPManagerApplicationBrick getEntityManager() {   return this.m_entityManager;  }
+	public HAPManagerApplicationBrick getBrickManager() {   return this.m_brickManager;  }
 
 	@Override
 	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}

@@ -108,7 +108,7 @@ public class HAPUtilityValueStructureDomain {
 				complexEntityExe.setValueContext(valueContextExe);
 				return true;
 			}
-		}, runtimeEnv.getEntityManager(), processContext);
+		}, runtimeEnv.getBrickManager(), processContext);
 	}
 
 	private static void createExtensionPart(HAPValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {

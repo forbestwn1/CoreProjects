@@ -63,7 +63,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
 		HAPManagerDomainEntityExecutable domainEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
-		HAPManagerApplicationBrick entityManager = new HAPManagerApplicationBrick(this);
+		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
 		
 		init(
 				dataTypeManager,
@@ -82,7 +82,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				resourceDefManager,
 				domainEntityDefinitionManager,
 				domainEntityExecutableManager,
-				entityManager,
+				brickManager,
 				cronJobManager,
 				storyManager,
 				runtime

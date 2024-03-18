@@ -47,7 +47,7 @@ public class HAPGatewayPackage extends HAPGatewayImp{
 	private HAPServiceData requestLoadExecutablePackage(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		Object idObj = parms.get(COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID);
 		HAPResourceId resourceId = HAPFactoryResourceId.newInstance(idObj);
-		HAPPackage entityPackage = this.m_runtimeEnviroment.getEntityManager().getEntityPackage(resourceId);
+		HAPPackage entityPackage = this.m_runtimeEnviroment.getBrickManager().getEntityPackage(resourceId);
 		return this.createSuccessWithObject(entityPackage);
 	}
 }

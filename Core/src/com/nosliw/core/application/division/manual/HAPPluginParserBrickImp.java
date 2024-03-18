@@ -99,7 +99,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	}
 
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
-	protected HAPManagerApplicationBrick getEntityManager() {    return this.getRuntimeEnvironment().getEntityManager();     }
+	protected HAPManagerApplicationBrick getEntityManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
 	protected HAPManualManagerBrick getManualDivisionEntityManager() {    return this.m_manualBrickMan;     }
 	
 	//*************************************   Json format parse helper
