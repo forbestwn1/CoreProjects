@@ -9,7 +9,7 @@ public class HAPResourceIdJSLibrary extends HAPResourceIdSimple{
 
 	private HAPJSLibraryId m_jsLibraryId; 
 	
-	public HAPResourceIdJSLibrary(){   super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY);      }
+	public HAPResourceIdJSLibrary(){   super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, "1.0.0");      }
 	
 	public HAPResourceIdJSLibrary(HAPResourceIdSimple resourceId){
 		this();

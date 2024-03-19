@@ -16,7 +16,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 //a package is all information for a resource runtime, it include resource id and all resource bundles required
 @HAPEntityWithAttribute
-public class HAPPackage extends HAPExecutableImp{
+public class HAPApplicationPackage extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String MAINENTITYREF = "mainEntityRef";
@@ -29,7 +29,7 @@ public class HAPPackage extends HAPExecutableImp{
 	//main global entity
 	private HAPInfoResourceIdNormalize m_mainEntityRef;
 	
-	public HAPPackage() {
+	public HAPApplicationPackage() {
 		this.m_dependency = new HashSet<HAPResourceIdSimple>();
 	}
 	

@@ -2,7 +2,6 @@ package com.nosliw.core.application;
 
 import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
@@ -12,9 +11,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPWrapperBrick extends HAPExecutableImp implements HAPTreeNode, HAPWithBrick{
-
-	@HAPAttribute
-	public static final String BRICK = "brick";
 
 	private HAPBrick m_brick;
 

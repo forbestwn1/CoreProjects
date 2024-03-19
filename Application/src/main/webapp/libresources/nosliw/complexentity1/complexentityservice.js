@@ -101,8 +101,8 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
-		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPEINFO][node_COMMONATRIBUTECONSTANT.INFOBRICKTYPE_BRICKTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
-		var complexEntityPlugin = loc_complexEntityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
+		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITY_ENTITYTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
+		var complexEntityPlugin = loc_complexEntityPlugins[entityType];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var complexEntityDef = node_createEntityDefinition(complexEntityDef);
@@ -170,25 +170,25 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_init = function(){
 		//complex entity plugin
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, node_createTestComplex1Plugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, node_createTestComplexScriptPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "1.0.0", node_createDataExpressionSinglePlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, node_createDataExpressionGroupPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, node_createDataExpressionGroupPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, node_createDataExpressionSinglePlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "1.0.0", node_createExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, "1.0.0", node_createExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "1.0.0", node_createExpressionSinglePlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, node_createExpressionGroupPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, node_createExpressionGroupPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, node_createExpressionSinglePlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK, "1.0.0", node_createTaskPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK, node_createTaskPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0", node_createScriptBasedPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, node_createScriptBasedPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, "1.0.0", node_createComplexEntityContainerPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, "1.0.0", node_createSimpleEntityContainerPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, node_createComplexEntityContainerPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, node_createSimpleEntityContainerPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, "1.0.0", node_createScriptTaskGroupEntityPlugin());
+		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, node_createScriptTaskGroupEntityPlugin());
 
 
 		//simple entity plugin
@@ -307,9 +307,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_getCreateAdapterRequest(adapterType, adapterDefinition, handlers, request);
 		},
 		
-		registerComplexEntityPlugin : function(entityType, version, complexEntityPlugin){
-			loc_complexEntityPlugins[entityType] = {};
-			loc_complexEntityPlugins[entityType][version] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
+		registerComplexEntityPlugin : function(entityType, complexEntityPlugin){
+			loc_complexEntityPlugins[entityType] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
 		},
 		
 		registerSimpleEntityPlugin : function(entityType, simpleEntityPlugin){

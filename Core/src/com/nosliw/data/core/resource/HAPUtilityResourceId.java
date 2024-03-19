@@ -34,7 +34,7 @@ public class HAPUtilityResourceId {
 	}
 	
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
-		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceType(), buildResourceCoreIdLiterate(resourceId)});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceType(), resourceId.getVersion(), buildResourceCoreIdLiterate(resourceId)});
 	}
 	
 	//build literate for id part
@@ -61,11 +61,11 @@ public class HAPUtilityResourceId {
 	}
 	
 	public static String[] parseResourceIdLiterate(String idLiterate) {
-		return HAPUtilityNamingConversion.parseTwoPartLevel2(idLiterate);
+		return HAPUtilityNamingConversion.parseLevel2(idLiterate);
 	}
 
-	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate) {
-		return buildResourceIdByLiterate(resourceType, literate, false);
+	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String version, String literate) {
+		return buildResourceIdByLiterate(resourceType, version, literate, false);
 	}
 	
 	public static boolean isResourceIdLiterate(String literate) {
@@ -81,7 +81,7 @@ public class HAPUtilityResourceId {
 		return false;
 	}
 	
-	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String literate, boolean strict) {
+	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String version, String literate, boolean strict) {
 		String structure = null;
 		String coreIdLiterate = literate;
 		
@@ -115,18 +115,18 @@ public class HAPUtilityResourceId {
 			return null;
 		}
 		
-		HAPResourceId out = newInstanceByType(resourceType, structure);
+		HAPResourceId out = newInstanceByType(resourceType, version, structure);
 		out.buildCoreIdByLiterate(coreIdLiterate);
 		return out;
 	}
 	
-	public static HAPResourceId newInstanceByType(String resourceType, String structure) {
+	public static HAPResourceId newInstanceByType(String resourceType, String version, String structure) {
 		HAPResourceId out = null;
 		if(structure==null) {
 			structure = getDefaultResourceStructure();
 		}
 		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
-			out = new HAPResourceIdSimple(resourceType);
+			out = new HAPResourceIdSimple(resourceType, version);
 		}
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 			out = new HAPResourceIdEmbeded(resourceType);

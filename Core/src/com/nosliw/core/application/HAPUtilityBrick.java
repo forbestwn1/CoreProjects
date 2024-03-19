@@ -137,7 +137,7 @@ public class HAPUtilityBrick {
 	}
 	
 	public static HAPResourceIdSimple fromBrickId2ResourceId(HAPIdBrick brickId) {
-		return new HAPResourceIdSimple(brickId.getBrickTypeId().getBrickType(), HAPUtilityNamingConversion.cascadeLevel1(brickId.getId(), brickId.getDivision()), brickId.getBrickTypeId().getVersion());
+		return new HAPResourceIdSimple(brickId.getBrickTypeId().getBrickType(), brickId.getBrickTypeId().getVersion(), HAPUtilityNamingConversion.cascadeLevel1(brickId.getId(), brickId.getDivision()));
 	}
 
 	public static HAPIdBrickType getBrickTypeIdFromResourceId(HAPResourceId resourceId) {

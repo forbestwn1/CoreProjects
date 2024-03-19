@@ -10,7 +10,7 @@
 				"status": "disabled1",
 				"description" : ""
 			},
-			"entity":{
+			"brick":{
 				"scriptName": "complexscript_test_value",
 				"parm" : {
 					"variable1" : ["parent_public"],

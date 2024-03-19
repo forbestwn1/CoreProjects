@@ -75,10 +75,12 @@ var node_createBundleCore = function(parm, configure){
 		}
 		
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			//build variable domain in bundle
-			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.BUNDLE_VALUESTRUCTUREDOMAIN]);
+			var exeEntityDomain = loc_bundleDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEBUNDLE_EXECUTABLEENTITYDOMAIN];
 
-			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.BUNDLE_BRICK][node_COMMONATRIBUTECONSTANT.WITHBRICK_BRICK];
+			//build variable domain in bundle
+			loc_variableDomain = nod_createVariableDomain(exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_VALUESTRUCTUREDOMAIN]);
+
+			var entityDef = exeEntityDomain[node_COMMONATRIBUTECONSTANT.DOMAINENTITYEXECUTABLERESOURCECOMPLEX_ROOTENTITY];
 			if(!node_basicUtility.isStringEmpty(loc_mainEntityPath)){
 				var pathSegs = node_namingConvensionUtility.parsePathInfos(loc_mainEntityPath);
 				for(var i in pathSegs){

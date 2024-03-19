@@ -21,7 +21,7 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
 
-	public static void exportEntityPackage(HAPPackage executablePackage, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
+	public static void exportEntityPackage(HAPApplicationPackage executablePackage, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
 		String mainFolderUnique = getRootFolderUnique();
 		exportExecutablePackage(executablePackage, mainFolderUnique, entityManager, runtimeInfo);
 
@@ -29,7 +29,7 @@ public class HAPUtilityExport {
 		exportExecutablePackage(executablePackage, mainFolderTemp, entityManager, runtimeInfo);
 	}
 
-	private static void exportExecutablePackage(HAPPackage executablePackage, String mainFolder, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
+	private static void exportExecutablePackage(HAPApplicationPackage executablePackage, String mainFolder, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
 		HAPUtilityFile.deleteFolder(mainFolder);
 		
 		//writer main info

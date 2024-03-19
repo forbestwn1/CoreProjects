@@ -11,37 +11,37 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 public class HAPInfoBrickType extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static String ENTITYTYPE = "entityType";
+	public static String BRICKTYPE = "brickType";
 
 	@HAPAttribute
 	public static String ISCOMPLEX = "isComplex";
 	
 	//entity type
-	private HAPIdBrickType m_entityTypeId;
+	private HAPIdBrickType m_brickTypeId;
 	
 	//
 	private Boolean m_isComplex = null;
 	
 	public HAPInfoBrickType() {
-		this.m_entityTypeId = null;
+		this.m_brickTypeId = null;
 	}
 	
-	public HAPInfoBrickType(HAPIdBrickType entityTypeId, boolean isComplex) {
-		this.m_entityTypeId = entityTypeId;
+	public HAPInfoBrickType(HAPIdBrickType brickTypeId, boolean isComplex) {
+		this.m_brickTypeId = brickTypeId;
 		this.m_isComplex = isComplex;
 	}
 	
-	public HAPInfoBrickType(HAPIdBrickType entityTypeId) {
-		this.m_entityTypeId = entityTypeId;
+	public HAPInfoBrickType(HAPIdBrickType brickTypeId) {
+		this.m_brickTypeId = brickTypeId;
 	}
 
-	public HAPIdBrickType getEntityTypeId() {    return this.m_entityTypeId;    }
+	public HAPIdBrickType getBrickTypeId() {    return this.m_brickTypeId;    }
 	
 	public Boolean getIsComplex() {   return this.m_isComplex;  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(ENTITYTYPE, this.m_entityTypeId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKTYPE, this.m_brickTypeId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ISCOMPLEX, this.m_isComplex+"");
 		typeJsonMap.put(ISCOMPLEX, Boolean.class);
 	}

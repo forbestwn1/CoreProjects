@@ -20,6 +20,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginProcessorBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
@@ -144,22 +145,22 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 	}
 
 	
-	private HAPBrick buildExecutableTree(HAPManualBrick entityDef, HAPManualContextProcess processContext) {
+	private HAPBrick buildExecutableTree(HAPManualBrick brickDef, HAPManualContextProcess processContext) {
 		HAPBundle entityBundle = processContext.getCurrentBundle();
-		HAPIdBrickType entityTypeId = entityDef.getBrickTypeId();
+		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 		
 		HAPBrick entityExe = null;
-		boolean isComplex = HAPUtilityBrick.isBrickComplex(entityDef.getBrickTypeId(), getEntityManager());
-		if(isComplex) {
+		HAPInfoBrickType brickTypeInfo = this.getEntityManager().getBrickTypeInfo(brickDef.getBrickTypeId());
+		if(brickTypeInfo.getIsComplex()) {
 			HAPPluginProcessorBrickDefinitionComplex processPlugin = (HAPPluginProcessorBrickDefinitionComplex)this.getEntityProcessPlugin(entityTypeId);
 			entityExe = processPlugin.newExecutable();
 		} else {
 			HAPPluginProcessorBrickDefinitionSimple simplePlugin = (HAPPluginProcessorBrickDefinitionSimple)this.getEntityProcessPlugin(entityTypeId);
 			entityExe = simplePlugin.newExecutable();
 		}
-		entityExe.setBrickTypeId(entityTypeId);
+		entityExe.setBrickTypeInfo(brickTypeInfo);
 		
-		List<HAPManualAttribute> attrsDef = entityDef.getAllAttributes();
+		List<HAPManualAttribute> attrsDef = brickDef.getAllAttributes();
 		for(HAPManualAttribute attrDef : attrsDef) {
 			if(HAPUtilityDefinitionBrick.isAttributeAutoProcess(attrDef, this.getEntityManager())) {
 				HAPAttributeInBrick attrExe = new HAPAttributeInBrick();

@@ -51,13 +51,13 @@ public class HAPManagerApplicationBrick {
 		Collections.sort(entityTypeInfos, new Comparator<HAPInfoBrickType>(){
 			@Override
 			public int compare(HAPInfoBrickType arg0, HAPInfoBrickType arg1) {
-				return arg0.getEntityTypeId().getVersion().compareTo(arg1.getEntityTypeId().getVersion());
+				return arg0.getBrickTypeId().getVersion().compareTo(arg1.getBrickTypeId().getVersion());
 			}
 		});
 		
 		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
 		for(HAPInfoBrickType entityTypeInfo : entityTypeInfos) {
-			out.add(entityTypeInfo.getEntityTypeId());
+			out.add(entityTypeInfo.getBrickTypeId());
 		}
 		
 		return out;
@@ -86,8 +86,8 @@ public class HAPManagerApplicationBrick {
 		return out;
 	}
 	
-	public HAPPackage getEntityPackage(HAPResourceId resourceId) {
-		HAPPackage out = new HAPPackage();
+	public HAPApplicationPackage getEntityPackage(HAPResourceId resourceId) {
+		HAPApplicationPackage out = new HAPApplicationPackage();
 
 		//figure out root entity
 		HAPInfoResourceIdNormalize normalizedResourceId = HAPUtilityResourceId.normalizeResourceId(resourceId);
@@ -121,7 +121,7 @@ public class HAPManagerApplicationBrick {
 	}
 
 	public void registerEntityTypeInfo(HAPInfoBrickType entityTypeInfo) {
-		HAPIdBrickType entityTypeId = entityTypeInfo.getEntityTypeId();
+		HAPIdBrickType entityTypeId = entityTypeInfo.getBrickTypeId();
 		
 		Map<String, HAPInfoBrickType> byVersion = this.m_brickTypeInfos.get(entityTypeId.getBrickType());
 		if(byVersion==null) {

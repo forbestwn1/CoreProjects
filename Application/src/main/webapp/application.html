@@ -32,6 +32,7 @@ $(document).on("nosliwActive", function(){
 	
 	var node_framework7Utility = nosliw.getNodeData("framework7.utility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
@@ -39,8 +40,8 @@ $(document).on("nosliwActive", function(){
 
 	
 	var parms = node_basicUtility.getParmsInUrl();
-	var resourceType = parms.resourceType;
-	var resourceId = parms.resourceId;
+	var resourceType = node_namingConvensionUtility.cascadeLevel1(parms.resourceType, "1.0.0");
+	var resourceId = node_namingConvensionUtility.cascadeLevel1(parms.resourceId, "manual");
 	var configure = parms.configure;
 	
 	var runtimeContext = {

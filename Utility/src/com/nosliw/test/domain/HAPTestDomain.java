@@ -3,7 +3,7 @@ package com.nosliw.test.domain;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPPackage;
+import com.nosliw.core.application.HAPApplicationPackage;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -40,7 +40,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPPackage executablePackage = runtimeEnvironment.getBrickManager().getEntityPackage(resourceId);		
+		HAPApplicationPackage executablePackage = runtimeEnvironment.getBrickManager().getEntityPackage(resourceId);		
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("*******************************************************************************");

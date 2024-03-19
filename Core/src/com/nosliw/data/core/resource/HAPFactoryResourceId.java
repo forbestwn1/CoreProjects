@@ -9,11 +9,11 @@ import org.json.JSONObject;
 public class HAPFactoryResourceId {
 
 	//newInstance when not sure obj including resource type or not.
-	public static HAPResourceId tryNewInstance(String resourceType, Object obj, boolean resourceTypeRestrict) {
+	public static HAPResourceId tryNewInstance(String resourceType, String version, Object obj, boolean resourceTypeRestrict) {
 		HAPResourceId out = null;
 		out = newInstance(obj);
 		if(out==null) {
-			out = newInstance(resourceType, obj);
+			out = newInstance(resourceType, version, obj);
 		}
 		if(resourceTypeRestrict==true&&!out.getResourceType().equals(resourceType)) {
 			throw new RuntimeException();
@@ -22,20 +22,20 @@ public class HAPFactoryResourceId {
 	}
 	
 	public static HAPResourceId tryNewInstance(String resourceType, String version, Object obj) {
-		return tryNewInstance(resourceType, obj, true);
+		return tryNewInstance(resourceType, version, obj, true);
 	}
 	
-	public static HAPResourceId newInstance(String resourceType, Object obj) {
+	public static HAPResourceId newInstance(String resourceType, String version, Object obj) {
 		HAPResourceId out = null;
 		if(obj instanceof String) {
-			out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)obj, false);
+			out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, version, (String)obj, false);
 		} else if(obj instanceof JSONObject) {
-			out = newInstanceByJSONObect(resourceType, (JSONObject)obj);
+			out = newInstanceByJSONObect(resourceType, version, (JSONObject)obj);
 		}
 		return out;
 	}
 	
-	private static HAPResourceId newInstanceByJSONObect(String resourceType, JSONObject jsonObj) {
+	private static HAPResourceId newInstanceByJSONObect(String resourceType, String version, JSONObject jsonObj) {
 		Object coreIdObj = jsonObj;
 		
 		Object typeObj = jsonObj.opt(HAPResourceId.RESOURCETYPE);
@@ -51,11 +51,11 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
 			if(structure!=null) {
-				out = HAPUtilityResourceId.newInstanceByType(resourceType, structure);
+				out = HAPUtilityResourceId.newInstanceByType(resourceType, version, structure);
 				out.buildCoreIdByLiterate((String)coreIdObj);
 			}
 			else {
-				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, (String)coreIdObj, false);
+				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, version, (String)coreIdObj, false);
 				
 //				String[] segs = HAPUtilityResourceId.parseResourceCoreIdLiterate((String)coreIdObj);
 //				out = HAPUtilityResourceId.newInstanceByType(resourceType, segs[0]);
@@ -64,7 +64,7 @@ public class HAPFactoryResourceId {
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
-			out = HAPUtilityResourceId.newInstanceByType(resourceType, structure);
+			out = HAPUtilityResourceId.newInstanceByType(resourceType, version, structure);
 			out.buildCoreIdByJSON(coreIdJson);
 		}
 		return out;
@@ -78,17 +78,18 @@ public class HAPFactoryResourceId {
 			String[] idSegs = HAPUtilityResourceId.parseResourceIdLiterate(literate);
 			if(idSegs.length==1) {
 				out = null;
-			} else if(idSegs.length==2) {
-				out = newInstance(idSegs[0], idSegs[1]);
+			} else if(idSegs.length==3) {
+				out = newInstance(idSegs[0], idSegs[1], idSegs[2]);
 			}
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;
 			Object resourceType = jsonObj.opt(HAPResourceId.RESOURCETYPE);
+			Object resourceVersion = jsonObj.opt(HAPResourceId.VERSION);
 			if(resourceType==null) {
 				out = null;
 			}
-			out = newInstance((String)resourceType, jsonObj.get(HAPResourceId.ID));
+			out = newInstance((String)resourceType, (String)resourceVersion, jsonObj.get(HAPResourceId.ID));
 		}
 		return out;
 	}

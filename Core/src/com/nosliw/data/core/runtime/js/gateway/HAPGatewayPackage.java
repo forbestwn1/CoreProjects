@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.core.application.HAPPackage;
+import com.nosliw.core.application.HAPApplicationPackage;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -47,7 +47,7 @@ public class HAPGatewayPackage extends HAPGatewayImp{
 	private HAPServiceData requestLoadExecutablePackage(JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		Object idObj = parms.get(COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID);
 		HAPResourceId resourceId = HAPFactoryResourceId.newInstance(idObj);
-		HAPPackage entityPackage = this.m_runtimeEnviroment.getBrickManager().getEntityPackage(resourceId);
+		HAPApplicationPackage entityPackage = this.m_runtimeEnviroment.getBrickManager().getEntityPackage(resourceId);
 		return this.createSuccessWithObject(entityPackage);
 	}
 }

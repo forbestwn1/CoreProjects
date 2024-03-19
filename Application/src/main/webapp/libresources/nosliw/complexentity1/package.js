@@ -73,9 +73,9 @@ var node_createPackageCore = function(parm, configure){
 							var bundleRuntimeRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("createBundleRuntime"));
 							
 							//load all related resources first
-							bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.APPLICATIONPACKAGE_DEPENDENCY], {
+							bundleRuntimeRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_DEPENDENCY], {
 								success : function(requestInfo, resourceTree){
-									var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.APPLICATIONPACKAGE_MAINENTITYREF], loc_configure, request);
+									var mainBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(loc_packageDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEPACKAGE_MAINENTITYREF], loc_configure, request);
 									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, mainBundleRuntime, true);
 								}
 							}));

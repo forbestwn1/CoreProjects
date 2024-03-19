@@ -21,9 +21,9 @@ public class HAPBrick extends HAPExecutableImp{
 	public final static String ATTRIBUTE = "attribute"; 
 
 	@HAPAttribute
-	public final static String BRICKTYPEID = "brickTypeId"; 
+	public final static String BRICKTYPEINFO = "brickTypeInfo"; 
 
-	private HAPIdBrickType m_brickTypeId;
+	private HAPInfoBrickType m_brickTypeInfo;
 	
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
@@ -34,8 +34,8 @@ public class HAPBrick extends HAPExecutableImp{
 	
 	public List<HAPAttributeInBrick> getAttributes(){     return this.m_attributes;      }
 	
-	public HAPIdBrickType getBrickTypeId() {    return this.m_brickTypeId;     }
-	public void setBrickTypeId(HAPIdBrickType brickTypeId) {    this.m_brickTypeId = brickTypeId;     }
+	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
+	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
 	
 	public void setAttribute(HAPAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
@@ -66,7 +66,7 @@ public class HAPBrick extends HAPExecutableImp{
 			attrJsonMap.put(attr.getName(), attr.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrJsonMap));
-		jsonMap.put(BRICKTYPEID, this.m_brickTypeId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKTYPEINFO, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
