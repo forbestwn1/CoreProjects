@@ -359,7 +359,7 @@ public class HAPUtilityRuntimeJSScript {
 		//build javascript function to execute the script
 		StringBuffer funScript = new StringBuffer();
 		int i=0;
-		for(HAPExecutableScript seg : script.getSegments()){
+		for(HAPBrickScript seg : script.getSegments()){
 			if(seg instanceof HAPExecutableScriptSegExpression){
 				HAPExecutableScriptSegExpression expressionSeg = (HAPExecutableScriptSegExpression)seg;
 				funScript.append(expressionsDataParmName+"[\""+expressionSeg.getExpressionId()+"\"]");

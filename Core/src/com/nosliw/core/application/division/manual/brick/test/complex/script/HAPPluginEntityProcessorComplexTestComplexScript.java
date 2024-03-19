@@ -6,46 +6,18 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPContextProcess;
+import com.nosliw.core.application.brick.test.complex.script.HAPExecutableTestComplexScript;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextProcess;
-import com.nosliw.core.application.division.manual.HAPManualEntity;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorEntityDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.HAPUtilityDefinitionBrick;
-import com.nosliw.core.application.division.manual.HAPUtilityDefinitionEntity;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.data.variable.HAPIdVariable;
-import com.nosliw.data.core.domain.HAPDomainAttachment;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPExecutableBundle;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
-import com.nosliw.data.core.domain.entity.test.complex.script.HAPDefinitionVariableExpected;
-import com.nosliw.data.core.domain.entity.test.complex.script.HAPExecutableTestComplexScript;
-import com.nosliw.data.core.domain.entity.test.complex.script.HAPExecutableVariableExpected;
-import com.nosliw.data.core.domain.entity.test.complex.script.HAPInfoAttachmentResolve;
-import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityProcessRelativeElement;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
 import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 
 public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginProcessorBrickDefinitionComplexImp{
@@ -96,7 +68,7 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 	}
 
 	
-	
+/*	
 	
 	
 	@Override
@@ -233,4 +205,6 @@ public class HAPPluginEntityProcessorComplexTestComplexScript extends HAPPluginP
 			}
 		}
 	}
+	
+*/	
 }

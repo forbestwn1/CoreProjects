@@ -5,6 +5,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPResourceManagerImpBrick;
+import com.nosliw.core.application.brick.script.HAPResourceManagerImpScript;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.activity.HAPTaskInfoParserActivity;
@@ -17,7 +18,6 @@ import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.common.script.HAPResourceManagerImpScriptBased;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntity;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntityThin;
@@ -226,7 +226,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 //		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, new HAPResourceManagerImpScriptBased(this.m_domainEntityDefinitionManager, this.m_resourceDefinitionManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, new HAPResourceManagerImpScriptBased(this.m_domainEntityDefinitionManager, this.m_resourceDefinitionManager, this.m_resourceManager));
+		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, new HAPResourceManagerImpScript(this.m_resourceManager));
 		
 
 		

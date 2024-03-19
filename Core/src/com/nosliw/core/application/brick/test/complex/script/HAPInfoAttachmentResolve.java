@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.test.complex.script;
+package com.nosliw.core.application.brick.test.complex.script;
 
 import java.util.Map;
 

@@ -66,7 +66,9 @@ public class HAPBrick extends HAPExecutableImp{
 			attrJsonMap.put(attr.getName(), attr.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrJsonMap));
-		jsonMap.put(BRICKTYPEINFO, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(m_brickTypeInfo!=null) {
+			jsonMap.put(BRICKTYPEINFO, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override

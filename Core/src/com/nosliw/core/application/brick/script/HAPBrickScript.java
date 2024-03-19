@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.common.script;
+package com.nosliw.core.application.brick.script;
 
 import java.util.Map;
 
@@ -6,18 +6,18 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableScript extends HAPExecutableImp{
+public class HAPBrickScript extends HAPBrick{
 
 	@HAPAttribute
 	public static final String SCRIPT = "script";
 
 	private HAPJsonTypeScript m_script;
 
-	public HAPExecutableScript() {	}
+	public HAPBrickScript() {	}
 
 	public void setScript(String script) {    this.m_script = new HAPJsonTypeScript(script);     }
 	

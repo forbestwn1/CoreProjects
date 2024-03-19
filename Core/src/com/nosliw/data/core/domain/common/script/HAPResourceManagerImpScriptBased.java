@@ -1,5 +1,6 @@
 package com.nosliw.data.core.domain.common.script;
 
+import com.nosliw.core.application.brick.script.HAPBrickScript;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -28,7 +29,7 @@ public class HAPResourceManagerImpScriptBased extends HAPResourceManagerImp{
 		HAPResourceDefinition resourceDef = m_resourceDefMan.getResourceDefinition(resourceId, entityDomain);
 		HAPDefinitionEntityScriptBased scriptEntity = (HAPDefinitionEntityScriptBased)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getBrick();
 		
-		HAPExecutableScript scriptExe = new HAPExecutableScript();
+		HAPBrickScript scriptExe = new HAPBrickScript();
 		scriptExe.setScript(scriptEntity.getScript());
 
 		return new HAPResource(resourceId, scriptExe.toResourceData(runtimeInfo), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
