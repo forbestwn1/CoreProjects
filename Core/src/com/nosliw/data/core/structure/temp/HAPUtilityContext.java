@@ -14,8 +14,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.valuestructure1.HAPElementContextStructureValueExecutable;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
@@ -179,9 +179,9 @@ public class HAPUtilityContext {
 		return createRootWithRelativeElement(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);
 	}
 
-	public static HAPInfoReferenceResolve resolveReferencedContextElement(HAPReferenceElementInStructure contextPath, HAPValueStructure parentContext){
+	public static HAPResultReferenceResolve resolveReferencedContextElement(HAPReferenceElementInStructure contextPath, HAPValueStructure parentContext){
 		if(parentContext==null)   return null;
-		HAPInfoReferenceResolve out = null;
+		HAPResultReferenceResolve out = null;
 		String contextType = parentContext.getDataType();
 		if(contextType.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			out = analyzeElementReference(contextPath, (HAPValueStructureDefinitionGroup)parentContext, null, null);

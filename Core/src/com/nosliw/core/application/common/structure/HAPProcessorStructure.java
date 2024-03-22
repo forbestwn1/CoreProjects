@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.core.application.common.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 

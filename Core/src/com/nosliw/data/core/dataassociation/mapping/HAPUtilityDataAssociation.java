@@ -21,15 +21,15 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingConstan
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
-import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
-import com.nosliw.data.core.domain.valueport.HAPValuePort;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityDataAssociation {

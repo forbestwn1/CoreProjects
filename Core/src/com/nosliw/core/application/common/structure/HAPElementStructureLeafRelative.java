@@ -6,10 +6,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
@@ -26,7 +26,7 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	public static final String RESOLVEDINFO = "resolvedInfo";
 
 	//reference definition
-	private HAPReferenceElementInValueStructure m_reference;
+	private HAPReferenceElement m_reference;
 
 	//resolved info (referred structure, element path, remain path, element)
 	private HAPInfoRelativeResolve m_resolvedInfo;
@@ -37,11 +37,11 @@ public abstract class HAPElementStructureLeafRelative extends HAPElementStructur
 	
 	public HAPElementStructureLeafRelative(String path) {
 		this();
-		this.m_reference = new HAPReferenceElementInValueStructure(path);
+		this.m_reference = new HAPReferenceElement(path);
 	}
 	
-	public HAPReferenceElementInValueStructure getReference() {    return this.m_reference;    }
-	public void setReference(HAPReferenceElementInValueStructure path) {   this.m_reference = path;     }
+	public HAPReferenceElement getReference() {    return this.m_reference;    }
+	public void setReference(HAPReferenceElement path) {   this.m_reference = path;     }
 
 	public HAPInfoRelativeResolve getResolveInfo() {   return this.m_resolvedInfo;     }
 	public void setResolvedInfo(HAPInfoRelativeResolve resolvedInfo) {    this.m_resolvedInfo = resolvedInfo;      }

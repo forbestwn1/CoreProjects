@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
+import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
+import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
-import com.nosliw.data.core.domain.valueport.HAPReferenceValueStructure;
-import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
-import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
 
 public class HAPContextStructureReferenceValueStructure implements HAPContextStructureReference{
 

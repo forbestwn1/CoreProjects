@@ -27,10 +27,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		
-		loc_parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_PARM);
-    	loc_scriptVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_VARIABLE);
-    	loc_unknownVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_UNKNOWNVARIABLE);
-    	loc_extendVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_VARIABLEEXTENDED);
+		loc_parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BRICKTESTCOMPLEXSCRIPT_PARM);
+    	loc_scriptVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BRICKTESTCOMPLEXSCRIPT_VARIABLE);
+    	loc_unknownVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BRICKTESTCOMPLEXSCRIPT_UNKNOWNVARIABLE);
+    	loc_extendVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BRICKTESTCOMPLEXSCRIPT_VARIABLEEXTENDED);
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();

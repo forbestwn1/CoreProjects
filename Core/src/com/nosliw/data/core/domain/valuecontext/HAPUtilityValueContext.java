@@ -10,14 +10,19 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
+import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
+import com.nosliw.core.application.valuecontext.HAPPartInValueContextGroupWithEntity;
+import com.nosliw.core.application.valuecontext.HAPPartInValueContextSimple;
+import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 
 public class HAPUtilityValueContext {
 
@@ -45,15 +50,15 @@ public class HAPUtilityValueContext {
 		return HAPUtilityStructure.getDescendant(root.getDefinition(), variableId.getElementPath().toString());
 	}
 	
-	public static List<HAPInfoValueStructureSorting> getAllValueStructuresSorted(HAPExecutableEntityValueContext valueContext){
+	public static List<HAPInfoValueStructureSorting> getAllValueStructuresSorted(HAPValueContext valueContext){
 		List<HAPInfoValueStructureSorting> out = getAllValueStructures(valueContext);
 		sortValueStructureInfos(out);
 		return out;
 	}
 	
-	public static List<HAPInfoValueStructureSorting> getAllValueStructures(HAPExecutableEntityValueContext valueContext){
+	public static List<HAPInfoValueStructureSorting> getAllValueStructures(HAPValueContext valueContext){
 		List<HAPInfoValueStructureSorting> out = new ArrayList<HAPInfoValueStructureSorting>();
-		for(HAPExecutablePartValueContext part : valueContext.getParts()) {
+		for(HAPPartInValueContext part : valueContext.getParts()) {
 			getAllChildrenValueStructure(null, part, out);
 		}
 		return out;
@@ -99,19 +104,19 @@ public class HAPUtilityValueContext {
 		});
 	}
 
-	private static void getAllChildrenValueStructure(List<Integer> priorityBase, HAPExecutablePartValueContext part, List<HAPInfoValueStructureSorting> out) {
+	private static void getAllChildrenValueStructure(List<Integer> priorityBase, HAPPartInValueContext part, List<HAPInfoValueStructureSorting> out) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
-			HAPExecutablePartValueContextSimple simplePart = (HAPExecutablePartValueContextSimple)part;
-			for(HAPWrapperExecutableValueStructure valueStructure : simplePart.getValueStructures()) {
+			HAPPartInValueContextSimple simplePart = (HAPPartInValueContextSimple)part;
+			for(HAPInfoValueStructure valueStructure : simplePart.getValueStructures()) {
 				HAPInfoValueStructureSorting valueStructureInfo = new HAPInfoValueStructureSorting(valueStructure);
 				valueStructureInfo.setPriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority()));
 				out.add(valueStructureInfo);
 			}
 		}
 		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)){
-			HAPExecutablePartValueContextGroupWithEntity groupPart = (HAPExecutablePartValueContextGroupWithEntity)part;
-			for(HAPExecutablePartValueContext child : groupPart.getChildren()) {
+			HAPPartInValueContextGroupWithEntity groupPart = (HAPPartInValueContextGroupWithEntity)part;
+			for(HAPPartInValueContext child : groupPart.getChildren()) {
 				getAllChildrenValueStructure(appendParentInfo(priorityBase, child.getPartInfo().getPriority()), child, out);
 			}
 		}
@@ -153,6 +158,17 @@ public class HAPUtilityValueContext {
 		return out;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPDefinitionEntityValueContext valueStructureComplex) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		List<HAPExecutablePartValueContextSimple> parts = getAllSimpleParts(valueStructureComplex);

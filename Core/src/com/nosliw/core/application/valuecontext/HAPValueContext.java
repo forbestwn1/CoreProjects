@@ -53,9 +53,9 @@ public class HAPValueContext extends HAPExecutableImp{
 		return out;
 	}
 
-	public void addPartSimple(List<HAPWrapperExecutableValueStructure> valueStructureExeWrappers, HAPInfoPartInValueContext partInfo, HAPDomainValueStructure valueStructureDomain) {
+	public void addPartSimple(List<HAPInfoValueStructure> valueStructureExeWrappers, HAPInfoPartInValueContext partInfo, HAPDomainValueStructure valueStructureDomain) {
 		HAPPartInValueContextSimple part = new HAPPartInValueContextSimple(partInfo);
-		for(HAPWrapperExecutableValueStructure wrapper : valueStructureExeWrappers) {
+		for(HAPInfoValueStructure wrapper : valueStructureExeWrappers) {
 			part.addValueStructure(wrapper);
 			
 			//build id by name

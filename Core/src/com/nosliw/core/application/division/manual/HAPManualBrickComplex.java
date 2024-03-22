@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.common.valueport.HAPDefinitionValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
@@ -14,7 +15,6 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
-import com.nosliw.data.core.domain.valueport.HAPDefinitionValuePort;
 
 //entity that have data value structure and attachment
 public abstract class HAPManualBrickComplex extends HAPManualBrickBlock implements HAPWithValueContext, HAPWithAttachment{

@@ -6,6 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
@@ -25,7 +26,6 @@ import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
@@ -57,7 +57,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		HAPValueStructureDefinitionGroup stepDataContext = processDataContext.cloneValueStructureGroup();
 		
 		//find container data criteria 
-		HAPInfoReferenceResolve containerResolve = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(loopActivityDef.getContainerName()), processDataContext, null, null);
+		HAPResultReferenceResolve containerResolve = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(loopActivityDef.getContainerName()), processDataContext, null, null);
 		out.setContainerDataPath(containerResolve.path);
 		HAPDataTypeCriteria containerCriteria = ((HAPElementStructureLeafData)containerResolve.finalElement.getSolidStructureElement()).getCriteria();
 		//find element data criteria from coontainer data criteria

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.valuecontext;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.data.core.structure.reference.HAPConfigureResolveStructureElementReference;
+import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 
 public class HAPConfigureProcessorRelative extends HAPInfoImpSimple{
 	
@@ -19,13 +19,13 @@ public class HAPConfigureProcessorRelative extends HAPInfoImpSimple{
 	
 	public HAPConfigureProcessorRelative() {
 		//init default value
-		this.setValue(RESOLVEREFERENCE_CONFIGURE, new HAPConfigureResolveStructureElementReference());
+		this.setValue(RESOLVEREFERENCE_CONFIGURE, new HAPConfigureResolveElementReference());
 		this.setValue(TRACKTOSOLID, false);
 		this.setValue(INHERITRULE, true);
 		this.setValue(TOLERATENOPARENT, false);
 	}
 	
-	public HAPConfigureResolveStructureElementReference getResolveStructureElementReferenceConfigure() {   return (HAPConfigureResolveStructureElementReference)this.getValue(RESOLVEREFERENCE_CONFIGURE) ;      }
+	public HAPConfigureResolveElementReference getResolveStructureElementReferenceConfigure() {   return (HAPConfigureResolveElementReference)this.getValue(RESOLVEREFERENCE_CONFIGURE) ;      }
 	
 	public boolean isInheritRule() {    return (Boolean)this.getValue(INHERITRULE);	}
 	

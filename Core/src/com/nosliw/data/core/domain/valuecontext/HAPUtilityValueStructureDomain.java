@@ -15,6 +15,11 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
+import com.nosliw.core.application.common.valueport.HAPIdValuePort;
+import com.nosliw.core.application.common.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
+import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
@@ -30,10 +35,6 @@ import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPProcessorEntityExecutableDownwardImpAttribute;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
-import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
-import com.nosliw.data.core.domain.valueport.HAPReferenceRootElement;
-import com.nosliw.data.core.domain.valueport.HAPUtilityValuePort;
 
 public class HAPUtilityValueStructureDomain {
 

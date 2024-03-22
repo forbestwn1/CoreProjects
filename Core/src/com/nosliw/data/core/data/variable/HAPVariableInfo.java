@@ -10,10 +10,10 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 
 /**
@@ -33,7 +33,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 	private HAPVariableDataInfo m_dataInfo;
 	
-	private HAPReferenceElementInValueStructure m_reference;
+	private HAPReferenceElement m_reference;
 
 	private HAPData m_defaultValue;
 	
@@ -62,7 +62,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 		this.m_dataInfo = new HAPVariableDataInfo();
 	}
 	
-	public HAPReferenceElementInValueStructure getReferenceInfo() {    return this.m_reference;     }
+	public HAPReferenceElement getReferenceInfo() {    return this.m_reference;     }
 	
 	public HAPVariableDataInfo getDataInfo(){		return this.m_dataInfo;	}
 	
@@ -108,7 +108,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 			Object referenceObj = jsonValue.opt(REFERENCE);
 			if(referenceObj!=null) {
-				this.m_reference = new HAPReferenceElementInValueStructure();
+				this.m_reference = new HAPReferenceElement();
 				this.m_reference.buildObject(referenceObj, HAPSerializationFormat.JSON);
 			}
 		}

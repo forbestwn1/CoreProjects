@@ -15,6 +15,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPInfoAlias;
 import com.nosliw.core.application.common.structure.HAPInfoVariable;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
@@ -35,8 +37,6 @@ import com.nosliw.data.core.operand.HAPOperandVariable;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
 public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPluginProcessorBrickDefinitionComplexImp{
@@ -301,7 +301,7 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 						String variablePath = variableOperand.getVariableName();
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-						HAPInfoReferenceResolve resolve = HAPUtilityStructureElementReference.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
+						HAPResultReferenceResolve resolve = HAPUtilityStructureElementReference.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
 						if(resolve==null || resolve.referredRoot==null || !resolve.elementInfoSolid.remainPath.isEmpty()) {
 							//variable name cannot be resolved
 							HAPRootStructure root = resolve==null?null:resolve.referredRoot;

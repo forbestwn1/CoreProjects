@@ -9,13 +9,15 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBrick extends HAPExecutableImp{
+public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
@@ -58,6 +60,8 @@ public class HAPBrick extends HAPExecutableImp{
 		return null;
 	}
 
+	@Override
+	public HAPContainerValuePorts getValuePorts() {		return null;	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -87,4 +91,5 @@ public class HAPBrick extends HAPExecutableImp{
 			dependency.addAll(attr.getResourceDependency(runtimeInfo, resourceManager));
 		}
 	}
+
 }

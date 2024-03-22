@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
+import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
+import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.domain.valueport.HAPReferenceValueStructure;
-import com.nosliw.data.core.structure.reference.HAPContextStructureReference;
-import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
 
 public class HAPContextStructureReferenceInteractiveRequest implements HAPContextStructureReference{
 

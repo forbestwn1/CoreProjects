@@ -14,14 +14,14 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.common.valueport.HAPReferenceElement;
+import com.nosliw.core.application.common.valueport.HAPResultDesendantResolve;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.domain.valueport.HAPReferenceElementInValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.reference.HAPInfoDesendantResolve;
 
 public class HAPUtilityStructure {
 
@@ -46,7 +46,7 @@ public class HAPUtilityStructure {
 		return out;
 	}
 
-	public static HAPInfoDesendantResolve resolveDescendant(HAPElementStructure element, String path) {
+	public static HAPResultDesendantResolve resolveDescendant(HAPElementStructure element, String path) {
 		HAPElementStructure solvedElment = element;
 		HAPPath solvedPath = new HAPPath();
 		HAPPath remainingPath = new HAPPath();
@@ -72,7 +72,7 @@ public class HAPUtilityStructure {
 				}
 			}
 		}
-		HAPInfoDesendantResolve out = new HAPInfoDesendantResolve();
+		HAPResultDesendantResolve out = new HAPResultDesendantResolve();
 		out.resolvedElement = solvedElment;
 		if(remainingPath!=null)  out.remainPath = remainingPath;
 		out.solvedPath = solvedPath;
@@ -161,7 +161,7 @@ public class HAPUtilityStructure {
 	public static HAPRootStructure createRootWithRelativeElement(String refPath, String parentStructure) {
 		HAPRootStructure out = new HAPRootStructure();
 		HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-		relativeEle.setReference(new HAPReferenceElementInValueStructure(parentStructure, refPath));
+		relativeEle.setReference(new HAPReferenceElement(parentStructure, refPath));
 		out.setDefinition(relativeEle);
 		return out;
 	}
@@ -176,7 +176,7 @@ public class HAPUtilityStructure {
 			out = new HAPRootStructure();
 			out.setInfo(parentNode.getInfo().cloneInfo(excludedInfo));
 			HAPElementStructureLeafRelative relativeEle = new HAPElementStructureLeafRelative();
-			relativeEle.setReference(new HAPReferenceElementInValueStructure(parentStructure, elePath));
+			relativeEle.setReference(new HAPReferenceElement(parentStructure, elePath));
 			relativeEle.setResolvedIdPath(new HAPComplexPath(parentNode.getLocalId(), elePath));
 			if(parentNode.getDefinition().isProcessed()) {
 //				relativeEle.setDefinition(parentNode.getDefinition().getSolidContextDefinitionElement());

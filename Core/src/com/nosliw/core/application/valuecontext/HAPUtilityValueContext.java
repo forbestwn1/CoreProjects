@@ -10,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
@@ -17,7 +18,6 @@ import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
 
 public class HAPUtilityValueContext {
 
@@ -29,7 +29,7 @@ public class HAPUtilityValueContext {
 		List<HAPInfoPartSimple> parts = getAllSimpleParts(valueContext);
 		for(HAPInfoPartSimple part : parts) {
 			if(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION.equals(part.getSimpleValueStructurePart().getPartInfo().getName())) {
-				for(HAPWrapperExecutableValueStructure valueStructureWrapper : part.getSimpleValueStructurePart().getValueStructures()) {
+				for(HAPInfoValueStructure valueStructureWrapper : part.getSimpleValueStructurePart().getValueStructures()) {
 					if(groupType.equals(valueStructureWrapper.getGroupType())) {
 						return valueStructureWrapper.getValueStructureRuntimeId();
 					}
@@ -67,7 +67,7 @@ public class HAPUtilityValueContext {
 				HAPPartInValueContextSimple simplePart = (HAPPartInValueContextSimple)part;
 				String partName = simplePart.getPartInfo().getName();
 				if(HAPConstantShared.VALUESTRUCTUREPART_NAME_DEFAULT.equals(partName)||HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION.equals(partName)) {
-					for(HAPWrapperExecutableValueStructure valueStructureWrapper : simplePart.getValueStructures()) {
+					for(HAPInfoValueStructure valueStructureWrapper : simplePart.getValueStructures()) {
 						out.add(valueStructureWrapper.getValueStructureRuntimeId());
 					}
 				}
@@ -103,7 +103,7 @@ public class HAPUtilityValueContext {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
 			HAPPartInValueContextSimple simplePart = (HAPPartInValueContextSimple)part;
-			for(HAPWrapperExecutableValueStructure valueStructure : simplePart.getValueStructures()) {
+			for(HAPInfoValueStructure valueStructure : simplePart.getValueStructures()) {
 				HAPInfoValueStructureSorting valueStructureInfo = new HAPInfoValueStructureSorting(valueStructure);
 				valueStructureInfo.setPriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority()));
 				out.add(valueStructureInfo);

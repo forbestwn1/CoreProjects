@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.domain.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPRefValuePort;
 
 @HAPEntityWithAttribute
 public class HAPIdRootElement extends HAPSerializableImp{

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -23,14 +24,14 @@ public class HAPUtilityBrick {
 	}
 	
 	public static HAPBrick getDescdentBrick(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
-		HAPBrick out = null;
-		if(path==null || path.isEmpty()) {
-			out = rootBrickWrapper.getBrick();
+		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
+		if(brickResult!=null&&brickResult.isInternalBrick()) {
+			return brickResult.getBrick();
 		}
-		else {
-			out = getDescendantBrick(rootBrickWrapper.getBrick(), path); 
-		}
-		return out;
+		return null;
+	}
+	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
+		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path);
 	}
 	
 	public static HAPAttributeInBrick getDescendantAttribute(HAPBrick brick, HAPPath path) {
@@ -52,17 +53,21 @@ public class HAPUtilityBrick {
 		return out;
 	}
 
-	private static HAPBrick getDescendantBrick(HAPBrick brick, HAPPath path) {
-		HAPBrick out = null;
+	private static HAPResultBrick getDescendantBrickResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
-			out = brick;
+			return new HAPResultBrick(brick);
 		} else {
 			HAPWrapperValueInAttribute attrValueInfo = getDescendantAttribute(brick, path).getValueWrapper();
+			String valueType = attrValueInfo.getValueType();
 			if(attrValueInfo instanceof HAPWithBrick) {
-				out = ((HAPWithBrick)attrValueInfo).getBrick();
+				return new HAPResultBrick(((HAPWithBrick)attrValueInfo).getBrick());
+			}
+			else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+				HAPWrapperValueInAttributeReferenceResource resourceRefAttrValue = (HAPWrapperValueInAttributeReferenceResource)attrValueInfo;
+				return new HAPResultBrick(resourceRefAttrValue.getReferencedBundle(), resourceRefAttrValue.getPathFromRoot());
 			}
 		}
-		return out;
+		return null;
 	}
 	
 	

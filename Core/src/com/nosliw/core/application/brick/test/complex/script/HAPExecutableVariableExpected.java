@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPDefinitionVariableExpected;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;

@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity.service.provider;
 
 import java.util.Map;
 
-import com.nosliw.data.core.domain.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
 import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
 import com.nosliw.data.core.interactive.HAPExecutableEntityInteractive;

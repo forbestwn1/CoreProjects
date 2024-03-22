@@ -14,6 +14,8 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
@@ -26,8 +28,6 @@ import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhino
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptEntity;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
 import com.nosliw.data.core.script.expression1.HAPProcessorScript;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
-import com.nosliw.data.core.structure.reference.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.value.HAPResourceDefinitionValue;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 
@@ -282,7 +282,7 @@ public class HAPProcessorElementConstant {
 			String constantId = constantDef.getId();
 			Set<String> types = new HashSet<String>();
 			types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT);
-			HAPInfoReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
+			HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(constantId, structure, configure.elementReferenceResolveMode, types);
 			solidateConstantDefEle((HAPElementStructureLeafConstant)resolveInfo.realSolved.finalElement, structure, configure, runtimeEnv);
 			constantsValue.put(constantId, ((HAPElementStructureLeafConstant)HAPUtilityStructureElementReference.resolveFinalElement(resolveInfo.realSolved, configure.relativeInheritRule)).getValue());
 		}

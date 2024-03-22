@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual;
 import java.util.Set;
 
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.data.core.domain.valueport.HAPDefinitionValuePort;
+import com.nosliw.core.application.common.valueport.HAPDefinitionValuePort;
 
 public abstract class HAPManualBrickBlock extends HAPManualBrick{
 

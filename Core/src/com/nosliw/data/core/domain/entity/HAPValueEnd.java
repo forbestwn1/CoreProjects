@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity;
 
 import java.util.Set;
 
-import com.nosliw.data.core.domain.valueport.HAPIdValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 
 //container of value port
 public class HAPValueEnd {

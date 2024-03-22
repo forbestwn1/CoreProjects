@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -35,6 +36,11 @@ public class HAPBundle extends HAPExecutableImp{
 	
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }
+
+	public HAPBrick getBrickByPath(HAPPath path) {
+		return HAPUtilityBrick.getDescdentBrick(getBrickWrapper(), path);
+	}
+
 	
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();

@@ -17,13 +17,13 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.structure.temp.HAPProcessorContext;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
@@ -100,12 +100,12 @@ public class HAPProcessorDataAssociationMapping2 {
 							//only relative element
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 							//if element path exist in output structure
-							HAPInfoReferenceResolve targetResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(eleInfo.getElementPath(), outputStructure);
+							HAPResultReferenceResolve targetResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(eleInfo.getElementPath(), outputStructure);
 							if(!HAPUtilityContext.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
 								HAPValueStructure sourceContextStructure = input.getStructure(relativeEle.getParentValueContextName());
-								HAPInfoReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
+								HAPResultReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
 								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.finalElement;
 									if(sourceEle.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
@@ -142,7 +142,7 @@ public class HAPProcessorDataAssociationMapping2 {
 			out = new HAPValueStructureDefinitionFlat();
 			for(String eleName : origin.getRootNames()) {
 				String updatedName = eleName;
-				HAPInfoReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
+				HAPResultReferenceResolve resolvedInfo = HAPUtilityContext.analyzeElementReference(new HAPReferenceElementInStructure(eleName), (HAPValueStructureDefinitionGroup)outputStructure, null, null);
 				if(resolvedInfo!=null) 	updatedName = resolvedInfo.path.getRootReference().getFullName();
 				out.addRootToCategary(updatedName, origin.getRoot(eleName));
 			}

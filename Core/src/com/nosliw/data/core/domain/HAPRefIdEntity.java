@@ -17,6 +17,7 @@ public class HAPRefIdEntity extends HAPSerializableImp{
 	
 	private String m_idPath;
 	
+	//for runtime purpose, as absolute path may lead to multiple brick
 	private String m_relativePath;
 	
 	public HAPRefIdEntity(String idPath) {

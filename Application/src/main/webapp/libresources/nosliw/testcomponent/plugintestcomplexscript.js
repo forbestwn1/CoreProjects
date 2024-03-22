@@ -22,7 +22,7 @@ var node_createTestComplexScriptPlugin = function(){
 		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptCoreEntity"), handlers, request);
 
-			var scriptName = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLETESTCOMPLEXSCRIPT_SCRIPTNAME);
+			var scriptName = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BRICKTESTCOMPLEXSCRIPT_SCRIPTNAME);
 			var resourceId = new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName);
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {

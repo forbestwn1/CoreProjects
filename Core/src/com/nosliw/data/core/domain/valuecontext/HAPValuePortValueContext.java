@@ -3,37 +3,39 @@ package com.nosliw.data.core.domain.valuecontext;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.valueport.HAPInfoValuePort;
-import com.nosliw.data.core.domain.valueport.HAPReferenceValueStructure;
-import com.nosliw.data.core.domain.valueport.HAPValuePortImp;
-import com.nosliw.data.core.structure.reference.HAPInfoValueStructureReference;
+import com.nosliw.core.application.HAPBrickComplex;
+import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
+import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
+import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.common.valueport.HAPValuePortImp;
+import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
+import com.nosliw.core.application.valuecontext.HAPValueContext;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPInfoValueStructureDefinition;
 
 public class HAPValuePortValueContext extends HAPValuePortImp{
 
-	private HAPExecutableEntityValueContext m_valueContext;
+	private HAPValueContext m_valueContext;
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
+	public HAPValuePortValueContext(HAPBrickComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
 		this(complexEntityExe, valueStructureDomain, false);
 	}
 
-	public HAPValuePortValueContext(HAPExecutableEntityComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
-		super(HAPUtilityValueContext.createValuePortIdValueContext(complexEntityExe), new HAPInfoValuePort(), isDefault);
+	public HAPValuePortValueContext(HAPBrickComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
+		super(new HAPInfoValuePort(), isDefault);
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}
-
+ 
 	@Override
-	public List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria) {
+	public List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure) {
 		List<HAPInfoValueStructureReference> out = new ArrayList<HAPInfoValueStructureReference>();
 		
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(m_valueContext);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-			HAPWrapperExecutableValueStructure wraper = valueStructureInfo.getValueStructure();
+			HAPInfoValueStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
 
 			HAPInfoValueStructureDefinition valueStructureDefInfo = m_valueStructureDomain.getValueStructureDefInfoByRuntimeId(wraper.getValueStructureRuntimeId());
@@ -76,7 +78,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	}
 
 	@Override
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId) {
+	public HAPInfoValueStructureDefinition getValueStructureDefintion(String valueStructureId) {
 		return this.m_valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureId);
 	}
 

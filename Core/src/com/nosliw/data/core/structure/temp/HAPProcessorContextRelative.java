@@ -20,6 +20,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
@@ -27,7 +28,6 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStruct
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.structure.reference.HAPInfoReferenceResolve;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
@@ -112,7 +112,7 @@ public class HAPProcessorContextRelative {
 		HAPElementStructure out = defContextElementRelative;
 		
 		HAPReferenceElementInStructure path = defContextElementRelative.getPathFormat(); 
-		HAPInfoReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(path, parentContext, categaryes, configure.elementReferenceResolveMode);
+		HAPResultReferenceResolve resolveInfo = HAPUtilityContext.analyzeElementReference(path, parentContext, categaryes, configure.elementReferenceResolveMode);
 		
 		if(resolveInfo==null || resolveInfo.referredRoot==null) {
 			errors.add(HAPServiceData.createFailureData(contextEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
