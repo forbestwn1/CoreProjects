@@ -1,6 +1,6 @@
 package com.nosliw.data.core.valuestructure1;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPElementContextStructureValueExecutable {
 

@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.updatename.HAPUpdateName;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 public interface HAPStructure1 extends HAPWithConstantScriptExpression, HAPSerializable{

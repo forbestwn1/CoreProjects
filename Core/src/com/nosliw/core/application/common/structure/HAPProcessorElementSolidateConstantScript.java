@@ -2,7 +2,7 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorElementSolidateConstantScript {

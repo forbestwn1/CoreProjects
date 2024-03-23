@@ -49,7 +49,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 //		@Override
-//		public HAPValueStructure buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
+//		public HAPValueStructureInValuePort buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
 //			HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 //			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 //				String outputVar = HAPConstantShared.ACTIVITY_OUTPUTVARIABLE_OUTPUT;

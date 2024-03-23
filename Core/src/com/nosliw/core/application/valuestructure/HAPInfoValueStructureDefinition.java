@@ -29,6 +29,10 @@ public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 		}
 	}
 	
+	public Set<HAPRootInValueStructure> getRoots(){
+		return (Set<HAPRootInValueStructure>)this.m_roots.values();
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ROOT, HAPSerializeManager.getInstance().toStringValue(m_roots, HAPSerializationFormat.JSON));

@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.common.structure.HAPParserStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.resource.HAPParserResourceEntityImp;
 
 public class HAPParserResourceDefinitionStructure extends HAPParserResourceEntityImp{

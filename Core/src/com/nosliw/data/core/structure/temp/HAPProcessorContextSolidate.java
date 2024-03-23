@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPWrapperExecutableValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;

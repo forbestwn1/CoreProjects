@@ -10,7 +10,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPUtilityValueStructureScript {
 

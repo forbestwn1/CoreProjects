@@ -60,14 +60,14 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 	
 	class HAPBuilderResultContext1 implements HAPBuilderResultContext {
 		
-//		HAPValueStructure m_activityValueStructure;
+//		HAPValueStructureInValuePort m_activityValueStructure;
 //		
-//		public HAPBuilderResultContext1(HAPValueStructure activityValueStructure) {
+//		public HAPBuilderResultContext1(HAPValueStructureInValuePort activityValueStructure) {
 //			this.m_activityValueStructure = activityValueStructure;
 //		}
 //		
 //		@Override
-//		public HAPValueStructure buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
+//		public HAPValueStructureInValuePort buildResultValueStructure(String resultName, HAPExecutableActivity activity) {
 //			HAPValueStructureDefinitionGroup out = new HAPValueStructureDefinitionGroup();
 //			if(HAPConstantShared.ACTIVITY_RESULT_SUCCESS.equals(resultName)) {
 //				return this.m_activityValueStructure;

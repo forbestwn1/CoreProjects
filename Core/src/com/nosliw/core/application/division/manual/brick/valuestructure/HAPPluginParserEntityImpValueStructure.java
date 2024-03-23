@@ -9,7 +9,7 @@ import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginParserEntityImpValueStructure extends HAPPluginParserBrickImpSimple{

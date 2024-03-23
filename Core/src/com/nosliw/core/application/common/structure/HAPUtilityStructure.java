@@ -16,10 +16,10 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultDesendantResolve;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

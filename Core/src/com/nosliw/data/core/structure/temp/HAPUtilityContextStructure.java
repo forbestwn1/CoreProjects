@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContextStructure {
 
-	public static HAPValueStructure hardMergeContextStructure(HAPValueStructure from, HAPValueStructure to) {
+	public static HAPValueStructureInValuePort hardMergeContextStructure(HAPValueStructureInValuePort from, HAPValueStructureInValuePort to) {
 		if(to==null)  return from;
 		
-		HAPValueStructure fromModify = toSolidContextStructure(from, to.isFlat());
+		HAPValueStructureInValuePort fromModify = toSolidContextStructure(from, to.isFlat());
 		if(to.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
 			((HAPValueStructureDefinitionFlat)to.cloneStructure()).hardMergeWith((HAPValueStructureDefinitionFlat)fromModify);
 			return to;
@@ -30,7 +30,7 @@ public class HAPUtilityContextStructure {
 		}
 	}
 	
-	public static HAPValueStructure toSolidContextStructure(HAPValueStructure context, boolean isFlat) {
+	public static HAPValueStructureInValuePort toSolidContextStructure(HAPValueStructureInValuePort context, boolean isFlat) {
 		if(context==null || context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_EMPTY)) {
 			if(isFlat)  return new HAPValueStructureDefinitionFlat();
 			else return new HAPValueStructureDefinitionGroup();

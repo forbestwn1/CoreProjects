@@ -58,7 +58,7 @@ public class HAPProcessorStructure {
 		HAPProcessorElementRule.process(structure, runtimeEnv);
 		
 		//process inheritance
-		structure = HAPProcessorElementVariableInheritance.process((HAPValueStructure)structure, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);
+		structure = HAPProcessorElementVariableInheritance.process((HAPValueStructureInValuePort)structure, parent, configure.inheritMode, configure.inheritanceExcludedInfo, runtimeEnv);
 		
 		return structure;
 	}

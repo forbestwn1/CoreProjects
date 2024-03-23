@@ -8,7 +8,6 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 
 @HAPEntityWithAttribute
 public class HAPRootInValueStructure extends HAPEntityInfoWritableImp{

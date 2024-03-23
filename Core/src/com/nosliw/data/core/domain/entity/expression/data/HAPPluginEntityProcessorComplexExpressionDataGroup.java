@@ -20,6 +20,7 @@ import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementRe
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -30,7 +31,6 @@ import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandReference;
 import com.nosliw.data.core.operand.HAPOperandVariable;

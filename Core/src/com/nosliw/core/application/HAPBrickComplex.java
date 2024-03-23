@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 
 public class HAPBrickComplex extends HAPBrick{

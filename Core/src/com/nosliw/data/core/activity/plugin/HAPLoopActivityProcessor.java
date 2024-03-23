@@ -7,6 +7,7 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
@@ -14,7 +15,6 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPBuilderResultContext;
 import com.nosliw.data.core.process1.HAPContextProcessor;
@@ -93,7 +93,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPValueStructure buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructureInValuePort buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPLoopActivityExecutable processActivity = (HAPLoopActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

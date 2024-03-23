@@ -56,7 +56,7 @@ public class HAPProcessorScript2 {
 			String id,
 			HAPDefinitionScriptGroup scriptGroupDef, 
 			HAPContextProcessAttachmentReferenceExpression processContext,
-			HAPValueStructure extraContext,
+			HAPValueStructureInValuePort extraContext,
 			HAPManagerExpression expressionMan, 
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
@@ -64,7 +64,7 @@ public class HAPProcessorScript2 {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPValueStructure contextStructure =  scriptGroupDef.getValueStructureWrapper();
+		HAPValueStructureInValuePort contextStructure =  scriptGroupDef.getValueStructureWrapper();
 		contextStructure = HAPUtilityValueStructure.hardMerge(contextStructure, extraContext);
 		out.setContextStructure(contextStructure);
 

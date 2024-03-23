@@ -35,12 +35,12 @@ import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementRe
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.variable.HAPDataRule;
 import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;

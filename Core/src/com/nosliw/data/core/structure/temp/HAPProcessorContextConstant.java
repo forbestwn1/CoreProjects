@@ -21,11 +21,11 @@ import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptEntity;
@@ -49,7 +49,7 @@ public class HAPProcessorContextConstant {
 		//merge with parent
 		HAPValueStructureDefinitionGroup merged = originalContextGroup;
 		for(String parentName : parent.getStructureNames()) {
-			merged = (HAPValueStructureDefinitionGroup)mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructure)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), inheritMode);
+			merged = (HAPValueStructureDefinitionGroup)mergeWithParent(merged, HAPUtilityContextStructure.toSolidContextStructure((HAPValueStructureInValuePort)HAPUtilityStructure.getReferedStructure(parentName, parent, merged), false), inheritMode);
 		}
 
 		//process constant ref in context
@@ -67,11 +67,11 @@ public class HAPProcessorContextConstant {
 	
 	//merge constant with parent
 	//child constant has higher priority than parent
-	private static HAPValueStructure mergeWithParent(
-			HAPValueStructure valueStructure,
-			HAPValueStructure parentValueStructure,
+	private static HAPValueStructureInValuePort mergeWithParent(
+			HAPValueStructureInValuePort valueStructure,
+			HAPValueStructureInValuePort parentValueStructure,
 			String inheritMode){
-		HAPValueStructure out = (HAPValueStructure)valueStructure.cloneStructure();
+		HAPValueStructureInValuePort out = (HAPValueStructureInValuePort)valueStructure.cloneStructure();
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			if(parentValueStructure!=null) {
 				//merge constants with parent

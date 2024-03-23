@@ -5,24 +5,24 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorElementVariableInheritance {
 
 	//merge with parent through inheritance
-	public static HAPValueStructure process(HAPValueStructure orgContext, HAPContainerStructure parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructure out = (HAPValueStructure)processConstant(orgContext);
+	public static HAPValueStructureInValuePort process(HAPValueStructureInValuePort orgContext, HAPContainerStructure parent, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureInValuePort out = (HAPValueStructureInValuePort)processConstant(orgContext);
 		for(String parentName : parent.getStructureNames()) {
 //			out = process(out, (HAPValueStructureDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(HAPUtilityContext.getReferedStructure(parentName, parent, orgContext), false), inheritMode, inheritanceExcludedInfo, runtimeEnv);
-			out = process(out, (HAPValueStructure)HAPUtilityStructureElementReference.getReferedStructure(parentName, parent, orgContext), inheritMode, inheritanceExcludedInfo, runtimeEnv);
+			out = process(out, (HAPValueStructureInValuePort)HAPUtilityStructureElementReference.getReferedStructure(parentName, parent, orgContext), inheritMode, inheritanceExcludedInfo, runtimeEnv);
 		}
 		return out;
 	}
 
-	public static HAPValueStructure process(HAPValueStructure orgValueStructure, HAPValueStructure parentValueStructure, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPValueStructureInValuePort process(HAPValueStructureInValuePort orgValueStructure, HAPValueStructureInValuePort parentValueStructure, String inheritMode, Set<String> inheritanceExcludedInfo, HAPRuntimeEnvironment runtimeEnv) {
 		if(parentValueStructure==null)   return orgValueStructure;
-		HAPValueStructure out = (HAPValueStructure)orgValueStructure.cloneStructure();
+		HAPValueStructureInValuePort out = (HAPValueStructureInValuePort)orgValueStructure.cloneStructure();
 		
 		if(!HAPConstant.INHERITMODE_NONE.equals(inheritMode)) {
 			for(HAPRootStructure root : parentValueStructure.getAllRoots()) {
@@ -50,7 +50,7 @@ public class HAPProcessorElementVariableInheritance {
 	}
 	
 	//whether child can herit from parent element
-	private static boolean isInheritable(HAPValueStructure childStructure, HAPReferenceRootInStrucutre rootRef, String inheritMode) {
+	private static boolean isInheritable(HAPValueStructureInValuePort childStructure, HAPReferenceRootInStrucutre rootRef, String inheritMode) {
 		boolean out = false;
 		HAPRootStructure childNode = HAPUtilityStructure.getRootFromStructure(childStructure, rootRef); 
 		if(childNode==null) 		out = true;

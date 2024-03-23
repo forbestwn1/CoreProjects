@@ -9,7 +9,7 @@ import com.nosliw.core.application.common.structure.reference.HAPContextStructur
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPContextStructureReferenceInteractiveResult implements HAPContextStructureReference{
 

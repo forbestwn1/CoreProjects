@@ -14,6 +14,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.variable.HAPVariableInfo;
@@ -23,7 +24,6 @@ import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.process1.resource.HAPIdProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceIdProcess;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -144,7 +144,7 @@ public class HAPUtilityProcess {
 		HAPExecutableResultActivityNormal resultExe = new HAPExecutableResultActivityNormal(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
-			HAPValueStructure dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
+			HAPValueStructureInValuePort dataAssociationInputContext = resultContextBuilder.buildResultContext(resultName, activity);
 			//process data association
 			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(dataAssociationInputContext), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);

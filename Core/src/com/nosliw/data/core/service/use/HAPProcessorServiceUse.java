@@ -33,7 +33,7 @@ public class HAPProcessorServiceUse {
 	}
 	
 	//enhance external value structure according to mapping with service
-	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructure globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructureInValuePort globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
 			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
@@ -54,7 +54,7 @@ public class HAPProcessorServiceUse {
 		}
 	}
 	
-	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPValueStructure globalValueStructure, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableServiceUse process(HAPDefinitionServiceUse definition, HAPValueStructureInValuePort globalValueStructure, HAPDefinitionEntityContainerAttachment attachmentContainer, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use

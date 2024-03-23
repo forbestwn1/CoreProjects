@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPParserValueStructure {
 

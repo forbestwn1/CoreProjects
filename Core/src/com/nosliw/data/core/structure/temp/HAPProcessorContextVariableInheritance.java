@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.common.structure.HAPStructure1;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;

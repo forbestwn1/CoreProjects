@@ -12,8 +12,8 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
@@ -22,7 +22,7 @@ public class HAPProcessorEscalate {
 
 	public static void process(HAPTreeNodeValueStructure sourceNode, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructure structure = sourceNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort structure = sourceNode.getValueStructureWrapper().getValueStructure();
 
 		//normalize mapping first
 		Map<String, String> contextMapping = new LinkedHashMap<String, String>();
@@ -48,7 +48,7 @@ public class HAPProcessorEscalate {
 	
 	//escalte context node to parent context group, only absolute variable
 	public static void process(HAPTreeNodeValueStructure sourceNode, String sourceRootId, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
-		HAPValueStructure sourceStructure = sourceNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort sourceStructure = sourceNode.getValueStructureWrapper().getValueStructure();
 		HAPRootStructure sourceRootNode = sourceStructure.getRoot(sourceRootId);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
@@ -62,8 +62,8 @@ public class HAPProcessorEscalate {
 	//out.left: true--escalate to existing root node    false--escalate to new root node
 	private static Pair<Boolean, HAPRootStructure> escalate(HAPTreeNodeValueStructure originalNode, String originalRootId, HAPTreeNodeValueStructure parentNode, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructure originalStrucutre = originalNode.getValueStructureWrapper().getValueStructure();
-		HAPValueStructure parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort originalStrucutre = originalNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
 		
 		Pair<Boolean, HAPRootStructure> out = null;
 		HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(new HAPReferenceElementInStructure(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);

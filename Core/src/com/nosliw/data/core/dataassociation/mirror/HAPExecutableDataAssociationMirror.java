@@ -29,7 +29,7 @@ public class HAPExecutableDataAssociationMirror extends HAPExecutableDataAssocia
 	@Override
 	public HAPOutputStructure getOutput() {  return this.m_output;  }
 	
-	public void addOutputStructure(String name, HAPValueStructure context) {
+	public void addOutputStructure(String name, HAPValueStructureInValuePort context) {
 		this.m_output.addOutputStructure(name, context);
 	}
 

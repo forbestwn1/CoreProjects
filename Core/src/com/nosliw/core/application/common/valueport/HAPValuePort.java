@@ -10,10 +10,10 @@ public interface HAPValuePort extends HAPEntityInfo{
 	
 	HAPResultReferenceResolve resolveReference(HAPReferenceElement elementReference, HAPConfigureResolveElementReference configure);
 	
+	HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId);
 	
 	
 //	List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureRef);
 //	
-//	HAPInfoValueStructureDefinition getValueStructureDefintion(String valueStructureId);
 
 }

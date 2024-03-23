@@ -6,9 +6,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionValueMapping;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 
@@ -19,8 +19,8 @@ public class HAPProcessorDataAssociationMirror {
 		HAPDefinitionDataAssociationMapping mappigDataAssociation = new HAPDefinitionDataAssociationMapping();
 		
 		for(String inputStructureName : input.getStructureNames()) {
-			HAPValueStructure inputStructure = input.getStructure(inputStructureName);
-			HAPValueStructure outputStructure = output.getStructure(inputStructureName);
+			HAPValueStructureInValuePort inputStructure = input.getStructure(inputStructureName);
+			HAPValueStructureInValuePort outputStructure = output.getStructure(inputStructureName);
 			if(outputStructure!=null) {
 				if(HAPUtilityBasic.isEquals(inputStructure.getStructureType(), outputStructure.getStructureType())) {
 					

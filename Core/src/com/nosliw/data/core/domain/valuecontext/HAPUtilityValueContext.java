@@ -17,12 +17,12 @@ import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContextGroupWithEntity;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContextSimple;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 
 public class HAPUtilityValueContext {
 
@@ -239,7 +239,7 @@ public class HAPUtilityValueContext {
 	public static HAPInfoPartValueStructure createPartInfoExtension() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_EXTENSION);	}
 	public static HAPInfoPartValueStructure createPartInfoFromParent() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
-	public static void setValueStructureDefault(HAPDefinitionEntityValueContext valueStructureComplex, HAPValueStructure valueStructure) {
+	public static void setValueStructureDefault(HAPDefinitionEntityValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityValueContext.createPartInfoDefault());
 	}
 	

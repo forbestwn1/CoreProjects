@@ -11,7 +11,7 @@ import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReferen
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPValuePortInteractiveResult extends HAPValuePortImp{
 

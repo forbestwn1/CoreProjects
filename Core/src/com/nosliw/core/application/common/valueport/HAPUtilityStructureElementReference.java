@@ -17,7 +17,6 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefin
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
@@ -42,12 +41,12 @@ public class HAPUtilityStructureElementReference {
 		
 		List<HAPResultReferenceResolve> resolveCandidates = new ArrayList<HAPResultReferenceResolve>();
 		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
-			HAPValueStructure valueStructure = valueStructureInfo.getValueStructureDefinition();
+			HAPValueStructureInValuePort valueStructure = valueStructureInfo.getValueStructureDefinition();
 			HAPComplexPath complexPath = new HAPComplexPath(elementPath);
 			String rootName = complexPath.getRoot();
 			String path = complexPath.getPathStr();
 			
-			HAPRootStructure root = valueStructure.getRootByName(rootName);
+			HAPRootStructureInValuePort root = valueStructure.getRootByName(rootName);
 			if(root!=null) {
 				HAPResultReferenceResolve resolved = new HAPResultReferenceResolve(); 
 				resolved.structureId = valueStructureInfo.getValueStructureId();
@@ -169,7 +168,7 @@ public class HAPUtilityStructureElementReference {
 		List<HAPInfoPartSimple> candidates = HAPUtilityValueContext.findCandidateSimplePart(reference.getParentValueContextName(), parentValueStructureComplex);
 		for(HAPInfoPartSimple candidate : candidates) {
 			HAPExecutablePartValueContextSimple simplePart = candidate.getSimpleValueStructurePart();
-			HAPValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
+			HAPValueStructureInValuePort valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(simplePart.getRuntimeId());
 			HAPResultReferenceResolve resolve = analyzeElementReference(new HAPReferenceElementInStructure(reference.getPath()), valueStructure, mode, elementTypes);
 			resolve.structureId = simplePart.getRuntimeId();
 			if(isLogicallySolved(resolve)) {

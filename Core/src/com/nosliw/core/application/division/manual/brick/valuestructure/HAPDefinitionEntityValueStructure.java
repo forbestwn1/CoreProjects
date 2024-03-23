@@ -12,10 +12,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
 @HAPEntityWithAttribute

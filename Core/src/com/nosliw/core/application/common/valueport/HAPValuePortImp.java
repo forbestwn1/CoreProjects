@@ -1,5 +1,6 @@
 package com.nosliw.core.application.common.valueport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
@@ -28,10 +29,14 @@ public abstract class HAPValuePortImp extends HAPEntityInfoImp implements HAPVal
 	
 	@Override
 	public HAPResultReferenceResolve resolveReference(HAPReferenceElement elementReference, HAPConfigureResolveElementReference configure) {
-		List<HAPInfoValueStructureReference> candiates = this.discoverCandidateValueStructure(elementReference.getValueStructureReference(), configure);
-		return HAPUtilityStructureElementReference.analyzeElementReference(elementReference.getElementPath(), candiates, configure);
+		List<HAPInfoValueStructureReference> candiateValueStructures = new ArrayList<HAPInfoValueStructureReference>(); 
+		List<String> candiateIds = this.discoverCandidateValueStructure(elementReference.getValueStructureReference(), configure);
+		for(String valueStructureId : candiateIds) {
+			candiateValueStructures.add(new HAPInfoValueStructureReference(valueStructureId, this.getValueStructureDefintion(valueStructureId)));
+		}
+		return HAPUtilityStructureElementReference.analyzeElementReference(elementReference.getElementPath(), candiateValueStructures, configure);
 	}
 	
-	protected abstract List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure);
+	protected abstract List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure);
 	
 }

@@ -2,7 +2,7 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.Set;
 
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 public interface HAPStructure extends HAPWithConstantScriptExpression{

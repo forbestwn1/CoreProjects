@@ -14,9 +14,8 @@ public class HAPContainerValuePorts {
 	}
 	
 	public void addValuePort(HAPValuePort valuePort) {
-		valuePort.getValuePortInfo().get
-		
-		this.m_valuePortByKey.put(valuePort.getValuePortId().getKey(), valuePort);
+		String key = getValuePortKey(valuePort);
+		this.m_valuePortByKey.put(key, valuePort);
 	}
 	
 	public void addValuePorts(HAPContainerValuePorts valuePortContainer) {
@@ -44,6 +43,10 @@ public class HAPContainerValuePorts {
 			}
 		}
 		return null;
+	}
+	
+	private String getValuePortKey(HAPValuePort valuePort) {
+		return valuePort.getName()+"_"+valuePort.getValuePortInfo().getType();
 	}
 	
 }

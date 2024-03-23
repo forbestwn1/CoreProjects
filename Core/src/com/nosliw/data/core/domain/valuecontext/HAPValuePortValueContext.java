@@ -6,13 +6,16 @@ import java.util.List;
 import com.nosliw.core.application.HAPBrickComplex;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
-import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.application.valuestructure.HAPInfoValueStructureDefinition;
+import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
+import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
 public class HAPValuePortValueContext extends HAPValuePortImp{
 
@@ -30,8 +33,8 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	}
  
 	@Override
-	public List<HAPInfoValueStructureReference> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure) {
-		List<HAPInfoValueStructureReference> out = new ArrayList<HAPInfoValueStructureReference>();
+	public List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure) {
+		List<String> out = new ArrayList<String>();
 		
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(m_valueContext);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
@@ -60,26 +63,38 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 //			}
 
 			//check name
-			if(isValid) {
-				String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
-				if(valueStructureName!=null) {
-					if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
-						isValid = false;
-					}
-				}
-			}
+//			if(isValid) {
+//				String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
+//				if(valueStructureName!=null) {
+//					if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
+//						isValid = false;
+//					}
+//				}
+//			}
 			
 			if(isValid) {
 				String id = wraper.getValueStructureRuntimeId();
-				out.add(new HAPInfoValueStructureReference(id, m_valueStructureDomain.getValueStructureDefinitionByRuntimeId(id)));
+				out.add(id);
 			}
 		}
 		return out;
 	}
 
 	@Override
-	public HAPInfoValueStructureDefinition getValueStructureDefintion(String valueStructureId) {
-		return this.m_valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureId);
+	public HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId) {
+		HAPValueStructureInValuePort out = new HAPValueStructureInValuePort();
+		HAPInfoValueStructureDefinition valueStructureDefInfo = this.m_valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId);
+		
+		HAPInfoValueStructureRuntime valueStrcutreRuntimeInfo = m_valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
+		valueStrcutreRuntimeInfo.cloneToEntityInfo(out);
+		
+		for(HAPRootInValueStructure r : valueStructureDefInfo.getRoots()) {
+			HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(r.getDefinition());
+			r.cloneToEntityInfo(root);
+			out.addRoot(root);
+		}
+		
+		return out;
 	}
 
 }

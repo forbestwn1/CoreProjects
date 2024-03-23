@@ -6,12 +6,12 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
+import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPDefinitionEntityElementInContainerComponent;
 import com.nosliw.data.core.component.HAPWithComplexEntity;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.attachment.HAPResultProcessAttachmentReference;
-import com.nosliw.data.core.domain.entity.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -35,11 +35,11 @@ public class HAPProcessorValueStructureInComponent {
 		return out;
 	}
 	
-	public static HAPValueStructure expandReference(
+	public static HAPValueStructureInValuePort expandReference(
 			HAPValueStructureInComplex valueStructureInComponent,
 			HAPContextProcessor processContext
 			) {
-		HAPValueStructure out = valueStructureInComponent;
+		HAPValueStructureInValuePort out = valueStructureInComponent;
 		String type = valueStructureInComponent.getStructureType();
 		if(type.equals(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT)) {
 			HAPValueStructureInComplexFlat flatIn = (HAPValueStructureInComplexFlat)valueStructureInComponent;
