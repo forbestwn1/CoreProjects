@@ -1,5 +1,6 @@
 package com.nosliw.core.application.valuestructure;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 	}
 	
 	public Set<HAPRootInValueStructure> getRoots(){
-		return (Set<HAPRootInValueStructure>)this.m_roots.values();
+		return new HashSet<HAPRootInValueStructure>(this.m_roots.values());
 	}
 	
 	@Override

@@ -8,6 +8,7 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPBrickComplex extends HAPBrick{
 
@@ -38,4 +39,10 @@ public class HAPBrickComplex extends HAPBrick{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
 	}
+	@Override
+	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+		jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
+	}
+	
 }

@@ -149,7 +149,7 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 
 	
 	private HAPBrick buildExecutableTree(HAPManualBrick brickDef, HAPManualContextProcess processContext) {
-		HAPBundle entityBundle = processContext.getCurrentBundle();
+		HAPBundle bundle = processContext.getCurrentBundle();
 		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 		
 		HAPBrick entityExe = null;
@@ -157,6 +157,7 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 		if(brickTypeInfo.getIsComplex()) {
 			HAPPluginProcessorBrickDefinitionComplex processPlugin = (HAPPluginProcessorBrickDefinitionComplex)this.getBrickProcessPlugin(entityTypeId);
 			entityExe = processPlugin.newExecutable();
+			((HAPBrickComplex)entityExe).setValueStructureDomain(((HAPBundleComplex)bundle).getValueStructureDomain());
 		} else {
 			HAPPluginProcessorBrickDefinitionSimple simplePlugin = (HAPPluginProcessorBrickDefinitionSimple)this.getBrickProcessPlugin(entityTypeId);
 			entityExe = simplePlugin.newExecutable();
