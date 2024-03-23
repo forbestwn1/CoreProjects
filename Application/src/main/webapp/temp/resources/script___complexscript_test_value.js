@@ -40,7 +40,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			//all defined variable
 			_.each(loc_scriptVars, function(varResolve, i){
 				var varInfo = {
-					reference : varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE],
+					reference : varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE],
 					variable : loc_valueContext.createResolvedVariable(varResolve),
 				};
 				loc_variableInfos.push(varInfo);

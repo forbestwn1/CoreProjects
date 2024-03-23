@@ -34,7 +34,11 @@ public abstract class HAPValuePortImp extends HAPEntityInfoImp implements HAPVal
 		for(String valueStructureId : candiateIds) {
 			candiateValueStructures.add(new HAPInfoValueStructureReference(valueStructureId, this.getValueStructureDefintion(valueStructureId)));
 		}
-		return HAPUtilityStructureElementReference.analyzeElementReference(elementReference.getElementPath(), candiateValueStructures, configure);
+		HAPResultReferenceResolve out = HAPUtilityStructureElementReference.analyzeElementReference(elementReference.getElementPath(), candiateValueStructures, configure);
+		if(out!=null) {
+			out.eleReference = elementReference;
+		}
+		return out;
 	}
 	
 	protected abstract List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPConfigureResolveElementReference configure);

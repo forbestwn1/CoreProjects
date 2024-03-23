@@ -89,11 +89,15 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		if(buildRootEle!=false){
 			var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
 			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
-			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_VALUESTRUCTURE]
+			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_ROOT];
+/*
+								[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_VALUESTRUCTURE]
 								[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYINDOMAIN_ATTRIBUTE]
 								[node_COMMONATRIBUTECONSTANT.DEFINITIONENTITYVALUESTRUCTURE_VALUE]
 								[node_COMMONATRIBUTECONSTANT.ATTRIBUTEENTITY_VALUE]
 								[node_COMMONATRIBUTECONSTANT.EMBEDED_VALUE];
+*/
+								
 			_.each(roots, function(valueStructureDefRootObj, rootName){
 				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFINITION];
 				
@@ -210,8 +214,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		
 		//
 		createResolvedVariable : function(varResolve){
-			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_STRUCTUREID]);
-			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.INFOREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEELEMENTINVALUECONTEXT_FULLPATH]));
+			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID]);
+			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEELEMENT_ELEMENTPATH]));
 		},
 
 		getValueStructureRuntimeIdByName : function(valueStructureName){

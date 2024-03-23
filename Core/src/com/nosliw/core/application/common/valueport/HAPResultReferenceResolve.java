@@ -54,9 +54,7 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		if(this.eleReference!=null) {
-			jsonMap.put(ELEREFERENCE, this.eleReference.toStringValue(HAPSerializationFormat.JSON));
-		}
+		jsonMap.put(ELEREFERENCE, this.eleReference.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(STRUCTUREID, this.structureId);
 		jsonMap.put(ROOTNAME, this.rootName);
 		if(this.elementInfoOriginal!=null) {
