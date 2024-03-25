@@ -1,7 +1,7 @@
 package com.nosliw.data.core.task;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 
 public interface HAPProcessorTask {
@@ -12,7 +12,7 @@ public interface HAPProcessorTask {
 			HAPDefinitionTask taskDefinition,
 			String id,
 			HAPContextProcessor processContext,
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper,
+			HAPManualBrickWrapperValueStructure valueStructureWrapper,
 			HAPProcessTracker processTracker
 	);
 

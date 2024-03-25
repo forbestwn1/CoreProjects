@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 //wrapper for value structure
@@ -41,7 +41,7 @@ public class HAPWrapperExecutableValueStructure extends HAPSerializableImp{
 		jsonMap.put(RUNTIMEID, this.m_valueStructureRuntimeId);
 	}
 
-	public void cloneFromDefinition(HAPDefinitionEntityWrapperValueStructure valueStructureDefWrapper) {
+	public void cloneFromDefinition(HAPManualBrickWrapperValueStructure valueStructureDefWrapper) {
 		this.m_groupType = valueStructureDefWrapper.getGroupType();
 	}
 	

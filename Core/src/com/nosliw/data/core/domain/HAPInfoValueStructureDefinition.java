@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
 @HAPEntityWithAttribute
 public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
@@ -17,15 +17,15 @@ public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String EXTRAINFO = "extraInfo";
 
-	private HAPDefinitionEntityValueStructure m_valueStructure;
+	private HAPManualBrickValueStructure m_valueStructure;
 	
 	private HAPExtraInfoEntityInDomainDefinition m_extraInfo;
 	
-	public HAPInfoValueStructureDefinition(HAPDefinitionEntityValueStructure valueStructure) {
+	public HAPInfoValueStructureDefinition(HAPManualBrickValueStructure valueStructure) {
 		this.m_valueStructure = valueStructure;
 	}
 	
-	public HAPDefinitionEntityValueStructure getValueStructure() {    return this.m_valueStructure;     }
+	public HAPManualBrickValueStructure getValueStructure() {    return this.m_valueStructure;     }
 	
 	public HAPExtraInfoEntityInDomainDefinition getExtraInfo() {     return this.m_extraInfo;      }
 	

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -47,7 +47,7 @@ public abstract class HAPPluginEntityDefinitionInDomainImpComplex extends HAPPlu
 	protected void postParseDefinitionContent(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {
 		super.postParseDefinitionContent(entityId, parserContext);
 		HAPManualBrickComplex complexEntity = this.getEntityComplex(entityId, parserContext);
-		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
+		HAPManualBrickValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
 		if(valueContextEntity!=null)   valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 	}
 

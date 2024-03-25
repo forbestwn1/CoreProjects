@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPWrapperExecutableValueStructure;
@@ -20,7 +20,7 @@ public class HAPProcessorContextSolidate {
 	private static Map<String, Object> buildConstants(List<HAPWrapperExecutableValueStructure> valueStructureGroup, HAPDomainValueStructure valueStructureDomain){
 		Map<String, Object> constantsData = new LinkedHashMap<String, Object>();
 		for(HAPWrapperExecutableValueStructure valueStructureWrapper : valueStructureGroup) {
-			HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
+			HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 			for(String rootName : valueStructure.getRootNames()) {
 				HAPRootStructure rootNode = valueStructure.getRootByName(rootName);
 				if(rootNode.isConstant()){

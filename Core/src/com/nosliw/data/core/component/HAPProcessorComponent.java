@@ -1,7 +1,7 @@
 package com.nosliw.data.core.component;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.component.command.HAPDefinitionCommand;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.command.HAPProcessorCommand;
@@ -24,7 +24,7 @@ public class HAPProcessorComponent {
 	//normalize definition
 	public static HAPDefinitionEntityComponent normalize(HAPDefinitionEntityComponent definition, HAPContextProcessor processContext) {
 		
-		HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = definition.getValueStructureWrapper();
+		HAPManualBrickWrapperValueStructure valueStructureWrapper = definition.getValueStructureWrapper();
 		
 		//expand reference in value structure
 		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)valueStructureWrapper.getValueStructure(), processContext));

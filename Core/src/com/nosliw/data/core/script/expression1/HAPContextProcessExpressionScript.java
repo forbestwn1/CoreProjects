@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueContext;
@@ -20,7 +20,7 @@ public class HAPContextProcessExpressionScript implements HAPWithValueContext, H
 	private Map<String, HAPDefinitionConstant> m_constantsDefinition;
 
 	//context for expression
-	private HAPDefinitionEntityWrapperValueStructure m_valueStructureWrapper;
+	private HAPManualBrickWrapperValueStructure m_valueStructureWrapper;
 	
 	public HAPContextProcessExpressionScript() {
 		this.m_constantsDefinition = new LinkedHashMap<String, HAPDefinitionConstant>();
@@ -39,9 +39,9 @@ public class HAPContextProcessExpressionScript implements HAPWithValueContext, H
 	public void addConstantDefinition(HAPDefinitionConstant constantDef) {  this.m_constantsDefinition.put(constantDef.getId(), constantDef);  }
 
 	@Override
-	public HAPDefinitionEntityWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
+	public HAPManualBrickWrapperValueStructure getValueStructureWrapper() {   return this.m_valueStructureWrapper;  }
 
 	@Override
-	public void setValueStructureWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
+	public void setValueStructureWrapper(HAPManualBrickWrapperValueStructure valueStructureWrapper) {   this.m_valueStructureWrapper = valueStructureWrapper;  }
 
 }

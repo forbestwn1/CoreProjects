@@ -21,9 +21,9 @@ import com.nosliw.core.application.common.valueport.HAPRefValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -63,10 +63,10 @@ public class HAPUtilityValueStructureDomain {
 				HAPInfoEntityInDomainDefinition complexEntityInfoDef = definitionGlobalDomain.getEntityInfoDefinition(entityIdDef);
 				HAPManualBrickComplex complexEntityDef = (HAPManualBrickComplex)complexEntityInfoDef.getEntity();
 				
-				HAPDefinitionEntityValueContext valueContextEntityDef = null;
+				HAPManualBrickValueContext valueContextEntityDef = null;
 				HAPIdEntityInDomain valueContextEntityId = complexEntityDef.getValueContextEntityId();
 				if(valueContextEntityId!=null) {
-					valueContextEntityDef = (HAPDefinitionEntityValueContext)definitionGlobalDomain.getEntityInfoDefinition(valueContextEntityId).getEntity();
+					valueContextEntityDef = (HAPManualBrickValueContext)definitionGlobalDomain.getEntityInfoDefinition(valueContextEntityId).getEntity();
 				}
 
 				//value context
@@ -74,9 +74,9 @@ public class HAPUtilityValueStructureDomain {
 				if(valueContextEntityDef!=null) {
 					{
 						List<HAPWrapperExecutableValueStructure> wrappers = new ArrayList<HAPWrapperExecutableValueStructure>();
-						for(HAPDefinitionEntityWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
+						for(HAPManualBrickWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
 							HAPInfoEntityInDomainDefinition valueStructureDefInfo = definitionGlobalDomain.getEntityInfoDefinition(part.getValueStructureId());
-							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPDefinitionEntityValueStructure)valueStructureDefInfo.getEntity(), part.getInfo(), part.getName());
+							String valueStructureExeId = valueStructureDomain.newValueStructure((HAPManualBrickValueStructure)valueStructureDefInfo.getEntity(), part.getInfo(), part.getName());
 							HAPWrapperExecutableValueStructure valueStructureWrapperExe = new HAPWrapperExecutableValueStructure(valueStructureExeId);
 							valueStructureWrapperExe.cloneFromDefinition(part);
 							wrappers.add(valueStructureWrapperExe);
@@ -178,7 +178,7 @@ public class HAPUtilityValueStructureDomain {
 				List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 					HAPWrapperExecutableValueStructure valueStructureWrapper = valueStructureInfo.getValueStructure();
-					HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
+					HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPRefValuePort> dependency = new HashSet<HAPRefValuePort>();
 					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
@@ -233,7 +233,7 @@ public class HAPUtilityValueStructureDomain {
 				List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
 					HAPWrapperExecutableValueStructure valueStructureWrapper = valueStructureInfo.getValueStructure();
-					HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
+					HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					HAPUtilityValueStructure.traverseElement(valueStructure, new HAPProcessorStructureElement() {
 
 						private void process(HAPElementStructureLeafRelative relativeEle) {

@@ -11,9 +11,9 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPInfoAlias;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -29,10 +29,10 @@ public class HAPUtilityValueStructure {
 	
 	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
 		
-		HAPDefinitionEntityValueStructure valueStructure = valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureComplexId).getValueStructure();
+		HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureComplexId).getValueStructure();
 		
 		
-		HAPDefinitionEntityValueContext valueStructureComplex = valueStructureDomain.getValueContext(valueStructureComplexId);
+		HAPManualBrickValueContext valueStructureComplex = valueStructureDomain.getValueContext(valueStructureComplexId);
 		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
@@ -57,16 +57,16 @@ public class HAPUtilityValueStructure {
 		return null;
 	}
 	
-	public static HAPValueStructureInValuePort getValueStructureFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
+	public static HAPValueStructureInValuePort getValueStructureFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
 		return wrapper.getValueStructure();
 	}
 	
-	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
+	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionFlat)getValueStructureFromWrapper(wrapper);
 	}
 	
-	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPDefinitionEntityWrapperValueStructure wrapper) {
+	public static HAPValueStructureDefinitionGroup getGroupFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
 		return (HAPValueStructureDefinitionGroup)getValueStructureFromWrapper(wrapper);
 	}
 	
@@ -90,7 +90,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static Map<String, Object> replaceValueNameWithId(HAPDefinitionEntityValueContext valueStructureComplex, Map<String, Object> values){
+	public static Map<String, Object> replaceValueNameWithId(HAPManualBrickValueContext valueStructureComplex, Map<String, Object> values){
 
 	}
 	

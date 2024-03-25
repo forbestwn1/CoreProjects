@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -42,7 +42,7 @@ public class HAPDefinitionEntityUITagDefinition extends HAPManualBrick{
 	public HAPResourceId getScriptResourceId() {    return (HAPResourceId)this.getAttributeValue(SCRIPTRESOURCEID);      }
 	
 	public HAPIdEntityInDomain getValueContextEntityId() {    return this.getAttributeValueEntityId(HAPWithValueContext.VALUECONTEXT);         }
-	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);   }
+	public HAPManualBrickValueContext getValueContextEntity(HAPContextParser parserContext) {    return (HAPManualBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);   }
 
 	public void setParentRelationConfigure(HAPConfigureParentRelationComplex parentRelationConfigure) {    this.setAttributeValueObject(PARENTRELATIONCONFIGURE, parentRelationConfigure);      }
 	public HAPConfigureParentRelationComplex getParentRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(PARENTRELATIONCONFIGURE);   }

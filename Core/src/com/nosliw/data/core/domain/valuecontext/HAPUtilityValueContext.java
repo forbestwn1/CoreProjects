@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdValuePort;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContextGroupWithEntity;
@@ -169,7 +169,7 @@ public class HAPUtilityValueContext {
 	
 	
 	
-	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPDefinitionEntityValueContext valueStructureComplex) {
+	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPManualBrickValueContext valueStructureComplex) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		List<HAPExecutablePartValueContextSimple> parts = getAllSimpleParts(valueStructureComplex);
 		for(int i=parts.size()-1; i>=0; i--) {
@@ -239,13 +239,13 @@ public class HAPUtilityValueContext {
 	public static HAPInfoPartValueStructure createPartInfoExtension() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_EXTENSION);	}
 	public static HAPInfoPartValueStructure createPartInfoFromParent() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
-	public static void setValueStructureDefault(HAPDefinitionEntityValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
+	public static void setValueStructureDefault(HAPManualBrickValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityValueContext.createPartInfoDefault());
 	}
 	
 
 	public static void setValueStructureFromParent(HAPWithValueContext withValueStructure, List<HAPExecutablePartValueContext> partsFromParent) {
-		HAPDefinitionEntityValueContext valueStructureComplex = withValueStructure.getValueContext();
+		HAPManualBrickValueContext valueStructureComplex = withValueStructure.getValueContext();
 		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityValueContext.createPartInfoFromParent());
 	}
 	

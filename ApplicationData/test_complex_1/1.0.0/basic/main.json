@@ -21,11 +21,15 @@
 						{
 							"groupType" : "public",
 							"valueStructure" : {
-								"child_public": {
-									"definition":{
-										"criteria": "test.string;1.0.0"
-									},
-									"defaultValue": {
+								"root" : {
+									"child_public": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									}
+								},
+								"initValue": {
+									"child_public": {
 										"dataTypeId": "test.string;1.0.0",
 										"value": "default value of parent_public"
 									}

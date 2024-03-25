@@ -44,7 +44,7 @@ public class HAPUtilityContextScript {
 	public static JSONObject buildDefaultJsonObject(HAPValueStructureDefinitionFlat context) {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		for(String contextEleName : context.getRootNames()) {
-			Object value = context.getRoot(contextEleName).getDefaultValue();
+			Object value = context.getRoot(contextEleName).getInitValue();
 			if(value!=null) {
 				jsonMap.put(contextEleName, value.toString());
 			}

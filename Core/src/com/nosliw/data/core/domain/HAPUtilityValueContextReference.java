@@ -10,7 +10,7 @@ import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementRe
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.data.variable.HAPIdVariable;
 import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
@@ -26,7 +26,7 @@ public class HAPUtilityValueContextReference {
 			//not able to resolve variable
 			String valueStructureRuntimId = HAPUtilityValueContext.getExtensionValueStructure(valueContext, extensionStructureGroup!=null?extensionStructureGroup:HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 			if(valueStructureRuntimId!=null) {
-				HAPDefinitionEntityValueStructure vs = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureRuntimId);
+				HAPManualBrickValueStructure vs = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureRuntimId);
 				HAPComplexPath varPath = new HAPComplexPath(variableName);
 				HAPUtilityStructure.setDescendant(vs, varPath, new HAPElementStructureLeafData());
 				out = new HAPIdVariable(new HAPIdRootElement(valueStructureRuntimId, varPath.getRoot()), varPath.getPath().toString());

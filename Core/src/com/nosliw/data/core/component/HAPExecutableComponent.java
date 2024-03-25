@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
@@ -46,7 +46,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public static final String SERVICE = "service";
 
 	// hook up with real data during runtime
-	private HAPDefinitionEntityValueContext m_valueStructure;
+	private HAPManualBrickValueContext m_valueStructure;
 	
 	private HAPExecutableTaskSuite m_taskSuite;
 
@@ -72,7 +72,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	public HAPExecutableServiceUse getServiceUse(String name) {   return this.m_services.get(name);  }
 
 	public HAPTreeNodeValueStructure getValueStructureDefinitionNode() {   return this.m_valueStructureNode;   }
-	public HAPDefinitionEntityValueContext getValueStructureComplex() {     return this.m_valueStructureNode.getValueContext();   }
+	public HAPManualBrickValueContext getValueStructureComplex() {     return this.m_valueStructureNode.getValueContext();   }
 	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructure());}
 
 	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }

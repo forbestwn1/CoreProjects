@@ -7,7 +7,7 @@ import java.util.Set;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPInfoValueStructureDefinition;
 
@@ -72,7 +72,7 @@ public class HAPContextStructureReferenceValueStructure implements HAPContextStr
 	}
 
 	@Override
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId) {
+	public HAPManualBrickValueStructure getValueStructureDefintion(String valueStructureId) {
 		return this.m_valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureId);
 	}
 

@@ -5,9 +5,9 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 
-public class HAPDefinitionEntityContainer<T extends HAPManualBrick> extends HAPManualBrickSimple{
+public class HAPManualBrickContainer<T extends HAPManualBrick> extends HAPManualBrickSimple{
 
-	protected HAPDefinitionEntityContainer (HAPIdBrickType entityType) {
+	protected HAPManualBrickContainer (HAPIdBrickType entityType) {
 		super(entityType);
 	}
 	

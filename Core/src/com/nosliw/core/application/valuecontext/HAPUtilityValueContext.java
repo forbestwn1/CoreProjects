@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdValuePort;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
@@ -153,7 +153,7 @@ public class HAPUtilityValueContext {
 		return out;
 	}
 
-	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPDefinitionEntityValueContext valueStructureComplex) {
+	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPManualBrickValueContext valueStructureComplex) {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		List<HAPPartInValueContextSimple> parts = getAllSimpleParts(valueStructureComplex);
 		for(int i=parts.size()-1; i>=0; i--) {
@@ -223,13 +223,13 @@ public class HAPUtilityValueContext {
 	public static HAPInfoPartInValueContext createPartInfoExtension() {	return new HAPInfoPartInValueContext(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_EXTENSION);	}
 	public static HAPInfoPartInValueContext createPartInfoFromParent() {	return new HAPInfoPartInValueContext(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
-	public static void setValueStructureDefault(HAPDefinitionEntityValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
+	public static void setValueStructureDefault(HAPManualBrickValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityValueContext.createPartInfoDefault());
 	}
 	
 
 	public static void setValueStructureFromParent(HAPWithValueContext withValueStructure, List<HAPPartInValueContext> partsFromParent) {
-		HAPDefinitionEntityValueContext valueStructureComplex = withValueStructure.getValueContext();
+		HAPManualBrickValueContext valueStructureComplex = withValueStructure.getValueContext();
 		valueStructureComplex.addPartGroup(partsFromParent, HAPUtilityValueContext.createPartInfoFromParent());
 	}
 	

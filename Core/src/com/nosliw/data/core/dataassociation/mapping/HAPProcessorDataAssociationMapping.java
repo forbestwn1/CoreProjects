@@ -214,7 +214,7 @@ public class HAPProcessorDataAssociationMapping {
 //			String toValueStructureId = valueMappingItem.getTarget().getValueStructureId();
 //			HAPComplexPath toItemPath = new HAPComplexPath(eleInfo.getElementPath().getFullName());
 //				
-//			HAPDefinitionEntityValueStructure toValueStructure = valueStructureRefContext.getValueStructureDefintion(toValueStructureId); 
+//			HAPManualBrickValueStructure toValueStructure = valueStructureRefContext.getValueStructureDefintion(toValueStructureId); 
 //			HAPElementStructure toElement = HAPUtilityStructure.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
 //			
 //			

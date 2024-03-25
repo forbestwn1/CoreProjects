@@ -8,7 +8,7 @@ public class HAPUtilityUITag {
 	public static Map<String, String> getTagAttributeValue(HAPUITagDefinition tagDef, Map<String, String> attributes){
 		Map<String, String> out = new LinkedHashMap<String, String>();
 		for(HAPUITagDefinitionAttribute attrDef : tagDef.getAllAttributeDef()) {
-			String defaultValue = attrDef.getDefaultValue();
+			String defaultValue = attrDef.getInitValue();
 			if(defaultValue!=null) {
 				out.put(attrDef.getName(), defaultValue);
 			}

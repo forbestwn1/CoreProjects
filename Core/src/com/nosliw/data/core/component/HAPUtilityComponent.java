@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
@@ -109,8 +109,8 @@ public class HAPUtilityComponent {
 		return null;
 	}
 	
-	public static HAPDefinitionEntityWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
-		HAPDefinitionEntityWrapperValueStructure out = null;
+	public static HAPManualBrickWrapperValueStructure getValueStructure(Object def, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualBrickWrapperValueStructure out = null;
 		if(def instanceof HAPDefinitionEntityElementInContainerComponent) {
 			out = ((HAPDefinitionEntityElementInContainerComponent)def).getValueStructureWrapper();
 		}

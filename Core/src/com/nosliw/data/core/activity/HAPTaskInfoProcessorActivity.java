@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.task.HAPDefinitionTask;
@@ -22,7 +22,7 @@ public class HAPTaskInfoProcessorActivity implements HAPProcessorTask{
 			HAPDefinitionTask taskDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper,
+			HAPManualBrickWrapperValueStructure valueStructureWrapper,
 			HAPProcessTracker processTracker) {
 		if(!HAPUtilityEntityInfo.isEnabled(taskDefinition))  return null;
 

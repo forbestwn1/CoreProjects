@@ -19,7 +19,7 @@ import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -183,8 +183,8 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 		expressionGroupExe.setDataConstants(constants);
 	}
 	
-	private static Triple<HAPDefinitionEntityExpressionDataGroup, HAPExecutableEntityExpressionDataGroup, HAPDefinitionEntityValueContext> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
-		Triple<HAPManualBrickComplex, HAPExecutableEntityComplex, HAPDefinitionEntityValueContext> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
+	private static Triple<HAPDefinitionEntityExpressionDataGroup, HAPExecutableEntityExpressionDataGroup, HAPManualBrickValueContext> getComplexEntityByExecutableId(HAPIdEntityInDomain executableId, HAPContextProcessor processContext){
+		Triple<HAPManualBrickComplex, HAPExecutableEntityComplex, HAPManualBrickValueContext> triple = processContext.getDomainContext().getComplexEntityInfoByExecutableId(executableId);
 		HAPExecutableEntityExpressionDataGroup expressionGroupExe = (HAPExecutableEntityExpressionDataGroup)triple.getMiddle();
 		HAPDefinitionExpressionGroup1 expressionGroupDef = (HAPDefinitionExpressionGroup1)triple.getLeft();
 		return Triple.of(expressionGroupDef, expressionGroupExe, triple.getRight());

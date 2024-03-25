@@ -64,28 +64,31 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	//return new runtime id
 	public String cloneRuntime(String runtimeId) {
 		String definitionId = this.m_definitionIdByRuntimeId.get(runtimeId);
-		return this.newRuntime(definitionId, null, null);
+		return this.newRuntime(definitionId, null, null, null);
 	}
 
 	public String newValueStructure() {
 		String defId = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition());
-		return this.newRuntime(defId, null, null);
+		return this.newRuntime(defId, null, null, null);
 	}
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(Set<HAPRootInValueStructure> roots, HAPInfo info, String name) {
+	public String newValueStructure(Set<HAPRootInValueStructure> roots, Object initValue, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(roots));
-		return this.newRuntime(id, info, name);
+		return this.newRuntime(id, initValue, info, name);
 	}
 
 	//create new runtime according to definition id 
-	private String newRuntime(String definitionId, HAPInfo info, String name) {
+	private String newRuntime(String definitionId, Object initValue, HAPInfo info, String name) {
 		String runtimeId = this.m_idGenerator.generateId();
+		HAPInfoValueStructureRuntime runtimeValueStructureInfo = new HAPInfoValueStructureRuntime(runtimeId, info, name);
+		runtimeValueStructureInfo.setInitValue(initValue);
+		this.m_valueStructureRuntime.put(runtimeId, runtimeValueStructureInfo);
+		
 		this.m_definitionIdByRuntimeId.put(runtimeId, definitionId);
-		this.m_valueStructureRuntime.put(runtimeId, new HAPInfoValueStructureRuntime(runtimeId, info, name));
 		return runtimeId;
 	}
 	

@@ -33,8 +33,8 @@ import com.nosliw.core.application.division.manual.brick.test.complex.script.HAP
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginParserEntityImpTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginParserBrickImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginProcessorBrickDefinitionComplexImpTestComplex1;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPPluginParserEntityImpValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPPluginParserEntityImpValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPPluginParserBrickImpValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPPluginParserBrickImpValueStructure;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -201,8 +201,8 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 		this.registerEntityProcessorInfo(HAPEnumBrickType.TEST_COMPLEX_1_100, new HAPManualInfoBrickProcessor(new HAPPluginParserBrickImpTestComplex1(this, this.m_runtimeEnv), new HAPPluginProcessorBrickDefinitionComplexImpTestComplex1()));
 		this.registerEntityProcessorInfo(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, new HAPManualInfoBrickProcessor(new HAPPluginParserEntityImpTestComplexScript(this, this.m_runtimeEnv), new HAPPluginEntityProcessorComplexTestComplexScript()));
 
-		this.registerEntityProcessorInfo(HAPEnumBrickType.VALUESTRUCTURE_100, new HAPManualInfoBrickProcessor(new HAPPluginParserEntityImpValueStructure(this, this.m_runtimeEnv), null));
-		this.registerEntityProcessorInfo(HAPEnumBrickType.VALUECONTEXT_100, new HAPManualInfoBrickProcessor(new HAPPluginParserEntityImpValueContext(this, this.m_runtimeEnv), null));
+		this.registerEntityProcessorInfo(HAPEnumBrickType.VALUESTRUCTURE_100, new HAPManualInfoBrickProcessor(new HAPPluginParserBrickImpValueStructure(this, this.m_runtimeEnv), null));
+		this.registerEntityProcessorInfo(HAPEnumBrickType.VALUECONTEXT_100, new HAPManualInfoBrickProcessor(new HAPPluginParserBrickImpValueContext(this, this.m_runtimeEnv), null));
 	}
 
 	public HAPManualBrick parseEntityDefinition(Object entityObj, HAPIdBrickType entityTypeId, HAPSerializationFormat format, HAPManualContextParse parseContext) {

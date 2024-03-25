@@ -34,7 +34,7 @@ import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
@@ -119,7 +119,7 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	public static void processRelativeInStructure(HAPDefinitionEntityValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	public static void processRelativeInStructure(HAPManualBrickValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		if(processRelativeConfigure==null) {
 			processRelativeConfigure = new HAPConfigureProcessorRelative();
 		} 

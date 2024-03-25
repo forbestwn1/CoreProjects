@@ -15,7 +15,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
@@ -26,14 +26,14 @@ public class HAPUtilityValueStructure {
 		HAPUtilityStructure.traverseElement(root.getDefinition(), root.getName(), processor, value);
 	}
 	
-	public static void traverseElement(HAPDefinitionEntityValueStructure valueStructure, HAPProcessorStructureElement processor, Object value) {
+	public static void traverseElement(HAPManualBrickValueStructure valueStructure, HAPProcessorStructureElement processor, Object value) {
 		for(HAPRootStructure rootStructure : valueStructure.getAllRoots()) {
 			traverseElement(rootStructure, processor, value);
 		}
 	}
 
 	//find all data variables in context 
-	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPDefinitionEntityValueStructure structure){
+	public static Map<String, HAPInfoCriteria> discoverDataVariablesByIdInStructure(HAPManualBrickValueStructure structure){
 		Map<String, HAPInfoCriteria> out = new LinkedHashMap<String, HAPInfoCriteria>();
 		if(structure!=null) {
 			for(HAPRootStructure root : structure.getAllRoots()){

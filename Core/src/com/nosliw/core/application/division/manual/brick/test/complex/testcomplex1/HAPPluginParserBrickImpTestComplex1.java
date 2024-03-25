@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.test.complex.testcompl
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinitionComplex;
@@ -26,7 +26,7 @@ public class HAPPluginParserBrickImpTestComplex1 extends HAPPluginParserBrickImp
 		super.postParseDefinitionContent(entityId, parserContext);
 
 		HAPManualBrickComplex complexEntity = (HAPManualBrickComplex)this.getEntity(entityId, parserContext);
-		HAPDefinitionEntityValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
+		HAPManualBrickValueContext valueContextEntity = complexEntity.getValueContextEntity(parserContext);
 		if(valueContextEntity!=null) {
 			valueContextEntity.discoverConstantScript(entityId, parserContext, this.getRuntimeEnvironment().getDataExpressionParser());
 		}

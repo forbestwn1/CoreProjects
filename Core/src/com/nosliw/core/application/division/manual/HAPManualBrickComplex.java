@@ -6,7 +6,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.common.valueport.HAPDefinitionValuePort;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -35,12 +35,12 @@ public abstract class HAPManualBrickComplex extends HAPManualBrickBlock implemen
 	
 	
 	@Override
-	public HAPDefinitionEntityValueContext getValueContextEntity() {    return (HAPDefinitionEntityValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
+	public HAPManualBrickValueContext getValueContextEntity() {    return (HAPManualBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
 
 	@Override
-	public void setValueContextEntity(HAPDefinitionEntityValueContext valueContext) {}
+	public void setValueContextEntity(HAPManualBrickValueContext valueContext) {}
 
-	public HAPDefinitionEntityValueContext getValueContextEntity(HAPContextParser parserContext) {  return (HAPDefinitionEntityValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
+	public HAPManualBrickValueContext getValueContextEntity(HAPContextParser parserContext) {  return (HAPManualBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
 	
 	@Override
 	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithAttachment.ATTACHMENT);  }

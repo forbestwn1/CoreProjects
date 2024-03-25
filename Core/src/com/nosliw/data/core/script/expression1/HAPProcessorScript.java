@@ -7,7 +7,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -26,7 +26,7 @@ public class HAPProcessorScript {
 	public static HAPExecutableScriptGroup processSimpleScript(
 			String script,
 			String scriptType, 
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper, 
+			HAPManualBrickWrapperValueStructure valueStructureWrapper, 
 			Map<String, Object> constants,
 			Map<String, String> configure, 
 			HAPRuntimeEnvironment runtimeEnv,
@@ -60,7 +60,7 @@ public class HAPProcessorScript {
 		HAPExecutableScriptGroup out = new HAPExecutableScriptGroup();
 
 		//context
-		HAPDefinitionEntityWrapperValueStructure valueStructureWrapper =  scriptGroupDef.getValueStructureWrapper();
+		HAPManualBrickWrapperValueStructure valueStructureWrapper =  scriptGroupDef.getValueStructureWrapper();
 		out.setValueStructureDefinitionWrapper(valueStructureWrapper);
 
 		//expression definition containing all expression in script 

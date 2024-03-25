@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -53,8 +53,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public boolean getIsDirty() {     return this.m_isDirty;   }
 	
 	public HAPInfoValueStructureDefinition getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
-	public HAPDefinitionEntityValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
-	public HAPDefinitionEntityValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
+	public HAPManualBrickValueStructure getValueStructureDefinitionByRuntimeId(String runtimeId) {	return getValueStructureDefInfoByRuntimeId(runtimeId).getValueStructure();	}
+	public HAPManualBrickValueStructure getValueStructure(String valueStructureDefId) {    return getValueStructureDefinitionInfo(valueStructureDefId).getValueStructure();     }
 	public HAPInfoValueStructureDefinition getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructureDefinition.get(valueStructureDefId);     }
 
 	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
@@ -70,7 +70,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	public String newValueStructure() {
-		HAPDefinitionEntityValueStructure valueStructureEntityDef = new HAPDefinitionEntityValueStructure();
+		HAPManualBrickValueStructure valueStructureEntityDef = new HAPManualBrickValueStructure();
 		String defId = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition(valueStructureEntityDef));
 		return this.newRuntime(defId, null, null);
@@ -78,7 +78,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(HAPDefinitionEntityValueStructure valueStructureDef, HAPInfo info, String name) {
+	public String newValueStructure(HAPManualBrickValueStructure valueStructureDef, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
 		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(valueStructureDef.cloneValueStructure()));
 		return this.newRuntime(id, info, name);

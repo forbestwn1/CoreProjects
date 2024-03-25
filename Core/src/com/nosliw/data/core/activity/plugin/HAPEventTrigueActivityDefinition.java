@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.activity.HAPDefinitionResultActivity;
@@ -22,7 +22,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 
 	private String m_eventName;
 	
-	private HAPDefinitionEntityWrapperValueStructure m_valueStructure;
+	private HAPManualBrickWrapperValueStructure m_valueStructure;
 	
 	public HAPEventTrigueActivityDefinition(String type) {
 		super(type);
@@ -31,7 +31,7 @@ public class HAPEventTrigueActivityDefinition extends HAPDefinitionActivityNorma
 	public String getEventName() {    return this.m_eventName;      }
 	
 	@Override
-	public HAPDefinitionEntityWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
+	public HAPManualBrickWrapperValueStructure getInputValueStructureWrapper() {  return this.m_valueStructure;   }
 
 	@Override
 	protected void buildConfigureByJson(JSONObject configurJsonObj) {

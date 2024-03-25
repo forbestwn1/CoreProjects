@@ -2,7 +2,7 @@ package com.nosliw.data.core.activity.plugin;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPExecutableActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
@@ -18,7 +18,7 @@ public class HAPDataAssociationActivityProcessor implements HAPProcessorActivity
 			HAPDefinitionActivity activityDefinition, 
 			String id,
 			HAPContextProcessor processContext, 
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper,
+			HAPManualBrickWrapperValueStructure valueStructureWrapper,
 			HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, 
 			HAPProcessTracker processTracker) {

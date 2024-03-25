@@ -12,7 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
@@ -30,7 +30,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 
-	private HAPDefinitionEntityWrapperValueStructure m_valueStructureWrapper;
+	private HAPManualBrickWrapperValueStructure m_valueStructureWrapper;
 	
 	private HAPExecutableEntityExpressionDataGroup m_expressionExe;
 	
@@ -43,9 +43,9 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 //		this.m_constants = new LinkedHashMap<String, Object>();
 	}
 	
-	public void setValueStructureDefinitionWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
+	public void setValueStructureDefinitionWrapper(HAPManualBrickWrapperValueStructure valueStructureWrapper) {   	this.m_valueStructureWrapper = valueStructureWrapper;	}
 	
-	public HAPDefinitionEntityWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
+	public HAPManualBrickWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 	
 	public HAPExecutableEntityExpressionDataGroup getExpression() {    return this.m_expressionExe;   }
 	public void setExpression(HAPExecutableEntityExpressionDataGroup expression) {    this.m_expressionExe = expression;    }

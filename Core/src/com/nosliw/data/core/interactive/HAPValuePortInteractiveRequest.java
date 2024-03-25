@@ -10,14 +10,14 @@ import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 
 	private List<HAPDefinitionInteractiveRequestParm> m_requestParms;
 
-	private HAPDefinitionEntityValueStructure m_valueStructureDef;
+	private HAPManualBrickValueStructure m_valueStructureDef;
 	
 	public HAPValuePortInteractiveRequest(HAPIdValuePort valuePortId, HAPInfoValuePort valuePortInfo, List<HAPDefinitionInteractiveRequestParm> requestParms) {
 		super(valuePortId, valuePortInfo);
@@ -33,12 +33,12 @@ public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 	}
 
 	@Override
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId) {
+	public HAPManualBrickValueStructure getValueStructureDefintion(String valueStructureId) {
 		return this.m_valueStructureDef;
 	}
 
 	private void buildValueStructure() {
-		this.m_valueStructureDef = new HAPDefinitionEntityValueStructure();
+		this.m_valueStructureDef = new HAPManualBrickValueStructure();
 		for(HAPDefinitionInteractiveRequestParm parm : this.m_requestParms) {
 			HAPRootStructure rootStructure = new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo()), parm);
 			rootStructure.setName(parm.getName());

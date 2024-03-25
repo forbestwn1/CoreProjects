@@ -8,14 +8,14 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPContextStructureReferenceInteractiveResult implements HAPContextStructureReference{
 
 	private HAPDefinitionInteractiveResult m_result;
 	
-	private HAPDefinitionEntityValueStructure m_valueStructureDef;
+	private HAPManualBrickValueStructure m_valueStructureDef;
 	
 	public HAPContextStructureReferenceInteractiveResult(HAPDefinitionInteractiveResult result) {
 		this.m_result = result;
@@ -30,12 +30,12 @@ public class HAPContextStructureReferenceInteractiveResult implements HAPContext
 	}
 
 	@Override
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId) {
+	public HAPManualBrickValueStructure getValueStructureDefintion(String valueStructureId) {
 		return this.m_valueStructureDef;
 	}
 
 	private void buildValueStructure() {
-		this.m_valueStructureDef = new HAPDefinitionEntityValueStructure();
+		this.m_valueStructureDef = new HAPManualBrickValueStructure();
 		for(HAPDefinitionInteractiveResultOutput output : this.m_result.getOutput()) {
 			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(output.getCriteria()), output));
 		}

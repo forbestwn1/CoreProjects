@@ -8,7 +8,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPUtilityInfo;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
@@ -52,9 +52,9 @@ public abstract class HAPDefinitionEntityElementInContainerComplex extends HAPSe
 	}
 
 	@Override
-	public HAPDefinitionEntityValueContext getValueStructureComplex() {	return this.m_componentEntity.getValueContext();	}
+	public HAPManualBrickValueContext getValueStructureComplex() {	return this.m_componentEntity.getValueContext();	}
 
-	public HAPDefinitionEntityValueContext getContainerValueStructureComplex() {	return this.m_componentContainer.getValueContext();	}
+	public HAPManualBrickValueContext getContainerValueStructureComplex() {	return this.m_componentContainer.getValueContext();	}
 	
 	
 	public HAPDefinitionEntityContainer getResourceContainer() {   return this.m_componentContainer;    }

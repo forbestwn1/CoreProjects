@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachmentImpEntity;
@@ -19,7 +19,7 @@ public class HAPUtilityActivityComponent {
 		HAPDefinitionActivitySuiteImp out = new HAPDefinitionActivitySuiteImp();
 		
 		//build context
-		HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = HAPUtilityComponent.getValueStructure(complexEntity, runtimeEnv);
+		HAPManualBrickWrapperValueStructure valueStructureWrapper = HAPUtilityComponent.getValueStructure(complexEntity, runtimeEnv);
 		out.setValueStructureWrapper(valueStructureWrapper);
 		
 //		//build constant from attachment

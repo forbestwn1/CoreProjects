@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
 public class HAPValueStructureInValuePort extends HAPEntityInfoImp{
 
@@ -44,8 +44,8 @@ public class HAPValueStructureInValuePort extends HAPEntityInfoImp{
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPDefinitionEntityValueStructure) {
-			HAPDefinitionEntityValueStructure context = (HAPDefinitionEntityValueStructure)obj;
+		if(obj instanceof HAPManualBrickValueStructure) {
+			HAPManualBrickValueStructure context = (HAPManualBrickValueStructure)obj;
 			if(context.getRootNames().equals(this.getRootNames())) {
 				for(String eleName : this.getRootNames()) {
 					out = this.getRootByName(eleName).equals(context.getRootByName(eleName));

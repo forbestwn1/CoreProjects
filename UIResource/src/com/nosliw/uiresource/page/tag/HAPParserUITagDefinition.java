@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.valuestructure1.HAPParserValueStructure;
@@ -73,7 +73,7 @@ public class HAPParserUITagDefinition {
 		NativeObject valueStructureObj = (NativeObject)defObjJS.get(HAPUITagDefinition.VALUESTRUCTURE);
 		JSONObject valueStructureJson = (JSONObject)HAPUtilityRhinoValue.toJson(valueStructureObj);
 		
-		HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = new HAPDefinitionEntityWrapperValueStructure(new HAPValueStructureDefinitionGroup());
+		HAPManualBrickWrapperValueStructure valueStructureWrapper = new HAPManualBrickWrapperValueStructure(new HAPValueStructureDefinitionGroup());
 		HAPParserUITagDefinition.parseValueStructureInTagDefinition(valueStructureJson, (HAPValueStructureDefinitionGroup)valueStructureWrapper.getValueStructure());
 		definition.setValueStructureDefinitionWrapper(valueStructureWrapper);
 		

@@ -7,10 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -18,47 +15,40 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
-@HAPEntityWithAttribute
-public class HAPDefinitionEntityValueStructure extends HAPManualBrickSimple implements HAPStructure{
+public class HAPManualBrickValueStructure extends HAPManualBrickSimple{
 
-	@HAPAttribute
-	public static final String VALUE = "value";
+	public static final String ROOT = "root";
 
-	private Map<String, HAPRootStructure> m_roots;
-	
-	public HAPDefinitionEntityValueStructure() {
+	public static final String INITVALUE = "initValue";
+
+	public HAPManualBrickValueStructure() {
 		super(HAPEnumBrickType.VALUESTRUCTURE_100);
-		this.setAttributeValue(VALUE, new LinkedHashMap<String, HAPRootStructure>());
+		this.setAttributeValue(ROOT, new LinkedHashMap<String, HAPManualRootInValueStructure>());
 	}
 
-	public HAPRootStructure addRoot(HAPRootStructure root) {
-		root = root.cloneRoot();
+	public void setInitValue(Object defaultValue) {	this.setAttributeValue(INITVALUE, defaultValue); 	}
+	public Object getInitValue() {    return this.getAttributeValue(INITVALUE);     } 
+	
+	public HAPManualRootInValueStructure addRoot(HAPManualRootInValueStructure root) {
 		String name = root.getName();
 		this.getRoots().put(name, root);
 		return root;
 	}
 
-	public Map<String, HAPRootStructure> getRoots(){	return (Map<String, HAPRootStructure>)this.getAttributeValue(VALUE);    }
+	public Map<String, HAPManualRootInValueStructure> getRoots(){	return (Map<String, HAPManualRootInValueStructure>)this.getAttributeValue(ROOT);    }
 	
-	@Override
-	public HAPRootStructure getRoot(String rootName, boolean createIfNotExist) {
-		HAPRootStructure out = null;
-		Map<String, HAPRootStructure> roots = this.getRoots();
-		out = roots.get(rootName);
-		if(createIfNotExist==true&&out==null) {
-			out = new HAPRootStructure();
-			roots.put(rootName, out);
-		}
-		return out;
-	}
-
 	public Set<String> getRootNames(){   return this.getRoots().keySet();    }
 	
-	public HAPRootStructure getRootByName(String rootName) {   return this.getRoots().get(rootName);  }
+	public HAPManualRootInValueStructure getRootByName(String rootName) {   return this.getRoots().get(rootName);  }
 	
-	@Override
-	public Set<HAPRootStructure> getAllRoots(){   return new HashSet<HAPRootStructure>(this.getRoots().values());      }
+	public Set<HAPManualRootInValueStructure> getAllRoots(){   return new HashSet<HAPManualRootInValueStructure>(this.getRoots().values());      }
 
+
+	
+	
+	
+	
+	
 	public List<HAPRootStructure> resolveRoot(String rootName, boolean createIfNotExist) {
 		HAPRootStructure root = this.getRootByName(rootName);
 		if(createIfNotExist && root==null) {
@@ -116,8 +106,8 @@ public class HAPDefinitionEntityValueStructure extends HAPManualBrickSimple impl
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPDefinitionEntityValueStructure) {
-			HAPDefinitionEntityValueStructure context = (HAPDefinitionEntityValueStructure)obj;
+		if(obj instanceof HAPManualBrickValueStructure) {
+			HAPManualBrickValueStructure context = (HAPManualBrickValueStructure)obj;
 			if(context.getRootNames().equals(this.getRootNames())) {
 				for(String eleName : this.getRootNames()) {
 					out = this.getRootByName(eleName).equals(context.getRootByName(eleName));

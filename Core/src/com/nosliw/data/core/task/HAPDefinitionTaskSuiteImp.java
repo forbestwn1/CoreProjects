@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.common.HAPWithValueContext;
 
 public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDefinitionTaskSuite{
@@ -30,10 +30,10 @@ public class HAPDefinitionTaskSuiteImp extends HAPEntityInfoImp implements HAPDe
 	public void addEntityElement(HAPDefinitionTask entityElement) {  this.m_tasks.put(entityElement.getId(), entityElement); }
 
 	@Override
-	public HAPDefinitionEntityWrapperValueStructure getValueStructureWrapper() {    return this.m_withValueStructure.getValueStructureWrapper();   }
+	public HAPManualBrickWrapperValueStructure getValueStructureWrapper() {    return this.m_withValueStructure.getValueStructureWrapper();   }
 
 	@Override
-	public void setValueStructureWrapper(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper) {    throw new RuntimeException();  }
+	public void setValueStructureWrapper(HAPManualBrickWrapperValueStructure valueStructureWrapper) {    throw new RuntimeException();  }
 
 	@Override
 	public HAPDefinitionTaskSuite cloneTaskSuiteDefinition() {

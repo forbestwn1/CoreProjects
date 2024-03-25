@@ -7,9 +7,9 @@ import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
@@ -58,22 +58,22 @@ public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefin
 		HAPManagerDomainEntityDefinition domainEntityDefMan = this.getRuntimeEnvironment().getDomainEntityDefinitionManager();
 
 		HAPInfoEntityInDomainDefinition valueContextEntityInfo1 = parserContext.getGlobalDomain().getEntityInfoDefinition(uiTagDefEntity.getValueContextEntityId());
-		HAPDefinitionEntityValueContext valueContextEntity1 = (HAPDefinitionEntityValueContext)valueContextEntityInfo1.getEntity();
+		HAPManualBrickValueContext valueContextEntity1 = (HAPManualBrickValueContext)valueContextEntityInfo1.getEntity();
 		
 		HAPIdEntityInDomain valueContextEntityId = domainEntityDefMan.newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, parserContext);
-		HAPDefinitionEntityValueContext valueContextEntity = (HAPDefinitionEntityValueContext)parserContext.getGlobalDomain().getEntityDefinition(valueContextEntityId);
+		HAPManualBrickValueContext valueContextEntity = (HAPManualBrickValueContext)parserContext.getGlobalDomain().getEntityDefinition(valueContextEntityId);
 
-		for(HAPDefinitionEntityWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
+		for(HAPManualBrickWrapperValueStructure valueStructureWrapper1 : valueContextEntity1.getValueStructures()) {
 
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = new HAPDefinitionEntityWrapperValueStructure();
+			HAPManualBrickWrapperValueStructure valueStructureWrapper = new HAPManualBrickWrapperValueStructure();
 			valueStructureWrapper.setName(valueStructureWrapper1.getName());
 			valueStructureWrapper.setGroupType(valueStructureWrapper1.getGroupType());
 
 			HAPInfoEntityInDomainDefinition valueStructureEntityInfo1 = parserContext.getGlobalDomain().getEntityInfoDefinition(valueStructureWrapper1.getValueStructureId());
-			HAPDefinitionEntityValueStructure valueStructure1 = (HAPDefinitionEntityValueStructure)valueStructureEntityInfo1.getEntity();
+			HAPManualBrickValueStructure valueStructure1 = (HAPManualBrickValueStructure)valueStructureEntityInfo1.getEntity();
 
 			HAPIdEntityInDomain valueStructureEntityId = domainEntityDefMan.newDefinitionInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, parserContext);
-			HAPDefinitionEntityValueStructure valueStructure = (HAPDefinitionEntityValueStructure)parserContext.getGlobalDomain().getEntityDefinition(valueStructureEntityId);
+			HAPManualBrickValueStructure valueStructure = (HAPManualBrickValueStructure)parserContext.getGlobalDomain().getEntityDefinition(valueStructureEntityId);
 			
 			for(String rootName : valueStructure1.getRootNames()) {
 				valueStructure.addRoot(valueStructure1.getRootByName(rootName).cloneRoot());

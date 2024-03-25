@@ -8,14 +8,14 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPContextStructureReferenceInteractiveRequest implements HAPContextStructureReference{
 
 	private List<HAPDefinitionInteractiveRequestParm> m_requestParms;
 
-	private HAPDefinitionEntityValueStructure m_valueStructureDef;
+	private HAPManualBrickValueStructure m_valueStructureDef;
 	
 	public HAPContextStructureReferenceInteractiveRequest(List<HAPDefinitionInteractiveRequestParm> requestParms) {
 		this.m_requestParms = requestParms;
@@ -30,12 +30,12 @@ public class HAPContextStructureReferenceInteractiveRequest implements HAPContex
 	}
 
 	@Override
-	public HAPDefinitionEntityValueStructure getValueStructureDefintion(String valueStructureId) {
+	public HAPManualBrickValueStructure getValueStructureDefintion(String valueStructureId) {
 		return this.m_valueStructureDef;
 	}
 
 	private void buildValueStructure() {
-		this.m_valueStructureDef = new HAPDefinitionEntityValueStructure();
+		this.m_valueStructureDef = new HAPManualBrickValueStructure();
 		for(HAPDefinitionInteractiveRequestParm parm : this.m_requestParms) {
 			HAPRootStructure rootStructure = new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo()), parm);
 			rootStructure.setName(parm.getName());

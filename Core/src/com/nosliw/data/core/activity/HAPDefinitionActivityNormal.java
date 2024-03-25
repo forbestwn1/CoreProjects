@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
@@ -40,7 +40,7 @@ public abstract class HAPDefinitionActivityNormal extends HAPDefinitionActivity{
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPDefinitionEntityWrapperValueStructure getInputValueStructureWrapper() {  return null;   }
+	public HAPManualBrickWrapperValueStructure getInputValueStructureWrapper() {  return null;   }
 	
 	public void addResult(String name, HAPDefinitionResultActivity result) {   this.m_results.put(name, result);   }
 	public Map<String, HAPDefinitionResultActivity> getResults(){   return this.m_results;  }

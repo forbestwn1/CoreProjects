@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.domain.HAPDomainAttachment;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -78,7 +78,7 @@ public class HAPContextProcessor {
 
 	public HAPProcessTracker getProcessTracker() {    return this.m_processTracker;    }
 	
-	public HAPDefinitionEntityValueContext getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueContext();     }
+	public HAPManualBrickValueContext getValueStructureComplex() {   return this.m_complexEntity==null?null:this.m_complexEntity.getValueContext();     }
 	
 	public HAPDefinitionEntityContainerAttachment getAttachmentContainer() {   return this.m_complexEntity==null?null:this.m_complexEntity.getAttachmentContainer();    }
 	

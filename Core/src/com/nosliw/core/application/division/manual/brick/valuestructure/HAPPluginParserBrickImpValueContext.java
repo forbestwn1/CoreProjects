@@ -15,50 +15,50 @@ import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple
 import com.nosliw.core.application.division.manual.HAPUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserEntityImpValueContext extends HAPPluginParserBrickImpSimple{
+public class HAPPluginParserBrickImpValueContext extends HAPPluginParserBrickImpSimple{
 
-	public HAPPluginParserEntityImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.VALUECONTEXT_100, HAPDefinitionEntityValueContext.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPPluginParserBrickImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPEnumBrickType.VALUECONTEXT_100, HAPManualBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
-		HAPDefinitionEntityValueContext valueContext = (HAPDefinitionEntityValueContext)entityDefinition;
+		HAPManualBrickValueContext valueContext = (HAPManualBrickValueContext)entityDefinition;
 
 		if(jsonValue instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)jsonValue;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
-				HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parseContext);
+				HAPManualBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parseContext);
 				valueContext.addValueStructure(valueStructureWrapper);
 			}
 		}
 		else if(jsonValue instanceof JSONObject) {
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parseContext);
+			HAPManualBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parseContext);
 			valueContext.addValueStructure(valueStructureWrapper);
 		}
 	}
 
-	private HAPDefinitionEntityWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualContextParse parseContext) {
-		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPDefinitionEntityWrapperValueStructure.VALUESTRUCTURE);
+	private HAPManualBrickWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualContextParse parseContext) {
+		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null) {
 			valueStructureJsonObj = wrapperObj;
 		}
 
-		HAPDefinitionEntityWrapperValueStructure out = new HAPDefinitionEntityWrapperValueStructure();
-		HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(HAPDefinitionEntityWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
+		HAPManualBrickWrapperValueStructure out = new HAPManualBrickWrapperValueStructure();
+		HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
 		out.setAttribute(valueStructureAttr);
 
-		String groupName = (String)wrapperObj.opt(HAPDefinitionEntityWrapperValueStructure.NAME);
+		String groupName = (String)wrapperObj.opt(HAPManualBrickWrapperValueStructure.NAME);
 		out.setName(groupName);
 
-		String groupType = (String)wrapperObj.opt(HAPDefinitionEntityWrapperValueStructure.GROUPTYPE);
+		String groupType = (String)wrapperObj.opt(HAPManualBrickWrapperValueStructure.GROUPTYPE);
 		if(groupType==null) {
 			groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		}
 		out.setGroupType(groupType);
 
-		JSONObject infoJsonObj = wrapperObj.optJSONObject(HAPDefinitionEntityWrapperValueStructure.INFO);
+		JSONObject infoJsonObj = wrapperObj.optJSONObject(HAPManualBrickWrapperValueStructure.INFO);
 		if(infoJsonObj!=null) {
 			HAPInfoImpSimple info = new HAPInfoImpSimple();
 			info.buildObject(infoJsonObj, HAPSerializationFormat.JSON);

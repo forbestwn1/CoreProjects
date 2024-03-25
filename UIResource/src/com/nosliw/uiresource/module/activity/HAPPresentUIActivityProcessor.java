@@ -2,7 +2,7 @@ package com.nosliw.uiresource.module.activity;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPDefinitionEntityWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPExecutableResultActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
@@ -14,7 +14,7 @@ public class HAPPresentUIActivityProcessor implements HAPProcessorActivity{
 	@Override
 	public com.nosliw.data.core.activity.HAPExecutableActivity process(HAPDefinitionActivity activityDefinition,
 			String id, com.nosliw.data.core.domain.entity.HAPContextProcessor processContext,
-			HAPDefinitionEntityWrapperValueStructure valueStructureWrapper, HAPRuntimeEnvironment runtimeEnv,
+			HAPManualBrickWrapperValueStructure valueStructureWrapper, HAPRuntimeEnvironment runtimeEnv,
 			HAPConfigureProcessorValueStructure configure, HAPProcessTracker processTracker) {
 		HAPPresentUIActivityDefinition activity = (HAPPresentUIActivityDefinition)activityDefinition;
 		HAPPresentUIActivityExecutable out = new HAPPresentUIActivityExecutable(id, activity);
