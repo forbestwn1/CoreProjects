@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.common.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 
 @HAPEntityWithAttribute
 public class HAPIdRootElement extends HAPSerializableImp{
@@ -24,7 +24,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
 	
-	private HAPRefValuePort m_refValuePort;
+	private HAPReferenceValuePort m_refValuePort;
 	
 	private String m_valueStructureId;
 	
@@ -41,7 +41,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		}
 	}
 	
-	public HAPIdRootElement(HAPRefValuePort valuePortId, String valueStructureId, String rootName) {
+	public HAPIdRootElement(HAPReferenceValuePort valuePortId, String valueStructureId, String rootName) {
 		this.m_refValuePort = valuePortId;
 		this.m_valueStructureId = valueStructureId;
 		this.m_rootName = rootName;
@@ -51,7 +51,7 @@ public class HAPIdRootElement extends HAPSerializableImp{
 		this(null, valueStructureId, rootName);
 	}
 
-	public HAPRefValuePort getValuePortRef() {    return this.m_refValuePort;    }
+	public HAPReferenceValuePort getValuePortRef() {    return this.m_refValuePort;    }
 	
 	public String getValueStructureId() {    return this.m_valueStructureId;     }
 	

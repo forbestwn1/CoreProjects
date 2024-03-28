@@ -14,71 +14,6 @@ var node_createValueStructureVariableInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createValueContextVariableInfo = function(valueStructureRuntimeId, n, p){
-
-	if(node_getObjectType(valueStructureRuntimeId)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUECONTEXTVARIABLE)  return valueStructureRuntimeId;
-
-	var loc_valueStructureRuntimeId;
-
-	var loc_valueStructureVariableInfo;
-
-	var loc_key;
-
-	var loc_init = function(valueStructureRuntimeId, n, p){
-		if(n==undefined&&p==undefined){
-			if(node_basicUtility.isStringValue(valueStructureRuntimeId)){
-				var index = valueStructureRuntimeId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
-				if(index!=-1){
-					loc_valueStructureRuntimeId = valueStructureRuntimeId.substring(0, index);
-					loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(valueStructureRuntimeId.substring(index+1));
-				}
-			}
-			else{
-				//variable id object
-				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
-				loc_valueStructureRuntimeId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
-			}
-		}
-		else{
-			loc_valueStructureRuntimeId = valueStructureRuntimeId;
-			loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(n, p);
-		}
-		loc_key = node_namingConvensionUtility.cascadePath(loc_valueStructureRuntimeId, loc_valueStructureVariableInfo.key);
-	};
-
-	var loc_out = {
-
-		getValueStructureRuntimeId : function(){   return  loc_valueStructureRuntimeId;    },
-		
-		getValueStructureVariableInfo : function(){    return loc_valueStructureVariableInfo;    },
-
-		getRootName : function(){   return loc_valueStructureVariableInfo.name;   },
-		
-		getElementPath : function(){    return  loc_valueStructureVariableInfo.path;   },
-
-		getKey : function(){  return loc_key;    },
-
-		getFullPath : function(){	return this.getKey();	},
-		
-
-		valueStructureRuntimeId : valueStructureRuntimeId,
-
-		valueStructureVariableInfo : loc_valueStructureVariableInfo,
-
-		//key
-		key : loc_key,
-		
-	};
-	
-	loc_init(valueStructureRuntimeId, n, p);
-	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VALUECONTEXTVARIABLE);
-	
-	return loc_out;
-	
-};
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -92,6 +27,5 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createValueContextVariableInfo", node_createValueContextVariableInfo); 
 
 })(packageObj);

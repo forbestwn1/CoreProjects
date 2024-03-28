@@ -13,7 +13,7 @@ var packageObj = library;
 	var node_createValueStructureElementInfo;
 	var node_dataUtility;
 	var node_complexEntityUtility;
-	var node_createValueContextVariableInfo;
+	var node_createValuePortElementInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -201,7 +201,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		},
 
 		createVariableById : function(variableIdEntity){
-			var variableInfo = node_createValueContextVariableInfo(variableIdEntity);
+			var variableInfo = node_createValuePortElementInfo(variableIdEntity);
 			return this.createVariable(variableInfo.getValueStructureRuntimeId(), variableInfo.getRootName(), variableInfo.getElementPath());
 		},
 		
@@ -366,7 +366,7 @@ nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVar
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 
 //Register Node by Name

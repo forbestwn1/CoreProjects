@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPReferenceBrick;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
@@ -24,8 +27,14 @@ import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 public class HAPUtilityStructureElementReference {
 
 	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
-		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
+		Triple<HAPReferenceBrick, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
+
+		HAPResultReferenceResolve resolve  = valuePortInfo.getRight().resolveReference(reference, resolveConfigure);
+		if(resolve!=null) {
+			resolve.brickReference = valuePortInfo.getLeft();
+			resolve.valuePortId = valuePortInfo.getMiddle();
+			resolve.elementPath = reference.getElementPath();
+		}
 		return resolve;
 	}
 	
@@ -51,6 +60,8 @@ public class HAPUtilityStructureElementReference {
 				HAPResultReferenceResolve resolved = new HAPResultReferenceResolve(); 
 				resolved.structureId = valueStructureInfo.getValueStructureId();
 				resolved.rootName = rootName;
+				resolved.elementPath = path;
+				resolved.fullPath = elementPath;
 
 				resolved.elementInfoSolid = HAPUtilityStructure.resolveDescendant(root.getDefinition().getSolidStructureElement(), path);
 				if(resolved.elementInfoSolid!=null) {

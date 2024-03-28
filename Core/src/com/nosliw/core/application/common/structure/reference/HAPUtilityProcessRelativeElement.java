@@ -27,7 +27,7 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingVariabl
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.application.common.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultDesendantResolve;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
@@ -119,7 +119,7 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	public static void processRelativeInStructure(HAPManualBrickValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	public static void processRelativeInStructure(HAPManualBrickValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		if(processRelativeConfigure==null) {
 			processRelativeConfigure = new HAPConfigureProcessorRelative();
 		} 
@@ -130,7 +130,7 @@ public class HAPUtilityProcessRelativeElement {
 		}
 	}
 
-	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure defStructureElement = structureEleInfo.getElement();
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {

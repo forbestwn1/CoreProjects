@@ -3,6 +3,7 @@ package com.nosliw.data.core.domain.valuecontext;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrickComplex;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
@@ -27,7 +28,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	}
 
 	public HAPValuePortValueContext(HAPBrickComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
-		super(new HAPInfoValuePort(), isDefault);
+		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT), isDefault);
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}

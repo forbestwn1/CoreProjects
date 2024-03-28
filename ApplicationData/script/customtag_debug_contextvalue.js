@@ -3,7 +3,7 @@ function(env){
 	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 	var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_createVariablesGroup = nosliw.getNodeData("variable.createVariablesGroup");
-	var node_createValueContextVariableInfo = nosliw.getNodeData("variable.valuecontext.createValueContextVariableInfo");
+	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 	var node_dataUtility = nosliw.getNodeData("variable.data.utility");
 
 	var loc_env = env;
@@ -49,7 +49,7 @@ function(env){
 				var rootNames = valueStructure.getElementsName();
 				if(rootNames.length>0){
 					_.each(rootNames, function(rootName, i){
-						varDefIds.push(node_createValueContextVariableInfo(vsId, rootName));
+						varDefIds.push(node_createValuePortElementInfo(vsId, rootName));
 					});
 					
 					var valueStructureInfo = {

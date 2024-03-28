@@ -11,7 +11,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -25,12 +24,13 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.common.valueport.HAPRefValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
+import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
@@ -85,11 +85,11 @@ public class HAPProcessorDataAssociationMapping {
 
 	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPExecutableDataAssociationMapping mapping) {
 		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
-			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getEntityIdRef();
+			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getBrickReference();
 			String fromEntityRelativePath = buildRelativePath(baseEntityIdPath, fromEntityIdRef.getIdPath());
 			fromEntityIdRef.setRelativePath(fromEntityRelativePath);
 			
-			HAPRefIdEntity toEntityIdRef = valueMappingPath.getToValuePortRef().getEntityIdRef();
+			HAPRefIdEntity toEntityIdRef = valueMappingPath.getToValuePortRef().getBrickReference();
 			String toEntityRelativePath = buildRelativePath(baseEntityIdPath, toEntityIdRef.getIdPath());
 			toEntityIdRef.setRelativePath(toEntityRelativePath);
 		}
@@ -99,42 +99,10 @@ public class HAPProcessorDataAssociationMapping {
 		System.out.println(buildRelativePath("a.b.c", "a.b.c.d.e"));
 	}
 	
-	private static String buildRelativePath(String baseEntityIdPath, String entityIdPath) {
-		String[] baseEntityIdPathSegs = new HAPPath(baseEntityIdPath).getPathSegments();
-		String[] entityIdPathSegs = new HAPPath(entityIdPath).getPathSegments();
-		
-		int i=0;
-		for(; i<baseEntityIdPathSegs.length; i++) {
-			if(i>=entityIdPathSegs.length) {
-				break;
-			} else if(!baseEntityIdPathSegs[i].equals(entityIdPathSegs[i])) {
-				break;
-			}
-		}
-		
-		StringBuffer out = new StringBuffer();
-		for(int j=i; j<baseEntityIdPathSegs.length; j++) {
-			if(j!=i) {
-				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
-			}
-			out.append(HAPConstantShared.NAME_PARENT);
-		}
-		
-		for(int j=i; j<entityIdPathSegs.length; j++) {
-			if(j!=i) {
-				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
-			}
-			out.append(HAPConstantShared.NAME_CHILD);
-			out.append(HAPConstantShared.SEPERATOR_LEVEL1);
-			out.append(entityIdPathSegs[j]);
-		}
-		return out.toString();
-	}
-	
 	private static void collectRelatedEntity(HAPExecutableDataAssociationMapping mapping) {
 		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
-			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getEntityIdRef().getIdPath());
-			mapping.addToEntity(valueMappingPath.getToValuePortRef().getEntityIdRef().getIdPath());
+			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getBrickReference().getIdPath());
+			mapping.addToEntity(valueMappingPath.getToValuePortRef().getBrickReference().getIdPath());
 		}
 	}
 	
@@ -142,7 +110,7 @@ public class HAPProcessorDataAssociationMapping {
 	private static void normalizeValuePortId(HAPItemValueMapping<HAPReferenceRootElement> mappingItem, HAPExecutableEntity inEntityExe, HAPExecutableEntity outEntityExe) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 		if(targetRef.getValuePortRef()==null) {
-			targetRef.setValuePortRef(new HAPRefValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe)));
+			targetRef.setValuePortRef(new HAPReferenceValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe)));
 		}
 		
 		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
@@ -152,7 +120,7 @@ public class HAPProcessorDataAssociationMapping {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
 					if(mappingEle.getReference().getValuePortRef()==null) {
-						mappingEle.getReference().setValuePortRef(new HAPRefValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe)));
+						mappingEle.getReference().setValuePortRef(new HAPReferenceValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe)));
 					}
 				}
 				return null;
@@ -180,7 +148,7 @@ public class HAPProcessorDataAssociationMapping {
 		
 	}
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPRefValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:

@@ -27,7 +27,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public static final String ROOTNAME = "rootName";
 
 	//value port Id
-	private HAPRefValuePort m_valuePortRef;
+	private HAPReferenceValuePort m_valuePortRef;
 	
 	//sometimes use value port name, need to translate name to value port id
 	private String m_valuePortName;
@@ -43,13 +43,13 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		this.m_rootName = rootName;
 	}
 
-	public HAPReferenceRootElement(String rootName, HAPRefValuePort valuePortRef) {
+	public HAPReferenceRootElement(String rootName, HAPReferenceValuePort valuePortRef) {
 		this(rootName);
 		this.m_valuePortRef = valuePortRef;
 	}
 	
-	public HAPRefValuePort getValuePortRef() {    return this.m_valuePortRef;     }
-	public void setValuePortRef(HAPRefValuePort valuePortRef) {    this.m_valuePortRef = valuePortRef;     }
+	public HAPReferenceValuePort getValuePortRef() {    return this.m_valuePortRef;     }
+	public void setValuePortRef(HAPReferenceValuePort valuePortRef) {    this.m_valuePortRef = valuePortRef;     }
 	
 	public String getValuePortName() {    return this.m_valuePortName;    }
 	
@@ -67,7 +67,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 			JSONObject jsonValue = (JSONObject)value;
 			JSONObject valuePortIdJson = jsonValue.optJSONObject(VALUEPORTID);
 			if(valuePortIdJson!=null) {
-				this.m_valuePortRef = new HAPRefValuePort();
+				this.m_valuePortRef = new HAPReferenceValuePort();
 				this.m_valuePortRef.buildObject(valuePortIdJson, HAPSerializationFormat.JSON);
 			}
 			JSONObject valueStructureRefJson = jsonValue.optJSONObject(VALUESTRUCTUREREFERENCE);
@@ -99,7 +99,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	protected void cloneToRootReference(HAPReferenceRootElement rootEleRef) {
 		rootEleRef.m_valuePortName = this.m_valuePortName;
 		if(this.m_valuePortRef!=null) {
-			rootEleRef.m_valuePortRef = (HAPRefValuePort)this.m_valuePortRef.cloneValue();
+			rootEleRef.m_valuePortRef = (HAPReferenceValuePort)this.m_valuePortRef.cloneValue();
 		}
 		rootEleRef.m_rootName = this.getRootName();
 	}

@@ -16,6 +16,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_variableInfos = [];
 	var loc_extendVariableInfos = [];
 	
+	var loc_envInterface = {};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		
@@ -28,6 +29,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getVariableDomain();
 		loc_valueContext = varDomain.getValueContext(valueContextId);
 
+		
+/*
 		if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
 			//all defined variable
 			_.each(loc_scriptVars, function(varResolve, i){
@@ -65,6 +68,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				});
 			});		
 		}
+*/
 
 /*
 		//extended variable
@@ -132,6 +136,29 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	};
 
 	var loc_out = {
+		
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
+		
+		getPreInitRequest : function(){
+			if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
+				//all defined variable
+				_.each(loc_scriptVars, function(varResolve, i){
+					
+					var eleReference = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE];
+					var valuePortInfo = eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEROOTELEMENT_VALUEPORTID];
+					
+					var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortInfo[node_COMMONATRIBUTECONSTANT.REFVALUEPORT_TYPE], valuePortInfo[node_COMMONATRIBUTECONSTANT.REFVALUEPORT_NAME]);
+					var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEELEMENT_ELEMENTPATH]);
+					
+					var varInfo = {
+						reference : eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEELEMENT_ELEMENTPATH],
+//						variable : loc_valueContext.createResolvedVariable(varResolve),
+						variable : valuePort.createVariable(valuePortEleInfo)
+					};
+					loc_variableInfos.push(varInfo);
+				});
+			}
+		},
 		
 		updateView : function(view){
 			var rootView =  $('<div>' + '</div>');

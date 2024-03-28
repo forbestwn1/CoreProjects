@@ -25,7 +25,7 @@ var packageObj = library;
 	var node_valueContextUtility;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
-	var node_createValueContextVariableInfo;
+	var node_createValuePortElementInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -309,7 +309,7 @@ var node_utility = function()
 						var mappingToReferencedExpressionRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("MappingToReferencedExpression", {}), {});
 						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOLVED_VARIABLE];
 						_.each(refVarsInMatchResult.getResults(), function(value, name){
-							var varId = node_createValueContextVariableInfo(varsId[name]);
+							var varId = node_createValuePortElementInfo(varsId[name]);
 							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, varId.getValueStructureRuntimeId(), varId.getRootName(), varId.getElementPath(), value));
 						});
 						
@@ -380,7 +380,7 @@ var node_utility = function()
 		_.each(varKeys, function(key, i){
 			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key];
 			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
-			var varId = node_createValueContextVariableInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
+			var varId = node_createValuePortElementInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
 			var variable = valueContext.createVariable(
 					varId.getValueStructureRuntimeId(), 
 					varId.getRootName(),
@@ -572,7 +572,7 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("complexentity.valueContextUtility", function(){node_valueContextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

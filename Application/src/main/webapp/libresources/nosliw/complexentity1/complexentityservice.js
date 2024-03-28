@@ -58,6 +58,7 @@ var packageObj = library;
 	var node_createScriptTaskGroupEntityPlugin;
 	
 	var node_createSimpleEntityContainerPlugin;
+	var node_makeObjectWithValuePortInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -89,6 +90,8 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
 				
+				simpleEntity = node_makeObjectWithValuePortInterface(simpleEntity);
+				
 				simpleEntity = node_makeObjectWithComponentInterface(entityType, simpleEntity, false);
 				
 				simpleEntity = node_makeObjectWithId(simpleEntity);
@@ -116,6 +119,8 @@ var node_createComplexEntityRuntimeService = function() {
 				complexEntityCore = node_makeObjectBasicEntityObjectInterface(complexEntityCore, complexEntityDef, configure);
 				
 				complexEntityCore = node_makeObjectComplexEntityObjectInterface(complexEntityCore, valueContextId, bundleCore);
+				
+				complexEntityCore = node_makeObjectWithValuePortInterface(complexEntityCore);
 				
 				complexEntityCore = node_makeObjectWithComponentInterface(entityType, complexEntityCore, false);
 				
@@ -387,6 +392,7 @@ nosliw.registerSetNodeDataEvent("entitycontainer.createComplexEntityContainerPlu
 nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlugin", function(){node_createScriptTaskGroupEntityPlugin = this.getData();});
 
 nosliw.registerSetNodeDataEvent("entitycontainer.createSimpleEntityContainerPlugin", function(){node_createSimpleEntityContainerPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.makeObjectWithValuePortInterface", function(){node_makeObjectWithValuePortInterface = this.getData();});
 
 
 //Register Node by Name

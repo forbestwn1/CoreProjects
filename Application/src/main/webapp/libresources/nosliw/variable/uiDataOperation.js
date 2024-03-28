@@ -9,7 +9,7 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_namingConvensionUtility;
 var node_dataUtility;
-var node_createValueContextVariableInfo;
+var node_createValuePortElementInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createValueStructureDataOperationRequest = function(valueStructure, valueStructureVarInfo, operationService, handlers, requester_parent){
@@ -38,12 +38,12 @@ var node_createUIDataOperationRequest = function(operationBase, uiDataOperation,
 	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTUREVARIABLE:
 		request = loc_createValueStructureDataOperationRequest(operationBase, target, operationService, handlers, requester_parent);
 		break;
-	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUECONTEXTVARIABLE:
+	case node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID:
 		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(target.getValueStructureRuntimeId()), target.getValueStructureVariableInfo(), operationService, handlers, requester_parent);
 		break;
 	default : 
 		//target is value context element name
-		var valueContextVarInfo = node_createValueContextVariableInfo(target);
+		var valueContextVarInfo = node_createValuePortElementInfo(target);
 		request = loc_createValueStructureDataOperationRequest(operationBase.getValueStructure(valueContextVarInfo.getValueStructureRuntimeId()), valueContextVarInfo.getValueStructureVariableInfo(), operationService, handlers, requester_parent);
 	}
 	return request;
@@ -189,7 +189,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuecontext.createValueContextVariableInfo", function(){node_createValueContextVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 
 //Register Node by Name

@@ -12,6 +12,18 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBrick {
 
+	
+	public static HAPBrick getBrick(HAPReferenceBrick brickRef, String baseBrickPath, HAPBundle bundle) {
+		HAPBrick brick = null;
+		if(brickRef.getIdPath()!=null) {
+			brick = bundle.getBrickByPath(new HAPPath(brickRef.getIdPath()));
+		}
+		else if(brickRef.getRelativePath()!=null) {
+			
+		}
+		return brick;
+	}
+	
 	public static HAPTreeNode getDescdentTreeNode(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
 		HAPTreeNode out = null;
 		if(path==null || path.isEmpty()) {

@@ -21,7 +21,7 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingConstan
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPRefValuePort;
+import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
@@ -35,7 +35,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 public class HAPUtilityDataAssociation {
 
 	public static List<HAPPathValueMapping> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
-		HAPRefValuePort valuePortId = valueMappingItem.getTarget().getValuePortRef();
+		HAPReferenceValuePort valuePortId = valueMappingItem.getTarget().getValuePortRef();
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
 		List<HAPPathValueMapping> out = new ArrayList<HAPPathValueMapping>();
