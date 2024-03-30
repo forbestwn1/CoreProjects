@@ -7,6 +7,8 @@ var packageObj = library.getChildPackage();
 	var node_COMMONCONSTANT;
 	var node_CONSTANT;
 	var node_getEmbededEntityInterface;
+	var node_buildInterface;
+	var node_getComplexEntityObjectInterface;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_makeObjectWithValuePortInterface = function(rawEntity){
@@ -20,17 +22,17 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 			if(valuePortType==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
 				var complexEntityInterface = node_getComplexEntityObjectInterface(loc_rawEntity);
 				if(complexEntityInterface!=undefined){
-					valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
+					loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
 				}
 			}
 			else{
 				if(loc_rawEntity.getValuePort!=undefined){
-					valuePort = loc_rawEntity.getValuePort(valuePortType, valuePortName);
+					loc_valuePort = loc_rawEntity.getValuePort(valuePortType, valuePortName);
 				}
 			}
 			
 			if(loc_valuePort!=undefined){
-				return node_buildValuePort(valuePort);
+				return node_buildValuePort(loc_valuePort);
 			}
 		},
 		
@@ -56,14 +58,14 @@ var node_getWithValuePortInterface = function(baseObject){
 
 var loc_createValuePortValueContext = function(valueContextId, varDomain){
 	
-	var loc_varDomain = bundleCore.getVariableDomain();
+	var loc_varDomain = varDomain;
 	var loc_valueContext = varDomain.getValueContext(valueContextId);
 	
 	
 	var loc_out = {
 		
 		createVariable : function(elementId){
-			return loc_varDomain.createVariableById(elementId);			
+			return loc_valueContext.createVariableById(elementId);			
 		},
 		
 	};
@@ -92,6 +94,8 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithValuePortInterface", node_makeObjectWithValuePortInterface); 

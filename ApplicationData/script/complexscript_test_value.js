@@ -2,8 +2,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -144,14 +146,13 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				//all defined variable
 				_.each(loc_scriptVars, function(varResolve, i){
 					
-					var eleReference = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE];
-					var valuePortInfo = eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEROOTELEMENT_VALUEPORTID];
+					var valuePortId = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_VALUEPORTID];
 					
-					var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortInfo[node_COMMONATRIBUTECONSTANT.REFVALUEPORT_TYPE], valuePortInfo[node_COMMONATRIBUTECONSTANT.REFVALUEPORT_NAME]);
-					var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEELEMENT_ELEMENTPATH]);
+					var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_TYPE], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+					var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH]);
 					
 					var varInfo = {
-						reference : eleReference[node_COMMONATRIBUTECONSTANT.REFERENCEELEMENT_ELEMENTPATH],
+						reference : varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH],
 //						variable : loc_valueContext.createResolvedVariable(varResolve),
 						variable : valuePort.createVariable(valuePortEleInfo)
 					};

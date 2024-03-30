@@ -3,10 +3,12 @@ package com.nosliw.core.application.common.valueport;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //value port id within entity
+@HAPEntityWithAttribute
 public class HAPIdValuePort extends HAPSerializableImp{
 
 	@HAPAttribute

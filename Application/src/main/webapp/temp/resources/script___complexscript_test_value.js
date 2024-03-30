@@ -10,8 +10,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -24,6 +26,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_variableInfos = [];
 	var loc_extendVariableInfos = [];
 	
+	var loc_envInterface = {};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		
@@ -36,6 +39,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		var varDomain = bundleCore.getVariableDomain();
 		loc_valueContext = varDomain.getValueContext(valueContextId);
 
+		
+/*
 		if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
 			//all defined variable
 			_.each(loc_scriptVars, function(varResolve, i){
@@ -73,6 +78,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				});
 			});		
 		}
+*/
 
 /*
 		//extended variable
@@ -140,6 +146,28 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	};
 
 	var loc_out = {
+		
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
+		
+		getPreInitRequest : function(){
+			if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
+				//all defined variable
+				_.each(loc_scriptVars, function(varResolve, i){
+					
+					var valuePortId = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_VALUEPORTID];
+					
+					var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_TYPE], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+					var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH]);
+					
+					var varInfo = {
+						reference : varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH],
+//						variable : loc_valueContext.createResolvedVariable(varResolve),
+						variable : valuePort.createVariable(valuePortEleInfo)
+					};
+					loc_variableInfos.push(varInfo);
+				});
+			}
+		},
 		
 		updateView : function(view){
 			var rootView =  $('<div>' + '</div>');
