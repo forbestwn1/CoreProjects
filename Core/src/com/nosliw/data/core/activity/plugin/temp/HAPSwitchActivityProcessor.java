@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.core.application.common.variable.HAPVariableInfo;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;

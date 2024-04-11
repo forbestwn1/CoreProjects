@@ -12,6 +12,7 @@
 		<project>Core</project>
 		<project>ServiceTest</project>
 		<project>MiniApp</project>
+		<project>DivisionManual</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

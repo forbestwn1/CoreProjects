@@ -1,6 +1,7 @@
 package com.nosliw.data.core.cronjob;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -12,7 +13,6 @@ import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 
 public class HAPManagerCronJob {
 

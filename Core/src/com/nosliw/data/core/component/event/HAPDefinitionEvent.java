@@ -1,8 +1,8 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
 
-public class HAPDefinitionEvent extends HAPDefinitionInteractiveResult{
+public class HAPDefinitionEvent extends HAPResultInInteractiveInterface{
 
 	public HAPDefinitionEvent cloneEventDefinition(){
 		HAPDefinitionEvent out = new HAPDefinitionEvent();

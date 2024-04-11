@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -39,16 +37,15 @@ public class HAPManagerApplicationBrick {
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUESTRUCTURE_100, false));
 		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUECONTEXT_100, false));
 		
-		this.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManualManagerBrick(this.m_runtimeEnv)));
 	}
 	
-	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType entityTypeId) {
-		return this.m_brickTypeInfos.get(entityTypeId.getBrickType()).get(entityTypeId.getVersion());
+	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {
+		return this.m_brickTypeInfos.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());
 	}
 
-	public List<HAPIdBrickType> getAllVersions(String entityType){
-		List<HAPInfoBrickType> entityTypeInfos = new ArrayList<HAPInfoBrickType>(this.m_brickTypeInfos.get(entityType).values());
-		Collections.sort(entityTypeInfos, new Comparator<HAPInfoBrickType>(){
+	public List<HAPIdBrickType> getAllVersions(String brickType){
+		List<HAPInfoBrickType> brickTypeInfos = new ArrayList<HAPInfoBrickType>(this.m_brickTypeInfos.get(brickType).values());
+		Collections.sort(brickTypeInfos, new Comparator<HAPInfoBrickType>(){
 			@Override
 			public int compare(HAPInfoBrickType arg0, HAPInfoBrickType arg1) {
 				return arg0.getBrickTypeId().getVersion().compareTo(arg1.getBrickTypeId().getVersion());
@@ -56,8 +53,8 @@ public class HAPManagerApplicationBrick {
 		});
 		
 		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
-		for(HAPInfoBrickType entityTypeInfo : entityTypeInfos) {
-			out.add(entityTypeInfo.getBrickTypeId());
+		for(HAPInfoBrickType brickTypeInfo : brickTypeInfos) {
+			out.add(brickTypeInfo.getBrickTypeId());
 		}
 		
 		return out;

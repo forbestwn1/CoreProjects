@@ -6,10 +6,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPResourceManagerImpBrick;
 import com.nosliw.core.application.brick.script.HAPResourceManagerImpScript;
+import com.nosliw.core.application.service.HAPFactoryServiceProcess;
+import com.nosliw.core.application.service.HAPManagerService;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPResourceManagerActivityPlugin;
-import com.nosliw.data.core.activity.HAPTaskInfoParserActivity;
-import com.nosliw.data.core.activity.HAPTaskInfoProcessorActivity;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
@@ -41,14 +41,9 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayPackage;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
 import com.nosliw.data.core.script.expression1.HAPManagerScript;
-import com.nosliw.data.core.sequence.HAPTaskInfoParserSequence;
-import com.nosliw.data.core.sequence.HAPTaskInfoProcessorSequence;
-import com.nosliw.data.core.service.definition.HAPFactoryServiceProcess;
-import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.service.resource.HAPResourceDefinitionPluginServiceDefinition;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionPluginStory;
-import com.nosliw.data.core.task.HAPInfoTask;
 import com.nosliw.data.core.task.HAPManagerTask;
 
 @HAPEntityWithAttribute(baseName="RUNTIME")
@@ -132,14 +127,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerService serviceManager,
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
-		    HAPManagerDomainEntityDefinition domainEntityManager,
-			HAPManagerDomainEntityExecutable complexEntityManager,
 			HAPManagerApplicationBrick brickManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, domainEntityManager, complexEntityManager, brickManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, brickManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -157,8 +150,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerService serviceManager,
 			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
-			    HAPManagerDomainEntityDefinition domainEntityDefinitionManager,
-				HAPManagerDomainEntityExecutable complexEntityExecutableManager,
 				HAPManagerApplicationBrick brickManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
@@ -174,8 +165,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_scriptManager = scriptManager;
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
-		this.m_domainEntityDefinitionManager = domainEntityDefinitionManager;
-		this.m_domainEntityExecutableManager = complexEntityExecutableManager;
 		this.m_brickManager = brickManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
@@ -199,8 +188,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_serviceManager.registerServiceFactory(HAPFactoryServiceProcess.FACTORY_TYPE, new HAPFactoryServiceProcess(this.m_processRuntime, this.m_processManager, this.m_resourceManager));
 		
 		//task
-		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_ACTIVITY, new HAPInfoTask(new HAPTaskInfoParserActivity(this.getActivityManager().getPluginManager()), new HAPTaskInfoProcessorActivity(this)));
-		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_SEQUENCE, new HAPInfoTask(new HAPTaskInfoParserSequence(this.getTaskManager()), new HAPTaskInfoProcessorSequence(this.getTaskManager())));
+//		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_ACTIVITY, new HAPInfoTask(new HAPTaskInfoParserActivity(this.getActivityManager().getPluginManager()), new HAPTaskInfoProcessorActivity(this)));
+//		this.m_taskManager.registerTaskInfo(HAPConstantShared.TASK_TYPE_SEQUENCE, new HAPInfoTask(new HAPTaskInfoParserSequence(this.getTaskManager()), new HAPTaskInfoProcessorSequence(this.getTaskManager())));
 		
 		
 		//component
@@ -282,7 +271,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainConfigure(this));
 //		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainScript(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociation(this));
-		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainInteractive(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, HAPServiceInterface.class, this));
+		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainInteractive(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, HAPBrickServiceInterface1.class, this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainServiceProvider(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociationInteractive(this));
 		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainDataAssociationTask(this));

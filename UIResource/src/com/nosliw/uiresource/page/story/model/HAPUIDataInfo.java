@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
 import com.nosliw.core.application.common.structure.HAPUtilityStructureReference;
-import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 
 @HAPEntityWithAttribute
 public class HAPUIDataInfo extends HAPSerializableImp{

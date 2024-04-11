@@ -1,6 +1,10 @@
 package com.nosliw.data.core.service.use;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
+import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.service.HAPUtilityServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableTask;
@@ -14,10 +18,6 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.definition.HAPDefinitionService;
-import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
-import com.nosliw.data.core.service.interfacee.HAPUtilityServiceInterface;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
 
@@ -36,7 +36,7 @@ public class HAPProcessorServiceUse {
 	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructureInValuePort globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
-			HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
+			HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 			
 			//
 			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataAssociations(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
@@ -50,7 +50,7 @@ public class HAPProcessorServiceUse {
 			//provider service id
 			HAPResourceId resourceId = ((HAPAttachmentReference)providerAttachment).getReferenceId();
 			//interface within provider service
-			definition.setInterfaceId(new HAPResourceIdEmbeded(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, resourceId, HAPDefinitionService.CHILD_INTERFACE));
+			definition.setInterfaceId(new HAPResourceIdEmbeded(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, resourceId, HAPBrickServiceProfile.CHILD_INTERFACE));
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class HAPProcessorServiceUse {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
-		HAPServiceInterface serviceInterface = ((HAPInfoServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
+		HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		
@@ -68,7 +68,7 @@ public class HAPProcessorServiceUse {
 		//process service provider
 		HAPAttachment providerAttachment = attachmentContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, definition.getProvider());
 		HAPInfoServiceProvider serviceProviderInfo = HAPUtilityServiceUse.parseServiceAttachment(providerAttachment, runtimeEnv);
-		HAPServiceInterface providerInterface = serviceProviderInfo.getServiceDefinition().getStaticInfo().getInterface().getInterface();
+		HAPBrickServiceInterface1 providerInterface = serviceProviderInfo.getServiceDefinition().getStaticInfo().getInterface().getInterface();
 		out.setProviderId(serviceProviderInfo.getServiceDefinition().getStaticInfo().getId());
 		
 		if(serviceProviderInfo.getDataMapping()!=null) {

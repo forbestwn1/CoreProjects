@@ -10,17 +10,17 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
+import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
+import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.common.variable.HAPVariableInfo;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
-import com.nosliw.data.core.data.variable.HAPVariableInfo;
-import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.service.definition.HAPInfoServiceStatic;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
 import com.nosliw.data.core.story.HAPAliasElement;
 import com.nosliw.data.core.story.HAPInfoElement;
 import com.nosliw.data.core.story.HAPStory;
@@ -191,14 +191,14 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//get service node
 				HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_SERVICE).iterator().next();
 				HAPInfoServiceStatic staticServiceInfo = this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager().getDefinition(serviceStoryNode.getReferenceId()).getStaticInfo();
-				HAPServiceInterface serviceInterface = staticServiceInfo.getInterface().getInterface();
+				HAPBrickServiceInterface1 serviceInterface = staticServiceInfo.getInterface().getInterface();
 				HAPDisplayResourceNode serviceDisplayResource = staticServiceInfo.getInterface().getDisplayResource();
 				HAPDisplayResourceNode interfaceDisplayResource = serviceDisplayResource.getResourceNode(HAPInfoServiceStatic.INTERFACE);
 				
 				//service input
 				HAPAliasElement serviceInputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceInput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceInputNodeName, HAPConstantShared.SERVICE_CHILD_INPUT));
-				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.REQUEST);
+				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPBrickServiceInterface1.REQUEST);
 				
 				//parms
 				for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
@@ -255,8 +255,8 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//output
 				HAPAliasElement serviceOutputNodeName = dataLayerChangeRequest.addNewChange(new HAPStoryNodeServiceOutput()).getAlias();
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstantShared.SERVICE_CHILD_RESULT));
-				HAPDefinitionInteractiveResult successResult = serviceInterface.getResult("success");
-				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPServiceInterface.RESULT);
+				HAPResultInInteractiveInterface successResult = serviceInterface.getResult("success");
+				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPBrickServiceInterface1.RESULT);
 				for(HAPVariableInfo parm : successResult.getOutput()) {
 					String parmName = parm.getName();
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();

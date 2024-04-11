@@ -1,6 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.service.HAPManagerService;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
@@ -15,7 +16,6 @@ import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression1.HAPManagerScript;
-import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 

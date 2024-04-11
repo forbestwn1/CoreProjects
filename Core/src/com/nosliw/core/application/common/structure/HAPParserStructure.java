@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
-import com.nosliw.data.core.data.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 
 public class HAPParserStructure {
 

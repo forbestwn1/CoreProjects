@@ -16,5 +16,6 @@
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DivisionManual"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

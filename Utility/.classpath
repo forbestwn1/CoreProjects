@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="libs/commons-io-2.6.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ServiceTest"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MiniApp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DivisionManual"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

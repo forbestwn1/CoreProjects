@@ -2,15 +2,19 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPInfoBrickDivision;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPPluginRepositoryBundleImpDummy;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.service.HAPGatewayService;
+import com.nosliw.core.application.service.HAPManagerService;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
@@ -27,8 +31,6 @@ import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayBrowserLoadLibrary;
 import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayLoadTestExpression;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 import com.nosliw.data.core.script.expression1.HAPManagerScript;
-import com.nosliw.data.core.service.definition.HAPGatewayService;
-import com.nosliw.data.core.service.definition.HAPManagerService;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
@@ -77,9 +79,9 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeProcess processRuntimeMan = null;  //new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
-		HAPManagerDomainEntityExecutable complexEntityExecutableManager = new HAPManagerDomainEntityExecutable(this);
-		HAPManagerDomainEntityDefinition domainEntityDefinitionManager = new HAPManagerDomainEntityDefinition();
+		
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
+		brickManager.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManualManagerBrick(this)));
 		
 		init(
 			dataTypeManager,
@@ -96,8 +98,6 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			serviceManager,
 			dynamicResourceManager,
 			resourceDefManager,
-			domainEntityDefinitionManager,
-			complexEntityExecutableManager,
 			brickManager,
 			cronJobManager,
 			storyManager,

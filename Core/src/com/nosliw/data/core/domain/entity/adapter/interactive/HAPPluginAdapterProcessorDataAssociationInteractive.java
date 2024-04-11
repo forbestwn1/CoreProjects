@@ -3,6 +3,11 @@ package com.nosliw.data.core.domain.entity.adapter.interactive;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.interactive.HAPContextStructureReferenceInteractiveRequest;
+import com.nosliw.core.application.common.interactive.HAPContextStructureReferenceInteractiveResult;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPBrickInteractive;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -14,11 +19,6 @@ import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.HAPPluginAdapterProcessorImp;
 import com.nosliw.data.core.domain.valuecontext.HAPContextStructureReferenceValueStructure;
-import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveRequest;
-import com.nosliw.data.core.interactive.HAPContextStructureReferenceInteractiveResult;
-import com.nosliw.data.core.interactive.HAPDefinitionInteractive;
-import com.nosliw.data.core.interactive.HAPDefinitionInteractiveResult;
-import com.nosliw.data.core.interactive.HAPExecutableEntityInteractive;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPluginAdapterProcessorImp{
@@ -36,7 +36,7 @@ public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPlug
 		
 		HAPExecutableEntityComplex parentComplexEntityExe = (HAPExecutableEntityComplex)parentEntityExecutable;
 		
-		HAPExecutableEntityInteractive interactiveEntityExe = (HAPExecutableEntityInteractive)childEntityExecutable;
+		HAPBrickInteractive interactiveEntityExe = (HAPBrickInteractive)childEntityExecutable;
 		HAPDefinitionInteractive interactiveExe = interactiveEntityExe.getInteractive();
 		
 		//data association for request parms
@@ -48,7 +48,7 @@ public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPlug
 		dataAssociationGroupExe.setInDataAssociation(inExe);
 
 		//data association for result
-		Map<String, HAPDefinitionInteractiveResult> results = interactiveExe.getResults();
+		Map<String, HAPResultInInteractiveInterface> results = interactiveExe.getResults();
 		Map<String, HAPDefinitionDataAssociation> outDAs = dataAssociationGroup.getOutDataAssociations();
 		for(String resultName : outDAs.keySet()) {
 			HAPExecutableDataAssociation outExe = HAPProcessorDataAssociation.processDataAssociation(

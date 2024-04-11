@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
 import com.nosliw.data.core.resource.HAPParserResourceEntity;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
-import com.nosliw.data.core.service.interfacee.HAPInfoServiceInterface;
 
 public class HAPParserServiceInterfaceResource implements HAPParserResourceEntity{
 
@@ -24,7 +24,7 @@ public class HAPParserServiceInterfaceResource implements HAPParserResourceEntit
 
 	@Override
 	public HAPResourceDefinition1 parseJson(JSONObject jsonObj) {
-		HAPInfoServiceInterface out = new HAPInfoServiceInterface();
+		HAPBrickServiceInterface out = new HAPBrickServiceInterface();
 		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		return out;
 	}

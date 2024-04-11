@@ -12,10 +12,6 @@ import org.json.JSONObject;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplex;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionSimple;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
@@ -568,8 +564,9 @@ public class HAPManagerDomainEntityExecutable {
 			if(entityDefInfo.isComplexEntity()) {
 				entityExe = this.m_processorComplexEntityPlugins.get(entityType).newExecutable();
 				((HAPExecutableEntityComplex)entityExe).setValueStructureDomain(complexResourceBundle.getValueStructureDomain());
+			} else {
+				entityExe = this.m_processorSimpleEntityPlugins.get(entityType).newExecutable();
 			}
-			else		entityExe = this.m_processorSimpleEntityPlugins.get(entityType).newExecutable();
 			entityExe.setDefinitionEntityId(entityDefinitionId);
 			embededValue = entityExe;
 			embededValueType = HAPConstantShared.EMBEDEDVALUE_TYPE_ENTITY;

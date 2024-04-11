@@ -3,11 +3,11 @@ package com.nosliw.data.core.event;
 import java.util.Map;
 
 import com.nosliw.core.application.common.structure.HAPRequirementContextProcessor;
+import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.service.definition.HAPManagerServiceDefinition;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 import com.nosliw.data.core.service.use.HAPUtilityServiceUse;
 

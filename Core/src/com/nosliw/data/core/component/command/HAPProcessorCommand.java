@@ -2,11 +2,11 @@ package com.nosliw.data.core.component.command;
 
 import java.util.Map;
 
+import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;

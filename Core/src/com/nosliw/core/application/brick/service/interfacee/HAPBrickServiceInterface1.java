@@ -1,0 +1,25 @@
+package com.nosliw.core.application.brick.service.interfacee;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
+import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
+
+@HAPEntityWithAttribute
+public class HAPBrickServiceInterface1 extends HAPBrickWithEntityInfoSimple{
+
+	@HAPAttribute
+	public static String INTERACTIVEINTERFACE = "interactiveInterface";
+
+
+	public HAPBrickInteractiveInterface getInterface() {}
+	
+	
+//	@Override
+//	public HAPDefinitionInteractive cloneInteractiveDefinition() {
+//		HAPBrickServiceInterface1 out = new HAPBrickServiceInterface1();
+//		this.cloneToInteractive(out);
+//		return out;
+//	}
+
+}

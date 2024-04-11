@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.service.interfacee.HAPServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
@@ -22,15 +22,15 @@ public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
 
 	private String m_serviceId;
 	
-	private HAPServiceInterface m_serviceInterface;
+	private HAPBrickServiceInterface1 m_serviceInterface;
 	
 	public HAPDefinitionServiceProvider() {}
 	
 	public String getServiceId() {    return this.m_serviceId;    }
 	public void setServiceId(String id) {    this.m_serviceId = id;    }
 	
-	public HAPServiceInterface getServiceInterface() {  return this.m_serviceInterface;  }
-	public void setServiceInterface(HAPServiceInterface serviceInterface) {   this.m_serviceInterface = serviceInterface;   }
+	public HAPBrickServiceInterface1 getServiceInterface() {  return this.m_serviceInterface;  }
+	public void setServiceInterface(HAPBrickServiceInterface1 serviceInterface) {   this.m_serviceInterface = serviceInterface;   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -45,7 +45,7 @@ public class HAPDefinitionServiceProvider extends HAPEntityInfoWritableImp{
 		super.buildObjectByJson(jsonObj);
 		JSONObject interfaceJsonObj = jsonObj.optJSONObject(SERVICEINTERFACE);
 		if(interfaceJsonObj!=null) {
-			this.m_serviceInterface = new HAPServiceInterface();
+			this.m_serviceInterface = new HAPBrickServiceInterface1();
 			this.m_serviceInterface.buildObject(interfaceJsonObj, HAPSerializationFormat.JSON);
 		}
 		this.m_serviceId = (String)jsonObj.opt(SERVICEID);

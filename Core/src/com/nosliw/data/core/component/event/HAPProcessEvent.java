@@ -1,10 +1,10 @@
 package com.nosliw.data.core.component.event;
 
+import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.handler.HAPExecutableHandler;
-import com.nosliw.data.core.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;

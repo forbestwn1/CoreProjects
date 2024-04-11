@@ -6,13 +6,13 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.core.application.service.HAPProviderService;
+import com.nosliw.core.application.service.HAPResultInteractive;
+import com.nosliw.core.application.service.HAPUtilityService;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.interactive.HAPResultInteractive;
-import com.nosliw.data.core.service.definition.HAPProviderService;
-import com.nosliw.data.core.service.definition.HAPUtilityService;
 
 public class HAPServiceImp extends com.nosliw.service.test.listoutput.refinterface.HAPServiceImp implements HAPProviderService{
 
