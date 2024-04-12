@@ -40,7 +40,7 @@ public class HAPUtilityExport {
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
 		for(HAPResourceIdSimple resourceId : executablePackage.getDependency()) {
-			HAPBundle bundle = entityManager.getEntityBundle(resourceId);
+			HAPBundle bundle = entityManager.getBrickBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
 			//write attachment domain

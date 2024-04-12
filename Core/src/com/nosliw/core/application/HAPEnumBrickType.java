@@ -9,6 +9,10 @@ public class HAPEnumBrickType {
 	
 	public static HAPIdBrickType CONTAINERSIMPLE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, "1.0.0");
 
+	public static HAPIdBrickType SERVICEINTERFACE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, "1.0.0");
+	public static HAPIdBrickType SERVICEPROFILE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROFILE, "1.0.0");
+
+	
 	
 	public static HAPIdBrickType VALUESTRUCTURE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, "1.0.0");
 	public static HAPIdBrickType VALUESTRUCTUREWRAPPER_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER, "1.0.0");

@@ -47,6 +47,18 @@ public class HAPIdBrickType extends HAPSerializableImp{
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		boolean out = false;
+		if(obj instanceof HAPIdBrickType) {
+			HAPIdBrickType brickTypeId = (HAPIdBrickType)obj;
+			if(this.getKey().equals(brickTypeId.getKey())) {
+				out = true;
+			}
+		}
+		return out;
+	}
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(BRICKTYPE, this.m_brickType);
 		jsonMap.put(VERSION, this.m_version);

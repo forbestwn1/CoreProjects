@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.core.application.brick.test.complex.script.HAPBrickTestComplexScript;
+import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBrickTestComplex1;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -17,44 +19,46 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerApplicationBrick {
 
-	private Map<String, Map<String, HAPInfoBrickType>> m_brickTypeInfos;
+	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 	
-	private Map<String, HAPInfoBrickDivision> m_divisionInfo;
+	private Map<String, HAPPluginDivision> m_divisionPlugin;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_brickTypeInfos = new LinkedHashMap<String, Map<String, HAPInfoBrickType>>();
-		this.m_divisionInfo = new LinkedHashMap<String, HAPInfoBrickDivision>();
+		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
+		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
 		this.m_runtimeEnv = runtimeEnv;
 		this.init();
 	}
 	
 	private void init() {
-		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true));
-		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true));
-		
-		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUESTRUCTURE_100, false));
-		this.registerEntityTypeInfo(new HAPInfoBrickType(HAPEnumBrickType.VALUECONTEXT_100, false));
-		
+
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBrickTestComplex1.class));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class));
+
+	}
+
+	public HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {
+		return this.m_brickPlugins.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());
 	}
 	
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {
-		return this.m_brickTypeInfos.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());
+		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();
 	}
 
 	public List<HAPIdBrickType> getAllVersions(String brickType){
-		List<HAPInfoBrickType> brickTypeInfos = new ArrayList<HAPInfoBrickType>(this.m_brickTypeInfos.get(brickType).values());
-		Collections.sort(brickTypeInfos, new Comparator<HAPInfoBrickType>(){
+		List<HAPPluginBrick> brickPlugins = new ArrayList<HAPPluginBrick>(this.m_brickPlugins.get(brickType).values());
+		Collections.sort(brickPlugins, new Comparator<HAPPluginBrick>(){
 			@Override
-			public int compare(HAPInfoBrickType arg0, HAPInfoBrickType arg1) {
-				return arg0.getBrickTypeId().getVersion().compareTo(arg1.getBrickTypeId().getVersion());
+			public int compare(HAPPluginBrick arg0, HAPPluginBrick arg1) {
+				return arg0.getBrickTypeInfo().getBrickTypeId().getVersion().compareTo(arg1.getBrickTypeInfo().getBrickTypeId().getVersion());
 			}
 		});
 		
 		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
-		for(HAPInfoBrickType brickTypeInfo : brickTypeInfos) {
-			out.add(brickTypeInfo.getBrickTypeId());
+		for(HAPPluginBrick brickPlugin : brickPlugins) {
+			out.add(brickPlugin.getBrickTypeInfo().getBrickTypeId());
 		}
 		
 		return out;
@@ -64,26 +68,16 @@ public class HAPManagerApplicationBrick {
 		return this.getAllVersions(entityType).get(0);
 	}
 
-	public HAPBundle getEntityBundle(HAPResourceIdSimple resourceId) {
-		return this.getEntityBundle(HAPUtilityBrick.parseBrickId(resourceId));
-	}
-
-	public HAPBundle getEntityBundle(HAPIdBrick entityId) {
-		HAPBundle out = null;
-		
-		HAPInfoBrickDivision divisionInfo = this.m_divisionInfo.get(entityId.getDivision());
-
-		//retrieve from respository first
-		out = divisionInfo.getEntityPackageRepositoryPlugin().retrieveEntityPackage(entityId);
-		
-		if(out==null) {
-			//process definition
-			out = divisionInfo.getEntityProcessorPlugin().process(entityId);
-		}
-		return out;
+	public HAPBundle getBrickBundle(HAPIdBrick brickId) {
+		HAPPluginDivision divisionPlugin = this.m_divisionPlugin.get(brickId.getDivision());
+		return divisionPlugin.getBundle(brickId);
 	}
 	
-	public HAPApplicationPackage getEntityPackage(HAPResourceId resourceId) {
+	public HAPBundle getBrickBundle(HAPResourceIdSimple resourceId) {
+		return this.getBrickBundle(HAPUtilityBrick.parseBrickId(resourceId));
+	}
+
+	public HAPApplicationPackage getBrickPackage(HAPResourceId resourceId) {
 		HAPApplicationPackage out = new HAPApplicationPackage();
 
 		//figure out root entity
@@ -105,7 +99,7 @@ public class HAPManagerApplicationBrick {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
 
-			HAPBundle bundle = this.getEntityBundle(HAPUtilityBrick.parseBrickId(complexEntityResourceId));
+			HAPBundle bundle = this.getBrickBundle(HAPUtilityBrick.parseBrickId(complexEntityResourceId));
 			Set<HAPResourceIdSimple> bundleDependency = bundle.getComplexResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {
 				buildDependencyGroup(id, dependency);
@@ -113,20 +107,20 @@ public class HAPManagerApplicationBrick {
 		}
 	}
 
-	public void registerDivisionInfo(String division, HAPInfoBrickDivision divisionInfo) {
-		this.m_divisionInfo.put(division, divisionInfo);
+	public void registerDivisionInfo(String division, HAPPluginDivision divisionPlugin) {
+		this.m_divisionPlugin.put(division, divisionPlugin);
 	}
 
-	public void registerEntityTypeInfo(HAPInfoBrickType entityTypeInfo) {
-		HAPIdBrickType entityTypeId = entityTypeInfo.getBrickTypeId();
+	public void registerBrickPlugin(HAPPluginBrick brickPlugin) {
+		HAPIdBrickType entityTypeId = brickPlugin.getBrickTypeInfo().getBrickTypeId();
 		
-		Map<String, HAPInfoBrickType> byVersion = this.m_brickTypeInfos.get(entityTypeId.getBrickType());
+		Map<String, HAPPluginBrick> byVersion = this.m_brickPlugins.get(entityTypeId.getBrickType());
 		if(byVersion==null) {
-			byVersion = new LinkedHashMap<String, HAPInfoBrickType>();
-			this.m_brickTypeInfos.put(entityTypeId.getBrickType(), byVersion);
+			byVersion = new LinkedHashMap<String, HAPPluginBrick>();
+			this.m_brickPlugins.put(entityTypeId.getBrickType(), byVersion);
 		}
 		
-		byVersion.put(entityTypeId.getVersion(), entityTypeInfo);
+		byVersion.put(entityTypeId.getVersion(), brickPlugin);
 	}
 	
 }

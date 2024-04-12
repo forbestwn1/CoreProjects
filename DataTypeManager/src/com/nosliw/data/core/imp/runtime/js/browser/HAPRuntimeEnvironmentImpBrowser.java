@@ -3,9 +3,7 @@ package com.nosliw.data.core.imp.runtime.js.browser;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPInfoBrickDivision;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPPluginRepositoryBundleImpDummy;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.service.HAPGatewayService;
 import com.nosliw.core.application.service.HAPManagerService;
@@ -81,7 +79,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
-		brickManager.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPInfoBrickDivision(new HAPPluginRepositoryBundleImpDummy(), new HAPManualManagerBrick(this)));
+		brickManager.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPManualManagerBrick(this));
 		
 		init(
 			dataTypeManager,

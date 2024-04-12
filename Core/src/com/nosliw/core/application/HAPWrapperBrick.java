@@ -40,6 +40,6 @@ public class HAPWrapperBrick extends HAPExecutableImp implements HAPTreeNode, HA
 	}
 
 	@Override
-	public HAPIdBrickType getBrickTypeId() {   return this.getBrick().getBrickTypeId();  }
+	public HAPIdBrickType getBrickTypeId() {   return this.getBrick().getBrickTypeInfo().getBrickTypeId();  }
 
 }

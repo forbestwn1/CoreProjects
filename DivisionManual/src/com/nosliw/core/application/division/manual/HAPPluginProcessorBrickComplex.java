@@ -8,10 +8,6 @@ public interface HAPPluginProcessorBrickComplex extends HAPPluginProcessorBrick{
 
 	HAPIdBrickType getBrickType();
 	
-	//new executable
-	HAPBrickComplex newExecutable();
-
-
 	void processBrick(HAPPath pathFromRoot, HAPManualContextProcess processContext);
 
 	

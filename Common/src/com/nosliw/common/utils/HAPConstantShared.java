@@ -477,6 +477,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE = "serviceinterface";
+		public static final String RUNTIME_RESOURCE_TYPE_SERVICEPROFILE = "serviceprofile";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER = "serviceprovider";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUE = "value";
 		public static final String RUNTIME_RESOURCE_TYPE_DATA = "data";

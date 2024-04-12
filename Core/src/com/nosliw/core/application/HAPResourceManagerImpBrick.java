@@ -19,7 +19,7 @@ public class HAPResourceManagerImpBrick extends HAPResourceManagerImp{
 
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPBundle bundle = this.m_entityMan.getEntityBundle((HAPResourceIdSimple)resourceId);
+		HAPBundle bundle = this.m_entityMan.getBrickBundle((HAPResourceIdSimple)resourceId);
 		return new HAPResource(resourceId, bundle.toResourceData(runtimeInfo), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 }

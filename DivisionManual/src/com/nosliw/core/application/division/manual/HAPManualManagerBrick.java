@@ -21,16 +21,16 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPPluginProcessorBrick;
+import com.nosliw.core.application.HAPPluginBrick;
+import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrick;
 import com.nosliw.core.application.HAPWrapperValueInAttributeBrick;
 import com.nosliw.core.application.HAPWrapperValueInAttributeReferenceResource;
-import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginProcessorBrickComplexTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginParserBrickImpTestComplexScript;
+import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPPluginProcessorBrickComplexTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginParserBrickImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginProcessorBrickDefinitionComplexImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
@@ -38,7 +38,7 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
+public class HAPManualManagerBrick implements HAPPluginDivision{
 
 	private Map<String, HAPManualInfoBrickProcessor> m_entityProcessorInfo;
 	
@@ -51,7 +51,7 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 	}
 	
 	@Override
-	public HAPBundle process(HAPIdBrick entityId) {
+	public HAPBundle getBundle(HAPIdBrick entityId) {
 		
 		HAPManualInfoBrickLocation entityLocationInfo = HAPUtilityBrickLocation.getEntityLocationInfo(entityId);
 		
@@ -152,17 +152,12 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 		HAPBundle bundle = processContext.getCurrentBundle();
 		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 		
-		HAPBrick entityExe = null;
-		HAPInfoBrickType brickTypeInfo = this.getBrickManager().getBrickTypeInfo(brickDef.getBrickTypeId());
-		if(brickTypeInfo.getIsComplex()) {
-			HAPPluginProcessorBrickComplex processPlugin = (HAPPluginProcessorBrickComplex)this.getBrickProcessPlugin(entityTypeId);
-			entityExe = processPlugin.newExecutable();
-			((HAPBrickComplex)entityExe).setValueStructureDomain(((HAPBundleComplex)bundle).getValueStructureDomain());
-		} else {
-			HAPPluginProcessorBrickSimple simplePlugin = (HAPPluginProcessorBrickSimple)this.getBrickProcessPlugin(entityTypeId);
-			entityExe = simplePlugin.newExecutable();
+		HAPPluginBrick brickPlugin = this.getBrickManager().getBrickPlugin(entityTypeId);
+		HAPBrick brick = brickPlugin.newInstance();
+		
+		if(brickPlugin.getBrickTypeInfo().getIsComplex()) {
+			((HAPBrickComplex)brick).setValueStructureDomain(((HAPBundleComplex)bundle).getValueStructureDomain());
 		}
-		entityExe.setBrickTypeInfo(brickTypeInfo);
 		
 		List<HAPManualAttribute> attrsDef = brickDef.getAllAttributes();
 		for(HAPManualAttribute attrDef : attrsDef) {
@@ -182,7 +177,7 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 					HAPWrapperValueInAttributeReferenceResource resourceRefValue = new HAPWrapperValueInAttributeReferenceResource(HAPUtilityResourceId.normalizeResourceId(resourceRefValueDef.getResourceId()));
 					resourceRefValue.solidate(this.getBrickManager());
 				}
-				entityExe.setAttribute(attrExe);
+				brick.setAttribute(attrExe);
 				
 //				//adapter
 //				for(HAPInfoAdapterDefinition defAdapterInfo : embededAttributeDef.getDefinitionAdapters()) {
@@ -194,7 +189,7 @@ public class HAPManualManagerBrick implements HAPPluginProcessorBrick{
 //				}
 			}
 		}
-		return entityExe;
+		return brick;
 	}
 	
 	private void init() {

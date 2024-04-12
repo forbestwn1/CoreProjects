@@ -28,7 +28,7 @@ public class HAPWrapperValueInAttributeReferenceResource extends HAPWrapperValue
 	public HAPPath getPathFromRoot() {    return  this.m_pathFromRoot;    }
 	
 	public void solidate(HAPManagerApplicationBrick brickMan) {
-		this.m_referBundle = brickMan.getEntityBundle(m_normalizedResourceId.getRootResourceIdSimple());
+		this.m_referBundle = brickMan.getBrickBundle(m_normalizedResourceId.getRootResourceIdSimple());
 		this.m_pathFromRoot = this.m_normalizedResourceId.getPath();
 	}
 }

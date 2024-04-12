@@ -566,6 +566,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceinterface"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEPROFILE" value="serviceprofile"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER" value="serviceprovider"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUE" value="value"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATA" value="data"/>
