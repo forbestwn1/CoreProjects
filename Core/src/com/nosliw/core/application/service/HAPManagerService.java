@@ -1,47 +1,118 @@
 package com.nosliw.core.application.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPIdBrick;
+import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPPluginDivision;
+import com.nosliw.core.application.HAPWrapperBrick;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPRequestParmInInteractiveInterface;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //service manager, it is used for runtime purpose
 @HAPEntityWithAttribute
-public class HAPManagerService {
+public class HAPManagerService implements HAPPluginDivision{
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
+	private Map<String, HAPInfoService> m_servicesInfo;
 	
 	private Map<String, HAPFactoryService> m_serviceFactorys;
 	
-	private HAPManagerServiceDefinition m_serviceDefinitionManager;
-	
-	private HAManagerServiceInterface m_serviceInterfaceManager;
-	
 	private Map<String, HAPInstanceService> m_serviceInstances;
 	
+	private HAPManagerServiceInterface m_serviceInterfaceMan;
+	
+	private HAPRuntimeEnvironment m_runtimeEnv;
+
 	public HAPManagerService(HAPRuntimeEnvironment runtimeEnv){
 		this.m_runtimeEnv = runtimeEnv;
-		this.m_serviceDefinitionManager = new HAPManagerServiceDefinition(this.m_runtimeEnv);
-		this.m_serviceInterfaceManager = new HAManagerServiceInterface();
+		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
+		this.m_serviceInterfaceMan = new HAPManagerServiceInterface(); 
 	}
 	
-	public HAPManagerServiceDefinition getServiceDefinitionManager() {   return this.m_serviceDefinitionManager;   }
-	public HAManagerServiceInterface getServiceInterfaceManager() {    return this.m_serviceInterfaceManager;    }
+	public HAPManagerServiceInterface getServiceInterfaceManager() {   return this.m_serviceInterfaceMan;     }
 	
-	public void registerServiceInstance(String id, HAPInstanceService serviceInstance){
-		this.m_serviceInstances.put(id, serviceInstance);
+	@Override
+	public Set<HAPIdBrickType> getBrickTypes() {  
+		Set<HAPIdBrickType> out = new HashSet<HAPIdBrickType>();
+		out.add(HAPEnumBrickType.SERVICEINTERFACE_100);
+		out.add(HAPEnumBrickType.SERVICEPROFILE_100);
+		return out;
 	}
 
-	public void registerServiceFactory(String name, HAPFactoryService serviceFactory){
-		this.m_serviceFactorys.put(name, serviceFactory);
+	@Override
+	public HAPBundle getBundle(HAPIdBrick brickId) {
+		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
+		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
+			HAPBundle bundle = new HAPBundle();
+			bundle.setBrickWrapper(new HAPWrapperBrick(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
+			return bundle;
+		}
+		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
+			HAPBundle bundle = new HAPBundle();
+			bundle.setBrickWrapper(new HAPWrapperBrick(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
+			return bundle;
+		}
+		return null;
 	}
+
+	
+	public void registerServiceInfo(HAPInfoService serviceInfo){	this.getAllServicesInfo().put(serviceInfo.getServiceProfileInfo().getId(), serviceInfo);	}
+	
+	public HAPInfoService getServiceInfo(String id){
+		HAPInfoService out = this.getAllServicesInfo().get(id);
+//		if(!out.isProcessed()) {
+//			out.process(this.m_runtimeEnv);
+//		}
+		return out;
+	}
+	
+	public List<HAPBrickServiceProfile> queryDefinition(HAPQueryServiceDefinition query){
+		List<HAPBrickServiceProfile> out = new ArrayList<HAPBrickServiceProfile>();
+		for(String id : this.getAllServicesInfo().keySet()) {
+			boolean found = true;
+			HAPBrickServiceProfile def = this.getAllServicesInfo().get(id).getServiceProfileInfo();
+			List<String> tags = def.getTags();
+			for(String keyword : query.getKeywords()) {
+				if(!tags.contains(keyword)) {
+					found = false;
+				}
+			}
+			if(found) {
+				out.add(def);
+			}
+		}
+		return out;
+	}
+	
+	private Map<String, HAPInfoService> getAllServicesInfo(){
+		if(this.m_servicesInfo==null) {
+			this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
+			List<HAPInfoService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition();
+			for(HAPInfoService def : defs) {
+				this.registerServiceInfo(def);
+			}
+		}
+		return this.m_servicesInfo;
+	}
+
+	
+	
+	public void registerServiceInstance(String id, HAPInstanceService serviceInstance){		this.m_serviceInstances.put(id, serviceInstance);	}
+
+	public void registerServiceFactory(String name, HAPFactoryService serviceFactory){		this.m_serviceFactorys.put(name, serviceFactory);	}
 	
 	//service query is used to find service provider
 	public HAPResultInteractive execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
@@ -50,40 +121,47 @@ public class HAPManagerService {
 		if(serviceInstance==null){
 			try{
 				//not exists, then create one using factory
-				HAPBrickServiceProfile serviceDef = this.m_serviceDefinitionManager.getDefinition(serviceQuery.getServiceId());
+				HAPInfoService serviceInfo = this.getServiceInfo(serviceQuery.getServiceId());
 				HAPExecutableService serviceExe;
-				String imp = serviceDef.getRuntimeInfo().getImplementation();
+				String imp = serviceInfo.getServiceRuntimeInfo().getImplementation();
 				if(imp.contains(".")){
 					//it is class name
 					serviceExe = (HAPExecutableService)Class.forName(imp).newInstance();
 				}
 				else{
 					//it is factory name
-					serviceExe = this.m_serviceFactorys.get(imp).newService(serviceDef);
+					serviceExe = this.m_serviceFactorys.get(imp).newService(serviceInfo.getServiceProfileInfo());
 				}
-				serviceInstance = new HAPInstanceService(serviceDef, serviceExe);
+				serviceInstance = new HAPInstanceService(serviceInfo.getServiceProfileInfo(), serviceExe);
 			}
 			catch(Exception e){
 				e.printStackTrace();
 			}
-			if(serviceInstance!=null)   this.registerServiceInstance(serviceQuery.getServiceId(), serviceInstance);
+			if(serviceInstance!=null) {
+				this.registerServiceInstance(serviceQuery.getServiceId(), serviceInstance);
+			}
 		}
 		
 		//execute service instance
 		HAPResultInteractive out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
-			HAPBrickServiceInterface1 serviceInterface = serviceInstance.getDefinition().getStaticInfo().getInterface().getInterface();
+			HAPBrickInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getInterface();
 			for(HAPRequestParmInInteractiveInterface parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;
-				if(parms!=null)  parmData = parms.get(parmName);
-				if(parmData==null) parmData = parm.getDefaultValue();   //not provide, use default 
+				if(parms!=null) {
+					parmData = parms.get(parmName);
+				}
+				if(parmData==null)
+				 {
+					parmData = parm.getDefaultValue();   //not provide, use default 
+				}
 				serviceParms.put(parmName, parmData);
 			}
 			out = serviceInstance.getExecutable().execute(serviceParms);
 		}
 		return out;
 	}
-	
+
 }

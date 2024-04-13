@@ -57,7 +57,7 @@ public class HAPTestDomain {
 	}
 	
 	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
-		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), HAPConstantShared.ENTITY_DIVISION_MANUAL, id);
+		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), HAPConstantShared.BRICK_DIVISION_MANUAL, id);
 		return HAPUtilityBrick.fromBrickId2ResourceId(entityId);
 	}
 }

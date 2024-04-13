@@ -43,7 +43,7 @@ public class HAPStoryNodeService extends HAPStoryNodeImp{
 				this.m_referenceId = (String)value;
 				
 				if(this.m_referenceId!=null) {
-					HAPInfoServiceStatic serviceDef = runtimeEnv.getServiceManager().getServiceDefinitionManager().getDefinition(this.m_referenceId).getStaticInfo();
+					HAPInfoServiceStatic serviceDef = runtimeEnv.getServiceManager().getServiceDefinitionManager().getServiceInfo(this.m_referenceId).getStaticInfo();
 					out.addExtendChange(new HAPChangeItemPatch(this.getElementId(), EXTRA, serviceDef));
 					out.addExtendChange(new HAPChangeItemPatch(this.getElementId(), DISPLAYRESOURCE, serviceDef.getInterface().getDisplayResource()));
 				}

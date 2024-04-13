@@ -34,10 +34,24 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
 	
-	public List<HAPAttributeInBrick> getAttributes(){     return this.m_attributes;      }
-	
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
+	
+	public List<HAPAttributeInBrick> getAttributes(){     return this.m_attributes;      }
+	public HAPAttributeInBrick getAttribute(String attrName) {
+		for(HAPAttributeInBrick attr : this.m_attributes) {
+			if(attrName.equals(attr.getName())) {
+				return attr;
+			}
+		}
+		return null;
+	}
+	public Object getAttributeValue(String attributeName) {
+		HAPAttributeInBrick attr = this.getAttribute(attributeName);
+		HAPWrapperValueInAttributeValue valueWrapper = (HAPWrapperValueInAttributeValue)attr.getValueWrapper();
+		return valueWrapper.getValue();
+	}
+	
 	
 	public void setAttribute(HAPAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
@@ -51,14 +65,6 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 	
 	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}
 
-	public HAPAttributeInBrick getAttribute(String attrName) {
-		for(HAPAttributeInBrick attr : this.m_attributes) {
-			if(attrName.equals(attr.getName())) {
-				return attr;
-			}
-		}
-		return null;
-	}
 
 	@Override
 	public HAPContainerValuePorts getValuePorts() {		return null;	}

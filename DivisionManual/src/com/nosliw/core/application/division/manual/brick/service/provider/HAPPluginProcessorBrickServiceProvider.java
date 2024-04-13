@@ -21,7 +21,7 @@ public class HAPPluginProcessorBrickServiceProvider extends HAPPluginProcessorBr
 		
 		String serviceId = serviceProviderDef.getServiceKey().getServiceId();
 		serviceProviderExe.setServiceId(serviceId);
-		HAPBrickServiceInterface1 serviceInterface = processContext.getRuntimeEnvironment().getServiceManager().getServiceDefinitionManager().getDefinition(serviceId).getStaticInfo().getInterface().getInterface();
+		HAPBrickServiceInterface1 serviceInterface = processContext.getRuntimeEnvironment().getServiceManager().getServiceDefinitionManager().getServiceInfo(serviceId).getStaticInfo().getInterface().getInterface();
 		serviceProviderExe.setInteractive(serviceInterface);
 	}
 }

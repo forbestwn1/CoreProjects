@@ -916,7 +916,8 @@ public class HAPConstantShared {
 
 
 
-		public static final String ENTITY_DIVISION_MANUAL = "manual";
+		public static final String BRICK_DIVISION_MANUAL = "manual";
+		public static final String BRICK_DIVISION_SERVICE = "service";
 
 
 

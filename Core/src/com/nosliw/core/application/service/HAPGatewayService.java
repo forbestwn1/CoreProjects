@@ -57,7 +57,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 		{
 			HAPQueryServiceDefinition defQuery = new HAPQueryServiceDefinition();
 			defQuery.buildObject(parms.optJSONObject(COMMAND_SEARCHDEFINITION_QUERY), HAPSerializationFormat.JSON);
-			List<HAPBrickServiceProfile> serviceDefs = this.m_serviceManager.getServiceDefinitionManager().queryDefinition(defQuery);
+			List<HAPBrickServiceProfile> serviceDefs = this.m_serviceManager.queryDefinition(defQuery);
 			out = this.createSuccessWithObject(serviceDefs);
 			return out;
 		}

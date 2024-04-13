@@ -15,8 +15,8 @@ import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
 
 public class HAPImporterDataSourceDefinition {
 
-	public static List<HAPBrickServiceProfile> loadDataSourceDefinition() {
-		List<HAPBrickServiceProfile> out = new ArrayList<HAPBrickServiceProfile>();
+	public static List<HAPInfoService> loadDataSourceDefinition() {
+		List<HAPInfoService> out = new ArrayList<HAPInfoService>();
 
 		/*
 		for(String serviceClasse : serviceClasses) {
@@ -36,7 +36,7 @@ public class HAPImporterDataSourceDefinition {
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
-				List<HAPBrickServiceProfile> dataSourceDefs = loadDataSourceDefinition(cls);
+				List<HAPInfoService> dataSourceDefs = loadDataSourceDefinition(cls);
 				out.addAll(dataSourceDefs);
 			}
 
@@ -55,8 +55,8 @@ public class HAPImporterDataSourceDefinition {
 		return out;
 	}
 	
-	private static List<HAPBrickServiceProfile> loadDataSourceDefinition(Class cls){
-		List<HAPBrickServiceProfile> out = new ArrayList<HAPBrickServiceProfile>();
+	private static List<HAPInfoService> loadDataSourceDefinition(Class cls){
+		List<HAPInfoService> out = new ArrayList<HAPInfoService>();
 		try{
 			InputStream inputStream = cls.getResourceAsStream("service.ds");
 			if(inputStream!=null) {

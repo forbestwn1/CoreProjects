@@ -12,6 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -31,23 +32,23 @@ public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
 
 	private List<String> m_tags;
 	
-	private HAPBrickServiceInterface m_serviceInterface;
+	private HAPBrickInteractiveInterface m_interface;
 	
 	private HAPDisplayResourceNode m_displayResource;
 	
 	public HAPBrickServiceInterface() {
 		this.m_tags = new ArrayList<String>();
-		this.m_serviceInterface = new HAPBrickServiceInterface();
+		this.m_interface = new HAPBrickInteractiveInterface();
 		this.m_displayResource = new HAPDisplayResourceNode();
 	}
 
-	public HAPBrickServiceInterface getInterface() {  return this.m_serviceInterface;  } 
+	public HAPBrickInteractiveInterface getInterface() {  return this.m_interface;  } 
 	
 	public List<String> getTags(){   return this.m_tags;    }
 	
 	public HAPDisplayResourceNode getDisplayResource() {   return this.m_displayResource;     }
 	
-	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.m_serviceInterface.process(runtimeEnv);	}
+	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.m_interface.process(runtimeEnv);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -49,6 +50,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.m_entityProcessorInfo = new LinkedHashMap<String, HAPManualInfoBrickProcessor>();
 		init();
 	}
+	
+	@Override
+	public Set<HAPIdBrickType> getBrickTypes() {   return null;   }
 	
 	@Override
 	public HAPBundle getBundle(HAPIdBrick entityId) {
@@ -227,4 +231,5 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	private HAPPluginProcessorBrick getBrickProcessPlugin(HAPIdBrickType entityTypeId) {   return this.getBrickProcessorInfo(entityTypeId).getProcessorPlugin();    }
 
 	private HAPManagerApplicationBrick getBrickManager() {   return this.m_runtimeEnv.getBrickManager();    }
+
 }

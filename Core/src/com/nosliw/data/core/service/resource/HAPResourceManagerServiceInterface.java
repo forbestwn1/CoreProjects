@@ -1,7 +1,7 @@
 package com.nosliw.data.core.service.resource;
 
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
-import com.nosliw.core.application.service.HAManagerServiceInterface;
+import com.nosliw.core.application.service.HAPManagerServiceInterface;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -12,9 +12,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerServiceInterface  extends HAPResourceManagerImp{
 
-	private HAManagerServiceInterface m_serviceInterfaceMan;
+	private HAPManagerServiceInterface m_serviceInterfaceMan;
 	
-	public HAPResourceManagerServiceInterface(HAManagerServiceInterface serviceInterfaceMan, HAPResourceManagerRoot rootResourceMan){
+	public HAPResourceManagerServiceInterface(HAPManagerServiceInterface serviceInterfaceMan, HAPResourceManagerRoot rootResourceMan){
 		super(rootResourceMan);
 		this.m_serviceInterfaceMan = serviceInterfaceMan;
 	}

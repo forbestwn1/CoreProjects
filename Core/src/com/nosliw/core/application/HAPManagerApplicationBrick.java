@@ -19,15 +19,18 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerApplicationBrick {
 
-	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
-	
 	private Map<String, HAPPluginDivision> m_divisionPlugin;
 	
+	private Map<HAPIdBrickType, String> m_divisionByBrickType;
+	
+	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
+
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
 		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
+		this.m_divisionByBrickType = new LinkedHashMap<HAPIdBrickType, String>();
+		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
 		this.m_runtimeEnv = runtimeEnv;
 		this.init();
 	}
@@ -69,7 +72,12 @@ public class HAPManagerApplicationBrick {
 	}
 
 	public HAPBundle getBrickBundle(HAPIdBrick brickId) {
-		HAPPluginDivision divisionPlugin = this.m_divisionPlugin.get(brickId.getDivision());
+		String division = brickId.getDivision();
+		if(division==null) {
+			division = this.m_divisionByBrickType.get(brickId.getBrickTypeId());
+		}
+		
+		HAPPluginDivision divisionPlugin = this.m_divisionPlugin.get(division);
 		return divisionPlugin.getBundle(brickId);
 	}
 	
@@ -109,6 +117,9 @@ public class HAPManagerApplicationBrick {
 
 	public void registerDivisionInfo(String division, HAPPluginDivision divisionPlugin) {
 		this.m_divisionPlugin.put(division, divisionPlugin);
+		for(HAPIdBrickType brickType : divisionPlugin.getBrickTypes()) {
+			this.m_divisionByBrickType.put(brickType, division);
+		}
 	}
 
 	public void registerBrickPlugin(HAPPluginBrick brickPlugin) {

@@ -1,5 +1,6 @@
 package com.nosliw.core.application.brick.service.profile;
 
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.core.application.service.HAPInfoServiceRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -24,15 +26,10 @@ public class HAPBrickServiceProfile extends HAPBrickWithEntityInfoSimple{
 	@HAPAttribute
 	public static String INTERFACE = "interface";
 
+	private HAPBrickServiceInterface m_interface;
 
+	private List<String> m_tags;
 	
-	
-	@HAPAttribute
-	public static String STATIC = "static";
-
-	@HAPAttribute
-	public static String RUNTIME = "runtime";
-
 	//information used for configuration, management purpose
 	private HAPInfoServiceStatic m_staticInfo;
 	
@@ -41,8 +38,11 @@ public class HAPBrickServiceProfile extends HAPBrickWithEntityInfoSimple{
 	public HAPBrickServiceProfile(){
 	}
 	
-	public HAPInfoServiceStatic getStaticInfo() {   return this.m_staticInfo;   }
+	public HAPBrickServiceInterface getServiceInterface() {   return this.m_interface;   }
 	
+	public List<String> getTags(){   return this.m_tags;    }
+	
+
 	public void process(HAPRuntimeEnvironment runtimeEnv) {
 		this.m_staticInfo.process(runtimeEnv);
 		this.m_isProcessed = true;

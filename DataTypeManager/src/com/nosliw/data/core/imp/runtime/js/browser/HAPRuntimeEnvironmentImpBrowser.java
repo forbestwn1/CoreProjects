@@ -77,9 +77,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeProcess processRuntimeMan = null;  //new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
-		
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
-		brickManager.registerDivisionInfo(HAPConstantShared.ENTITY_DIVISION_MANUAL, new HAPManualManagerBrick(this));
 		
 		init(
 			dataTypeManager,
@@ -104,6 +102,10 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPManagerUITag(this, dataTypeHelper));
 
+		//brick division
+		this.getBrickManager().registerDivisionInfo(HAPConstantShared.BRICK_DIVISION_MANUAL, new HAPManualManagerBrick(this));
+		
+		
 		//gateway
 		this.getGatewayManager().registerGateway(GATEWAY_SERVICE, new HAPGatewayService(this.getServiceManager()));
 		
