@@ -829,6 +829,7 @@
 			<definition name="STORY_INFO_IDINDEX" value="story_idindex"/>
 
 			<definition type="space"/>
+			<definition name="BRICK" value="brick"/>
 			<definition name="REFERENCE" value="reference"/>
 			<definition name="ENTITY" value="entity"/>
 			<definition name="RESOURCEID" value="resourceid"/>

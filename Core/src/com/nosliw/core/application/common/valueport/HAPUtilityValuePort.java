@@ -6,24 +6,24 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPReferenceBrick;
+import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.HAPUtilityBrick;
 
 public class HAPUtilityValuePort {
 
-	public static Triple<HAPReferenceBrick, HAPIdValuePort, HAPValuePort> getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle) {
+	public static Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle) {
 		HAPValuePort valuePort = null;
-		HAPReferenceBrick brickRef = null;
+		HAPReferenceBrickLocal brickRef = null;
 		HAPIdValuePort valuePortId = valuePortRef==null?null:valuePortRef.getValuePortId();
 		
 
 		if(valuePortRef==null) {
-			brickRef = new HAPReferenceBrick(baseBrickPathId.toString());
+			brickRef = new HAPReferenceBrickLocal(baseBrickPathId.toString());
 		}
 		else {
 			brickRef = valuePortRef.getBrickReference();
 			if(brickRef==null) {
-				brickRef = new HAPReferenceBrick(baseBrickPathId.toString());
+				brickRef = new HAPReferenceBrickLocal(baseBrickPathId.toString());
 			}
 		}
 

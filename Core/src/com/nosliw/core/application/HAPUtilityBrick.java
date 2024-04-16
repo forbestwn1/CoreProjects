@@ -12,8 +12,78 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBrick {
 
+	public static HAPResultAttribute getDescendantAttributeResult(HAPBrick brick, HAPPath path) {
+		if(path==null||path.isEmpty()) {
+			throw new RuntimeException();
+		}
+		
+		HAPAttributeInBrick attr = null;
+		HAPBrick currentBrick = brick;
+		for(int i=0; i<path.getLength(); i++) {
+			String attrName = path.getPathSegments()[i];
+			attr = currentBrick.getAttribute(attrName);
+			HAPWrapperValueInAttribute attrValueWrapper = attr.getValueWrapper();
+			String attrValueType = attrValueWrapper.getValueType();
+			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+				currentBrick = ((HAPWrapperValueInAttributeBrick)attrValueWrapper).getBrick();
+			}
+			else {
+				HAPPath remainPath = path.getRemainingPath(i+1);
+				if(!remainPath.isEmpty()) {
+					if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+						return new HAPResultAttribute(attr, remainPath);
+					}
+					else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
+						throw new RuntimeException();
+					}
+				}
+			}
+		}
+		return new HAPResultAttribute(attr, new HAPPath());
+	}
+
+	public static HAPBrick getDescdentBrick(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPManagerApplicationBrick brickMan) {
+		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path, brickMan);
+		if(brickResult!=null) {
+			return brickResult.getBrick();
+		}
+		return null;
+	}
 	
-	public static HAPBrick getBrick(HAPReferenceBrick brickRef, String baseBrickPath, HAPBundle bundle) {
+	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPManagerApplicationBrick brickMan) {
+		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path, brickMan);
+	}
+	
+	private static HAPResultBrick getDescendantBrickResult(HAPBrick brick, HAPPath path, HAPManagerApplicationBrick brickMan) {
+		if(path==null||path.isEmpty()) {
+			return new HAPResultBrick(brick);
+		} else {
+			HAPResultAttribute attrResult = getDescendantAttributeResult(brick, path);
+			HAPWrapperValueInAttribute attrValueWrapper = attrResult.getAttribute().getValueWrapper();
+			String attrValueType = attrValueWrapper.getValueType();
+			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+				return new HAPResultBrick(((HAPWithBrick)attrValueWrapper).getBrick());
+			}
+			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
+				throw new RuntimeException();
+			}
+			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+				HAPWrapperValueInAttributeReferenceResource valueWrapper = (HAPWrapperValueInAttributeReferenceResource)attrValueWrapper;
+				HAPBundle attrBundle = brickMan.getBrickBundle(valueWrapper.getNormalizedResourceId().getRootResourceIdSimple());
+				HAPPath attrPath = new HAPPath(valueWrapper.getPathFromRoot()).appendPath(attrResult.getRemainPath());
+				HAPResultBrick refBrickResult = getDescendantBrickResult(attrBundle.getBrickWrapper().getBrick(), attrPath, brickMan);
+				if(refBrickResult.isInternalBrick()) {
+					return new HAPResultBrick(new HAPReferenceBrickGlobal(attrBundle, attrPath));
+				} else {
+					return refBrickResult;
+				}
+			}
+		}
+		return null;
+	}
+	
+	
+	public static HAPBrick getBrick(HAPReferenceBrickLocal brickRef, String baseBrickPath, HAPBundle bundle) {
 		HAPBrick brick = null;
 		if(brickRef.getIdPath()!=null) {
 			brick = bundle.getBrickByPath(new HAPPath(brickRef.getIdPath()));
@@ -33,53 +103,6 @@ public class HAPUtilityBrick {
 			out = getDescendantAttribute(rootBrickWrapper.getBrick(), path);
 		}
 		return out;
-	}
-	
-	public static HAPBrick getDescdentBrick(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
-		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
-		if(brickResult!=null&&brickResult.isInternalBrick()) {
-			return brickResult.getBrick();
-		}
-		return null;
-	}
-	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
-		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path);
-	}
-	
-	public static HAPAttributeInBrick getDescendantAttribute(HAPBrick brick, HAPPath path) {
-		HAPAttributeInBrick out = null;
-		for(int i=0; i<path.getLength(); i++) {
-			String attribute = path.getPathSegments()[i];
-			if(i==0) {
-				out = brick.getAttribute(attribute);
-			} else {
-				HAPWrapperValueInAttribute attrValueInfo = out.getValueWrapper();
-				if(attrValueInfo instanceof HAPWithBrick) {
-					out = ((HAPWithBrick)attrValueInfo).getBrick().getAttribute(attribute);
-				}
-				else{
-					throw new RuntimeException();
-				}
-			}
-		}
-		return out;
-	}
-
-	private static HAPResultBrick getDescendantBrickResult(HAPBrick brick, HAPPath path) {
-		if(path==null||path.isEmpty()) {
-			return new HAPResultBrick(brick);
-		} else {
-			HAPWrapperValueInAttribute attrValueInfo = getDescendantAttribute(brick, path).getValueWrapper();
-			String valueType = attrValueInfo.getValueType();
-			if(attrValueInfo instanceof HAPWithBrick) {
-				return new HAPResultBrick(((HAPWithBrick)attrValueInfo).getBrick());
-			}
-			else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-				HAPWrapperValueInAttributeReferenceResource resourceRefAttrValue = (HAPWrapperValueInAttributeReferenceResource)attrValueInfo;
-				return new HAPResultBrick(resourceRefAttrValue.getReferencedBundle(), resourceRefAttrValue.getPathFromRoot());
-			}
-		}
-		return null;
 	}
 	
 	
@@ -129,8 +152,32 @@ public class HAPUtilityBrick {
 			out = brickMan.getLatestVersion(brickTypeId.getBrickType());
 		}
 		return out;
-		
 	}
+
+	public static HAPIdBrickType parseBrickTypeId(Object entityTypeObj, HAPIdBrickType entityTypeIfNotProvided, HAPManagerApplicationBrick entityManager) {
+		String entityType = null;
+		String entityTypeVersion = null;
+		if(entityTypeObj!=null) {
+			HAPIdBrickType entityTypeId1 = parseBrickTypeId(entityTypeObj);
+			entityType = entityTypeId1.getBrickType();
+			entityTypeVersion = entityTypeId1.getVersion();
+		}
+		//try with entityTypeIfNotProvided
+		if(entityTypeIfNotProvided!=null) {
+			if(entityType==null) {
+				entityType = entityTypeIfNotProvided.getBrickType();
+			}
+			if(entityTypeVersion==null) {
+				entityTypeVersion = entityTypeIfNotProvided.getVersion();
+			}
+		}
+		//if version not provided, then use latest version
+		if(entityTypeVersion==null) {
+			entityTypeVersion = entityManager.getLatestVersion(entityType).getVersion();
+		}
+		return new HAPIdBrickType(entityType, entityTypeVersion);
+	}
+	
 
 	public static HAPIdBrick parseBrickId(Object obj) {
 		HAPIdBrick out = null;

@@ -48,6 +48,14 @@ public class HAPPath {
 		return new HAPPath(HAPUtilityNamingConversion.cascadePath(this.m_path, path.m_path));
 	}
 	
+	public HAPPath getRemainingPath(int startIndex) {
+		HAPPath out = new HAPPath();
+		for(int i=startIndex; i<this.m_pathSegs.length; i++) {
+			out.appendSegment(m_pathSegs[i]);
+		}
+		return out;
+	}
+	
 	public HAPPath clonePath() {
 		HAPPath out = new HAPPath(this.m_path);
 		return out;
@@ -55,7 +63,9 @@ public class HAPPath {
 	
 	@Override
 	public int hashCode() {
-		if(this.m_path==null)  return 0;
+		if(this.m_path==null) {
+			return 0;
+		}
 		return this.m_path.hashCode();
 	}
 	

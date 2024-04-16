@@ -36,7 +36,6 @@ import com.nosliw.core.application.division.manual.brick.test.complex.testcomple
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPPluginProcessorBrickDefinitionComplexImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualManagerBrick implements HAPPluginDivision{
@@ -178,7 +177,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				else if(valueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 					//resource reference
 					HAPManualWrapperValueInAttributeReferenceResource resourceRefValueDef = (HAPManualWrapperValueInAttributeReferenceResource)attrValueInfo;
-					HAPWrapperValueInAttributeReferenceResource resourceRefValue = new HAPWrapperValueInAttributeReferenceResource(HAPUtilityResourceId.normalizeResourceId(resourceRefValueDef.getResourceId()));
+					HAPWrapperValueInAttributeReferenceResource resourceRefValue = new HAPWrapperValueInAttributeReferenceResource(resourceRefValueDef.getResourceId());
 					resourceRefValue.solidate(this.getBrickManager());
 				}
 				brick.setAttribute(attrExe);

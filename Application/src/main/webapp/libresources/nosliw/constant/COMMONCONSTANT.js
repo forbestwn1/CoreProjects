@@ -487,6 +487,7 @@ var COMMONCONSTANT=
   "STORYDESIGN_CHANGE_INFO_STAGE": "stage",
   "STORY_EVENT_CHANGE": "change",
   "STORY_INFO_IDINDEX": "story_idindex",
+  "BRICK": "brick",
   "REFERENCE": "reference",
   "ENTITY": "entity",
   "RESOURCEID": "resourceid",

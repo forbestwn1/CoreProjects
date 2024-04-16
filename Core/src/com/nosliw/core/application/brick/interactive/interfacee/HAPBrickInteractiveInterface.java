@@ -11,11 +11,11 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPBrickImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPBrickInteractiveInterface extends HAPBrick{
+public class HAPBrickInteractiveInterface extends HAPBrickImp{
 
 	@HAPAttribute
 	public static String REQUEST = "request";
@@ -24,8 +24,8 @@ public class HAPBrickInteractiveInterface extends HAPBrick{
 	public static String RESULT = "result";
 
 	public HAPBrickInteractiveInterface() {
-		this.setAttributeValue(REQUEST, new ArrayList<HAPRequestParmInInteractiveInterface>());
-		this.setAttributeValue(REQUEST, new LinkedHashMap<String, HAPResultInInteractiveInterface>());
+		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractiveInterface>());
+		this.setAttributeValueWithValue(REQUEST, new LinkedHashMap<String, HAPResultInInteractiveInterface>());
 	}
 
 	public void addRequestParm(HAPRequestParmInInteractiveInterface parm) { this.getRequestParms().add(parm);  }
@@ -52,12 +52,17 @@ public class HAPBrickInteractiveInterface extends HAPBrick{
 //		}
 //	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		try{
-			JSONObject objJson = (JSONObject)json;
-			super.buildObjectByJson(objJson);
-			JSONObject resultObject = objJson.getJSONObject(RESULT);
+    @Override
+	protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {
+    	if(REQUEST.equals(attrName)) {
+			JSONArray parmsArray = (JSONArray)obj;
+			for(int i=0; i<parmsArray.length(); i++) {
+				HAPRequestParmInInteractiveInterface parm = HAPRequestParmInInteractiveInterface.buildParmFromObject(parmsArray.get(i));
+				this.addRequestParm(parm);
+			}
+    	}
+    	else if(RESULT.equals(attrName)) {
+			JSONObject resultObject = (JSONObject)obj;
 			for(Object key : resultObject.keySet()) {
 				String name = (String)key;
 				HAPResultInInteractiveInterface resultEle = new HAPResultInInteractiveInterface();
@@ -65,17 +70,7 @@ public class HAPBrickInteractiveInterface extends HAPBrick{
 				resultEle.setName(name);
 				this.addResult(resultEle);
 			}
-			
-			JSONArray parmsArray = objJson.getJSONArray(REQUEST);
-			for(int i=0; i<parmsArray.length(); i++) {
-				HAPRequestParmInInteractiveInterface parm = HAPRequestParmInInteractiveInterface.buildParmFromObject(parmsArray.get(i));
-				this.addRequestParm(parm);
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-		return true;  
-	}
+    	}
+    	return true;
+    }
 }

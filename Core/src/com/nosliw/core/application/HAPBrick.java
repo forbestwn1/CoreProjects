@@ -1,29 +1,35 @@
 package com.nosliw.core.application;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
+public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrReference, HAPWithValuePort{
 
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 
 	@HAPAttribute
-	public final static String BRICKTYPEINFO = "brickTypeInfo"; 
+	public final static String BRICKTYPE = "brickType"; 
+
+	@HAPAttribute
+	public final static String ISCOMPLEX = "isComplex"; 
+
 
 	private HAPInfoBrickType m_brickTypeInfo;
 	
@@ -34,8 +40,13 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
 	
+	@Override
+	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
+
+	
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
+	public HAPIdBrickType getBrickType() {   return this.getBrickTypeInfo().getBrickTypeId();     }
 	
 	public List<HAPAttributeInBrick> getAttributes(){     return this.m_attributes;      }
 	public HAPAttributeInBrick getAttribute(String attrName) {
@@ -46,11 +57,8 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 		}
 		return null;
 	}
-	public Object getAttributeValue(String attributeName) {
-		HAPAttributeInBrick attr = this.getAttribute(attributeName);
-		HAPWrapperValueInAttributeValue valueWrapper = (HAPWrapperValueInAttributeValue)attr.getValueWrapper();
-		return valueWrapper.getValue();
-	}
+	public Object getAttributeValue(String attributeName) {		return ((HAPWrapperValueInAttributeValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
+	public HAPBrick getAttributeBrick(String attributeName) {	return ((HAPWrapperValueInAttributeBrick)this.getAttribute(attributeName).getValueWrapper()).getBrick();	}
 	
 	
 	public void setAttribute(HAPAttributeInBrick attribute) {
@@ -63,32 +71,41 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 		this.m_attributes.add(attribute);    
 	}
 	
-	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}
-
-
-	@Override
-	public HAPContainerValuePorts getValuePorts() {		return null;	}
-	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
-		for(HAPAttributeInBrick attr : this.m_attributes) {
-			attrJsonMap.put(attr.getName(), attr.toStringValue(HAPSerializationFormat.JSON));
+	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}
+	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
+		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
+			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeBrick((HAPBrick)brickOrRef)));
 		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrJsonMap));
-		if(m_brickTypeInfo!=null) {
-			jsonMap.put(BRICKTYPEINFO, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
+			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeReferenceResource((HAPResourceId)brickOrRef)));
 		}
 	}
 	
 	@Override
+	public HAPContainerValuePorts getValuePorts() {		return null;	}
+
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
+		if(m_brickTypeInfo!=null) {
+			jsonMap.put(BRICKTYPE, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+			jsonMap.put(ISCOMPLEX, this.m_brickTypeInfo.getIsComplex()+"");
+			typeJsonMap.put(ISCOMPLEX, Boolean.class);
+		}
+	}
+	
+	
+	
+	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		Map<String, String> attrJsonMap = new LinkedHashMap<String, String>();
+		
+		List<String> attrJsonList = new ArrayList<String>();
 		for(HAPAttributeInBrick attr : this.m_attributes) {
-			attrJsonMap.put(attr.getName(), attr.toResourceData(runtimeInfo).toString());
+			attrJsonList.add(attr.toResourceData(runtimeInfo).toString());
 		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildMapJson(attrJsonMap));
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
 	}
 
 	@Override
@@ -97,5 +114,7 @@ public class HAPBrick extends HAPExecutableImp implements HAPWithValuePort{
 			dependency.addAll(attr.getResourceDependency(runtimeInfo, resourceManager));
 		}
 	}
+
+	abstract public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan);
 
 }

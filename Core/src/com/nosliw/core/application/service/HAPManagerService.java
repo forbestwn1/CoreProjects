@@ -39,7 +39,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
-		this.m_serviceInterfaceMan = new HAPManagerServiceInterface(); 
+		this.m_serviceInterfaceMan = new HAPManagerServiceInterface(this.m_runtimeEnv.getBrickManager()); 
 	}
 	
 	public HAPManagerServiceInterface getServiceInterfaceManager() {   return this.m_serviceInterfaceMan;     }
@@ -146,7 +146,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		HAPResultInteractive out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
-			HAPBrickInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getInterface();
+			HAPBrickInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getActiveInterface();
 			for(HAPRequestParmInInteractiveInterface parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;

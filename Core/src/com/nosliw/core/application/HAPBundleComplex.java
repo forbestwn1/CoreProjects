@@ -26,4 +26,6 @@ public class HAPBundleComplex extends HAPBundle{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 	}	
+
+
 }

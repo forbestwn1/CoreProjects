@@ -7,7 +7,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 
@@ -96,10 +95,6 @@ public class HAPUtilityDefinitionBrick {
 		} else {
 			return false;
 		}
-		
-	}
-	
-	public static HAPIdBrickType parseEntityTypeId(Object obj) {
 		
 	}
 	

@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPReferenceBrick;
+import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 //store result for resolve structure element reference path
@@ -46,7 +46,7 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	
 	
 	//ref to brick
-	public HAPReferenceBrick brickReference;
+	public HAPReferenceBrickLocal brickReference;
 	
 	//value port id
 	public HAPIdValuePort valuePortId;

@@ -1,24 +1,23 @@
 package com.nosliw.core.application;
 
-import com.nosliw.common.path.HAPPath;
-
 public class HAPResultBrick {
 
 	private HAPBrick m_brick;
-	
-	private HAPBundle m_bundle;
-	private HAPPath m_pathFromRoot;
+
+	private HAPReferenceBrickGlobal m_globalRef;
 	
 	public HAPResultBrick(HAPBrick brick) {
 		this.m_brick = brick;
 	}
 	
-	public HAPResultBrick(HAPBundle bundle, HAPPath pathFromRoot) {
-		this.m_bundle = bundle;
-		this.m_pathFromRoot = pathFromRoot;
+	public HAPResultBrick(HAPReferenceBrickGlobal globalRef) {
+		this.m_globalRef = globalRef;
 	}
 	
 	public boolean isInternalBrick() {    return this.m_brick!=null;    }
+	
+	
+	
 	
 	public HAPBrick getBrick() {
 		if(this.m_brick!=null) {

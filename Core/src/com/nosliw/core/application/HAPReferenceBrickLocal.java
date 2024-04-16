@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 @HAPEntityWithAttribute
-public class HAPReferenceBrick extends HAPSerializableImp{
+public class HAPReferenceBrickLocal extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String IDPATH = "idPath";
@@ -20,7 +20,7 @@ public class HAPReferenceBrick extends HAPSerializableImp{
 	//for runtime purpose, as absolute path may lead to multiple brick
 	private String m_relativePath;
 	
-	public HAPReferenceBrick(String idPath) {
+	public HAPReferenceBrickLocal(String idPath) {
 		this.m_idPath = idPath;
 	}
 	

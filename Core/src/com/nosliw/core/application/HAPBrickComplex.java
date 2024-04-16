@@ -2,6 +2,8 @@ package com.nosliw.core.application;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
@@ -10,7 +12,7 @@ import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPBrickComplex extends HAPBrick{
+public class HAPBrickComplex extends HAPBrickImp{
 
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
@@ -45,4 +47,16 @@ public class HAPBrickComplex extends HAPBrick{
 		jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
 	}
 	
+	@Override
+	protected boolean buildBrickFormatJson(JSONObject jsonObj, HAPManagerApplicationBrick brickMan) {
+		super.buildBrickFormatJson(jsonObj, brickMan);
+		JSONObject valueContextJsonObj = jsonObj.optJSONObject(VALUECONTEXT);
+		if(valueContextJsonObj!=null) {
+			this.m_valueContext = new HAPValueContext();
+			this.m_valueContext.buildObject(valueContextJsonObj, HAPSerializationFormat.JSON);
+			
+		}
+		return true;
+	}
+
 }

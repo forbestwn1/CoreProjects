@@ -2,7 +2,6 @@ package com.nosliw.core.application.brick.service.interfacee;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,7 +10,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -22,65 +20,45 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
 
 	@HAPAttribute
-	public static String TAG = "tag";
+	public static String INTERFACE = "interface";
 
 	@HAPAttribute
-	public static String INTERFACE = "interface";
+	public static String TAG = "tag";
 
 	@HAPAttribute
 	public static String DISPLAY = "display";
 
-	private List<String> m_tags;
-	
-	private HAPBrickInteractiveInterface m_interface;
-	
-	private HAPDisplayResourceNode m_displayResource;
-	
 	public HAPBrickServiceInterface() {
-		this.m_tags = new ArrayList<String>();
-		this.m_interface = new HAPBrickInteractiveInterface();
-		this.m_displayResource = new HAPDisplayResourceNode();
+		this.setAttributeValueWithValue(TAG, new ArrayList<String>());
+		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}
 
-	public HAPBrickInteractiveInterface getInterface() {  return this.m_interface;  } 
+	public HAPBrickInteractiveInterface getActiveInterface() {  return (HAPBrickInteractiveInterface)this.getAttributeBrick(INTERFACE);  } 
 	
-	public List<String> getTags(){   return this.m_tags;    }
+	public List<String> getTags(){   return (List<String>)this.getAttributeValue(TAG);    }
 	
-	public HAPDisplayResourceNode getDisplayResource() {   return this.m_displayResource;     }
+	public HAPDisplayResourceNode getDisplayResource() {   return (HAPDisplayResourceNode)this.getAttributeValue(DISPLAY);     }
 	
-	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.m_interface.process(runtimeEnv);	}
+	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.getActiveInterface().process(runtimeEnv);	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		try{
-			JSONObject objJson = (JSONObject)json;
-			super.buildObjectByJson(objJson);
-			this.m_serviceInterface = new HAPBrickServiceInterface();
-			this.m_serviceInterface.buildObject(objJson.getJSONObject(INTERFACE), HAPSerializationFormat.JSON);
-			this.m_tags.clear();
-			JSONArray tagArray = objJson.optJSONArray(TAG);
-			if(tagArray!=null) {
-				for(int i=0; i<tagArray.length(); i++) {
-					this.m_tags.add(tagArray.getString(i));
-				}
-			}
-			JSONObject displayResourceObj = objJson.optJSONObject(DISPLAY);
-			if(displayResourceObj!=null) {
-				this.m_displayResource.buildObject(displayResourceObj, HAPSerializationFormat.JSON);
-			}
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-		return true;  
-	}
-	
-	@Override
-	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INTERFACE, HAPUtilityJson.buildJson(this.m_serviceInterface, HAPSerializationFormat.JSON));
-		jsonMap.put(TAG, HAPUtilityJson.buildJson(this.m_tags, HAPSerializationFormat.JSON));
-		jsonMap.put(DISPLAY, HAPUtilityJson.buildJson(this.m_displayResource, HAPSerializationFormat.JSON));
-	}
+    @Override
+	protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {
+    	super.buildAttributeValueFormatJson(attrName, obj);
+    	if(TAG.equals(attrName)) {
+    		this.getTags().clear();
+    		JSONArray tagArray = (JSONArray)obj;
+    		if(tagArray!=null) {
+    			for(int i=0; i<tagArray.length(); i++) {
+    				this.getTags().add(tagArray.getString(i));
+    			}
+    		}
+    	}
+    	else if(DISPLAY.equals(attrName)) {
+    		JSONObject displayResourceObj = ((JSONObject)obj).optJSONObject(DISPLAY);
+    		if(displayResourceObj!=null) {
+    			this.getDisplayResource().buildObject(displayResourceObj, HAPSerializationFormat.JSON);
+    		}
+    	}
+    	return true;
+    }
 }

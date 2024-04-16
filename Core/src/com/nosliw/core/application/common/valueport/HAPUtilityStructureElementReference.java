@@ -11,7 +11,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPReferenceBrick;
+import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
@@ -27,7 +27,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 public class HAPUtilityStructureElementReference {
 
 	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle) {
-		Triple<HAPReferenceBrick, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
+		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
 
 		HAPResultReferenceResolve resolve  = valuePortInfo.getRight().resolveReference(reference, resolveConfigure);
 		if(resolve!=null) {

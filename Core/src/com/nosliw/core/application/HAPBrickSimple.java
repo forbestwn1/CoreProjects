@@ -1,5 +1,5 @@
 package com.nosliw.core.application;
 
-public class HAPBrickSimple extends HAPBrick{
+public class HAPBrickSimple extends HAPBrickImp{
 
 }

@@ -66,7 +66,7 @@ public class HAPUtilityBrickTraverse {
 				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
 					HAPWrapperValueInAttribute attrValueInfo = attr.getValueWrapper();
 					if(attrValueInfo instanceof HAPWithBrick) {
-						return HAPUtilityBrick.isBrickComplex(((HAPWithBrick)attrValueInfo).getBrickTypeId(), brickMan);
+						return HAPUtilityBrick.isBrickComplex(((HAPWithBrick)attrValueInfo).getBrick().getBrickType(), brickMan);
 					}
 					return false;
 				}

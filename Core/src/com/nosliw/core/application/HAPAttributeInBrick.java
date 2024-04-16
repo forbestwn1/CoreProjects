@@ -5,8 +5,6 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.interfac.HAPTreeNode;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -14,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements HAPTreeNode{
+public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static final String VALUEWRAPPER = "valueWrapper";
@@ -24,9 +22,6 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 
 	private HAPWrapperValueInAttribute m_valueWrapper;
 	
-	//path from root
-	private HAPPath m_pathFromRoot;
-
 	public HAPAttributeInBrick() {}
 	
 	public HAPAttributeInBrick(String attrName, HAPWrapperValueInAttribute valueWrapper) {
@@ -41,19 +36,8 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	}
 
 	@Override
-	public HAPPath getPathFromRoot() {    return this.m_pathFromRoot;    }
-	
-	public void setPathFromRoot(HAPPath path) {    this.m_pathFromRoot = path;     }
-
-	@Override
-	public Object getNodeValue() {   return this.getValueWrapper();   }
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_pathFromRoot!=null) {
-			jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
-		}
 		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
 	}
 	

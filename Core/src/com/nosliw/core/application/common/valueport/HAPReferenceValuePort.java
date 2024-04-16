@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPReferenceBrick;
+import com.nosliw.core.application.HAPReferenceBrickLocal;
 
 @HAPEntityWithAttribute
 public class HAPReferenceValuePort extends HAPSerializableImp{
@@ -17,19 +17,19 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String VALUEPORTKEY = "valuePortKey";
 
-	private HAPReferenceBrick m_brickReference;
+	private HAPReferenceBrickLocal m_brickReference;
 	
 	private HAPIdValuePort m_valuePortKey;
 	
 	public HAPReferenceValuePort() {}
 	
-	public HAPReferenceValuePort(HAPReferenceBrick brickRef, HAPIdValuePort valuePortKey) {
+	public HAPReferenceValuePort(HAPReferenceBrickLocal brickRef, HAPIdValuePort valuePortKey) {
 		this.m_brickReference = brickRef;
 		this.m_valuePortKey = valuePortKey;
 	}
 	
 	//which entity this value port belong
-	public HAPReferenceBrick getBrickReference() {    return this.m_brickReference;     }
+	public HAPReferenceBrickLocal getBrickReference() {    return this.m_brickReference;     }
 	
 	public HAPIdValuePort getValuePortId() {   return this.m_valuePortKey;     }
 

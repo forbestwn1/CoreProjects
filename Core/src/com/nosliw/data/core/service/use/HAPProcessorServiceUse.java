@@ -36,7 +36,7 @@ public class HAPProcessorServiceUse {
 	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructureInValuePort globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
-			HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
+			HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
 			
 			//
 			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataAssociations(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
@@ -58,7 +58,7 @@ public class HAPProcessorServiceUse {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
-		HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getInterface();
+		HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		
@@ -68,7 +68,7 @@ public class HAPProcessorServiceUse {
 		//process service provider
 		HAPAttachment providerAttachment = attachmentContainer.getElement(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICE, definition.getProvider());
 		HAPInfoServiceProvider serviceProviderInfo = HAPUtilityServiceUse.parseServiceAttachment(providerAttachment, runtimeEnv);
-		HAPBrickServiceInterface1 providerInterface = serviceProviderInfo.getServiceDefinition().getStaticInfo().getInterface().getInterface();
+		HAPBrickServiceInterface1 providerInterface = serviceProviderInfo.getServiceDefinition().getStaticInfo().getActiveInterface().getActiveInterface();
 		out.setProviderId(serviceProviderInfo.getServiceDefinition().getStaticInfo().getId());
 		
 		if(serviceProviderInfo.getDataMapping()!=null) {

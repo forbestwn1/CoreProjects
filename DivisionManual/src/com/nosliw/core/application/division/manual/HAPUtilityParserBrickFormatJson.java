@@ -37,7 +37,7 @@ public class HAPUtilityParserBrickFormatJson {
 		
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdBrickType entityTypeId = HAPUtilityBrick.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		Object entityObj = jsonObj.opt(HAPManualWithBrick.BRICK);
 		if(entityObj==null)
@@ -99,7 +99,7 @@ public class HAPUtilityParserBrickFormatJson {
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = parseEntityTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdBrickType entityTypeId = HAPUtilityBrick.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		//local entity reference
 		if(out==null) {
@@ -152,30 +152,6 @@ public class HAPUtilityParserBrickFormatJson {
 		return out;
 	}
 
-	private static HAPIdBrickType parseEntityTypeId(Object entityTypeObj, HAPIdBrickType entityTypeIfNotProvided, HAPManagerApplicationBrick entityManager) {
-		String entityType = null;
-		String entityTypeVersion = null;
-		if(entityTypeObj!=null) {
-			HAPIdBrickType entityTypeId1 = HAPUtilityDefinitionBrick.parseEntityTypeId(entityTypeObj);
-			entityType = entityTypeId1.getBrickType();
-			entityTypeVersion = entityTypeId1.getVersion();
-		}
-		//try with entityTypeIfNotProvided
-		if(entityTypeIfNotProvided!=null) {
-			if(entityType==null) {
-				entityType = entityTypeIfNotProvided.getBrickType();
-			}
-			if(entityTypeVersion==null) {
-				entityTypeVersion = entityTypeIfNotProvided.getVersion();
-			}
-		}
-		//if version not provided, then use latest version
-		if(entityTypeVersion==null) {
-			entityTypeVersion = entityManager.getLatestVersion(entityType).getVersion();
-		}
-		return new HAPIdBrickType(entityType, entityTypeVersion);
-	}
-	
 	private static HAPManualBrick parseLocalValue(String basePath, HAPIdBrick entityId, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualInfoBrickLocation entityLocationInfo = HAPUtilityBrickLocation.getEntityLocationInfo(entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());

@@ -191,7 +191,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				//get service node
 				HAPStoryNodeService serviceStoryNode = (HAPStoryNodeService)HAPUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_SERVICE).iterator().next();
 				HAPInfoServiceStatic staticServiceInfo = this.m_runtimeEnv.getServiceManager().getServiceDefinitionManager().getServiceInfo(serviceStoryNode.getReferenceId()).getStaticInfo();
-				HAPBrickServiceInterface1 serviceInterface = staticServiceInfo.getInterface().getInterface();
+				HAPBrickServiceInterface1 serviceInterface = staticServiceInfo.getInterface().getActiveInterface();
 				HAPDisplayResourceNode serviceDisplayResource = staticServiceInfo.getInterface().getDisplayResource();
 				HAPDisplayResourceNode interfaceDisplayResource = serviceDisplayResource.getResourceNode(HAPInfoServiceStatic.INTERFACE);
 				
