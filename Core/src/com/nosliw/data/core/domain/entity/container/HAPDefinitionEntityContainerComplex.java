@@ -29,7 +29,7 @@ public class HAPDefinitionEntityContainerComplex extends HAPManualBrickComplex{
 		return eleId;
 	}
 
-	public HAPInfoBrickType getElmentValueTypeInfo() {     return (HAPInfoBrickType)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
+	public HAPInfoBrickType getElmentValueTypeInfo() {     return (HAPInfoBrickType)this.getAttributeValueOfValue(ATTR_ELEMENT_TYPEINFO);     }
 	public void setElementValueTypeInfo(HAPInfoBrickType eleValueTypeInfo) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueTypeInfo);      }
 	
 	public HAPConfigureParentRelationComplex getElementRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(ATTR_ELEMENTRELATIONCONFIGURE, new HAPConfigureParentRelationComplex());     }

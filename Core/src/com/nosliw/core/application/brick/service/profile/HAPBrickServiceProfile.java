@@ -11,7 +11,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.core.application.service.HAPInfoServiceRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -28,8 +27,6 @@ public class HAPBrickServiceProfile extends HAPBrickWithEntityInfoSimple{
 	@HAPAttribute
 	public static String INTERFACE = "interface";
 
-	private HAPBrickServiceInterface m_interface;
-
 	private List<String> m_tags;
 	
 	//information used for configuration, management purpose
@@ -42,9 +39,9 @@ public class HAPBrickServiceProfile extends HAPBrickWithEntityInfoSimple{
 	}
 	
 	public void setInterface(HAPEntityOrReference brickOrRef) {		this.setAttributeValueWithBrick(INTERFACE, brickOrRef);	}
-	public HAPBrickInteractiveInterface getServiceInterface() {   return this.getAttributeBrick(INTERFACE);   }
+	public HAPBrickInteractiveInterface getServiceInterface() {   return this.getAttributeValueOfBrick(INTERFACE);   }
 	
-	public List<String> getTags(){   return (List<String>)this.getAttributeValue(TAG);    }
+	public List<String> getTags(){   return (List<String>)this.getAttributeValueOfValue(TAG);    }
 	
 
 	public void process(HAPRuntimeEnvironment runtimeEnv) {

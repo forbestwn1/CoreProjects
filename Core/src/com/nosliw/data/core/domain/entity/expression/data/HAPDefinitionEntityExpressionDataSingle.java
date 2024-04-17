@@ -17,7 +17,7 @@ public class HAPDefinitionEntityExpressionDataSingle extends HAPDefinitionEntity
 	
 	public void setExpression(HAPDefinitionExpressionData expression) {	this.setAttributeValueObject(ATTR_EXPRESSION, expression);	}
 
-	public HAPDefinitionExpressionData getExpression() {    return (HAPDefinitionExpressionData)this.getAttributeValue(ATTR_EXPRESSION);      }
+	public HAPDefinitionExpressionData getExpression() {    return (HAPDefinitionExpressionData)this.getAttributeValueOfValue(ATTR_EXPRESSION);      }
 
 	@Override
 	public List<HAPDefinitionExpressionData> getAllExpressionItems(){   return Lists.newArrayList(this.getExpression());      }

@@ -14,7 +14,7 @@ public class HAPDefinitionEntityExpressionScriptGroup extends HAPDefinitionEntit
 	}
 
 	@Override
-	public List<HAPDefinitionExpression> getAllExpressionItems() {   return (List<HAPDefinitionExpression>)this.getAttributeValue(ELEMENT);  }
+	public List<HAPDefinitionExpression> getAllExpressionItems() {   return (List<HAPDefinitionExpression>)this.getAttributeValueOfValue(ELEMENT);  }
 
 	public String addExpression(HAPDefinitionExpression expression) {
 		if(expression!=null) {

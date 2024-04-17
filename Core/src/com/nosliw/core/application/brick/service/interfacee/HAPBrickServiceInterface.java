@@ -33,11 +33,11 @@ public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
 		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}
 
-	public HAPBrickInteractiveInterface getActiveInterface() {  return (HAPBrickInteractiveInterface)this.getAttributeBrick(INTERFACE);  } 
+	public HAPBrickInteractiveInterface getActiveInterface() {  return (HAPBrickInteractiveInterface)this.getAttributeValueOfBrick(INTERFACE);  } 
 	
-	public List<String> getTags(){   return (List<String>)this.getAttributeValue(TAG);    }
+	public List<String> getTags(){   return (List<String>)this.getAttributeValueOfValue(TAG);    }
 	
-	public HAPDisplayResourceNode getDisplayResource() {   return (HAPDisplayResourceNode)this.getAttributeValue(DISPLAY);     }
+	public HAPDisplayResourceNode getDisplayResource() {   return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);     }
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.getActiveInterface().process(runtimeEnv);	}
 	

@@ -7,11 +7,17 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBrick {
 
+	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
+		HAPBundle bundle = brickMan.getBrickBundle(normalizedResourceId.getRootResourceIdSimple());
+		return getDescdentBrick(bundle.getBrickWrapper(), normalizedResourceId.getPath(), brickMan);
+	}
+	
 	public static HAPResultAttribute getDescendantAttributeResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
 			throw new RuntimeException();
@@ -70,7 +76,7 @@ public class HAPUtilityBrick {
 			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 				HAPWrapperValueInAttributeReferenceResource valueWrapper = (HAPWrapperValueInAttributeReferenceResource)attrValueWrapper;
 				HAPBundle attrBundle = brickMan.getBrickBundle(valueWrapper.getNormalizedResourceId().getRootResourceIdSimple());
-				HAPPath attrPath = new HAPPath(valueWrapper.getPathFromRoot()).appendPath(attrResult.getRemainPath());
+				HAPPath attrPath = new HAPPath(valueWrapper.getNormalizedResourceId().getPath()).appendPath(attrResult.getRemainPath());
 				HAPResultBrick refBrickResult = getDescendantBrickResult(attrBundle.getBrickWrapper().getBrick(), attrPath, brickMan);
 				if(refBrickResult.isInternalBrick()) {
 					return new HAPResultBrick(new HAPReferenceBrickGlobal(attrBundle, attrPath));

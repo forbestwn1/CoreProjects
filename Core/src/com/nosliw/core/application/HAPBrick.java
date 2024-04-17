@@ -30,6 +30,7 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 	@HAPAttribute
 	public final static String ISCOMPLEX = "isComplex"; 
 
+	private HAPManagerApplicationBrick m_brickMan;
 
 	private HAPInfoBrickType m_brickTypeInfo;
 	
@@ -43,6 +44,7 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
 
+	public void setBrickManager(HAPManagerApplicationBrick brickMan) {    this.m_brickMan = brickMan;      }
 	
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
@@ -57,9 +59,20 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		}
 		return null;
 	}
-	public Object getAttributeValue(String attributeName) {		return ((HAPWrapperValueInAttributeValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
-	public HAPBrick getAttributeBrick(String attributeName) {	return ((HAPWrapperValueInAttributeBrick)this.getAttribute(attributeName).getValueWrapper()).getBrick();	}
-	
+	public Object getAttributeValueOfValue(String attributeName) {		return ((HAPWrapperValueInAttributeValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
+	public HAPBrick getAttributeValueOfBrick(String attributeName) {
+		HAPBrick out = null;
+		HAPWrapperValueInAttribute valueWrapper = this.getAttribute(attributeName).getValueWrapper();
+		String valueType = valueWrapper.getValueType();
+		if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+			out = ((HAPWrapperValueInAttributeBrick)valueWrapper).getBrick();
+		}
+		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+			HAPWrapperValueInAttributeReferenceResource valueWrapperResourceId = (HAPWrapperValueInAttributeReferenceResource)valueWrapper;
+			out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), m_brickMan);			
+		}
+		return out;	
+	}
 	
 	public void setAttribute(HAPAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {

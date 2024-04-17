@@ -16,14 +16,5 @@ public class HAPResultBrick {
 	
 	public boolean isInternalBrick() {    return this.m_brick!=null;    }
 	
-	
-	
-	
-	public HAPBrick getBrick() {
-		if(this.m_brick!=null) {
-			return this.m_brick;
-		} else {
-			return HAPUtilityBrick.getDescdentBrick(this.m_bundle.getBrickWrapper(), m_pathFromRoot);
-		}
-	}
+	public HAPBrick getBrick() {   return this.m_brick;  }
 }

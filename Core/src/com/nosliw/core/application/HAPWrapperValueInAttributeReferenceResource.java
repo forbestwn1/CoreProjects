@@ -1,16 +1,21 @@
 package com.nosliw.core.application;
 
-import com.nosliw.common.path.HAPPath;
+import java.util.Map;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 
-public class HAPWrapperValueInAttributeReferenceResource extends HAPWrapperValueInAttribute implements HAPWithBrick{
+public class HAPWrapperValueInAttributeReferenceResource extends HAPWrapperValueInAttribute{
+
+	@HAPAttribute
+	public static final String RESOURCEID = "resourceId";
 
 	private HAPResourceId m_resourceId;
-	
-	private HAPReferenceBrickGlobal m_blockRef;
 	
 	public HAPWrapperValueInAttributeReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID);
@@ -23,15 +28,16 @@ public class HAPWrapperValueInAttributeReferenceResource extends HAPWrapperValue
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	public HAPInfoResourceIdNormalize getNormalizedResourceId() {   return HAPUtilityResourceId.normalizeResourceId(m_resourceId);    }
 	
-	public HAPBundle getReferencedBundle() {    return this.m_referBundle;     }
-	
-	public HAPPath getPathFromRoot() {    return  this.m_pathFromRoot;    }
-	
-	@Override
-	public HAPBrick getBrick() {    return this.m_referBundle.getBrickByPath(m_pathFromRoot);    }
+//	public void solidate(HAPManagerApplicationBrick brickMan) {
+//		this.m_referBundle = brickMan.getBrickBundle(m_normalizedResourceId.getRootResourceIdSimple());
+//		this.m_pathFromRoot = this.m_normalizedResourceId.getPath();
+//	}
 
-	public void solidate(HAPManagerApplicationBrick brickMan) {
-		this.m_referBundle = brickMan.getBrickBundle(m_normalizedResourceId.getRootResourceIdSimple());
-		this.m_pathFromRoot = this.m_normalizedResourceId.getPath();
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(RESOURCEID, HAPSerializeManager.getInstance().toStringValue(this.m_resourceId, HAPSerializationFormat.JSON));
 	}
+
 }

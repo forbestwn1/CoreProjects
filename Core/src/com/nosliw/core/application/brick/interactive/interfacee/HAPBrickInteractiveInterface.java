@@ -29,9 +29,9 @@ public class HAPBrickInteractiveInterface extends HAPBrickImp{
 	}
 
 	public void addRequestParm(HAPRequestParmInInteractiveInterface parm) { this.getRequestParms().add(parm);  }
-	public List<HAPRequestParmInInteractiveInterface> getRequestParms(){   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValue(REQUEST);   }
+	public List<HAPRequestParmInInteractiveInterface> getRequestParms(){   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValueOfValue(REQUEST);   }
 	
-	public Map<String, HAPResultInInteractiveInterface> getResults(){ return (Map<String, HAPResultInInteractiveInterface>)this.getAttributeValue(RESULT);  }
+	public Map<String, HAPResultInInteractiveInterface> getResults(){ return (Map<String, HAPResultInInteractiveInterface>)this.getAttributeValueOfValue(RESULT);  }
 	public HAPResultInInteractiveInterface getResult(String result) {   return this.getResults().get(result);  }
 	public List<HAPResultOutputInInteractiveInterface> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
 	public void addResult(HAPResultInInteractiveInterface result) {  this.getResults().put(result.getName(), result);  }

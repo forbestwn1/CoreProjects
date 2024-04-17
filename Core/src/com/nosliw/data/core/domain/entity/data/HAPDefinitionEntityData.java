@@ -9,7 +9,7 @@ public class HAPDefinitionEntityData extends HAPManualBrickSimple{
 	public static final String ATTR_DATA = "data";
 	
 	public void setData(HAPData data) {    this.setAttributeValueObject(ATTR_DATA, data);    }
-	public HAPData getData() {   return (HAPData)this.getAttributeValue(ATTR_DATA);     }
+	public HAPData getData() {   return (HAPData)this.getAttributeValueOfValue(ATTR_DATA);     }
 	
 	@Override
 	public HAPManualBrick cloneEntityDefinitionInDomain() {

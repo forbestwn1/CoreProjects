@@ -6,9 +6,12 @@ public class HAPPluginBrickImp implements HAPPluginBrick{
 	
 	private Class<? extends HAPBrick> m_brickClass;
 	
-	public HAPPluginBrickImp(HAPInfoBrickType brickTypeInfo, Class<? extends HAPBrick> brickClass) {
+	private HAPManagerApplicationBrick m_brickMan;
+	
+	public HAPPluginBrickImp(HAPInfoBrickType brickTypeInfo, Class<? extends HAPBrick> brickClass, HAPManagerApplicationBrick brickMan) {
 		this.m_brickTypeInfo = brickTypeInfo;
 		this.m_brickClass = brickClass;
+		this.m_brickMan = brickMan;
 	}
 	
 	@Override
@@ -20,6 +23,7 @@ public class HAPPluginBrickImp implements HAPPluginBrick{
 		try {
 			out = this.m_brickClass.newInstance();
 			out.setBrickTypeInfo(m_brickTypeInfo);
+			out.setBrickManager(m_brickMan);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -13,7 +13,7 @@ public abstract class HAPDefinitionEntityExpressionScript extends HAPManualBrick
 
 	public abstract List<HAPDefinitionExpression> getAllExpressionItems();
 
-	public HAPIdEntityInDomain getReferencesContainerId() {    return (HAPIdEntityInDomain)this.getAttributeValue(ATTR_REFERENCES);     }
+	public HAPIdEntityInDomain getReferencesContainerId() {    return (HAPIdEntityInDomain)this.getAttributeValueOfValue(ATTR_REFERENCES);     }
 	
 	public HAPDefinitionEntityContainerComplex getReferencesContainer(HAPDomainEntityDefinitionGlobal globalDomain){
 		return (HAPDefinitionEntityContainerComplex)globalDomain.getEntityInfoDefinition(getReferencesContainerId()).getEntity();    

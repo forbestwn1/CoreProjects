@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -35,6 +36,10 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo{
 		this.m_valueWrapper = valueInfo;
 	}
 
+	public void setValueOfValue(Object value) {		this.setValueInfo(new HAPWrapperValueInAttributeValue(value));	}
+	public void setValueOfBrick(HAPBrick brick) {		this.setValueInfo(new HAPWrapperValueInAttributeBrick(brick));	}
+	public void setValueOfResourceId(HAPResourceId resourceId) {		this.setValueInfo(new HAPWrapperValueInAttributeReferenceResource(resourceId));	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

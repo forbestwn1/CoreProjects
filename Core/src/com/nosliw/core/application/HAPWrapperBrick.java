@@ -39,7 +39,4 @@ public class HAPWrapperBrick extends HAPExecutableImp implements HAPTreeNode, HA
 		jsonMap.put(BRICK, this.m_brick.toResourceData(runtimeInfo).toString());
 	}
 
-	@Override
-	public HAPIdBrickType getBrickTypeId() {   return this.getBrick().getBrickTypeInfo().getBrickTypeId();  }
-
 }

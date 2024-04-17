@@ -8,7 +8,7 @@ public class HAPDefinitionEntityValue extends HAPManualBrickSimple{
 	public static final String ATTR_VALUE = "value";
 	
 	public void setValue(Object value) {    this.setAttributeValueObject(ATTR_VALUE, value);    }
-	public Object getValue() {   return this.getAttributeValue(ATTR_VALUE);     }
+	public Object getValue() {   return this.getAttributeValueOfValue(ATTR_VALUE);     }
 	
 	@Override
 	public HAPManualBrick cloneEntityDefinitionInDomain() {

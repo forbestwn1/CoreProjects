@@ -21,7 +21,7 @@ public class HAPDefinitionEntityContainerSimple extends HAPManualBrickComplex{
 		return eleId;
 	}
 
-	public String getElmentValueTypeInfo() {     return (String)this.getAttributeValue(ATTR_ELEMENT_TYPEINFO);     }
+	public String getElmentValueTypeInfo() {     return (String)this.getAttributeValueOfValue(ATTR_ELEMENT_TYPEINFO);     }
 	public void setElementValueTypeInfo(String eleValueType) {    this.setAttributeValueObject(ATTR_ELEMENT_TYPEINFO, eleValueType);  }
 	
 	@Override

@@ -39,7 +39,7 @@ public class HAPDefinitionEntityExpressionDataGroup extends HAPDefinitionEntityE
 	}
 
 	@Override
-	public List<HAPDefinitionExpressionData> getAllExpressionItems(){	return (List<HAPDefinitionExpressionData>)this.getAttributeValue(ELEMENT);	}
+	public List<HAPDefinitionExpressionData> getAllExpressionItems(){	return (List<HAPDefinitionExpressionData>)this.getAttributeValueOfValue(ELEMENT);	}
 
 	@Override
 	public void addEntityElement(HAPDefinitionExpressionData expression) {

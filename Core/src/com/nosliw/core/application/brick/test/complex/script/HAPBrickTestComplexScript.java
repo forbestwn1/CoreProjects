@@ -46,7 +46,7 @@ public class HAPBrickTestComplexScript extends HAPBrickComplex{
 	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
 
 	public void setScriptName(String scriptName) {   this.setAttributeValueWithValue(SCRIPTNAME, scriptName);  }
-	public String getScriptName() {		return (String)this.getAttributeValue(SCRIPTNAME);	}
+	public String getScriptName() {		return (String)this.getAttributeValueOfValue(SCRIPTNAME);	}
 
 	public void setParms(Map<String, Object> parms) {	this.setAttributeValueWithValue(PARM, parms);	}
 
@@ -54,7 +54,7 @@ public class HAPBrickTestComplexScript extends HAPBrickComplex{
 	
 	public void setUnknowVariable(List<HAPReferenceElement> unknowns) {   this.setAttributeValueWithValue(UNKNOWNVARIABLE, unknowns);   }
 
-	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValue(VARIABLEEXTENDED);         }
+	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValueOfValue(VARIABLEEXTENDED);         }
 	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setAttributeValueObject(VARIABLEEXTENDED, vars);	}
 
 	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setAttributeValueObject(ATTACHMENT, attachments);	}

@@ -25,7 +25,7 @@ public class HAPDefinitionEntityContainerAttachment extends HAPManualBrickSimple
 
 	public boolean isEmpty() {     return this.getAllAttachment().isEmpty();   }
 	
-	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return (Map<String, Map<String, HAPAttachment>>)this.getAttributeValue(ELEMENT);   }
+	public Map<String, Map<String, HAPAttachment>> getAllAttachment(){   return (Map<String, Map<String, HAPAttachment>>)this.getAttributeValueOfValue(ELEMENT);   }
 	
 	public Map<String, HAPAttachment> getAttachmentByType(String type){
 		Map<String, HAPAttachment> out = this.getAllAttachment().get(type);

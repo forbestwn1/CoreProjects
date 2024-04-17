@@ -9,7 +9,7 @@ public class HAPDefinitionEntityDataAssociationInteractive extends HAPManualBric
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	
 	public void setDataAssciation(HAPDefinitionGroupDataAssociationForTask dataAssciation) {    this.setAttributeObject(ATTR_DATAASSOCIATION, new HAPEmbededDefinition(dataAssciation));    }
-	public HAPDefinitionGroupDataAssociationForTask getDataAssociation() {   return (HAPDefinitionGroupDataAssociationForTask)this.getAttributeValue(ATTR_DATAASSOCIATION);     }
+	public HAPDefinitionGroupDataAssociationForTask getDataAssociation() {   return (HAPDefinitionGroupDataAssociationForTask)this.getAttributeValueOfValue(ATTR_DATAASSOCIATION);     }
 
 	
 	@Override

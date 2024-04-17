@@ -13,7 +13,7 @@ public class HAPBrickServiceProvider extends HAPBrickInteractive{
 
 	public void setServiceId(String serviceId) {	this.setAttributeValueObject(ATTR_SERVICEID, serviceId);	}
 
-	public String getServiceId() {	return (String)this.getAttributeValue(ATTR_SERVICEID);	}
+	public String getServiceId() {	return (String)this.getAttributeValueOfValue(ATTR_SERVICEID);	}
 	 
 	@Override
 	public HAPContainerValuePorts getValuePorts() {

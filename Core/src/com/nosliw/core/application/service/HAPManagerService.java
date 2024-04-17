@@ -100,7 +100,7 @@ public class HAPManagerService implements HAPPluginDivision{
 	private Map<String, HAPInfoService> getAllServicesInfo(){
 		if(this.m_servicesInfo==null) {
 			this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
-			List<HAPInfoService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition();
+			List<HAPInfoService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition(this.m_runtimeEnv.getBrickManager());
 			for(HAPInfoService def : defs) {
 				this.registerServiceInfo(def);
 			}

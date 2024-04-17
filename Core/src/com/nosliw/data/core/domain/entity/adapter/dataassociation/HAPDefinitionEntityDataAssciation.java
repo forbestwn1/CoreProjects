@@ -9,7 +9,7 @@ public class HAPDefinitionEntityDataAssciation extends HAPManualBrickAdapter{
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";
 	
 	public void setDataAssciation(HAPDefinitionDataAssociation dataAssciation) {    this.setAttributeValueObject(ATTR_DATAASSOCIATION, dataAssciation);    }
-	public HAPDefinitionDataAssociation getDataAssociation() {   return (HAPDefinitionDataAssociation)this.getAttributeValue(ATTR_DATAASSOCIATION);     }
+	public HAPDefinitionDataAssociation getDataAssociation() {   return (HAPDefinitionDataAssociation)this.getAttributeValueOfValue(ATTR_DATAASSOCIATION);     }
 
 	
 	@Override
