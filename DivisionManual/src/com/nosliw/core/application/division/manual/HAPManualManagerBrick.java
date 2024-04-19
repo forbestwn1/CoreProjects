@@ -172,7 +172,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				String valueType = attrValueInfo.getValueType();
 				if(attrValueInfo instanceof HAPManualWithBrick) {
 					HAPBrick attrEntity = buildExecutableTree(((HAPManualWithBrick)attrValueInfo).getBrick(), processContext);
-					attrExe.setValueInfo(new HAPWrapperValueInAttributeBrick(attrEntity));
+					attrExe.setValueWrapper(new HAPWrapperValueInAttributeBrick(attrEntity));
 				}
 				else if(valueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 					//resource reference

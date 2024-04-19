@@ -1,12 +1,12 @@
-package com.nosliw.data.core.domain.entity.adapter.dataassociation;
+package com.nosliw.core.application.brick.adapter.dataassociation;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntitySimple;
 
 @HAPEntityWithAttribute
-public class HAPExecutableEntityDataAssciation extends HAPExecutableEntitySimple{
+public class HAPExecutableEntityDataAssciation extends HAPBrickAdapter{
 
 	@HAPAttribute
 	public static final String ATTR_DATAASSOCIATION = "dataAssociation";

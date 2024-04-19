@@ -30,12 +30,15 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 	@HAPAttribute
 	public final static String ISCOMPLEX = "isComplex"; 
 
-	private HAPManagerApplicationBrick m_brickMan;
+	//all attributes
+	private List<HAPAttributeInBrick> m_attributes;
+	
+	private HAPInfoTreeNode m_tempTreeNodeInfo;
 
 	private HAPInfoBrickType m_brickTypeInfo;
 	
-	//all attributes
-	private List<HAPAttributeInBrick> m_attributes;
+	private HAPManagerApplicationBrick m_brickMan;
+
 	
 	public HAPBrick() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
@@ -46,6 +49,9 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 
 	public void setBrickManager(HAPManagerApplicationBrick brickMan) {    this.m_brickMan = brickMan;      }
 	
+	public HAPInfoTreeNode getTreeNodeInfo() {  return this.m_tempTreeNodeInfo;  }
+	public void setTreeNodeInfo(HAPInfoTreeNode treeNodeInfo) {   this.m_tempTreeNodeInfo = treeNodeInfo;     }
+
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
 	public HAPIdBrickType getBrickType() {   return this.getBrickTypeInfo().getBrickTypeId();     }
@@ -81,7 +87,10 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 				break;
 			}
 		}
-		this.m_attributes.add(attribute);    
+		this.m_attributes.add(attribute);
+		
+		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPartFromRoot().appendSegment(attribute.getName()), this);
+		this.setTreeNodeInfo(treeNodeInfo);
 	}
 	
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}

@@ -13,6 +13,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafProvide;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;

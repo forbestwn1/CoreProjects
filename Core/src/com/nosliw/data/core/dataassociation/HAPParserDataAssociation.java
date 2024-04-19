@@ -5,12 +5,12 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMirror;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationNone;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
-import com.nosliw.data.core.dataassociation.mirror.HAPExecutableDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.none.HAPDefinitionDataAssociationNone;
-import com.nosliw.data.core.dataassociation.none.HAPExecutableDataAssociationNone;
 
 public class HAPParserDataAssociation {
 

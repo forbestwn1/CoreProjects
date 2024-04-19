@@ -1,4 +1,4 @@
-package com.nosliw.data.core.dataassociation.mapping;
+package com.nosliw.core.application.brick.adapter.dataassociation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,6 +15,9 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureUnknown;
 import com.nosliw.core.application.common.variable.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
+import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPItemValueMapping;
+import com.nosliw.data.core.dataassociation.mapping.HAPPathValueMapping;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;

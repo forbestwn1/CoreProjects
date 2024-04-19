@@ -21,10 +21,13 @@ public class HAPManagerApplicationBrick {
 
 	private Map<String, HAPPluginDivision> m_divisionPlugin;
 	
+	//
 	private Map<HAPIdBrickType, String> m_divisionByBrickType;
 	
 	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
+	private Map<String, HAPIdBrickType> m_adapterTypeByBlockType;
+	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
@@ -37,8 +40,8 @@ public class HAPManagerApplicationBrick {
 	
 	private void init() {
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBrickTestComplex1.class));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBrickTestComplex1.class, this));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class, this));
 
 	}
 
@@ -134,4 +137,6 @@ public class HAPManagerApplicationBrick {
 		byVersion.put(entityTypeId.getVersion(), brickPlugin);
 	}
 	
+	public void registerAdapterTypeByBlockType(HAPIdBrickType blockType, HAPIdBrickType adapterType) {		this.m_adapterTypeByBlockType.put(blockType.getKey(), adapterType);	}
+	public HAPIdBrickType getDefaultAdapterTypeByBlockType(HAPIdBrickType blockType) {   return this.m_adapterTypeByBlockType.get(blockType.getKey());  	}
 }

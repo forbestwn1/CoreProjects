@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
-import com.nosliw.data.core.dataassociation.mapping.HAPExecutableDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.dataassociation.mirror.HAPProcessorDataAssociationMirror;

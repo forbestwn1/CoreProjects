@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableEntityDataAssciation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;

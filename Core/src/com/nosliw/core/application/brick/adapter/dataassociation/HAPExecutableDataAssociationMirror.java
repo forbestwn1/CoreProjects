@@ -1,4 +1,4 @@
-package com.nosliw.data.core.dataassociation.mirror;
+package com.nosliw.core.application.brick.adapter.dataassociation;
 
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.HAPOutputStructure;
+import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;

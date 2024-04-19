@@ -17,6 +17,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
