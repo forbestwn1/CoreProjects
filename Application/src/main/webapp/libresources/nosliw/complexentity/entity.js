@@ -62,7 +62,7 @@ var node_createEntityDefinition = function(original){
 
 		getAttributeValue : function(attrName){
 			var attr = this.getAttribute(attrName);
-			return attr==undefined? undefined : attr.getValue();
+			return attr==undefined? undefined : attr.getAttributeValue();
 		},
 		
 	};
@@ -73,28 +73,74 @@ var node_createEntityDefinition = function(original){
 var loc_createAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
 	var loc_valueWrapper = loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEINBRICK_VALUEWRAPPER];
-	var loc_value = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUE];
 
-
-//	var loc_getEmbeded = function(){	return loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEINBRICK_VALUEWRAPPER];	};
 	var loc_getAdapters = function(){  }    // return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ADAPTER];   };
 	
 	var loc_out = {
 		
 		getAttributeInfo : function(){   return loc_attrDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];   },
-		
-		getEntityType : function(){  return loc_value[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPEINFO][node_COMMONATRIBUTECONSTANT.BRICKTYPEINFO_BRICKTYPEID];  },
-		
-		isComplex : function(){  return loc_value[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPEINFO][node_COMMONATRIBUTECONSTANT.INFOBRICKTYPE_ISCOMPLEX];  },
 
-		isExternalReference : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE]==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE;     },
-		
-		getValue : function(){		return loc_value;	},
+		getAttributeValue : function(){
+			var valueType = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];
+			if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+				return loc_createAttributeValueWithEntity(loc_valueWrapper);
+			}
+			else if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE){
+				return loc_createAttributeValueWithResourceReference(loc_valueWrapper);
+			}
+			else if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_VALUE){
+				return loc_createAttributeValueWithValue(loc_valueWrapper);
+			}
+		},
 
 		getAdaptersInfo : function(){    return loc_getAdapters();     },
 		
 		getAdapterInfo : function(name){    return loc_getAdapters()[name];     },
+
+	};
+	
+	return loc_out;
+};
+
+var loc_createAttributeValueWithEntity = function(valueWrapper){
+	var loc_valueWrapper = valueWrapper;
+	var loc_brick = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_BRICK];
+
+	var loc_out = {
+
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
+
+		getEntityType : function(){  return loc_brick[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];  },
 		
+		isComplex : function(){  return loc_brick[node_COMMONATRIBUTECONSTANT.BRICK_ISCOMPLEX];  },
+	};
+	
+	return loc_out;
+};
+
+var loc_createAttributeValueWithValue = function(valueWrapper){
+	var loc_valueWrapper = valueWrapper;
+	var loc_value = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUE];
+
+	var loc_out = {
+
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
+		
+		getValue : function(){   return loc_value;    }
+		
+	};
+	
+	return loc_out;
+};
+
+var loc_createAttributeValueWithResourceReference = function(valueWrapper){
+	var loc_valueWrapper = valueWrapper;
+	var loc_resourceId = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_RESOURCEID];
+
+	var loc_out = {
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
+		
+		getResourceId : function(){   return loc_resourceId;    }
 	};
 	
 	return loc_out;

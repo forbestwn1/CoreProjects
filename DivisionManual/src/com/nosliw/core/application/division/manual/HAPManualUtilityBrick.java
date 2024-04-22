@@ -7,15 +7,17 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPTreeNodeBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 
-public class HAPUtilityDefinitionBrick {
+public class HAPManualUtilityBrick {
 
-	public static Pair<HAPManualBrick, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle){
+	public static Pair<HAPManualBrick, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle, HAPManagerApplicationBrick brickMan){
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
 		HAPManualBrick entityDef = getDescdentEntityDefinition(rootEntityDefInfo, path);
-		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), path);
+		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), path, brickMan);
 		return Pair.of(entityDef, entityExe);
 	}
 	
@@ -67,14 +69,14 @@ public class HAPUtilityDefinitionBrick {
 	}
 
 	
-	public static HAPTreeNode getDefTreeNodeFromExeTreeNode(HAPTreeNode treeNodeExe, HAPBundle bundle) {
+	public static HAPTreeNode getDefTreeNodeFromExeTreeNode(HAPTreeNodeBrick treeNodeExe, HAPBundle bundle) {
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
-		return HAPUtilityDefinitionBrick.getDescdentTreeNode(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
+		return HAPManualUtilityBrick.getDescdentTreeNode(rootEntityDefInfo, treeNodeExe.getTreeNodeInfo().getPathFromRoot());
 	}
 
 	public static HAPManualBrick getEntityDefinitionFromExeTreeNode(HAPTreeNode treeNodeExe, HAPBundle bundle) {
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
-		return HAPUtilityDefinitionBrick.getDescdentEntityDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
+		return HAPManualUtilityBrick.getDescdentEntityDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
 	}
 	
 	public static boolean isAttributeAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {
@@ -85,7 +87,7 @@ public class HAPUtilityDefinitionBrick {
 		
 		HAPManualWrapperValueInAttribute attrValueInfo = attr.getValueInfo();
 		if(attrValueInfo instanceof HAPManualWithBrick) {
-			boolean isComplex = HAPUtilityBrick.isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan); 
+			boolean isComplex = isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan);
 			
 			if(isComplex) {
 				return true;
@@ -105,6 +107,14 @@ public class HAPUtilityDefinitionBrick {
 			}
 		}
 		return null;
+	}
+	
+	public static boolean isBrickComplex(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick entityMan) {
+		if(brickTypeId.getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
+			return false;
+		} else {
+			return HAPUtilityBrick.isBrickComplex(brickTypeId, entityMan);
+		}
 	}
 	
 }

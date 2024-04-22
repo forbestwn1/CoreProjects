@@ -564,7 +564,9 @@ var COMMONCONSTANT=
   "BRICK_DIVISION_SERVICE": "service",
   "MANUAL_RELATION_TYPE_VALUECONTEXT": "valueContext",
   "MANUAL_RELATION_TYPE_ATTACHMENT": "attachment",
-  "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess"
+  "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess",
+  "TUNNELENDPOINT_TYPE_CONSTANT": "constant",
+  "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

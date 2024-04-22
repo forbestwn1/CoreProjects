@@ -71,11 +71,12 @@ public class HAPUtilityBrickTraverse {
 					return false;
 				}
 			}, 
+			brickMan,
 			data);
 	}
 	
 	//traverse only entity leaves that marked as auto process
-	public static void traverseTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, Object data) {
+	public static void traverseTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseExecutableTree(
 			rootBrickWrapper, 
 			new HAPHandlerBrickWrapper(processor) {
@@ -87,27 +88,28 @@ public class HAPUtilityBrickTraverse {
 					return false;
 				}
 			}, 
+			brickMan,
 			data);
 	}
 	
 	//traverse all leave (complex, simiple, solid, not solid ...)
-	public static void traverseExecutableTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, Object data) {
-		traverseExecutableTreeLeaves(rootBrickWrapper, null, processor, data);
+	public static void traverseExecutableTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+		traverseExecutableTreeLeaves(rootBrickWrapper, null, processor, brickMan, data);
 	}
 	
-	private static void traverseExecutableTreeLeaves(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, Object data) {
+	private static void traverseExecutableTreeLeaves(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		if(path==null) {
 			path = new HAPPath();
 		}
 		
 		if(processor.processBrickNode(rootBrickWrapper, path, data)) {
-			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrick(rootBrickWrapper, path);
+			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrick(rootBrickWrapper, path, brickMan);
 			
 			if(leafBrick!=null) {
 				List<HAPAttributeInBrick> attrsExe = leafBrick.getAttributes();
 				for(HAPAttributeInBrick attrExe : attrsExe) {
 					HAPPath attrPath = path.appendSegment(attrExe.getName());
-					traverseExecutableTreeLeaves(rootBrickWrapper, attrPath, processor, data);
+					traverseExecutableTreeLeaves(rootBrickWrapper, attrPath, processor, brickMan, data);
 				}
 			}
 		}

@@ -8,11 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBrickImpValueStructure extends HAPPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueStructure(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.VALUESTRUCTURE_100, HAPManualBrickValueStructure.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPManualEnumBrickType.VALUESTRUCTURE_100, HAPManualBrickValueStructure.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override

@@ -962,6 +962,10 @@
 			<definition name="MANUAL_RELATION_TYPE_ATTACHMENT" value="attachment"/>
 			<definition name="MANUAL_RELATION_TYPE_AUTOPROCESS" value="autoProcess"/>
 
+			<definition type="space"/>
+			<definition name="TUNNELENDPOINT_TYPE_CONSTANT" value="constant"/>
+			<definition name="TUNNELENDPOINT_TYPE_VALUEPORT" value="valuePort"/>
+
 		</definitions>
 	</constants>
 </root>

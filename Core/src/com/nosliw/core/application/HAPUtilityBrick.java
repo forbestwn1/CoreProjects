@@ -2,7 +2,6 @@ package com.nosliw.core.application;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -16,6 +15,15 @@ public class HAPUtilityBrick {
 	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
 		HAPBundle bundle = brickMan.getBrickBundle(normalizedResourceId.getRootResourceIdSimple());
 		return getDescdentBrick(bundle.getBrickWrapper(), normalizedResourceId.getPath(), brickMan);
+	}
+	
+	public static HAPAttributeInBrick getDescendantAttribute(HAPBrick brick, HAPPath path) {
+		HAPResultAttribute attrResult = getDescendantAttributeResult(brick, path);
+		if(attrResult.getRemainPath().isEmpty()) {
+			return attrResult.getAttribute();
+		} else {
+			throw new RuntimeException();
+		}
 	}
 	
 	public static HAPResultAttribute getDescendantAttributeResult(HAPBrick brick, HAPPath path) {
@@ -100,8 +108,8 @@ public class HAPUtilityBrick {
 		return brick;
 	}
 	
-	public static HAPTreeNode getDescdentTreeNode(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
-		HAPTreeNode out = null;
+	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
+		HAPTreeNodeBrick out = null;
 		if(path==null || path.isEmpty()) {
 			out = rootBrickWrapper;
 		}

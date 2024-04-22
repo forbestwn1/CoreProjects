@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -22,7 +22,7 @@ public class HAPManualBrickValueStructure extends HAPManualBrickSimple{
 	public static final String INITVALUE = "initValue";
 
 	public HAPManualBrickValueStructure() {
-		super(HAPEnumBrickType.VALUESTRUCTURE_100);
+		super(HAPManualEnumBrickType.VALUESTRUCTURE_100);
 		this.setAttributeValue(ROOT, new LinkedHashMap<String, HAPManualRootInValueStructure>());
 	}
 

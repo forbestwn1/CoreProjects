@@ -14,6 +14,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafProvide;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -85,7 +86,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 
 	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPExecutableDataAssociationMapping mapping) {
-		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
+		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
 			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getBrickReference();
 			String fromEntityRelativePath = buildRelativePath(baseEntityIdPath, fromEntityIdRef.getIdPath());
 			fromEntityIdRef.setRelativePath(fromEntityRelativePath);
@@ -101,7 +102,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 	
 	private static void collectRelatedEntity(HAPExecutableDataAssociationMapping mapping) {
-		for(HAPPathValueMapping valueMappingPath : mapping.getRelativePathMappings()) {
+		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
 			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getBrickReference().getIdPath());
 			mapping.addToEntity(valueMappingPath.getToValuePortRef().getBrickReference().getIdPath());
 		}

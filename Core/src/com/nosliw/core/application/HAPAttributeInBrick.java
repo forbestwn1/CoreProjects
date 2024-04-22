@@ -65,7 +65,7 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	public Object getNodeValue() {  return this.getValueWrapper();   }
 
 	private void synTreeNodeInfoInBrick() {
-		if(this.m_tempTreeNodeInfo!=null&&this.m_valueWrapper!=null&this.m_valueWrapper.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+		if(this.m_tempTreeNodeInfo!=null&&this.m_valueWrapper!=null&&this.m_valueWrapper.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
 			((HAPWrapperValueInAttributeBrick)this.m_valueWrapper).getBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
 		}
 	}
@@ -73,7 +73,9 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_valueWrapper!=null) {
+			jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override

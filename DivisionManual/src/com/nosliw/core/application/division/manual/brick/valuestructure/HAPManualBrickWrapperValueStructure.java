@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -31,7 +31,7 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualBrickSimple im
 	private HAPManualBrickValueStructure m_valueStructure;
 	
 	public HAPManualBrickWrapperValueStructure() {
-		super(HAPEnumBrickType.VALUESTRUCTUREWRAPPER_100);
+		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
 	}
 
 	public HAPManualBrickWrapperValueStructure(HAPManualBrickValueStructure valueStructure) {

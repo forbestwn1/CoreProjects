@@ -120,8 +120,11 @@ public class HAPManagerApplicationBrick {
 
 	public void registerDivisionInfo(String division, HAPPluginDivision divisionPlugin) {
 		this.m_divisionPlugin.put(division, divisionPlugin);
-		for(HAPIdBrickType brickType : divisionPlugin.getBrickTypes()) {
-			this.m_divisionByBrickType.put(brickType, division);
+		Set<HAPIdBrickType> brickTypes = divisionPlugin.getBrickTypes();
+		if(brickTypes!=null) {
+			for(HAPIdBrickType brickType : brickTypes) {
+				this.m_divisionByBrickType.put(brickType, division);
+			}
 		}
 	}
 

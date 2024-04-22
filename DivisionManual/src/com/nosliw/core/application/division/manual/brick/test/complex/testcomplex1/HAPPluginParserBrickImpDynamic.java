@@ -10,11 +10,13 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImp;
+import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -43,7 +45,7 @@ public class HAPPluginParserBrickImpDynamic extends HAPPluginParserBrickImp{
 						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
-						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT), null, parseContext);							
+						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);							
 					}
 					else {
 						Object entityObj = jsonObj.opt(attrName);
@@ -87,7 +89,7 @@ public class HAPPluginParserBrickImpDynamic extends HAPPluginParserBrickImp{
 			}
 		}
 
-		out.isComplex = HAPUtilityBrick.isBrickComplex(out.entityType, getEntityManager()); 
+		out.isComplex = HAPManualUtilityBrick.isBrickComplex(out.entityType, getEntityManager()); 
 		
 		return out;
 	}

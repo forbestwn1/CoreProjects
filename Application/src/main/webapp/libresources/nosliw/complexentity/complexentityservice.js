@@ -104,7 +104,7 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
-		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPEINFO][node_COMMONATRIBUTECONSTANT.INFOBRICKTYPE_BRICKTYPE];  //complexEntityId[node_COMMONATRIBUTECONSTANT.IDENTITYINDOMAIN_ENTITYTYPE]
+		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		var complexEntityPlugin = loc_complexEntityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

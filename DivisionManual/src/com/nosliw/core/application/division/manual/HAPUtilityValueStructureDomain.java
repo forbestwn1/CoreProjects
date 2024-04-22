@@ -8,13 +8,13 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBrickComplex;
 import com.nosliw.core.application.HAPBundleComplex;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
+import com.nosliw.core.application.HAPTreeNodeBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrick;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -24,8 +24,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePort;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
+import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
@@ -65,7 +65,7 @@ public class HAPUtilityValueStructureDomain {
 		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
-			protected boolean processTreeNode(HAPTreeNode treeNode, Object data) {
+			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
 				HAPManualContextProcess processContext = (HAPManualContextProcess)data;
 				HAPBundleComplex bundle = (HAPBundleComplex)processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
@@ -74,7 +74,7 @@ public class HAPUtilityValueStructureDomain {
 				
 				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
 				
-				Pair<HAPManualBrick, HAPBrick> entityPair = HAPUtilityDefinitionBrick.getEntityPair(treeNode.getPathFromRoot(), bundle);
+				Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getEntityPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle, runtimeEnv.getBrickManager());
 				
 				HAPManualBrickComplex rootEntityDef = (HAPManualBrickComplex)rootEntityDefInfo.getBrick();
 				HAPManualBrickComplex complexEntityDef = (HAPManualBrickComplex)entityPair.getLeft();

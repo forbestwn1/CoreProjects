@@ -927,4 +927,9 @@ public class HAPConstantShared {
 		public static final String MANUAL_RELATION_TYPE_AUTOPROCESS = "autoProcess";
 
 
+
+		public static final String TUNNELENDPOINT_TYPE_CONSTANT = "constant";
+		public static final String TUNNELENDPOINT_TYPE_VALUEPORT = "valuePort";
+
+
 }

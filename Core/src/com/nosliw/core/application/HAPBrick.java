@@ -89,8 +89,8 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		}
 		this.m_attributes.add(attribute);
 		
-		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPartFromRoot().appendSegment(attribute.getName()), this);
-		this.setTreeNodeInfo(treeNodeInfo);
+		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPathFromRoot().appendSegment(attribute.getName()), this);
+		attribute.setTreeNodeInfo(treeNodeInfo);
 	}
 	
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}
@@ -111,13 +111,11 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		if(m_brickTypeInfo!=null) {
-			jsonMap.put(BRICKTYPE, this.m_brickTypeInfo.toStringValue(HAPSerializationFormat.JSON));
+			jsonMap.put(BRICKTYPE, this.m_brickTypeInfo.getBrickTypeId().toStringValue(HAPSerializationFormat.JSON));
 			jsonMap.put(ISCOMPLEX, this.m_brickTypeInfo.getIsComplex()+"");
 			typeJsonMap.put(ISCOMPLEX, Boolean.class);
 		}
 	}
-	
-	
 	
 	@Override
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {

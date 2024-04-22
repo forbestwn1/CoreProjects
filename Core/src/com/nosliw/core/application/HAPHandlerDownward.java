@@ -1,6 +1,5 @@
 package com.nosliw.core.application;
 
-import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 
 public abstract class HAPHandlerDownward {
@@ -13,7 +12,7 @@ public abstract class HAPHandlerDownward {
 		return path==null||path.isEmpty();
 	}
 	
-	protected HAPBrick getBrickFromNode(HAPTreeNode node) {
+	protected HAPBrick getBrickFromNode(HAPTreeNodeBrick node) {
 		HAPBrick out = null;
 		Object value = node.getNodeValue();
 		if(value instanceof HAPBrick) {

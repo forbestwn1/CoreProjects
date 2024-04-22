@@ -20,7 +20,7 @@ import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementRe
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextProcess;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickComplexImp;
-import com.nosliw.core.application.division.manual.HAPUtilityDefinitionBrick;
+import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 
 public class HAPPluginProcessorBrickComplexTestComplexScript extends HAPPluginProcessorBrickComplexImp{
 
@@ -33,7 +33,7 @@ public class HAPPluginProcessorBrickComplexTestComplexScript extends HAPPluginPr
 		
 		HAPBundle bundle = processContext.getCurrentBundle();
 		
-		Pair<HAPManualBrick, HAPBrick> entityPair = HAPUtilityDefinitionBrick.getEntityPair(pathFromRoot, bundle);
+		Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getEntityPair(pathFromRoot, bundle);
 		HAPManualBrickTestComplexScript definitionEntity = (HAPManualBrickTestComplexScript)entityPair.getLeft();
 		HAPBrickTestComplexScript executableEntity = (HAPBrickTestComplexScript)entityPair.getRight();
 		

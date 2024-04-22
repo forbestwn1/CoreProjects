@@ -13,7 +13,7 @@ public class HAPInfoTreeNode {
 		this.m_parent = parent;
 	}
 	
-	public HAPPath getPartFromRoot() {   return this.m_pathFromRoot;     }
+	public HAPPath getPathFromRoot() {   return this.m_pathFromRoot;     }
 	
 	public HAPBrick getParent() {   return this.m_parent;    }
 	

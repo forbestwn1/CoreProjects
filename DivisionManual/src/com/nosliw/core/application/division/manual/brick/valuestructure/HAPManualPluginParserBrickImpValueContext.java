@@ -6,11 +6,11 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.HAPManualContextParse;
+import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
 import com.nosliw.core.application.division.manual.HAPUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -18,7 +18,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBrickImpValueContext extends HAPPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.VALUECONTEXT_100, HAPManualBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPManualEnumBrickType.VALUECONTEXT_100, HAPManualBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPPluginParserBr
 		}
 
 		HAPManualBrickWrapperValueStructure out = new HAPManualBrickWrapperValueStructure();
-		HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
+		HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
 		out.setAttribute(valueStructureAttr);
 
 		String groupName = (String)wrapperObj.opt(HAPManualBrickWrapperValueStructure.NAME);

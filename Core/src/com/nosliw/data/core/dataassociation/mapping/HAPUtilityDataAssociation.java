@@ -12,6 +12,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -34,11 +35,11 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityDataAssociation {
 
-	public static List<HAPPathValueMapping> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
+	public static List<HAPTunnel> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
 		HAPReferenceValuePort valuePortId = valueMappingItem.getTarget().getValuePortRef();
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
-		List<HAPPathValueMapping> out = new ArrayList<HAPPathValueMapping>();
+		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
 		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
@@ -68,7 +69,7 @@ public class HAPUtilityDataAssociation {
 							if(matchers.isVoid()) {
 								matchers = null;
 							}
-							out.add(new HAPPathValueMapping(mappingPath1.getFromConstant(), matchers, valuePortId, toValueStructureId, toItemFullPath));
+							out.add(new HAPTunnel(mappingPath1.getFromConstant(), matchers, valuePortId, toValueStructureId, toItemFullPath));
 						}
 						else if(mappingPath.getType().equals(HAPPathElementMapping.VARIABLE2VARIABLE)) {
 							//from variable
@@ -77,7 +78,7 @@ public class HAPUtilityDataAssociation {
 							if(matchers.isVoid()) {
 								matchers = null;
 							}
-							out.add(new HAPPathValueMapping(relativeEle.getReference().getValuePortRef(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
+							out.add(new HAPTunnel(relativeEle.getReference().getValuePortRef(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
 						}
 					}
 					
@@ -91,7 +92,7 @@ public class HAPUtilityDataAssociation {
 //						HAPPathElementMappingVariableToVariable mappingPath1 = (HAPPathElementMappingVariableToVariable)mappingPath;
 //						HAPMatchers matchers = mappingPath1.getMatcher();
 //						if(matchers.isVoid())  matchers = null;
-//						out.add(new HAPPathValueMapping(provideEle.getName(), mappingPath1.getPath(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemPath.getFullName()));
+//						out.add(new HAPTunnel(provideEle.getName(), mappingPath1.getPath(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemPath.getFullName()));
 //					}
 				}
 				else if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
@@ -106,7 +107,7 @@ public class HAPUtilityDataAssociation {
 							matchers = null;
 						}
 						String toItemFullPath = HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), mappingPath.getPath());
-						out.add(new HAPPathValueMapping(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortRef(), toValueStructureId, toItemFullPath));
+						out.add(new HAPTunnel(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortRef(), toValueStructureId, toItemFullPath));
 					}
 				}
 				return null;
