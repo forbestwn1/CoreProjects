@@ -130,14 +130,56 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				var complexEntityDef = basicEntityInterface.getEntityDefinition();
 				var configure = basicEntityInterface.getConfigure();
 				var attr = complexEntityDef.getAttribute(attrName);
-				
-				var attrValue = attr.getValue();
-				var entityType = attr.getEntityType();
+
 				var adaptersInfo = attr.getAdaptersInfo();
 				var childConfigure = configure.getChildConfigure(attrName);
-				if(attr.isExternalReference()==true){
+
+				var attrValueWrapper = attr.getAttributeValueWrapper();
+	
+				if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+					var attrEntityDef = attrValueWrapper.getEntityDefinition();
+					
+					//brick
+					if(attrValueWrapper.isComplex()==true){
+						//complex attribute
+						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
+							success : function(request, complexEntityRuntime){
+								
+								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+									success : function(request, adaptersResult){
+										return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
+									}
+								});
+								
+								_.each(adaptersInfo, function(adapterInfo){
+									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+								});
+								return adaptersRequest;
+							}
+						}));
+					}
+					else{
+						//simple
+						//simple attribute
+						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(entityType, attrEntityDef, childConfigure, {
+							success : function(request, simpleEntity){
+								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+									success : function(request, adaptersResult){
+										return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
+									}	
+								});
+								
+								_.each(adaptersInfo, function(adapterInfo){
+									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+								});
+								return adaptersRequest;
+							}
+						}));
+					}
+				}
+				else if(attrValueWrapper.getValueType()==valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE){
 					//external bundle reference attribute
-					var externalBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(attrValue[node_COMMONATRIBUTECONSTANT.REFERENCEEXTERNAL_NORMALIZEDRESOURCEID], childConfigure, request);
+					var externalBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(attrValueWrapper[node_COMMONATRIBUTECONSTANT.REFERENCEEXTERNAL_NORMALIZEDRESOURCEID], childConfigure, request);
 					var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 						success : function(request, adaptersResult){
 							return treeNodeEntityInterface.addChild(attrName, externalBundleRuntime, adaptersResult.getResults(), true);
@@ -149,44 +191,9 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					});
 					out.addRequest(adaptersRequest);
 				}
-				else if(attr.isComplex()==true){
-					//complex attribute
-					var childEntitId = attrValue;
 
-					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(childEntitId, loc_out, loc_bundleCore, variationPoints, childConfigure, {
-						success : function(request, complexEntityRuntime){
-							
-							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-								success : function(request, adaptersResult){
-									return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
-								}
-							});
-							
-							_.each(adaptersInfo, function(adapterInfo){
-								adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
-							});
-							return adaptersRequest;
-						}
-					}));
-				}
-				else{
-					//simple attribute
-					var childEntityDef = attrValue;
-					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(entityType, childEntityDef, childConfigure, {
-						success : function(request, simpleEntity){
-							var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-								success : function(request, adaptersResult){
-									return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
-								}	
-							});
-							
-							_.each(adaptersInfo, function(adapterInfo){
-								adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
-							});
-							return adaptersRequest;
-						}
-					}));
-				}
+//				var entityType = attr.getEntityType();
+
 				return out;
 			}
 		});

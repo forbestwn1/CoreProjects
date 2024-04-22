@@ -59,16 +59,4 @@ public abstract class HAPPluginProcessorBrickComplexImp implements HAPPluginProc
 //		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
 //		return Pair.of(entityDef, entityExe);
 //	}
-	
-	@Override
-	public HAPBrickComplex newExecutable() {
-		HAPBrickComplex out = null;
-		try {
-			out = this.m_exeBrickClass.newInstance();
-//			out.setEntityType(this.getEntityType());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return out; 
-	}
 }

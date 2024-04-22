@@ -62,7 +62,7 @@ var node_createEntityDefinition = function(original){
 
 		getAttributeValue : function(attrName){
 			var attr = this.getAttribute(attrName);
-			return attr==undefined? undefined : attr.getAttributeValue();
+			return attr==undefined? undefined : attr.getAttributeValueWrapper().getValue();
 		},
 		
 	};
@@ -80,7 +80,7 @@ var loc_createAttributeDefinition = function(attrDef){
 		
 		getAttributeInfo : function(){   return loc_attrDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];   },
 
-		getAttributeValue : function(){
+		getAttributeValueWrapper : function(){
 			var valueType = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];
 			if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
 				return loc_createAttributeValueWithEntity(loc_valueWrapper);
@@ -111,6 +111,10 @@ var loc_createAttributeValueWithEntity = function(valueWrapper){
 		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
 
 		getEntityType : function(){  return loc_brick[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];  },
+
+		getEntityDefinition : function(){   return loc_brick;     },		
+		
+		getValue : function(){  return loc_brick;    },
 		
 		isComplex : function(){  return loc_brick[node_COMMONATRIBUTECONSTANT.BRICK_ISCOMPLEX];  },
 	};
@@ -138,6 +142,7 @@ var loc_createAttributeValueWithResourceReference = function(valueWrapper){
 	var loc_resourceId = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_RESOURCEID];
 
 	var loc_out = {
+		
 		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
 		
 		getResourceId : function(){   return loc_resourceId;    }

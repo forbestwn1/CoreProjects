@@ -5,7 +5,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "children":[],
 "dependency":{},
 "info":{}
-}, {"attribute":{},
+}, {"attribute":[],
 "script":function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");

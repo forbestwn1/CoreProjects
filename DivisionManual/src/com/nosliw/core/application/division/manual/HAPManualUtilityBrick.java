@@ -14,10 +14,10 @@ import com.nosliw.core.application.HAPUtilityBrick;
 
 public class HAPManualUtilityBrick {
 
-	public static Pair<HAPManualBrick, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle, HAPManagerApplicationBrick brickMan){
+	public static Pair<HAPManualBrick, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle){
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
 		HAPManualBrick entityDef = getDescdentEntityDefinition(rootEntityDefInfo, path);
-		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), path, brickMan);
+		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	
