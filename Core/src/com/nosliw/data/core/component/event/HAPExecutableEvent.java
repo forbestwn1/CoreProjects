@@ -6,7 +6,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -26,16 +26,16 @@ public class HAPExecutableEvent extends HAPExecutableImpEntityInfo{
 	//value structure
 	private HAPValueStructureDefinitionFlat m_valueStructure;
 	
-	private HAPExecutableDataAssociationMapping m_dataAssociation;
+	private HAPDataAssociationMapping m_dataAssociation;
 	
 	public HAPExecutableEvent() {}
 	
-	public HAPExecutableEvent(HAPValueStructureDefinitionFlat dataDefinition, HAPExecutableDataAssociationMapping dataAssociation) {
+	public HAPExecutableEvent(HAPValueStructureDefinitionFlat dataDefinition, HAPDataAssociationMapping dataAssociation) {
 		this.m_valueStructure = dataDefinition;
 		this.m_dataAssociation = dataAssociation;
 	}
 
-	public void setDataAssociation(HAPExecutableDataAssociationMapping dataAssociation) {    this.m_dataAssociation = dataAssociation;    }
+	public void setDataAssociation(HAPDataAssociationMapping dataAssociation) {    this.m_dataAssociation = dataAssociation;    }
 
 	public void setValueStructure(HAPValueStructureDefinitionFlat valueStructure) {   this.m_valueStructure = valueStructure;    }
 	public HAPValueStructureDefinitionFlat getValueStructure() {    return this.m_valueStructure;    }

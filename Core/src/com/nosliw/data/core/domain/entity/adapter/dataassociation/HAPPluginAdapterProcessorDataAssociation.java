@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.adapter.dataassociation;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableEntityDataAssciation;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPBrickDataAssciation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
@@ -15,7 +15,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 public class HAPPluginAdapterProcessorDataAssociation extends HAPPluginAdapterProcessorImp{
 
 	public HAPPluginAdapterProcessorDataAssociation() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, HAPExecutableEntityDataAssciation.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, HAPBrickDataAssciation.class);
 	}
 
 	@Override
@@ -35,6 +35,6 @@ public class HAPPluginAdapterProcessorDataAssociation extends HAPPluginAdapterPr
 				childContext,
 				parentContext.getRuntimeEnvironment());
 
-		((HAPExecutableEntityDataAssciation)adapterExe).setDataAssciation(dataAssociationExe);
+		((HAPBrickDataAssciation)adapterExe).setDataAssciation(dataAssociationExe);
 	}
 }

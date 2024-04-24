@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -26,7 +26,7 @@ public class HAPProcessEvent {
 		
 		HAPDefinitionDataAssociationMapping dataAssociation = HAPUtilityInteractive.buildDataAssociationForResult(solidateEventDef);
 
-		HAPExecutableDataAssociationMapping exeDataAssociation = (HAPExecutableDataAssociationMapping)HAPProcessorDataAssociation.processDataAssociation(parentStructures, dataAssociation, HAPContainerStructure.createDefault(valueStructure), null, runtimeEnv);
+		HAPDataAssociationMapping exeDataAssociation = (HAPDataAssociationMapping)HAPProcessorDataAssociation.processDataAssociation(parentStructures, dataAssociation, HAPContainerStructure.createDefault(valueStructure), null, runtimeEnv);
 
 		out.setDataAssociation(exeDataAssociation);
 		out.setValueStructure(valueStructure);

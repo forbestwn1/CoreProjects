@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPProcessorDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mirror.HAPDefinitionDataAssociationMirror;
@@ -31,7 +31,7 @@ public class HAPProcessorDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 			HAPDefinitionDataAssociationMapping valueMappingDA = (HAPDefinitionDataAssociationMapping)dataAssociation;
-			HAPExecutableDataAssociationMapping daMappingExe = new  HAPExecutableDataAssociationMapping(valueMappingDA);
+			HAPDataAssociationMapping daMappingExe = new  HAPDataAssociationMapping(valueMappingDA);
 			if(direction.equals(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM)) {
 				
 				HAPProcessorDataAssociationMapping.processValueMapping(

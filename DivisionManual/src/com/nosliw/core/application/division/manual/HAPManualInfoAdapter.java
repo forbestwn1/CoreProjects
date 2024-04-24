@@ -11,5 +11,6 @@ public class HAPManualInfoAdapter extends HAPEntityInfoImp{
 		this.m_valueInfo = valueInfo;
 	}
 	
+	public HAPManualWrapperValueInAttribute getValueWrapper() {    return this.m_valueInfo;      }
 	
 }

@@ -1,8 +1,10 @@
 package com.nosliw.core.application.division.manual;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interfac.HAPTreeNode;
@@ -54,6 +56,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public void setValueInfo(HAPManualWrapperValueInAttribute valueInfo) {    this.m_valueInfo = valueInfo;     }
 	
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
+	public Set<HAPManualInfoAdapter> getAdapters(){   return new HashSet<HAPManualInfoAdapter>(this.m_adapters.values());      }
 	
 	public void addRelation(HAPManualBrickRelation relation) {    this.m_relations.add(relation);      }
 	public List<HAPManualBrickRelation> getRelations(){    return this.m_relations;     }

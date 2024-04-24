@@ -24,6 +24,7 @@ public class HAPPluginBrickImp implements HAPPluginBrick{
 			out = this.m_brickClass.newInstance();
 			out.setBrickTypeInfo(m_brickTypeInfo);
 			out.setBrickManager(m_brickMan);
+			out.init();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

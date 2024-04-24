@@ -102,6 +102,9 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeReferenceResource((HAPResourceId)brickOrRef)));
 		}
 	}
+	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {
+		this.setAttributeValueWithBrick(attributeName, this.getBrickManager().newBrickInstance(brickTypeId));
+	}
 	
 	@Override
 	public HAPContainerValuePorts getValuePorts() {		return null;	}
@@ -135,6 +138,10 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		}
 	}
 
+	protected HAPManagerApplicationBrick getBrickManager() {    return this.m_brickMan;     }
+	
 	abstract public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan);
 
+	abstract public void init();
+	
 }

@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafProvide;
@@ -49,7 +49,7 @@ import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 public class HAPProcessorDataAssociationMapping {
 
 	public static void processValueMapping(
-			HAPExecutableDataAssociationMapping out,
+			HAPDataAssociationMapping out,
 			HAPExecutableEntity fromEntityExe,
 			HAPContextProcessor fromProcessorContext,
 			HAPDefinitionDataAssociationMapping valueMapping,
@@ -85,7 +85,7 @@ public class HAPProcessorDataAssociationMapping {
 		collectRelatedEntity(out);
 	}
 
-	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPExecutableDataAssociationMapping mapping) {
+	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPDataAssociationMapping mapping) {
 		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
 			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getBrickReference();
 			String fromEntityRelativePath = buildRelativePath(baseEntityIdPath, fromEntityIdRef.getIdPath());
@@ -101,7 +101,7 @@ public class HAPProcessorDataAssociationMapping {
 		System.out.println(buildRelativePath("a.b.c", "a.b.c.d.e"));
 	}
 	
-	private static void collectRelatedEntity(HAPExecutableDataAssociationMapping mapping) {
+	private static void collectRelatedEntity(HAPDataAssociationMapping mapping) {
 		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
 			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getBrickReference().getIdPath());
 			mapping.addToEntity(valueMappingPath.getToValuePortRef().getBrickReference().getIdPath());
@@ -133,7 +133,7 @@ public class HAPProcessorDataAssociationMapping {
 		}, targetRef);
 	}
 	
-	private static void collectProvide(HAPExecutableDataAssociationMapping mapping,  HAPElementStructure root) {
+	private static void collectProvide(HAPDataAssociationMapping mapping,  HAPElementStructure root) {
 		HAPUtilityStructure.traverseElement(root, null, new HAPProcessorStructureElement() {
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
@@ -226,14 +226,14 @@ public class HAPProcessorDataAssociationMapping {
 	
 	
 	
-	public static HAPExecutableDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPExecutableDataAssociationMapping out = new HAPExecutableDataAssociationMapping(dataAssociation, input, output);
+	public static HAPDataAssociationMapping processDataAssociation(HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPDataAssociationMapping out = new HAPDataAssociationMapping(dataAssociation, input, output);
 		processDataAssociation(out, input, dataAssociation, output, daProcessConfigure, runtimeEnv);
 		return out;
 	}
 	
 	//process input configure for activity and generate flat context for activity
-	public static void processDataAssociation(HAPExecutableDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processDataAssociation(HAPDataAssociationMapping out, HAPContainerStructure input, HAPDefinitionDataAssociationMapping dataAssociation, HAPContainerStructure output, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		Map<String, HAPDefinitionValueMapping> valueMappings = dataAssociation.getMappings();
 		for(String targetName : valueMappings.keySet()) {
 			HAPExecutableValueMapping associationExe = processValueMapping(input, valueMappings.get(targetName), output.getStructure(targetName), out.getInputDependency(), daProcessConfigure, runtimeEnv);

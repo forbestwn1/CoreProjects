@@ -543,6 +543,8 @@
 			<definition name="DATAOPERATION_VAR_TYPE_OUT" value="out"/>
 
 			<definition type="space"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_CONTAINER" value="container"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_CONTAINERLIST" value="containerList"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX" value="complexContainer"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE" value="simpleContainer"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP" value="dataexpressiongroup"/>

@@ -17,14 +17,14 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPUtilityScript2 {
 
-	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
+	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
 		Map<String, HAPExecutableValueMapping> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {

@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMirror;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationNone;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -34,7 +34,7 @@ public class HAPParserDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 		{
-			out = new HAPExecutableDataAssociationMapping();
+			out = new HAPDataAssociationMapping();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			break;
 		}

@@ -15,6 +15,9 @@ import com.nosliw.data.core.resource.HAPResourceId;
 public class HAPBrickImp extends HAPBrick{
 
 	@Override
+	public void init() {	}
+	
+	@Override
 	public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan) {
 		
 		switch(format) {
@@ -62,7 +65,7 @@ public class HAPBrickImp extends HAPBrick{
 					//brick
 					JSONObject brickJsonObj =  valueWrapperJsonObj.getJSONObject(HAPWrapperValueInAttributeBrick.BRICK);
 					blockType = HAPUtilityBrick.parseBrickTypeId(brickJsonObj.opt(HAPBrick.BRICKTYPE));
-					HAPBrick attrBrick = brickMan.getBrickPlugin(blockType).newInstance();
+					HAPBrick attrBrick = brickMan.newBrickInstance(blockType);
 					attrBrick.buildBrick(brickJsonObj, HAPSerializationFormat.JSON, brickMan);
 					attribute.setValueOfBrick(attrBrick);
 				}
@@ -166,4 +169,5 @@ public class HAPBrickImp extends HAPBrick{
     protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {return true;}
     
     protected HAPIdBrickType getAttributeBrickType(String attrName) {   return null;     }
+
 }

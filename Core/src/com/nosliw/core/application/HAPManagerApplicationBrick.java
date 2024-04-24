@@ -43,15 +43,12 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBrickTestComplex1.class, this));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class, this));
 
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class, this));
 	}
 
-	public HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {
-		return this.m_brickPlugins.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());
-	}
+	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();	}
 	
-	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {
-		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();
-	}
+	public HAPBrick newBrickInstance(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).newInstance();	}
 
 	public List<HAPIdBrickType> getAllVersions(String brickType){
 		List<HAPPluginBrick> brickPlugins = new ArrayList<HAPPluginBrick>(this.m_brickPlugins.get(brickType).values());
@@ -142,4 +139,7 @@ public class HAPManagerApplicationBrick {
 	
 	public void registerAdapterTypeByBlockType(HAPIdBrickType blockType, HAPIdBrickType adapterType) {		this.m_adapterTypeByBlockType.put(blockType.getKey(), adapterType);	}
 	public HAPIdBrickType getDefaultAdapterTypeByBlockType(HAPIdBrickType blockType) {   return this.m_adapterTypeByBlockType.get(blockType.getKey());  	}
+	
+	private HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {		return this.m_brickPlugins.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());	}
+
 }

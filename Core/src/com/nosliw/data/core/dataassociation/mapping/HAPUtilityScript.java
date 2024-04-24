@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPExecutableDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -26,7 +26,7 @@ import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
 public class HAPUtilityScript {
 
-	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPExecutableDataAssociationMapping dataAssociation) {
+	public static HAPJsonTypeScript buildDataAssociationConvertFunction(HAPDataAssociationMapping dataAssociation) {
 		StringBuffer assocationScripts = new StringBuffer();
 		Map<String, HAPExecutableValueMapping> associations = dataAssociation.getMappings();
 		for(String targetName : associations.keySet()) {

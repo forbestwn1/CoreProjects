@@ -23,11 +23,12 @@ public class HAPBrickInteractiveInterface extends HAPBrickImp{
 	@HAPAttribute
 	public static String RESULT = "result";
 
-	public HAPBrickInteractiveInterface() {
+	@Override
+	public void init() {
 		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractiveInterface>());
 		this.setAttributeValueWithValue(REQUEST, new LinkedHashMap<String, HAPResultInInteractiveInterface>());
 	}
-
+	
 	public void addRequestParm(HAPRequestParmInInteractiveInterface parm) { this.getRequestParms().add(parm);  }
 	public List<HAPRequestParmInInteractiveInterface> getRequestParms(){   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValueOfValue(REQUEST);   }
 	
