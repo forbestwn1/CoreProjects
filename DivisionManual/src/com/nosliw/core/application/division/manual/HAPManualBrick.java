@@ -66,25 +66,25 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 		return out;
 	}
 	
-	public void setAttributeValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeValue(attrValue)));	}
-	public Object getAttributeValue(String attributeName){
+	public void setAttributeWithValueValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeValue(attrValue)));	}
+	public void setAttributeWithValueBrick(String attributeName, HAPManualBrick brick) {
+		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeBrick(brick)));	
+	}
+	
+	public Object getAttributeValueWithValue(String attributeName){
 		HAPManualAttribute attr = this.getAttribute(attributeName);
 		if(attr!=null) {
 			return ((HAPManualWrapperValueInAttributeValue)attr.getValueInfo()).getValue();
 		}
 		return null;
 	}
-	public Object getAttributeValue(String attrName, Object defaultValue) {
+	public Object getAttributeValueWithValue(String attrName, Object defaultValue) {
 		HAPManualAttribute att = this.getAttribute(attrName);
 		if(att==null) {
-			this.setAttributeValue(attrName, defaultValue);
+			this.setAttributeWithValueValue(attrName, defaultValue);
 			att = this.getAttribute(attrName);
 		}
 		return ((HAPManualWrapperValueInAttributeValue)att.getValueInfo()).getValue();
-	}
-	
-	public void setAttributeWithValueBrick(String attributeName, HAPManualBrick brick) {
-		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeBrick(brick)));	
 	}
 	
 	public HAPManualBrick getAttributeValueWithBrick(String attributeName) {
@@ -96,9 +96,9 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 	}
 
 	protected String generateId() {
-		int idIndex = (Integer)this.getAttributeValue(ATTR_IDINDEX, Integer.valueOf(0));
+		int idIndex = (Integer)this.getAttributeValueWithValue(ATTR_IDINDEX, Integer.valueOf(0));
 		idIndex++;
-		this.setAttributeValue(ATTR_IDINDEX, idIndex);
+		this.setAttributeWithValueValue(ATTR_IDINDEX, idIndex);
 		return "generatedId_"+ idIndex;
 	}
 	

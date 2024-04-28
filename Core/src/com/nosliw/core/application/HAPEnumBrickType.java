@@ -7,6 +7,10 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType TEST_COMPLEX_1_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0");
 	public static HAPIdBrickType TEST_COMPLEX_SCRIPT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0");
 	
+	public static HAPIdBrickType DATAASSOCIATION_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, "1.0.0");
+
+	
+	
 	public static HAPIdBrickType CONTAINER_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTAINER, "1.0.0");
 	public static HAPIdBrickType CONTAINERLIST_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTAINERLIST, "1.0.0");
 	

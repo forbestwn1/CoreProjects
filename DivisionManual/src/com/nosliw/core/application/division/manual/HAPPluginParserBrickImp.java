@@ -7,12 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
@@ -83,11 +78,11 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	protected void postParseDefinitionContent(HAPManualBrick brick) {}
 	
 
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {}
+	protected void parseDefinitionContentJson(HAPManualBrick brickManual, Object jsonValue, HAPManualContextParse parseContext) {}
 
-	protected void parseDefinitionContentHtml(HAPManualBrick entityDefinition, Object obj, HAPManualContextParse parseContext) {}
+	protected void parseDefinitionContentHtml(HAPManualBrick brickManual, Object obj, HAPManualContextParse parseContext) {}
 
-	protected void parseDefinitionContentJavascript(HAPManualBrick entityDefinition, Object obj, HAPManualContextParse parseContext) {}
+	protected void parseDefinitionContentJavascript(HAPManualBrick brickManual, Object obj, HAPManualContextParse parseContext) {}
 
 	protected void parseDefinitionContent(HAPManualBrick entityDefinition, Object obj, HAPSerializationFormat format, HAPManualContextParse parseContext) {}
 	
@@ -122,7 +117,8 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	
 	
 	
-	
+
+	/*
 	protected void parseEntityAttributeJson(JSONObject entityJsonObj, HAPIdEntityInDomain entityId, String attributeName, String attrEntityType, String adapterType, HAPContextParser parserContext) {
 		if(this.m_runtimeEnv.getDomainEntityDefinitionManager().isComplexEntity(attrEntityType)) {
 			parseComplexEntityAttributeJson(entityJsonObj, entityId, attributeName, attrEntityType, adapterType, null, parserContext);
@@ -179,7 +175,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 		return out;
 	}
 	
-	
+	*/
 	
 	protected boolean isAttributeEnabledJson(Object entityObj) {
 		boolean out = true;

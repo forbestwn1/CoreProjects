@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.core.application.HAPIdBrickType;
 
-public abstract class HAPManualBrickSimple extends HAPManualBrickBlock{
+public abstract class HAPManualBlockSimple extends HAPManualBlock{
 
-	protected HAPManualBrickSimple (HAPIdBrickType brickType) {
+	protected HAPManualBlockSimple (HAPIdBrickType brickType) {
 		super(brickType);
 	}
 	

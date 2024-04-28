@@ -16,7 +16,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBrickTestComplexScript extends HAPBlockComplex{
+public class HAPBlockTestComplexScript extends HAPBlockComplex{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";
@@ -40,7 +40,7 @@ public class HAPBrickTestComplexScript extends HAPBlockComplex{
 	public static String VARIABLEEXTENDED = "variableExtended";
 	
 	
-	public HAPBrickTestComplexScript() {
+	public HAPBlockTestComplexScript() {
 	}
 	
 	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}

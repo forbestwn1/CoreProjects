@@ -4,15 +4,12 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBlockComplex;
 import com.nosliw.core.application.HAPIdBrickType;
 
-public abstract class HAPPluginProcessorBrickComplexImp implements HAPPluginProcessorBrickComplex{
+public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProcessorBlockComplex{
 
-	private Class<? extends HAPBlockComplex> m_exeBrickClass;
-	
 	private HAPIdBrickType m_brickTypeId;
 	
-	public HAPPluginProcessorBrickComplexImp(HAPIdBrickType entityType, Class<? extends HAPBlockComplex> exeBrickClass) {
+	public HAPPluginProcessorBlockComplexImp(HAPIdBrickType entityType) {
 		this.m_brickTypeId = entityType;
-		this.m_exeBrickClass = exeBrickClass;
 	}
 
 	@Override
@@ -53,9 +50,9 @@ public abstract class HAPPluginProcessorBrickComplexImp implements HAPPluginProc
 //		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
 //	}
 //	
-//	public Pair<HAPManualBrickComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+//	public Pair<HAPManualBlockComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
 //		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-//		HAPManualBrickComplex entityDef = (HAPManualBrickComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
+//		HAPManualBlockComplex entityDef = (HAPManualBlockComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
 //		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
 //		return Pair.of(entityDef, entityExe);
 //	}

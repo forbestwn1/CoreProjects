@@ -9,9 +9,9 @@ public class HAPDefinitionEntityInDomainServiceProvider extends HAPManualBrick{
 
 	public static final String ATTR_SERVICEKEY = "serviceKey";
 
-	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeValue(ATTR_SERVICEKEY, serviceKey);	}
+	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeWithValueValue(ATTR_SERVICEKEY, serviceKey);	}
 
-	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValue(ATTR_SERVICEKEY);	}
+	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueWithValue(ATTR_SERVICEKEY);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

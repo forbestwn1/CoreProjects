@@ -4,7 +4,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBlockComplex;
 import com.nosliw.core.application.HAPIdBrickType;
 
-public interface HAPPluginProcessorBrickComplex extends HAPPluginProcessorBlock{
+public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 
 	HAPIdBrickType getBrickType();
 	

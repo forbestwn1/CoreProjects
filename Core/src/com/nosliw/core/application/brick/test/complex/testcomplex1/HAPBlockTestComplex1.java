@@ -4,9 +4,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBlockComplex;
 
 @HAPEntityWithAttribute
-public class HAPBrickTestComplex1 extends HAPBlockComplex{
+public class HAPBlockTestComplex1 extends HAPBlockComplex{
 
-	public HAPBrickTestComplex1() {
+	public HAPBlockTestComplex1() {
 	}
 	
 }

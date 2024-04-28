@@ -2,7 +2,7 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 
-public interface HAPPluginProcessorBrickSimple extends HAPPluginProcessorBlock{
+public interface HAPPluginProcessorBlockSimple extends HAPPluginProcessorBlock{
 
 	String getEntityType();
 	

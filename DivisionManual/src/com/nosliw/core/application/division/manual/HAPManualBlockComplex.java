@@ -11,11 +11,11 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 
 //entity that have data value structure and attachment
-public abstract class HAPManualBrickComplex extends HAPManualBrickBlock{
+public abstract class HAPManualBlockComplex extends HAPManualBlock{
 
 	static private String VALUECONTEXT = "valueContext"; 
 	
-	protected HAPManualBrickComplex (HAPIdBrickType entityType) {
+	protected HAPManualBlockComplex (HAPIdBrickType entityType) {
 		super(entityType);
 	}
 	

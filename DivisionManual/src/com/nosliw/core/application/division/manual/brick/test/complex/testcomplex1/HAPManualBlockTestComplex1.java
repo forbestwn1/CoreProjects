@@ -1,11 +1,11 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
+import com.nosliw.core.application.division.manual.HAPManualBlockComplex;
 
-public class HAPManualTestComplex1 extends HAPManualBrickComplex{
+public class HAPManualBlockTestComplex1 extends HAPManualBlockComplex{
 
-	public HAPManualTestComplex1() {
+	public HAPManualBlockTestComplex1() {
 		super(HAPEnumBrickType.TEST_COMPLEX_1_100);
 	}
 

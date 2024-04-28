@@ -5,7 +5,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPAdapter;
 
 @HAPEntityWithAttribute
-public class HAPBrickDataAssciation extends HAPAdapter{
+public class HAPAdapterDataAssciation extends HAPAdapter{
 
 	@HAPAttribute
 	public static final String DATAASSOCIATION = "dataAssociation";

@@ -1,5 +1,5 @@
 package com.nosliw.core.application;
 
-public class HAPAdapter extends HAPBlockSimple{
+public class HAPAdapter extends HAPBrickImp{
 
 }

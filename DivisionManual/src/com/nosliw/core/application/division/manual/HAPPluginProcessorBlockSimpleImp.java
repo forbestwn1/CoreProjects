@@ -5,13 +5,13 @@ import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 
-public abstract class HAPPluginProcessorBrickSimpleImp implements HAPPluginProcessorBrickSimple{
+public abstract class HAPPluginProcessorBlockSimpleImp implements HAPPluginProcessorBlockSimple{
 
 	private Class<? extends HAPExecutableEntity> m_exeEntityClass;
 	
 	private String m_entityType;
 
-	public HAPPluginProcessorBrickSimpleImp(String entityType, Class<? extends HAPExecutableEntity> exeEntityClass) {
+	public HAPPluginProcessorBlockSimpleImp(String entityType, Class<? extends HAPExecutableEntity> exeEntityClass) {
 		this.m_entityType = entityType;
 		this.m_exeEntityClass = exeEntityClass;
 	}

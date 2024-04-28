@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.division.manual.HAPManualBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExpandable;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualBrickWrapperValueStructure extends HAPManualBrickSimple implements HAPWithConstantScriptExpression, HAPExpandable{
+public class HAPManualBrickWrapperValueStructure extends HAPManualBlockSimple implements HAPWithConstantScriptExpression, HAPExpandable{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";
@@ -39,17 +39,17 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualBrickSimple im
 		this.setValueStructure(valueStructure);
 	}
 	
-	public HAPInfo getInfo() {    return (HAPInfo)this.getAttributeValue(INFO);     }
-	public void setInfo(HAPInfoImpSimple info) {   this.setAttributeValue(INFO, info);     }
+	public HAPInfo getInfo() {    return (HAPInfo)this.getAttributeValueWithValue(INFO);     }
+	public void setInfo(HAPInfoImpSimple info) {   this.setAttributeWithValueValue(INFO, info);     }
 	
 	public HAPManualBrickValueStructure getValueStructure() {	return (HAPManualBrickValueStructure)this.getAttributeValueWithBrick(VALUESTRUCTURE);   }
 	public void setValueStructure(HAPManualBrickValueStructure valueStructure) {   this.setAttributeWithValueBrick(VALUESTRUCTURE, valueStructure);  }
 	
-	public String getName() {   return (String)this.getAttributeValue(NAME);   }
-	public void setName(String groupName) {   this.setAttributeValue(NAME, groupName);    }
+	public String getName() {   return (String)this.getAttributeValueWithValue(NAME);   }
+	public void setName(String groupName) {   this.setAttributeWithValueValue(NAME, groupName);    }
 	
-	public String getGroupType() {   return (String)this.getAttributeValue(GROUPTYPE);    }
-	public void setGroupType(String groupType) {    this.setAttributeValue(GROUPTYPE, groupType);     }
+	public String getGroupType() {   return (String)this.getAttributeValueWithValue(GROUPTYPE);    }
+	public void setGroupType(String groupType) {    this.setAttributeWithValueValue(GROUPTYPE, groupType);     }
 
 	@Override
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {

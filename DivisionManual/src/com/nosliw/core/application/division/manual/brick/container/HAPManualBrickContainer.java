@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.container;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.division.manual.HAPManualBlockSimple;
 
-public class HAPManualBrickContainer<T extends HAPManualBrick> extends HAPManualBrickSimple{
+public class HAPManualBrickContainer<T extends HAPManualBrick> extends HAPManualBlockSimple{
 
 	protected HAPManualBrickContainer (HAPIdBrickType entityType) {
 		super(entityType);

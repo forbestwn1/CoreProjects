@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.core.application.brick.test.complex.script.HAPBrickTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBrickTestComplex1;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
+import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -40,10 +41,10 @@ public class HAPManagerApplicationBrick {
 	
 	private void init() {
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBrickTestComplex1.class, this));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class, this));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBlockTestComplex1.class, this));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBlockTestComplexScript.class, this));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBrickTestComplexScript.class, this));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, true), HAPAdapterDataAssciation.class, this));
 	}
 
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();	}

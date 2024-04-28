@@ -9,9 +9,9 @@ import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserBrickImpTestComplexScript extends HAPPluginParserBrickImpComplex{
+public class HAPManualPluginParserBlockTestComplexScript extends HAPPluginParserBrickImpComplex{
 
-	public HAPPluginParserBrickImpTestComplexScript(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPManualPluginParserBlockTestComplexScript(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBrickTestComplexScript.class, manualDivisionEntityMan, runtimeEnv);
 	}
 

@@ -21,11 +21,11 @@ import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserBrickImpDynamic extends HAPPluginParserBrickImp{
+public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickImp{
 
 	public final static String PREFIX_IGNORE = "ignore";
 
-	public HAPPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(entityTypeId, entityClass, manualDivisionEntityMan, runtimeEnv);
 	}
 
