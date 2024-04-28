@@ -1,8 +1,9 @@
 package com.nosliw.core.application;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -28,12 +29,12 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 
 	private HAPWrapperValueInAttribute m_valueWrapper;
 	
-	private List<HAPWrapperAdapter> m_adapter;
+	private Set<HAPWrapperAdapter> m_adapter;
 	
 	private HAPInfoTreeNode m_tempTreeNodeInfo;
 	
 	public HAPAttributeInBrick() {
-		this.m_adapter = new ArrayList<HAPWrapperAdapter>();
+		this.m_adapter = new HashSet<HAPWrapperAdapter>();
 	}
 	
 	public HAPAttributeInBrick(String attrName, HAPWrapperValueInAttribute valueWrapper) {
@@ -49,6 +50,7 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	}
 
 	public void addAdapter(HAPWrapperAdapter adapter) {    this.m_adapter.add(adapter);    }
+	public Set<HAPWrapperAdapter> getAdapters(){    return this.m_adapter;    }
 	
 	public void setValueOfValue(Object value) {		this.setValueWrapper(new HAPWrapperValueInAttributeValue(value));	}
 	public void setValueOfBrick(HAPBrick brick) {		this.setValueWrapper(new HAPWrapperValueInAttributeBrick(brick));	}

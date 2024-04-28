@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBrickComplex;
+import com.nosliw.core.application.HAPBlockComplex;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -16,7 +16,7 @@ import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBrickTestComplexScript extends HAPBrickComplex{
+public class HAPBrickTestComplexScript extends HAPBlockComplex{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";

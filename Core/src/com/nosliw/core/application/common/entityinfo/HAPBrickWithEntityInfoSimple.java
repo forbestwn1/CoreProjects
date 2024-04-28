@@ -2,9 +2,9 @@ package com.nosliw.core.application.common.entityinfo;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.core.application.HAPBrickSimple;
+import com.nosliw.core.application.HAPBlockSimple;
 
-public class HAPBrickWithEntityInfoSimple extends HAPBrickSimple implements HAPEntityInfo{
+public class HAPBrickWithEntityInfoSimple extends HAPBlockSimple implements HAPEntityInfo{
 
 	@Override
 	public String getId() {

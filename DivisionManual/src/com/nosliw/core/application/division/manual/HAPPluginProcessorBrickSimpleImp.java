@@ -20,7 +20,7 @@ public abstract class HAPPluginProcessorBrickSimpleImp implements HAPPluginProce
 	public String getEntityType() {  return this.m_entityType;  }
 
 	@Override
-	public void process(HAPExecutableEntity entityExe, HAPManualContextProcess processContext) {
+	public void process(HAPExecutableEntity entityExe, HAPManualContextProcessBrick processContext) {
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPManualBrick entityDef = definitionDomain.getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();

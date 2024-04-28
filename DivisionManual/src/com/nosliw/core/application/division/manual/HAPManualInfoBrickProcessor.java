@@ -4,15 +4,17 @@ public class HAPManualInfoBrickProcessor {
 
 	private HAPPluginParserBrick m_parserPlugin;
 	
-	private HAPPluginProcessorBrick m_processPlugin;
+	private HAPPluginProcessorBlock m_processPluginBrick;
 	
-	public HAPManualInfoBrickProcessor(HAPPluginParserBrick parserPlugin, HAPPluginProcessorBrick processPlugin) {
+	private HAPPluginProcessorAdapter m_processorPluginAdapter;
+	
+	public HAPManualInfoBrickProcessor(HAPPluginParserBrick parserPlugin, HAPPluginProcessorBlock processPlugin) {
 		this.m_parserPlugin = parserPlugin;
-		this.m_processPlugin = processPlugin;
+		this.m_processPluginBrick = processPlugin;
 	}
 	
 	public HAPPluginParserBrick getParserPlugin() {    return this.m_parserPlugin;     }
 	
-	public HAPPluginProcessorBrick getProcessorPlugin() {    return this.m_processPlugin;    }
+	public HAPPluginProcessorBlock getProcessorPlugin() {    return this.m_processPluginBrick;    }
 	
 }

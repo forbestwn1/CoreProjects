@@ -12,7 +12,7 @@ import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPBrickComplex extends HAPBrickImp{
+public class HAPBlockComplex extends HAPBlock{
 
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";

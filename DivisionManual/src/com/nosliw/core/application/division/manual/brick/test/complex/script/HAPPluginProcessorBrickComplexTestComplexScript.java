@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextProcess;
+import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickComplexImp;
 import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 
@@ -29,7 +29,7 @@ public class HAPPluginProcessorBrickComplexTestComplexScript extends HAPPluginPr
 	}
 
 	@Override
-	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcess processContext) {
+	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		
 		HAPBundle bundle = processContext.getCurrentBundle();
 		

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPBrickComplex;
+import com.nosliw.core.application.HAPBlockComplex;
 import com.nosliw.core.application.HAPBundleComplex;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
@@ -49,7 +49,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPWrapperBrick rootEntityInfo, HAPManualContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueStructureDomain(HAPWrapperBrick rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
 		
 		buildValueStructureComplexTree(rootEntityInfo, processContext, runtimeEnv);
 		
@@ -61,16 +61,16 @@ public class HAPUtilityValueStructureDomain {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPManualContextProcess processContext, HAPRuntimeEnvironment runtimeEnv) {
+	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
-				HAPManualContextProcess processContext = (HAPManualContextProcess)data;
+				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
 				HAPBundleComplex bundle = (HAPBundleComplex)processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPBrickComplex complexEntityExe = (HAPBrickComplex)this.getBrickFromNode(treeNode);
+				HAPBlockComplex complexEntityExe = (HAPBlockComplex)this.getBrickFromNode(treeNode);
 				
 				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
 				

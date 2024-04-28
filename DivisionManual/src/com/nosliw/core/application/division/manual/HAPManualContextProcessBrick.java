@@ -2,11 +2,11 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.core.application.HAPBundle;
 
-public class HAPManualContextProcess {
+public class HAPManualContextProcessBrick {
 
 	private HAPBundle m_bundle;
 	
-	public HAPManualContextProcess(HAPBundle bundle) {
+	public HAPManualContextProcessBrick(HAPBundle bundle) {
 		this.m_bundle = bundle;
 	}
 	
