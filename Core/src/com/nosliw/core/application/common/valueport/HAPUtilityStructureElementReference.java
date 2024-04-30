@@ -24,6 +24,16 @@ import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 
 public class HAPUtilityStructureElementReference {
 
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle){
+		HAPResultReferenceResolve resolve = analyzeElementReference(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle);
+		return new HAPIdRootElement(rootEleCriteria.getValuePortRef(), resolve.structureId, rootEleCriteria.getRootName());
+	}
+	
+	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle) {
+		return analyzeElementReference(reference, resolveConfigure, null, bundle);
+	}
+
+	
 	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle) {
 		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
 
@@ -116,7 +126,7 @@ public class HAPUtilityStructureElementReference {
 		return out;
 	}
 
-	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPContextProcessor processContext){
+	public static HAPIdRootElement resolveValueStructureRootReference1(HAPReferenceRootElement rootEleCriteria, HAPContextProcessor processContext){
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(rootEleCriteria.getValuePortRef(), processContext);
 		List<HAPInfoValueStructureReference> candidates = valuePort.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
 

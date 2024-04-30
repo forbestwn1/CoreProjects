@@ -55,35 +55,35 @@ import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
 public class HAPProcessorDataAssociationMapping {
 
-	
-	public static void processValueMapping(
+	public static HAPDataAssociationMapping processValueMapping(
 			HAPManualDataAssociationMapping daDef,
-			HAPDataAssociationMapping daExe,
 			HAPPath baseBlockPath, 
 			HAPBundle currentBundle, 
 			HAPRuntimeEnvironment runtimeEnv) 
 	{
+		HAPDataAssociationMapping out = new HAPDataAssociationMapping();
+		
 		List<HAPItemValueMapping> mappingItems = daDef.getItems();
 		for(HAPItemValueMapping mappingItem : mappingItems) {
 			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getBrickManager());
 		
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, toProcessorContext);
+			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, null, currentBundle);
 			
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, fromProcessorContext);
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, currentBundle);
 			
-			HAPUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
-			
-			
-			
+			List<HAPTunnel> tunnels = HAPUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
+			for(HAPTunnel tunnel : tunnels) {
+				out.addTunnel(tunnel);
+			}
 		}
-		
+		return out;
 	}	
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
@@ -95,7 +95,7 @@ public class HAPProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
-				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.resolveElementReference(pathReference, null, processorContext);
+				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle);
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
@@ -115,7 +115,7 @@ public class HAPProcessorDataAssociationMapping {
 			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
 			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
 			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, processorContext));
+				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, currentBundle));
 			}
 			nodeStructureElement.setChildren(processedChildren);
 			break;

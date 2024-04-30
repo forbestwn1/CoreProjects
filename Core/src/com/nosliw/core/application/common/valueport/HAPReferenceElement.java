@@ -30,9 +30,14 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 		this.m_elementPath = eleFullPath;
 	}
 
-	public HAPReferenceElement(HAPIdValuePort valuePortId, String eleFullPath) {
+	public HAPReferenceElement(HAPReferenceValuePort valuePortRef, String eleFullPath) {
 		this(eleFullPath);
-		this.setValuePortRef(valuePortId);
+		this.setValuePortRef(valuePortRef);
+	}
+	
+	public HAPReferenceElement(HAPReferenceRootElement rootRef) {
+		this.cloneToRootReference(rootRef);
+		this.m_elementPath = rootRef.getRootName();
 	}
 
 	@Override
@@ -72,12 +77,16 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(!super.equals(obj))  return false;
+		if(!super.equals(obj)) {
+			return false;
+		}
 
 		boolean out = false;
 		if(obj instanceof HAPReferenceElement) {
 			HAPReferenceElement ele = (HAPReferenceElement)obj;
-			if(!HAPUtilityBasic.isEquals(this.getLeafPath(), ele.getLeafPath()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getLeafPath(), ele.getLeafPath())) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

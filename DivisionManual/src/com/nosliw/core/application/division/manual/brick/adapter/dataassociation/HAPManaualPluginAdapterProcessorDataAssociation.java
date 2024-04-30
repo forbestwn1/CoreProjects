@@ -1,49 +1,46 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
 
+import java.util.List;
+
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAdapter;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
 import com.nosliw.core.application.division.manual.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapterImp;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.domain.HAPUtilityDomain;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.runtime.HAPExecutable;
+import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
+import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPManualDataAssociationMapping;
+import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPProcessorDataAssociationMapping;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginProcessorAdapterImp{
 
-	public HAPManaualPluginAdapterProcessorDataAssociation() {
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
+	public HAPManaualPluginAdapterProcessorDataAssociation(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.DATAASSOCIATION_100);
-	}
-
-	@Override
-	public void postProcess(HAPExecutableEntity adapterExe, HAPExecutable childEntityExecutable, HAPContextProcessor childContext, HAPExecutableEntity parentEntityExecutable, HAPContextProcessor parentContext) {
-		HAPDefinitionDataAssociation dataAssociation = null;
-		HAPManualAdapterDataAssciation daEntityDef = HAPUtilityDomain.getEntity(adapterExe.getDefinitionEntityId(), parentContext, HAPManualAdapterDataAssciation.class);
-		dataAssociation = daEntityDef.getDataAssociation();
-		
-		HAPExecutableEntityComplex parentComplexEntityExe = (HAPExecutableEntityComplex)parentEntityExecutable;
-		HAPExecutableEntityComplex childComplexEntityExe = (HAPExecutableEntityComplex)childEntityExecutable;
-		
-		HAPExecutableDataAssociation dataAssociationExe = HAPProcessorDataAssociation.processDataAssociation(
-				dataAssociation,
-				parentEntityExecutable,
-				parentContext,
-				(HAPExecutableEntity)childEntityExecutable,
-				childContext,
-				parentContext.getRuntimeEnvironment());
-
-		((HAPAdapterDataAssciation)adapterExe).setDataAssciation(dataAssociationExe);
+		this.m_runtimeEnv = runtimeEnv;
 	}
 
 	@Override
 	public void process(HAPAdapter adapterExe, HAPManualAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
-		// TODO Auto-generated method stub
-		
+		HAPManualAdapterDataAssciation daAdapterDef = (HAPManualAdapterDataAssciation)adapterDef;
+		HAPAdapterDataAssciation daAdapterExe = (HAPAdapterDataAssciation)adapterExe;
+		HAPDataAssociationMapping daExe = new HAPDataAssociationMapping();
+		daAdapterExe.setDataAssciation(daExe);
+		List<HAPManualDataAssociation> das = daAdapterDef.getDataAssociation();
+		for(HAPManualDataAssociation da : das) {
+			String daType = da.getType();
+			if(daType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
+				HAPDataAssociationMapping daMappingExe = HAPProcessorDataAssociationMapping.processValueMapping((HAPManualDataAssociationMapping)da, processContext.getRootPathForBaseBrick(), processContext.getCurrentBundle(), this.m_runtimeEnv);
+				for(HAPTunnel tunnel : daMappingExe.getTunnels()) {
+					daExe.addTunnel(tunnel);
+				}
+			}
+		}
 	}
+
 }
