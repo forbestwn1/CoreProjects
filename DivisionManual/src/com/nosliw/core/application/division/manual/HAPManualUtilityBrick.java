@@ -43,7 +43,7 @@ public class HAPManualUtilityBrick {
 			if(i==0) {
 				out = entityDef.getAttribute(attribute);
 			} else {
-				HAPManualWrapperValueInAttribute attrValueInfo = out.getValueInfo();
+				HAPManualWrapperValue attrValueInfo = out.getValueInfo();
 				if(attrValueInfo instanceof HAPManualWithBrick) {
 					out = ((HAPManualWithBrick)attrValueInfo).getBrick().getAttribute(attribute);
 				}
@@ -60,7 +60,7 @@ public class HAPManualUtilityBrick {
 		if(path==null||path.isEmpty()) {
 			out = entityDef;
 		} else {
-			HAPManualWrapperValueInAttribute attrValueInfo = getDescendantAttribute(entityDef, path).getValueInfo();
+			HAPManualWrapperValue attrValueInfo = getDescendantAttribute(entityDef, path).getValueInfo();
 			if(attrValueInfo instanceof HAPManualWithBrick) {
 				out = ((HAPManualWithBrick)attrValueInfo).getBrick();
 			}
@@ -85,7 +85,7 @@ public class HAPManualUtilityBrick {
 			return relation.isAutoProcess();
 		}
 		
-		HAPManualWrapperValueInAttribute attrValueInfo = attr.getValueInfo();
+		HAPManualWrapperValue attrValueInfo = attr.getValueInfo();
 		if(attrValueInfo instanceof HAPManualWithBrick) {
 			boolean isComplex = isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan);
 			

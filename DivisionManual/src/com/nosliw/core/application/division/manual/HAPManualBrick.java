@@ -66,15 +66,15 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 		return out;
 	}
 	
-	public void setAttributeWithValueValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeValue(attrValue)));	}
+	public void setAttributeWithValueValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueValue(attrValue)));	}
 	public void setAttributeWithValueBrick(String attributeName, HAPManualBrick brick) {
-		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueInAttributeBrick(brick)));	
+		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueBrick(brick)));	
 	}
 	
 	public Object getAttributeValueWithValue(String attributeName){
 		HAPManualAttribute attr = this.getAttribute(attributeName);
 		if(attr!=null) {
-			return ((HAPManualWrapperValueInAttributeValue)attr.getValueInfo()).getValue();
+			return ((HAPManualWrapperValueValue)attr.getValueInfo()).getValue();
 		}
 		return null;
 	}
@@ -84,13 +84,13 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 			this.setAttributeWithValueValue(attrName, defaultValue);
 			att = this.getAttribute(attrName);
 		}
-		return ((HAPManualWrapperValueInAttributeValue)att.getValueInfo()).getValue();
+		return ((HAPManualWrapperValueValue)att.getValueInfo()).getValue();
 	}
 	
 	public HAPManualBrick getAttributeValueWithBrick(String attributeName) {
 		HAPManualAttribute attr = this.getAttribute(attributeName);
 		if(attr!=null) {
-			return ((HAPManualWrapperValueInAttributeBrick)attr.getValueInfo()).getBrick();
+			return ((HAPManualWrapperValueBrick)attr.getValueInfo()).getBrick();
 		}
 		return null;
 	}

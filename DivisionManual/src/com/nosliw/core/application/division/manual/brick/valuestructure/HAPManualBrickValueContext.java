@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualWrapperValueInAttributeBrick;
+import com.nosliw.core.application.division.manual.HAPManualWrapperValueBrick;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainerSimpleList;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -28,7 +28,7 @@ public class HAPManualBrickValueContext extends HAPManualBlockSimple implements 
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){
 		List<HAPManualBrickWrapperValueStructure> out = new ArrayList<HAPManualBrickWrapperValueStructure>();
 		for(HAPManualAttribute attr: this.getValueStructureContainer().getPublicAttributes()) {
-			out.add((HAPManualBrickWrapperValueStructure)((HAPManualWrapperValueInAttributeBrick)attr.getValueInfo()).getBrick());
+			out.add((HAPManualBrickWrapperValueStructure)((HAPManualWrapperValueBrick)attr.getValueInfo()).getBrick());
 		}
 		return out;
 	}

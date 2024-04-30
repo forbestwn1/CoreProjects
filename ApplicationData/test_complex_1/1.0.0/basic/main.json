@@ -36,6 +36,39 @@
 								}
 							}
 						}
+					],
+					"adapter": [
+						{
+							"name" : "dataassociation",
+							"brickTypeId" : {
+								"brickType": "dataassociation",
+								"version": "1.0.0"
+							},
+							"brick" : {
+								"type" : "mapping",
+								"direction" : "downStream",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "child_public"
+										},
+										"definition" : {
+											"child" : {
+												"a" : {
+													"child" : {
+														"ac" : {
+															"mapping" : {
+																"elementPath": "parent_tree_public.a.ac"
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								]
+							}						
+						}
 					]
 				}
 			}

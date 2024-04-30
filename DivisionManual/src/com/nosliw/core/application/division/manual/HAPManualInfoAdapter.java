@@ -4,13 +4,12 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 
 public class HAPManualInfoAdapter extends HAPEntityInfoImp{
 
-	//attribute value
-	private HAPManualWrapperValueInAttribute m_valueInfo;
+	private HAPManualWrapperValue m_valueWrapper;
 	
-	public HAPManualInfoAdapter(HAPManualWrapperValueInAttribute valueInfo) {
-		this.m_valueInfo = valueInfo;
+	public HAPManualInfoAdapter(HAPManualWrapperValue valueWrapper) {
+		
 	}
-	
-	public HAPManualWrapperValueInAttribute getValueWrapper() {    return this.m_valueInfo;      }
+
+	public HAPManualWrapperValue getValueWrapper() {    return this.m_valueWrapper;      }
 	
 }

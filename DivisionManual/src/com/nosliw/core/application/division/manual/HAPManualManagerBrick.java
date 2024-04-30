@@ -239,7 +239,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				attrExe.setName(attrDef.getName());
 				brick.setAttribute(attrExe);
 
-				HAPManualWrapperValueInAttribute attrValueInfo = attrDef.getValueInfo();
+				HAPManualWrapperValue attrValueInfo = attrDef.getValueInfo();
 				String attrValueType = attrValueInfo.getValueType();
 				if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 					HAPManualBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
@@ -249,27 +249,27 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				}
 				else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 					//resource reference
-					HAPManualWrapperValueInAttributeReferenceResource resourceRefValueDef = (HAPManualWrapperValueInAttributeReferenceResource)attrValueInfo;
+					HAPManualWrapperValueReferenceResource resourceRefValueDef = (HAPManualWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueInAttributeReferenceResource resourceRefValue = new HAPWrapperValueInAttributeReferenceResource(resourceRefValueDef.getResourceId());
 					attrExe.setValueWrapper(resourceRefValue);
 				}
 				
 				//adapter
 				for(HAPManualInfoAdapter defAdapterInfo : attrDef.getAdapters()) {
-					HAPManualWrapperValueInAttribute adapterValueWrapper = defAdapterInfo.getValueWrapper();
+					HAPManualWrapperValue adapterValueWrapper = defAdapterInfo.getValueWrapper();
 					String adapterValueType = adapterValueWrapper.getValueType();
 					
 					HAPWrapperAdapter adapterValueWrapperExe = null;
 					if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 						//brick
-						HAPManualWrapperValueInAttributeBrick adpaterValueDefWrapperBrick = (HAPManualWrapperValueInAttributeBrick)adapterValueWrapper;
+						HAPManualWrapperValueBrick adpaterValueDefWrapperBrick = (HAPManualWrapperValueBrick)adapterValueWrapper;
 						HAPBrick adapterBrick = this.newBrickInstance(adpaterValueDefWrapperBrick.getBrick());
 						adapterValueWrapperExe = new HAPWrapperAdapterWithBrick(adapterBrick);
 						buildExecutableTree(adpaterValueDefWrapperBrick.getBrick(), adapterBrick, processContext);
 					}
 					else if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 						//resource reference
-						HAPManualWrapperValueInAttributeReferenceResource adpaterValueDefWrapperResourceRef = (HAPManualWrapperValueInAttributeReferenceResource)adapterValueWrapper;
+						HAPManualWrapperValueReferenceResource adpaterValueDefWrapperResourceRef = (HAPManualWrapperValueReferenceResource)adapterValueWrapper;
 						adapterValueWrapperExe = new HAPWrapperAdapterWithReferenceResource(adpaterValueDefWrapperResourceRef.getResourceId());
 					}
 					defAdapterInfo.cloneToEntityInfo(adapterValueWrapperExe);
@@ -287,7 +287,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_1_100, new HAPManualPluginParserBlockTestComplex1(this, this.m_runtimeEnv), new HAPManualPluginProcessorBrickDefinitionComplexImpTestComplex1());
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, new HAPManualPluginParserBlockTestComplexScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexScript());
 
-		this.registerAdapterPluginInfo(HAPEnumBrickType.DATAASSOCIATION_100, new HAPManualPluginParserAdapterDataAssociation(this, this.m_runtimeEnv), new HAPManaualPluginAdapterProcessorDataAssociation());
+		this.registerAdapterPluginInfo(HAPEnumBrickType.DATAASSOCIATION_100, new HAPManualPluginParserAdapterDataAssociation(this, this.m_runtimeEnv), new HAPManaualPluginAdapterProcessorDataAssociation(this.m_runtimeEnv));
 
 		
 		this.registerBlockPluginInfo(HAPManualEnumBrickType.VALUESTRUCTURE_100, new HAPManualPluginParserBrickImpValueStructure(this, this.m_runtimeEnv), null);
@@ -303,7 +303,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		HAPManualWrapperBrick out = null;
 		switch(format) {
 		case JSON:
-			out = HAPUtilityParserBrickFormatJson.parseEntityInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), entityTypeId, parseContext, this, this.getBrickManager());
+			out = HAPUtilityParserBrickFormatJson.parseBrickInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), entityTypeId, parseContext, this, this.getBrickManager());
 			break;
 		case HTML:
 			break;

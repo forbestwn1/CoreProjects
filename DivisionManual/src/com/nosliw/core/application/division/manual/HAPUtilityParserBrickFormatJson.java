@@ -1,6 +1,5 @@
 package com.nosliw.core.application.division.manual;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -32,7 +31,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPUtilityParserBrickFormatJson {
 
-	public static HAPManualWrapperBrick parseEntityInfo(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+	public static HAPManualWrapperBrick parseBrickInfo(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		HAPManualWrapperBrick out = new HAPManualWrapperBrick();
 		
 		//try with definition
@@ -62,7 +61,7 @@ public class HAPUtilityParserBrickFormatJson {
 			out = new HAPManualAttribute();
 			
 			//parse attribute value
-			HAPManualWrapperValueInAttribute attrValueInfo = parseAttributeValueInfo(jsonObj, entityTypeIfNotProvided, parseContext, manualDivisionEntityMan, entityManager);
+			HAPManualWrapperValue attrValueInfo = parseWrapperValue(jsonObj, entityTypeIfNotProvided, parseContext, manualDivisionEntityMan, entityManager);
 			out.setValueInfo(attrValueInfo);
 			
 			//parse info
@@ -72,11 +71,22 @@ public class HAPUtilityParserBrickFormatJson {
 			}
 			
 			//parse adapter
-			Object adapterObjs = jsonObj.opt(HAPManualAttribute.ADAPTER);
-			if(adapterObjs!=null) {
-				List<HAPManualInfoAdapter> adaptersInfo = parseAdapter(adapterObjs, adapterTypeId, manualDivisionEntityMan, entityManager);
-				for(HAPManualInfoAdapter adapterInfo : adaptersInfo) {
-					out.addAdapter(adapterInfo);
+			Object adaptersObj = jsonObj.opt(HAPManualAttribute.ADAPTER);
+			if(adaptersObj!=null) {
+				if(adaptersObj instanceof JSONArray) {
+					JSONArray adaptersArray = (JSONArray)adaptersObj;
+					for(int i=0; i<adaptersArray.length(); i++) {
+						HAPManualInfoAdapter adapterInfo = parseAdapter(adaptersArray.getJSONObject(i), adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
+						if(adapterInfo!=null) {
+							out.addAdapter(adapterInfo);
+						}
+					}
+				}
+				else if(adaptersObj instanceof JSONObject) {
+					HAPManualInfoAdapter adapterInfo = parseAdapter((JSONObject)adaptersObj, adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
+					if(adapterInfo!=null) {
+						out.addAdapter(adapterInfo);
+					}
 				}
 			}
 			
@@ -94,8 +104,8 @@ public class HAPUtilityParserBrickFormatJson {
 	}
 	
 	//parse entity as attribute value (value may be entity or reference(resource, attachment, local))
-	public static HAPManualWrapperValueInAttribute parseAttributeValueInfo(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
-		HAPManualWrapperValueInAttribute out = null;
+	public static HAPManualWrapperValue parseWrapperValue(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+		HAPManualWrapperValue out = null;
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
@@ -103,50 +113,50 @@ public class HAPUtilityParserBrickFormatJson {
 		
 		//local entity reference
 		if(out==null) {
-			Object entityRefObj = jsonObj.opt(HAPManualWrapperValueInAttributeReferenceBrick.BRICKREFERENCE);
+			Object entityRefObj = jsonObj.opt(HAPManualWrapperValueReferenceBrick.BRICKREFERENCE);
 			if(entityRefObj!=null) {
 				HAPIdBrick entityId = HAPUtilityBrick.parseBrickIdAgressive(entityRefObj, parseContext.getBrickDivision(), entityManager); 
-				out = new HAPManualWrapperValueInAttributeReferenceBrick(entityId);
+				out = new HAPManualWrapperValueReferenceBrick(entityId);
 				HAPManualBrick refEntity = parseLocalValue(parseContext.getBasePath(), entityId, manualDivisionEntityMan);
-				((HAPManualWrapperValueInAttributeReferenceBrick)out).setBrick(refEntity);
+				((HAPManualWrapperValueReferenceBrick)out).setBrick(refEntity);
 			}
 		}
 		
 		//resource id
 		if(out==null) {
-			Object resourceObj = jsonObj.opt(HAPManualWrapperValueInAttributeReferenceResource.RESOURCEID);
+			Object resourceObj = jsonObj.opt(HAPManualWrapperValueReferenceResource.RESOURCEID);
 			if(resourceObj!=null) {
 				HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityTypeId.getBrickType(), entityTypeId.getVersion(), resourceObj);
-				out = new HAPManualWrapperValueInAttributeReferenceResource(resourceId);
+				out = new HAPManualWrapperValueReferenceResource(resourceId);
 			}
 		}
 		
 		//reference
 		if(out==null) {
-			Object referenceObj = jsonObj.opt(HAPManualWrapperValueInAttributeReferenceAttachment.REFERENCE);
+			Object referenceObj = jsonObj.opt(HAPManualWrapperValueReferenceAttachment.REFERENCE);
 			if(referenceObj!=null) {
 				HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityTypeId.getBrickType());
-				out = new HAPManualWrapperValueInAttributeReferenceAttachment(reference);
+				out = new HAPManualWrapperValueReferenceAttachment(reference);
 			}
 		}
 
 		//value
 		if(out==null) {
-			Object valueObj = jsonObj.opt(HAPManualWrapperValueInAttributeValue.VALUE);
+			Object valueObj = jsonObj.opt(HAPManualWrapperValueValue.VALUE);
 			if(valueObj!=null) {
-				out = new HAPManualWrapperValueInAttributeValue(valueObj);
+				out = new HAPManualWrapperValueValue(valueObj);
 			}
 		}
 		
 		//entity
 		if(out==null) {
-			Object entityObj = jsonObj.opt(HAPManualWrapperValueInAttributeBrick.BRICK);
+			Object entityObj = jsonObj.opt(HAPManualWrapperValueBrick.BRICK);
 			if(entityObj==null)
 			{
 				entityObj = jsonObj;    //if no entity node, then using root
 			}
 			HAPManualBrick entityDef = manualDivisionEntityMan.parseEntityDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
-			out = new HAPManualWrapperValueInAttributeBrick(entityDef);
+			out = new HAPManualWrapperValueBrick(entityDef);
 		}
 
 		return out;
@@ -174,38 +184,17 @@ public class HAPUtilityParserBrickFormatJson {
 		return out;
 	}
 	
-	private static List<HAPManualInfoAdapter> parseAdapter(Object adaptersObj, HAPIdBrickType adatperTypeId, HAPManualManagerBrick textDivisionEntityMan, HAPManagerApplicationBrick entityManager){
-		List<HAPManualInfoAdapter> out = new ArrayList<HAPManualInfoAdapter>();
-		
-		if(adaptersObj instanceof JSONArray) {
-			JSONArray adaptersArray = (JSONArray)adaptersObj;
-			for(int i=0; i<adaptersArray.length(); i++) {
-				JSONObject adapterObj = adaptersArray.getJSONObject(i);
-				if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
-					HAPManualWrapperValueInAttribute adpaterEntityDefInfo = parseEntity(adapterObj, adatperTypeId, textDivisionEntityMan, entityManager);
-					HAPManualInfoAdapter adapterInfo = new HAPManualInfoAdapter(adpaterEntityDefInfo);
-					adapterInfo.buildEntityInfoByJson(adapterObj);
-					if(adapterInfo.getName()==null) {
-						adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
-					}
-					out.add(adapterInfo);
-				}
+	private static HAPManualInfoAdapter parseAdapter(JSONObject adapterObj, HAPIdBrickType adatperTypeId, HAPManualContextParse parseContext, HAPManualManagerBrick textDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+		HAPManualInfoAdapter adapterInfo = null;
+		if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
+			HAPManualWrapperValue adpaterEntityDefInfo = parseWrapperValue(adapterObj, adatperTypeId, parseContext, textDivisionEntityMan, entityManager);
+			adapterInfo = new HAPManualInfoAdapter(adpaterEntityDefInfo);
+			adapterInfo.buildEntityInfoByJson(adapterObj);
+			if(adapterInfo.getName()==null) {
+				adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
 			}
 		}
-		else if(adaptersObj instanceof JSONObject) {
-			JSONObject adapterObj = (JSONObject)adaptersObj;
-			if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
-				HAPManualWrapperValueInAttribute adpaterEntityDefInfo = parseEntity(adapterObj, adatperTypeId, textDivisionEntityMan, entityManager);
-				HAPManualInfoAdapter adapterInfo = new HAPManualInfoAdapter(adpaterEntityDefInfo);
-				adapterInfo.buildEntityInfoByJson(adapterObj);
-				if(adapterInfo.getName()==null) {
-					adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
-				}
-				out.add(adapterInfo);
-			}
-		}
-		
-		return out;
+		return adapterInfo;
 	}
 	
 	private static String figureoutAdatperType(String entityType, String adapterType, HAPManagerDomainEntityDefinition domainEntityManager) {
@@ -229,7 +218,7 @@ public class HAPUtilityParserBrickFormatJson {
 			JSONObject jsonObj = (JSONObject)obj;
 			
 			//embeded entity
-			HAPIdEntityInDomain entityId = parseAttributeValueInfo(getEntityObject(jsonObj), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
+			HAPIdEntityInDomain entityId = parseWrapperValue(getEntityObject(jsonObj), entityType, parserContext, domainEntityManager, resourceDefinitionManager); 
 
 			if(entityId!=null) {
 				out = new HAPEmbededDefinition(entityId); 
@@ -276,7 +265,7 @@ public class HAPUtilityParserBrickFormatJson {
 
 	private static HAPIdEntityInDomain parseComplexEntity(JSONObject jsonObj, String entityType, HAPIdEntityInDomain parentEntityId, HAPConfigureParentRelationComplex parentRelationConfigureExternal, HAPConfigureParentRelationComplex parentRelationConfigureDefault, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		//entity itself
-		HAPIdEntityInDomain out = parseAttributeValueInfo(jsonObj, entityType, parserContext, domainEntityManager, resourceDefinitionManager);
+		HAPIdEntityInDomain out = parseWrapperValue(jsonObj, entityType, parserContext, domainEntityManager, resourceDefinitionManager);
 
 		if(out!=null && parentEntityId!=null) {
 			//parent relation

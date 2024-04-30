@@ -4,13 +4,13 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 
-public class HAPManualWrapperValueInAttribute extends HAPSerializableImp{
+public class HAPManualWrapperValue extends HAPSerializableImp{
 
 	public static final String VALUETYPE = "valueType";
 	
 	private String m_valueType;
 	
-	public HAPManualWrapperValueInAttribute(String valueType) {
+	public HAPManualWrapperValue(String valueType) {
 		this.m_valueType = valueType;
 	}
 	

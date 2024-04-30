@@ -6,14 +6,14 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPManualWrapperValueInAttributeValue extends HAPManualWrapperValueInAttribute{
+public class HAPManualWrapperValueValue extends HAPManualWrapperValue{
 
 	//entity definition
 	public static final String VALUE = "value";
 
 	private Object m_value;
 	
-	public HAPManualWrapperValueInAttributeValue(Object value) {
+	public HAPManualWrapperValueValue(Object value) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE);
 		this.m_value = value;
 	}

@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 
-public class HAPManualWrapperValueInAttributeReferenceAttachment extends HAPManualWrapperValueInAttributeWithBrick{
+public class HAPManualWrapperValueReferenceAttachment extends HAPManualWrapperValueWithBrick{
 
 	//reference to attachment
 	public static final String REFERENCE = "reference";
@@ -11,7 +11,7 @@ public class HAPManualWrapperValueInAttributeReferenceAttachment extends HAPManu
 	//reference to data in attachment
 	private HAPReferenceAttachment m_reference;
 	
-	public HAPManualWrapperValueInAttributeReferenceAttachment(HAPReferenceAttachment reference) {
+	public HAPManualWrapperValueReferenceAttachment(HAPReferenceAttachment reference) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE, entityTypeInfo);
 		this.m_reference = reference;
 	}

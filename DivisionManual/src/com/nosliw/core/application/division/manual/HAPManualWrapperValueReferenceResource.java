@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPManualWrapperValueInAttributeReferenceResource extends HAPManualWrapperValueInAttribute{
+public class HAPManualWrapperValueReferenceResource extends HAPManualWrapperValue{
 
 	//resource id
 	public static final String RESOURCEID = "resourceId";
@@ -11,7 +11,7 @@ public class HAPManualWrapperValueInAttributeReferenceResource extends HAPManual
 	//reference to external resource
 	private HAPResourceId m_resourceId;
 
-	public HAPManualWrapperValueInAttributeReferenceResource(HAPResourceId resourceId) {
+	public HAPManualWrapperValueReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE);
 		this.m_resourceId = resourceId;
 	}

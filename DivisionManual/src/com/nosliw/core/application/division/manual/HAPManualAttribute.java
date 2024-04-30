@@ -2,6 +2,7 @@ package com.nosliw.core.application.division.manual;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public static final String INFO = "info";
 	
 	//attribute value
-	private HAPManualWrapperValueInAttribute m_valueInfo;
+	private HAPManualWrapperValue m_valueInfo;
 	
 	//multiple adapters by name
 	private Map<String, HAPManualInfoAdapter> m_adapters;
@@ -44,16 +45,17 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	
 	public HAPManualAttribute() {
 		this.m_relations = new ArrayList<HAPManualBrickRelation>();
+		this.m_adapters = new LinkedHashMap<String, HAPManualInfoAdapter>();
 	}
 
-	public HAPManualAttribute(String name, HAPManualWrapperValueInAttribute valueInfo) {
+	public HAPManualAttribute(String name, HAPManualWrapperValue valueInfo) {
 		this();
 		this.setName(name);
 		this.m_valueInfo = valueInfo;
 	}
 
-	public HAPManualWrapperValueInAttribute getValueInfo() {    return this.m_valueInfo;     }
-	public void setValueInfo(HAPManualWrapperValueInAttribute valueInfo) {    this.m_valueInfo = valueInfo;     }
+	public HAPManualWrapperValue getValueInfo() {    return this.m_valueInfo;     }
+	public void setValueInfo(HAPManualWrapperValue valueInfo) {    this.m_valueInfo = valueInfo;     }
 	
 	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	public Set<HAPManualInfoAdapter> getAdapters(){   return new HashSet<HAPManualInfoAdapter>(this.m_adapters.values());      }

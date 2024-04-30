@@ -5,13 +5,13 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
 
-public class HAPManualWrapperValueInAttributeWithBrick extends HAPManualWrapperValueInAttribute implements HAPManualWithBrick{
+public class HAPManualWrapperValueWithBrick extends HAPManualWrapperValue implements HAPManualWithBrick{
 
 	private HAPManualBrick m_brick;
 	
 	private HAPIdBrickType m_brickTypeId;
 
-	public HAPManualWrapperValueInAttributeWithBrick(String valueType, HAPIdBrickType brickTypeId) {
+	public HAPManualWrapperValueWithBrick(String valueType, HAPIdBrickType brickTypeId) {
 		super(valueType);
 		this.m_brickTypeId = brickTypeId;
 	}
