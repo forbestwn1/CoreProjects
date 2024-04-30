@@ -1,19 +1,20 @@
-package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
+package com.nosliw.core.application.division.manual.common.dataassociation;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPManualDataAssociationMapping;
 
-public class HAPParserDataAssociation {
+public class HAPManualParserDataAssociation {
 
-	public static HAPDefinitionDataAssociation buildDefinitionByJson(JSONObject asJson){
+	public static HAPManualDataAssociation buildDefinitionByJson(JSONObject asJson){
 		if(asJson==null) {
 			return null;
 		}
 		
-		String type = (String)asJson.opt(HAPDefinitionDataAssociation.TYPE);
+		String type = (String)asJson.opt(HAPManualDataAssociation.TYPE);
 		if(HAPUtilityBasic.isStringEmpty(type)) {
 			type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
 		}
@@ -21,19 +22,19 @@ public class HAPParserDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 		{
-			HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
+			HAPManualDataAssociationMapping out = new HAPManualDataAssociationMapping();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
 		{
-			HAPDefinitionDataAssociationMirror out = new HAPDefinitionDataAssociationMirror();
+			HAPManualDataAssociationMirror out = new HAPManualDataAssociationMirror();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}
 		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 		{
-			HAPDefinitionDataAssociationNone out = new HAPDefinitionDataAssociationNone();
+			HAPManualDataAssociationNone out = new HAPManualDataAssociationNone();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}

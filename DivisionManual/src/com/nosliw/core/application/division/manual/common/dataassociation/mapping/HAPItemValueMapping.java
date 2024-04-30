@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
+package com.nosliw.core.application.division.manual.common.dataassociation.mapping;
 
 import java.util.Map;
 
@@ -8,9 +8,10 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 
 @HAPEntityWithAttribute
-public class HAPItemValueMapping<T> extends HAPEntityInfoWritableImp{
+public class HAPItemValueMapping extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -21,18 +22,18 @@ public class HAPItemValueMapping<T> extends HAPEntityInfoWritableImp{
 	//context element definition
 	private HAPElementStructure m_definition;
 
-	private T m_target;
+	private HAPReferenceRootElement m_target;
 	
 	public HAPItemValueMapping() {}
 	
-	public HAPItemValueMapping(HAPElementStructure definition, T target) {
+	public HAPItemValueMapping(HAPElementStructure definition, HAPReferenceRootElement target) {
 		this.m_definition = definition;
 		this.m_target = target;
 	}
 	
-	public T getTarget() {   return this.m_target;   }
+	public HAPReferenceRootElement getTarget() {   return this.m_target;   }
 	
-	public void setTarget(T target) {    this.m_target = target;    }
+	public void setTarget(HAPReferenceRootElement target) {    this.m_target = target;    }
 	
 	public HAPElementStructure getDefinition() {	return this.m_definition;	}
 	
@@ -45,11 +46,15 @@ public class HAPItemValueMapping<T> extends HAPEntityInfoWritableImp{
 		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.m_target, HAPSerializationFormat.JSON));
 	}
 	
-	public HAPItemValueMapping<T> cloneValueMappingItem() {
-		HAPItemValueMapping<T> out = new HAPItemValueMapping<T>();
+	public HAPItemValueMapping cloneValueMappingItem() {
+		HAPItemValueMapping out = new HAPItemValueMapping();
 		this.cloneToEntityInfo(out);
-		if(this.m_definition!=null)  out.m_definition = this.m_definition.cloneStructureElement();
-		if(this.m_target!=null)  out.m_target = this.m_target;
+		if(this.m_definition!=null) {
+			out.m_definition = this.m_definition.cloneStructureElement();
+		}
+		if(this.m_target!=null) {
+			out.m_target = this.m_target.cloneRootElementReference();
+		}
 		return out;
 	}
 }

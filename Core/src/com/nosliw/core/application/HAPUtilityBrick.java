@@ -64,6 +64,10 @@ public class HAPUtilityBrick {
 		return null;
 	}
 	
+	public static HAPResultBrick getDescdentBrickResult(HAPBundle bundle, HAPPath path, HAPManagerApplicationBrick brickMan) {
+		return getDescdentBrickResult(bundle.getBrickWrapper(), path, brickMan);
+	}
+	
 	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPManagerApplicationBrick brickMan) {
 		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path, brickMan);
 	}

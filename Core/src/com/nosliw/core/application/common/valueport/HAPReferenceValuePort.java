@@ -30,8 +30,10 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 	
 	//which entity this value port belong
 	public HAPReferenceBrickLocal getBrickReference() {    return this.m_brickReference;     }
+	public void setBlockReference(HAPReferenceBrickLocal blockRef) {     this.m_brickReference = blockRef;      }
 	
 	public HAPIdValuePort getValuePortId() {   return this.m_valuePortKey;     }
+	public void setValuePortId(HAPIdValuePort valuePortId) {     this.m_valuePortKey = valuePortId;      }
 
 	
 	@Override

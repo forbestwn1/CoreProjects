@@ -16,8 +16,6 @@ import com.nosliw.core.application.common.structure.HAPReferenceElementInStructu
 import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.variable.HAPIdRootElement;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSimple;

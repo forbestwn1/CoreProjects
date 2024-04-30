@@ -1,7 +1,10 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
 
-import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPAdapter;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
+import com.nosliw.core.application.division.manual.HAPManualAdapter;
+import com.nosliw.core.application.division.manual.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapterImp;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -15,7 +18,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginProcessorAdapterImp{
 
 	public HAPManaualPluginAdapterProcessorDataAssociation() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION);
+		super(HAPEnumBrickType.DATAASSOCIATION_100);
 	}
 
 	@Override
@@ -36,5 +39,11 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginPr
 				parentContext.getRuntimeEnvironment());
 
 		((HAPAdapterDataAssciation)adapterExe).setDataAssciation(dataAssociationExe);
+	}
+
+	@Override
+	public void process(HAPAdapter adapterExe, HAPManualAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
+		// TODO Auto-generated method stub
+		
 	}
 }

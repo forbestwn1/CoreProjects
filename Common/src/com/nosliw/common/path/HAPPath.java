@@ -56,6 +56,14 @@ public class HAPPath {
 		return out;
 	}
 	
+	public HAPPath trimLast() {
+		HAPPath out = new HAPPath();
+		for(int i=0; i<this.m_pathSegs.length-1; i++) {
+			out.appendSegment(m_pathSegs[i]);
+		}
+		return out;
+	}
+	
 	public HAPPath clonePath() {
 		HAPPath out = new HAPPath(this.m_path);
 		return out;

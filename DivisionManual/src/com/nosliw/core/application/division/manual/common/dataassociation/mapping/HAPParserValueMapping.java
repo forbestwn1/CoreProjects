@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
+package com.nosliw.core.application.division.manual.common.dataassociation.mapping;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,15 +15,15 @@ import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 
 public class HAPParserValueMapping {
 
-	public static List<HAPItemValueMapping<HAPReferenceRootElement>> parses(Object itemsObj){
-		List<HAPItemValueMapping<HAPReferenceRootElement>> out = new ArrayList<>();
+	public static List<HAPItemValueMapping> parses(Object itemsObj){
+		List<HAPItemValueMapping> out = new ArrayList<>();
 		if(itemsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)itemsObj;
 			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleKey = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleKey);
-				HAPItemValueMapping<HAPReferenceRootElement> item = parseValueMappingItemFromJson(eleDefJson);
+				HAPItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null) {
 					HAPReferenceElement target = new HAPReferenceElement();
 					target.buildObject(eleKey, HAPSerializationFormat.JSON);
@@ -36,20 +36,24 @@ public class HAPParserValueMapping {
 			JSONArray elementsArray = (JSONArray)itemsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPItemValueMapping<HAPReferenceRootElement> item = parseValueMappingItemFromJson(eleDefJson);
-				if(item!=null)  out.add(item);
+				HAPItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
+				if(item!=null) {
+					out.add(item);
+				}
 			}
 		}
 		return out;
 	}
 	
 	//parse context root
-	public static HAPItemValueMapping<HAPReferenceRootElement> parseValueMappingItemFromJson(JSONObject eleDefJson){
-		HAPItemValueMapping<HAPReferenceRootElement> out = new HAPItemValueMapping<HAPReferenceRootElement>();
+	public static HAPItemValueMapping parseValueMappingItemFromJson(JSONObject eleDefJson){
+		HAPItemValueMapping out = new HAPItemValueMapping();
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
-		if(!HAPUtilityEntityInfo.isEnabled(out))   return null;
+		if(!HAPUtilityEntityInfo.isEnabled(out)) {
+			return null;
+		}
 
 		//target
 		Object targetObj = eleDefJson.opt(HAPItemValueMapping.TARGET);

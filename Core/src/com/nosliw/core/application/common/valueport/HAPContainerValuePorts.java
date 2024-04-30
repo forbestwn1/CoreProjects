@@ -55,6 +55,6 @@ public class HAPContainerValuePorts {
 	}
 	
 	private String getValuePortKey(HAPValuePort valuePort) {
-		return new HAPIdValuePort(valuePort.getValuePortInfo().getType(), valuePort.getName()).getKey();
+		return HAPUtilityValuePort.getValuePortId(valuePort).getKey();
 	}
 }

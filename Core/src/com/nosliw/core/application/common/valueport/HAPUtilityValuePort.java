@@ -12,8 +12,8 @@ import com.nosliw.core.application.HAPUtilityBrick;
 public class HAPUtilityValuePort {
 
 	public static Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle) {
-		HAPValuePort valuePort = null;
 		HAPReferenceBrickLocal brickRef = null;
+		HAPValuePort valuePort = null;
 		HAPIdValuePort valuePortId = valuePortRef==null?null:valuePortRef.getValuePortId();
 		
 
@@ -49,6 +49,10 @@ public class HAPUtilityValuePort {
 	
 	public static HAPValuePort getDefaultValuePortInEntity(HAPBrick brick) {
 		return brick.getValuePorts().getValuePort(null);
+	}
+	
+	public static HAPIdValuePort getValuePortId(HAPValuePort valuePort) {
+		return new HAPIdValuePort(valuePort.getValuePortInfo().getType(), valuePort.getName());
 	}
 	
 }
