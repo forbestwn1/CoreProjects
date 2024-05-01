@@ -80,7 +80,7 @@ public class HAPProcessorValueStructureInComponent {
 			//attachment
 			String literate = (String)ref;
 			HAPResultProcessAttachmentReference result = processContext.processAttachmentReference(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUESTRUCTURE, literate);
-			out.addAll((List<HAPRootStructure>)result.getBrick());
+			out.addAll((List<HAPRootStructure>)result.getAdapter());
 		}
 		else {
 			//resource

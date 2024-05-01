@@ -86,7 +86,7 @@ public class HAPUtilityDomain {
 		else {
 			HAPIdComplexEntityInGlobal globalEntityId = processContext.getCurrentExecutableDomain().getExternalEntityGlobalId(exeEntityId);
 			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceIdSimple());
-			outExeEntity = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getBrick();
+			outExeEntity = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getAdapter();
 			outProcessorContext = new HAPContextProcessor(childBundle, processContext.getRuntimeEnvironment());
 		}
 		return Pair.of(outExeEntity, outProcessorContext);

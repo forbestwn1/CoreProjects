@@ -6,16 +6,16 @@ public class HAPWrapperAdapterWithBrick extends HAPWrapperAdapter{
 
 	public static final String BRICK = "brick";
 
-	private HAPBrick m_brick;
+	private HAPAdapter m_adapter;
 
 	
-	public HAPWrapperAdapterWithBrick(HAPBrick brick) {
-		this.m_brick = brick;
+	public HAPWrapperAdapterWithBrick(HAPAdapter adapter) {
+		this.m_adapter = adapter;
 	}
-	
-	public HAPBrick getBrick() {   return this.m_brick;     }
 	
 	@Override
 	public String getValueType() {  return HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK;  }
+	
+	public HAPAdapter getAdapter() {   return this.m_adapter;     }
 	
 }

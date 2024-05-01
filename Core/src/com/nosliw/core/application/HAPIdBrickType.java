@@ -2,6 +2,8 @@ package com.nosliw.core.application;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -65,6 +67,14 @@ public class HAPIdBrickType extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(BRICKTYPE, this.m_brickType);
 		jsonMap.put(VERSION, this.m_version);
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object obj){
+		JSONObject jsonObj = (JSONObject)obj;
+		this.m_brickType = (String)jsonObj.opt(BRICKTYPE);
+		this.m_version = jsonObj.optString(VERSION);
+		return true;  
 	}
 
 }

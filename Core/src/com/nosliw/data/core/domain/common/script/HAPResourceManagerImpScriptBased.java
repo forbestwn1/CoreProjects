@@ -27,7 +27,7 @@ public class HAPResourceManagerImpScriptBased extends HAPResourceManagerImp{
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPDomainEntityDefinitionGlobal entityDomain = new HAPDomainEntityDefinitionGlobal(m_entityDefMan, m_resourceDefMan);
 		HAPResourceDefinition resourceDef = m_resourceDefMan.getResourceDefinition(resourceId, entityDomain);
-		HAPDefinitionEntityScriptBased scriptEntity = (HAPDefinitionEntityScriptBased)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getBrick();
+		HAPDefinitionEntityScriptBased scriptEntity = (HAPDefinitionEntityScriptBased)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getAdapter();
 		
 		HAPBrickScript scriptExe = new HAPBrickScript();
 		scriptExe.setScript(scriptEntity.getScript());

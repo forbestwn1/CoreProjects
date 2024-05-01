@@ -53,7 +53,7 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualBlockSimple im
 
 	@Override
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
-		HAPManualBrickValueStructure valueStructure = (HAPManualBrickValueStructure)parserContext.getGlobalDomain().getEntityInfoDefinition(m_valueStructureId).getBrick();
+		HAPManualBrickValueStructure valueStructure = (HAPManualBrickValueStructure)parserContext.getGlobalDomain().getEntityInfoDefinition(m_valueStructureId).getAdapter();
 		valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
 	}
 

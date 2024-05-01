@@ -11,6 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
@@ -75,7 +76,12 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUEINFO, this.m_valueInfo.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
+		if(this.m_pathFromRoot!=null) {
+			jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
+		}
+		if(!this.m_adapters.isEmpty()) {
+			jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.m_adapters, HAPSerializationFormat.JSON));
+		}
 	}
 
 	

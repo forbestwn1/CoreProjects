@@ -7,12 +7,15 @@ public class HAPManualContextProcessAdapter {
 
 	private HAPBundle m_bundle;
 	
-	public HAPManualContextProcessAdapter(HAPBundle bundle) {
+	private HAPPath m_baseBrickPath;
+	
+	public HAPManualContextProcessAdapter(HAPBundle bundle, HAPPath baseBrickPath) {
 		this.m_bundle = bundle;
+		this.m_baseBrickPath = baseBrickPath;
 	}
 	
 	public HAPBundle getCurrentBundle(){   return this.m_bundle;  }
 
-	public HAPPath getRootPathForBaseBrick() {}
+	public HAPPath getRootPathForBaseBrick() {    return this.m_baseBrickPath;    }
 	
 }

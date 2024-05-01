@@ -158,17 +158,13 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 							}
 							
 							for(HAPManualInfoAdapter adapterInfoDef : adapterInfoDefs) {
-								HAPWrapperAdapter adapterWrapperExe = adapterInfoByName.get(adapterInfoDef.getName()); 
+								HAPWrapperAdapterWithBrick adapterWrapperExe = (HAPWrapperAdapterWithBrick)adapterInfoByName.get(adapterInfoDef.getName()); 
+								HAPPluginProcessorAdapter adapterProcessPlugin = getAdapterProcessPlugin(entityTypeId);
 								
+								HAPManualWrapperValueBrick adapterWrapperDef = (HAPManualWrapperValueBrick)adapterInfoDef.getValueWrapper();
+								adapterProcessPlugin.process(adapterWrapperExe.getAdapter(), (HAPManualAdapter)adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot()));
 							}
 							
-							if(HAPManualUtilityBrick.isBrickComplex(entityTypeId, brickMan)) {
-								
-								
-								
-								HAPPluginProcessorBlockComplex plugin = (HAPPluginProcessorBlockComplex)getBlockProcessPlugin(entityTypeId);
-								plugin.processBrick(treeNode.getTreeNodeInfo().getPathFromRoot(), processContext);
-							}
 							return true;
 						}
 						else {

@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 public class HAPUtilityEntityProcess {
 
 	public static void processComplexAttribute(String attrName, HAPIdEntityInDomain complexEntityExecutableId, HAPContextProcessor processContext) {
-		HAPExecutableEntityComplex complexEntityExe = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getBrick();
+		HAPExecutableEntityComplex complexEntityExe = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getAdapter();
 		HAPAttributeEntityExecutable attrExe = complexEntityExe.getAttribute(attrName);
 
 		//process attribute entity
@@ -45,7 +45,7 @@ public class HAPUtilityEntityProcess {
 		HAPAttributeEntityExecutable attrNormalExe = new HAPAttributeEntityExecutable(attrName, new HAPEmbededExecutable(entityExe), attrDef.getValueTypeInfo()); 
 		
 		Set<HAPInfoAdapter> adapters = attrDef.getValue().getAdapters();
-		HAPExecutableEntityComplex complexEntityExe = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getBrick();
+		HAPExecutableEntityComplex complexEntityExe = processContext.getCurrentExecutableDomain().getEntityInfoExecutable(complexEntityExecutableId).getAdapter();
 		for(HAPInfoAdapter adapter : adapters) {
 			Object adapterExeObj = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().processEmbededAdapter(adapter, complexEntityExe, entityExe, processContext);
 			HAPInfoAdapterExecutable adapterExe = new HAPInfoAdapterExecutable(adapter.getValueType(), adapterExeObj);

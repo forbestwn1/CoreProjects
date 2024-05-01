@@ -11,7 +11,7 @@ public class HAPManualAdapterDataAssciation extends HAPManualAdapter{
 
 	public static final String DATAASSOCIATION = "dataAssociation";
 
-	protected HAPManualAdapterDataAssciation() {
+	public HAPManualAdapterDataAssciation() {
 		super(HAPEnumBrickType.DATAASSOCIATION_100);
 		this.setAttributeWithValueValue(DATAASSOCIATION, new ArrayList<HAPManualDataAssociation>());
 	}

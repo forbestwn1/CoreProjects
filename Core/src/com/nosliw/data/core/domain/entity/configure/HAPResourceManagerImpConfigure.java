@@ -26,7 +26,7 @@ public class HAPResourceManagerImpConfigure extends HAPResourceManagerImp{
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
 		HAPDomainEntityDefinitionGlobal entityDomain = new HAPDomainEntityDefinitionGlobal(m_entityDefMan, m_resourceDefMan);
 		HAPResourceDefinition resourceDef = m_resourceDefMan.getResourceDefinition(resourceId, entityDomain);
-		HAPDefinitionEntityConfigure configureEntity = (HAPDefinitionEntityConfigure)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getBrick();
+		HAPDefinitionEntityConfigure configureEntity = (HAPDefinitionEntityConfigure)entityDomain.getEntityInfoDefinition(resourceDef.getEntityId()).getAdapter();
 		
 		HAPExecutableConfigure configureExe = new HAPExecutableConfigure();
 		configureExe.setScript(configureEntity.getScript());

@@ -41,7 +41,7 @@
 						{
 							"name" : "dataassociation",
 							"brickTypeId" : {
-								"brickType": "dataassociation",
+								"brickType": "dataAssociation",
 								"version": "1.0.0"
 							},
 							"brick" : {
