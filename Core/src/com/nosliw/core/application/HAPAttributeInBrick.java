@@ -27,34 +27,34 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	@HAPAttribute
 	public static final String PATHFROMROOT = "pathFromRoot";
 
-	private HAPWrapperValueInAttribute m_valueWrapper;
+	private HAPWrapperValue m_valueWrapper;
 	
-	private Set<HAPWrapperAdapter> m_adapter;
+	private Set<HAPAdapter> m_adapter;
 	
 	private HAPInfoTreeNode m_tempTreeNodeInfo;
 	
 	public HAPAttributeInBrick() {
-		this.m_adapter = new HashSet<HAPWrapperAdapter>();
+		this.m_adapter = new HashSet<HAPAdapter>();
 	}
 	
-	public HAPAttributeInBrick(String attrName, HAPWrapperValueInAttribute valueWrapper) {
+	public HAPAttributeInBrick(String attrName, HAPWrapperValue valueWrapper) {
 		this();
 		this.setName(attrName);
 		this.setValueWrapper(valueWrapper);
 	}
 	
-	public HAPWrapperValueInAttribute getValueWrapper() {	return this.m_valueWrapper;	}
-	public void setValueWrapper(HAPWrapperValueInAttribute valueInfo) {	
+	public HAPWrapperValue getValueWrapper() {	return this.m_valueWrapper;	}
+	public void setValueWrapper(HAPWrapperValue valueInfo) {	
 		this.m_valueWrapper = valueInfo;
 		this.synTreeNodeInfoInBrick();
 	}
 
-	public void addAdapter(HAPWrapperAdapter adapter) {    this.m_adapter.add(adapter);    }
-	public Set<HAPWrapperAdapter> getAdapters(){    return this.m_adapter;    }
+	public void addAdapter(HAPAdapter adapter) {    this.m_adapter.add(adapter);    }
+	public Set<HAPAdapter> getAdapters(){    return this.m_adapter;    }
 	
-	public void setValueOfValue(Object value) {		this.setValueWrapper(new HAPWrapperValueInAttributeValue(value));	}
-	public void setValueOfBrick(HAPBrick brick) {		this.setValueWrapper(new HAPWrapperValueInAttributeBrick(brick));	}
-	public void setValueOfResourceId(HAPResourceId resourceId) {		this.setValueWrapper(new HAPWrapperValueInAttributeReferenceResource(resourceId));	}
+	public void setValueOfValue(Object value) {		this.setValueWrapper(new HAPWrapperValueOfValue(value));	}
+	public void setValueOfBrick(HAPBrick brick) {		this.setValueWrapper(new HAPWrapperValueOfBlock(brick));	}
+	public void setValueOfResourceId(HAPResourceId resourceId) {		this.setValueWrapper(new HAPWrapperValueOfReferenceResource(resourceId));	}
 
 	@Override
 	public HAPInfoTreeNode getTreeNodeInfo() {  return this.m_tempTreeNodeInfo;  }
@@ -68,7 +68,7 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 
 	private void synTreeNodeInfoInBrick() {
 		if(this.m_tempTreeNodeInfo!=null&&this.m_valueWrapper!=null&&this.m_valueWrapper.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			((HAPWrapperValueInAttributeBrick)this.m_valueWrapper).getBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
+			((HAPWrapperValueOfBlock)this.m_valueWrapper).getBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
 		}
 	}
 	

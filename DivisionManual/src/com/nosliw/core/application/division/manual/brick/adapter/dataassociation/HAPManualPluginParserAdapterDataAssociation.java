@@ -22,7 +22,7 @@ public class HAPManualPluginParserAdapterDataAssociation  extends HAPPluginParse
 	protected void parseDefinitionContentJson(HAPManualBrick brickManual, Object jsonValue, HAPManualContextParse parseContext) {
 		HAPManualAdapterDataAssciation entity = (HAPManualAdapterDataAssciation)brickManual;
 		
-		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualAdapterDataAssciation.DATAASSOCIATION);
+		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualAdapterDataAssciation.DEFINITION);
 		if(daObj instanceof JSONObject) {
 			HAPManualDataAssociation da = HAPManualParserDataAssociation.buildDefinitionByJson((JSONObject)daObj);
 			entity.addDataAssciation(da);

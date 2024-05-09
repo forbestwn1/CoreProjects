@@ -9,11 +9,11 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPWrapperBrick extends HAPExecutableImp implements HAPTreeNodeBrick, HAPWithBrick{
+public class HAPWrapperBrickRoot extends HAPExecutableImp implements HAPTreeNodeBrick, HAPWithBrick{
 
 	private HAPBrick m_brick;
 
-	public HAPWrapperBrick(HAPBrick brick) {
+	public HAPWrapperBrickRoot(HAPBrick brick) {
 		this.m_brick = brick;
 	}
 	

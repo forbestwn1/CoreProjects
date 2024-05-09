@@ -9,14 +9,14 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPWrapperValueInAttributeValue extends HAPWrapperValueInAttribute{
+public class HAPWrapperValueOfValue extends HAPWrapperValue{
 
 	@HAPAttribute
 	public static final String VALUE = "value";
 	
 	private Object m_value;
 	
-	public HAPWrapperValueInAttributeValue(Object value) {
+	public HAPWrapperValueOfValue(Object value) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE);
 		this.m_value = value;
 	}

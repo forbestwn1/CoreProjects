@@ -16,7 +16,7 @@ public class HAPUtilityValuePort {
 		HAPValuePort valuePort = null;
 		HAPIdValuePort valuePortId = valuePortRef==null?null:valuePortRef.getValuePortId();
 		
-
+		//discover brick ref
 		if(valuePortRef==null) {
 			brickRef = new HAPReferenceBrickLocal(baseBrickPathId.toString());
 		}
@@ -27,21 +27,25 @@ public class HAPUtilityValuePort {
 			}
 		}
 
+		if(brickRef.getRelativePath()==null) {
+			brickRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickRef.getIdPath(), baseBrickPathId.toString()));
+		}
+
+		if(brickRef.getIdPath()==null) {
+			brickRef.setIdPath(HAPUtilityPath.fromRelativeToAbsolutePath(brickRef.getRelativePath(), baseBrickPathId.toString()));
+		}
+
+		
 		HAPBrick brick = HAPUtilityBrick.getBrick(brickRef, baseBrickPathId.toString(), bundle);
 		
+		//discover value port id
 		if(valuePortId==null) {
 			valuePortId = brick.getValuePorts().getDefaultValuePortId();
 		}
 		
+		//value port
 		valuePort = brick.getValuePorts().getValuePort(valuePortId);
 
-		if(brickRef.getRelativePath()==null) {
-			brickRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(baseBrickPathId.toString(), brickRef.getIdPath()));
-		}
-
-		if(brickRef.getIdPath()==null) {
-			brickRef.setIdPath(HAPUtilityPath.fromRelativeToAbsolutePath(baseBrickPathId.toString(), brickRef.getRelativePath()));
-		}
 		
 		return Triple.of(brickRef, valuePortId, valuePort);
 	}

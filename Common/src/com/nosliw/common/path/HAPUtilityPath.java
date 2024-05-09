@@ -17,27 +17,57 @@ public class HAPUtilityPath {
 			}
 		}
 		
+		int index = 0;
 		StringBuffer out = new StringBuffer();
 		for(int j=i; j<baseEntityIdPathSegs.length; j++) {
-			if(j!=i) {
+			if(index!=0) {
 				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
 			}
 			out.append(HAPConstantShared.NAME_PARENT);
+			index++;
 		}
 		
 		for(int j=i; j<entityIdPathSegs.length; j++) {
-			if(j!=i) {
+			if(index!=0) {
 				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
 			}
 			out.append(HAPConstantShared.NAME_CHILD);
 			out.append(HAPConstantShared.SEPERATOR_LEVEL1);
 			out.append(entityIdPathSegs[j]);
+			index++;
 		}
 		return out.toString();
 	}
 	
-	public static String fromRelativeToAbsolutePath(String basePath, String relativePath) {
-		
+	public static String fromRelativeToAbsolutePath(String relativePath, String basePath) {
+		HAPPath path = new HAPPath(basePath);
+		String[] segs = relativePath.split("\\"+HAPConstantShared.SEPERATOR_LEVEL2);
+		for(String seg : segs) {
+			if(seg.startsWith(HAPConstantShared.NAME_PARENT)) {
+				path = path.trimLast();
+			}
+			else if(seg.startsWith(HAPConstantShared.NAME_CHILD)) {
+				String[] ss = seg.split("\\"+HAPConstantShared.SEPERATOR_LEVEL1);
+				path = path.appendSegment(ss[1]);
+			}
+		}
+		return path.toString();
+	}
+	
+	public static void main(String[] args) {
+		String basePath = "a.b.c";
+		debug("", basePath);
+		debug("a.b.c.d.e.f", basePath);
+		debug("a.b.x.y.z", basePath);
+	}
+	
+	private static void debug(String absolutePath, String basePath) {
+		System.out.println();
+		System.out.println("--------------------------------");
+		String relativePath = fromAbsoluteToRelativePath(absolutePath, basePath);
+		System.out.println(relativePath);
+		System.out.println(fromRelativeToAbsolutePath(relativePath, basePath));
+		System.out.println();
 	}
 	
 }

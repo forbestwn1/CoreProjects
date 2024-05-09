@@ -13,7 +13,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPPluginDivision;
-import com.nosliw.core.application.HAPWrapperBrick;
+import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPRequestParmInInteractiveInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
@@ -57,12 +57,12 @@ public class HAPManagerService implements HAPPluginDivision{
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
 		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
 			HAPBundle bundle = new HAPBundle();
-			bundle.setBrickWrapper(new HAPWrapperBrick(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
+			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
 			return bundle;
 		}
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
 			HAPBundle bundle = new HAPBundle();
-			bundle.setBrickWrapper(new HAPWrapperBrick(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
+			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
 			return bundle;
 		}
 		return null;

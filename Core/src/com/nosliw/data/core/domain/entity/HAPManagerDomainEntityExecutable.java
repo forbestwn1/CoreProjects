@@ -72,7 +72,7 @@ public class HAPManagerDomainEntityExecutable {
 		
 		//find all related complex resource
 		Set<HAPResourceIdSimple> dependency = new HashSet<HAPResourceIdSimple>();
-		buildDependencyGroup(normalizedResourceId.getRootResourceIdSimple(), dependency);
+		buildDependencyGroup(normalizedResourceId.getRootResourceId(), dependency);
 		for(HAPResourceIdSimple bundleId : dependency) {
 			out.addDependency(bundleId);
 		}

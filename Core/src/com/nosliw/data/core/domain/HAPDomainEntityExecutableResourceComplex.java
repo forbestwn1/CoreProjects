@@ -54,7 +54,7 @@ public class HAPDomainEntityExecutableResourceComplex extends HAPExecutableImp i
 	public Set<HAPResourceIdSimple> getComplexResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();
 		for(HAPInfoResourceIdNormalize normalizedResourceId : this.m_externalComplexEntityDpendency) {
-			out.add(normalizedResourceId.getRootResourceIdSimple());
+			out.add(normalizedResourceId.getRootResourceId());
 		}
 		return out;
 	}

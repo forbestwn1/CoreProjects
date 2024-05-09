@@ -12,14 +12,14 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPWrapperValueInAttribute extends HAPExecutableImp{
+public abstract class HAPWrapperValue extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static final String VALUETYPE = "valueType";
 	
 	private String m_valueType;
 	
-	public HAPWrapperValueInAttribute(String valueType) {
+	public HAPWrapperValue(String valueType) {
 		this.m_valueType = valueType;
 	}
 	

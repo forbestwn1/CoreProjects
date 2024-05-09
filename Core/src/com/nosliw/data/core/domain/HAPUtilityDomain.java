@@ -53,7 +53,7 @@ public class HAPUtilityDomain {
 		}
 		else if(attrEntityValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE)) {
 			HAPReferenceExternal externalRef = exeEntity.getAttributeReferenceExternal(attribute);
-			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(externalRef.getNormalizedResourceId().getRootResourceIdSimple());
+			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(externalRef.getNormalizedResourceId().getRootResourceId());
 
 			HAPExecutableEntityComplex rootEntity = childBundle.getExecutableDomain().getRootEntity();
 			HAPPath childEntityPath = externalRef.getNormalizedResourceId().getPath();
@@ -85,7 +85,7 @@ public class HAPUtilityDomain {
 		}
 		else {
 			HAPIdComplexEntityInGlobal globalEntityId = processContext.getCurrentExecutableDomain().getExternalEntityGlobalId(exeEntityId);
-			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceIdSimple());
+			HAPExecutableBundle childBundle = processContext.getRuntimeEnvironment().getDomainEntityExecutableManager().getComplexEntityResourceBundle(globalEntityId.getResourceInfo().getRootResourceId());
 			outExeEntity = childBundle.getExecutableDomain().getEntityInfoExecutable(globalEntityId.getEntityIdInDomain()).getAdapter();
 			outProcessorContext = new HAPContextProcessor(childBundle, processContext.getRuntimeEnvironment());
 		}

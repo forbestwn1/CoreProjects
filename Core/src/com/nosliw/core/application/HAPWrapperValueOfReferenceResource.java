@@ -10,14 +10,14 @@ import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
 
-public class HAPWrapperValueInAttributeReferenceResource extends HAPWrapperValueInAttribute{
+public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	@HAPAttribute
 	public static final String RESOURCEID = "resourceId";
 
 	private HAPResourceId m_resourceId;
 	
-	public HAPWrapperValueInAttributeReferenceResource(HAPResourceId resourceId) {
+	public HAPWrapperValueOfReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID);
 		this.m_resourceId = resourceId;
 	}

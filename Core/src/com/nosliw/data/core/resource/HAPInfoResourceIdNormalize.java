@@ -25,22 +25,20 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String RESOURCEENTITYTYPE = "resourceEntityType";
 	
-	//it maybe simple or local resource id
-	private HAPResourceId m_rootResourceId;
+	//simple resource id
+	private HAPResourceIdSimple m_rootResourceId;
 	
 	private HAPPath m_path;
 	
 	private String m_resourceEntityType;
 	
-	public HAPInfoResourceIdNormalize(HAPResourceId rootResourceId, String path, String entityType) {
+	public HAPInfoResourceIdNormalize(HAPResourceIdSimple rootResourceId, String path, String entityType) {
 		this.m_rootResourceId = rootResourceId;
 		this.m_path = new HAPPath(path);
 		this.m_resourceEntityType = entityType;
 	}
 	
-	public HAPResourceId getRootResourceId() {    return this.m_rootResourceId;    }
-	public HAPResourceIdSimple getRootResourceIdSimple() {    return (HAPResourceIdSimple)this.m_rootResourceId;    }
-	public HAPResourceIdLocal getRootResourceIdLocal() {    return (HAPResourceIdLocal)this.m_rootResourceId;    }
+	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
 	public HAPPath getPath() {   return this.m_path;    }
 	
@@ -59,9 +57,15 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPInfoResourceIdNormalize) {
 			HAPInfoResourceIdNormalize nResourceId = (HAPInfoResourceIdNormalize)obj;
-			if(!HAPUtilityBasic.isEquals(nResourceId.m_path, this.m_path))  return false;
-			if(!HAPUtilityBasic.isEquals(nResourceId.m_resourceEntityType, this.m_resourceEntityType))  return false;
-			if(!HAPUtilityBasic.isEquals(nResourceId.m_rootResourceId, this.m_rootResourceId))  return false;
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_path, this.m_path)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_resourceEntityType, this.m_resourceEntityType)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(nResourceId.m_rootResourceId, this.m_rootResourceId)) {
+				return false;
+			}
 			return true;
 		}
 		return false;
@@ -70,6 +74,5 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	@Override
 	public int hashCode() {
 		return (this.m_rootResourceId.buildLiterate()+this.m_path.getPath()).hashCode();
-	}
-	
+	}	
 }

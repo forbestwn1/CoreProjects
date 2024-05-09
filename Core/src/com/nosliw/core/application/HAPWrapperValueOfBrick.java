@@ -8,14 +8,14 @@ import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public class HAPWrapperValueInAttributeBrick extends HAPWrapperValueInAttribute implements HAPWithBrick{
+public class HAPWrapperValueOfBrick extends HAPWrapperValue implements HAPWithBrick{
 
 	@HAPAttribute
 	public static final String BRICK = "brick";
 	
 	private HAPBrick m_brick;
 	
-	public HAPWrapperValueInAttributeBrick(HAPBrick brick) {
+	public HAPWrapperValueOfBrick(HAPBrick brick) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK);
 		this.m_brick = brick;
 	}

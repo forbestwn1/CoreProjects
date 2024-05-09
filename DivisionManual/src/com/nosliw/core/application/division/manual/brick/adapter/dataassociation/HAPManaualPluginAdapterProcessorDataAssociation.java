@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPAdapter;
+import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
@@ -26,7 +26,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginPr
 	}
 
 	@Override
-	public void process(HAPAdapter adapterExe, HAPManualAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
+	public void process(HAPBrickAdapter adapterExe, HAPManualAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
 		HAPManualAdapterDataAssciation daAdapterDef = (HAPManualAdapterDataAssciation)adapterDef;
 		HAPAdapterDataAssciation daAdapterExe = (HAPAdapterDataAssciation)adapterExe;
 		HAPDataAssociationMapping daExe = new HAPDataAssociationMapping();

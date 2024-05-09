@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPResourceIdEmbeded  extends HAPResourceId{
@@ -18,16 +18,16 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@HAPAttribute
 	public static String PATH = "path";
 
-	private HAPResourceId m_parentId;
+	private HAPResourceIdSimple m_parentId;
 	
 	private String m_path;
 
-	public HAPResourceIdEmbeded(String type) {
-		super(type);
+	public HAPResourceIdEmbeded(String type, String version) {
+		super(type, version);
 	}
 	
-	public HAPResourceIdEmbeded(String type, HAPResourceId parentId, String path) {
-		this(type);
+	public HAPResourceIdEmbeded(String type, String version, HAPResourceIdSimple parentId, String path) {
+		this(type, version);
 		this.m_parentId = parentId;
 		this.m_path = path;
 	}
@@ -35,8 +35,8 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_EMBEDED;  }
 
-	public HAPResourceId getParentResourceId() {    return this.m_parentId;    }
-	public void setParentResourceId(HAPResourceId parentResourceId) {   this.m_parentId = parentResourceId;   }
+	public HAPResourceIdSimple getParentResourceId() {    return this.m_parentId;    }
+	public void setParentResourceId(HAPResourceIdSimple parentResourceId) {   this.m_parentId = parentResourceId;   }
 	
 	public String getPath() {    return this.m_path;    }
 	public void setPath(String path) {    this.m_path = path;    }

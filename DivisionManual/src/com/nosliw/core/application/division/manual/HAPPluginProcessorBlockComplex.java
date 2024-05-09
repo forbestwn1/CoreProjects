@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.HAPBlockComplex;
+import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.HAPIdBrickType;
 
 public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
@@ -14,22 +14,22 @@ public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 	
 	
 	//supply custom constant value
-	void extendConstantValue(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void extendConstantValue(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 	
 	//process definition before value context
-	void processValueContext(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessValueContext(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 
 	//value context extension, variable resolve
-	void processValueContextExtension(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessValueContextExtension(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 	
 	//matcher
-	void processValueContextDiscovery(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessValueContextDiscovery(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 	
 	//process definition after value context
-	void processEntity(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessEntity(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 
 }

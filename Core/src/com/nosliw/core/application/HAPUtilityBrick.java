@@ -13,7 +13,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 public class HAPUtilityBrick {
 
 	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
-		HAPBundle bundle = brickMan.getBrickBundle(normalizedResourceId.getRootResourceIdSimple());
+		HAPBundle bundle = brickMan.getBrickBundle(normalizedResourceId.getRootResourceId());
 		return getDescdentBrickLocal(bundle.getBrickWrapper(), normalizedResourceId.getPath());
 	}
 	
@@ -36,10 +36,10 @@ public class HAPUtilityBrick {
 		for(int i=0; i<path.getLength(); i++) {
 			String attrName = path.getPathSegments()[i];
 			attr = currentBrick.getAttribute(attrName);
-			HAPWrapperValueInAttribute attrValueWrapper = attr.getValueWrapper();
+			HAPWrapperValue attrValueWrapper = attr.getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-				currentBrick = ((HAPWrapperValueInAttributeBrick)attrValueWrapper).getBrick();
+				currentBrick = ((HAPWrapperValueOfBlock)attrValueWrapper).getBrick();
 			}
 			else {
 				HAPPath remainPath = path.getRemainingPath(i+1);
@@ -56,7 +56,7 @@ public class HAPUtilityBrick {
 		return new HAPResultAttribute(attr, new HAPPath());
 	}
 
-	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
+	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
 		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path, null);
 		if(brickResult!=null) {
 			return brickResult.getBrick();
@@ -68,7 +68,7 @@ public class HAPUtilityBrick {
 		return getDescdentBrickResult(bundle.getBrickWrapper(), path, brickMan);
 	}
 	
-	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPManagerApplicationBrick brickMan) {
+	public static HAPResultBrick getDescdentBrickResult(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPManagerApplicationBrick brickMan) {
 		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path, brickMan);
 	}
 	
@@ -77,7 +77,7 @@ public class HAPUtilityBrick {
 			return new HAPResultBrick(brick);
 		} else {
 			HAPResultAttribute attrResult = getDescendantAttributeResultLocal(brick, path);
-			HAPWrapperValueInAttribute attrValueWrapper = attrResult.getAttribute().getValueWrapper();
+			HAPWrapperValue attrValueWrapper = attrResult.getAttribute().getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
 				return new HAPResultBrick(((HAPWithBrick)attrValueWrapper).getBrick());
@@ -89,8 +89,8 @@ public class HAPUtilityBrick {
 				if(brickMan==null) {
 					throw new RuntimeException();
 				}
-				HAPWrapperValueInAttributeReferenceResource valueWrapper = (HAPWrapperValueInAttributeReferenceResource)attrValueWrapper;
-				HAPBundle attrBundle = brickMan.getBrickBundle(valueWrapper.getNormalizedResourceId().getRootResourceIdSimple());
+				HAPWrapperValueOfReferenceResource valueWrapper = (HAPWrapperValueOfReferenceResource)attrValueWrapper;
+				HAPBundle attrBundle = brickMan.getBrickBundle(valueWrapper.getNormalizedResourceId().getRootResourceId());
 				HAPPath attrPath = new HAPPath(valueWrapper.getNormalizedResourceId().getPath()).appendPath(attrResult.getRemainPath());
 				HAPResultBrick refBrickResult = getDescendantBrickResult(attrBundle.getBrickWrapper().getBrick(), attrPath, brickMan);
 				if(refBrickResult.isInternalBrick()) {
@@ -115,7 +115,7 @@ public class HAPUtilityBrick {
 		return brick;
 	}
 	
-	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrick rootBrickWrapper, HAPPath path) {
+	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
 		HAPTreeNodeBrick out = null;
 		if(path==null || path.isEmpty()) {
 			out = rootBrickWrapper;

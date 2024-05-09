@@ -20,7 +20,7 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	//traverse only entity leaves that marked as auto process
-//	public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrick rootEntityInfo, HAPHandlerDownward processor, HAPManualContextProcess processContext) {
+//	public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrickRoot rootEntityInfo, HAPHandlerDownward processor, HAPManualContextProcess processContext) {
 //		traverseExecutableEntity(
 //				rootEntityInfo, 
 //			new HAPHandlerBrickWrapper(processor) {
@@ -40,7 +40,7 @@ public class HAPUtilityBrickTraverse {
 //	}
 	
 	//traverse only leaves that is local complex entity
-	public static void traverseTreeLocalComplexBrick(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	public static void traverseTreeLocalComplexBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseTreeComplexBrick(
 				rootBrickWrapper, 
 			new HAPHandlerBrickWrapper(processor) {
@@ -58,13 +58,13 @@ public class HAPUtilityBrickTraverse {
 	
 	
 	//traverse only leafs that is complex entity
-	public static void traverseTreeComplexBrick(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	public static void traverseTreeComplexBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseTree(
 			rootBrickWrapper, 
 			new HAPHandlerBrickWrapper(processor) {
 				@Override
 				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
-					HAPWrapperValueInAttribute attrValueInfo = attr.getValueWrapper();
+					HAPWrapperValue attrValueInfo = attr.getValueWrapper();
 					if(attrValueInfo instanceof HAPWithBrick) {
 						return HAPUtilityBrick.isBrickComplex(((HAPWithBrick)attrValueInfo).getBrick().getBrickType(), brickMan);
 					}
@@ -76,7 +76,7 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	//traverse only entity leaves that marked as auto process
-	public static void traverseTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	public static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseExecutableTree(
 			rootBrickWrapper, 
 			new HAPHandlerBrickWrapper(processor) {
@@ -93,11 +93,11 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	//traverse all leave (complex, simiple, solid, not solid ...)
-	public static void traverseExecutableTree(HAPWrapperBrick rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	public static void traverseExecutableTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseExecutableTreeLeaves(rootBrickWrapper, null, processor, brickMan, data);
 	}
 	
-	private static void traverseExecutableTreeLeaves(HAPWrapperBrick rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	private static void traverseExecutableTreeLeaves(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		if(path==null) {
 			path = new HAPPath();
 		}
@@ -129,7 +129,7 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 	abstract protected boolean isValidAttribute(HAPAttributeInBrick attr);
 	
 	@Override
-	public boolean processBrickNode(HAPWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
+	public boolean processBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
 			return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 		}
@@ -143,7 +143,7 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 	}
 
 	@Override
-	public void postProcessBrickNode(HAPWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
+	public void postProcessBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
 			this.m_processor.postProcessBrickNode(rootBrickWrapper, path, data);
 		}

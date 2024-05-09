@@ -59,7 +59,7 @@ public class HAPPath {
 	public HAPPath trimLast() {
 		HAPPath out = new HAPPath();
 		for(int i=0; i<this.m_pathSegs.length-1; i++) {
-			out.appendSegment(m_pathSegs[i]);
+			out = out.appendSegment(m_pathSegs[i]);
 		}
 		return out;
 	}
@@ -90,6 +90,6 @@ public class HAPPath {
 
 	@Override
 	public String toString() {
-		return this.getPath();
+		return this.getPath()!=null?this.getPath():"";
 	}
 }

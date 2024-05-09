@@ -8,13 +8,13 @@ import com.nosliw.common.path.HAPPath;
 public abstract class HAPHandlerDownwardImpTreeNodeChild extends HAPHandlerDownward{
 
 	@Override
-	public boolean processBrickNode(HAPWrapperBrick rootEntityInfo, HAPPath path, Object data) {
+	public boolean processBrickNode(HAPWrapperBrickRoot rootEntityInfo, HAPPath path, Object data) {
 		Pair<HAPTreeNode, String> treeLeafInfo = this.getNodePathInfo(rootEntityInfo, path); 
 		return processChildLeaf(treeLeafInfo.getLeft(), treeLeafInfo.getRight(), data);
 	}
 
 	@Override
-	public void postProcessBrickNode(HAPWrapperBrick rootEntityInfo, HAPPath path, Object data) {
+	public void postProcessBrickNode(HAPWrapperBrickRoot rootEntityInfo, HAPPath path, Object data) {
 		Pair<HAPTreeNode, String> treeLeafInfo = this.getNodePathInfo(rootEntityInfo, path); 
 		postProcessChildLeaf(treeLeafInfo.getLeft(), treeLeafInfo.getRight(), data);
 	}

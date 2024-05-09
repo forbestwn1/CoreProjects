@@ -1,14 +1,14 @@
 package com.nosliw.core.application.division.manual;
 
-import com.nosliw.core.application.HAPAdapter;
+import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.HAPIdBrickType;
 
-public interface HAPPluginProcessorAdapter extends HAPPluginProcessorBlock{
+public interface HAPPluginProcessorAdapter{
 
 	
 	HAPIdBrickType getBrickType();
 	
 	//process
-	void process(HAPAdapter adapterExe, HAPManualAdapter adapterDef, HAPManualContextProcessAdapter processContext);
+	void process(HAPBrickAdapter adapterExe, HAPManualAdapter adapterDef, HAPManualContextProcessAdapter processContext);
 
 }

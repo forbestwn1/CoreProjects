@@ -24,7 +24,11 @@ public class HAPUtilityResourceId {
 		String resourceStructure = resourceId.getStructure();
 		if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
-			out = new HAPInfoResourceIdNormalize(resourceId, "", resourceId.getResourceType());
+			out = new HAPInfoResourceIdNormalize(simpleId, "", simpleId.getResourceType());
+		}
+		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
+			
 		}
 		return out;
 	}

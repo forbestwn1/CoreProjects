@@ -10,13 +10,13 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPBlockComplex;
+import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.HAPBundleComplex;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.HAPTreeNodeBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
-import com.nosliw.core.application.HAPWrapperBrick;
+import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
@@ -49,7 +49,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPWrapperBrick rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
 		
 		buildValueStructureComplexTree(rootEntityInfo, processContext, runtimeEnv);
 		
@@ -61,7 +61,7 @@ public class HAPUtilityValueStructureDomain {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPWrapperBrick rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
+	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
 		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
@@ -70,7 +70,7 @@ public class HAPUtilityValueStructureDomain {
 				HAPBundleComplex bundle = (HAPBundleComplex)processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPBlockComplex complexEntityExe = (HAPBlockComplex)this.getBrickFromNode(treeNode);
+				HAPBrickBlockComplex complexEntityExe = (HAPBrickBlockComplex)this.getBrickFromNode(treeNode);
 				
 				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
 				

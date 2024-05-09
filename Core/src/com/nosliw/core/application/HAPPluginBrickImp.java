@@ -1,5 +1,7 @@
 package com.nosliw.core.application;
 
+import com.nosliw.common.path.HAPPath;
+
 public class HAPPluginBrickImp implements HAPPluginBrick{
 
 	private HAPInfoBrickType m_brickTypeInfo;
@@ -24,6 +26,7 @@ public class HAPPluginBrickImp implements HAPPluginBrick{
 			out = this.m_brickClass.newInstance();
 			out.setBrickTypeInfo(m_brickTypeInfo);
 			out.setBrickManager(m_brickMan);
+			out.setTreeNodeInfo(new HAPInfoTreeNode(new HAPPath(), null));
 			out.init();
 		} catch (Exception e) {
 			e.printStackTrace();

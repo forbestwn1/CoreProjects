@@ -24,14 +24,15 @@ public class HAPBundle extends HAPExecutableImp{
 	@HAPAttribute
 	public final static String EXTRADATA = "extraData"; 
 
-	private HAPWrapperBrick m_brickWrapper;
+	private HAPWrapperBrickRoot m_brickWrapper;
 
 	private Object m_extraData;
 
+	private List<HAPInfoExportBundle> m_exportInfos;
 	
 	
-	public HAPWrapperBrick getBrickWrapper() {    return this.m_brickWrapper;     }
-	public void setBrickWrapper(HAPWrapperBrick brickWrapper) {     this.m_brickWrapper = brickWrapper;      }
+	public HAPWrapperBrickRoot getBrickWrapper() {    return this.m_brickWrapper;     }
+	public void setBrickWrapper(HAPWrapperBrickRoot brickWrapper) {     this.m_brickWrapper = brickWrapper;      }
 	
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }

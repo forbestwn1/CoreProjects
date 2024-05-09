@@ -36,42 +36,36 @@
 								}
 							}
 						}
-					],
-					"adapter": [
-						{
-							"name" : "dataassociation",
-							"brickTypeId" : {
-								"brickType": "dataAssociation",
-								"version": "1.0.0"
-							},
-							"brick" : {
-								"type" : "mapping",
-								"direction" : "downStream",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "child_public"
-										},
-										"definition" : {
-											"child" : {
-												"a" : {
-													"child" : {
-														"ac" : {
-															"mapping" : {
-																"elementPath": "parent_tree_public.a.ac"
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								]
-							}						
-						}
 					]
 				}
-			}
+			},
+			"adapter1": [
+				{
+					"name" : "dataassociation",
+					"brickTypeId" : {
+						"brickType": "dataAssociation",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"type" : "mapping",
+							"direction" : "downStream",
+							"mapping" : [
+								{
+									"target" : {
+										"rootName" : "child_public"
+									},
+									"definition" : {
+										"mapping" : {
+											"elementPath": "parent_public"
+										}
+									}
+								}
+							]
+						}
+					}						
+				}
+			]
 		},
 		
 		{

@@ -65,16 +65,16 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		}
 		return null;
 	}
-	public Object getAttributeValueOfValue(String attributeName) {		return ((HAPWrapperValueInAttributeValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
+	public Object getAttributeValueOfValue(String attributeName) {		return ((HAPWrapperValueOfValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
 	public HAPBrick getAttributeValueOfBrick(String attributeName) {
 		HAPBrick out = null;
-		HAPWrapperValueInAttribute valueWrapper = this.getAttribute(attributeName).getValueWrapper();
+		HAPWrapperValue valueWrapper = this.getAttribute(attributeName).getValueWrapper();
 		String valueType = valueWrapper.getValueType();
 		if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			out = ((HAPWrapperValueInAttributeBrick)valueWrapper).getBrick();
+			out = ((HAPWrapperValueOfBlock)valueWrapper).getBrick();
 		}
 		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-			HAPWrapperValueInAttributeReferenceResource valueWrapperResourceId = (HAPWrapperValueInAttributeReferenceResource)valueWrapper;
+			HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
 			out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), m_brickMan);			
 		}
 		return out;	
@@ -93,13 +93,13 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		attribute.setTreeNodeInfo(treeNodeInfo);
 	}
 	
-	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeValue(attrValue)));	}
+	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
 	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
 		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeBrick((HAPBrick)brickOrRef)));
+			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfBlock((HAPBrick)brickOrRef)));
 		}
 		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
-			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueInAttributeReferenceResource((HAPResourceId)brickOrRef)));
+			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
 		}
 	}
 	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {

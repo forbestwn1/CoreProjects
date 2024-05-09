@@ -54,16 +54,16 @@ public class HAPBrickImp extends HAPBrick{
 			
 			//parse attribute value wrapper
 			JSONObject valueWrapperJsonObj = attrJsonObj.getJSONObject(HAPAttributeInBrick.VALUEWRAPPER);
-			String valueType =(String)valueWrapperJsonObj.opt(HAPWrapperValueInAttribute.VALUETYPE);
+			String valueType =(String)valueWrapperJsonObj.opt(HAPWrapperValue.VALUETYPE);
 			if(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE.equals(valueType)) {
 				//value
-				attribute.setValueOfValue(buildAttributeValueFormatJson(attribute.getName(), valueWrapperJsonObj.opt(HAPWrapperValueInAttributeValue.VALUE)));
+				attribute.setValueOfValue(buildAttributeValueFormatJson(attribute.getName(), valueWrapperJsonObj.opt(HAPWrapperValueOfValue.VALUE)));
 			}
 			else {
 				HAPIdBrickType blockType = null;
 				if(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK.equals(valueType)) {
 					//brick
-					JSONObject brickJsonObj =  valueWrapperJsonObj.getJSONObject(HAPWrapperValueInAttributeBrick.BRICK);
+					JSONObject brickJsonObj =  valueWrapperJsonObj.getJSONObject(HAPWrapperValueOfBlock.BLOCK);
 					blockType = HAPUtilityBrick.parseBrickTypeId(brickJsonObj.opt(HAPBrick.BRICKTYPE));
 					HAPBrick attrBrick = brickMan.newBrickInstance(blockType);
 					attrBrick.buildBrick(brickJsonObj, HAPSerializationFormat.JSON, brickMan);
@@ -71,7 +71,7 @@ public class HAPBrickImp extends HAPBrick{
 				}
 				else if(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID.equals(valueType)) {
 					//ref to resource
-					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(valueWrapperJsonObj.opt(HAPWrapperValueInAttributeReferenceResource.RESOURCEID));
+					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(valueWrapperJsonObj.opt(HAPWrapperValueOfReferenceResource.RESOURCEID));
 					attribute.setValueOfResourceId(resourceId);
 					blockType = HAPUtilityBrick.getBrickTypeIdFromResourceId(resourceId);
 				}
@@ -150,7 +150,7 @@ public class HAPBrickImp extends HAPBrick{
 				}
 				else if(attrObj instanceof JSONObject){
 					JSONObject attrObjJson = (JSONObject)attrObj;
-					Object resourceIdObj = attrObjJson.opt(HAPWrapperValueInAttributeReferenceResource.RESOURCEID);
+					Object resourceIdObj = attrObjJson.opt(HAPWrapperValueOfReferenceResource.RESOURCEID);
 					if(resourceIdObj!=null) {
 						//resource id
 						attribute.setValueOfResourceId(HAPFactoryResourceId.newInstance(attrObj));

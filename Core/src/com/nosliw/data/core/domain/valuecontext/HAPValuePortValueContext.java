@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBlockComplex;
+import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
@@ -23,11 +23,11 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	private HAPValueContext m_valueContext;
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPValuePortValueContext(HAPBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
+	public HAPValuePortValueContext(HAPBrickBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
 		this(complexEntityExe, valueStructureDomain, false);
 	}
 
-	public HAPValuePortValueContext(HAPBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
+	public HAPValuePortValueContext(HAPBrickBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT), isDefault);
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;

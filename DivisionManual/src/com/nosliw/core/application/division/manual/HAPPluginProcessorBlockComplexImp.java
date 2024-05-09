@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.HAPBlockComplex;
+import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.HAPIdBrickType;
 
 public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProcessorBlockComplex{
@@ -21,30 +21,30 @@ public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProc
 
 	
 	@Override
-	public void extendConstantValue(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void extendConstantValue(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	
 	//process definition before value context
 	@Override
-	public void processValueContext(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void processValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	@Override
-	public void postProcessValueContext(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void postProcessValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 
 	//value context extension, variable resolve
 	@Override
-	public void processValueContextExtension(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void processValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	@Override
-	public void postProcessValueContextExtension(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void postProcessValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	
 	//matcher
 	@Override
-	public void processValueContextDiscovery(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void processValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	@Override
-	public void postProcessValueContextDiscovery(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void postProcessValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	
 	@Override
-	public void processEntity(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
+	public void processEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
 	@Override
-	public void postProcessEntity(HAPBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
+	public void postProcessEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
 
 //	protected HAPManualBrick getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
 //		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();

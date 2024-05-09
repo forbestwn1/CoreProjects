@@ -44,7 +44,7 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBlockTestComplex1.class, this));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBlockTestComplexScript.class, this));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, true), HAPAdapterDataAssciation.class, this));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, false), HAPAdapterDataAssciation.class, this));
 	}
 
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();	}
@@ -95,7 +95,7 @@ public class HAPManagerApplicationBrick {
 		
 		//find all related complex resource
 		Set<HAPResourceIdSimple> dependency = new HashSet<HAPResourceIdSimple>();
-		buildDependencyGroup(normalizedResourceId.getRootResourceIdSimple(), dependency);
+		buildDependencyGroup(normalizedResourceId.getRootResourceId(), dependency);
 		for(HAPResourceIdSimple bundleId : dependency) {
 			out.addDependency(bundleId);
 		}
