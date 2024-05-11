@@ -6,7 +6,7 @@ import java.util.List;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPResourceManagerImp implements HAPResourceManager{
+public abstract class HAPResourceManagerImp implements HAPResourceManager1{
  
 	protected HAPResourceManagerRoot m_rootResourceMan;
 	

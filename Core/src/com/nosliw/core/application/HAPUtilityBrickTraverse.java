@@ -134,7 +134,7 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 			return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 		}
 		else {
-			HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttributeLocal(rootBrickWrapper.getBrick(), path); 
+			HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(rootBrickWrapper.getBrick(), path); 
 			if(this.isValidAttribute(attr)) {
 				return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 			}
@@ -148,7 +148,7 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 			this.m_processor.postProcessBrickNode(rootBrickWrapper, path, data);
 		}
 		else {
-			HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttributeLocal(rootBrickWrapper.getBrick(), path);
+			HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(rootBrickWrapper.getBrick(), path);
 			if(this.isValidAttribute(attr)) {
 				this.m_processor.postProcessBrickNode(rootBrickWrapper, path, data);
 			}

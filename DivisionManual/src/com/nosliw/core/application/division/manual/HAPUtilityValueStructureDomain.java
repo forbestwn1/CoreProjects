@@ -11,7 +11,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBrickBlockComplex;
-import com.nosliw.core.application.HAPBundleComplex;
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.HAPTreeNodeBrick;
@@ -67,7 +67,7 @@ public class HAPUtilityValueStructureDomain {
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
 				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
-				HAPBundleComplex bundle = (HAPBundleComplex)processContext.getCurrentBundle();
+				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
 				HAPBrickBlockComplex complexEntityExe = (HAPBrickBlockComplex)this.getBrickFromNode(treeNode);

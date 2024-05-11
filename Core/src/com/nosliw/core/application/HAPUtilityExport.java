@@ -48,9 +48,11 @@ public class HAPUtilityExport {
 //			HAPUtilityFile.writeJsonFile(packageFolder, "attachment.json", attachmentDomain.toStringValue(HAPSerializationFormat.JSON));
 			
 			//write value structure domain
-			if(bundle instanceof HAPBundleComplex) {
-				HAPDomainValueStructure valueStructureDomain = ((HAPBundleComplex)bundle).getValueStructureDomain();
+			HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
+			if(valueStructureDomain!=null) {
 				HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
+			} else {
+				HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", "");
 			}
 
 			//write package definition

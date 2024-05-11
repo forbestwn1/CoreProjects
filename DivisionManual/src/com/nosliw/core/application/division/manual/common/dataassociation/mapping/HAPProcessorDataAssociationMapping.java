@@ -176,7 +176,7 @@ public class HAPProcessorDataAssociationMapping {
 		HAPIdValuePort valuePortId = valuePortRef.getValuePortId();
 		if(valuePortId==null) {
 			HAPResultBrick blockResult = HAPUtilityBrick.getDescdentBrickResult(currentBundle, new HAPPath(blockRef.getIdPath()), brickMan);
-			valuePortId = HAPUtilityValuePort.getValuePortId(HAPUtilityValuePort.getDefaultValuePortInEntity(blockResult.getBrick()));
+			valuePortId = HAPUtilityValuePort.getValuePortId(HAPUtilityValuePort.getDefaultValuePortInEntity(blockResult.getInternalBrick()));
 			valuePortRef.setValuePortId(valuePortId);
 		}
 	}

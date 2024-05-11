@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
-import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.data.HAPOperationParm;
 import com.nosliw.data.core.resource.HAPResource;
@@ -33,25 +33,31 @@ public class HAPUtilityRuntimeJSScript {
 	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
 		//build library script info first
-		if(resource.getId().getResourceType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
+		if(resource.getId().getResourceTypeId().getResourceType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY)){
 			out.addAll(buildScriptInfoForLibrary(resourceInfo, resource));
 		}
 		
-		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER)))  return out;
+		if(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER.equals(resourceInfo.getInfo().getValue(HAPRuntimeImpRhino.ADDTORESOURCEMANAGER))) {
+			return out;
+		}
 		
 		//build script for resource with data
-		if(resource.getResourceData() instanceof HAPResourceDataJSValue){
-			out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, ((HAPResourceDataJSValue)resource.getResourceData()).getValue()));
-		}
+		out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource));
+		
+//		if(resource.getResourceData() instanceof HAPResourceDataJSValue){
+//			out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, ((HAPResourceDataJSValue)resource.getResourceData()).getValue()));
+//		}
 		return out;
 	}
 	
-	private static HAPJSScriptInfo buildScriptInfoForResourceWithScript(HAPResourceInfo resourceInfo, HAPResource resource, String scriptValue){
+	private static HAPJSScriptInfo buildScriptInfoForResourceWithScript(HAPResourceInfo resourceInfo, HAPResource resource){
 		HAPJSScriptInfo out = null;
-		String script = buildImportResourceScriptForResource(resourceInfo, resource, scriptValue);
+		String script = buildImportResourceScriptForResource(resourceInfo, resource);
 		
 		String loadPattern = (String)resource.getInfoValue(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN);
-		if(loadPattern==null)  loadPattern = HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_VALUE;
+		if(loadPattern==null) {
+			loadPattern = HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_VALUE;
+		}
 		switch(loadPattern){
 		case HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE:
 			//load as file, create temp file first
@@ -70,7 +76,7 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 	
-	private static String buildImportResourceScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource, String valueScript){
+	private static String buildImportResourceScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		StringBuffer script = new StringBuffer();
 		
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
@@ -84,7 +90,10 @@ public class HAPUtilityRuntimeJSScript {
 			templateParms.put(HAPResource.INFO, infoJson);
 		}
 
-		if(valueScript==null)  valueScript = "undefined";
+		String valueScript = resource.getResourceData().toStringValue(HAPSerializationFormat.JAVASCRIPT);
+		if(valueScript==null) {
+			valueScript = "undefined";
+		}
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
 		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ImportResource.temp");
@@ -105,10 +114,10 @@ public class HAPUtilityRuntimeJSScript {
 			File file = new File(uri);
 			String fileFullName = file.getAbsolutePath().replaceAll("\\\\", "/");
 			HAPJSScriptInfo scriptInfo = HAPJSScriptInfo.buildByFile(fileFullName, "Library__" + resource.getId().getCoreIdLiterate() + "__" + file.getName());
-			scriptInfo.setType(resource.getId().getResourceType());
+			scriptInfo.setType(resource.getId().getResourceTypeId().getResourceType());
 			out.add(scriptInfo);
 		}
-		out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource, null));
+		out.add(buildScriptInfoForResourceWithScript(resourceInfo, resource));
 		return out;
 	}
 

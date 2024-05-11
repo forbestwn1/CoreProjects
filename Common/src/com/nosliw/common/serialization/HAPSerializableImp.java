@@ -7,7 +7,9 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format){
-		if(value==null)   return true;
+		if(value==null) {
+			return true;
+		}
 		boolean out = false;
 		switch(format){
 		case JSON_FULL:
@@ -49,7 +51,9 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 	
 	@Override
 	public String toStringValue(HAPSerializationFormat format) {
-		if(format==null) format = HAPSerializationFormat.JSON_FULL;
+		if(format==null) {
+			format = HAPSerializationFormat.JSON_FULL;
+		}
 		
 		String out = null;
 		switch(format){
@@ -68,6 +72,15 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
 				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 				this.buildJsonMap(outJsonMap, typeJsonMap);
+				out = HAPUtilityJson.buildMapJson(outJsonMap, typeJsonMap);
+			}
+			break;
+		case JAVASCRIPT:
+			out = this.buildJavascript();
+			if(out==null){
+				Map<String, String> outJsonMap = new LinkedHashMap<String, String>();
+				Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
+				this.buildJSJsonMap(outJsonMap, typeJsonMap);
 				out = HAPUtilityJson.buildMapJson(outJsonMap, typeJsonMap);
 			}
 			break;
@@ -90,12 +103,22 @@ public abstract class HAPSerializableImp implements HAPSerializable{
 	protected String buildJson(){ return null; }
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 	}
+
+	protected String buildJavascript(){ return null; }
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+	}
+
 	
 	@Override
 	public int hashCode() {
 		String literateStr = this.toStringValue(HAPSerializationFormat.LITERATE);
-		if(literateStr==null)   literateStr = this.toStringValue(HAPSerializationFormat.JSON);
-		if(literateStr==null)   return super.hashCode();
+		if(literateStr==null) {
+			literateStr = this.toStringValue(HAPSerializationFormat.JSON);
+		}
+		if(literateStr==null) {
+			return super.hashCode();
+		}
 		return literateStr.hashCode();
 	}
 

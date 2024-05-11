@@ -6,8 +6,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPWrapperValueOfValue extends HAPWrapperValue{
 
@@ -31,10 +29,8 @@ public class HAPWrapperValueOfValue extends HAPWrapperValue{
 	}
 
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo){
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		if(this.getValue() instanceof HAPExecutable) {
-			jsonMap.put(VALUE, ((HAPExecutable)this.m_value).toResourceData(runtimeInfo).toString());
-		}
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		this.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JAVASCRIPT));
 	}
 }

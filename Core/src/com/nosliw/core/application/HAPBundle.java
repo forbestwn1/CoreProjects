@@ -1,5 +1,6 @@
 package com.nosliw.core.application;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +8,12 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.resource.HAPResourceDataBrick;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
@@ -22,13 +27,59 @@ public class HAPBundle extends HAPExecutableImp{
 	public final static String BRICK = "brick"; 
 
 	@HAPAttribute
+	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
+
+	@HAPAttribute
 	public final static String EXTRADATA = "extraData"; 
 
 	private HAPWrapperBrickRoot m_brickWrapper;
 
+	//processed value structure
+	private HAPDomainValueStructure m_valueStructureDomain;
+	
 	private Object m_extraData;
 
-	private List<HAPInfoExportBundle> m_exportInfos;
+	private List<HAPInfoExportResource> m_exportResourceInfos;
+	
+	public HAPBundle() {
+		this.m_valueStructureDomain = new HAPDomainValueStructure();
+		this.m_exportResourceInfos = new ArrayList<HAPInfoExportResource>();
+		
+		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
+		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
+	}
+	
+	public HAPResourceDataBrick getExportResourceData(String name, HAPManagerApplicationBrick brickMan) {
+		if(name==null) {
+			name = HAPConstantShared.NAME_DEFAULT;
+		}
+		HAPInfoExportResource exportInfo = null;
+		for(HAPInfoExportResource ei : this.m_exportResourceInfos) {
+			if(name.equals(ei.getName())) {
+				exportInfo = ei;
+				break;
+			}
+		}
+		
+		HAPResourceDataBrick out = null;
+		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(m_brickWrapper, exportInfo.getPathFromRoot(), brickMan);
+		if(brickResult.isInternalBrick()) {
+			HAPBrick brick = brickResult.getInternalBrick();
+			if(brick.getBrickTypeInfo().getIsComplex()) {
+				out = new HAPResourceDataBrick(brick, this.m_valueStructureDomain);
+			}
+			else {
+				out = new HAPResourceDataBrick(brick);
+			}
+		}
+		else {
+			HAPReferenceBrickGlobal externalBrickRef = brickResult.getExternalBrickRef();
+			out = externalBrickRef.getBundle().getExportResourceData(externalBrickRef.getExportName(), brickMan);
+		}
+		return out;
+	}
+	
+	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}
 	
 	
 	public HAPWrapperBrickRoot getBrickWrapper() {    return this.m_brickWrapper;     }
@@ -50,6 +101,7 @@ public class HAPBundle extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRADATA, HAPSerializeManager.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JSON));
 	}
 	

@@ -16,5 +16,8 @@ public class HAPResultBrick {
 	
 	public boolean isInternalBrick() {    return this.m_brick!=null;    }
 	
-	public HAPBrick getBrick() {   return this.m_brick;  }
+	public HAPBrick getInternalBrick() {   return this.m_brick;  }
+	
+	public HAPReferenceBrickGlobal getExternalBrickRef() {    return this.m_globalRef;     }
+	
 }

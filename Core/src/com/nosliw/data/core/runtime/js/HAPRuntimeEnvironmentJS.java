@@ -3,33 +3,28 @@ package com.nosliw.data.core.runtime.js;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPResourceManagerImpBrick;
-import com.nosliw.core.application.brick.script.HAPResourceManagerImpScript;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.resource.HAPPluginResourceManagerImpBrick;
 import com.nosliw.core.application.service.HAPFactoryServiceProcess;
 import com.nosliw.core.application.service.HAPManagerService;
 import com.nosliw.data.core.activity.HAPManagerActivity;
-import com.nosliw.data.core.activity.HAPResourceManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.codetable.HAPResourceManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.cronjob.HAPResourceDefinitionPluginCronJob;
-import com.nosliw.data.core.cronjob.HAPResourceManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntity;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntityThin;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
-import com.nosliw.data.core.domain.entity.HAPResourceManagerImpComplex;
-import com.nosliw.data.core.domain.entity.configure.HAPResourceManagerImpConfigure;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPPluginResourceDefinitionProcess;
-import com.nosliw.data.core.process1.resource.HAPResourceManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
@@ -199,6 +194,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		//component
 
 		//resource
+		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrick.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_1_100), new HAPPluginResourceManagerImpBrick(this.m_brickManager));
+		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrick.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100), new HAPPluginResourceManagerImpBrick(this.m_brickManager));
+		
+
+		
+/*		
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_PROCESS, new HAPResourceManagerProcess(this.m_processManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN, new HAPResourceManagerActivityPlugin(this.m_activityManager.getPluginManager(), this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CRONJOB, new HAPResourceManagerCronJob(this.m_cronJobManager, this.m_resourceManager));
@@ -206,9 +207,6 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE, new HAPResourceManagerImpConfigure(this.m_domainEntityDefinitionManager, this.m_resourceDefinitionManager, this.m_resourceManager));
 
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, new HAPResourceManagerImpBrick(this.m_brickManager, this.m_resourceManager));
-		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, new HAPResourceManagerImpBrick(this.m_brickManager, this.m_resourceManager));
-		
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
@@ -220,7 +218,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 //		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, new HAPResourceManagerImpScriptBased(this.m_domainEntityDefinitionManager, this.m_resourceDefinitionManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, new HAPResourceManagerImpComplex(this.m_domainEntityExecutableManager, this.m_resourceManager));
 		this.m_resourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, new HAPResourceManagerImpScript(this.m_resourceManager));
-		
+*/		
 
 		
 		//resource definition

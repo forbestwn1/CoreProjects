@@ -17,10 +17,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrId{
 
 	@HAPAttribute
-	public static String RESOURCETYPE = "resourceType";
-
-	@HAPAttribute
-	public static String VERSION = "version";
+	public static String RESOURCETYPEID = "resourceTypeId";
 
 	@HAPAttribute
 	public static String ID = "id";
@@ -31,27 +28,21 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	@HAPAttribute
 	public static String SUP = "supliment";
 
-	private String m_resourceType;
+	private HAPIdResourceType m_resourceTypeId;
 	
-	private String m_version;
-
 	//all the supplement resource in order for this resource to be valid resource
 	private HAPSupplementResourceId m_supplement;
 
 	public HAPResourceId(String type, String version) {
-		this.m_resourceType = type;
-		this.m_version = version;
+		this.m_resourceTypeId = new HAPIdResourceType(type, version); 
 	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.RESOURCEID;    }
 
-	public String getResourceType() {  return this.m_resourceType;  }
-	protected void setResourceType(String type) {    this.m_resourceType = type;    }
-	
-	public String getVersion() {  return this.m_version;    }
-	
 	public abstract String getStructure();
+	
+	public HAPIdResourceType getResourceTypeId() {    return this.m_resourceTypeId;     }
 	
 	public HAPSupplementResourceId getSupplement() {  return this.m_supplement;  }
 	public void setSupplement(HAPSupplementResourceId sup) {   this.m_supplement = sup;   }
@@ -72,7 +63,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(RESOURCETYPE, this.getResourceType());
+		jsonMap.put(RESOURCETYPEID, this.m_resourceTypeId.toStringValue(HAPSerializationFormat.JSON));
 		
 		Map<String, String> jsonMapId = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMapId = new LinkedHashMap<String, Class<?>>();
@@ -86,8 +77,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(RESOURCETYPE, this.getResourceType());
-		jsonMap.put(VERSION, this.getVersion());
+		jsonMap.put(RESOURCETYPEID, this.m_resourceTypeId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(ID, HAPUtilityResourceId.buildResourceCoreIdLiterate(this));
 	}
 
@@ -96,10 +86,8 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 		boolean out = false;
 		if(o instanceof HAPResourceId){
 			HAPResourceId resourceId = (HAPResourceId)o;
-			if(HAPUtilityBasic.isEquals(this.getResourceType(), resourceId.getResourceType())) {
-				if(HAPUtilityBasic.isEquals(this.getVersion(), resourceId.getVersion())) {
-					return HAPUtilityBasic.isEquals(this.m_supplement, resourceId.m_supplement);
-				}
+			if(HAPUtilityBasic.isEquals(this.getResourceTypeId(), resourceId.getResourceTypeId())) {
+				return HAPUtilityBasic.isEquals(this.m_supplement, resourceId.m_supplement);
 			}
 		}
 		return out;
@@ -109,8 +97,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	public abstract HAPResourceId clone();
 
 	protected void cloneFrom(HAPResourceId resourceId){
-		this.m_resourceType = resourceId.m_resourceType;
-		this.m_version = resourceId.m_version;
+		this.m_resourceTypeId = (HAPIdResourceType)resourceId.m_resourceTypeId.cloneValue();
 		this.m_supplement = resourceId.m_supplement;
 	}
 }

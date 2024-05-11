@@ -7,6 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -15,11 +16,10 @@ import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrReference, HAPWithValuePort{
+public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithValuePort{
 
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
@@ -71,7 +71,7 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 		HAPWrapperValue valueWrapper = this.getAttribute(attributeName).getValueWrapper();
 		String valueType = valueWrapper.getValueType();
 		if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			out = ((HAPWrapperValueOfBlock)valueWrapper).getBrick();
+			out = ((HAPWrapperValueOfBlock)valueWrapper).getInternalBrick();
 		}
 		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 			HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
@@ -121,12 +121,12 @@ public abstract class HAPBrick extends HAPExecutableImp implements HAPEntityOrRe
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		
+
 		List<String> attrJsonList = new ArrayList<String>();
 		for(HAPAttributeInBrick attr : this.m_attributes) {
-			attrJsonList.add(attr.toResourceData(runtimeInfo).toString());
+			attrJsonList.add(attr.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
 	}

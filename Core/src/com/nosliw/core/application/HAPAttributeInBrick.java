@@ -7,16 +7,16 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements HAPTreeNodeBrick{
+public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPTreeNodeBrick{
 
 	@HAPAttribute
 	public static final String VALUEWRAPPER = "valueWrapper";
@@ -53,7 +53,7 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	public Set<HAPAdapter> getAdapters(){    return this.m_adapter;    }
 	
 	public void setValueOfValue(Object value) {		this.setValueWrapper(new HAPWrapperValueOfValue(value));	}
-	public void setValueOfBrick(HAPBrick brick) {		this.setValueWrapper(new HAPWrapperValueOfBlock(brick));	}
+	public void setValueOfBrick(HAPBrick brick) {		this.setValueWrapper(new HAPWrapperValueOfBrick(brick));	}
 	public void setValueOfResourceId(HAPResourceId resourceId) {		this.setValueWrapper(new HAPWrapperValueOfReferenceResource(resourceId));	}
 
 	@Override
@@ -68,7 +68,7 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 
 	private void synTreeNodeInfoInBrick() {
 		if(this.m_tempTreeNodeInfo!=null&&this.m_valueWrapper!=null&&this.m_valueWrapper.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			((HAPWrapperValueOfBlock)this.m_valueWrapper).getBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
+			((HAPWrapperValueOfBrick)this.m_valueWrapper).getBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
 		}
 	}
 	
@@ -81,10 +81,11 @@ public class HAPAttributeInBrick extends HAPExecutableImpEntityInfo implements H
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toResourceData(runtimeInfo).toString());
+		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
+	
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {

@@ -6,6 +6,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.resource.HAPIdResourceType;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -17,16 +18,11 @@ public class HAPUtilityBrick {
 		return getDescdentBrickLocal(bundle.getBrickWrapper(), normalizedResourceId.getPath());
 	}
 	
-	public static HAPAttributeInBrick getDescendantAttributeLocal(HAPBrick brick, HAPPath path) {
-		HAPResultAttribute attrResult = getDescendantAttributeResultLocal(brick, path);
-		if(attrResult.getRemainPath().isEmpty()) {
-			return attrResult.getAttribute();
-		} else {
-			throw new RuntimeException();
-		}
+	public static HAPAttributeInBrick getDescendantAttribute(HAPBrick brick, HAPPath path) {
+		return getDescendantAttributeResult(brick, path).getAttribute();
 	}
 	
-	public static HAPResultAttribute getDescendantAttributeResultLocal(HAPBrick brick, HAPPath path) {
+	public static HAPResultAttribute getDescendantAttributeResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
 			throw new RuntimeException();
 		}
@@ -39,27 +35,28 @@ public class HAPUtilityBrick {
 			HAPWrapperValue attrValueWrapper = attr.getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-				currentBrick = ((HAPWrapperValueOfBlock)attrValueWrapper).getBrick();
+				currentBrick = ((HAPWrapperValueOfBrick)attrValueWrapper).getBrick();
 			}
 			else {
 				HAPPath remainPath = path.getRemainingPath(i+1);
 				if(!remainPath.isEmpty()) {
-					if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-						return new HAPResultAttribute(attr, remainPath);
-					}
-					else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
-						throw new RuntimeException();
-					}
+					throw new RuntimeException();
+//					if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+//						return new HAPResultAttribute(attr, remainPath);
+//					}
+//					else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
+//						throw new RuntimeException();
+//					}
 				}
 			}
 		}
-		return new HAPResultAttribute(attr, new HAPPath());
+		return new HAPResultAttribute(attr);
 	}
 
 	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
 		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path, null);
 		if(brickResult!=null) {
-			return brickResult.getBrick();
+			return brickResult.getInternalBrick();
 		}
 		return null;
 	}
@@ -76,7 +73,7 @@ public class HAPUtilityBrick {
 		if(path==null||path.isEmpty()) {
 			return new HAPResultBrick(brick);
 		} else {
-			HAPResultAttribute attrResult = getDescendantAttributeResultLocal(brick, path);
+			HAPResultAttribute attrResult = getDescendantAttributeResult(brick, path);
 			HAPWrapperValue attrValueWrapper = attrResult.getAttribute().getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
@@ -91,13 +88,7 @@ public class HAPUtilityBrick {
 				}
 				HAPWrapperValueOfReferenceResource valueWrapper = (HAPWrapperValueOfReferenceResource)attrValueWrapper;
 				HAPBundle attrBundle = brickMan.getBrickBundle(valueWrapper.getNormalizedResourceId().getRootResourceId());
-				HAPPath attrPath = new HAPPath(valueWrapper.getNormalizedResourceId().getPath()).appendPath(attrResult.getRemainPath());
-				HAPResultBrick refBrickResult = getDescendantBrickResult(attrBundle.getBrickWrapper().getBrick(), attrPath, brickMan);
-				if(refBrickResult.isInternalBrick()) {
-					return new HAPResultBrick(new HAPReferenceBrickGlobal(attrBundle, attrPath));
-				} else {
-					return refBrickResult;
-				}
+				return new HAPResultBrick(new HAPReferenceBrickGlobal(attrBundle, valueWrapper.getNormalizedResourceId().getPath().toString()));
 			}
 		}
 		return null;
@@ -121,7 +112,7 @@ public class HAPUtilityBrick {
 			out = rootBrickWrapper;
 		}
 		else {
-			out = getDescendantAttributeLocal(rootBrickWrapper.getBrick(), path);
+			out = getDescendantAttribute(rootBrickWrapper.getBrick(), path);
 		}
 		return out;
 	}
@@ -218,7 +209,7 @@ public class HAPUtilityBrick {
 
 	public static HAPIdBrick fromResourceId2BrickId(HAPResourceIdSimple resourceId) {
 		String[] segs = HAPUtilityNamingConversion.parseLevel1(resourceId.getId());
-		return new HAPIdBrick(new HAPIdBrickType(resourceId.getResourceType(), resourceId.getVersion()), segs.length>1?segs[1]:null, segs[0]);
+		return new HAPIdBrick(new HAPIdBrickType(resourceId.getResourceTypeId().getResourceType(), resourceId.getResourceTypeId().getVersion()), segs.length>1?segs[1]:null, segs[0]);
 	}
 	
 	public static HAPResourceIdSimple fromBrickId2ResourceId(HAPIdBrick brickId) {
@@ -226,7 +217,14 @@ public class HAPUtilityBrick {
 	}
 
 	public static HAPIdBrickType getBrickTypeIdFromResourceId(HAPResourceId resourceId) {
-		return new HAPIdBrickType(resourceId.getResourceType(), resourceId.getVersion());
+		return new HAPIdBrickType(resourceId.getResourceTypeId().getResourceType(), resourceId.getResourceTypeId().getVersion());
 	}
 	
+	public static HAPIdBrickType getBrickTypeIdFromResourceTypeId(HAPIdResourceType resourceTypeId) {
+		return new HAPIdBrickType(resourceTypeId.getResourceType(), resourceTypeId.getVersion());
+	}
+	
+	public static HAPIdResourceType getResourceTypeIdFromBrickTypeId(HAPIdBrickType brickTypeId) {
+		return new HAPIdResourceType(brickTypeId.getBrickType(), brickTypeId.getVersion());
+	}
 }

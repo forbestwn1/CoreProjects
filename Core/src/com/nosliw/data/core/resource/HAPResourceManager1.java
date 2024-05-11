@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public interface HAPResourceManager {
+public interface HAPResourceManager1 {
 
 	
 	/**

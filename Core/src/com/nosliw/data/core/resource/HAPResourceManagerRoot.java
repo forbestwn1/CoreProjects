@@ -27,7 +27,7 @@ public interface HAPResourceManagerRoot{
 	 * @param type
 	 * @param resourceMan
 	 */
-	void registerResourceManager(String type, HAPResourceManager resourceMan);
+	void registerResourceManagerPlugin(HAPIdResourceType resourceType, HAPPluginResourceManager resourceManPlugin);
 
 	void clearCache();
 	

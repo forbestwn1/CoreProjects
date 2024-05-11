@@ -30,19 +30,19 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 	
 	private HAPPath m_path;
 	
-	private String m_resourceEntityType;
+	private HAPIdResourceType m_resourceEntityType;
 	
-	public HAPInfoResourceIdNormalize(HAPResourceIdSimple rootResourceId, String path, String entityType) {
+	public HAPInfoResourceIdNormalize(HAPResourceIdSimple rootResourceId, String path, HAPIdResourceType resourceType) {
 		this.m_rootResourceId = rootResourceId;
 		this.m_path = new HAPPath(path);
-		this.m_resourceEntityType = entityType;
+		this.m_resourceEntityType = resourceType;
 	}
 	
 	public HAPResourceIdSimple getRootResourceId() {    return this.m_rootResourceId;    }
 	
 	public HAPPath getPath() {   return this.m_path;    }
 	
-	public String getResourceEntityType() {    return this.m_resourceEntityType;     }
+	public HAPIdResourceType getResourceEntityType() {    return this.m_resourceEntityType;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -50,7 +50,7 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 		HAPUtilityEntityInfo.buildJsonMap(jsonMap, this);
 		jsonMap.put(ROOTRESOURCEID, this.m_rootResourceId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(PATH, this.m_path.getPath());
-		jsonMap.put(RESOURCEENTITYTYPE, this.m_resourceEntityType);
+		jsonMap.put(RESOURCEENTITYTYPE, this.m_resourceEntityType.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override

@@ -6,6 +6,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+
 public class HAPFactoryResourceId {
 
 	//newInstance when not sure obj including resource type or not.
@@ -84,12 +86,27 @@ public class HAPFactoryResourceId {
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;
-			Object resourceType = jsonObj.opt(HAPResourceId.RESOURCETYPE);
-			Object resourceVersion = jsonObj.opt(HAPResourceId.VERSION);
-			if(resourceType==null) {
+			HAPIdResourceType resourceTypeId = null;
+			Object resourceTypeIdObj = jsonObj.opt(HAPResourceId.RESOURCETYPEID);
+			if(resourceTypeIdObj==null) {
 				out = null;
+			} else {
+				resourceTypeId = parseResourceTypeId(resourceTypeIdObj);
 			}
-			out = newInstance((String)resourceType, (String)resourceVersion, jsonObj.get(HAPResourceId.ID));
+			
+			out = newInstance(resourceTypeId.getResourceType(), resourceTypeId.getVersion(), jsonObj.get(HAPResourceId.ID));
+		}
+		return out;
+	}
+	
+	public static HAPIdResourceType parseResourceTypeId(Object obj) {
+		HAPIdResourceType out = null;
+		if(obj instanceof String) {
+			out = new HAPIdResourceType((String)obj);
+		}
+		else if(obj instanceof JSONObject) {
+			out = new HAPIdResourceType();
+			out.buildObject(obj, HAPSerializationFormat.JSON);
 		}
 		return out;
 	}

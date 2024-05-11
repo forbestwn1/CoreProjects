@@ -20,15 +20,14 @@ public class HAPUtilityResourceId {
 
 	public static HAPInfoResourceIdNormalize normalizeResourceId(HAPResourceId resourceId) {
 		HAPInfoResourceIdNormalize out = null;
-		String resourceType = resourceId.getResourceType();
 		String resourceStructure = resourceId.getStructure();
 		if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
 			HAPResourceIdSimple simpleId = (HAPResourceIdSimple)resourceId;
-			out = new HAPInfoResourceIdNormalize(simpleId, "", simpleId.getResourceType());
+			out = new HAPInfoResourceIdNormalize(simpleId, "", simpleId.getResourceTypeId());
 		}
 		else if(resourceStructure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
 			HAPResourceIdEmbeded embededId = (HAPResourceIdEmbeded)resourceId;
-			
+			out = new HAPInfoResourceIdNormalize(embededId.getParentResourceId(), embededId.getPath(), embededId.getResourceTypeId());
 		}
 		return out;
 	}
@@ -38,7 +37,7 @@ public class HAPUtilityResourceId {
 	}
 	
 	public static String buildResourceIdLiterate(HAPResourceId resourceId) {
-		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceType(), resourceId.getVersion(), buildResourceCoreIdLiterate(resourceId)});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[]{resourceId.getResourceTypeId().getResourceType(), resourceId.getResourceTypeId().getVersion(), buildResourceCoreIdLiterate(resourceId)});
 	}
 	
 	//build literate for id part
@@ -133,7 +132,7 @@ public class HAPUtilityResourceId {
 			out = new HAPResourceIdSimple(resourceType, version);
 		}
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
-			out = new HAPResourceIdEmbeded(resourceType);
+			out = new HAPResourceIdEmbeded(resourceType, version);
 		}
 		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
 			out = new HAPResourceIdDynamic(resourceType);
