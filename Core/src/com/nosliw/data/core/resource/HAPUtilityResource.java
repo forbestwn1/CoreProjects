@@ -7,7 +7,6 @@ import java.util.Set;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemUtility;
@@ -15,8 +14,10 @@ import com.nosliw.data.core.system.HAPSystemUtility;
 public class HAPUtilityResource {
 
 	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {
-		if(info==null)   info = new LinkedHashMap<String, Object>();
-		if(isLoadResoureByFile(resourceId.getResourceType())) {
+		if(info==null) {
+			info = new LinkedHashMap<String, Object>();
+		}
+		if(isLoadResoureByFile(resourceId.getResourceTypeId().getResourceType())) {
 			info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
 		}
 		return info;
@@ -30,9 +31,15 @@ public class HAPUtilityResource {
 	private final static Set<String> loadResourceByFile = HAPSystemUtility.getLoadResoureByFile();
 	public static boolean isLoadResoureByFile(String resourceType) {
 		String mode = HAPSystemUtility.getLoadResourceByFileMode();
-		if(mode==null)  mode = LOADRESOURCEBYFILE_MODE_DEPENDS;
-		if(LOADRESOURCEBYFILE_MODE_NEVER.equals(resourceType))  return false;
-		if(LOADRESOURCEBYFILE_MODE_ALWAYS.equals(resourceType))  return true;
+		if(mode==null) {
+			mode = LOADRESOURCEBYFILE_MODE_DEPENDS;
+		}
+		if(LOADRESOURCEBYFILE_MODE_NEVER.equals(resourceType)) {
+			return false;
+		}
+		if(LOADRESOURCEBYFILE_MODE_ALWAYS.equals(resourceType)) {
+			return true;
+		}
 		return loadResourceByFile.contains(resourceType);
 	}
 	

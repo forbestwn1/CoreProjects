@@ -27,7 +27,7 @@ var node_createTestComplexScriptPlugin = function(){
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
-					var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.BRICKSCRIPT_SCRIPT];
+					var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATASCRIPT_SCRIPT];
 					var rawComplexEntityCore = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
 					return rawComplexEntityCore;
 	 			}

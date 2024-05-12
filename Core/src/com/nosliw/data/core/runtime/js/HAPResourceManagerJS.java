@@ -21,6 +21,7 @@ import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
 import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.resource.HAPWrapperResourceData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemUtility;
@@ -59,7 +60,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 	}
 
 	private HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		return new HAPResource(resourceId, getResourceData(resourceId, runtimeInfo), null);
+		return new HAPResource(resourceId, getResourceData(resourceId, runtimeInfo), HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
 	
 	private HAPResourceData getResourceData(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
