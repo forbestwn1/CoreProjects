@@ -15,6 +15,7 @@ import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -23,10 +24,10 @@ public class HAPUtilityExport {
 
 	public static void exportEntityPackage(HAPApplicationPackage executablePackage, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
 		String mainFolderUnique = getRootFolderUnique();
-		exportExecutablePackage(executablePackage, mainFolderUnique, entityManager, runtimeInfo);
+//		exportExecutablePackage(executablePackage, mainFolderUnique, entityManager, runtimeInfo);
 
 		String mainFolderTemp = getRootFolderTemp();
-		exportExecutablePackage(executablePackage, mainFolderTemp, entityManager, runtimeInfo);
+//		exportExecutablePackage(executablePackage, mainFolderTemp, entityManager, runtimeInfo);
 	}
 
 	private static void exportExecutablePackage(HAPApplicationPackage executablePackage, String mainFolder, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
@@ -34,12 +35,14 @@ public class HAPUtilityExport {
 		
 		//writer main info
 		Map<String, String> mainInfoJson = new LinkedHashMap<String, String>();
-		mainInfoJson.put(HAPExecutablePackage.MAINENTITYREF, executablePackage.getMainEntityId().toStringValue(HAPSerializationFormat.JSON));
+		mainInfoJson.put(HAPExecutablePackage.MAINENTITYREF, executablePackage.getMainResourceId().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(mainFolder, "mainInfo.json", HAPUtilityJson.buildMapJson(mainInfoJson));
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
-		for(HAPResourceIdSimple resourceId : executablePackage.getDependency()) {
+		for(HAPResourceId resourceId : executablePackage.getDependency()) {
+			
+			
 			HAPBundle bundle = entityManager.getBrickBundle(resourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
@@ -81,7 +84,7 @@ public class HAPUtilityExport {
 
 	private static String getExecutablePackageGroupFolder(String parentFolder){   return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, "resourcebundles"));  }
 
-	private static String getExecutablePackageFolder(String parentFolder, HAPResourceIdSimple resourceId){   
+	private static String getExecutablePackageFolder(String parentFolder, HAPResourceId resourceId){   
 		return HAPUtilityFile.getValidFolder(HAPUtilityFile.buildFullFolderPath(parentFolder, resourceId.toStringValue(HAPSerializationFormat.LITERATE)));  
 	}
 	

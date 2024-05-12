@@ -117,7 +117,7 @@ public class HAPResourceManagerJS implements HAPResourceManagerRoot{
 			
 			HAPResourceInfo resourceInfo = new HAPResourceInfo(resourceId); 
 			//add dependency first
-			List<HAPResourceDependency> dependencys = getResourceData(resourceId, runtimeInfo).getResourceDependency();
+			List<HAPResourceDependency> dependencys = getResourceData(resourceId, runtimeInfo).getResourceDependency(runtimeInfo);
 			for(HAPResourceDependency dependency : dependencys){
 				resourceInfo.addDependency(dependency);
 				this.discoverResource(dependency.getId(), resourceInfos, processedResourceIds, runtimeInfo);

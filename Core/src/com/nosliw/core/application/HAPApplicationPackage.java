@@ -10,8 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 //a package is all information for a resource runtime, it include resource id and all resource bundles required
@@ -19,32 +18,31 @@ import com.nosliw.data.core.runtime.HAPExecutableImp;
 public class HAPApplicationPackage extends HAPExecutableImp{
 
 	@HAPAttribute
-	public static final String MAINENTITYREF = "mainEntityRef";
+	public static final String MAINRESOURCEID = "mainResourceId";
 	@HAPAttribute
 	public static final String DEPENDENCY = "dependency";
 	
 	//complex entity resource dependency
-	private Set<HAPResourceIdSimple> m_dependency;
+	private Set<HAPResourceId> m_dependency;
 	
 	//main global entity
-	private HAPInfoResourceIdNormalize m_mainEntityRef;
+	private HAPResourceId m_mainResourceId;
 	
 	public HAPApplicationPackage() {
-		this.m_dependency = new HashSet<HAPResourceIdSimple>();
+		this.m_dependency = new HashSet<HAPResourceId>();
 	}
 	
-	public Set<HAPResourceIdSimple> getDependency() {     return this.m_dependency;      }
-	public void addDependency(HAPResourceIdSimple resourceId) {   this.m_dependency.add(resourceId);   }
+	public Set<HAPResourceId> getDependency() {     return this.m_dependency;      }
+	public void addDependency(HAPResourceId resourceId) {   this.m_dependency.add(resourceId);   }
 	
-	public HAPInfoResourceIdNormalize getMainEntityId() {    return this.m_mainEntityRef;     }
-	
-	public void setMainEntityId(HAPInfoResourceIdNormalize mainEntityId) {    this.m_mainEntityRef = mainEntityId;     }
+	public HAPResourceId getMainResourceId() {    return this.m_mainResourceId;     }
+	public void setMainResourceId(HAPResourceId resourceId) {    this.m_mainResourceId = resourceId;     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(MAINENTITYREF, this.m_mainEntityRef.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(MAINRESOURCEID, this.m_mainResourceId.toStringValue(HAPSerializationFormat.JSON));
 		List<String> dependencyArray = new ArrayList<String>();
-		for(HAPResourceIdSimple resourceId : this.m_dependency) {
+		for(HAPResourceId resourceId : this.m_dependency) {
 			dependencyArray.add(resourceId.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(DEPENDENCY, HAPUtilityJson.buildArrayJson(dependencyArray.toArray(new String[0])));

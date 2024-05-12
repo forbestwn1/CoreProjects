@@ -968,6 +968,9 @@
 			<definition name="TUNNELENDPOINT_TYPE_CONSTANT" value="constant"/>
 			<definition name="TUNNELENDPOINT_TYPE_VALUEPORT" value="valuePort"/>
 
+			<definition type="space"/>
+			<definition name="VERSION_DEFAULT" value="1.0.0"/>
+
 		</definitions>
 	</constants>
 </root>

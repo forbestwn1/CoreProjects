@@ -47,6 +47,7 @@ public class HAPBundle extends HAPExecutableImp{
 		
 		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
 		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
+		this.m_exportResourceInfos.add(defaultExport);
 	}
 	
 	public HAPResourceDataBrick getExportResourceData(String name, HAPManagerApplicationBrick brickMan) {

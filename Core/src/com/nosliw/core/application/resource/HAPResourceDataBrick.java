@@ -6,16 +6,16 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.data.core.resource.HAPResourceDataImp;
 import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPResourceDataBrick extends HAPSerializableImp implements HAPResourceData{
+public class HAPResourceDataBrick extends HAPResourceDataImp {
 
 	@HAPAttribute
 	public final static String BRICK = "brick"; 
@@ -44,12 +44,6 @@ public class HAPResourceDataBrick extends HAPSerializableImp implements HAPResou
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brick.toStringValue(HAPSerializationFormat.JSON));
@@ -61,4 +55,10 @@ public class HAPResourceDataBrick extends HAPSerializableImp implements HAPResou
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brick.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
+
+	@Override
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		this.m_brick.buildResourceDependency(dependency, runtimeInfo);
+	}
+
 }

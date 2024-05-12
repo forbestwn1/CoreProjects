@@ -15,11 +15,11 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithValuePort{
+public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithValuePort, HAPWithResourceDependency{
 
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
@@ -71,7 +71,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 		HAPWrapperValue valueWrapper = this.getAttribute(attributeName).getValueWrapper();
 		String valueType = valueWrapper.getValueType();
 		if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			out = ((HAPWrapperValueOfBlock)valueWrapper).getInternalBrick();
+			out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
 		}
 		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 			HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
@@ -96,7 +96,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
 	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
 		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfBlock((HAPBrick)brickOrRef)));
+			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfBrick((HAPBrick)brickOrRef)));
 		}
 		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
 			this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
@@ -132,9 +132,9 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
 		for(HAPAttributeInBrick attr : this.m_attributes) {
-			dependency.addAll(attr.getResourceDependency(runtimeInfo, resourceManager));
+			attr.buildResourceDependency(dependency, runtimeInfo);
 		}
 	}
 

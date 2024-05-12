@@ -27,9 +27,11 @@ var loc_MAIN_NAME = "main";
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
 
-	var loc_resourceId;
+	var loc_normalizedResourceId;
+	
 	var loc_bundleDef;
-
+	var loc_mainEntityPath;
+	
 	var loc_configure;
 	var loc_configureValue;
 	
@@ -49,30 +51,41 @@ var node_createBundleCore = function(parm, configure){
 		if(parm.bundleDef!=undefined){
 			//parm is bundle entity
 			loc_bundleDef = parm.bundleDef;
+			loc_mainEntityPath = parm.mainEntityPath;
 		}
 		else{
 			//parm is global complex entity id
-			loc_resourceId = parm;
+			loc_normalizedResourceId = parm;
 		}
 	};
 	
 	var loc_getPreInitRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("PreInitCoreBundle"), handlers, request);
 
-		if(loc_resourceId!=undefined){
+		if(loc_normalizedResourceId!=undefined){
 			//load related resources
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(loc_resourceId, {
+			var resourceId = loc_normalizedResourceId[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_ROOTRESOURCEID];
+			loc_mainEntityPath = loc_normalizedResourceId[node_COMMONATRIBUTECONSTANT.INFORESOURCEIDNORMALIZE_PATH];
+			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					//get bundle definition
-					loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, loc_resourceId).resourceData;
+					loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData;
 	 			}
 			}));
 		}
 		
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			//build variable domain in bundle
-			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
-			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
+			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.BUNDLE_VALUESTRUCTUREDOMAIN]);
+
+			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.BUNDLE_BRICK][node_COMMONATRIBUTECONSTANT.WITHBRICK_BRICK];
+			if(!node_basicUtility.isStringEmpty(loc_mainEntityPath)){
+				var pathSegs = node_namingConvensionUtility.parsePathInfos(loc_mainEntityPath);
+				for(var i in pathSegs){
+					 entityDef = new node_createEntityDefinition(entityDef).getAttributeValue(pathSegs[i]);
+				}
+			}
+
 			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainCoplexEntity){
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
@@ -128,6 +141,8 @@ var node_createBundleCore = function(parm, configure){
 		},
 		
 		getBundleDefinition : function(){		return loc_bundleDef;	},
+
+		getMainEntityDefinitionPath : function(){   return loc_mainEntityPath;     },
 
 		getVariableDomain : function(){		return loc_variableDomain;	},
 

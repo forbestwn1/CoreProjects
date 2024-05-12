@@ -102,6 +102,8 @@ public class HAPUtilityRuntimeJSScript {
 		script.append(resoruceDataScript);
 		script.append("\n");
 		
+		HAPUtilityFile.writeFile("c:\\Temp\\test.js", script.toString());
+		
 		return script.toString();
 	}
 	

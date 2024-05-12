@@ -7,13 +7,14 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceData;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.data.core.resource.HAPResourceDataImp;
+import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
 
 @HAPEntityWithAttribute
-public class HAPResourceDataJSLibrary extends HAPSerializableImp implements HAPResourceData{
+public class HAPResourceDataJSLibrary extends HAPResourceDataImp{
 
 	@HAPAttribute
 	public static String URIS = "uris";
@@ -31,5 +32,8 @@ public class HAPResourceDataJSLibrary extends HAPSerializableImp implements HAPR
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(URIS, HAPUtilityJson.buildJson(this.m_uris.toArray(new URI[0]), HAPSerializationFormat.JSON_FULL));
 	}
+
+	@Override
+	public HAPResourceDataOrWrapper getDescendant(HAPPath path) {  throw new RuntimeException();  }
 
 }

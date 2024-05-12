@@ -89,7 +89,7 @@ public class HAPFactoryResourceId {
 			HAPIdResourceType resourceTypeId = null;
 			Object resourceTypeIdObj = jsonObj.opt(HAPResourceId.RESOURCETYPEID);
 			if(resourceTypeIdObj==null) {
-				out = null;
+				resourceTypeId = parseResourceTypeId(jsonObj);
 			} else {
 				resourceTypeId = parseResourceTypeId(resourceTypeIdObj);
 			}

@@ -1,18 +1,14 @@
 package com.nosliw.core.application;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutable;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.data.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
-public abstract class HAPWrapperValue extends HAPSerializableImp{
+public abstract class HAPWrapperValue extends HAPSerializableImp implements HAPWithResourceDependency{
 
 	@HAPAttribute
 	public static final String VALUETYPE = "valueType";
@@ -36,13 +32,6 @@ public abstract class HAPWrapperValue extends HAPSerializableImp{
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
-	}
-	
-	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		if(this.getValue() instanceof HAPExecutable) {
-			dependency.addAll(((HAPExecutable)this.getValue()).getResourceDependency(runtimeInfo, resourceManager));
-		}
 	}
 	
 }

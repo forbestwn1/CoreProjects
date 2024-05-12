@@ -177,7 +177,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 						}));
 					}
 				}
-				else if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE){
+				else if(attrValueWrapper.getValueType()==valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE){
 					//external bundle reference attribute
 					var externalBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(attrValueWrapper[node_COMMONATRIBUTECONSTANT.REFERENCEEXTERNAL_NORMALIZEDRESOURCEID], childConfigure, request);
 					var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {

@@ -1,5 +1,6 @@
 package com.nosliw.core.application;
 
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -7,8 +8,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResourceId;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
@@ -38,6 +41,11 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RESOURCEID, HAPSerializeManager.getInstance().toStringValue(this.m_resourceId, HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		dependency.add(new HAPResourceDependency(this.m_resourceId));
 	}
 
 }

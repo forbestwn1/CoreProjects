@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -41,10 +42,15 @@ public class HAPIdResourceType extends HAPSerializableImp{
 	public String getResourceType() {  return this.m_resourceType;  }
 	protected void setResourceType(String type) {    this.m_resourceType = type;    }
 	
-	public String getVersion() {  return this.m_version;    }
+	public String getVersion() {  
+		if(HAPUtilityBasic.isStringEmpty(this.m_version)) {
+			this.m_version = HAPConstantShared.VERSION_DEFAULT;
+		}
+		return this.m_version;
+	}
 	
 	public String getKey() {
-		return HAPUtilityNamingConversion.cascadeLevel1(this.m_resourceType, this.m_version);
+		return HAPUtilityNamingConversion.cascadeLevel1(this.getResourceType(), this.getVersion());
 	}
 	
 	@Override
@@ -60,7 +66,7 @@ public class HAPIdResourceType extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object obj){
 		JSONObject jsonObj = (JSONObject)obj;
 		this.m_resourceType = (String)jsonObj.opt(RESOURCETYPE);
-		this.m_version = jsonObj.optString(VERSION);
+		this.m_version = (String)jsonObj.opt(VERSION);
 		return true;  
 	}
 	
@@ -77,6 +83,6 @@ public class HAPIdResourceType extends HAPSerializableImp{
 	}
 	
 	@Override
-	public Object cloneValue() {    return new HAPIdResourceType(this.m_resourceType, this.m_version);     }
+	public Object cloneValue() {    return new HAPIdResourceType(this.getResourceType(), this.getVersion());     }
 	
 }

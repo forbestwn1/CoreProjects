@@ -568,7 +568,8 @@ var COMMONCONSTANT=
   "MANUAL_RELATION_TYPE_ATTACHMENT": "attachment",
   "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess",
   "TUNNELENDPOINT_TYPE_CONSTANT": "constant",
-  "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort"
+  "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort",
+  "VERSION_DEFAULT": "1.0.0"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -81,7 +81,7 @@ var loc_createAttributeDefinition = function(attrDef){
 		getAttributeInfo : function(){   return loc_attrDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];   },
 
 		getAttributeValueWrapper : function(){
-			var valueType = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];
+			var valueType = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];
 			if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
 				return loc_createAttributeValueWithEntity(loc_valueWrapper);
 			}
@@ -104,11 +104,11 @@ var loc_createAttributeDefinition = function(attrDef){
 
 var loc_createAttributeValueWithEntity = function(valueWrapper){
 	var loc_valueWrapper = valueWrapper;
-	var loc_brick = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_BRICK];
+	var loc_brick = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_BRICK];
 
 	var loc_out = {
 
-		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
 
 		getEntityType : function(){  return loc_brick[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];  },
 
@@ -124,11 +124,11 @@ var loc_createAttributeValueWithEntity = function(valueWrapper){
 
 var loc_createAttributeValueWithValue = function(valueWrapper){
 	var loc_valueWrapper = valueWrapper;
-	var loc_value = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUE];
+	var loc_value = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUE];
 
 	var loc_out = {
 
-		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
 		
 		getValue : function(){   return loc_value;    }
 		
@@ -139,11 +139,11 @@ var loc_createAttributeValueWithValue = function(valueWrapper){
 
 var loc_createAttributeValueWithResourceReference = function(valueWrapper){
 	var loc_valueWrapper = valueWrapper;
-	var loc_resourceId = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_RESOURCEID];
+	var loc_resourceId = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_RESOURCEID];
 
 	var loc_out = {
 		
-		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUEINATTRIBUTE_VALUETYPE];     },
 		
 		getResourceId : function(){   return loc_resourceId;    }
 	};

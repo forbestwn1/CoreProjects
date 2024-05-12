@@ -934,4 +934,8 @@ public class HAPConstantShared {
 		public static final String TUNNELENDPOINT_TYPE_VALUEPORT = "valuePort";
 
 
+
+		public static final String VERSION_DEFAULT = "1.0.0";
+
+
 }

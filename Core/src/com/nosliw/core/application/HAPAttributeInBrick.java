@@ -12,11 +12,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPTreeNodeBrick{
+public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPTreeNodeBrick, HAPWithResourceDependency{
 
 	@HAPAttribute
 	public static final String VALUEWRAPPER = "valueWrapper";
@@ -85,10 +85,13 @@ public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPTreeNode
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
-	
-	
+
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		dependency.addAll(this.m_valueWrapper.getResourceDependency(runtimeInfo, resourceManager));
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		this.m_valueWrapper.buildResourceDependency(dependency, runtimeInfo);
+		
+		for(HAPAdapter adapter : this.m_adapter) {
+			adapter.buildResourceDependency(dependency, runtimeInfo);
+		}
 	}
 }

@@ -12,10 +12,8 @@ import java.util.Set;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManagerApplicationBrick {
@@ -90,13 +88,12 @@ public class HAPManagerApplicationBrick {
 		HAPApplicationPackage out = new HAPApplicationPackage();
 
 		//figure out root entity
-		HAPInfoResourceIdNormalize normalizedResourceId = HAPUtilityResourceId.normalizeResourceId(resourceId);
-		out.setMainEntityId(normalizedResourceId);
+		out.setMainResourceId(resourceId);
 		
 		//find all related complex resource
-		Set<HAPResourceIdSimple> dependency = new HashSet<HAPResourceIdSimple>();
-		buildDependencyGroup(normalizedResourceId.getRootResourceId(), dependency);
-		for(HAPResourceIdSimple bundleId : dependency) {
+		Set<HAPResourceId> dependency = new HashSet<HAPResourceId>();
+//		buildDependencyGroup(resourceId, dependency);
+		for(HAPResourceId bundleId : dependency) {
 			out.addDependency(bundleId);
 		}
 		
@@ -104,7 +101,7 @@ public class HAPManagerApplicationBrick {
 		return out;
 	}
 	
-	private void buildDependencyGroup(HAPResourceIdSimple complexEntityResourceId, Set<HAPResourceIdSimple> dependency) {
+	private void buildDependencyGroup(HAPResourceId complexEntityResourceId, Set<HAPResourceId> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
 

@@ -10,9 +10,11 @@ var packageObj = library.getChildPackage("entity");
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_ResourceId = function(type, id){
+	var resourceTypeId = {};
 	var typeSegs = node_namingConvensionUtility.parseLevel1(type);
-	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE] = typeSegs[0];
-	if(typeSegs.length>1)  this[node_COMMONATRIBUTECONSTANT.RESOURCEID_VERSION] = typeSegs[1];
+	resourceTypeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_RESOURCETYPE] = typeSegs[0];
+	if(typeSegs.length>1)  resourceTypeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_VERSION] = typeSegs[1];
+	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPEID] = resourceTypeId;
 	
 	this[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID] = node_resourceUtility.buildReourceCoreIdLiterate(id);
 	this.name = id;
