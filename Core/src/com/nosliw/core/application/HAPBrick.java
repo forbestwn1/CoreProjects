@@ -39,7 +39,6 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	
 	private HAPManagerApplicationBrick m_brickMan;
 
-	
 	public HAPBrick() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}

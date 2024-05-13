@@ -1,15 +1,18 @@
 package com.nosliw.core.application;
 
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPWrapperBrickRoot extends HAPExecutableImp implements HAPTreeNodeBrick, HAPWithBrick{
+public class HAPWrapperBrickRoot extends HAPSerializableImp implements HAPTreeNodeBrick, HAPWithBrick, HAPWithResourceDependency{
 
 	private HAPBrick m_brick;
 
@@ -33,9 +36,14 @@ public class HAPWrapperBrickRoot extends HAPExecutableImp implements HAPTreeNode
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, this.m_brick.toResourceData(runtimeInfo).toString());
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(BRICK, this.m_brick.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+	}
+
+	@Override
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		this.m_brick.buildResourceDependency(dependency, runtimeInfo);
 	}
 
 }

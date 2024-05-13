@@ -10,7 +10,6 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPBrickBlockComplex extends HAPBrickBlock{
 
@@ -36,6 +35,7 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 	}
 	
 	protected HAPContainerValuePorts getOtherValuePorts() {   return null;   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -43,11 +43,12 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
 		}
 	}
+	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
 		if(this.m_valueContext!=null) {
-			jsonMap.put(VALUECONTEXT, this.m_valueContext.toResourceData(runtimeInfo).toString());
+			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
 	}
 	

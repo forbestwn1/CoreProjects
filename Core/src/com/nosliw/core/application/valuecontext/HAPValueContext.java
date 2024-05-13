@@ -7,14 +7,13 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPValueContext extends HAPExecutableImp{
+public class HAPValueContext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String PART = "part";
@@ -118,9 +117,9 @@ public class HAPValueContext extends HAPExecutableImp{
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		this.buildJsonMap(jsonMap, typeJsonMap);
-		
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
+
 		List<String> valueStructureIds = new ArrayList<String>();
 		List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructuresSorted(this);
 		for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {

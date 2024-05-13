@@ -54,6 +54,7 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brick.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 
 	@Override

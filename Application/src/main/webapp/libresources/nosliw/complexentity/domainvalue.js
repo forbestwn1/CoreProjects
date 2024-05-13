@@ -81,7 +81,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 	var loc_valueStructures = {};
 
 
-	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, buildRootEle){
+	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, initValue, buildRootEle){
 
 		//build context element first
 		var valueStructureElementInfosArray = [];
@@ -122,7 +122,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 				}
 				else{
 					//not relative or logical relative variable
-					var defaultValue = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
+					var defaultValue = initValue!=undefined?initValue[rootName]:undefined;  
+//					valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
 					
 					var criteria;
 					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_CRITERIA];
@@ -141,7 +142,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 			});
 		}
 		
-		var valueStructureName = valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYVALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
+		var valueStructureName = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
 
 		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, valueStructureName, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
@@ -152,23 +153,24 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		loc_parentValueContext = parentValueContext;
 		loc_variableMan = variableMan;
 
-		var valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYVALUECONTEXT_VALUESTRUCTURE];
+		var valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURE];
 		_.each(valueStructureRuntimeIds, function(valueStructureRuntimeId){
 			var valueStructure;
 			if(loc_parentValueContext==undefined || loc_parentValueContext.getValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
 				var valueStructureRuntime = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId];
+				var valueStructureRuntimeInitValue = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INITVALUE];
 				var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INFO];
 				var initMode = valueStructureRuntimeInfo==undefined?undefined:valueStructureRuntimeInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE];
 				if(initMode==undefined)   initMode = node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO;
 				
 				if(initMode == node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO){
 					//build with all variable
-					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef);
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue);
 				}
 				else{
 					//build empty value structure
-					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, false);
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue, false);
 				}
 			}
 			else{
@@ -213,7 +215,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 
 		getValueStructureRuntimeIdByName : function(valueStructureName){
 			var out;
-			out = valueContextDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYVALUECONTEXT_VALUESTRUCTURERUNTIMEIDBYNAME][valueStructureName];
+			out = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMEIDBYNAME][valueStructureName];
 			if(out==undefined){
 				if(loc_parentValueContext!=undefined){
 					out = loc_parentValueContext.getValueStructureRuntimeIdByName(valueStructureName);

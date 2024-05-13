@@ -1,6 +1,7 @@
 package com.nosliw.core.application;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
@@ -16,6 +18,7 @@ import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
@@ -24,10 +27,10 @@ public class HAPUtilityExport {
 
 	public static void exportEntityPackage(HAPApplicationPackage executablePackage, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
 		String mainFolderUnique = getRootFolderUnique();
-//		exportExecutablePackage(executablePackage, mainFolderUnique, entityManager, runtimeInfo);
+		exportExecutablePackage(executablePackage, mainFolderUnique, entityManager, runtimeInfo);
 
 		String mainFolderTemp = getRootFolderTemp();
-//		exportExecutablePackage(executablePackage, mainFolderTemp, entityManager, runtimeInfo);
+		exportExecutablePackage(executablePackage, mainFolderTemp, entityManager, runtimeInfo);
 	}
 
 	private static void exportExecutablePackage(HAPApplicationPackage executablePackage, String mainFolder, HAPManagerApplicationBrick entityManager, HAPRuntimeInfo runtimeInfo) {
@@ -40,10 +43,20 @@ public class HAPUtilityExport {
 		
 		//write package group
 		String packageGroupFolder = getExecutablePackageGroupFolder(mainFolder);
-		for(HAPResourceId resourceId : executablePackage.getDependency()) {
+		
+		Set<HAPResourceId> resourceIds = new HashSet<HAPResourceId>();
+		resourceIds.add(executablePackage.getMainResourceId());
+		resourceIds.addAll(executablePackage.getDependency());
+		for(HAPResourceId resourceId : resourceIds) {
+			HAPResourceIdSimple rootResourceId = null;
+			String structure = resourceId.getStructure();
+			if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+				rootResourceId = (HAPResourceIdSimple)resourceId;
+			} else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+				rootResourceId = ((HAPResourceIdEmbeded)resourceId).getParentResourceId();
+			}
 			
-			
-			HAPBundle bundle = entityManager.getBrickBundle(resourceId);
+			HAPBundle bundle = entityManager.getBrickBundle(rootResourceId);
 			String packageFolder = getExecutablePackageFolder(packageGroupFolder, resourceId);
 			
 			//write attachment domain
@@ -53,7 +66,7 @@ public class HAPUtilityExport {
 			//write value structure domain
 			HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 			if(valueStructureDomain!=null) {
-				HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
+				HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 			} else {
 				HAPUtilityFile.writeJsonFile(packageFolder, "valuestructure.json", "");
 			}
@@ -62,7 +75,7 @@ public class HAPUtilityExport {
 			HAPUtilityFile.writeJsonFile(packageFolder, "extra.json", HAPSerializeManager.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 			
 			//write package executable
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", HAPSerializeManager.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JSON));
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", HAPSerializeManager.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
 			
 			//external complex entity dependency
 			Set<HAPResourceIdSimple> dependency = bundle.getComplexResourceDependency();

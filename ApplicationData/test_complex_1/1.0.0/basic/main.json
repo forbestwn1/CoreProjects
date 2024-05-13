@@ -77,11 +77,15 @@
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"parent_public": {
-							"definition":{
-								"criteria": "test.string;1.0.0"
-							},
-							"defaultValue": {
+						"root": {
+							"parent_public": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
 							}

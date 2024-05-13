@@ -9,6 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -16,12 +17,11 @@ import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBundle extends HAPExecutableImp{
+public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDependency{
 
 	@HAPAttribute
 	public final static String BRICK = "brick"; 
@@ -107,13 +107,15 @@ public class HAPBundle extends HAPExecutableImp{
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, this.m_brickWrapper.toResourceData(runtimeInfo).toString());
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(EXTRADATA, HAPSerializeManager.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JAVASCRIPT));
 	}
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
-		dependency.addAll(this.m_brickWrapper.getResourceDependency(runtimeInfo, resourceManager));
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		this.m_brickWrapper.buildResourceDependency(dependency, runtimeInfo);
 	}
 }
