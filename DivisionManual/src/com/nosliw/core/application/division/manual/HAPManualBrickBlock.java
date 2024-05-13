@@ -5,9 +5,9 @@ import java.util.Set;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.common.valueport.HAPDefinitionValuePort;
 
-public abstract class HAPManualBlock extends HAPManualBrick{
+public abstract class HAPManualBrickBlock extends HAPManualBrick{
 
-	protected HAPManualBlock (HAPIdBrickType entityType) {
+	protected HAPManualBrickBlock (HAPIdBrickType entityType) {
 		super(entityType);
 	}
 

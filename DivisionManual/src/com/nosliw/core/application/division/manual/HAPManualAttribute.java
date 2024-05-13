@@ -33,7 +33,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	private HAPManualWrapperValue m_valueInfo;
 	
 	//multiple adapters by name
-	private Map<String, HAPManualInfoAdapter> m_adapters;
+	private Map<String, HAPManualAdapter> m_adapters;
 
 	//relationship to parent
 	private List<HAPManualBrickRelation> m_relations;
@@ -46,7 +46,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	
 	public HAPManualAttribute() {
 		this.m_relations = new ArrayList<HAPManualBrickRelation>();
-		this.m_adapters = new LinkedHashMap<String, HAPManualInfoAdapter>();
+		this.m_adapters = new LinkedHashMap<String, HAPManualAdapter>();
 	}
 
 	public HAPManualAttribute(String name, HAPManualWrapperValue valueInfo) {
@@ -58,8 +58,8 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public HAPManualWrapperValue getValueInfo() {    return this.m_valueInfo;     }
 	public void setValueInfo(HAPManualWrapperValue valueInfo) {    this.m_valueInfo = valueInfo;     }
 	
-	public void addAdapter(HAPManualInfoAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
-	public Set<HAPManualInfoAdapter> getAdapters(){   return new HashSet<HAPManualInfoAdapter>(this.m_adapters.values());      }
+	public void addAdapter(HAPManualAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
+	public Set<HAPManualAdapter> getAdapters(){   return new HashSet<HAPManualAdapter>(this.m_adapters.values());      }
 	
 	public void addRelation(HAPManualBrickRelation relation) {    this.m_relations.add(relation);      }
 	public List<HAPManualBrickRelation> getRelations(){    return this.m_relations;     }

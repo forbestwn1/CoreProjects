@@ -101,7 +101,6 @@ public class HAPUtilityBrick {
 		return null;
 	}
 	
-	
 	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
 		HAPTreeNodeBrick out = null;
 		if(path==null || path.isEmpty()) {

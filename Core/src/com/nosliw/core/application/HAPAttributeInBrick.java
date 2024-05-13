@@ -1,5 +1,6 @@
 package com.nosliw.core.application;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -78,12 +80,24 @@ public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPTreeNode
 		if(this.m_valueWrapper!=null) {
 			jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
 		}
+		
+		List<String> adapterJsonList = new ArrayList<String>();
+		for(HAPAdapter adapter : this.m_adapter) {
+			adapterJsonList.add(adapter.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ADAPTER, HAPUtilityJson.buildArrayJson(adapterJsonList.toArray(new String[0])));
 	}
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+
+		List<String> adapterJsonList = new ArrayList<String>();
+		for(HAPAdapter adapter : this.m_adapter) {
+			adapterJsonList.add(adapter.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		}
+		jsonMap.put(ADAPTER, HAPUtilityJson.buildArrayJson(adapterJsonList.toArray(new String[0])));
 	}
 
 	@Override

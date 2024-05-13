@@ -9,6 +9,6 @@ public interface HAPPluginProcessorAdapter{
 	HAPIdBrickType getBrickType();
 	
 	//process
-	void process(HAPBrickAdapter adapterExe, HAPManualAdapter adapterDef, HAPManualContextProcessAdapter processContext);
+	void process(HAPBrickAdapter adapterExe, HAPManualBrickAdapter adapterDef, HAPManualContextProcessAdapter processContext);
 
 }

@@ -15,10 +15,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPReferenceBrickLocal;
-import com.nosliw.core.application.HAPResultBrick;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -32,7 +28,6 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
@@ -50,7 +45,9 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
 public class HAPProcessorDataAssociationMapping {
@@ -65,15 +62,15 @@ public class HAPProcessorDataAssociationMapping {
 		
 		List<HAPItemValueMapping> mappingItems = daDef.getItems();
 		for(HAPItemValueMapping mappingItem : mappingItems) {
-			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getBrickManager());
+			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 		
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, null, currentBundle);
+			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
 			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, currentBundle);
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
 			List<HAPTunnel> tunnels = HAPUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
 			for(HAPTunnel tunnel : tunnels) {
@@ -83,7 +80,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}	
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
@@ -95,7 +92,7 @@ public class HAPProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
-				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle);
+				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
@@ -115,7 +112,7 @@ public class HAPProcessorDataAssociationMapping {
 			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
 			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
 			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, currentBundle));
+				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, currentBundle, resourceMan, runtimeInfo));
 			}
 			nodeStructureElement.setChildren(processedChildren);
 			break;
@@ -125,7 +122,7 @@ public class HAPProcessorDataAssociationMapping {
 	}
 	
 
-	private static void normalizeValuePortId(HAPItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPManagerApplicationBrick brickMan) {
+	private static void normalizeValuePortId(HAPItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPPath parentBlockPath = baseBlockPath.trimLast();
 
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
@@ -142,7 +139,7 @@ public class HAPProcessorDataAssociationMapping {
 			out = baseBlockPath;
 		}
 		
-		normalizeRootReference(targetRef, out, currentBundle, brickMan);
+		normalizeRootReference(targetRef, out, currentBundle, resourceMan, runtimeInfo);
 		
 		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
@@ -150,7 +147,7 @@ public class HAPProcessorDataAssociationMapping {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					normalizeRootReference(mappingEle.getReference(), in, currentBundle, brickMan);
+					normalizeRootReference(mappingEle.getReference(), in, currentBundle, resourceMan, runtimeInfo);
 				}
 				return null;
 			}
@@ -160,26 +157,14 @@ public class HAPProcessorDataAssociationMapping {
 		}, targetRef);
 	}
 	
-	private static void normalizeRootReference(HAPReferenceRootElement rootRef, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerApplicationBrick brickMan) {
-		HAPReferenceValuePort valuePortRef = rootRef.getValuePortRef();
-		if(valuePortRef==null) {
-			valuePortRef = new HAPReferenceValuePort();
-			rootRef.setValuePortRef(valuePortRef);
-		}
-		
-		HAPReferenceBrickLocal blockRef = valuePortRef.getBrickReference();
-		if(blockRef==null) {
-			blockRef = new HAPReferenceBrickLocal(blockPathFromRoot.toString());
-			valuePortRef.setBlockReference(blockRef);
-		}
-		
-		HAPIdValuePort valuePortId = valuePortRef.getValuePortId();
-		if(valuePortId==null) {
-			HAPResultBrick blockResult = HAPUtilityBrick.getDescdentBrickResult(currentBundle, new HAPPath(blockRef.getIdPath()), brickMan);
-			valuePortId = HAPUtilityValuePort.getValuePortId(HAPUtilityValuePort.getDefaultValuePortInEntity(blockResult.getInternalBrick()));
-			valuePortRef.setValuePortId(valuePortId);
-		}
+	private static void normalizeRootReference(HAPReferenceRootElement rootRef, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+		rootRef.setValuePortRef(HAPUtilityValuePort.normalizeValuePortReference(rootRef.getValuePortRef(), blockPathFromRoot, currentBundle, resourceMan, runtimeInfo));
 	}
+	
+
+	
+	
+	
 	
 	
 	public static void processValueMapping(

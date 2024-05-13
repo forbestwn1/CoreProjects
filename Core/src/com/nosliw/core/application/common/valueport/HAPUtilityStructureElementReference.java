@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Triple;
-
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
@@ -37,12 +34,12 @@ public class HAPUtilityStructureElementReference {
 
 	
 	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
-		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle, resourceMan, runtimeInfo);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle, resourceMan, runtimeInfo);
 
-		HAPResultReferenceResolve resolve  = valuePortInfo.getRight().resolveReference(reference, resolveConfigure);
+		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
 		if(resolve!=null) {
-			resolve.brickReference = valuePortInfo.getLeft();
-			resolve.valuePortId = valuePortInfo.getMiddle();
+			resolve.brickReference = reference.getValuePortRef().getBrickReference();
+			resolve.valuePortId = reference.getValuePortRef().getValuePortId();
 			resolve.elementPath = reference.getElementPath();
 		}
 		return resolve;

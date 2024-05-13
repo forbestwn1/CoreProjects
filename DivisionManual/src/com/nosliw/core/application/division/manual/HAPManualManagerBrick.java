@@ -143,18 +143,19 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 						entityTypeId = ((HAPManualWithBrick)attrDef.getValueInfo()).getBrickTypeId();
 						
 						if(HAPManualUtilityBrick.isAttributeAutoProcess(attrDef, brickMan)) {
-							Set<HAPManualInfoAdapter> adapterInfoDefs = attrDef.getAdapters();
-							Map<String, HAPAdapter> adapterInfoByName = new LinkedHashMap<String, HAPAdapter>();
-							for(HAPAdapter adapterWrapperExe : attrExe.getAdapters()) {
-								adapterInfoByName.put(adapterWrapperExe.getName(), adapterWrapperExe);
+							Set<HAPManualAdapter> adapterDefs = attrDef.getAdapters();
+							Map<String, HAPAdapter> adapterExeByName = new LinkedHashMap<String, HAPAdapter>();
+							for(HAPAdapter adapter : attrExe.getAdapters()) {
+								adapterExeByName.put(adapter.getName(), adapter);
 							}
 							
-							for(HAPManualInfoAdapter adapterInfoDef : adapterInfoDefs) {
-								HAPAdapter adapterWrapperExe = adapterInfoByName.get(adapterInfoDef.getName()); 
-								HAPManualWrapperValueBrick adapterWrapperDef = (HAPManualWrapperValueBrick)adapterInfoDef.getValueWrapper();
+							for(HAPManualAdapter adapterDef : adapterDefs) {
+								HAPAdapter adapterExe = adapterExeByName.get(adapterDef.getName()); 
+								HAPManualWrapperValueBrick adapterWrapperDef = (HAPManualWrapperValueBrick)adapterDef.getValueWrapper();
 								HAPPluginProcessorAdapter adapterProcessPlugin = getAdapterProcessPlugin(adapterWrapperDef.getBrick().getBrickTypeId());
 								
-//								adapterProcessPlugin.process(adapterWrapperExe.getAdapter(), (HAPManualAdapter)adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot()));
+								HAPBrickAdapter brick = (HAPBrickAdapter)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
+								adapterProcessPlugin.process(brick, (HAPManualBrickAdapter)adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot(), m_runtimeEnv));
 							}
 							
 							return true;
@@ -243,7 +244,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				}
 				
 				//adapter
-				for(HAPManualInfoAdapter defAdapterInfo : attrDef.getAdapters()) {
+				for(HAPManualAdapter defAdapterInfo : attrDef.getAdapters()) {
 					HAPManualWrapperValue adapterValueWrapper = defAdapterInfo.getValueWrapper();
 					String adapterValueType = adapterValueWrapper.getValueType();
 					

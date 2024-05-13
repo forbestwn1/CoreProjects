@@ -76,14 +76,14 @@ public class HAPUtilityParserBrickFormatJson {
 				if(adaptersObj instanceof JSONArray) {
 					JSONArray adaptersArray = (JSONArray)adaptersObj;
 					for(int i=0; i<adaptersArray.length(); i++) {
-						HAPManualInfoAdapter adapterInfo = parseAdapter(adaptersArray.getJSONObject(i), adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
+						HAPManualAdapter adapterInfo = parseAdapter(adaptersArray.getJSONObject(i), adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
 						if(adapterInfo!=null) {
 							out.addAdapter(adapterInfo);
 						}
 					}
 				}
 				else if(adaptersObj instanceof JSONObject) {
-					HAPManualInfoAdapter adapterInfo = parseAdapter((JSONObject)adaptersObj, adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
+					HAPManualAdapter adapterInfo = parseAdapter((JSONObject)adaptersObj, adapterTypeId, parseContext, manualDivisionEntityMan, entityManager);
 					if(adapterInfo!=null) {
 						out.addAdapter(adapterInfo);
 					}
@@ -184,11 +184,11 @@ public class HAPUtilityParserBrickFormatJson {
 		return out;
 	}
 	
-	private static HAPManualInfoAdapter parseAdapter(JSONObject adapterObj, HAPIdBrickType adatperTypeId, HAPManualContextParse parseContext, HAPManualManagerBrick textDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
-		HAPManualInfoAdapter adapterInfo = null;
+	private static HAPManualAdapter parseAdapter(JSONObject adapterObj, HAPIdBrickType adatperTypeId, HAPManualContextParse parseContext, HAPManualManagerBrick textDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+		HAPManualAdapter adapterInfo = null;
 		if(HAPUtilityEntityInfo.isEnabled(adapterObj)) {
 			HAPManualWrapperValue adpaterEntityDefInfo = parseWrapperValue(adapterObj, adatperTypeId, parseContext, textDivisionEntityMan, entityManager);
-			adapterInfo = new HAPManualInfoAdapter(adpaterEntityDefInfo);
+			adapterInfo = new HAPManualAdapter(adpaterEntityDefInfo);
 			adapterInfo.buildEntityInfoByJson(adapterObj);
 			if(adapterInfo.getName()==null) {
 				adapterInfo.setName(HAPConstantShared.NAME_DEFAULT);
