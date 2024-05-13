@@ -39,7 +39,7 @@
 					]
 				}
 			},
-			"adapter1": [
+			"adapter": [
 				{
 					"name" : "dataassociation",
 					"brickTypeId" : {

@@ -11,14 +11,14 @@ import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 
 public class HAPManagerCronJob {
 
 	private HAPManagerExpression m_expressionMan; 
 	
-	private HAPResourceManagerRoot m_resourceMan;
+	private HAPResourceManager m_resourceMan;
 
 	private HAPRuntime m_runtime;
 
@@ -34,7 +34,7 @@ public class HAPManagerCronJob {
 	
 	public HAPManagerCronJob(
 			HAPManagerExpression expressionMan, 
-			HAPResourceManagerRoot resourceMan,
+			HAPResourceManager resourceMan,
 			HAPManagerProcess processMan,
 			HAPRuntime runtime, 
 			HAPDataTypeHelper dataTypeHelper,

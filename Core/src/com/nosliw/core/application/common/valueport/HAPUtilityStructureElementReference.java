@@ -21,21 +21,23 @@ import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
+import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityStructureElementReference {
 
-	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle){
-		HAPResultReferenceResolve resolve = analyzeElementReference(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle);
+	public static HAPIdRootElement resolveValueStructureRootReference(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo){
+		HAPResultReferenceResolve resolve = analyzeElementReference(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle, resourceMan, runtimeInfo);
 		return new HAPIdRootElement(rootEleCriteria.getValuePortRef(), resolve.structureId, rootEleCriteria.getRootName());
 	}
 	
-	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle) {
-		return analyzeElementReference(reference, resolveConfigure, null, bundle);
+	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+		return analyzeElementReference(reference, resolveConfigure, null, bundle, resourceMan, runtimeInfo);
 	}
 
 	
-	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle) {
-		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle);
+	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> valuePortInfo = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle, resourceMan, runtimeInfo);
 
 		HAPResultReferenceResolve resolve  = valuePortInfo.getRight().resolveReference(reference, resolveConfigure);
 		if(resolve!=null) {

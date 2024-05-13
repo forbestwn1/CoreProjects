@@ -13,7 +13,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceManagerJSLibrary extends HAPResourceManagerImp{
 
-	public HAPResourceManagerJSLibrary(HAPResourceManagerRoot rootResourceMan) {
+	public HAPResourceManagerJSLibrary(HAPResourceManager rootResourceMan) {
 		super(rootResourceMan);
 	}
 	

@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForTask;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -57,7 +57,7 @@ public class HAPExecutableCommand extends HAPExecutableImpEntityInfo{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		this.buildResourceDependencyForExecutable(dependency, m_dataAssociations, runtimeInfo, resourceManager);
 	}

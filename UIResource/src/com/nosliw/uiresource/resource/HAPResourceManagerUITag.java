@@ -8,7 +8,7 @@ import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.ui.tag.HAPManagerUITag;
@@ -18,7 +18,7 @@ public class HAPResourceManagerUITag extends HAPResourceManagerImp{
 
 	private HAPManagerUITag m_uiTagMan;
 
-	public HAPResourceManagerUITag(HAPManagerUITag uiTagMan, HAPResourceManagerRoot rootResourceMan){
+	public HAPResourceManagerUITag(HAPManagerUITag uiTagMan, HAPResourceManager rootResourceMan){
 		super(rootResourceMan);
 		this.m_uiTagMan = uiTagMan;
 	}

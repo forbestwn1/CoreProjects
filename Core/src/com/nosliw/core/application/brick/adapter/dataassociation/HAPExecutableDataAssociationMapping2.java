@@ -18,7 +18,7 @@ import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPItemValueMapping;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -90,7 +90,7 @@ public class HAPExecutableDataAssociationMapping2 extends HAPExecutableDataAssoc
 	}
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		for(HAPTunnel mappingPath : this.m_relativePathMapping) {
 			dependency.addAll(mappingPath.getResourceDependency(runtimeInfo, resourceManager));
 		}

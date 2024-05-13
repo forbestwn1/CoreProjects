@@ -5,7 +5,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -13,7 +13,7 @@ public class HAPResourceManagerImpComplex extends HAPResourceManagerImp{
 
 	private HAPManagerDomainEntityExecutable m_complexEntityMan;
 	
-	public HAPResourceManagerImpComplex(HAPManagerDomainEntityExecutable complexEntityMan, HAPResourceManagerRoot rootResourceMan) {
+	public HAPResourceManagerImpComplex(HAPManagerDomainEntityExecutable complexEntityMan, HAPResourceManager rootResourceMan) {
 		super(rootResourceMan);
 		this.m_complexEntityMan = complexEntityMan;
 	}

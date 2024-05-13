@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public interface HAPResourceManagerRoot{
+public interface HAPResourceManager{
 
 	/**
 	 * Response including loaded resoures and fail resources, the sequence should be the same as input. Sequence matters

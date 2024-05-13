@@ -10,7 +10,7 @@ import com.nosliw.core.application.common.variable.HAPIdVariable;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPDefinitionVariableExpected;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -56,7 +56,7 @@ public class HAPExecutableVariableExpected extends HAPExecutableImp{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		if(this.m_matchers!=null) {
 			dependency.addAll(this.m_matchers.getResourceDependency(runtimeInfo, resourceManager));

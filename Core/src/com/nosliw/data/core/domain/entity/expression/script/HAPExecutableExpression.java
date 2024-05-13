@@ -16,7 +16,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.expression.script.resource.js.HAPScriptFunctionInfo;
 import com.nosliw.data.core.domain.entity.expression.script.resource.js.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -107,7 +107,7 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		
 	}
 }

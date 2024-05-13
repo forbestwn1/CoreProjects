@@ -6,7 +6,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -14,7 +14,7 @@ public class HAPResourceManagerCronJob  extends HAPResourceManagerImp{
 
 	private HAPManagerCronJob m_cronJobMan;
 	
-	public HAPResourceManagerCronJob(HAPManagerCronJob cronJobMan, HAPResourceManagerRoot rootResourceMan){
+	public HAPResourceManagerCronJob(HAPManagerCronJob cronJobMan, HAPResourceManager rootResourceMan){
 		super(rootResourceMan);
 		this.m_cronJobMan = cronJobMan;
 	}

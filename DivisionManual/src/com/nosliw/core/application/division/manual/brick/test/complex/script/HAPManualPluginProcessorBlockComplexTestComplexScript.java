@@ -52,7 +52,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 			for(int i=0; i<varJsonArray.length(); i++) {
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
-				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReference(ref, new HAPConfigureResolveElementReference(), pathFromRoot, bundle);
+				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReference(ref, new HAPConfigureResolveElementReference(), pathFromRoot, bundle, processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
 				
 				if(resolve!=null) {
 					resolvedVars.add(resolve);

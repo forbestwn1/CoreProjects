@@ -8,10 +8,12 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
-	public static Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle) {
+	public static Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPReferenceBrickLocal brickRef = null;
 		HAPValuePort valuePort = null;
 		HAPIdValuePort valuePortId = valuePortRef==null?null:valuePortRef.getValuePortId();
@@ -35,8 +37,7 @@ public class HAPUtilityValuePort {
 			brickRef.setIdPath(HAPUtilityPath.fromRelativeToAbsolutePath(brickRef.getRelativePath(), baseBrickPathId.toString()));
 		}
 
-		
-		HAPBrick brick = HAPUtilityBrick.getBrick(brickRef, baseBrickPathId.toString(), bundle);
+		HAPBrick brick = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), new HAPPath(brickRef.getIdPath()), resourceMan, runtimeInfo);
 		
 		//discover value port id
 		if(valuePortId==null) {

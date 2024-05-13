@@ -12,7 +12,7 @@ import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -117,7 +117,7 @@ public class HAPExecutableModule extends HAPExecutableComponent{
 //	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
 		for(HAPExecutableModuleUI ui : this.m_uis) {		out.addAll(ui.getResourceDependency(runtimeInfo, resourceManager));		}

@@ -98,7 +98,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 			//complex entity
 			out.setExtraData(brickWrapper);
 			
-			HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out);
+			HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, this.m_runtimeEnv);
 			
 			//build executable tree
 			HAPBrickBlockComplex rootEntityExe = (HAPBrickBlockComplex)this.newBrickInstance(brickDef);
@@ -260,7 +260,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 						HAPManualWrapperValueReferenceResource adpaterValueDefWrapperResourceRef = (HAPManualWrapperValueReferenceResource)adapterValueWrapper;
 						adapterValueWrapperExe = new HAPWrapperValueOfReferenceResource(adpaterValueDefWrapperResourceRef.getResourceId());
 					}
-					HAPAdapter adapter = null;
+					HAPAdapter adapter = new HAPAdapter(adapterValueWrapperExe);
 					defAdapterInfo.cloneToEntityInfo(adapter);
 					attrExe.addAdapter(adapter);
 				}

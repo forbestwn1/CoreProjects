@@ -8,7 +8,7 @@ import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.process1.HAPExecutableActivityNormal;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPDebugActivityExecutable extends HAPExecutableActivityNormal{
@@ -20,7 +20,7 @@ public class HAPDebugActivityExecutable extends HAPExecutableActivityNormal{
 //	public HAPDebugActivityDefinition getDebugActivityDefinition() {   return (HAPDebugActivityDefinition)this.getActivityDefinition();   }
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		dependency.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_PROCESS))));
 	}

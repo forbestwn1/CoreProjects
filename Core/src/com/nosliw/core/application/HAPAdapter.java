@@ -11,6 +11,10 @@ public class HAPAdapter extends HAPExecutableImpEntityInfo implements HAPWithRes
 
 	private HAPWrapperValue m_valueWrapper;
 	
+	public HAPAdapter(HAPWrapperValue valueWrapper) {
+		this.m_valueWrapper = valueWrapper;
+	}
+	
 	public HAPWrapperValue getValueWrapper() {
 		return this.m_valueWrapper;
 	}

@@ -1,23 +1,25 @@
 package com.nosliw.core.application;
 
+import com.nosliw.data.core.resource.HAPResourceId;
+
 public class HAPResultBrick {
 
 	private HAPBrick m_brick;
 
-	private HAPReferenceBrickGlobal m_globalRef;
+	private HAPResourceId m_resourceId;
 	
 	public HAPResultBrick(HAPBrick brick) {
 		this.m_brick = brick;
 	}
 	
-	public HAPResultBrick(HAPReferenceBrickGlobal globalRef) {
-		this.m_globalRef = globalRef;
+	public HAPResultBrick(HAPResourceId resourceId) {
+		this.m_resourceId = resourceId;
 	}
 	
 	public boolean isInternalBrick() {    return this.m_brick!=null;    }
 	
 	public HAPBrick getInternalBrick() {   return this.m_brick;  }
 	
-	public HAPReferenceBrickGlobal getExternalBrickRef() {    return this.m_globalRef;     }
+	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	
 }

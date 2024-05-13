@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;
@@ -106,7 +106,7 @@ public class HAPExecutableUITag extends HAPExecutableComponent{
 	}
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		List<HAPResourceDependency> out = super.getResourceDependency(runtimeInfo, resourceManager);
 		//ui tag
 		out.add(new HAPResourceDependency(new HAPResourceIdUITag(new HAPUITagId(this.m_tagName))));

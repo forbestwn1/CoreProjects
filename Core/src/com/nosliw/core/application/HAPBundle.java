@@ -17,6 +17,8 @@ import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -50,7 +52,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.m_exportResourceInfos.add(defaultExport);
 	}
 	
-	public HAPResourceDataBrick getExportResourceData(String name, HAPManagerApplicationBrick brickMan) {
+	public HAPResourceDataBrick getExportResourceData(String name, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		if(name==null) {
 			name = HAPConstantShared.NAME_DEFAULT;
 		}
@@ -63,7 +65,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		}
 		
 		HAPResourceDataBrick out = null;
-		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(m_brickWrapper, exportInfo.getPathFromRoot(), brickMan);
+		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(m_brickWrapper, exportInfo.getPathFromRoot());
 		if(brickResult.isInternalBrick()) {
 			HAPBrick brick = brickResult.getInternalBrick();
 			if(brick.getBrickTypeInfo().getIsComplex()) {
@@ -74,8 +76,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 			}
 		}
 		else {
-			HAPReferenceBrickGlobal externalBrickRef = brickResult.getExternalBrickRef();
-			out = externalBrickRef.getBundle().getExportResourceData(externalBrickRef.getExportName(), brickMan);
+			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();
 		}
 		return out;
 	}

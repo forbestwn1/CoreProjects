@@ -19,7 +19,7 @@ import com.nosliw.data.core.component.HAPExecutableComponent;
 import com.nosliw.data.core.component.command.HAPReferenceCommand;
 import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.script.expression1.HAPContextProcessExpressionScript;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptGroup;
@@ -198,7 +198,7 @@ public class HAPExecutableUIUnit extends HAPExecutableComponent{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		//resource from expression
 		dependency.addAll(this.m_scriptGroupExe.getResourceDependency(runtimeInfo, resourceManager));
 		

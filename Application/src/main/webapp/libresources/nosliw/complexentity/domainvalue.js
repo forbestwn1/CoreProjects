@@ -123,7 +123,6 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 				else{
 					//not relative or logical relative variable
 					var defaultValue = initValue!=undefined?initValue[rootName]:undefined;  
-//					valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
 					
 					var criteria;
 					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_CRITERIA];

@@ -4,15 +4,21 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.collect.Lists;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPUtilityResource {
 
+	public static HAPResource getResource(HAPResourceId resourceId, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+		return resourceMan.getResources(Lists.asList(resourceId, null), runtimeInfo).getLoadedResource(resourceId);
+	}
+	
 	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {
 		if(info==null) {
 			info = new LinkedHashMap<String, Object>();

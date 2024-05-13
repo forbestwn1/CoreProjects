@@ -26,7 +26,7 @@ import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process1.util.HAPParserProcessDefinition;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.valuestructure1.HAPContainerStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
@@ -42,9 +42,9 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 
 	private HAPRuntimeProcess m_processRuntime;
 	private HAPManagerProcess m_processMan;
-	private HAPResourceManagerRoot m_resourceManager;
+	private HAPResourceManager m_resourceManager;
 	
-	public HAPFactoryServiceProcess(HAPRuntimeProcess processRuntime, HAPManagerProcess processMan, HAPResourceManagerRoot resourceManager) {
+	public HAPFactoryServiceProcess(HAPRuntimeProcess processRuntime, HAPManagerProcess processMan, HAPResourceManager resourceManager) {
 		this.m_processRuntime = processRuntime;
 		this.m_processMan = processMan;
 		this.m_resourceManager = resourceManager;
@@ -107,9 +107,9 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 
 	class HAPExecutableServiceImp implements HAPExecutableService{
 		private HAPExecutableWrapperTask m_processExe;
-		private HAPResourceManagerRoot m_resourceManager;
+		private HAPResourceManager m_resourceManager;
 
-		public HAPExecutableServiceImp(HAPExecutableWrapperTask processExe, HAPResourceManagerRoot resourceManager) {
+		public HAPExecutableServiceImp(HAPExecutableWrapperTask processExe, HAPResourceManager resourceManager) {
 			this.m_processExe = processExe;
 			this.m_resourceManager = resourceManager;
 		}

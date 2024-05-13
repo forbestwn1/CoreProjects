@@ -6,7 +6,7 @@ import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -14,7 +14,7 @@ public class HAPResourceManagerServiceInterface  extends HAPResourceManagerImp{
 
 	private HAPManagerServiceInterface m_serviceInterfaceMan;
 	
-	public HAPResourceManagerServiceInterface(HAPManagerServiceInterface serviceInterfaceMan, HAPResourceManagerRoot rootResourceMan){
+	public HAPResourceManagerServiceInterface(HAPManagerServiceInterface serviceInterfaceMan, HAPResourceManager rootResourceMan){
 		super(rootResourceMan);
 		this.m_serviceInterfaceMan = serviceInterfaceMan;
 	}

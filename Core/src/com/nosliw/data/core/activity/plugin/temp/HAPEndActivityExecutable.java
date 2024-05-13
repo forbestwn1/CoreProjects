@@ -13,7 +13,7 @@ import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.process1.HAPExecutableActivity;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManagerRoot;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPEndActivityExecutable extends HAPExecutableActivity{
@@ -29,7 +29,7 @@ public class HAPEndActivityExecutable extends HAPExecutableActivity{
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManagerRoot resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_END))));
 		return out;

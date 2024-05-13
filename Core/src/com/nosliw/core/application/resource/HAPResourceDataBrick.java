@@ -37,6 +37,7 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 		this.m_valueStructureDomain = valueStructureDomain;
 	}
 	
+	public HAPBrick getBrick() {    return this.m_brick;     }
 	
 	@Override
 	public HAPResourceDataOrWrapper getDescendant(HAPPath path) {
