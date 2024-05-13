@@ -4,13 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.apache.commons.lang3.tuple.Triple;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPReferenceBrickLocal;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPEndPointInTunnelConstant;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPEndPointInTunnelValuePort;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
@@ -23,7 +21,6 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingConstan
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
@@ -37,8 +34,7 @@ public class HAPUtilityDataAssociationMapping {
 	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
 		
 		HAPReferenceValuePort toValuePortRef = rootEleId.getValuePortRef();
-		Triple<HAPReferenceBrickLocal, HAPIdValuePort, HAPValuePort> toValuePortInfo = HAPUtilityValuePort.getValuePort(toValuePortRef, null, bundle);
-		HAPValuePort toValuePort = toValuePortInfo.getRight();
+		HAPValuePort toValuePort = HAPUtilityValuePort.getValuePort(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 
 		String toValueStructureId = rootEleId.getValueStructureId();
 		HAPValueStructureInValuePort toValueStructure = toValuePort.getValueStructureDefintion(toValueStructureId); 

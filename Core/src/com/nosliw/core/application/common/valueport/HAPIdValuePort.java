@@ -42,6 +42,11 @@ public class HAPIdValuePort extends HAPSerializableImp{
 	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_type, this.m_name});     }
 	
 	@Override
+	public HAPIdValuePort cloneValue() {
+		return new HAPIdValuePort(this.m_type, this.m_name);
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, m_type);
 		jsonMap.put(NAME, m_name);

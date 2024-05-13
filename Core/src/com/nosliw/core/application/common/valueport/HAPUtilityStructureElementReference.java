@@ -29,12 +29,7 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
-		return analyzeElementReference(reference, resolveConfigure, null, bundle, resourceMan, runtimeInfo);
-	}
-
-	
-	public static HAPResultReferenceResolve analyzeElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPPath defaultBrickPath, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultBrickPath, bundle, resourceMan, runtimeInfo);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), bundle, resourceMan, runtimeInfo);
 
 		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
 		if(resolve!=null) {

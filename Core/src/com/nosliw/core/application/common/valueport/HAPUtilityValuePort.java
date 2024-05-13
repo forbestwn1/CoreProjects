@@ -38,7 +38,7 @@ public class HAPUtilityValuePort {
 		return out;
 	}
 
-	public static HAPValuePort getValuePort(HAPReferenceValuePort valuePortRef, HAPPath baseBrickPathId, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPValuePort getValuePort(HAPReferenceValuePort valuePortRef, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick brick = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), new HAPPath(valuePortRef.getBrickReference().getIdPath()), resourceMan, runtimeInfo);
 		return brick.getValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}

@@ -36,7 +36,7 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 	}
 	
 	public HAPReferenceElement(HAPReferenceRootElement rootRef) {
-		this.cloneToRootReference(rootRef);
+		rootRef.cloneToRootReference(this);
 		this.m_elementPath = rootRef.getRootName();
 	}
 

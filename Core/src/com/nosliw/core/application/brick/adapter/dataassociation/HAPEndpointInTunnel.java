@@ -4,10 +4,10 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.common.serialization.HAPSerializableImp;
 
 @HAPEntityWithAttribute
-public abstract class HAPEndpointInTunnel extends HAPExecutableImp{
+public abstract class HAPEndpointInTunnel extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String TYPE = "type";

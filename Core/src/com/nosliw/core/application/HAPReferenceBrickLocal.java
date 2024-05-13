@@ -31,6 +31,13 @@ public class HAPReferenceBrickLocal extends HAPSerializableImp{
 	public void setRelativePath(String path) {    this.m_relativePath = path;     }
 
 	@Override
+	public HAPReferenceBrickLocal cloneValue() {
+		HAPReferenceBrickLocal out = new HAPReferenceBrickLocal(this.m_idPath);
+		out.setRelativePath(this.getRelativePath());
+		return out;
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(IDPATH, m_idPath);
 		jsonMap.put(RELATIVEPATH, m_relativePath);

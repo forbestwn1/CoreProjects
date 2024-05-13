@@ -37,6 +37,11 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 
 	
 	@Override
+	public HAPReferenceValuePort cloneValue() {
+		return new HAPReferenceValuePort(this.m_brickReference.cloneValue(), this.m_valuePortKey.cloneValue());
+	}
+	
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		if(this.m_brickReference!=null) {
 			jsonMap.put(BRICKREFERENCE, this.m_brickReference.toStringValue(HAPSerializationFormat.JSON));

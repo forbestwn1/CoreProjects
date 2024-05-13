@@ -99,7 +99,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	protected void cloneToRootReference(HAPReferenceRootElement rootEleRef) {
 		rootEleRef.m_valuePortName = this.m_valuePortName;
 		if(this.m_valuePortRef!=null) {
-			rootEleRef.m_valuePortRef = (HAPReferenceValuePort)this.m_valuePortRef.cloneValue();
+			rootEleRef.m_valuePortRef = this.m_valuePortRef.cloneValue();
 		}
 		rootEleRef.m_rootName = this.getRootName();
 	}
