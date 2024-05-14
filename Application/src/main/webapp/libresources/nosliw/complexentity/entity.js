@@ -73,8 +73,11 @@ var node_createEntityDefinition = function(original){
 var loc_createAttributeDefinition = function(attrDef){
 	var loc_attrDef = attrDef;
 	var loc_valueWrapper = loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEINBRICK_VALUEWRAPPER];
-
-	var loc_getAdapters = function(){  }    // return loc_getEmbeded()[node_COMMONATRIBUTECONSTANT.EMBEDED_ADAPTER];   };
+	var loc_adapters = {};
+	
+	_.each(loc_attrDef[node_COMMONATRIBUTECONSTANT.ATTRIBUTEINBRICK_ADAPTER], function(adapter, i){
+		loc_adapters[adapter[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = adapter;
+	});
 	
 	var loc_out = {
 		
@@ -93,9 +96,9 @@ var loc_createAttributeDefinition = function(attrDef){
 			}
 		},
 
-		getAdaptersInfo : function(){    return loc_getAdapters();     },
+		getAdaptersInfo : function(){    return loc_adapters;     },
 		
-		getAdapterInfo : function(name){    return loc_getAdapters()[name];     },
+		getAdapterInfo : function(name){    return loc_adapters[name];     },
 
 	};
 	

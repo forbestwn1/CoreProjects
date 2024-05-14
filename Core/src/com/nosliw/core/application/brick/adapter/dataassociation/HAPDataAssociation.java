@@ -1,8 +1,16 @@
 package com.nosliw.core.application.brick.adapter.dataassociation;
 
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import java.util.Map;
 
-public class HAPDataAssociation extends HAPExecutableImp{
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+
+@HAPEntityWithAttribute
+public class HAPDataAssociation extends HAPSerializableImp{
+
+	@HAPAttribute
+	public static String TYPE = "type";
 
 	private String m_dataAssociationType;
 	
@@ -12,4 +20,9 @@ public class HAPDataAssociation extends HAPExecutableImp{
 	
 	public String getDataAssociationType() {   return this.m_dataAssociationType;     }
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getDataAssociationType());
+	}
 }

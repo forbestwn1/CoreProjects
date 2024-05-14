@@ -23,9 +23,9 @@ var node_createDataAssociationAdapterPlugin = function(){
 	
 	var loc_out = {
 
-		getNewAdapterRequest : function(adapterDefinition, handlers, request){
+		getNewAdapterRequest : function(adapterDefinition, baseEntityCore, handlers, request){
 			return node_createServiceRequestInfoSimple({}, function(request){
-				return loc_createDataAssociationAdapter(adapterDefinition);
+				return loc_createDataAssociationAdapter(adapterDefinition, baseEntityCore);
 			}, handlers, request);
 		},
 	};
@@ -34,32 +34,16 @@ var node_createDataAssociationAdapterPlugin = function(){
 };
 
 
-var loc_createDataAssociationAdapter = function(dataAssociation){
+var loc_createDataAssociationAdapter = function(dataAssociation, baseEntityCore){
 	
-	var loc_dataAssociation = dataAssociation.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYDATAASSCIATION_ATTR_DATAASSOCIATION);
-	
+	var loc_baseEntityCore = baseEntityCore;
+	var loc_dataAssociationDef = dataAssociation.getAttributeValue(node_COMMONATRIBUTECONSTANT.ADAPTERDATAASSCIATION_DATAASSOCIATION);
+	var loc_dataAssociation = node_createDataAssociation(loc_dataAssociationDef, loc_baseEntityCore);
 	
 	var loc_out = {
 		
-		getExecuteRequest : function(parentCore, childRuntime, extraInfo, handlers, request){
-			var parentDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
-			var childDataIoSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(childRuntime.getCoreEntity()));
-
-			extraInfo = {
-				"provide" : {
-					"testProvide" : {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "test provide data"
-					}
-				}
-			};
-			var provideData = extraInfo.provide;
-			if(provideData!=undefined){
-				parentDataIoSet.setData(node_COMMONCONSTANT.IODATASET_PROVIDE, provideData);
-			}
-
-			var da = node_createDataAssociation(parentDataIoSet, loc_dataAssociation, childDataIoSet);
-			return da.getExecuteRequest(handlers, request);
+		getExecuteRequest : function(handlers, request){
+			return loc_dataAssociation.getExecuteRequest(handlers, request);
 		}
 	};
 	

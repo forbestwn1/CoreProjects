@@ -15,7 +15,68 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_getExecuteMappingDataAssociationRequest = function(inputIODataSet, association, outputIODataSet, targetName, handlers, request){
+var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
+	
+	//get core entity
+	var valuePortRef = valuePortEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
+	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_BRICKREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEBRICKLOCAL_RELATIVEPATH];
+	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_VALUEPORTKEY];
+	
+	var hostEntityCore = baseEntityCore;
+	if(relativePath!=undefined && relativePath!=""){
+		var segs = relativePath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
+		_.each(segs, function(seg, i){
+			var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
+			if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
+				hostEntityCore = treeNodeInterface.getParentCore();
+			}
+			else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
+				var ss = seg.split("\\"+node_COMMONCONSTANT.SEPERATOR_LEVEL1);
+				var childTreeNode = treeNodeInterface.getChild(ss[1])
+				hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
+			}
+		});		
+	}
+	
+	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_TYPE], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+};
+
+var node_getExecuteMappingDataAssociationRequest = function(association, baseEntityCore, handlers, request){
+
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
+
+	var tunnels = association[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONMAPPING_TUNNEL];
+	_.each(tunnels, function(tunnel, i){
+		var fromEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_FROMENDPOINT];
+		var toEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
+		var matchers = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_MATCHERS];
+
+		var executeTunnelRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTunnel", {}));
+		
+		var executeFromEndPointRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("fromEndPoint", {}), {
+			success: function(request, fromValue){
+				var toValuePort = loc_getValuePort(toEndPoint, baseEntityCore);
+				var toValuePortEleInfo = node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]);
+				return toValuePort.setValueRequest(toValuePortEleInfo, fromValue);
+			}
+		});
+		var fromEndPointType = fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNEL_TYPE];
+		if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_VALUEPORT){
+			var fromValuePort = loc_getValuePort(fromEndPoint, baseEntityCore);
+			var fromValuePortEleInfo = node_createValuePortElementInfo(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]);
+			executeFromEndPointRequest.addRequest(fromValuePort.getValueRequest(fromValuePortEleInfo));
+		}
+		else if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_CONSTANT){
+			
+		}
+		executeTunnelRequest.addRequest(executeFromEndPointRequest);
+		out.addRequest(executeTunnelRequest);
+	});
+	
+};
+
+
+var node_getExecuteMappingDataAssociationRequest1 = function(inputIODataSet, association, outputIODataSet, targetName, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
 	var getDataSetRequest = node_createServiceRequestInfoSet(undefined, {

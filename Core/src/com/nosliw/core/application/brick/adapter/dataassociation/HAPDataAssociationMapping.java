@@ -50,12 +50,6 @@ public class HAPDataAssociationMapping extends HAPDataAssociation{
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
-		
-	}
-	
-	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
 		for(HAPTunnel mappingPath : this.m_tunnel) {
 			dependency.addAll(mappingPath.getResourceDependency(runtimeInfo, resourceManager));

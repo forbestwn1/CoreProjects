@@ -24,33 +24,22 @@ var packageObj = library;
 //when it is executed, the data from inputIO is mapped to outputIO
 //the type of inputIO can be IODataSet or another dataAssociation
 //name in parm is for debugging purpose
-var node_createDataAssociation = function(parentIODataSet, dataAssociationDef, childIODataSet, name){
+var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, name){
 	
-	var loc_inputIODataSet;
-	var loc_outputIODataSet;
+	var loc_baseEntityCore;
 	var loc_dataAssociationDef;
 
-	var loc_init = function(parentIODataSet, dataAssociationDef, childIODataSet, name){
+	var loc_init = function(dataAssociationDef, baseEntityCore, name){
 		loc_dataAssociationDef = dataAssociationDef;
-
-		var direction = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_DIRECTION];
-
-		if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_DOWNSTREAM){
-			loc_inputIODataSet = node_createIODataSet(parentIODataSet);
-			loc_outputIODataSet = node_createIODataSet(childIODataSet);
-		}
-		else if(direction==node_COMMONCONSTANT.DATAASSOCIATION_DIRECTION_UPSTREAM){
-			loc_outputIODataSet = node_createIODataSet(parentIODataSet);
-			loc_inputIODataSet = node_createIODataSet(childIODataSet);
-		}
+		loc_baseEntityCore = baseEntityCore;
 	};
 
 	var loc_getExecuteDataAssociationRequest = function(handlers, request){
 		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
 		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
 		else{
-			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_TYPE];
-			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
+			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.DATAASSOCIATION_TYPE];
+			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(loc_dataAssociationDef, loc_baseEntityCore, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_TRANSPARENT){
@@ -76,42 +65,6 @@ var node_createDataAssociation = function(parentIODataSet, dataAssociationDef, c
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		
-
-/*		
-		getExecuteWithExtraDataRequest : function(extraDataSet, handlers, request){
-			nosliw.logging.info("Start execute data association : ", loc_out.prv_name, "   ", loc_out.prv_id);
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteDataAssociation", {}), handlers, request);
-
-			//get input data set first
-			out.addRequest(node_dataIOUtility.getGetIODataValueRequest(loc_inputIO, {
-				success: function(request, inputDataSet){
-					if(extraDataSet!=undefined){
-						//merge with extraDataSet
-						extraDataSet = node_createIODataSet(extraDataSet);
-						_.each(extraDataSet.getDataSet(), function(extraData, setName){
-							var inputData = inputDataSet[setName];
-							if(inputData==undefined){
-								inputData = {};
-								inputDataSet[setName] = inputData;
-							}
-							node_dataIOUtility.mergeContext(extraData, inputData, loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEDATAASSOCIATION_INPUT][setName]);
-						})
-					}
-					
-					//execute data associatoin
-					return loc_getExecuteDataAssociationRequest(inputDataSet, {
-						success :function(request){
-							nosliw.logging.info("Data association ", loc_out.prv_id, " result : " + node_basicUtility.stringify(loc_outputIODataSet));
-							return loc_outputIODataSet;
-						}
-					})
-				}
-			}));
-			
-			return out;
-		},
-*/
-			
 		getExecuteCommandRequest : function(commandName, data, handlers, request){
 			if(commandName=="execute"){
 				return this.getExecuteWithExtraDataRequest(data, handlers, request);
@@ -119,7 +72,7 @@ var node_createDataAssociation = function(parentIODataSet, dataAssociationDef, c
 		}
 	};
 
-	loc_init(parentIODataSet, dataAssociationDef, childIODataSet, name);
+	loc_init(dataAssociationDef, baseEntityCore, name);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DATAASSOCIATION);
 

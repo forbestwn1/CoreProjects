@@ -1,24 +1,21 @@
 package com.nosliw.core.application.resource;
 
-import java.util.List;
-
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPWrapperResourceData;
+import com.nosliw.data.core.resource.HAPWrapperResourceDataImp;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPWrapperResourceDataBrick implements HAPWrapperResourceData{
+public class HAPWrapperResourceDataBrick extends HAPWrapperResourceDataImp{
 
 	private HAPBundle m_bundle;
 	
-	private HAPManagerApplicationBrick m_brickMan;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPWrapperResourceDataBrick(HAPBundle bundle, HAPManagerApplicationBrick brickMan) {
+	public HAPWrapperResourceDataBrick(HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv) {
 		this.m_bundle = bundle;
-		this.m_brickMan = brickMan;
+		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
@@ -26,18 +23,12 @@ public class HAPWrapperResourceDataBrick implements HAPWrapperResourceData{
 		if(path.getLength()>=2) {
 			throw new RuntimeException();
 		}
-		return this.m_bundle.getExportResourceData(path.toString(), m_brickMan);
-	}
-
-	@Override
-	public List<HAPResourceDependency> getResourceDependency() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.m_bundle.getExportResourceData(path.toString(), this.m_runtimeEnv.getResourceManager(), this.m_runtimeEnv.getRuntime().getRuntimeInfo());
 	}
 
 	@Override
 	public HAPResourceData getResourceData() {
-		return this.m_bundle.getExportResourceData(null, m_brickMan);
+		return this.m_bundle.getExportResourceData(null, this.m_runtimeEnv.getResourceManager(), this.m_runtimeEnv.getRuntime().getRuntimeInfo());
 	}
 
 }

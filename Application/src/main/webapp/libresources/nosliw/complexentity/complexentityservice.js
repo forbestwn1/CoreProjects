@@ -69,15 +69,10 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_adapterPlugins = {};
 
-	var loc_getCreateAdapterRequest = function(adapterType, adapterDefinition, handlers, request){
-		if(adapterDefinition==undefined){
-			return node_createServiceRequestInfoSimple({}, function(requestInfo){
-				return;
-			});		
-		}
-		else{
-			return loc_adapterPlugins[adapterType].getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), handlers, request);
-		}
+	var loc_getCreateAdapterRequest = function(adapterDefinition, baseCore, handlers, request){
+		var entityType = adapterDefinition[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
+		var adapterEntityPlugin = loc_adapterPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
+		return adapterEntityPlugin.getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), baseCore, handlers, request);
 	};
 
 	var loc_getCreateSimpleEntityRequest = function(entityType, entityDef, configure, handlers, request){
@@ -197,13 +192,13 @@ var node_createComplexEntityRuntimeService = function() {
 
 
 		//simple entity plugin
-		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, node_createDataServiceEntityPlugin());
+		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0", node_createDataServiceEntityPlugin());
 
 
 		//adapter plugin
-		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, node_createDataAssociationAdapterPlugin());
-		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, node_createDataAssociationInteractiveAdapterPlugin());
-		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONTASK, node_createDataAssociationTaskAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, "1.0.0", node_createDataAssociationAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, "1.0.0", node_createDataAssociationInteractiveAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONTASK, "1.0.0", node_createDataAssociationTaskAdapterPlugin());
 	};
 
 
@@ -308,8 +303,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_createContainerComplexEntityRuntime(containerDef, parentCore, bundleCore, configure, request);
 		},
 		
-		getCreateAdapterRequest : function(adapterType, adapterDefinition, handlers, request){
-			return loc_getCreateAdapterRequest(adapterType, adapterDefinition, handlers, request);
+		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
+			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
 		},
 		
 		registerComplexEntityPlugin : function(entityType, version, complexEntityPlugin){
@@ -317,12 +312,14 @@ var node_createComplexEntityRuntimeService = function() {
 			loc_complexEntityPlugins[entityType][version] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
 		},
 		
-		registerSimpleEntityPlugin : function(entityType, simpleEntityPlugin){
-			loc_simpleEntityPlugins[entityType] = node_buildSimpleEntityPlugInObject(simpleEntityPlugin);
+		registerSimpleEntityPlugin : function(entityType, version, simpleEntityPlugin){
+			loc_simpleEntityPlugins[entityType] = {};
+			loc_simpleEntityPlugins[entityType][version] = node_buildSimpleEntityPlugInObject(simpleEntityPlugin);
 		},
 		
-		registerAdapterPlugin : function(adapterType, adapterPlugin){
-			loc_adapterPlugins[adapterType] = node_buildAdapterPlugInObject(adapterPlugin);
+		registerAdapterPlugin : function(adapterType, version, adapterPlugin){
+			loc_adapterPlugins[adapterType] = {};
+			loc_adapterPlugins[adapterType][version] = node_buildAdapterPlugInObject(adapterPlugin);
 		},
 		
 	};

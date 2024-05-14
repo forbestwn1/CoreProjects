@@ -47,10 +47,10 @@ var node_buildAdapterPlugInObject = function(rawPluginObj){
 
 	var interfaceDef = {
 		//create component core object
-		getNewAdapterRequest : function(adapterDefinition, handlers, request){
+		getNewAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
 			return node_createServiceRequestInfoSimple({}, function(request){
 				return {
-					getExecuteRequest : function(parent, child, handlers, request){
+					getExecuteRequest : function(handlers, request){
 						return;
 					}
 				};
@@ -144,7 +144,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 						//complex attribute
 						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 							success : function(request, complexEntityRuntime){
-								
+								node_getEntityTreeNodeInterface(complexEntityRuntime.getCoreEntity()).setParentCore(rawEntity);
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
 										return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
@@ -152,7 +152,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 								});
 								
 								_.each(adaptersInfo, function(adapterInfo){
-									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.value, complexEntityRuntime.getCoreEntity()));
 								});
 								return adaptersRequest;
 							}
@@ -212,7 +212,12 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	
 	var loc_children = node_newOrderedContainer();
 
+	var loc_parentCore;
+
 	var loc_interfaceEntity = {
+
+		getParentCore : function(){   return loc_parentCore;     },
+		setParentCore : function(parentCore){    loc_parentCore = parentCore;    },
 
 		getChildrenName : function(){   return loc_children.getAllKeys();   },
 		
