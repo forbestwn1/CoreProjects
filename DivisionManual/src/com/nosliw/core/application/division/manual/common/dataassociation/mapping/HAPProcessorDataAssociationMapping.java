@@ -64,13 +64,14 @@ public class HAPProcessorDataAssociationMapping {
 		for(HAPItemValueMapping mappingItem : mappingItems) {
 			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 		
+			normalizeValuePortRelativeBrickPath(mappingItem, baseBlockPath);
+			
 			//process out reference (root name)
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
-			
 			//process in reference (relative elements)
-			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), new HAPConfigureProcessorRelative(), null, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
+			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), new HAPConfigureProcessorRelative(), baseBlockPath, null, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
 			List<HAPTunnel> tunnels = HAPUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
 			for(HAPTunnel tunnel : tunnels) {
@@ -80,7 +81,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}	
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, HAPPath baseBlockPath, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
@@ -92,6 +93,8 @@ public class HAPProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
+//				pathReference.setValuePortRef(HAPUtilityValuePort.normalizeValuePortReference(pathReference.getValuePortRef(), baseBlockPath, currentBundle, resourceMan, runtimeInfo));
+				
 				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
 				
 				if(resolveInfo==null) {
@@ -112,7 +115,7 @@ public class HAPProcessorDataAssociationMapping {
 			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
 			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
 			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, dependency, errors, currentBundle, resourceMan, runtimeInfo));
+				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, baseBlockPath, dependency, errors, currentBundle, resourceMan, runtimeInfo));
 			}
 			nodeStructureElement.setChildren(processedChildren);
 			break;
@@ -121,7 +124,29 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 	
+	private static void normalizeValuePortRelativeBrickPath(HAPItemValueMapping mappingItem, HAPPath baseBlockPath) {
 
+		HAPReferenceRootElement targetRef = mappingItem.getTarget();
+
+		HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(targetRef.getValuePortRef(), baseBlockPath);
+		
+		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
+
+			@Override
+			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
+					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
+					HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(mappingEle.getReference().getValuePortRef(), baseBlockPath);
+				}
+				return null;
+			}
+
+			@Override
+			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
+		}, targetRef);
+		
+	}
+	
 	private static void normalizeValuePortId(HAPItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPPath parentBlockPath = baseBlockPath.trimLast();
 

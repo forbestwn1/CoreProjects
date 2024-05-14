@@ -24,10 +24,6 @@ public class HAPUtilityValuePort {
 			out.setBlockReference(brickRef);
 		}
 
-		if(brickRef.getRelativePath()==null) {
-			brickRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickRef.getIdPath(), blockPathFromRoot.toString()));
-		}
-
 		//normalize value port id
 		HAPIdValuePort valuePortId = out.getValuePortId();
 		if(valuePortId==null) {
@@ -38,6 +34,14 @@ public class HAPUtilityValuePort {
 		return out;
 	}
 
+	public static void normalizeValuePortRelativeBrickPath(HAPReferenceValuePort valuePortRef, HAPPath blockPathFromRoot) {
+		HAPReferenceBrickLocal brickRef = valuePortRef.getBrickReference();
+		if(brickRef.getRelativePath()==null) {
+			brickRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickRef.getIdPath(), blockPathFromRoot.toString()));
+		}
+	}
+
+	
 	public static HAPValuePort getValuePort(HAPReferenceValuePort valuePortRef, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick brick = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), new HAPPath(valuePortRef.getBrickReference().getIdPath()), resourceMan, runtimeInfo);
 		return brick.getValuePorts().getValuePort(valuePortRef.getValuePortId());

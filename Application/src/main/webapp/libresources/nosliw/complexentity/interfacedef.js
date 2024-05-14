@@ -131,7 +131,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 				var configure = basicEntityInterface.getConfigure();
 				var attr = complexEntityDef.getAttribute(attrName);
 
-				var adaptersInfo = attr.getAdaptersInfo();
+				var adapterNames = attr.getAdapterNames();
 				var childConfigure = configure.getChildConfigure(attrName);
 
 				var attrValueWrapper = attr.getAttributeValueWrapper();
@@ -151,8 +151,12 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 									}
 								});
 								
-								_.each(adaptersInfo, function(adapterInfo){
-									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.value, complexEntityRuntime.getCoreEntity()));
+								_.each(adapterNames, function(adapterName){
+									var adapterValueWrapper = attr.getAdapterValueWrapper(adapterName);								
+									if(adapterValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+										var adapterEntityDef = adapterValueWrapper.getEntityDefinition();
+										adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef, complexEntityRuntime.getCoreEntity()));
+									}
 								});
 								return adaptersRequest;
 							}
