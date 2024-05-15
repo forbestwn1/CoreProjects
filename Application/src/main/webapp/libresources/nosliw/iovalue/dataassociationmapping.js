@@ -12,6 +12,9 @@ var packageObj = library;
 	var node_objectOperationUtility;
 	var node_uiDataOperationServiceUtility;
 	var node_namingConvensionUtility;
+	var node_getEntityTreeNodeInterface;
+	var node_getWithValuePortInterface;
+	var node_createValuePortElementInfo;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -41,7 +44,7 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_TYPE], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
 };
 
-var node_getExecuteMappingDataAssociationRequest = function(association, baseEntityCore, handlers, request){
+var node_getExecuteMappingDataAssociationRequest = function(association, baseEntityCore, name, handlers, request){
 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
@@ -57,7 +60,11 @@ var node_getExecuteMappingDataAssociationRequest = function(association, baseEnt
 			success: function(request, fromValue){
 				var toValuePort = loc_getValuePort(toEndPoint, baseEntityCore);
 				var toValuePortEleInfo = node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]);
-				return toValuePort.setValueRequest(toValuePortEleInfo, fromValue);
+				return toValuePort.setValueRequest(toValuePortEleInfo, fromValue, {
+					success : function(request, value){
+						var v = value;
+					}
+				});
 			}
 		});
 		var fromEndPointType = fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNEL_TYPE];
@@ -72,7 +79,7 @@ var node_getExecuteMappingDataAssociationRequest = function(association, baseEnt
 		executeTunnelRequest.addRequest(executeFromEndPointRequest);
 		out.addRequest(executeTunnelRequest);
 	});
-	
+	return out;
 };
 
 
@@ -164,6 +171,9 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

@@ -35,7 +35,7 @@ var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, na
 	};
 
 	var loc_getExecuteDataAssociationRequest = function(handlers, request){
-		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
+//		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
 		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
 		else{
 			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.DATAASSOCIATION_TYPE];

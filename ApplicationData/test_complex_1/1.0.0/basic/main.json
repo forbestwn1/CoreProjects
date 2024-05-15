@@ -31,7 +31,7 @@
 								"initValue": {
 									"child_public": {
 										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of parent_public"
+										"value": "default value of child_public"
 									}
 								}
 							}
