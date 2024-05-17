@@ -28,7 +28,7 @@ public class HAPUtilityValuePort {
 		HAPIdValuePort valuePortId = out.getValuePortId();
 		if(valuePortId==null) {
 			HAPBrick brick = HAPUtilityBrick.getDescdentBrick(currentBundle.getBrickWrapper(), new HAPPath(brickRef.getIdPath()), resourceMan, runtimeInfo);
-			valuePortId = HAPUtilityValuePort.getValuePortId(HAPUtilityValuePort.getDefaultValuePortInEntity(brick));
+			valuePortId = HAPUtilityValuePort.getDefaultValuePortIdInBrick(brick);
 			out.setValuePortId(valuePortId);
 		}
 		return out;
@@ -48,12 +48,12 @@ public class HAPUtilityValuePort {
 	}
 
 	
-	public static HAPValuePort getDefaultValuePortInEntity(HAPBrick brick) {
+	public static HAPValuePort getDefaultValuePortInBrick(HAPBrick brick) {
 		return brick.getValuePorts().getValuePort(null);
 	}
 	
-	public static HAPIdValuePort getValuePortId(HAPValuePort valuePort) {
-		return new HAPIdValuePort(valuePort.getValuePortInfo().getType(), valuePort.getName());
+	public static HAPIdValuePort getDefaultValuePortIdInBrick(HAPBrick brick) {
+		return brick.getValuePorts().getDefaultValuePortId();
 	}
 	
 }

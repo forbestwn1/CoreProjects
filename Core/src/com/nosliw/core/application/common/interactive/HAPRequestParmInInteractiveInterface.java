@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.interactive.interfacee;
+package com.nosliw.core.application.common.interactive;
 
 import java.util.Map;
 

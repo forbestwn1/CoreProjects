@@ -1,12 +1,16 @@
 package com.nosliw.core.application;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
@@ -25,16 +29,22 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 	
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
 
-	
 	@Override
 	public HAPContainerValuePorts getValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
-		out.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain, true));
-		out.addValuePorts(this.getOtherValuePorts());
+		
+		HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
+		valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
+		valePortGroup.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain), true);
+		out.addValuePortGroup(valePortGroup, true);
+		
+		for(HAPGroupValuePorts group : this.getOtherValuePortGroups()) {
+			out.addValuePortGroup(group, false);
+		}
 		return out;
 	}
 	
-	protected HAPContainerValuePorts getOtherValuePorts() {   return null;   }
+	protected Set<HAPGroupValuePorts> getOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

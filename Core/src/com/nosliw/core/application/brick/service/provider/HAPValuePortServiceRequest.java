@@ -3,8 +3,8 @@ package com.nosliw.core.application.brick.service.provider;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPRequestParmInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPValuePortInteractiveRequest;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
+import com.nosliw.core.application.common.interactive1.HAPValuePortInteractiveRequest;
 import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 

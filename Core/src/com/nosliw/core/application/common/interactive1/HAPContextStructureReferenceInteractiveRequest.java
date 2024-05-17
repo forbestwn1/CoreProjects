@@ -1,11 +1,10 @@
-package com.nosliw.core.application.common.interactive;
+package com.nosliw.core.application.common.interactive1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
@@ -13,14 +12,14 @@ import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
-public class HAPContextStructureReferenceInteractiveResult implements HAPContextStructureReference{
+public class HAPContextStructureReferenceInteractiveRequest implements HAPContextStructureReference{
 
-	private HAPResultInInteractiveInterface m_result;
-	
+	private List<HAPRequestParmInInteractiveInterface> m_requestParms;
+
 	private HAPManualBrickValueStructure m_valueStructureDef;
 	
-	public HAPContextStructureReferenceInteractiveResult(HAPResultInInteractiveInterface result) {
-		this.m_result = result;
+	public HAPContextStructureReferenceInteractiveRequest(List<HAPRequestParmInInteractiveInterface> requestParms) {
+		this.m_requestParms = requestParms;
 		this.buildValueStructure();
 	}
 	
@@ -38,8 +37,10 @@ public class HAPContextStructureReferenceInteractiveResult implements HAPContext
 
 	private void buildValueStructure() {
 		this.m_valueStructureDef = new HAPManualBrickValueStructure();
-		for(HAPResultOutputInInteractiveInterface output : this.m_result.getOutput()) {
-			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(output.getCriteria()), output));
+		for(HAPRequestParmInInteractiveInterface parm : this.m_requestParms) {
+			HAPRootStructure rootStructure = new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo()), parm);
+			rootStructure.setName(parm.getName());
+			m_valueStructureDef.addRoot(rootStructure);
 		}
 	}
 }

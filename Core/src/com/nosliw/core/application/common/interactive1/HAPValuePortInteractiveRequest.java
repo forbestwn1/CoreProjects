@@ -1,24 +1,28 @@
-package com.nosliw.core.application.common.interactive;
+package com.nosliw.core.application.common.interactive1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPRequestParmInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
+import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.valueport.HAPIdValuePort;
+import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
-public class HAPContextStructureReferenceInteractiveRequest implements HAPContextStructureReference{
+public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 
 	private List<HAPRequestParmInInteractiveInterface> m_requestParms;
 
 	private HAPManualBrickValueStructure m_valueStructureDef;
 	
-	public HAPContextStructureReferenceInteractiveRequest(List<HAPRequestParmInInteractiveInterface> requestParms) {
+	public HAPValuePortInteractiveRequest(HAPIdValuePort valuePortId, HAPInfoValuePort valuePortInfo, List<HAPRequestParmInInteractiveInterface> requestParms) {
+		super(valuePortId, valuePortInfo);
 		this.m_requestParms = requestParms;
 		this.buildValueStructure();
 	}
@@ -43,4 +47,12 @@ public class HAPContextStructureReferenceInteractiveRequest implements HAPContex
 			m_valueStructureDef.addRoot(rootStructure);
 		}
 	}
+
+	@Override
+	protected List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria,
+			HAPConfigureResolveElementReference configure) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

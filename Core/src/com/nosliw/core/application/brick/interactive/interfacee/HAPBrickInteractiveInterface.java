@@ -12,10 +12,14 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrickImp;
+import com.nosliw.core.application.common.interactive.HAPInteractive;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPBrickInteractiveInterface extends HAPBrickImp{
+public class HAPBrickInteractiveInterface extends HAPBrickImp implements HAPInteractive{
 
 	@HAPAttribute
 	public static String REQUEST = "request";

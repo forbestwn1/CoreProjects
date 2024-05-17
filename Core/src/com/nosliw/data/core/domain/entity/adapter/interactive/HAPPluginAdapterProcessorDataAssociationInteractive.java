@@ -3,11 +3,11 @@ package com.nosliw.data.core.domain.entity.adapter.interactive;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.interactive.HAPContextStructureReferenceInteractiveRequest;
-import com.nosliw.core.application.common.interactive.HAPContextStructureReferenceInteractiveResult;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPBrickInteractive;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive1.HAPBrickInteractive;
+import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveRequest;
+import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveResult;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;

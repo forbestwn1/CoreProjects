@@ -12,43 +12,43 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 public class HAPIdValuePort extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static final String TYPE = "type";
+	public static final String GROUP = "group";
 
 	@HAPAttribute
 	public static final String NAME = "name";
 
-	private String m_type;
-	
+	private String m_group;
+
 	private String m_name;
 
-	public HAPIdValuePort(String type, String name) {
-		this.m_type = type;
+	public HAPIdValuePort(String group, String name) {
+		this.m_group = group;
 		this.m_name = name;
 	}
 	
 	public HAPIdValuePort(String strValue) {
 		String[] segs = HAPUtilityNamingConversion.parsePaths(strValue);
-		this.m_type = segs[0];
+		this.m_group = segs[0];
 		if(segs.length>1) {
 			this.m_name = segs[1];
 		}
 	}
 	
-	public String getType() {    return this.m_type;     }
+	public String getValuePortGroup() {   return this.m_group;      }
 	
 	//name of the port within entity
 	public String getValuePortName() {    return this.m_name;     }
 	
-	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_type, this.m_name});     }
+	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_group, this.m_name});     }
 	
 	@Override
 	public HAPIdValuePort cloneValue() {
-		return new HAPIdValuePort(this.m_type, this.m_name);
+		return new HAPIdValuePort(this.m_group, this.m_name);
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(TYPE, m_type);
+		jsonMap.put(GROUP, m_group);
 		jsonMap.put(NAME, m_name);
 	}
 }

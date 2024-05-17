@@ -1,7 +1,7 @@
 package com.nosliw.data.core.component.event;
 
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
+import com.nosliw.core.application.common.interactive1.HAPUtilityInteractive;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.handler.HAPExecutableHandler;

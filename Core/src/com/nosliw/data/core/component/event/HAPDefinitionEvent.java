@@ -1,6 +1,6 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
 
 public class HAPDefinitionEvent extends HAPResultInInteractiveInterface{
 

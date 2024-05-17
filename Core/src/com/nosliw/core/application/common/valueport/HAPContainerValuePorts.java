@@ -5,56 +5,62 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPUtilityBasic;
+
 public class HAPContainerValuePorts {
 
-	private Map<String, HAPValuePort> m_valuePortByKey;
+	private Map<String, HAPGroupValuePorts> m_valuePortGroupByName;
+
+	private String m_defaultName;
+	
+	private int m_idIndex = 0;
 	
 	public HAPContainerValuePorts() {
-		this.m_valuePortByKey = new LinkedHashMap<String, HAPValuePort>();
+		this.m_valuePortGroupByName = new LinkedHashMap<String, HAPGroupValuePorts>();
 	}
 	
-	public void addValuePort(HAPValuePort valuePort) {
-		String key = getValuePortKey(valuePort);
-		this.m_valuePortByKey.put(key, valuePort);
+	public Set<HAPGroupValuePorts> getValuePortGroups(){
+		return new HashSet<HAPGroupValuePorts>(this.m_valuePortGroupByName.values());
 	}
 	
-	public void addValuePorts(HAPContainerValuePorts valuePortContainer) {
-		if(valuePortContainer!=null) {
-			for(HAPValuePort valuePort : valuePortContainer.getValuePorts()) {
-				this.addValuePort(valuePort);
-			}
+	public void addValuePortGroup(HAPGroupValuePorts group, boolean isDefault) {
+		String name = group.getName();
+		if(HAPUtilityBasic.isStringEmpty(name)) {
+			name = "group" + this.m_idIndex;
+			this.m_idIndex++;
+			group.setName(name);
+		}
+		this.m_valuePortGroupByName.put(group.getName(), group);
+		if(isDefault) {
+			this.m_defaultName = name;
 		}
 	}
-	
-	public Set<HAPValuePort> getValuePorts(){
-		return new HashSet<HAPValuePort>(this.m_valuePortByKey.values());
+
+	public HAPIdValuePort getDefaultValuePortId() {
+		String groupId = this.getDefaultGroupName();
+		String valuePortId = null;
+		if(groupId!=null) {
+			valuePortId = this.m_valuePortGroupByName.get(groupId).getDefaultValuePortName();
+		}
+		return new HAPIdValuePort(groupId, valuePortId);
 	}
 	
 	public HAPValuePort getValuePort(HAPIdValuePort valuePortId) {
-		if(valuePortId!=null) {
-			return this.m_valuePortByKey.get(valuePortId.getKey());
+		String groupName = null;
+		if(valuePortId==null||valuePortId.getValuePortGroup()==null) {
+			groupName = this.getDefaultGroupName();
 		}
 		else {
-			//find default one
-			for(HAPValuePort valuePort : this.m_valuePortByKey.values()) {
-				if(valuePort.isDefault()) {
-					return valuePort;
-				}
-			}
+			groupName = valuePortId.getValuePortGroup();
 		}
-		return null;
-	}
-	
-	public HAPIdValuePort getDefaultValuePortId() {
-		for(String key : this.m_valuePortByKey.keySet()) {
-			if(this.m_valuePortByKey.get(key).isDefault()) {
-				return new HAPIdValuePort(key);
-			}
+		if(groupName==null) {
+			return null;
 		}
-		return null;
+		
+		HAPGroupValuePorts group = this.m_valuePortGroupByName.get(groupName);
+		String valuePortName = valuePortId==null?null:valuePortId.getValuePortName();
+		return group.getValuePort(valuePortName);
 	}
-	
-	private String getValuePortKey(HAPValuePort valuePort) {
-		return HAPUtilityValuePort.getValuePortId(valuePort).getKey();
-	}
+
+	private String getDefaultGroupName() {    return this.m_defaultName;    }
 }

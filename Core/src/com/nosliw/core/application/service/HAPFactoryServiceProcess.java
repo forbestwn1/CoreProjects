@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultOutputInInteractiveInterface;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
 import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.data.HAPContextDataFactory;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;

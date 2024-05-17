@@ -24,11 +24,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
 	public HAPValuePortValueContext(HAPBrickBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
-		this(complexEntityExe, valueStructureDomain, false);
-	}
-
-	public HAPValuePortValueContext(HAPBrickBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain, boolean isDefault) {
-		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT), isDefault);
+		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT));
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;
 	}

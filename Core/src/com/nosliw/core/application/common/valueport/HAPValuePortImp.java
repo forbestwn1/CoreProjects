@@ -7,22 +7,12 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 
 public abstract class HAPValuePortImp extends HAPEntityInfoImp implements HAPValuePort{
 
-	private boolean m_isDefault = false;
-	
 	private HAPInfoValuePort m_valuePortInfo;
 	
-	public HAPValuePortImp(HAPIdValuePort valuePortId, HAPInfoValuePort valuePortInfo) {
-		this(valuePortInfo, false);
-	}
-
-	public HAPValuePortImp(HAPInfoValuePort valuePortInfo, boolean isDefault) {
+	public HAPValuePortImp(HAPInfoValuePort valuePortInfo) {
 		this.m_valuePortInfo = valuePortInfo;
-		this.m_isDefault = isDefault;
 	}
 
-	@Override
-	public boolean isDefault() {    return this.m_isDefault;    }
-	
 	@Override
 	public HAPInfoValuePort getValuePortInfo() {    return this.m_valuePortInfo;     }
 

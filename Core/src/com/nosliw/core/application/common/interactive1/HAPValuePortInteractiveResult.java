@@ -1,11 +1,11 @@
-package com.nosliw.core.application.common.interactive;
+package com.nosliw.core.application.common.interactive1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPIdValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;

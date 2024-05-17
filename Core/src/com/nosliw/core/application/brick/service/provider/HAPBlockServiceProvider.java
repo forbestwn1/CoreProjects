@@ -2,18 +2,20 @@ package com.nosliw.core.application.brick.service.provider;
 
 import java.util.Map;
 
-import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPBrickInteractive;
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.HAPBrickBlockSimple;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
-public class HAPBrickServiceProvider extends HAPBrickInteractive{
+@HAPEntityWithAttribute
+public class HAPBlockServiceProvider extends HAPBrickBlockSimple{
 
-	public static final String ATTR_SERVICEID = "serviceId";
+	@HAPAttribute
+	public static final String SERVICEID = "serviceId";
 
-	public void setServiceId(String serviceId) {	this.setAttributeValueObject(ATTR_SERVICEID, serviceId);	}
-
-	public String getServiceId() {	return (String)this.getAttributeValueOfValue(ATTR_SERVICEID);	}
+	public void setServiceId(String serviceId) {	this.setAttributeValueWithValue(SERVICEID, serviceId);	}
+	public String getServiceId() {	return (String)this.getAttributeValueOfValue(SERVICEID);	}
 	 
 	@Override
 	public HAPContainerValuePorts getValuePorts() {

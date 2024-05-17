@@ -15,8 +15,8 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPRequestParmInInteractiveInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
