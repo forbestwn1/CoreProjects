@@ -50,9 +50,9 @@ public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProc
 //		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
 //	}
 //	
-//	public Pair<HAPManualBlockComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
+//	public Pair<HAPManualBrickBlockComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
 //		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-//		HAPManualBlockComplex entityDef = (HAPManualBlockComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
+//		HAPManualBrickBlockComplex entityDef = (HAPManualBrickBlockComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
 //		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
 //		return Pair.of(entityDef, entityExe);
 //	}

@@ -3,15 +3,16 @@ package com.nosliw.core.application.division.manual.brick.service.provider;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.brick.service.provider.HAPKeyService;
+import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 
-public class HAPDefinitionEntityInDomainServiceProvider extends HAPManualBrick{
+public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickBlockSimple{
 
 	public static final String SERVICEKEY = "serviceKey";
 
-	protected HAPDefinitionEntityInDomainServiceProvider(HAPIdBrickType brickTypeId) {
-		super(brickTypeId);
+	public HAPManualBlockSimpleServiceProvider() {
+		super(HAPEnumBrickType.SERVICEPROVIDER_100);
 	}
 
 	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeWithValueValue(SERVICEKEY, serviceKey);	}
@@ -33,5 +34,4 @@ public class HAPDefinitionEntityInDomainServiceProvider extends HAPManualBrick{
 		}
 		return true;  
 	}
-	
 }

@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.test.complex.testcompl
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplexImp;
 
-public class HAPManualPluginProcessorBrickDefinitionComplexImpTestComplex1 extends HAPPluginProcessorBlockComplexImp{
+public class HAPManualPluginProcessorBlockComplexImpTestComplex1 extends HAPPluginProcessorBlockComplexImp{
 
-	public HAPManualPluginProcessorBrickDefinitionComplexImpTestComplex1() {
+	public HAPManualPluginProcessorBlockComplexImpTestComplex1() {
 		super(HAPEnumBrickType.TEST_COMPLEX_1_100);
 	}
 

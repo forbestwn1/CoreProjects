@@ -1,12 +1,12 @@
 package com.nosliw.core.application.division.manual;
 
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.core.application.HAPBrickBlockSimple;
 
 public interface HAPPluginProcessorBlockSimple extends HAPPluginProcessorBlock{
 
 	String getEntityType();
 	
 	//process
-	void process(HAPExecutableEntity entityExe, HAPManualContextProcessBrick processContext);
+	void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext);
 
 }

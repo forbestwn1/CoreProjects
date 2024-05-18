@@ -23,14 +23,14 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple{
 	@HAPAttribute
 	public static final String SERVICEID = "serviceId";
 
-	public void setServiceId(String serviceId) {	this.setAttributeValueWithValue(SERVICEID, serviceId);	}
-	public String getServiceId() {	return (String)this.getAttributeValueOfValue(SERVICEID);	}
+	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeValueWithValue(SERVICEID, serviceKey);	}
+	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueOfValue(SERVICEID);	}
 	 
 	@Override
 	public HAPContainerValuePorts getValuePorts() {
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
-		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrick.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceId()));
+		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrick.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
 		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBrickServiceProfile.INTERFACE);
 		
 		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)this.getResourceManager().getResources(Lists.asList(serviceInterfaceResourceId, new HAPResourceId[0]), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo()).getLoadedResources().get(0).getResourceData();
@@ -39,6 +39,6 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple{
 		
 		out.addValuePortGroup(valuePortGroup, true);
 		
-		return null;	
+		return out;	
 	}
 }

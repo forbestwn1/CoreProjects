@@ -6,8 +6,49 @@
 	"brick": [
 		{
 			"info": {
-				"name" : "merge_runtime_localresource-test_complex_script",
+				"name" : "service-serviceprovider",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"serviceKey" : {
+					"id" : "TestBasicService"
+				},
+				"adapter":[
+					{
+						"name1" : "serviceAdapter",
+						"status": "disabled1",
+						"entityType" : "dataAssociationTask",
+						"entity" : {
+							"in" : {
+								"serviceParm1" : {
+									"definition" : {
+										"mapping" : {
+											"elementPath": "parm1"
+										}
+									}
+								}
+							},
+							"out" : {
+								"success" : {
+									"output1" : {
+										"definition" : {
+											"mapping" : {
+												"elementPath": "outputInService1"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}		
+		},
+		{
+			"info": {
+				"name" : "merge_runtime_localresource-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

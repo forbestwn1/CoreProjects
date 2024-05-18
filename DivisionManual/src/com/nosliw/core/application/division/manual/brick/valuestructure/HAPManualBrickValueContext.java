@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBlockSimple;
+import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualWrapperValueBrick;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainerSimpleList;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
-public class HAPManualBrickValueContext extends HAPManualBlockSimple implements HAPWithConstantScriptExpression{
+public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implements HAPWithConstantScriptExpression{
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	

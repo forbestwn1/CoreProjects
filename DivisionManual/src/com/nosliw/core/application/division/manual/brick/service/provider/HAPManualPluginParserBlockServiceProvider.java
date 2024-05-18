@@ -8,15 +8,15 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginParserBrickImpServiceProvider extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserBlockServiceProvider extends HAPPluginParserBrickImpSimple{
 
-	public HAPPluginParserBrickImpServiceProvider(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.SERVICEPROVIDER_100, HAPDefinitionEntityInDomainServiceProvider.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBlockServiceProvider(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPEnumBrickType.SERVICEPROVIDER_100, HAPManualBlockSimpleServiceProvider.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
-		HAPDefinitionEntityInDomainServiceProvider entity = (HAPDefinitionEntityInDomainServiceProvider)entityDefinition;
+		HAPManualBlockSimpleServiceProvider entity = (HAPManualBlockSimpleServiceProvider)entityDefinition;
 		entity.buildObject(jsonValue, HAPSerializationFormat.JSON);
 	}
 }

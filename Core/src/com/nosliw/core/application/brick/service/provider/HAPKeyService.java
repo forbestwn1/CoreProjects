@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.service.provider;
+package com.nosliw.core.application.brick.service.provider;
 
 import org.json.JSONObject;
 
@@ -6,7 +6,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 
 public class HAPKeyService extends HAPSerializableImp{
 
-	public static final String ATTR_ID = "id";
+	public static final String ID = "id";
 
 	private String m_id;
 	
@@ -22,7 +22,7 @@ public class HAPKeyService extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		try{
 			JSONObject objJson = (JSONObject)json;
-			this.m_id = objJson.getString(ATTR_ID);
+			this.m_id = objJson.getString(ID);
 		}
 		catch(Exception e){
 			e.printStackTrace();

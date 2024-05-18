@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBlockComplex;
+import com.nosliw.core.application.division.manual.HAPManualBrickBlockComplex;
 
-public class HAPManualBrickTestComplexScript extends HAPManualBlockComplex{
+public class HAPManualBrickTestComplexScript extends HAPManualBrickBlockComplex{
 
 	public static final String ATTR_SCRIPTNAME = "scriptName";
 	public static final String ATTR_PARM = "parm";

@@ -1,33 +1,18 @@
 package com.nosliw.core.application.division.manual;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.common.valueport.HAPDefinitionValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 
 //entity that have data value structure and attachment
-public abstract class HAPManualBlockComplex extends HAPManualBrickBlock{
+public abstract class HAPManualBrickBlockComplex extends HAPManualBrickBlock{
 
 	static private String VALUECONTEXT = "valueContext"; 
 	
-	protected HAPManualBlockComplex (HAPIdBrickType entityType) {
+	protected HAPManualBrickBlockComplex (HAPIdBrickType entityType) {
 		super(entityType);
 	}
-	
-	@Override
-	public Set<HAPDefinitionValuePort> getValuePorts(){
-		Set<HAPDefinitionValuePort> out = new HashSet<HAPDefinitionValuePort>();
-		out.add(this.getValueContextValuePort());
-		out.addAll(this.getOtherValuePorts());
-		return out;
-	}
-	protected HAPDefinitionValuePort getValueContextValuePort(){		return new HAPDefinitionValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.VALUEPORT_NAME_DEFAULT);	}
-	protected Set<HAPDefinitionValuePort> getOtherValuePorts(){		return new HashSet<HAPDefinitionValuePort>();	}
 	
 	
 	public HAPManualBrickValueContext getValueContextBrick() {    return (HAPManualBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
