@@ -15,7 +15,9 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -37,7 +39,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 
 	private HAPInfoBrickType m_brickTypeInfo;
 	
-	private HAPManagerApplicationBrick m_brickMan;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 
 	public HAPBrick() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
@@ -46,7 +48,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
 
-	public void setBrickManager(HAPManagerApplicationBrick brickMan) {    this.m_brickMan = brickMan;      }
+	public void setRuntimeEnvironment(HAPRuntimeEnvironment runtimeEnv) {     this.m_runtimeEnv = runtimeEnv;      }
 	
 	public HAPInfoTreeNode getTreeNodeInfo() {  return this.m_tempTreeNodeInfo;  }
 	public void setTreeNodeInfo(HAPInfoTreeNode treeNodeInfo) {   this.m_tempTreeNodeInfo = treeNodeInfo;     }
@@ -74,7 +76,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 		}
 		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 			HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
-			out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), m_brickMan);			
+			out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), this.getBrickManager());			
 		}
 		return out;	
 	}
@@ -137,7 +139,9 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 		}
 	}
 
-	protected HAPManagerApplicationBrick getBrickManager() {    return this.m_brickMan;     }
+	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
+	protected HAPManagerApplicationBrick getBrickManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
+	protected HAPResourceManager getResourceManager() {    return this.getRuntimeEnvironment().getResourceManager();     }
 	
 	abstract public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan);
 

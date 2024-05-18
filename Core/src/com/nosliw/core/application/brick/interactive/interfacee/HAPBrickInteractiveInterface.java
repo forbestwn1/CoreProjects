@@ -11,15 +11,14 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPBrickImp;
+import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
 import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPBrickInteractiveInterface extends HAPBrickImp implements HAPInteractive{
+public class HAPBrickInteractiveInterface extends HAPBrickBlockSimple implements HAPInteractive{
 
 	@HAPAttribute
 	public static String REQUEST = "request";
@@ -34,18 +33,20 @@ public class HAPBrickInteractiveInterface extends HAPBrickImp implements HAPInte
 	}
 	
 	public void addRequestParm(HAPRequestParmInInteractiveInterface parm) { this.getRequestParms().add(parm);  }
+	@Override
 	public List<HAPRequestParmInInteractiveInterface> getRequestParms(){   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValueOfValue(REQUEST);   }
 	
+	@Override
 	public Map<String, HAPResultInInteractiveInterface> getResults(){ return (Map<String, HAPResultInInteractiveInterface>)this.getAttributeValueOfValue(RESULT);  }
 	public HAPResultInInteractiveInterface getResult(String result) {   return this.getResults().get(result);  }
 	public List<HAPResultOutputInInteractiveInterface> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
 	public void addResult(HAPResultInInteractiveInterface result) {  this.getResults().put(result.getName(), result);  }
 	
-	public void process(HAPRuntimeEnvironment runtimeEnv) {
-		for(HAPRequestParmInInteractiveInterface parm : this.getRequestParms()) {
-			parm.getDataInfo().process(runtimeEnv);
-		}
-	}
+//	public void process(HAPRuntimeEnvironment runtimeEnv) {
+//		for(HAPRequestParmInInteractiveInterface parm : this.getRequestParms()) {
+//			parm.getDataInfo().process(runtimeEnv);
+//		}
+//	}
 	
 //	protected void cloneToInteractive(HAPBrickInteractiveInterface interactive) {
 //		this.cloneToEntityInfo(interactive);

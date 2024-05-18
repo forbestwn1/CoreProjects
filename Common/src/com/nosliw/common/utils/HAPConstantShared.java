@@ -890,8 +890,14 @@ public class HAPConstantShared {
 
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
-		public static final String VALUEPORT_TYPE_SERVICE_REQUEST = "serviceRequest";
-		public static final String VALUEPORT_TYPE_SERVICE_RESULT = "serviceResult";
+		public static final String VALUEPORT_TYPE_INTERACTIVE_REQUEST = "interactiveRequest";
+		public static final String VALUEPORT_TYPE_INTERACTIVE_RESULT = "interactiveResult";
+
+
+
+		public static final String IO_DIRECTION_IN = "IN";
+		public static final String IO_DIRECTION_OUT = "OUT";
+		public static final String IO_DIRECTION_BOTH = "BOTH";
 
 
 
