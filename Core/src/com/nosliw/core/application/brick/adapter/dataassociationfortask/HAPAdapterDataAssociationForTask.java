@@ -3,28 +3,14 @@ package com.nosliw.core.application.brick.adapter.dataassociationfortask;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrickAdapter;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
-import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForTask;
 
 @HAPEntityWithAttribute
 public class HAPAdapterDataAssociationForTask extends HAPBrickAdapter{
 
 	@HAPAttribute
-	public static final String DATAASSOCIATIONREQUEST = "dataAssociationRequest";
+	public static final String DATAASSOCIATION = "dataAssociation";
 	
-	@HAPAttribute
-	public static final String DATAASSOCIATIONRESPONSE = "dataAssociationResponse";
-	
-	@Override
-	public void init() {
-		this.getBrickManager().newBrickInstance(HAPEnumBrickType.CONTAINER_100);
-	}
-
-	public void setRequestDataAssociation(HAPDataAssociation dataAssociation) {		this.setAttributeValueWithBrick(DATAASSOCIATIONREQUEST, dataAssociation);	}
-	public void setResponseDataAssociation(String responseName, HAPAdapterDataAssciation dataAssociation) {
-		HAPBrickContainer responses = (HAPBrickContainer)this.getAttributeValueOfBrick(DATAASSOCIATIONRESPONSE);
-		responses.addElement(responseName, dataAssociation);
-	}
+	public void setDataAssciation(HAPDataAssociationForTask dataAssciation) {    this.setAttributeValueWithValue(DATAASSOCIATION, dataAssciation);    }
+	public HAPDataAssociationForTask getDataAssociation() {   return (HAPDataAssociationForTask)this.getAttributeValueOfValue(DATAASSOCIATION);     }
 }

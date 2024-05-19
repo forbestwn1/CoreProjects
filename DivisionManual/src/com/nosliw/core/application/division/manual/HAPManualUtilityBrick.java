@@ -14,9 +14,9 @@ import com.nosliw.core.application.HAPUtilityBrick;
 
 public class HAPManualUtilityBrick {
 
-	public static Pair<HAPManualBrick, HAPBrick> getEntityPair(HAPPath path, HAPBundle bundle){
+	public static Pair<HAPManualBrick, HAPBrick> getBrickPair(HAPPath path, HAPBundle bundle){
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
-		HAPManualBrick entityDef = getDescdentEntityDefinition(rootEntityDefInfo, path);
+		HAPManualBrick entityDef = getDescdentBrickDefinition(rootEntityDefInfo, path);
 		HAPBrick entityExe = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
@@ -32,7 +32,7 @@ public class HAPManualUtilityBrick {
 		return out;
 	}
 	
-	public static HAPManualBrick getDescdentEntityDefinition(HAPManualWrapperBrick rootEntityInfo, HAPPath path) {
+	public static HAPManualBrick getDescdentBrickDefinition(HAPManualWrapperBrick rootEntityInfo, HAPPath path) {
 		return getDescendantEntity(rootEntityInfo.getBrick(), path);
 	}
 	
@@ -76,7 +76,7 @@ public class HAPManualUtilityBrick {
 
 	public static HAPManualBrick getEntityDefinitionFromExeTreeNode(HAPTreeNode treeNodeExe, HAPBundle bundle) {
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
-		return HAPManualUtilityBrick.getDescdentEntityDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
+		return HAPManualUtilityBrick.getDescdentBrickDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
 	}
 	
 	public static boolean isAttributeAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {

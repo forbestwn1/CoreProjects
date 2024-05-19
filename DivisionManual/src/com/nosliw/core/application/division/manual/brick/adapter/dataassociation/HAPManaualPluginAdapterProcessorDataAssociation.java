@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.division.manual.HAPManualBrickAdapter;
@@ -26,7 +26,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginPr
 	@Override
 	public void process(HAPBrickAdapter adapterExe, HAPManualBrickAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
 		HAPManualAdapterDataAssociation daAdapterDef = (HAPManualAdapterDataAssociation)adapterDef;
-		HAPAdapterDataAssciation daAdapterExe = (HAPAdapterDataAssciation)adapterExe;
+		HAPAdapterDataAssociation daAdapterExe = (HAPAdapterDataAssociation)adapterExe;
 		HAPDataAssociationMapping daExe = new HAPDataAssociationMapping();
 		daAdapterExe.setDataAssciation(daExe);
 		List<HAPManualDataAssociation> das = daAdapterDef.getDataAssociation();

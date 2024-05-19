@@ -34,7 +34,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		
 		HAPBundle bundle = processContext.getCurrentBundle();
 		
-		Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getEntityPair(pathFromRoot, bundle);
+		Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getBrickPair(pathFromRoot, bundle);
 		HAPManualBrickTestComplexScript definitionEntity = (HAPManualBrickTestComplexScript)entityPair.getLeft();
 		HAPBlockTestComplexScript executableEntity = (HAPBlockTestComplexScript)entityPair.getRight();
 		

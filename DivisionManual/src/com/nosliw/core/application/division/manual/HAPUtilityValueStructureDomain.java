@@ -74,7 +74,7 @@ public class HAPUtilityValueStructureDomain {
 				
 				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
 				
-				Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getEntityPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
+				Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
 				
 				HAPManualBrickBlockComplex rootEntityDef = (HAPManualBrickBlockComplex)rootEntityDefInfo.getBrick();
 				HAPManualBrickBlockComplex complexEntityDef = (HAPManualBrickBlockComplex)entityPair.getLeft();

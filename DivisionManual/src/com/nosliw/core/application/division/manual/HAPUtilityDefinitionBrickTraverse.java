@@ -17,7 +17,7 @@ public class HAPUtilityDefinitionBrickTraverse {
 		}
 
 		if(processor.processEntityNode(rootEntityInfo, path, data)) {
-			HAPManualBrick leafEntity = HAPManualUtilityBrick.getDescdentEntityDefinition(rootEntityInfo, path);
+			HAPManualBrick leafEntity = HAPManualUtilityBrick.getDescdentBrickDefinition(rootEntityInfo, path);
 			
 			if(leafEntity!=null) {
 				List<HAPManualAttribute> attrs = leafEntity.getAllAttributes();

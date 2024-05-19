@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
+import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
@@ -45,7 +46,8 @@ public class HAPManagerApplicationBrick {
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false), HAPBlockServiceProvider.class, this.m_runtimeEnv));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, false), HAPAdapterDataAssciation.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, false), HAPAdapterDataAssociation.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, false), HAPAdapterDataAssociationForTask.class, this.m_runtimeEnv));
 	}
 
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();	}

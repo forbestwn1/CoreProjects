@@ -3,14 +3,17 @@ package com.nosliw.core.application.common.dataassociation;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 @HAPEntityWithAttribute
 public class HAPDataAssociationForTask extends HAPSerializableImp{
 
+	@HAPAttribute
 	public static String OUT = "out";
 
+	@HAPAttribute
 	public static String IN = "in";
 
 	private HAPDataAssociation m_inDataAssociation;

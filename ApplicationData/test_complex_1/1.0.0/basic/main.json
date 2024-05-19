@@ -19,23 +19,28 @@
 				{
 					"name1" : "serviceAdapter",
 					"status": "disabled1",
-					"entityType" : "dataAssociationForTask",
-					"entity" : {
-						"in" : {
-							"serviceParm1" : {
-								"definition" : {
-									"mapping" : {
-										"elementPath": "parm1"
-									}
-								}
-							}
-						},
-						"out" : {
-							"success" : {
-								"output1" : {
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"serviceParm1" : {
 									"definition" : {
 										"mapping" : {
-											"elementPath": "outputInService1"
+											"elementPath": "parm1"
+										}
+									}
+								}
+							},
+							"out" : {
+								"success" : {
+									"output1" : {
+										"definition" : {
+											"mapping" : {
+												"elementPath": "outputInService1"
+											}
 										}
 									}
 								}

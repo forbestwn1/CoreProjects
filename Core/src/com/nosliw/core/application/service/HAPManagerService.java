@@ -36,7 +36,7 @@ public class HAPManagerService implements HAPPluginDivision{
 
 	public HAPManagerService(HAPRuntimeEnvironment runtimeEnv){
 		this.m_runtimeEnv = runtimeEnv;
-		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
+//		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
 		this.m_serviceInterfaceMan = new HAPManagerServiceInterface(this.m_runtimeEnv.getBrickManager()); 
