@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.adapter.dataassociation;
+package com.nosliw.core.application.common.dataassociation;
 
 import java.util.ArrayList;
 import java.util.List;

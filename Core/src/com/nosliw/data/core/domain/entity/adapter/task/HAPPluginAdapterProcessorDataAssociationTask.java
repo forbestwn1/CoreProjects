@@ -8,8 +8,8 @@ import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInte
 import com.nosliw.core.application.common.interactive1.HAPBrickInteractive;
 import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveRequest;
 import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveResult;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;

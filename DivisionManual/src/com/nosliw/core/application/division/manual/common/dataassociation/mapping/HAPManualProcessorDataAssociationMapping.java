@@ -15,8 +15,8 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPDataAssociationMapping;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
+import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafProvide;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -50,7 +50,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
-public class HAPProcessorDataAssociationMapping {
+public class HAPManualProcessorDataAssociationMapping {
 
 	public static HAPDataAssociationMapping processValueMapping(
 			HAPManualDataAssociationMapping daDef,
@@ -60,8 +60,8 @@ public class HAPProcessorDataAssociationMapping {
 	{
 		HAPDataAssociationMapping out = new HAPDataAssociationMapping();
 		
-		List<HAPItemValueMapping> mappingItems = daDef.getItems();
-		for(HAPItemValueMapping mappingItem : mappingItems) {
+		List<HAPManualItemValueMapping> mappingItems = daDef.getItems();
+		for(HAPManualItemValueMapping mappingItem : mappingItems) {
 			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 		
 			normalizeValuePortRelativeBrickPath(mappingItem, baseBlockPath);
@@ -73,7 +73,7 @@ public class HAPProcessorDataAssociationMapping {
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), new HAPConfigureProcessorRelative(), baseBlockPath, null, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
-			List<HAPTunnel> tunnels = HAPUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
+			List<HAPTunnel> tunnels = HAPManualUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
 			for(HAPTunnel tunnel : tunnels) {
 				out.addTunnel(tunnel);
 			}
@@ -124,7 +124,7 @@ public class HAPProcessorDataAssociationMapping {
 		return out;
 	}
 	
-	private static void normalizeValuePortRelativeBrickPath(HAPItemValueMapping mappingItem, HAPPath baseBlockPath) {
+	private static void normalizeValuePortRelativeBrickPath(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath) {
 
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 
@@ -147,7 +147,7 @@ public class HAPProcessorDataAssociationMapping {
 		
 	}
 	
-	private static void normalizeValuePortId(HAPItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static void normalizeValuePortId(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPPath parentBlockPath = baseBlockPath.trimLast();
 
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
@@ -201,8 +201,8 @@ public class HAPProcessorDataAssociationMapping {
 			HAPContextProcessor toProcessorContext,
 			HAPRuntimeEnvironment runtimeEnv
 			) {
-		List<HAPItemValueMapping> mappingItems = valueMapping.getItems();
-		for(HAPItemValueMapping mappingItem : mappingItems) {
+		List<HAPManualItemValueMapping> mappingItems = valueMapping.getItems();
+		for(HAPManualItemValueMapping mappingItem : mappingItems) {
 			
 			normalizeValuePortId(mappingItem, fromEntityExe, toEntityExe);
 			
@@ -212,7 +212,7 @@ public class HAPProcessorDataAssociationMapping {
 			
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, fromProcessorContext);
-			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
+			HAPManualItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPManualItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
 			//build relative assignment path mapping according to relative node

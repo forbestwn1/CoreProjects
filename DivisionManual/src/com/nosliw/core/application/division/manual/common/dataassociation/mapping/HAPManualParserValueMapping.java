@@ -13,17 +13,17 @@ import com.nosliw.core.application.common.structure.HAPParserStructure;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 
-public class HAPParserValueMapping {
+public class HAPManualParserValueMapping {
 
-	public static List<HAPItemValueMapping> parses(Object itemsObj){
-		List<HAPItemValueMapping> out = new ArrayList<>();
+	public static List<HAPManualItemValueMapping> parses(Object itemsObj){
+		List<HAPManualItemValueMapping> out = new ArrayList<>();
 		if(itemsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)itemsObj;
 			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleKey = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleKey);
-				HAPItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
+				HAPManualItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null) {
 					HAPReferenceElement target = new HAPReferenceElement();
 					target.buildObject(eleKey, HAPSerializationFormat.JSON);
@@ -36,7 +36,7 @@ public class HAPParserValueMapping {
 			JSONArray elementsArray = (JSONArray)itemsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
+				HAPManualItemValueMapping item = parseValueMappingItemFromJson(eleDefJson);
 				if(item!=null) {
 					out.add(item);
 				}
@@ -46,8 +46,8 @@ public class HAPParserValueMapping {
 	}
 	
 	//parse context root
-	public static HAPItemValueMapping parseValueMappingItemFromJson(JSONObject eleDefJson){
-		HAPItemValueMapping out = new HAPItemValueMapping();
+	public static HAPManualItemValueMapping parseValueMappingItemFromJson(JSONObject eleDefJson){
+		HAPManualItemValueMapping out = new HAPManualItemValueMapping();
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
@@ -56,7 +56,7 @@ public class HAPParserValueMapping {
 		}
 
 		//target
-		Object targetObj = eleDefJson.opt(HAPItemValueMapping.TARGET);
+		Object targetObj = eleDefJson.opt(HAPManualItemValueMapping.TARGET);
 		if(targetObj!=null) {
 			HAPReferenceRootElement target = new HAPReferenceRootElement();
 			target.buildObject(targetObj, HAPSerializationFormat.JSON);
@@ -64,7 +64,7 @@ public class HAPParserValueMapping {
 		}
 		
 		//definition
-		JSONObject defJsonObj = eleDefJson.getJSONObject(HAPItemValueMapping.DEFINITION);
+		JSONObject defJsonObj = eleDefJson.getJSONObject(HAPManualItemValueMapping.DEFINITION);
 		out.setDefinition(HAPParserStructure.parseStructureElement(defJsonObj));
 		return out;
 	}

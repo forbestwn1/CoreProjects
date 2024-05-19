@@ -142,7 +142,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 						HAPManualAttribute attrDef = (HAPManualAttribute)treeNodeDef;
 						HAPAttributeInBrick attrExe = (HAPAttributeInBrick)treeNode;
 						
-						entityTypeId = ((HAPManualWithBrick)attrDef.getValueInfo()).getBrickTypeId();
+						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
 						
 						if(HAPManualUtilityBrick.isAttributeAutoProcess(attrDef, brickMan)) {
 							Set<HAPManualAdapter> adapterDefs = attrDef.getAdapters();
@@ -190,7 +190,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 					}
 					else {
 						HAPManualAttribute attrDef = (HAPManualAttribute)treeNodeDef;
-						entityTypeId = ((HAPManualWithBrick)attrDef.getValueInfo()).getBrickTypeId();
+						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
 						process = HAPManualUtilityBrick.isAttributeAutoProcess(attrDef, brickMan);
 					}
 					
@@ -230,7 +230,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				attrExe.setName(attrDef.getName());
 				brick.setAttribute(attrExe);
 
-				HAPManualWrapperValue attrValueInfo = attrDef.getValueInfo();
+				HAPManualWrapperValue attrValueInfo = attrDef.getValueWrapper();
 				String attrValueType = attrValueInfo.getValueType();
 				if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 					HAPManualBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();

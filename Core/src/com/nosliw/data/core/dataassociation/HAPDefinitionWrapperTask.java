@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPDefinitionWrapperTask<T> extends HAPDefinitionGroupDataAssociationForTask{

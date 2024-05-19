@@ -62,7 +62,7 @@ public class HAPUtilityParserBrickFormatJson {
 			
 			//parse attribute value
 			HAPManualWrapperValue attrValueInfo = parseWrapperValue(jsonObj, entityTypeIfNotProvided, parseContext, manualDivisionEntityMan, entityManager);
-			out.setValueInfo(attrValueInfo);
+			out.setValueWrapper(attrValueInfo);
 			
 			//parse info
 			info.cloneToEntityInfo(out);

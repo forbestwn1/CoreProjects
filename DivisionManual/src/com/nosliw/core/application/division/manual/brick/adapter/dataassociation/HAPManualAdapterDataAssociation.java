@@ -7,11 +7,11 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrickAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 
-public class HAPManualAdapterDataAssciation extends HAPManualBrickAdapter{
+public class HAPManualAdapterDataAssociation extends HAPManualBrickAdapter{
 
 	public static final String DEFINITION = "definition";
 
-	public HAPManualAdapterDataAssciation() {
+	public HAPManualAdapterDataAssociation() {
 		super(HAPEnumBrickType.DATAASSOCIATION_100);
 		this.setAttributeWithValueValue(DEFINITION, new ArrayList<HAPManualDataAssociation>());
 	}

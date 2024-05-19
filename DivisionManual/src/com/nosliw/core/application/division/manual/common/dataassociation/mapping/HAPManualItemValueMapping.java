@@ -11,7 +11,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 
 @HAPEntityWithAttribute
-public class HAPItemValueMapping extends HAPEntityInfoWritableImp{
+public class HAPManualItemValueMapping extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -24,9 +24,9 @@ public class HAPItemValueMapping extends HAPEntityInfoWritableImp{
 
 	private HAPReferenceRootElement m_target;
 	
-	public HAPItemValueMapping() {}
+	public HAPManualItemValueMapping() {}
 	
-	public HAPItemValueMapping(HAPElementStructure definition, HAPReferenceRootElement target) {
+	public HAPManualItemValueMapping(HAPElementStructure definition, HAPReferenceRootElement target) {
 		this.m_definition = definition;
 		this.m_target = target;
 	}
@@ -46,8 +46,8 @@ public class HAPItemValueMapping extends HAPEntityInfoWritableImp{
 		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.m_target, HAPSerializationFormat.JSON));
 	}
 	
-	public HAPItemValueMapping cloneValueMappingItem() {
-		HAPItemValueMapping out = new HAPItemValueMapping();
+	public HAPManualItemValueMapping cloneValueMappingItem() {
+		HAPManualItemValueMapping out = new HAPManualItemValueMapping();
 		this.cloneToEntityInfo(out);
 		if(this.m_definition!=null) {
 			out.m_definition = this.m_definition.cloneStructureElement();

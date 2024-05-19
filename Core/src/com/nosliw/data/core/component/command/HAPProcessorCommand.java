@@ -3,7 +3,7 @@ package com.nosliw.data.core.component.command;
 import java.util.Map;
 
 import com.nosliw.core.application.common.interactive1.HAPUtilityInteractive;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;

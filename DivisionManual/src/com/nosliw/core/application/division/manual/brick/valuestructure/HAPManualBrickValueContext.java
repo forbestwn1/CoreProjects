@@ -28,7 +28,7 @@ public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implem
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){
 		List<HAPManualBrickWrapperValueStructure> out = new ArrayList<HAPManualBrickWrapperValueStructure>();
 		for(HAPManualAttribute attr: this.getValueStructureContainer().getPublicAttributes()) {
-			out.add((HAPManualBrickWrapperValueStructure)((HAPManualWrapperValueBrick)attr.getValueInfo()).getBrick());
+			out.add((HAPManualBrickWrapperValueStructure)((HAPManualWrapperValueBrick)attr.getValueWrapper()).getBrick());
 		}
 		return out;
 	}

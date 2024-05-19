@@ -43,7 +43,7 @@ public class HAPManualUtilityBrick {
 			if(i==0) {
 				out = entityDef.getAttribute(attribute);
 			} else {
-				HAPManualWrapperValue attrValueInfo = out.getValueInfo();
+				HAPManualWrapperValue attrValueInfo = out.getValueWrapper();
 				if(attrValueInfo instanceof HAPManualWithBrick) {
 					out = ((HAPManualWithBrick)attrValueInfo).getBrick().getAttribute(attribute);
 				}
@@ -60,7 +60,7 @@ public class HAPManualUtilityBrick {
 		if(path==null||path.isEmpty()) {
 			out = entityDef;
 		} else {
-			HAPManualWrapperValue attrValueInfo = getDescendantAttribute(entityDef, path).getValueInfo();
+			HAPManualWrapperValue attrValueInfo = getDescendantAttribute(entityDef, path).getValueWrapper();
 			if(attrValueInfo instanceof HAPManualWithBrick) {
 				out = ((HAPManualWithBrick)attrValueInfo).getBrick();
 			}
@@ -85,18 +85,29 @@ public class HAPManualUtilityBrick {
 			return relation.isAutoProcess();
 		}
 		
-		HAPManualWrapperValue attrValueInfo = attr.getValueInfo();
-		if(attrValueInfo instanceof HAPManualWithBrick) {
-			boolean isComplex = isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan);
-			
-			if(isComplex) {
-				return true;
-			} else {
+		HAPManualWrapperValue attrValueWrapper = attr.getValueWrapper();
+		String valueWrapperType = attrValueWrapper.getValueType();
+		if(valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
+			HAPManualWrapperValueBrick brickValueWrapper = (HAPManualWrapperValueBrick)attrValueWrapper;
+			if(brickValueWrapper.getBrickTypeId().getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
 				return false;
 			}
-		} else {
-			return false;
+			return true;
 		}
+		return false;
+		
+//		if(attrValueWrapper instanceof HAPManualWithBrick) {
+//			return true;
+//			boolean isComplex = isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan);
+//			
+//			if(isComplex) {
+//				return true;
+//			} else {
+//				return false;
+//			}
+//		} else {
+//			return false;
+//		}
 		
 	}
 	

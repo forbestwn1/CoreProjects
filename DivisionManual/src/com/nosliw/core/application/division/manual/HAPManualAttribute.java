@@ -18,7 +18,7 @@ import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 //attribute in entity
 public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 
-	public static final String VALUEINFO = "value";
+	public static final String VALUEWRAPPER = "valueWrapper";
 
 	public static final String RELATION = "relation";
 
@@ -30,7 +30,7 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public static final String INFO = "info";
 	
 	//attribute value
-	private HAPManualWrapperValue m_valueInfo;
+	private HAPManualWrapperValue m_valueWrapper;
 	
 	//multiple adapters by name
 	private Map<String, HAPManualAdapter> m_adapters;
@@ -49,14 +49,14 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 		this.m_adapters = new LinkedHashMap<String, HAPManualAdapter>();
 	}
 
-	public HAPManualAttribute(String name, HAPManualWrapperValue valueInfo) {
+	public HAPManualAttribute(String name, HAPManualWrapperValue valueWrapper) {
 		this();
 		this.setName(name);
-		this.m_valueInfo = valueInfo;
+		this.m_valueWrapper = valueWrapper;
 	}
 
-	public HAPManualWrapperValue getValueInfo() {    return this.m_valueInfo;     }
-	public void setValueInfo(HAPManualWrapperValue valueInfo) {    this.m_valueInfo = valueInfo;     }
+	public HAPManualWrapperValue getValueWrapper() {    return this.m_valueWrapper;     }
+	public void setValueWrapper(HAPManualWrapperValue valueWrapper) {    this.m_valueWrapper = valueWrapper;     }
 	
 	public void addAdapter(HAPManualAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
 	public Set<HAPManualAdapter> getAdapters(){   return new HashSet<HAPManualAdapter>(this.m_adapters.values());      }
@@ -69,13 +69,13 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	public void setPathFromRoot(HAPPath path) {    this.m_pathFromRoot = path;     }
 
 	@Override
-	public Object getNodeValue() {   return this.m_valueInfo;    }
+	public Object getNodeValue() {   return this.m_valueWrapper;    }
 
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEINFO, this.m_valueInfo.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_pathFromRoot!=null) {
 			jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
 		}

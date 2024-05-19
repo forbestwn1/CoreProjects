@@ -6,9 +6,10 @@ import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssciation;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
 
 @HAPEntityWithAttribute
-public class HAPBrickDataAssociationForTask extends HAPBrickAdapter{
+public class HAPAdapterDataAssociationForTask extends HAPBrickAdapter{
 
 	@HAPAttribute
 	public static final String DATAASSOCIATIONREQUEST = "dataAssociationRequest";
@@ -21,7 +22,7 @@ public class HAPBrickDataAssociationForTask extends HAPBrickAdapter{
 		this.getBrickManager().newBrickInstance(HAPEnumBrickType.CONTAINER_100);
 	}
 
-	public void setRequestDataAssociation(HAPAdapterDataAssciation dataAssociation) {		this.setAttributeValueWithBrick(DATAASSOCIATIONREQUEST, dataAssociation);	}
+	public void setRequestDataAssociation(HAPDataAssociation dataAssociation) {		this.setAttributeValueWithBrick(DATAASSOCIATIONREQUEST, dataAssociation);	}
 	public void setResponseDataAssociation(String responseName, HAPAdapterDataAssciation dataAssociation) {
 		HAPBrickContainer responses = (HAPBrickContainer)this.getAttributeValueOfBrick(DATAASSOCIATIONRESPONSE);
 		responses.addElement(responseName, dataAssociation);

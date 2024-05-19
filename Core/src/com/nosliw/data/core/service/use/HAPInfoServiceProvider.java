@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 
 //store all the info related with service provider attachment
 public class HAPInfoServiceProvider extends HAPEntityInfoWritableImp{

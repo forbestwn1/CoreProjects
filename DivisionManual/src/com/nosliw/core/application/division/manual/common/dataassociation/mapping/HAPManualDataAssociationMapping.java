@@ -11,34 +11,24 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 
 public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 
-	@HAPAttribute
-	public static final String DIRECTION = "direction";
-
-	private List<HAPItemValueMapping> m_items;
-
-	private String m_direction;
+	private List<HAPManualItemValueMapping> m_items;
 
 	public HAPManualDataAssociationMapping() {
 		super(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING);
-		this.m_items = new LinkedList<HAPItemValueMapping>();
-		this.m_direction = HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM;
+		this.m_items = new LinkedList<HAPManualItemValueMapping>();
 	}
  
-	public void addItem(HAPItemValueMapping item) { 	this.m_items.add(item); 	}
+	public void addItem(HAPManualItemValueMapping item) { 	this.m_items.add(item); 	}
 	
-	public List<HAPItemValueMapping> getItems(){   return this.m_items;    }
+	public List<HAPManualItemValueMapping> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
-
-	public String getDirection() {    return this.m_direction;    }
-	public void setDirection(String direction) {    this.m_direction = direction;      }
 
 	@Override
 	public HAPManualDataAssociationMapping cloneDataAssocation() {
@@ -49,7 +39,7 @@ public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 	
 	protected void cloneToDataAssociation(HAPManualDataAssociationMapping dataAssociation) {
 		super.cloneToDataAssociation(dataAssociation);
-		for(HAPItemValueMapping item : this.m_items) {
+		for(HAPManualItemValueMapping item : this.m_items) {
 			dataAssociation.addItem(item.cloneValueMappingItem());
 		}
 	}
@@ -57,7 +47,6 @@ public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DIRECTION, this.getDirection());
 		jsonMap.put(MAPPING, HAPUtilityJson.buildJson(this.m_items, HAPSerializationFormat.JSON));
 	}
 	
@@ -68,17 +57,12 @@ public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 			super.buildObjectByJson(json);
 			JSONObject jsonObj = (JSONObject)json;
 
-			Object dirObj = jsonObj.opt(HAPDefinitionDataAssociation.DIRECTION);
-			if(dirObj!=null) {
-				this.m_direction = (String)dirObj;
-			}
-			
 			Object mappingObj = jsonObj.opt(MAPPING);
 			if(mappingObj==null) {
 				mappingObj = jsonObj;
 			}
 			
-			List<HAPItemValueMapping> items = HAPParserValueMapping.parses(mappingObj);
+			List<HAPManualItemValueMapping> items = HAPManualParserValueMapping.parses(mappingObj);
 			this.m_items.addAll(items);
 			return true;  
 		}
@@ -87,5 +71,4 @@ public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 			return false;
 		}
 	}
-
 }

@@ -9,9 +9,9 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPEndPointInTunnelConstant;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPEndPointInTunnelValuePort;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPTunnel;
+import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelConstant;
+import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelValuePort;
+import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -29,7 +29,7 @@ import com.nosliw.core.application.common.variable.HAPIdRootElement;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPUtilityDataAssociationMapping {
+public class HAPManualUtilityDataAssociationMapping {
 
 	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
 		

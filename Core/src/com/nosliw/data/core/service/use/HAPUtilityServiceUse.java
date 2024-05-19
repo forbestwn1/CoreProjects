@@ -14,8 +14,8 @@ import com.nosliw.core.application.common.interactive.HAPResultOutputInInteracti
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.core.application.service.HAPManagerServiceDefinition;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPAttachmentReference;

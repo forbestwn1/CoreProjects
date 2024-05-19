@@ -13,37 +13,37 @@
 			"brick":{
 				"serviceKey" : {
 					"id" : "TestBasicService"
-				},
-				"adapter":[
-					{
-						"name1" : "serviceAdapter",
-						"status": "disabled1",
-						"entityType" : "dataAssociationTask",
-						"entity" : {
-							"in" : {
-								"serviceParm1" : {
-									"definition" : {
-										"mapping" : {
-											"elementPath": "parm1"
-										}
+				}
+			},		
+			"adapter":[
+				{
+					"name1" : "serviceAdapter",
+					"status": "disabled1",
+					"entityType" : "dataAssociationForTask",
+					"entity" : {
+						"in" : {
+							"serviceParm1" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "parm1"
 									}
 								}
-							},
-							"out" : {
-								"success" : {
-									"output1" : {
-										"definition" : {
-											"mapping" : {
-												"elementPath": "outputInService1"
-											}
+							}
+						},
+						"out" : {
+							"success" : {
+								"output1" : {
+									"definition" : {
+										"mapping" : {
+											"elementPath": "outputInService1"
 										}
 									}
 								}
 							}
 						}
 					}
-				]
-			}		
+				}
+			]
 		},
 		{
 			"info": {
@@ -123,13 +123,31 @@
 								"definition":{
 									"criteria": "test.string;1.0.0"
 								}
+							},
+							"parm1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"output1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
 							}
 						},
 						"initValue": {
 							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
-							}
+							},
+							"parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm1"
+							},
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							},
 						}
 					}
 				}

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.adapter.task;
 
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
-import com.nosliw.data.core.dataassociation.HAPDefinitionGroupDataAssociationForTask;
+import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
 public class HAPDefinitionEntityDataAssociationTask extends HAPManualBrickSimple{
