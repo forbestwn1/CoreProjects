@@ -4,7 +4,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.service.HAPUtilityServiceInterface;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableTask;
@@ -36,7 +36,7 @@ public class HAPProcessorServiceUse {
 	public static void enhanceValueStructureByService(HAPDefinitionServiceUse definition, HAPValueStructureInValuePort globalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		if(HAPProcessorServiceUse.isEnhanceContextByService(definition)) {
 			//process service use
-			HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
+			HAPBrickServiceInterface1 serviceInterface = ((HAPBlockServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
 			
 			//
 			HAPProcessorDataAssociation.enhanceDataAssociationWithTaskEndPointValueStructure(HAPUtilityServiceInterface.buildIOTaskByInterface(serviceInterface), false, definition.getDataAssociations(), HAPContainerStructure.createDefault(globalValueStructure), true, runtimeEnv);
@@ -58,7 +58,7 @@ public class HAPProcessorServiceUse {
 		HAPExecutableServiceUse out = new HAPExecutableServiceUse(definition);
 
 		//process service use
-		HAPBrickServiceInterface1 serviceInterface = ((HAPBrickServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
+		HAPBrickServiceInterface1 serviceInterface = ((HAPBlockServiceInterface)HAPUtilityResource.solidateResource(definition.getInterfaceId(), runtimeEnv)).getActiveInterface();
 
 		HAPExecutableTask taskExe = HAPUtilityServiceInterface.buildExecutableTaskByInterface(serviceInterface);
 		

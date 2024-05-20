@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimpl
 //static information for a service. readable, query for service
 //information needed during configuration time
 @HAPEntityWithAttribute
-public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
+public class HAPBlockServiceInterface extends HAPBrickWithEntityInfoSimple{
 
 	@HAPAttribute
 	public static String INTERFACE = "interface";
@@ -29,7 +29,7 @@ public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
 	@HAPAttribute
 	public static String DISPLAY = "display";
 
-	public HAPBrickServiceInterface() {
+	public HAPBlockServiceInterface() {
 		this.setAttributeValueWithValue(TAG, new ArrayList<String>());
 		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}

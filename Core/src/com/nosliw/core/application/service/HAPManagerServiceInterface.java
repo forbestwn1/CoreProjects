@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilitySerializeJson;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerServiceInterface{
@@ -19,9 +19,9 @@ public class HAPManagerServiceInterface{
 		this.m_brickManager = brickManager;
 	}
 	
-	public HAPBrickServiceInterface getServiceInterface(HAPIdServcieInterface id) {
+	public HAPBlockServiceInterface getServiceInterface(HAPIdServcieInterface id) {
 		String fileName = HAPSystemFolderUtility.getServiceInterfaceFolder() + id.getId() + ".res";
 		String content = HAPUtilityFile.readFile(new File(fileName));
-		return (HAPBrickServiceInterface)HAPUtilitySerializeJson.buildBrick(new JSONObject(content), HAPEnumBrickType.SERVICEINTERFACE_100, m_brickManager);
+		return (HAPBlockServiceInterface)HAPUtilitySerializeJson.buildBrick(new JSONObject(content), HAPEnumBrickType.SERVICEINTERFACE_100, m_brickManager);
 	}
 }

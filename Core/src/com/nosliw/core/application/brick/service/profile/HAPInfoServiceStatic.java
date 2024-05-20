@@ -12,7 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //static information for a service. readable, query for service
@@ -28,18 +28,18 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 
 	private List<String> m_tags;
 	
-	private HAPBrickServiceInterface m_interface;
+	private HAPBlockServiceInterface m_interface;
 	
 	public HAPInfoServiceStatic() {
 		this.m_tags = new ArrayList<String>();
 	}
 
-	public HAPBrickServiceInterface getInterface() {  return this.m_interface;  } 
+	public HAPBlockServiceInterface getInterface() {  return this.m_interface;  } 
 	
 	public List<String> getTags(){   return this.m_tags;    }
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {  
-//		this.m_processedInterface = (HAPBrickServiceInterface)HAPUtilityResource.solidateResource(m_interface, runtimeEnv);
+//		this.m_processedInterface = (HAPBlockServiceInterface)HAPUtilityResource.solidateResource(m_interface, runtimeEnv);
 		this.m_interface.process(runtimeEnv);	
 	}
 	
@@ -54,7 +54,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 //				this.m_interface = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, interfaceObj);
 			}
 			else {
-				HAPBrickServiceInterface serviceInterfaceInfo = new HAPBrickServiceInterface();
+				HAPBlockServiceInterface serviceInterfaceInfo = new HAPBlockServiceInterface();
 				serviceInterfaceInfo.buildObject(objJson, HAPSerializationFormat.JSON);
 				this.m_interface = serviceInterfaceInfo;
 			}
@@ -84,7 +84,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 //			jsonMap.put(TAG, HAPUtilityJson.buildJson(this.m_tags, HAPSerializationFormat.JSON));
 //		}
 //		else {
-//			HAPBrickServiceInterface serviceInterfaceInfo = this.m_interface;
+//			HAPBlockServiceInterface serviceInterfaceInfo = this.m_interface;
 //			serviceInterfaceInfo.buildJsonMap(jsonMap, typeJsonMap);
 //		}
 	}

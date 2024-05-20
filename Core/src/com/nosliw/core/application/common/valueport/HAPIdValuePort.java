@@ -21,6 +21,9 @@ public class HAPIdValuePort extends HAPSerializableImp{
 
 	private String m_name;
 
+	public HAPIdValuePort() {
+	}
+	
 	public HAPIdValuePort(String group, String name) {
 		this.m_group = group;
 		this.m_name = name;
@@ -35,9 +38,12 @@ public class HAPIdValuePort extends HAPSerializableImp{
 	}
 	
 	public String getValuePortGroup() {   return this.m_group;      }
+	public void setValuePortGroup(String group) {   this.m_group = group;      }
+
 	
 	//name of the port within entity
 	public String getValuePortName() {    return this.m_name;     }
+	public void setValuePortName(String name) {    this.m_name = name;     }
 	
 	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_group, this.m_name});     }
 	

@@ -6,7 +6,7 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.data.core.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.dataassociation.HAPIOTask;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -24,7 +24,7 @@ public class HAPUtilityServiceInterface {
 			out = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, content);
 		}
 		else {
-			HAPBrickServiceInterface serviceInterfaceInfo = new HAPBrickServiceInterface();
+			HAPBlockServiceInterface serviceInterfaceInfo = new HAPBlockServiceInterface();
 			serviceInterfaceInfo.buildObject(content, HAPSerializationFormat.JSON);
 			out = serviceInterfaceInfo;
 		}

@@ -26,11 +26,10 @@ public class HAPUtilityValuePort {
 
 		//normalize value port id
 		HAPIdValuePort valuePortId = out.getValuePortId();
-		if(valuePortId==null) {
-			HAPBrick brick = HAPUtilityBrick.getDescdentBrick(currentBundle.getBrickWrapper(), new HAPPath(brickRef.getIdPath()), resourceMan, runtimeInfo);
-			valuePortId = HAPUtilityValuePort.getDefaultValuePortIdInBrick(brick);
-			out.setValuePortId(valuePortId);
-		}
+		HAPBrick brick = HAPUtilityBrick.getDescdentBrick(currentBundle.getBrickWrapper(), new HAPPath(brickRef.getIdPath()), resourceMan, runtimeInfo);
+		valuePortId = brick.getValuePorts().normalizeValuePortId(valuePortId);
+		out.setValuePortId(valuePortId);
+		
 		return out;
 	}
 

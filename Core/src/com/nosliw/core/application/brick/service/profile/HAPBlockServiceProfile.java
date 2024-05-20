@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 
 //contains all information related with service definition
@@ -86,7 +86,7 @@ public class HAPBlockServiceProfile extends HAPBrickWithEntityInfoSimple{
 //				this.m_interface = HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, interfaceObj);
 			}
 			else {
-				HAPBrickServiceInterface serviceInterfaceInfo = new HAPBrickServiceInterface();
+				HAPBlockServiceInterface serviceInterfaceInfo = new HAPBlockServiceInterface();
 				serviceInterfaceInfo.buildObject(objJson, HAPSerializationFormat.JSON);
 				this.m_interface = serviceInterfaceInfo;
 			}

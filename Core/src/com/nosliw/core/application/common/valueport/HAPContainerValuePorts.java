@@ -23,6 +23,10 @@ public class HAPContainerValuePorts {
 		return new HashSet<HAPGroupValuePorts>(this.m_valuePortGroupByName.values());
 	}
 	
+	public HAPGroupValuePorts getValuePortGroup(String groupId) {
+		return this.m_valuePortGroupByName.get(groupId);
+	}
+	
 	public void addValuePortGroup(HAPGroupValuePorts group, boolean isDefault) {
 		String name = group.getName();
 		if(HAPUtilityBasic.isStringEmpty(name)) {
@@ -62,5 +66,25 @@ public class HAPContainerValuePorts {
 		return group.getValuePort(valuePortName);
 	}
 
+	public HAPIdValuePort normalizeValuePortId(HAPIdValuePort valuePortId) {
+		HAPIdValuePort out = valuePortId;
+		if(out==null) {
+			out = new HAPIdValuePort();
+		}
+		String valuePortGroupId = out.getValuePortGroup();
+		if(valuePortGroupId==null) {
+			valuePortGroupId = this.getDefaultGroupName();
+		}
+		String valuePortName = out.getValuePortName();
+		if(valuePortGroupId!=null) {
+			HAPGroupValuePorts valuePortGroup = this.getValuePortGroup(valuePortGroupId);
+			if(valuePortName==null) {
+				valuePortName = valuePortGroup.getDefaultValuePortName();
+			}
+		}
+		out.setValuePortName(valuePortName);
+		return out;
+	}
+	
 	private String getDefaultGroupName() {    return this.m_defaultName;    }
 }

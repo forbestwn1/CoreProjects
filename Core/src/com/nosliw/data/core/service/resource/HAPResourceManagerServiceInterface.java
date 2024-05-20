@@ -1,6 +1,6 @@
 package com.nosliw.data.core.service.resource;
 
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.service.HAPManagerServiceInterface;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -21,7 +21,7 @@ public class HAPResourceManagerServiceInterface  extends HAPResourceManagerImp{
 	
 	@Override
 	public HAPResource getResource(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPBrickServiceInterface serviceInterfaceInfo =  this.m_serviceInterfaceMan.getServiceInterface(new HAPResourceIdServiceInterface((HAPResourceIdSimple)resourceId).getServiceInterfaceId());
+		HAPBlockServiceInterface serviceInterfaceInfo =  this.m_serviceInterfaceMan.getServiceInterface(new HAPResourceIdServiceInterface((HAPResourceIdSimple)resourceId).getServiceInterfaceId());
 		HAPResourceDataServiceInterface resourceData = new HAPResourceDataServiceInterface(serviceInterfaceInfo);
 		return new HAPResource(resourceId, resourceData, HAPUtilityResource.buildResourceLoadPattern(resourceId, null));
 	}
