@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
@@ -26,7 +26,7 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 public class HAPUtilityServiceUse {
 
 	public static HAPInfoServiceProvider parseServiceAttachment(HAPAttachment providerAttachment, HAPRuntimeEnvironment runtimeEnv) {
-		HAPBrickServiceProfile serviceDef = (HAPBrickServiceProfile)HAPUtilityAttachment.getResourceDefinition(providerAttachment, runtimeEnv.getResourceDefinitionManager());
+		HAPBlockServiceProfile serviceDef = (HAPBlockServiceProfile)HAPUtilityAttachment.getResourceDefinition(providerAttachment, runtimeEnv.getResourceDefinitionManager());
 
 		HAPDefinitionGroupDataAssociationForTask dataMapping = null;
 		Object adaptor = providerAttachment.getAdaptor();

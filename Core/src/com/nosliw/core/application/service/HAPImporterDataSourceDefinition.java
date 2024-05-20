@@ -14,7 +14,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilitySerializeJson;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 
 public class HAPImporterDataSourceDefinition {
 
@@ -26,8 +26,8 @@ public class HAPImporterDataSourceDefinition {
 			Class cls;
 			try {
 				cls = Class.forName(serviceClasse);
-				List<HAPBrickServiceProfile> dataSourceDefs = loadDataSourceDefinition(cls);
-				for(HAPBrickServiceProfile dataSourceDef : dataSourceDefs) {
+				List<HAPBlockServiceProfile> dataSourceDefs = loadDataSourceDefinition(cls);
+				for(HAPBlockServiceProfile dataSourceDef : dataSourceDefs) {
 					out.add(dataSourceDef);
 				}
 			} catch (ClassNotFoundException e) {
@@ -70,7 +70,7 @@ public class HAPImporterDataSourceDefinition {
 					if(HAPUtilityEntityInfo.isEnabled(serviceDefJson)) {
 						JSONObject profileJsonObj = serviceDefJson.optJSONObject(HAPInfoService.PROFILE);
 						if(HAPUtilityEntityInfo.isEnabled(profileJsonObj)) {
-							HAPBrickServiceProfile serviceProfile = (HAPBrickServiceProfile)HAPUtilitySerializeJson.buildBrick(profileJsonObj, HAPEnumBrickType.SERVICEPROFILE_100, brickMan);
+							HAPBlockServiceProfile serviceProfile = (HAPBlockServiceProfile)HAPUtilitySerializeJson.buildBrick(profileJsonObj, HAPEnumBrickType.SERVICEPROFILE_100, brickMan);
 							
 							JSONObject runtimeJsonObj = serviceDefJson.optJSONObject(HAPInfoService.RUNTIME);
 							HAPInfoServiceRuntime serviceRuntime = new HAPInfoServiceRuntime();

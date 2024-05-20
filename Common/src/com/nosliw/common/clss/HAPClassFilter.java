@@ -31,7 +31,7 @@ public abstract class HAPClassFilter {
 					}
 				}
 				catch(Throwable e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 			}
 		} catch (IOException e) {

@@ -66,17 +66,26 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 		}
 		return null;
 	}
-	public Object getAttributeValueOfValue(String attributeName) {		return ((HAPWrapperValueOfValue)this.getAttribute(attributeName).getValueWrapper()).getValue();  }
+	public Object getAttributeValueOfValue(String attributeName) {
+		Object out = null;
+		HAPWrapperValueOfValue valueWrapper = (HAPWrapperValueOfValue)this.getAttributeValueWrapper(attributeName);
+		if(valueWrapper!=null) {
+			out = valueWrapper.getValue();
+		}
+		return out;
+	}
 	public HAPBrick getAttributeValueOfBrick(String attributeName) {
 		HAPBrick out = null;
-		HAPWrapperValue valueWrapper = this.getAttribute(attributeName).getValueWrapper();
-		String valueType = valueWrapper.getValueType();
-		if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
-		}
-		else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-			HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
-			out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), this.getBrickManager());			
+		HAPWrapperValue valueWrapper = this.getAttributeValueWrapper(attributeName);
+		if(valueWrapper!=null) {
+			String valueType = valueWrapper.getValueType();
+			if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+				out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
+			}
+			else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+				HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
+				out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), this.getBrickManager());			
+			}
 		}
 		return out;	
 	}
@@ -92,6 +101,15 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 		
 		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPathFromRoot().appendSegment(attribute.getName()), this);
 		attribute.setTreeNodeInfo(treeNodeInfo);
+	}
+	
+	private HAPWrapperValue getAttributeValueWrapper(String attributeName) {
+		HAPWrapperValue out = null; 
+		HAPAttributeInBrick attr = this.getAttribute(attributeName);
+		if(attr!=null) {
+			out = attr.getValueWrapper();
+		}
+		return out;
 	}
 	
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPAttributeInBrick(attributeName, new HAPWrapperValueOfValue(attrValue)));	}

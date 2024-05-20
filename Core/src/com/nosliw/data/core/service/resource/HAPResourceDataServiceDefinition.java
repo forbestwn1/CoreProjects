@@ -1,18 +1,18 @@
 package com.nosliw.data.core.service.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValueImp;
 
 public class HAPResourceDataServiceDefinition extends HAPResourceDataJSValueImp{
 
-	private HAPBrickServiceProfile m_serviceDefinition;
+	private HAPBlockServiceProfile m_serviceDefinition;
 	
-	public HAPResourceDataServiceDefinition(HAPBrickServiceProfile serviceDefinition){
+	public HAPResourceDataServiceDefinition(HAPBlockServiceProfile serviceDefinition){
 		this.m_serviceDefinition = serviceDefinition;
 	}
 	
-	public HAPBrickServiceProfile getServiceDefinition(){ return this.m_serviceDefinition;  }
+	public HAPBlockServiceProfile getServiceDefinition(){ return this.m_serviceDefinition;  }
 	
 	@Override
 	public String getValue() {

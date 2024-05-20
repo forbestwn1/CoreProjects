@@ -8,14 +8,16 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -58,6 +60,11 @@ public class HAPManagerService implements HAPPluginDivision{
 		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
 			HAPBundle bundle = new HAPBundle();
 			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
+			
+			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockServiceProfile.INTERFACE));
+			exposeInteractiveInterface.setName(HAPBlockServiceProfile.CHILD_INTERFACE);
+			bundle.addExportResourceInfo(exposeInteractiveInterface);
+			
 			return bundle;
 		}
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
@@ -79,11 +86,11 @@ public class HAPManagerService implements HAPPluginDivision{
 		return out;
 	}
 	
-	public List<HAPBrickServiceProfile> queryDefinition(HAPQueryServiceDefinition query){
-		List<HAPBrickServiceProfile> out = new ArrayList<HAPBrickServiceProfile>();
+	public List<HAPBlockServiceProfile> queryDefinition(HAPQueryServiceDefinition query){
+		List<HAPBlockServiceProfile> out = new ArrayList<HAPBlockServiceProfile>();
 		for(String id : this.getAllServicesInfo().keySet()) {
 			boolean found = true;
-			HAPBrickServiceProfile def = this.getAllServicesInfo().get(id).getServiceProfileInfo();
+			HAPBlockServiceProfile def = this.getAllServicesInfo().get(id).getServiceProfileInfo();
 			List<String> tags = def.getTags();
 			for(String keyword : query.getKeywords()) {
 				if(!tags.contains(keyword)) {
@@ -146,7 +153,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		HAPResultInteractive out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
-			HAPBrickInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getActiveInterface();
+			HAPBlockInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getActiveInterface();
 			for(HAPRequestParmInInteractiveInterface parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;

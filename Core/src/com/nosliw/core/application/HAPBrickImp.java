@@ -19,10 +19,11 @@ public class HAPBrickImp extends HAPBrick{
 	
 	@Override
 	public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan) {
-		
 		switch(format) {
 		case JSON:
 			buildBrickFormatJson((JSONObject)value, brickMan);
+			break;
+		case JSON_FULL:
 			break;
 		case HTML:
 			break;
@@ -166,7 +167,7 @@ public class HAPBrickImp extends HAPBrick{
 		return true;
 	}
 	
-    protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {return true;}
+    protected Object buildAttributeValueFormatJson(String attrName, Object obj) {return true;}
     
     protected HAPIdBrickType getAttributeBrickType(String attrName) {   return null;     }
 

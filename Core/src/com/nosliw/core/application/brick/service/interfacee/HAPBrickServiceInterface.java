@@ -10,9 +10,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
+import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
@@ -33,25 +34,34 @@ public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
 		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}
 
-	public HAPBrickInteractiveInterface getActiveInterface() {  return (HAPBrickInteractiveInterface)this.getAttributeValueOfBrick(INTERFACE);  } 
+	public HAPBlockInteractiveInterface getActiveInterface() {  return (HAPBlockInteractiveInterface)this.getAttributeValueOfBrick(INTERFACE);  } 
 	
 	public List<String> getTags(){   return (List<String>)this.getAttributeValueOfValue(TAG);    }
 	
 	public HAPDisplayResourceNode getDisplayResource() {   return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);     }
 	
-	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.getActiveInterface().process(runtimeEnv);	}
+//	public void process(HAPRuntimeEnvironment runtimeEnv) {  this.getActiveInterface().process(runtimeEnv);	}
 	
     @Override
-	protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {
-    	super.buildAttributeValueFormatJson(attrName, obj);
+	protected HAPIdBrickType getAttributeBrickType(String attrName) {
+    	if(INTERFACE.equals(attrName)) {
+    		return HAPEnumBrickType.INTERACTIVEINTERFACE_100;
+    	}
+    	return null;     
+    }
+	
+    @Override
+	protected Object buildAttributeValueFormatJson(String attrName, Object obj) {
+    	Object out = super.buildAttributeValueFormatJson(attrName, obj);
     	if(TAG.equals(attrName)) {
-    		this.getTags().clear();
+    		List<String> tags = new ArrayList<String>();
     		JSONArray tagArray = (JSONArray)obj;
     		if(tagArray!=null) {
     			for(int i=0; i<tagArray.length(); i++) {
-    				this.getTags().add(tagArray.getString(i));
+    				tags.add(tagArray.getString(i));
     			}
     		}
+    		out = tags;
     	}
     	else if(DISPLAY.equals(attrName)) {
     		JSONObject displayResourceObj = ((JSONObject)obj).optJSONObject(DISPLAY);
@@ -59,6 +69,6 @@ public class HAPBrickServiceInterface extends HAPBrickWithEntityInfoSimple{
     			this.getDisplayResource().buildObject(displayResourceObj, HAPSerializationFormat.JSON);
     		}
     	}
-    	return true;
+    	return out;
     }
 }

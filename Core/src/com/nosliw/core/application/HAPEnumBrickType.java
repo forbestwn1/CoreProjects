@@ -14,6 +14,7 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType CONTAINERLIST_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONTAINERLIST, "1.0.0");
 	
 
+	public static HAPIdBrickType INTERACTIVEINTERFACE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_INTERACTIVEINTERFACE, "1.0.0");
 	public static HAPIdBrickType SERVICEINTERFACE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, "1.0.0");
 	public static HAPIdBrickType SERVICEPROFILE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROFILE, "1.0.0");
 

@@ -4,9 +4,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBrickInteractiveInterface;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 
-public class HAPDefinitionCommand extends HAPBrickInteractiveInterface{
+public class HAPDefinitionCommand extends HAPBlockInteractiveInterface{
 
 	@HAPAttribute
 	public static String TASK = "task";

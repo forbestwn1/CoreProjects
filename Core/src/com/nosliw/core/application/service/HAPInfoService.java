@@ -1,6 +1,6 @@
 package com.nosliw.core.application.service;
 
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 
 public class HAPInfoService {
 
@@ -10,16 +10,16 @@ public class HAPInfoService {
 
 	private HAPInfoServiceRuntime m_serviceRuntime;
 	
-	private HAPBrickServiceProfile m_serviceProfile;
+	private HAPBlockServiceProfile m_serviceProfile;
 	
 	
-	public HAPInfoService(HAPBrickServiceProfile serviceProfile, HAPInfoServiceRuntime serviceRuntime) {
+	public HAPInfoService(HAPBlockServiceProfile serviceProfile, HAPInfoServiceRuntime serviceRuntime) {
 		this.m_serviceProfile = serviceProfile;
 		this.m_serviceRuntime = serviceRuntime;
 	}
 	
 	public HAPInfoServiceRuntime getServiceRuntimeInfo() {  	return this.m_serviceRuntime;	}
 	
-	public HAPBrickServiceProfile getServiceProfileInfo() {    return this.m_serviceProfile;     }
+	public HAPBlockServiceProfile getServiceProfileInfo() {    return this.m_serviceProfile;     }
 
 }

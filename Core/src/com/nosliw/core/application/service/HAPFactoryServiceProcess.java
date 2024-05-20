@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
 import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
 import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
@@ -51,7 +51,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 	}
 	
 	@Override
-	public HAPExecutableService newService(HAPBrickServiceProfile dataSourceDefinition) {
+	public HAPExecutableService newService(HAPBlockServiceProfile dataSourceDefinition) {
 
 		//basic information
 		HAPInfoServiceRuntime runtimeInfo = dataSourceDefinition.getRuntimeInfo();

@@ -8,7 +8,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
@@ -31,7 +31,7 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple{
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
 		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrick.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
-		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBrickServiceProfile.INTERFACE);
+		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBlockServiceProfile.INTERFACE);
 		
 		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)this.getResourceManager().getResources(Lists.asList(serviceInterfaceResourceId, new HAPResourceId[0]), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo()).getLoadedResources().get(0).getResourceData();
 		HAPBrickServiceInterface serviceInterfaceService = (HAPBrickServiceInterface)brickResourceData.getBrick();

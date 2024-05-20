@@ -1,5 +1,5 @@
 [{
-	"static": {
+	"profile": {
 		"id": "TestBasicService",
 		"status":"disabled1",
 		"name": "TestBasicService",

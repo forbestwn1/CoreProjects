@@ -11,6 +11,8 @@ import java.util.Set;
 
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
 import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
@@ -45,6 +47,9 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBlockTestComplexScript.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false), HAPBlockServiceProvider.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROFILE_100, false), HAPBlockServiceProfile.class, this.m_runtimeEnv));
+
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.INTERACTIVEINTERFACE_100, false), HAPBlockInteractiveInterface.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, false), HAPAdapterDataAssociation.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, false), HAPAdapterDataAssociationForTask.class, this.m_runtimeEnv));

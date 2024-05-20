@@ -2,7 +2,7 @@ package com.nosliw.data.core.service.use;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
-import com.nosliw.core.application.brick.service.profile.HAPBrickServiceProfile;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.service.HAPUtilityServiceInterface;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -50,7 +50,7 @@ public class HAPProcessorServiceUse {
 			//provider service id
 			HAPResourceId resourceId = ((HAPAttachmentReference)providerAttachment).getReferenceId();
 			//interface within provider service
-			definition.setInterfaceId(new HAPResourceIdEmbeded(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, resourceId, HAPBrickServiceProfile.CHILD_INTERFACE));
+			definition.setInterfaceId(new HAPResourceIdEmbeded(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE, resourceId, HAPBlockServiceProfile.CHILD_INTERFACE));
 		}
 	}
 	

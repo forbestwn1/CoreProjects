@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInte
 import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
 
 @HAPEntityWithAttribute
-public class HAPBrickInteractiveInterface extends HAPBrickBlockSimple implements HAPInteractive{
+public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple implements HAPInteractive{
 
 	@HAPAttribute
 	public static String REQUEST = "request";
@@ -48,7 +48,7 @@ public class HAPBrickInteractiveInterface extends HAPBrickBlockSimple implements
 //		}
 //	}
 	
-//	protected void cloneToInteractive(HAPBrickInteractiveInterface interactive) {
+//	protected void cloneToInteractive(HAPBlockInteractiveInterface interactive) {
 //		this.cloneToEntityInfo(interactive);
 //		for(HAPRequestParmInInteractiveInterface parm : this.m_requestParms) {
 //			interactive.addRequestParm(parm.cloneVariableInfo());
@@ -59,24 +59,29 @@ public class HAPBrickInteractiveInterface extends HAPBrickBlockSimple implements
 //	}
 	
     @Override
-	protected boolean buildAttributeValueFormatJson(String attrName, Object obj) {
+	protected Object buildAttributeValueFormatJson(String attrName, Object obj) {
+    	Object out = null;
     	if(REQUEST.equals(attrName)) {
+    		List<HAPRequestParmInInteractiveInterface> rquestParms = new ArrayList<HAPRequestParmInInteractiveInterface>();
 			JSONArray parmsArray = (JSONArray)obj;
 			for(int i=0; i<parmsArray.length(); i++) {
 				HAPRequestParmInInteractiveInterface parm = HAPRequestParmInInteractiveInterface.buildParmFromObject(parmsArray.get(i));
-				this.addRequestParm(parm);
+				rquestParms.add(parm);
+				out = rquestParms;
 			}
     	}
     	else if(RESULT.equals(attrName)) {
+    		Map<String, HAPResultInInteractiveInterface> results = new LinkedHashMap<String, HAPResultInInteractiveInterface>();
 			JSONObject resultObject = (JSONObject)obj;
 			for(Object key : resultObject.keySet()) {
 				String name = (String)key;
 				HAPResultInInteractiveInterface resultEle = new HAPResultInInteractiveInterface();
 				resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
 				resultEle.setName(name);
-				this.addResult(resultEle);
+				results.put(resultEle.getName(), resultEle);
 			}
+			out = results;
     	}
-    	return true;
+    	return out;
     }
 }

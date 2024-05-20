@@ -49,7 +49,11 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		
 		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
 		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
-		this.m_exportResourceInfos.add(defaultExport);
+		this.addExportResourceInfo(defaultExport);
+	}
+	
+	public void addExportResourceInfo(HAPInfoExportResource exportResourceInfo) {
+		this.m_exportResourceInfos.add(exportResourceInfo);
 	}
 	
 	public HAPResourceDataBrick getExportResourceData(String name, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
