@@ -46,7 +46,7 @@ var packageObj = library;
 	var node_createTestComplexScriptPlugin;
 	var node_createDataAssociationAdapterPlugin;
 	var node_createDataAssociationInteractiveAdapterPlugin;
-	var node_createDataAssociationTaskAdapterPlugin;
+	var node_createDataAssociationForTaskAdapterPlugin;
 	var node_createDataServiceEntityPlugin;
 	var node_createDataExpressionGroupPlugin;
 	var node_createDataExpressionSinglePlugin;
@@ -75,13 +75,18 @@ var node_createComplexEntityRuntimeService = function() {
 		return adapterEntityPlugin.getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), baseCore, handlers, request);
 	};
 
-	var loc_getCreateSimpleEntityRequest = function(entityType, entityDef, configure, handlers, request){
+	var loc_getCreateSimpleEntityRequest = function(entityDef, configure, handlers, request){
+		var entityType = entityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
+		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
+
 		var out = node_createServiceRequestInfoSequence("CreateSimpleEntityRequest", handlers, request);
 		var entityDef = node_createEntityDefinition(entityDef);
-		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType];
 		out.addRequest(simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, {
 			success : function(request, simpleEntity){
+				
 				simpleEntity = node_makeObjectWithEmbededEntityInterface(simpleEntity);
+				
+				simpleEntity = node_makeObjectEntityTreeNodeInterface(simpleEntity);
 				
 				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
 				
@@ -139,6 +144,7 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 	
 	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityDef, parentComplexEntityCore, bundleCore, variationPoints, configure, handlers, request){
+
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
@@ -198,7 +204,7 @@ var node_createComplexEntityRuntimeService = function() {
 		//adapter plugin
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, "1.0.0", node_createDataAssociationAdapterPlugin());
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, "1.0.0", node_createDataAssociationInteractiveAdapterPlugin());
-		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONTASK, "1.0.0", node_createDataAssociationTaskAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK, "1.0.0", node_createDataAssociationForTaskAdapterPlugin());
 	};
 
 
@@ -295,8 +301,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_getCreateComplexEntityRuntimeRequest(complexEntityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
 		},
 
-		getCreateSimpleEntityRequest : function(entityType, entityDef, configure, handlers, request){
-			return loc_getCreateSimpleEntityRequest(entityType, entityDef, configure, handlers, request);
+		getCreateSimpleEntityRequest : function(entityDef, configure, handlers, request){
+			return loc_getCreateSimpleEntityRequest(entityDef, configure, handlers, request);
 		},
 		
 		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){
@@ -377,7 +383,7 @@ nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", functi
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationTaskAdapterPlugin", function(){node_createDataAssociationTaskAdapterPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForTaskAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataServiceEntityPlugin", function(){node_createDataServiceEntityPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionGroupPlugin", function(){node_createDataExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});

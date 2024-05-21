@@ -165,16 +165,21 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					else{
 						//simple
 						//simple attribute
-						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(entityType, attrEntityDef, childConfigure, {
+						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(attrEntityDef, childConfigure, {
 							success : function(request, simpleEntity){
+								node_getEntityTreeNodeInterface(simpleEntity).setParentCore(rawEntity);
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
 										return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
 									}	
 								});
 								
-								_.each(adaptersInfo, function(adapterInfo){
-									adaptersRequest.addRequest(adapterInfo.name, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterInfo.valueType, adapterInfo.value));
+								_.each(adapterNames, function(adapterName){
+									var adapterValueWrapper = attr.getAdapterValueWrapper(adapterName);								
+									if(adapterValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+										var adapterEntityDef = adapterValueWrapper.getEntityDefinition();
+										adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef, simpleEntity));
+									}
 								});
 								return adaptersRequest;
 							}

@@ -41,17 +41,22 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_configure = configure;
 	
+	var loc_getExecuteTaskRequest = function(taskInput, handlers, request){
+		return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
+	};
+	
 	var loc_facade = node_createTaskInterface({
 		getExecuteRequest : function(taskInput, requirement, handlers, request){
-			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
-		},
+			return loc_getExecuteTaskRequest(taskInput, handlers, request);
+		}
 	});
 	
 	var loc_out = {
 		
 		getExecuteTaskRequest: function(taskInput, handlers, request){
-			return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
-		},	
+			return loc_getExecuteTaskRequest(taskInput, handlers, request);
+		}
+			
 	};
 
 	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);

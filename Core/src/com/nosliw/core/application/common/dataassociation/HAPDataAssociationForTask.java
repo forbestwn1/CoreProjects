@@ -6,6 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 
 @HAPEntityWithAttribute
 public class HAPDataAssociationForTask extends HAPSerializableImp{
@@ -34,4 +36,15 @@ public class HAPDataAssociationForTask extends HAPSerializableImp{
 	}   }
 	public void addOutDataAssociation(String name, HAPDataAssociation dataAssociation) {  this.m_outDataAssociation.put(name, dataAssociation);   }
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(IN, this.m_inDataAssociation.toStringValue(HAPSerializationFormat.JSON));
+		
+		Map<String, String> outJsonStr = new LinkedHashMap<String, String>(); 
+		for(String outName : this.m_outDataAssociation.keySet()) {
+			outJsonStr.put(outName, this.m_outDataAssociation.get(outName).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(OUT, HAPUtilityJson.buildMapJson(outJsonStr));
+	}
 }

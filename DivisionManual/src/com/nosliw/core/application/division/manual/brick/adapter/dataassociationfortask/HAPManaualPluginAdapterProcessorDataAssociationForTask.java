@@ -41,6 +41,8 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPP
 			HAPDataAssociation daForResponse = HAPManualProcessorDataAssociation.processDataAssociation(daForTaskDef.getOutDataAssociations().get(key), processContext.getRootPathForBaseBrick(), processContext.getCurrentBundle(), this.m_runtimeEnv);
 			daForTaskExe.addOutDataAssociation((String)key, daForResponse);
 		}
+		
+		daAdapterExe.setDataAssciation(daForTaskExe);
 	}
 
 }
