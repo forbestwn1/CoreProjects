@@ -903,6 +903,8 @@ public class HAPConstantShared {
 
 
 		public static final String VALUEPORT_NAME_SELF = "self";
+		public static final String VALUEPORT_NAME_INTERACT_REQUEST = "interactiveRequest";
+		public static final String VALUEPORT_NAME_INTERACT_RESULT = "interactiveResult";
 
 
 

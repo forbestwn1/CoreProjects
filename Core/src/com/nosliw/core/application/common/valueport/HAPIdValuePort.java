@@ -2,6 +2,8 @@ package com.nosliw.core.application.common.valueport;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -30,11 +32,7 @@ public class HAPIdValuePort extends HAPSerializableImp{
 	}
 	
 	public HAPIdValuePort(String strValue) {
-		String[] segs = HAPUtilityNamingConversion.parsePaths(strValue);
-		this.m_group = segs[0];
-		if(segs.length>1) {
-			this.m_name = segs[1];
-		}
+		this.parseKey(strValue);
 	}
 	
 	public String getValuePortGroup() {   return this.m_group;      }
@@ -46,10 +44,30 @@ public class HAPIdValuePort extends HAPSerializableImp{
 	public void setValuePortName(String name) {    this.m_name = name;     }
 	
 	public String getKey() {    return HAPUtilityNamingConversion.cascadePath(new String[] {this.m_group, this.m_name});     }
+	private void parseKey(String key) {
+		String[] segs = HAPUtilityNamingConversion.parsePaths(key);
+		this.m_group = segs[0];
+		if(segs.length>1) {
+			this.m_name = segs[1];
+		}
+	}
 	
 	@Override
 	public HAPIdValuePort cloneValue() {
 		return new HAPIdValuePort(this.m_group, this.m_name);
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object obj){
+		if(obj instanceof String) {
+			this.parseKey((String)obj);
+		}
+		else if(obj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)obj;
+			this.m_group = (String)jsonObj.opt(GROUP);
+			this.m_name = (String)jsonObj.opt(NAME);
+		}
+		return true;  
 	}
 
 	@Override

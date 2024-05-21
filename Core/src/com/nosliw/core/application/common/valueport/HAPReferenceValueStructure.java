@@ -2,6 +2,8 @@ package com.nosliw.core.application.common.valueport;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -25,6 +27,19 @@ public class HAPReferenceValueStructure extends HAPSerializableImp{
 	
 	public String getId() {    return this.m_id;     }
 	
+	@Override
+	protected boolean buildObjectByJson(Object obj){
+		if(obj instanceof String) {
+			this.m_id = (String)obj;
+		}
+		else if(obj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)obj;
+			this.m_name = (String)jsonObj.opt(NAME);
+			this.m_id = (String)jsonObj.opt(ID);
+		}
+		return true;  
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, m_name);

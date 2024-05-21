@@ -29,9 +29,12 @@ public class HAPManualDataAssociationForTask extends HAPSerializableImp{
 	public void setInDataAssociation(HAPManualDataAssociation inDataAssociation) {    this.m_inDataAssociation = inDataAssociation;    }
 	
 	public Map<String, HAPManualDataAssociation> getOutDataAssociations(){    return this.m_outDataAssociation;     }
-	public void setOutDataAssociations(Map<String, HAPManualDataAssociation> outDataAssociations) {  if(outDataAssociations!=null) {
-		this.m_outDataAssociation.putAll(outDataAssociations);
-	}   }
+	public void setOutDataAssociations(Map<String, HAPManualDataAssociation> outDataAssociations) {  
+		if(outDataAssociations!=null) {
+			this.m_outDataAssociation.putAll(outDataAssociations);
+		}    
+	}
+	
 	public void addOutDataAssociation(String name, HAPManualDataAssociation dataAssociation) {  this.m_outDataAssociation.put(name, dataAssociation);   }
 	
 	@Override
@@ -41,6 +44,12 @@ public class HAPManualDataAssociationForTask extends HAPSerializableImp{
 	}
 
 	private void buildMapping(JSONObject jsonObj) {
+		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
+		if(inputMappingJson!=null) {
+			this.m_inDataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(inputMappingJson);
+			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
+		}
+
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
@@ -48,11 +57,6 @@ public class HAPManualDataAssociationForTask extends HAPSerializableImp{
 				dataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
 				this.addOutDataAssociation((String)key, dataAssociation);
 			}
-		}
-		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
-		if(inputMappingJson!=null) {
-			this.m_inDataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(inputMappingJson);
-			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
 		}
 	}
 	

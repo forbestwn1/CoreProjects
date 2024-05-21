@@ -8,7 +8,6 @@ import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
-import com.nosliw.core.application.division.manual.brick.adapter.dataassociation.HAPManualAdapterDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForTask;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -22,7 +21,7 @@ public class HAPManualPluginParserAdapterDataAssociationForTask  extends HAPPlug
 	protected void parseDefinitionContentJson(HAPManualBrick brickManual, Object jsonValue, HAPManualContextParse parseContext) {
 		HAPManualAdapterDataAssociationForTask entity = (HAPManualAdapterDataAssociationForTask)brickManual;
 		
-		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualAdapterDataAssociation.DEFINITION);
+		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualAdapterDataAssociationForTask.DEFINITION);
 		HAPManualDataAssociationForTask dataAssociationForTask = new HAPManualDataAssociationForTask();
 		dataAssociationForTask.buildObject(daJsonObj, HAPSerializationFormat.JSON);
 		

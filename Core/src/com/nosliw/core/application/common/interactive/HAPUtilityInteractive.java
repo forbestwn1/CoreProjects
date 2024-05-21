@@ -1,6 +1,9 @@
 package com.nosliw.core.application.common.interactive;
 
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.common.valueport.HAPValuePort;
 
 public class HAPUtilityInteractive {
 
@@ -8,14 +11,18 @@ public class HAPUtilityInteractive {
 
 		HAPGroupValuePorts out = new HAPGroupValuePorts();
 		
-		out.addValuePort(new HAPValuePortInteractiveRequest(interactive), false);
+		HAPValuePort requestValuePort = new HAPValuePortInteractiveRequest(interactive);
+		requestValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST);
+		out.addValuePort(requestValuePort, false);
 		
 		for(Object key : interactive.getResults().keySet()) {
-			out.addValuePort(new HAPValuePortInteractiveResult(interactive, (String)key), false);
+			String resultName = (String)key;
+			HAPValuePort resultValuePort = new HAPValuePortInteractiveResult(interactive, resultName);
+			resultName = HAPUtilityNamingConversion.cascadeComponents(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT, resultName, HAPConstantShared.SEPERATOR_PREFIX);
+			resultValuePort.setName(resultName);
+			out.addValuePort(resultValuePort, false);
 		}
 		return out;
 	}
-	
-	
 }
 

@@ -943,6 +943,8 @@
 
 			<definition type="space"/>
 			<definition name="VALUEPORT_NAME_SELF" value="self"/>
+			<definition name="VALUEPORT_NAME_INTERACT_REQUEST" value="interactiveRequest"/>
+			<definition name="VALUEPORT_NAME_INTERACT_RESULT" value="interactiveResult"/>
 
 
 			<definition type="space"/>

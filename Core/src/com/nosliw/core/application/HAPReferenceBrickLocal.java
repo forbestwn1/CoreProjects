@@ -2,6 +2,8 @@ package com.nosliw.core.application;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -19,7 +21,9 @@ public class HAPReferenceBrickLocal extends HAPSerializableImp{
 	
 	//for runtime purpose, as absolute path may lead to multiple brick
 	private String m_relativePath;
-	
+
+	public HAPReferenceBrickLocal() {}
+
 	public HAPReferenceBrickLocal(String idPath) {
 		this.m_idPath = idPath;
 	}
@@ -35,6 +39,19 @@ public class HAPReferenceBrickLocal extends HAPSerializableImp{
 		HAPReferenceBrickLocal out = new HAPReferenceBrickLocal(this.m_idPath);
 		out.setRelativePath(this.getRelativePath());
 		return out;
+	}
+
+	@Override
+	protected boolean buildObjectByJson(Object obj){
+		if(obj instanceof String) {
+			this.m_idPath = (String)obj;
+		}
+		else if(obj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)obj;
+			this.m_idPath = (String)jsonObj.opt(IDPATH);
+			this.m_relativePath = (String)jsonObj.opt(RELATIVEPATH);
+		}
+		return true;  
 	}
 
 	@Override

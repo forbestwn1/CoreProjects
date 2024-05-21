@@ -2,6 +2,8 @@ package com.nosliw.core.application.common.valueport;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -39,6 +41,25 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 	@Override
 	public HAPReferenceValuePort cloneValue() {
 		return new HAPReferenceValuePort(this.m_brickReference.cloneValue(), this.m_valuePortKey.cloneValue());
+	}
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+
+		Object brickRefObj = jsonObj.opt(BRICKREFERENCE);
+		if(brickRefObj!=null) {
+			this.m_brickReference = new HAPReferenceBrickLocal();
+			this.m_brickReference.buildObject(brickRefObj, HAPSerializationFormat.JSON);
+		}
+		
+		Object valuePortIdObj = jsonObj.opt(VALUEPORTKEY);
+		if(valuePortIdObj!=null) {
+			this.m_valuePortKey = new HAPIdValuePort();
+			this.m_valuePortKey.buildObject(valuePortIdObj, HAPSerializationFormat.JSON);
+		}
+		
+		return true;  
 	}
 	
 	@Override

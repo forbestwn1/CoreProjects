@@ -555,6 +555,8 @@ var COMMONCONSTANT=
   "IO_DIRECTION_OUT": "OUT",
   "IO_DIRECTION_BOTH": "BOTH",
   "VALUEPORT_NAME_SELF": "self",
+  "VALUEPORT_NAME_INTERACT_REQUEST": "interactiveRequest",
+  "VALUEPORT_NAME_INTERACT_RESULT": "interactiveResult",
   "NAME_PARENT": "pppppparentttttt",
   "NAME_CHILD": "chilllllllld",
   "EMBEDEDVALUE_TYPE_ENTITYID": "entityId",
