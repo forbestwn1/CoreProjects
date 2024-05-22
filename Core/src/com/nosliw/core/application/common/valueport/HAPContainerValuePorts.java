@@ -74,15 +74,16 @@ public class HAPContainerValuePorts {
 		String valuePortGroupId = out.getValuePortGroup();
 		if(valuePortGroupId==null) {
 			valuePortGroupId = this.getDefaultGroupName();
+			out.setValuePortGroup(valuePortGroupId);
 		}
 		String valuePortName = out.getValuePortName();
 		if(valuePortGroupId!=null) {
 			HAPGroupValuePorts valuePortGroup = this.getValuePortGroup(valuePortGroupId);
 			if(valuePortName==null) {
 				valuePortName = valuePortGroup.getDefaultValuePortName();
+				out.setValuePortName(valuePortName);
 			}
 		}
-		out.setValuePortName(valuePortName);
 		return out;
 	}
 	

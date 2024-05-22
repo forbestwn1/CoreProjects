@@ -37,7 +37,8 @@ var node_createDataAssociationAdapterPlugin = function(){
 var loc_createDataAssociationAdapter = function(dataAssociation, baseEntityCore){
 	
 	var loc_baseEntityCore = baseEntityCore;
-	var loc_dataAssociationDef = dataAssociation.getAttributeValue(node_COMMONATRIBUTECONSTANT.ADAPTERDATAASSCIATION_DATAASSOCIATION);
+	                                                                                           
+	var loc_dataAssociationDef = dataAssociation.getAttributeValue(node_COMMONATRIBUTECONSTANT.ADAPTERDATAASSOCIATION_DATAASSOCIATION);
 	var loc_dataAssociation = node_createDataAssociation(loc_dataAssociationDef, loc_baseEntityCore);
 	
 	var loc_out = {

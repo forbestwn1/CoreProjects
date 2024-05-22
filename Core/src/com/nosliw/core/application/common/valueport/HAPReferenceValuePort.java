@@ -8,6 +8,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPReferenceBrickLocal;
 
 @HAPEntityWithAttribute
@@ -18,6 +20,9 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String VALUEPORTKEY = "valuePortKey";
+
+	@HAPAttribute
+	public static final String KEY = "key";
 
 	private HAPReferenceBrickLocal m_brickReference;
 	
@@ -37,6 +42,7 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 	public HAPIdValuePort getValuePortId() {   return this.m_valuePortKey;     }
 	public void setValuePortId(HAPIdValuePort valuePortId) {     this.m_valuePortKey = valuePortId;      }
 
+	public String getKey() {    return HAPUtilityNamingConversion.cascadeComponents(this.m_brickReference!=null?this.m_brickReference.getIdPath():"", this.m_valuePortKey!=null?this.m_valuePortKey.getKey():"", HAPConstantShared.SEPERATOR_PREFIX);       }
 	
 	@Override
 	public HAPReferenceValuePort cloneValue() {
@@ -70,5 +76,6 @@ public class HAPReferenceValuePort extends HAPSerializableImp{
 		if(this.m_valuePortKey!=null) {
 			jsonMap.put(VALUEPORTKEY, this.m_valuePortKey.toStringValue(HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(KEY, this.getKey());
 	}
 }

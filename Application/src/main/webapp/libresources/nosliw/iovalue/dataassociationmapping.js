@@ -41,13 +41,91 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 		});		
 	}
 	
-	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_TYPE], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+};
+
+
+var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getAllFromValueRequest", {}), handlers, request);
+
+	var fromValues = [];
+	var executeFromEndPointsRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("fromEndPoint", {}), {
+		success : function(request){
+			return fromValues;
+		}
+	});
+	_.each(tunnels, function(tunnel, i){
+		var fromEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_FROMENDPOINT];
+		
+		var fromEndPointType = fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNEL_TYPE];
+		if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_VALUEPORT){
+			var fromValuePort = loc_getValuePort(fromEndPoint, baseEntityCore);
+			var fromValuePortEleInfo = node_createValuePortElementInfo(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]);
+			executeFromEndPointsRequest.addRequest(fromValuePort.getValueRequest(fromValuePortEleInfo, {
+				success: function(request, value){
+					fromValues.push(value)
+				}
+			}));
+		}
+		else if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_CONSTANT){
+			
+		}
+	});
+	out.addRequest(executeFromEndPointsRequest);
+	return out;
+}
+
+var loc_setValueToEndPointRequest = function(tunnels, values, baseEntityCore, handlers, request){
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValueToEndPointRequest", {}), handlers, request);
+	
+	var toEndPoint = tunnels[0][node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
+	var toValuePort = loc_getValuePort(toEndPoint, baseEntityCore);
+
+	var toValuesInfo = [];
+	_.each(tunnels, function(tunnel, i){
+		toValuesInfo.push(
+			{
+				elementId : node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]),
+				value : values[i] 
+			}
+		);
+	});
+
+	out.addRequest(toValuePort.setValuesRequest(toValuesInfo));
+	return out;
 };
 
 var node_getExecuteMappingDataAssociationRequest = function(association, baseEntityCore, name, handlers, request){
 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteAssociation", {}), handlers, request);
 
+	var tunnels = association[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONMAPPING_TUNNEL];
+	var tunnelsByTargets = {};
+
+	//group tunnels by target value port
+	_.each(tunnels, function(tunnel, i){
+		var toEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
+		var toValuePortRef = toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
+		var toValuePortKey = toValuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_KEY];
+		var tunnels = tunnelsByTargets[toValuePortKey];
+		if(tunnels==undefined){
+			tunnels = [];
+			tunnelsByTargets[toValuePortKey] = tunnels;
+		}
+		tunnels.push(tunnel);
+	});
+
+	_.each(tunnelsByTargets, function(tunnels, targetKey){
+		out.addRequest(loc_getAllFromValueRequest(tunnels, baseEntityCore, {
+			success : function(request, fromValues){
+				return loc_setValueToEndPointRequest(tunnels, fromValues, baseEntityCore);
+			}
+		}));
+	});
+
+
+
+/*
 	var tunnels = association[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONMAPPING_TUNNEL];
 	_.each(tunnels, function(tunnel, i){
 		var fromEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_FROMENDPOINT];
@@ -79,6 +157,8 @@ var node_getExecuteMappingDataAssociationRequest = function(association, baseEnt
 		executeTunnelRequest.addRequest(executeFromEndPointRequest);
 		out.addRequest(executeTunnelRequest);
 	});
+*/
+	
 	return out;
 };
 

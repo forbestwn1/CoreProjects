@@ -55,7 +55,17 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		
 		getExecuteTaskRequest: function(taskInput, handlers, request){
 			return loc_getExecuteTaskRequest(taskInput, handlers, request);
-		}
+		},
+		
+		getValuePort : function(valuePortGroup, valuePortName){
+			
+		},
+		
+		getValueRequest : function(elmentId, handlers, request){        },
+
+		setValueRequest : function(elmentId, value, handlers, request){        },
+
+		setValuesRequest : function(setValueInfos, handlers, request){        },
 			
 	};
 

@@ -67,12 +67,12 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 			
 			out.addRequest(loc_dataAssociationIn.getExecuteRequest({
 				success : function(request, intputValue){
-					
+					var v = inputValue;
 				}
 			}));
 			
 			
-			
+/*			
 			var inIO = node_createIODataSet();
 			
 			var outIOs = {};
@@ -98,6 +98,8 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 			
 			var parentIODataSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
 			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentIODataSet, loc_dataAssociationTask, taskInfo));
+*/			
+			
 			return out;
 		}
 	};

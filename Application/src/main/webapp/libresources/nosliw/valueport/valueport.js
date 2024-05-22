@@ -6,6 +6,8 @@ var packageObj = library.getChildPackage();
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_CONSTANT;
+	var node_ServiceInfo;
+	var node_createServiceRequestInfoSequence;
 	var node_getEmbededEntityInterface;
 	var node_buildInterface;
 	var node_getComplexEntityObjectInterface;
@@ -19,9 +21,9 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 	
 	var loc_interfaceEntity = {
 
-		getValuePort : function(valuePortType, valuePortName){   
+		getValuePort : function(valuePortGroup, valuePortName){   
 			var loc_valuePort;
-			if(valuePortType==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
+			if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
 				var complexEntityInterface = node_getComplexEntityObjectInterface(loc_rawEntity);
 				if(complexEntityInterface!=undefined){
 					loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
@@ -29,7 +31,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 			}
 			else{
 				if(loc_rawEntity.getValuePort!=undefined){
-					loc_valuePort = loc_rawEntity.getValuePort(valuePortType, valuePortName);
+					loc_valuePort = loc_rawEntity.getValuePort(valuePortGroup, valuePortName);
 				}
 			}
 			
@@ -77,6 +79,16 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 		setValueRequest : function(elementId, value, handlers, request){        
 			return loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
 		},
+		
+		setValuesRequest : function(setValueInfos, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			_.each(setValueInfos, function(setValueInfo, i){
+				var elementId = setValueInfo.elementId;
+				out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+			});
+			return out;			
+		},
+		
 	};
 	
 	return loc_out;
@@ -86,9 +98,11 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 //interface for component external env
 var node_buildValuePort = function(rawValuePort){
 	var interfaceDef = {
+		
 		getValueRequest : function(elmentId, handlers, request){        },
 
 		setValueRequest : function(elmentId, value, handlers, request){        },
+		setValuesRequest : function(setValueInfos, handlers, request){        },
 
 		createVariable : function(elementId){},
 	};
@@ -102,6 +116,8 @@ var node_buildValuePort = function(rawValuePort){
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
