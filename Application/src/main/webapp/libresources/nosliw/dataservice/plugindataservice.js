@@ -55,6 +55,31 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	};
 
 	var loc_getExecuteTaskRequest = function(handlers, request){
+
+		return node_createServiceRequestInfoSimple(undefined, function(request){
+			var result = {
+			    "resultName": "success",
+			    "resultValue": {
+			        "outputInService1": {
+			            "dataTypeId": "test.string;1.0.0",
+			            "valueFormat": "JSON",
+			            "value": "default value of parm1",
+			            "info": {}
+			        },
+			        "outputInService2": {
+			            "dataTypeId": "test.string;1.0.0",
+			            "valueFormat": "JSON",
+			            "value": "default value of parm1",
+			            "info": {}
+			        }
+			    }
+			};
+			loc_result = {};
+			loc_result.success = result.resultValue;
+			return result;
+		}, handlers, request);
+
+/*		
 		var out = node_createServiceRequestInfoSequence(handlers, request);
 		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID])[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], loc_input, {
 			success: function(rquest, resultValue){
@@ -62,6 +87,8 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			}
 		}));
 		return out;
+*/		
+		
 	};
 	
 	var loc_facade = node_createTaskInterface({
@@ -79,19 +106,25 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		},
 
 		setValuesRequest : function(setValueInfos, handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				_.each(setValueInfos, function(setValueInfo, i){
 					loc_input[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
 				});
-			}, handlers, request);
+			}));
+			return out;
 		},
 	};
 
 	var loc_resultValuePort = {
 		"interactiveResult_success" : {
-			getValueRequest : function(elmentId, handlers, request){       
-				return loc_result.success[elementId.getRootName()];
-			 },
+			getValueRequest : function(elmentId, handlers, request){ 
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_result.success[elmentId.getRootName()];
+				}));
+				return out;
+			 }
 		}
 	};
 
