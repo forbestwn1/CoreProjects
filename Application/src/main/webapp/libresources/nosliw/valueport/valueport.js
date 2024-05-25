@@ -73,7 +73,13 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 		},
 		
 		getValueRequest : function(elementId, handlers, request){        
-			return loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), handlers, request);
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+				success: function(request, dataValue){
+					return dataValue.value;
+				}
+			}));
+			return out;
 		},
 
 		setValueRequest : function(elementId, value, handlers, request){        

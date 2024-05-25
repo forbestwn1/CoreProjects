@@ -90,6 +90,8 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
 				
+				complexEntityCore = node_makeObjectComplexEntityObjectInterface(simpleEntity, undefined, undefined);
+				
 				simpleEntity = node_makeObjectWithValuePortInterface(simpleEntity);
 				
 				simpleEntity = node_makeObjectWithComponentInterface(entityType, simpleEntity, false);
@@ -187,8 +189,6 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, "1.0.0", node_createExpressionGroupPlugin());
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "1.0.0", node_createExpressionSinglePlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK, "1.0.0", node_createTaskPlugin());
-
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0", node_createScriptBasedPlugin());
 
 		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, "1.0.0", node_createComplexEntityContainerPlugin());
@@ -199,6 +199,8 @@ var node_createComplexEntityRuntimeService = function() {
 
 		//simple entity plugin
 		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0", node_createDataServiceEntityPlugin());
+		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER, "1.0.0", node_createTaskPlugin());
+
 
 
 		//adapter plugin

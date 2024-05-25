@@ -18,7 +18,7 @@
 			},		
 			"adapter":[
 				{
-					"name1" : "serviceAdapter",
+					"name" : "serviceAdapter",
 					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
@@ -76,7 +76,7 @@
 		{
 			"info": {
 				"name" : "merge_runtime_localresource-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -126,7 +126,7 @@
 									},
 									"definition" : {
 										"mapping" : {
-											"elementPath": "parent_public"
+											"elementPath": "output1"
 										}
 									}
 								}
@@ -175,7 +175,7 @@
 							"output1": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of output1"
-							},
+							}
 						}
 					}
 				}

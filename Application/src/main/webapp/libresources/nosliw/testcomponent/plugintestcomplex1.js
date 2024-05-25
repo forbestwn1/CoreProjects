@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_complexEntityUtility;
 	var node_basicUtility;
+	var node_getBasicEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -80,15 +81,32 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
 
 				//adapter view
-				if(child.getAdapters!=undefined){
-					_.each(child.getAdapters(), function(adapter, adapterName){
+				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
+				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
+				if(childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
+					//for task wrapper attribute
+					var childEntityDef = node_getBasicEntityObjectInterface(childEntityCore).getEntityDefinition();
+					var adapterNames = childEntityDef.getAttribute(node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK).getAdapterNames();
+					_.each(adapterNames, function(adapterName, i){
 						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
 						attributeView.append(adapterView);
 						adapterView.click(function() {
-							var adapterExecuteRequest =  adapter.getExecuteRequest();
-							node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+							var taskWrapperExeRequest = childEntityCore.getExecuteTaskRequest(adapterName);
+							node_requestServiceProcessor.processRequest(taskWrapperExeRequest);
 						});
-					});
+					});					
+				}
+				else{
+					if(child.getAdapters!=undefined){
+						_.each(child.getAdapters(), function(adapter, adapterName){
+							var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
+							attributeView.append(adapterView);
+							adapterView.click(function() {
+								var adapterExecuteRequest =  adapter.getExecuteRequest();
+								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+							});
+						});
+					}
 				}
 
 				var childView = $('<div style="margin-left:10px;" />');
@@ -192,6 +210,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 
 
 //Register Node by Name

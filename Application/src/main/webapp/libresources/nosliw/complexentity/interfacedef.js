@@ -125,6 +125,11 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 */
 
 			createAttributeRequest : function(attrName, variationPoints, handlers, request){
+				return this.createChildByAttributeRequest(attrName, attrName, variationPoints, handlers, request);
+			},
+
+
+			createChildByAttributeRequest : function(childName, attrName, variationPoints, handlers, request){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
 				
 				var complexEntityDef = basicEntityInterface.getEntityDefinition();
@@ -147,7 +152,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 								node_getEntityTreeNodeInterface(complexEntityRuntime.getCoreEntity()).setParentCore(rawEntity);
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
-										return treeNodeEntityInterface.addChild(attrName, complexEntityRuntime, adaptersResult.getResults(), true);
+										return treeNodeEntityInterface.addChild(childName, complexEntityRuntime, adaptersResult.getResults(), true);
 									}
 								});
 								
@@ -170,7 +175,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 								node_getEntityTreeNodeInterface(simpleEntity).setParentCore(rawEntity);
 								var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 									success : function(request, adaptersResult){
-										return treeNodeEntityInterface.addChild(attrName, simpleEntity, adaptersResult.getResults(), false);
+										return treeNodeEntityInterface.addChild(childName, simpleEntity, adaptersResult.getResults(), false);
 									}	
 								});
 								
@@ -191,7 +196,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 					var externalBundleRuntime = nosliw.runtime.getComplexEntityService().createBundleRuntime(attrValueWrapper[node_COMMONATRIBUTECONSTANT.REFERENCEEXTERNAL_NORMALIZEDRESOURCEID], childConfigure, request);
 					var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
 						success : function(request, adaptersResult){
-							return treeNodeEntityInterface.addChild(attrName, externalBundleRuntime, adaptersResult.getResults(), true);
+							return treeNodeEntityInterface.addChild(childName, externalBundleRuntime, adaptersResult.getResults(), true);
 						}
 					});
 					

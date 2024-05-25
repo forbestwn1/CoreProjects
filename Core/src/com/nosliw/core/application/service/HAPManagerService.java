@@ -153,7 +153,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		HAPResultInteractive out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
-			HAPBlockInteractiveInterface serviceInterface = serviceInstance.getDefinition().getServiceInterface().getActiveInterface();
+			HAPBlockInteractiveInterface serviceInterface = (HAPBlockInteractiveInterface)serviceInstance.getDefinition().getServiceInterface();
 			for(HAPRequestParmInInteractiveInterface parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;

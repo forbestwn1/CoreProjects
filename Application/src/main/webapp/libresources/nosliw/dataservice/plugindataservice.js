@@ -41,15 +41,60 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_configure = configure;
 	
-	var loc_getExecuteTaskRequest = function(taskInput, handlers, request){
-		return nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID]), taskInput, handlers, request);
+	var loc_input = {};
+	var loc_result;
+
+	var loc_getExecuteTaskRequest1 = function(taskInput, handlers, request){
+		var out = node_createServiceRequestInfoSequence(handlers, request);
+		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID]), taskInput, {
+			success: function(rquest, resultValue){
+				loc_result = resultValue;
+			}
+		}));
+		return out;
+	};
+
+	var loc_getExecuteTaskRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(handlers, request);
+		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID])[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], loc_input, {
+			success: function(rquest, resultValue){
+				loc_result = resultValue;
+			}
+		}));
+		return out;
 	};
 	
 	var loc_facade = node_createTaskInterface({
-		getExecuteRequest : function(taskInput, requirement, handlers, request){
+		getExecuteRequest : function(handlers, request){
+			return loc_getExecuteTaskRequest(handlers, request);
+		},
+		getExecuteRequest1 : function(taskInput, requirement, handlers, request){
 			return loc_getExecuteTaskRequest(taskInput, handlers, request);
 		}
 	});
+
+	var loc_requestValuePort = {
+		setValueRequest : function(elmentId, value, handlers, request){        
+			
+		},
+
+		setValuesRequest : function(setValueInfos, handlers, request){
+			return node_createServiceRequestInfoSimple(undefined, function(request){
+				_.each(setValueInfos, function(setValueInfo, i){
+					loc_input[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
+				});
+			}, handlers, request);
+		},
+	};
+
+	var loc_resultValuePort = {
+		"interactiveResult_success" : {
+			getValueRequest : function(elmentId, handlers, request){       
+				return loc_result.success[elementId.getRootName()];
+			 },
+		}
+	};
+
 	
 	var loc_out = {
 		
@@ -57,28 +102,15 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			return loc_getExecuteTaskRequest(taskInput, handlers, request);
 		},
 		
-		newValuePort : function(valuePortGroup, valuePortName){
-		},
-		
-		releaseValuePort : function(valuePortId){
-			
-		},
-		
-		
-		
 		getValuePort : function(valuePortGroup, valuePortName){
-			
-		},
+			if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
+				return loc_requestValuePort;
+			}
+			else{
+				return loc_resultValuePort[valuePortName];
+			}
+		}
 		
-		getValueRequest : function(elmentId, handlers, request){        },
-
-		setValueRequest : function(elmentId, value, handlers, request){        },
-
-		setValuesRequest : function(setValueInfos, handlers, request){        
-			 
-			
-		},
-			
 	};
 
 	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);

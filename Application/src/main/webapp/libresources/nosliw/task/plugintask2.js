@@ -24,9 +24,9 @@ var node_createTaskPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityRequest : function(entityDef, configure, handlers, request){
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createTaskCore(entityDef, configure);
+				return loc_createTaskComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
 		},
 	};
@@ -34,20 +34,14 @@ var node_createTaskPlugin = function(){
 	return loc_out;
 };
 
+var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
-var loc_createTaskCore = function(taskDef, configure){
-
-	var loc_taskDef = taskDef;
-	
+	var loc_complexEntityDef = complexEntityDef;
+	var loc_valueContextId = valueContextId;
+	var loc_bundleCore = bundleCore;
+	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface;
-
-	var loc_indexId = 0;
 	
-	var loc_createTaskId = function(){
-		loc_indexId++;
-		return loc_indexId + "";
-	};
-
 	var loc_facadeTask = {
 		getItemVariableInfos : function(){
 		},
@@ -56,42 +50,40 @@ var loc_createTaskCore = function(taskDef, configure){
 			
 		},
 
-		getExecuteRequest : function(adForTaskName, handlers, request){
+		getExecuteRequest : function(extraInfo, handlers, request){
 			return loc_taskUtility.getTaskAttributeExecuteRequest(loc_out, node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, extraInfo, handlers, request);
 		},
 	};
+	
+	var loc_facadeTaskContainer = {
+		getAllItemIds : function(){
+		},
 		
+		getItemVariableInfos : function(itemId){
+		},
+		
+		getItemRequirement : function(itemId){
+			
+		},
+		
+		getExecuteItemRequest : function(itemId, extraInfo, handlers, request){
+		},
+	};
+	
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(adForTaskName, handlers, request){
+		getComplexEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-			//create task entity runtime
-			var childId = loc_createTaskId();
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createChildByAttributeRequest(childId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-				success : function(request){
-					var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(childId);
-					var adapter = childNodeObj.getAdapters()[adForTaskName];
-					return adapter.getExecuteRequest();
-				}
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, undefined));
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				
 			}));
-			
-			//init entity runtime
-			
-			
-			
-			//execute da for task
-			
-			
-			//destroy task entity runtime
-
-			return out;			
+			return out;
 		},
 		
 		setEnvironmentInterface : function(envInterface){
 			loc_envInterface = envInterface;
 		},
-		
 	};
 	
 	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
@@ -116,6 +108,6 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTaskPlugin", node_createTaskPlugin); 
+packageObj.createChildNode("createTaskPlugin1", node_createTaskPlugin); 
 
 })(packageObj);

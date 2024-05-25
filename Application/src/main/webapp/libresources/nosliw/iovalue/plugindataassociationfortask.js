@@ -66,39 +66,20 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			out.addRequest(loc_dataAssociationIn.getExecuteRequest({
-				success : function(request, intputValue){
-					var v = inputValue;
+				success : function(request){
+					var taskInterface = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+					
+					return taskInterface.getExecuteRequest({
+						success: function(request, taskResult){
+							loc_dataAssociationOut[taskResult.resultName].getExecuteRequest({
+								success : function(request){
+									return resultName;
+								}
+							});
+						}
+					});
 				}
 			}));
-			
-			
-/*			
-			var inIO = node_createIODataSet();
-			
-			var outIOs = {};
-			var taskInfo = new node_IOTaskInfo(function(handlers, request){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				out.addRequest(inIO.getDataValueRequest(undefined, {
-					success : function(request, taskInputValue){
-						var taskInterface = node_getApplicationInterface(node_complexEntityUtility.getCoreEntity(childRuntime), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-						var taskInput = extraInfo==undefined?undefined:extraInfo.taskInput;
-						var requirement = extraInfo==undefined?undefined:extraInfo.requirement;
-						return taskInterface.getExecuteRequest(taskInputValue.default, requirement, {
-							success : function(request, taskResult){
-								var resultName = taskResult.resultName;
-								outIOs[resultName] = node_createIODataSet();
-								outIOs[resultName].setData(undefined, {default:taskResult.resultValue});
-								return resultName;
-							}
-						});
-					}
-				}));
-				return out;
-			}, "interactive", inIO, outIOs);
-			
-			var parentIODataSet = node_createIODataSet(node_ioDataFactory.createIODataByComplexEntity(parentCore));
-			out.addRequest(node_taskUtility.getExecuteWrappedTaskRequest(parentIODataSet, loc_dataAssociationTask, taskInfo));
-*/			
 			
 			return out;
 		}
