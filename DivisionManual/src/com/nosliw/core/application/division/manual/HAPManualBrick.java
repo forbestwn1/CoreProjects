@@ -10,7 +10,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityNosliw;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockSimpleTaskWrapper;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 
 public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
@@ -42,7 +45,19 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 				break;
 			}
 		}
-		this.m_attributes.add(attribute);    
+		
+		//insert task wrapper if attribute value is task
+		if(attribute.getIsTask()&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
+			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = new HAPManualBlockSimpleTaskWrapper();
+			String taskWrapperAttrName = attribute.getName();
+			
+			attribute.setName(HAPBlockTaskWrapper.TASK);
+			taskWrapperBrick.setAttribute(attribute);
+			this.setAttributeWithValueBrick(taskWrapperAttrName, taskWrapperBrick);
+		}
+		else {
+			this.m_attributes.add(attribute);    
+		}
 	}
 
 	public List<HAPManualAttribute> getAllAttributes(){    return this.m_attributes;    }

@@ -584,6 +584,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPT" value="script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT" value="decoration_script"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK" value="task"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TASKWRAPPER" value="taskWrapper"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP" value="scripttaskgroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_SIMPLE1" value="testsimple1"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1" value="test_complex_1"/>

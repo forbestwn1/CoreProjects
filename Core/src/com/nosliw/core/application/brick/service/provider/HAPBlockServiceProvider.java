@@ -10,6 +10,7 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
+import com.nosliw.core.application.common.task.HAPTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
@@ -18,7 +19,7 @@ import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 @HAPEntityWithAttribute
-public class HAPBlockServiceProvider extends HAPBrickBlockSimple{
+public class HAPBlockServiceProvider extends HAPBrickBlockSimple implements HAPTask{
 
 	@HAPAttribute
 	public static final String SERVICEID = "serviceId";

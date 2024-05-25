@@ -2,6 +2,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 
 import java.util.List;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
@@ -31,7 +32,9 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginPr
 		daAdapterExe.setDataAssciation(daExe);
 		List<HAPManualDataAssociation> das = daAdapterDef.getDataAssociation();
 		for(HAPManualDataAssociation da : das) {
-			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, processContext.getRootPathForBaseBrick(), processContext.getCurrentBundle(), this.m_runtimeEnv);
+			HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
+			HAPPath secondBlockPath = baseBlockPath.trimLast();
+			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), this.m_runtimeEnv);
 			for(HAPTunnel tunnel : daMappingExe.getTunnels()) {
 				daExe.addTunnel(tunnel);
 			}

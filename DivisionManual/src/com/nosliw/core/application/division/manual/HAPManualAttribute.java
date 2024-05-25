@@ -24,6 +24,8 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 
 	public static final String ADAPTER = "adapter";
 
+	public static final String ISTASK = "isTask";
+
 	public static final String PARENT = "parent";
 
 	//extra info definition
@@ -41,6 +43,8 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	//path from root
 	private HAPPath m_pathFromRoot;
 
+	private boolean m_isTask = false;
+	
 	//parent entity
 	private HAPManualBrick m_parent;
 	
@@ -63,6 +67,9 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	
 	public void addRelation(HAPManualBrickRelation relation) {    this.m_relations.add(relation);      }
 	public List<HAPManualBrickRelation> getRelations(){    return this.m_relations;     }
+	
+	public boolean getIsTask() {   return this.m_isTask;    }
+	public void setIsTask(boolean isTask) {    this.m_isTask = isTask;     }
 	
 	@Override
 	public HAPPath getPathFromRoot() {   return this.m_pathFromRoot;  }

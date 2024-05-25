@@ -14,6 +14,7 @@ import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapt
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
+import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -46,6 +47,8 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBlockTestComplex1.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBlockTestComplexScript.class, this.m_runtimeEnv));
 
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TASKWRAPPER_100, false), HAPBlockTaskWrapper.class, this.m_runtimeEnv));
+		
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false), HAPBlockServiceProvider.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROFILE_100, false), HAPBlockServiceProfile.class, this.m_runtimeEnv));
 

@@ -55,6 +55,7 @@ public class HAPManualProcessorDataAssociationMapping {
 	public static HAPDataAssociationMapping processValueMapping(
 			HAPManualDataAssociationMapping daDef,
 			HAPPath baseBlockPath, 
+			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
 			HAPRuntimeEnvironment runtimeEnv) 
 	{
@@ -62,7 +63,7 @@ public class HAPManualProcessorDataAssociationMapping {
 		
 		List<HAPManualItemValueMapping> mappingItems = daDef.getItems();
 		for(HAPManualItemValueMapping mappingItem : mappingItems) {
-			normalizeValuePortId(mappingItem, baseBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
+			normalizeValuePortId(mappingItem, baseBlockPath, secondBlockPath, daDef.getDirection(), currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 		
 			normalizeValuePortRelativeBrickPath(mappingItem, baseBlockPath);
 			
@@ -147,20 +148,18 @@ public class HAPManualProcessorDataAssociationMapping {
 		
 	}
 	
-	private static void normalizeValuePortId(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
-		HAPPath parentBlockPath = baseBlockPath.trimLast();
-
+	private static void normalizeValuePortId(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 		
 		final HAPPath in;
 		HAPPath out = null;
 		
 		if(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM.equals(direction)) {
-			out = parentBlockPath;
+			out = secondBlockPath;
 			in = baseBlockPath;
 		}
 		else {
-			in = parentBlockPath;
+			in = secondBlockPath;
 			out = baseBlockPath;
 		}
 		

@@ -10,6 +10,7 @@
 				"status": "disabled1",
 				"description" : ""
 			},
+			"isTask" : true,
 			"brick":{
 				"serviceKey" : {
 					"id" : "TestBasicService"
