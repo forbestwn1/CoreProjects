@@ -63,10 +63,6 @@ public class HAPUtilityResourceId {
 		return out.toString();
 	}
 	
-	public static String[] parseResourceIdLiterate(String idLiterate) {
-		return HAPUtilityNamingConversion.parseLevel2(idLiterate);
-	}
-
 	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String version, String literate) {
 		return buildResourceIdByLiterate(resourceType, version, literate, false);
 	}

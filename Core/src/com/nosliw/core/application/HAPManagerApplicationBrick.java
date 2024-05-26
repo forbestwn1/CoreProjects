@@ -9,15 +9,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
 import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
 import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -51,6 +55,7 @@ public class HAPManagerApplicationBrick {
 		
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false), HAPBlockServiceProvider.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROFILE_100, false), HAPBlockServiceProfile.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEINTERFACE_100, false), HAPBlockServiceInterface.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.INTERACTIVEINTERFACE_100, false), HAPBlockInteractiveInterface.class, this.m_runtimeEnv));
 
@@ -136,6 +141,32 @@ public class HAPManagerApplicationBrick {
 		}
 	}
 
+	//add division information to resource id if missing
+	public HAPResourceId normalizeResourceIdWithDivision(HAPResourceId resourceId, String divisionDefault) {
+		HAPResourceId out = resourceId;
+		String strucuture = resourceId.getStructure();
+		if(HAPConstantShared.RESOURCEID_TYPE_SIMPLE.equals(strucuture)) {
+			HAPResourceIdSimple simpleResourceId = (HAPResourceIdSimple)out;
+			if(m_brickPlugins.get(simpleResourceId.getResourceTypeId().getResourceType())!=null) {
+				//for known brick
+				String[] segs = HAPUtilityNamingConversion.parseLevel1(simpleResourceId.getId());
+				if(segs.length<=1) {
+					String id = segs[0];
+					String division = this.m_divisionByBrickType.get(HAPUtilityBrick.getBrickTypeIdFromResourceTypeId(simpleResourceId.getResourceTypeId()));
+					if(division==null) {
+						division = divisionDefault;
+					}
+					simpleResourceId.setId(HAPUtilityNamingConversion.cascadeLevel1(id, division));
+				}
+			}
+		}
+		else if(HAPConstantShared.RESOURCEID_TYPE_EMBEDED.equals(strucuture)) {
+			HAPResourceIdEmbeded embededResourceId = (HAPResourceIdEmbeded)out;
+			embededResourceId.setParentResourceId((HAPResourceIdSimple)normalizeResourceIdWithDivision(embededResourceId.getParentResourceId(), divisionDefault));
+		}
+		return out;
+	}
+	
 	public void registerBrickPlugin(HAPPluginBrick brickPlugin) {
 		HAPIdBrickType entityTypeId = brickPlugin.getBrickTypeInfo().getBrickTypeId();
 		

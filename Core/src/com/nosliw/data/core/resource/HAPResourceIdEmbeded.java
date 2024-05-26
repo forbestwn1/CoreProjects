@@ -54,7 +54,7 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	protected void buildCoreIdByLiterate(String idLiterate) {
 		String[] idSegs = HAPUtilityNamingConversion.parseTwoPartLevel3(idLiterate);
 		this.m_path = idSegs[0];
-		this.m_parentId = HAPFactoryResourceId.newInstance(idSegs[1]);
+		this.m_parentId = (HAPResourceIdSimple)HAPFactoryResourceId.newInstance(idSegs[1]);
 		
 //		JSONObject jsonObj = new JSONObject(idLiterate);
 //		this.buildCoreIdByJSON(jsonObj);
@@ -69,12 +69,12 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@Override
 	protected void buildCoreIdByJSON(JSONObject jsonObj) {
 		this.m_path = jsonObj.optString(PATH);
-		this.m_parentId =  HAPFactoryResourceId.newInstance(jsonObj.opt(PARENT));
+		this.m_parentId =  (HAPResourceIdSimple)HAPFactoryResourceId.newInstance(jsonObj.opt(PARENT));
 	}
 
 	@Override
 	public HAPResourceId clone() {
-		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getResourceType());
+		HAPResourceIdEmbeded out = new HAPResourceIdEmbeded(this.getResourceTypeId().getResourceType(), this.getResourceTypeId().getVersion());
 		out.m_path = this.m_path;
 		out.m_parentId = this.m_parentId.clone();
 		return out;

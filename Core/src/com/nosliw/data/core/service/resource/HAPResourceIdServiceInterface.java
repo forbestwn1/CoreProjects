@@ -30,7 +30,7 @@ public class HAPResourceIdServiceInterface  extends HAPResourceIdSimple{
 	}
 
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_serviceInterfaceId = new HAPIdServcieInterface(id);
 	}

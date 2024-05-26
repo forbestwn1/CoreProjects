@@ -29,7 +29,7 @@ public class HAPResourceIdDataType extends HAPResourceIdSimple{
 	}
 
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_dataTypeId = new HAPDataTypeId(id);
 	}

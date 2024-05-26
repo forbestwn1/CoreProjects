@@ -36,12 +36,12 @@ public class HAPManualUtilityBrick {
 		return getDescendantEntity(rootEntityInfo.getBrick(), path);
 	}
 	
-	public static HAPManualAttribute getDescendantAttribute(HAPManualBrick entityDef, HAPPath path) {
+	public static HAPManualAttribute getDescendantAttribute(HAPManualBrick brickManual, HAPPath path) {
 		HAPManualAttribute out = null;
 		for(int i=0; i<path.getLength(); i++) {
 			String attribute = path.getPathSegments()[i];
 			if(i==0) {
-				out = entityDef.getAttribute(attribute);
+				out = brickManual.getAttribute(attribute);
 			} else {
 				HAPManualWrapperValue attrValueInfo = out.getValueWrapper();
 				if(attrValueInfo instanceof HAPManualWithBrick) {
@@ -80,6 +80,7 @@ public class HAPManualUtilityBrick {
 	}
 	
 	public static boolean isAttributeAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {
+		//check attribute relation configure first
 		HAPManualBrickRelationAutoProcess relation = (HAPManualBrickRelationAutoProcess)getEntityRelation(attr, HAPConstantShared.MANUAL_RELATION_TYPE_AUTOPROCESS);
 		if(relation!=null) {
 			return relation.isAutoProcess();
@@ -87,28 +88,16 @@ public class HAPManualUtilityBrick {
 		
 		HAPManualWrapperValue attrValueWrapper = attr.getValueWrapper();
 		String valueWrapperType = attrValueWrapper.getValueType();
-		if(valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
-			HAPManualWrapperValueBrick brickValueWrapper = (HAPManualWrapperValueBrick)attrValueWrapper;
-			if(brickValueWrapper.getBrickTypeId().getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
-				return false;
+		if(!valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE)) {
+			if(valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
+				HAPManualWrapperValueBrick brickValueWrapper = (HAPManualWrapperValueBrick)attrValueWrapper;
+				if(brickValueWrapper.getBrickTypeId().getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
+					return false;
+				}
 			}
 			return true;
 		}
 		return false;
-		
-//		if(attrValueWrapper instanceof HAPManualWithBrick) {
-//			return true;
-//			boolean isComplex = isBrickComplex(((HAPManualWithBrick)attrValueInfo).getBrickTypeId(), entityMan);
-//			
-//			if(isComplex) {
-//				return true;
-//			} else {
-//				return false;
-//			}
-//		} else {
-//			return false;
-//		}
-		
 	}
 	
 	public static HAPManualBrickRelation getEntityRelation(HAPManualAttribute attr, String relationType) {

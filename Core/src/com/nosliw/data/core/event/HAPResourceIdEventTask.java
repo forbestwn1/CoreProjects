@@ -29,7 +29,7 @@ public class HAPResourceIdEventTask   extends HAPResourceIdSimple{
 	}
 
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_eventTaskId = new HAPEventTaskId(id);
 	}

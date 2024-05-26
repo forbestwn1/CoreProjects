@@ -20,6 +20,8 @@ import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimpl
 @HAPEntityWithAttribute
 public class HAPBlockServiceInterface extends HAPBrickWithEntityInfoSimple{
 
+	public static final String CHILD_INTERFACE = "interface";
+
 	@HAPAttribute
 	public static String INTERFACE = "interface";
 
@@ -30,6 +32,10 @@ public class HAPBlockServiceInterface extends HAPBrickWithEntityInfoSimple{
 	public static String DISPLAY = "display";
 
 	public HAPBlockServiceInterface() {
+	}
+	
+	@Override
+	public void init() {
 		this.setAttributeValueWithValue(TAG, new ArrayList<String>());
 		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}

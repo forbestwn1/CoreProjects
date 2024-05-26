@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPFactoryResourceId {
 
@@ -17,7 +19,10 @@ public class HAPFactoryResourceId {
 		if(out==null) {
 			out = newInstance(resourceType, version, obj);
 		}
-		if(resourceTypeRestrict==true&&!out.getResourceType().equals(resourceType)) {
+		
+		if(resourceTypeRestrict==true&&
+			!HAPUtilityBasic.isEquals(out.getResourceTypeId().getResourceType(), resourceType)&&
+			!HAPUtilityBasic.isEquals(out.getResourceTypeId().getVersion(), version)) {
 			throw new RuntimeException();
 		}
 		return out;
@@ -77,12 +82,22 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		if(content instanceof String) {
 			String literate = (String)content;
-			String[] idSegs = HAPUtilityResourceId.parseResourceIdLiterate(literate);
-			if(idSegs.length==1) {
-				out = null;
-			} else if(idSegs.length==3) {
-				out = newInstance(idSegs[0], idSegs[1], idSegs[2]);
-			}
+			
+			String seperator = HAPConstantShared.SEPERATOR_LEVEL2;
+			
+			String resourceType = null;
+			String version = null; 
+			String idLiterate = null;
+
+			int index = literate.indexOf(seperator);
+			resourceType = literate.substring(0, index);
+			literate = literate.substring(index+seperator.length());
+			
+			index = literate.indexOf(seperator);
+			version = literate.substring(0, index);
+			idLiterate = literate.substring(index+seperator.length());
+
+			out = newInstance(resourceType, version, idLiterate);
 		}
 		else if(content instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)content;

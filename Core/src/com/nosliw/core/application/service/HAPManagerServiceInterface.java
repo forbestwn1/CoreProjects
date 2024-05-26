@@ -20,7 +20,7 @@ public class HAPManagerServiceInterface{
 	}
 	
 	public HAPBlockServiceInterface getServiceInterface(HAPIdServcieInterface id) {
-		String fileName = HAPSystemFolderUtility.getServiceInterfaceFolder() + id.getId() + ".res";
+		String fileName = HAPSystemFolderUtility.getServiceInterfaceFolder() + id.getId() + ".json";
 		String content = HAPUtilityFile.readFile(new File(fileName));
 		return (HAPBlockServiceInterface)HAPUtilitySerializeJson.buildBrick(new JSONObject(content), HAPEnumBrickType.SERVICEINTERFACE_100, m_brickManager);
 	}

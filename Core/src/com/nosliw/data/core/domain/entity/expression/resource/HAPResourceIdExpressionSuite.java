@@ -36,7 +36,7 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 	}
 	
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_expressionSuiteId = new HAPIdExpressionSuite(id);
 	}

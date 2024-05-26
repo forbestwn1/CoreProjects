@@ -73,7 +73,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 						success: function(request, taskResult){
 							return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest({
 								success : function(request){
-									return resultName;
+									return taskResult;
 								}
 							});
 						}

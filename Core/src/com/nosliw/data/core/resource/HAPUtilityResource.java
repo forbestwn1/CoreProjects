@@ -16,7 +16,7 @@ import com.nosliw.data.core.system.HAPSystemUtility;
 public class HAPUtilityResource {
 
 	public static HAPResource getResource(HAPResourceId resourceId, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
-		return resourceMan.getResources(Lists.asList(resourceId, null), runtimeInfo).getLoadedResource(resourceId);
+		return resourceMan.getResources(Lists.asList(resourceId, new HAPResourceId[0]), runtimeInfo).getLoadedResource(resourceId);
 	}
 	
 	public static Map<String, Object> buildResourceLoadPattern(HAPResourceId resourceId, Map<String, Object> info) {

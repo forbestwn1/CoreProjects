@@ -1,0 +1,68 @@
+{
+   "id":"basicinterface",
+   "name":"basicinterface",
+   "displayName":"basicinterface",
+   "description":"basicinterface",
+   "tag":[
+      "basic",
+      "interface"
+   ],
+   "interface":{
+		"request" : [
+			{
+				"name" : "serviceParm1",
+				"dataInfo" : "test.string;1.0.0"
+			}
+		],
+		"result" : {
+			"success": {
+				"output": [
+					{
+						"name" : "outputInService1",
+						"criteria" : "test.string;1.0.0"
+					},
+					{
+						"name" : "outputInService2",
+						"criteria" : "test.string;1.0.0"
+					}
+				]
+			}
+		}
+   },
+   "display":{
+      "displayName":"Element school ranking list English",
+      "description":"all element school rank in ontario",
+      "interface":{
+         "parm":{
+            "schoolTypeInService":{
+               "displayName":"School Type"
+            },
+            "schoolRatingInService":{
+               "displayName":"School Rating"
+            }
+         },
+         "result":{
+            "success":{
+               "output":{
+                  "outputInService":{
+                     "displayName":"a list of element schools",
+                     "children":{
+                        "element":{
+                           "displayName":"School Info",
+                           "children":{
+                              "schoolName":{
+                                 "displayName":"School Name"
+                              },
+                              "schoolRate":{
+                                 "displayName":"School Rate"
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

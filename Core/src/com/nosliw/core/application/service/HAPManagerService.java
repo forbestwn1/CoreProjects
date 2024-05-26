@@ -17,6 +17,7 @@ import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
 import com.nosliw.data.core.data.HAPData;
@@ -41,10 +42,14 @@ public class HAPManagerService implements HAPPluginDivision{
 //		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
 		this.m_serviceFactorys = new LinkedHashMap<String, HAPFactoryService>();
-		this.m_serviceInterfaceMan = new HAPManagerServiceInterface(this.m_runtimeEnv.getBrickManager()); 
 	}
 	
-	public HAPManagerServiceInterface getServiceInterfaceManager() {   return this.m_serviceInterfaceMan;     }
+	public HAPManagerServiceInterface getServiceInterfaceManager() { 
+		if(this.m_serviceInterfaceMan==null) {
+			this.m_serviceInterfaceMan = new HAPManagerServiceInterface(this.m_runtimeEnv.getBrickManager()); 
+		}
+		return this.m_serviceInterfaceMan;     
+	}
 	
 	@Override
 	public Set<HAPIdBrickType> getBrickTypes() {  
@@ -70,6 +75,11 @@ public class HAPManagerService implements HAPPluginDivision{
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
 			HAPBundle bundle = new HAPBundle();
 			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
+			
+			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockServiceInterface.INTERFACE));
+			exposeInteractiveInterface.setName(HAPBlockServiceInterface.CHILD_INTERFACE);
+			bundle.addExportResourceInfo(exposeInteractiveInterface);
+			
 			return bundle;
 		}
 		return null;

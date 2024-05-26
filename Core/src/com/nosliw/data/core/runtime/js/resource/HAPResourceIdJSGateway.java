@@ -28,7 +28,7 @@ public class HAPResourceIdJSGateway extends HAPResourceIdSimple{
 	}
 
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_gatewayId = new HAPJSGatewayId(id);
 	}

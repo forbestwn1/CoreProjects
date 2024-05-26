@@ -7,13 +7,13 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
 			"brick":{
 				"serviceKey" : {
-					"id" : "TestBasicService"
+					"id" : "TestReferenceService"
 				}
 			},		
 			"adapter":[
@@ -73,10 +73,47 @@
 				}
 			]
 		},
+		
 		{
 			"info": {
-				"name" : "merge_runtime_localresource-test_complex_script",
+				"name" : "variable_reference-test_complex_script",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"resourceId":"test_complex_script|1.0.0|*variable",
+			"adapter": [
+				{
+					"name" : "dataassociation",
+					"brickTypeId" : {
+						"brickType": "dataAssociation",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"type" : "mapping",
+							"direction" : "downStream",
+							"mapping" : [
+								{
+									"target" : {
+										"rootName" : "child_public"
+									},
+									"definition" : {
+										"mapping" : {
+											"elementPath": "output1"
+										}
+									}
+								}
+							]
+						}
+					}						
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -136,6 +173,7 @@
 				}
 			]
 		},
+
 		
 		{
 			"info": {

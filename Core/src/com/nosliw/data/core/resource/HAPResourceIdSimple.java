@@ -40,7 +40,7 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	}
 
 	public String getId() {   return this.m_id;    }
-	protected void setId(String id) {  this.m_id = id;   }
+	public void setId(String id) {  this.m_id = id;   }
 
 	@Override
 	public String getStructure() {  return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;	}

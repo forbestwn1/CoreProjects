@@ -7,63 +7,63 @@ import com.nosliw.common.path.HAPPath;
 public class HAPUtilityDefinitionBrickTraverse {
 
 	
-	public static void traverseEntityTreeLeaves(HAPManualWrapperBrick rootEntityInfo, HAPManualProcessorEntityDownward processor, Object data) {
-		traverseEntityTreeLeaves(rootEntityInfo, null, processor, data);
+	public static void traverseEntityTreeLeaves(HAPManualWrapperBrick rootBrickWrapper, HAPManualProcessorBrickNodeDownwardWithPath processor, Object data) {
+		traverseEntityTreeLeaves(rootBrickWrapper, null, processor, data);
 	}
 	
-	private static void traverseEntityTreeLeaves(HAPManualWrapperBrick rootEntityInfo, HAPPath path, HAPManualProcessorEntityDownward processor, Object data) {
+	private static void traverseEntityTreeLeaves(HAPManualWrapperBrick rootBrickWrapper, HAPPath path, HAPManualProcessorBrickNodeDownwardWithPath processor, Object data) {
 		if(path==null) {
 			path = new HAPPath();
 		}
 
-		if(processor.processEntityNode(rootEntityInfo, path, data)) {
-			HAPManualBrick leafEntity = HAPManualUtilityBrick.getDescdentBrickDefinition(rootEntityInfo, path);
+		if(processor.processBrickNode(rootBrickWrapper, path, data)) {
+			HAPManualBrick leafEntity = HAPManualUtilityBrick.getDescdentBrickDefinition(rootBrickWrapper, path);
 			
 			if(leafEntity!=null) {
 				List<HAPManualAttribute> attrs = leafEntity.getAllAttributes();
 				for(HAPManualAttribute attr : attrs) {
 					HAPPath attrPath = path.appendSegment(attr.getName());
-					traverseEntityTreeLeaves(rootEntityInfo, attrPath, processor, data);
+					traverseEntityTreeLeaves(rootBrickWrapper, attrPath, processor, data);
 				}
 			}
 		}
-		processor.postProcessEntityNode(rootEntityInfo, path, data);
+		processor.postProcessBrickNode(rootBrickWrapper, path, data);
 	}
 }
 
-abstract class HAPProcessorEntityWrapper extends HAPManualProcessorEntityDownward{
+abstract class HAPProcessorEntityWrapper extends HAPManualProcessorBrickNodeDownwardWithPath{
 
-	private HAPManualProcessorEntityDownward m_processor;
+	private HAPManualProcessorBrickNodeDownwardWithPath m_processor;
 	
-	public HAPProcessorEntityWrapper(HAPManualProcessorEntityDownward processor) {
+	public HAPProcessorEntityWrapper(HAPManualProcessorBrickNodeDownwardWithPath processor) {
 		this.m_processor = processor;
 	}
 	
 	abstract protected boolean isValidAttribute(HAPManualAttribute attr);
 	
 	@Override
-	public boolean processEntityNode(HAPManualWrapperBrick rootEntityInfo, HAPPath path, Object data) {
+	public boolean processBrickNode(HAPManualWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
-			return this.m_processor.processEntityNode(rootEntityInfo, path, data);
+			return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 		}
 		else {
-			HAPManualAttribute attr = rootEntityInfo.getBrick().getDescendantAttribute(path);
+			HAPManualAttribute attr = HAPManualUtilityBrick.getDescendantAttribute(rootBrickWrapper.getBrick(), path); 
 			if(this.isValidAttribute(attr)) {
-				return this.m_processor.processEntityNode(rootEntityInfo, path, data);
+				return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 			}
 			return false;
 		}
 	}
 
 	@Override
-	public void postProcessEntityNode(HAPManualWrapperBrick rootEntityInfo, HAPPath path, Object data) {
+	public void postProcessBrickNode(HAPManualWrapperBrick rootEntityInfo, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
-			this.m_processor.postProcessEntityNode(rootEntityInfo, path, data);
+			this.m_processor.postProcessBrickNode(rootEntityInfo, path, data);
 		}
 		else {
-			HAPManualAttribute attr = rootEntityInfo.getBrick().getDescendantAttribute(path);
+			HAPManualAttribute attr = HAPManualUtilityBrick.getDescendantAttribute(rootEntityInfo.getBrick(), path); 
 			if(this.isValidAttribute(attr)) {
-				this.m_processor.postProcessEntityNode(rootEntityInfo, path, data);
+				this.m_processor.postProcessBrickNode(rootEntityInfo, path, data);
 			}
 		}
 	}

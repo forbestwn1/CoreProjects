@@ -28,7 +28,7 @@ public class HAPResourceIdJSHelper extends HAPResourceIdSimple{
 	}
 
 	@Override
-	protected void setId(String id){
+	public void setId(String id){
 		super.setId(id);
 		this.m_helperId = new HAPJSHelperId(id);
 	}

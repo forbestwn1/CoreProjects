@@ -44,16 +44,6 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	var loc_input = {};
 	var loc_result;
 
-	var loc_getExecuteTaskRequest1 = function(taskInput, handlers, request){
-		var out = node_createServiceRequestInfoSequence(handlers, request);
-		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID]), taskInput, {
-			success: function(rquest, resultValue){
-				loc_result = resultValue;
-			}
-		}));
-		return out;
-	};
-
 	var loc_getExecuteTaskRequest = function(handlers, request){
 
 		return node_createServiceRequestInfoSimple(undefined, function(request){
