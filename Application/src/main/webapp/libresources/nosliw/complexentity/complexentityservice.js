@@ -98,15 +98,13 @@ var node_createComplexEntityRuntimeService = function() {
 				entityCore = node_makeObjectWithType(entityCore, entityType);
 				
 				
-				var out = node_createServiceRequestInfoSequence(undefined, {
+				var out1 = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
 						return entityCore;
 					}
-				}, request);
-
-				out.addRequest(node_getEntityObjectInterface(entityCore).getEntityInitRequest());
-				
-				return out;
+				});
+				out1.addRequest(node_getEntityObjectInterface(entityCore).getEntityInitRequest());
+				return out1;
 			}
 		}));
 		return out;
@@ -266,12 +264,12 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
 		},
 		
-		getCreateComplexEntityRuntimeRequest : function(complexEntityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
-			return loc_getCreateComplexEntityRuntimeRequest(complexEntityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		getCreateComplexEntityRuntimeRequest : function(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateComplexEntityRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
 		},
 
-		getCreateSimpleEntityRequest : function(entityDef, configure, handlers, request){
-			return loc_getCreateSimpleEntityRequest(entityDef, configure, handlers, request);
+		getCreateSimpleEntityRequest : function(entityDef, bundleCore, configure, handlers, request){
+			return loc_getCreateEntityCoreRequest(entityDef, undefined, bundleCore, configure, handlers, request);
 		},
 		
 		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){

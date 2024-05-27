@@ -109,7 +109,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, valueContextId, b
 					else{
 						//simple
 						//simple attribute
-						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
+						out.addRequest(nosliw.runtime.getComplexEntityService().getCreateSimpleEntityRequest(attrEntityDef, loc_bundleCore, childConfigure, {
 							success : function(request, simpleEntity){
 								node_getEntityTreeNodeInterface(simpleEntity).setParentCore(rawEntity);
 								return loc_createAdaptersRequest(attrDef, simpleEntity, {
