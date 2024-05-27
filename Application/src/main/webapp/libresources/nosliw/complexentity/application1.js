@@ -17,13 +17,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_BUNDLE_NAME = "bundle";	
+var loc_PACKAGE_NAME = "package";	
 
 //application is main object for application
 //it may multiple package (one is main package, each decoration is package as well)
 var node_createApplication = function(parm, configure){
 
-	var loc_bundleParm = parm;
+	var loc_packageParm = parm;
 	
 	var loc_configure = configure;
 	var loc_configureValue = node_createConfigure(configure).getConfigureValue();
@@ -32,37 +32,33 @@ var node_createApplication = function(parm, configure){
 
 	var loc_envInterface;
 	
-	var loc_createBundleRuntimeRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(loc_bundleParm, loc_configure, {
-			success : function(request, bundleRuntime){
-				loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, bundleRuntime);
-			}
-		}));
-		return out;
+	var loc_createPackageRuntime = function(request){
+		var packageRuntime = nosliw.runtime.getComplexEntityService().createPackageRuntime(loc_packageParm, loc_configure, request);
+		loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_PACKAGE_NAME, packageRuntime);
+		return packageRuntime;
 	};
 	
-	var loc_getBundleRuntime = function(){
-		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_BUNDLE_NAME).getChildValue();
+	var loc_getPackageRuntime = function(){
+		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_PACKAGE_NAME).getChildValue();
 	};
 	
 	var loc_out = {
 
 		getDataType: function(){    return  "application";   },
 
-		getBundleRuntime : function(){   return loc_getBundleRuntime();   },
+		getPackageRuntime : function(){   return loc_getPackageRuntime();   },
 		
-		getMainEntityRuntime : function(){ return this.getBundleRuntime().getCoreEntity().getMainEntity();  },
+		getMainEntityRuntime : function(){ return this.getPackageRuntime().getCoreEntity().getMainBundleRuntime().getCoreEntity().getMainEntity();  },
 		
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 
 		getPreInitRequest : function(handlers, request){   
-			return loc_createBundleRuntimeRequest(handlers, request);
+			loc_createPackageRuntime(request);
 		},
 		
 		updateView : function(view){    
 			loc_parentView = view;
-			loc_getBundleRuntime().updateView(view);     
+			loc_getPackageRuntime().updateView(view);     
 		},
 		
 	};
@@ -88,6 +84,6 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createApplication", node_createApplication); 
+packageObj.createChildNode("createApplication1", node_createApplication); 
 
 })(packageObj);

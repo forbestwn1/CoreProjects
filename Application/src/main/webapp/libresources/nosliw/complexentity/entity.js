@@ -81,13 +81,13 @@ var loc_createAttributeDefinition = function(attrDef){
 	
 	var loc_createValeuWrapper = function(rawObj){
 		var valueType = rawObj[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];
-		if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+		if(valueType==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_BRICK){
 			return loc_createAttributeValueWithEntity(rawObj);
 		}
-		else if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_EXTERNALREFERENCE){
+		else if(valueType==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID){
 			return loc_createAttributeValueWithResourceReference(rawObj);
 		}
-		else if(valueType==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_VALUE){
+		else if(valueType==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_VALUE){
 			return loc_createAttributeValueWithValue(rawObj);
 		}
 	};

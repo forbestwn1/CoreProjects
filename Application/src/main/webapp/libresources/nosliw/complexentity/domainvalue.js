@@ -39,7 +39,16 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//return value context id
 		creatValueContext : function(valueContextDef, parentValueContextId){
 			loc_valueContextIdIndex++;
-			var valueContext = loc_createValueContext(loc_valueContextIdIndex+"", valueContextDef, loc_variableDomainDefinition, this.getValueContext(parentValueContextId), loc_variableMan);
+			var id = loc_valueContextIdIndex+"";
+			var parentValueContext = this.getValueContext(parentValueContextId);
+			var valueContext; 
+			if(valueContextDef!=undefined){
+				valueContext = loc_createValueContext(id, valueContextDef, loc_variableDomainDefinition, parentValueContext, loc_variableMan);
+			}
+			else{
+				valueContext = loc_createEmptyValueContext(id, parentValueContext);
+			}
+			
 			loc_valueContextById[valueContext.getId()] = valueContext;
 			return valueContext.getId();
 		},
@@ -62,6 +71,26 @@ var nod_createVariableDomain = function(variableDomainDef){
 
 	return loc_out;
 };
+
+var loc_createEmptyValueContext = function(id, parentValueContext){
+	
+	//value context id
+	var loc_id = id;
+	
+	//parent context which some variable can get from
+	var loc_parentValueContext = parentValueContext;
+	
+	var loc_out = {
+
+		getParentValueContext : function(){   return loc_parentValueContext;    },
+		
+		getId : function(){  return loc_id;   },
+
+	};
+
+	return loc_out;	
+};
+
 
 //value context responding to data structure under complex entity
 //id id assigned to valuecontext

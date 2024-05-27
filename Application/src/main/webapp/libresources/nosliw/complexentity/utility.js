@@ -63,13 +63,17 @@ var node_complexEntityUtility = function(){
 		},
 		
 		getCoreEntity : function(obj){
-			var dataType = node_getObjectType(obj);
+			var out = obj;
+			var dataType = node_getObjectType(out);
 			if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
-				return obj.getCoreEntity();
+				out = obj.getCoreEntity();
 			}
-			else{
-				return obj;
+			
+			var coreDataType = node_getObjectType(out);
+			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				out = out.getMainEntityCore();
 			}
+			return out;
 		},
 		
 		getComplexCoreEntity : function(parm){

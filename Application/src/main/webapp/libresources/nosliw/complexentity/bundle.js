@@ -73,7 +73,7 @@ var node_createBundleCore = function(parm, configure){
 			//build variable domain in bundle
 			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
-			return nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
+			return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainCoplexEntity){
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
 				}
@@ -81,14 +81,6 @@ var node_createBundleCore = function(parm, configure){
 
 		}));
 		
-		//build complex entity runtime
-/*
-		out.addRequest(nosliw.runtime.getComplexEntityService().getCreateComplexEntityRuntimeRequest(loc_mainEntityId, undefined, loc_out, loc_configure, {
-			success : function(request, mainCoplexEntity){
-				loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
-			}
-		}));
-*/
 		return out;
 	};
 
@@ -100,13 +92,13 @@ var node_createBundleCore = function(parm, configure){
 
 		getDataType: function(){    return  "bundle";   },
 
-		getMainEntity : function(){    return loc_getMainEntity();     },
+		getMainEntityCore : function(){    return loc_getMainEntity().getCoreEntity();     },
 
-		getMainEntityRuntime : function(){ return this.getMainEntity();  },
+		getMainEntityRuntime : function(){ return loc_getMainEntity();  },
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
-		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
+		getPreInitRequest1 : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

@@ -110,28 +110,24 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 
-	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityDef, parentComplexEntityCore, bundleCore, variationPoints, configure, handlers, request){
+	var loc_getCreateEntityRuntimeRequest = function(entityDef, parentEntityCore, bundleCore, variationPoints, configure, handlers, request){
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
-		
-		//internal entity
-		//build variableGroup
-		var valueContextId = null;
-		var variableDomain = bundleCore.getVariableDomain();
-		var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-		var parentComplexEntityInterface = node_getEntityObjectInterface(parentComplexEntityCore);
-		valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityInterface.getValueContextId());
+		//build value context
+		var valueContextDef = entityDef[node_COMMONATRIBUTECONSTANT.BRICKBLOCK_VALUECONTEXT];
+		var parentValueContextId = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getValueContextId();
+		var valueContextId = bundleCore.getVariableDomain().creatValueContext(valueContextDef, parentValueContextId);
 		
 		//process raw configure			
 		//get runtime configure & decoration info from configure
 		var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 		
-		out.addRequest(variationPoints.afterValueContext(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
+		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
+		out.addRequest(variationPoints.afterValueContext(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
 		
 		//new complexCore through complex plugin
-		out.addRequest(loc_getCreateEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
+		out.addRequest(loc_getCreateEntityCoreRequest(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
 			success : function(request, componentCore){
 				//create runtime
 				return node_createComponentRuntime(componentCore, runtimeConfigureInfo.decorations, request);
@@ -246,6 +242,7 @@ var node_createComplexEntityRuntimeService = function() {
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 
+/*
 		//create package runtime object
 		createPackageRuntime : function(parm, configure, request){
 			//create runtime object
@@ -253,29 +250,24 @@ var node_createComplexEntityRuntimeService = function() {
 			packageCore = loc_buildOtherObject(packageCore, parm, configure);
 			return node_createComponentRuntime(packageCore, undefined, request); 
 		},
+*/
 				
-		createBundleRuntime : function(parm, configure, request){
+		getCreateBundleRuntimeRequest : function(parm, configure, handlers, request){
+			var out = node_createServiceRequestInfoSequence("createBundleRuntimeRequest", handlers, request);
 			var bundleCore = node_createBundleCore(parm, configure);
 			bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
-			return node_createComponentRuntime(bundleCore, undefined);
+			out.addRequest(bundleCore.getPreInitRequest1({
+				success: function(request){
+					return node_createComponentRuntime(bundleCore, undefined);
+				}
+			}))
+			return out;
 		},
 
-		createComplexEntityCore : function(complexEntityDef, variableGroupId, bundleCore, configure){
-			return loc_createComplexEntityCore(complexEntityDef, variableGroupId, bundleCore, configure);
-		},
-		
-		getCreateComplexEntityRuntimeRequest : function(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
-			return loc_getCreateComplexEntityRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		getCreateEntityRuntimeRequest : function(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateEntityRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
 		},
 
-		getCreateSimpleEntityRequest : function(entityDef, bundleCore, configure, handlers, request){
-			return loc_getCreateEntityCoreRequest(entityDef, undefined, bundleCore, configure, handlers, request);
-		},
-		
-		createContainerComplexEntityRuntime : function(containerDef, parentCore, bundleCore, configure, request){
-			return loc_createContainerComplexEntityRuntime(containerDef, parentCore, bundleCore, configure, request);
-		},
-		
 		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
 			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
 		},
