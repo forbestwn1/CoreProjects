@@ -115,10 +115,10 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	
 	var loc_out = {
 		
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, undefined, {
 				success : function(request, childNode){
 					loc_referenceContainer = childNode.getChildValue().getCoreEntity();
 				}
@@ -127,7 +127,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 			var refAttrNames = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_ATTRIBUTESREFERENCE);
 			
 			_.each(refAttrNames, function(attrName, i){
-				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
+				out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(attrName, undefined, {
 					success : function(request, childNode){
 						loc_referencedRuntime[attrName] = childNode.getChildValue();
 					}

@@ -102,7 +102,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 	
 	var loc_interfaceEntity = {
 
-		getComplexEntityInitRequest : function(handlers, request){   return loc_rawEntity.getComplexEntityInitRequest==undefined?undefined:loc_rawEntity.getComplexEntityInitRequest(handlers, request);     },
+		getEntityInitRequest : function(handlers, request){   return loc_rawEntity.getEntityInitRequest==undefined?undefined:loc_rawEntity.getEntityInitRequest(handlers, request);     },
 
 		getValueContextId : function(){   return loc_valueContextId;   },
 		
@@ -116,7 +116,7 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
 	var basicEntityInterface = node_getBasicEntityObjectInterface(rawEntity);
 	if(embededEntityInterface!=null){
-		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_COMPLEXENTITY, {
+		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_ENTITY, {
 
 /*			
 			getExecuteAdapterRequest : function(attrName){
@@ -192,13 +192,13 @@ var node_makeObjectComplexEntityObjectInterface = function(rawEntity, valueConte
 		});
 	}
 	
-	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_COMPLEXENTITY, loc_interfaceEntity);
+	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_ENTITY, loc_interfaceEntity);
 	return loc_out;
 };
 
 
-var node_getComplexEntityObjectInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_COMPLEXENTITY);
+var node_getEntityObjectInterface = function(baseObject){
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_ENTITY);
 };
 
 var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
@@ -325,7 +325,7 @@ packageObj.createChildNode("buildComplexEntityPlugInObject", node_buildComplexEn
 packageObj.createChildNode("buildSimpleEntityPlugInObject", node_buildSimpleEntityPlugInObject); 
 packageObj.createChildNode("buildAdapterPlugInObject", node_buildAdapterPlugInObject); 
 packageObj.createChildNode("makeObjectComplexEntityObjectInterface", node_makeObjectComplexEntityObjectInterface); 
-packageObj.createChildNode("getComplexEntityObjectInterface", node_getComplexEntityObjectInterface); 
+packageObj.createChildNode("getEntityObjectInterface", node_getEntityObjectInterface); 
 packageObj.createChildNode("makeObjectBasicEntityObjectInterface", node_makeObjectBasicEntityObjectInterface); 
 packageObj.createChildNode("getBasicEntityObjectInterface", node_getBasicEntityObjectInterface); 
 packageObj.createChildNode("makeObjectEntityTreeNodeInterface", node_makeObjectEntityTreeNodeInterface); 

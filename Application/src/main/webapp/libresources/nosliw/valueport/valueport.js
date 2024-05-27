@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage();
 	var node_createServiceRequestInfoSequence;
 	var node_getEmbededEntityInterface;
 	var node_buildInterface;
-	var node_getComplexEntityObjectInterface;
+	var node_getEntityObjectInterface;
 	var node_getInterface;
 	var node_uiDataOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -24,7 +24,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 		getValuePort : function(valuePortGroup, valuePortName){   
 			var loc_valuePort;
 			if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-				var complexEntityInterface = node_getComplexEntityObjectInterface(loc_rawEntity);
+				var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
 				if(complexEntityInterface!=undefined){
 					loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
 				}
@@ -126,7 +126,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 

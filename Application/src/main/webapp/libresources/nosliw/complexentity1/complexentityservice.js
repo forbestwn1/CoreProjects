@@ -34,7 +34,7 @@ var packageObj = library;
     var node_getComponentInterface;
 
     var node_makeObjectComplexEntityObjectInterface; 
-    var node_getComplexEntityObjectInterface;
+    var node_getEntityObjectInterface;
     var node_makeObjectEntityTreeNodeInterface;
     var node_getEntityTreeNodeInterface;
 	var node_makeObjectWithId;
@@ -135,7 +135,7 @@ var node_createComplexEntityRuntimeService = function() {
 					}
 				}, request);
 
-				out.addRequest(node_getComplexEntityObjectInterface(complexEntityCore).getComplexEntityInitRequest());
+				out.addRequest(node_getEntityObjectInterface(complexEntityCore).getEntityInitRequest());
 				
 				return out;
 			}
@@ -153,7 +153,7 @@ var node_createComplexEntityRuntimeService = function() {
 		var valueContextId = null;
 		var variableDomain = bundleCore.getVariableDomain();
 		var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-		var parentComplexEntityInterface = node_getComplexEntityObjectInterface(parentComplexEntityCore);
+		var parentComplexEntityInterface = node_getEntityObjectInterface(parentComplexEntityCore);
 		valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityInterface.getValueContextId());
 		
 		//process raw configure			
@@ -365,7 +365,7 @@ nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){no
 
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectBasicEntityObjectInterface", function(){node_makeObjectBasicEntityObjectInterface = this.getData();}); 
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectComplexEntityObjectInterface", function(){node_makeObjectComplexEntityObjectInterface = this.getData();}); 
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});

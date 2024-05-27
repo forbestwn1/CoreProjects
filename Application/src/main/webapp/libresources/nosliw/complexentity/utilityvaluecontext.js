@@ -14,7 +14,7 @@ var packageObj = library;
 	var node_resourceUtility;
 	var node_createConfigure;
 	var node_complexEntityUtility;
-	var node_getComplexEntityObjectInterface;
+	var node_getEntityObjectInterface;
 	var node_createUIDataOperationRequest;
 	var node_UIDataOperation;
 	var node_uiDataOperationServiceUtility;
@@ -26,7 +26,7 @@ var node_valueContextUtility = {
 	
 	getValueContext : function(parm){
 		var complexCore = node_complexEntityUtility.getComplexCoreEntity(parm);
-		var complexInterface = node_getComplexEntityObjectInterface(complexCore);
+		var complexInterface = node_getEntityObjectInterface(complexCore);
 		var bundle = complexInterface.getBundle();
 		var valueContext = complexInterface.getValueContext();
 		return valueContext;
@@ -73,7 +73,7 @@ nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_R
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});

@@ -234,7 +234,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 			//content view			
@@ -242,7 +242,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_HTML));
 			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
 			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP, undefined));
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP, undefined));
 
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//init expression in content
@@ -276,7 +276,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			}));
 			
 			//init custom tag
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
 				success: function(request, attrNode){
 					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
 						var customTag = child.getCoreEntity();
@@ -287,14 +287,14 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			}));
 
 			//init service
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SERVICE, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SERVICE, undefined, {
 				success: function(request, attrNode){
 					loc_services = attrNode.getChildValue().getCoreEntity();
 				}
 			}));
 
 			//init script task group
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT, undefined, {
 				success: function(request, attrNode){
 				}
 			}));

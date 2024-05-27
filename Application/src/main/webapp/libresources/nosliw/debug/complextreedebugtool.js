@@ -15,7 +15,7 @@ var packageObj = library.getChildPackage();
 	var node_getComponentManagementInterface;
 	var node_componentUtility;
 	var node_getStateMachineDefinition;
-	var node_getComplexEntityObjectInterface;
+	var node_getEntityObjectInterface;
 	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -163,7 +163,7 @@ var loc_createComponentInfoComplexEntity = function(){
 		},
 		methods : {
 			getValueContext : function(){
-				return node_getComplexEntityObjectInterface(this.data).getValueContext();
+				return node_getEntityObjectInterface(this.data).getValueContext();
 			},
 		},
 		props : ['data'],
@@ -394,7 +394,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.getComponentManagementInterface", function(){node_getComponentManagementInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getStateMachineDefinition", function(){node_getStateMachineDefinition = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});

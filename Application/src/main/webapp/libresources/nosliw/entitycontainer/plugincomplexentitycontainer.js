@@ -41,13 +41,13 @@ var loc_createComplexEntityContainerComponentCore = function(complexEntityDef, v
 	
 	var loc_out = {
 		
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var attrNames = loc_complexEntityDef.getAllAttributesName();
 			_.each(attrNames, function(attrName, i){
 				if(attrName.startsWith(node_COMMONCONSTANT.PREFIX_ELEMENTID_COTAINER)){
-					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined, {
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(attrName, undefined, {
 						success : function(request, childNode){
 							loc_childrenEntity[attrName] = childNode.getChildValue();
 						}

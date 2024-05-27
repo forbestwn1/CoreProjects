@@ -68,7 +68,7 @@ var loc_createTaskCore = function(taskDef, configure){
 
 			//create task entity runtime
 			var childId = loc_createTaskId();
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createChildByAttributeRequest(childId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(childId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
 				success : function(request){
 					var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(childId);
 					var adapter = childNodeObj.getAdapters()[adForTaskName];

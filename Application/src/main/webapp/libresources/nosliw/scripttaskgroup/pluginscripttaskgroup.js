@@ -98,7 +98,7 @@ var loc_createScriptTaskGroup = function(scriptTaskGroupDef, valueContextId, bun
 	
 	var loc_out = {
 		
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			return out;

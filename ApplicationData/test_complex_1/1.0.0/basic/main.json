@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -77,7 +77,7 @@
 		{
 			"info": {
 				"name" : "variable_reference-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"resourceId":"test_complex_script|1.0.0|*variable",

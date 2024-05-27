@@ -72,9 +72,9 @@ var loc_createTaskComponentCore = function(complexEntityDef, valueContextId, bun
 	
 	var loc_out = {
 		
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, undefined));
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, undefined));
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				
 			}));

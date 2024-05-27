@@ -10,7 +10,7 @@ var packageObj = library.getChildPackage();
 	var node_createEventObject;
 	var node_getLifecycleInterface;
 	var node_getApplicationInterface;
-	var node_getComplexEntityObjectInterface;
+	var node_getEntityObjectInterface;
 	var node_createVariablesGroup;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
@@ -128,7 +128,7 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 	
 		loc_taskGroupInterface = node_getApplicationInterface(loc_taskGroupEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
 
-		var valueContext = node_getComplexEntityObjectInterface(loc_taskGroupEntityCore).getValueContext()
+		var valueContext = node_getEntityObjectInterface(loc_taskGroupEntityCore).getValueContext()
 		loc_contextVarGroup = node_createVariablesGroup(valueContext, loc_taskGroupInterface.getItemVariableInfos(loc_taskItemId), loc_contextVarsGroupHandler, this);
 	};
 		
@@ -179,7 +179,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.createVariablesGroup", function(){  node_createVariablesGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});

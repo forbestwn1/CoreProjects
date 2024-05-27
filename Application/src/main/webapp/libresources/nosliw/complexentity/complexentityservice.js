@@ -13,8 +13,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createBundleCore;
 	var node_EntityIdInDomain;
-	var node_buildComplexEntityPlugInObject;
-	var node_buildSimpleEntityPlugInObject;
+	var node_buildEntityPlugInObject;
 	var node_buildAdapterPlugInObject;
 	var node_createComponentRuntime;
 	var node_componentUtility;
@@ -33,8 +32,8 @@ var packageObj = library;
     var node_makeObjectWithComponentInterface;
     var node_getComponentInterface;
 
-    var node_makeObjectComplexEntityObjectInterface; 
-    var node_getComplexEntityObjectInterface;
+    var node_makeObjectEntityObjectInterface; 
+    var node_getEntityObjectInterface;
     var node_makeObjectEntityTreeNodeInterface;
     var node_getEntityTreeNodeInterface;
 	var node_makeObjectWithId;
@@ -64,9 +63,7 @@ var packageObj = library;
 
 var node_createComplexEntityRuntimeService = function() {
 	
-	var loc_complexEntityPlugins = {};
-	var loc_simpleEntityPlugins = {};
-
+	var loc_entityPlugins = {};
 	var loc_adapterPlugins = {};
 
 	var loc_getCreateAdapterRequest = function(adapterDefinition, baseCore, handlers, request){
@@ -75,76 +72,46 @@ var node_createComplexEntityRuntimeService = function() {
 		return adapterEntityPlugin.getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), baseCore, handlers, request);
 	};
 
-	var loc_getCreateSimpleEntityRequest = function(entityDef, configure, handlers, request){
-		var entityType = entityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
-		var simpleEntityPlugin = loc_simpleEntityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
-
-		var out = node_createServiceRequestInfoSequence("CreateSimpleEntityRequest", handlers, request);
-		var entityDef = node_createEntityDefinition(entityDef);
-		out.addRequest(simpleEntityPlugin.getCreateEntityRequest(entityDef, configure, {
-			success : function(request, simpleEntity){
-				
-				simpleEntity = node_makeObjectWithEmbededEntityInterface(simpleEntity);
-				
-				simpleEntity = node_makeObjectEntityTreeNodeInterface(simpleEntity);
-				
-				simpleEntity = node_makeObjectBasicEntityObjectInterface(simpleEntity, entityDef, configure);
-				
-				complexEntityCore = node_makeObjectComplexEntityObjectInterface(simpleEntity, undefined, undefined);
-				
-				simpleEntity = node_makeObjectWithValuePortInterface(simpleEntity);
-				
-				simpleEntity = node_makeObjectWithComponentInterface(entityType, simpleEntity, false);
-				
-				simpleEntity = node_makeObjectWithId(simpleEntity);
-				
-				simpleEntity = node_makeObjectWithType(simpleEntity, entityType);
-				
-			}
-		}));
-		return out;
-	};
-
-	var loc_getCreateComplexEntityCoreRequest = function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
-		var entityType = complexEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
-		var complexEntityPlugin = loc_complexEntityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
+	var loc_getCreateEntityCoreRequest = function(rawEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		var entityType = rawEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
+		var complexEntityPlugin = loc_entityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var complexEntityDef = node_createEntityDefinition(complexEntityDef);
-		out.addRequest(complexEntityPlugin.getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, configure, {
-			success : function(request, complexEntityCore){
+		var entityDef = node_createEntityDefinition(rawEntityDef);
+		out.addRequest(complexEntityPlugin.getCreateEntityCoreRequest(entityDef, valueContextId, bundleCore, configure, {
+			success : function(request, entityCore){
 				
-				complexEntityCore = node_makeObjectWithEmbededEntityInterface(complexEntityCore);
+				entityCore = node_makeObjectWithEmbededEntityInterface(entityCore);
 				
-				complexEntityCore = node_makeObjectEntityTreeNodeInterface(complexEntityCore);
+				entityCore = node_makeObjectEntityTreeNodeInterface(entityCore);
 				
-				complexEntityCore = node_makeObjectBasicEntityObjectInterface(complexEntityCore, complexEntityDef, configure);
+				entityCore = node_makeObjectBasicEntityObjectInterface(entityCore, entityDef, configure);
 				
-				complexEntityCore = node_makeObjectComplexEntityObjectInterface(complexEntityCore, valueContextId, bundleCore);
+				entityCore = node_makeObjectEntityObjectInterface(entityCore, valueContextId, bundleCore);
 				
-				complexEntityCore = node_makeObjectWithValuePortInterface(complexEntityCore);
+				entityCore = node_makeObjectWithValuePortInterface(entityCore);
 				
-				complexEntityCore = node_makeObjectWithComponentInterface(entityType, complexEntityCore, false);
+				entityCore = node_makeObjectWithComponentInterface(entityType, entityCore, false);
 				
-				complexEntityCore = node_makeObjectWithId(complexEntityCore);
+				entityCore = node_makeObjectWithId(entityCore);
 				
-				complexEntityCore = node_makeObjectWithType(complexEntityCore, entityType);
+				entityCore = node_makeObjectWithType(entityCore, entityType);
 				
 				
 				var out = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
-						return complexEntityCore;
+						return entityCore;
 					}
 				}, request);
 
-				out.addRequest(node_getComplexEntityObjectInterface(complexEntityCore).getComplexEntityInitRequest());
+				out.addRequest(node_getEntityObjectInterface(entityCore).getEntityInitRequest());
 				
 				return out;
 			}
 		}));
 		return out;
 	};
-	
+
 	var loc_getCreateComplexEntityRuntimeRequest = function(complexEntityDef, parentComplexEntityCore, bundleCore, variationPoints, configure, handlers, request){
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -156,7 +123,7 @@ var node_createComplexEntityRuntimeService = function() {
 		var valueContextId = null;
 		var variableDomain = bundleCore.getVariableDomain();
 		var valueContextDef = complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_VALUECONTEXT];
-		var parentComplexEntityInterface = node_getComplexEntityObjectInterface(parentComplexEntityCore);
+		var parentComplexEntityInterface = node_getEntityObjectInterface(parentComplexEntityCore);
 		valueContextId = variableDomain.creatValueContext(valueContextDef, parentComplexEntityCore==undefined?undefined : parentComplexEntityInterface.getValueContextId());
 		
 		//process raw configure			
@@ -166,7 +133,7 @@ var node_createComplexEntityRuntimeService = function() {
 		out.addRequest(variationPoints.afterValueContext(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
 		
 		//new complexCore through complex plugin
-		out.addRequest(loc_getCreateComplexEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
+		out.addRequest(loc_getCreateEntityCoreRequest(complexEntityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
 			success : function(request, componentCore){
 				//create runtime
 				return node_createComponentRuntime(componentCore, runtimeConfigureInfo.decorations, request);
@@ -178,28 +145,28 @@ var node_createComplexEntityRuntimeService = function() {
 
 	var loc_init = function(){
 		//complex entity plugin
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "1.0.0", node_createDataExpressionSinglePlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "1.0.0", node_createDataExpressionSinglePlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "1.0.0", node_createExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, "1.0.0", node_createExpressionGroupPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "1.0.0", node_createExpressionSinglePlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "1.0.0", node_createExpressionGroupPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, "1.0.0", node_createExpressionGroupPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONSINGLE, "1.0.0", node_createExpressionSinglePlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0", node_createScriptBasedPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0", node_createScriptBasedPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, "1.0.0", node_createComplexEntityContainerPlugin());
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, "1.0.0", node_createSimpleEntityContainerPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, "1.0.0", node_createComplexEntityContainerPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, "1.0.0", node_createSimpleEntityContainerPlugin());
 
-		loc_out.registerComplexEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, "1.0.0", node_createScriptTaskGroupEntityPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, "1.0.0", node_createScriptTaskGroupEntityPlugin());
 
 
 		//simple entity plugin
-		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0", node_createDataServiceEntityPlugin());
-		loc_out.registerSimpleEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER, "1.0.0", node_createTaskPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0", node_createDataServiceEntityPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER, "1.0.0", node_createTaskPlugin());
 
 
 
@@ -314,17 +281,12 @@ var node_createComplexEntityRuntimeService = function() {
 		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
 			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
 		},
-		
-		registerComplexEntityPlugin : function(entityType, version, complexEntityPlugin){
-			loc_complexEntityPlugins[entityType] = {};
-			loc_complexEntityPlugins[entityType][version] = node_buildComplexEntityPlugInObject(complexEntityPlugin);
+
+		registerEntityPlugin : function(entityType, version, entityPlugin){
+			loc_entityPlugins[entityType] = {};
+			loc_entityPlugins[entityType][version] = node_buildEntityPlugInObject(entityPlugin);
 		},
-		
-		registerSimpleEntityPlugin : function(entityType, version, simpleEntityPlugin){
-			loc_simpleEntityPlugins[entityType] = {};
-			loc_simpleEntityPlugins[entityType][version] = node_buildSimpleEntityPlugInObject(simpleEntityPlugin);
-		},
-		
+	
 		registerAdapterPlugin : function(adapterType, version, adapterPlugin){
 			loc_adapterPlugins[adapterType] = {};
 			loc_adapterPlugins[adapterType][version] = node_buildAdapterPlugInObject(adapterPlugin);
@@ -349,8 +311,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createBundleCore", function(){node_createBundleCore = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.EntityIdInDomain", function(){node_EntityIdInDomain = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityPlugInObject", function(){node_buildComplexEntityPlugInObject = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.buildSimpleEntityPlugInObject", function(){node_buildSimpleEntityPlugInObject = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.buildEntityPlugInObject", function(){node_buildEntityPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.buildAdapterPlugInObject", function(){node_buildAdapterPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createComponentRuntime", function(){node_createComponentRuntime = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
@@ -369,9 +330,9 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){node_getComponentInterface = this.getData();});
 
-nosliw.registerSetNodeDataEvent("complexentity.makeObjectBasicEntityObjectInterface", function(){node_makeObjectBasicEntityObjectInterface = this.getData();}); 
-nosliw.registerSetNodeDataEvent("complexentity.makeObjectComplexEntityObjectInterface", function(){node_makeObjectComplexEntityObjectInterface = this.getData();}); 
-nosliw.registerSetNodeDataEvent("complexentity.getComplexEntityObjectInterface", function(){node_getComplexEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.makeObjectBasicEntityObjectInterface", function(){node_makeObjectBasicEntityObjectInterface = this.getData();}); 
+nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityObjectInterface", function(){node_makeObjectEntityObjectInterface = this.getData();}); 
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});

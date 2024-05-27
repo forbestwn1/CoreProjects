@@ -19,7 +19,7 @@ var node_createTestComplexScriptPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptCoreEntity"), handlers, request);
 
 			var scriptName = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_SCRIPTNAME);

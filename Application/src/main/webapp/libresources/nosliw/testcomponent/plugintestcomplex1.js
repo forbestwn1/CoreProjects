@@ -24,7 +24,7 @@ var node_createTestComplex1Plugin = function(){
 	
 	var loc_out = {
 
-		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createTestComplex1ComponentCore(complexEntityDef, configure);
@@ -56,11 +56,11 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 		getConfigure : function(){   return loc_configureValue;    },
 		getVariableGroupId : function(){   return loc_variableGroupId;     },
 
-		getComplexEntityInitRequest : function(handlers, request){
+		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(loc_complexEntityDef.getAllAttributesName(), function(attrName, i){
 				if(node_basicUtility.getNosliwCoreName(attrName)==undefined){
-					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_COMPLEXENTITY].createAttributeRequest(attrName, undefined));
+					out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(attrName, undefined));
 				}
 			});
 			return out;
@@ -210,7 +210,7 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("complexentity.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 
 
 //Register Node by Name

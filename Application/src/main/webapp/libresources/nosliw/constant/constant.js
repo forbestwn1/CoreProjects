@@ -303,7 +303,7 @@ var node_CONSTANT=
 	  "INTERFACE_EMBEDEDENTITY" : "embededEntity",
 	  "INTERFACE_TREENODEENTITY" : "treeNodeEntity",
 	  "INTERFACE_BASICENTITY" : "basicEntity",
-	  "INTERFACE_COMPLEXENTITY" : "complexEntity",
+	  "INTERFACE_ENTITY" : "entity",
 	  "INTERFACE_COMPONENTENTITY" : "componentEntity",
 	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",
 	  "INTERFACE_APPLICATIONENTITY" : "applicationEntity",
