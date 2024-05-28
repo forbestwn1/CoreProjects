@@ -65,6 +65,8 @@ var node_createEntityDefinition = function(original){
 			return attr==undefined? undefined : attr.getAttributeValueWrapper().getValue();
 		},
 		
+		original : loc_entityDef
+		
 	};
 
 	return loc_out;

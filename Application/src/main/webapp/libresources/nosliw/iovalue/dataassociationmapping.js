@@ -3,6 +3,7 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
+	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
 	var node_createServiceRequestInfoSimple;
@@ -15,6 +16,7 @@ var packageObj = library;
 	var node_getEntityTreeNodeInterface;
 	var node_getWithValuePortInterface;
 	var node_createValuePortElementInfo;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -32,11 +34,19 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 			var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
 			if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
 				hostEntityCore = treeNodeInterface.getParentCore();
+				if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+					//for bundle node
+					hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
+				}
 			}
 			else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
 				var ss = seg.split("\\"+node_COMMONCONSTANT.SEPERATOR_LEVEL1);
 				var childTreeNode = treeNodeInterface.getChild(ss[1])
 				hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
+				if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+					//for bundle node
+					hostEntityCore = hostEntityCore.getMainEntityCore();
+				}
 			}
 		});		
 	}
@@ -242,6 +252,7 @@ var node_getExecuteMappingDataAssociationRequest1 = function(inputIODataSet, ass
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
+nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
@@ -254,6 +265,7 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

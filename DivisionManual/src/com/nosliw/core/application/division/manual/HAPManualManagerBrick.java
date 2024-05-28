@@ -156,21 +156,18 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	}
 	
 	private void processAdapter(HAPWrapperBrickRoot entityInfo, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
-		HAPUtilityBrickTraverse.traverseTree(
+		HAPUtilityBrickTraverse.traverseExecutableTree(
 				entityInfo, 
 			new HAPHandlerDownwardImpTreeNode() {
 					
 				@Override
 				protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
 					HAPTreeNode treeNodeDef = HAPManualUtilityBrick.getDefTreeNodeFromExeTreeNode(treeNode, processContext.getCurrentBundle());
-					HAPIdBrickType entityTypeId = null;
 					if(treeNodeDef instanceof HAPManualAttribute) {
 						HAPManualAttribute attrDef = (HAPManualAttribute)treeNodeDef;
 						HAPAttributeInBrick attrExe = (HAPAttributeInBrick)treeNode;
 						
-						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
-						
-						if(HAPManualUtilityBrick.isAttributeAutoProcess(attrDef, brickMan)) {
+						if(HAPManualUtilityBrick.isAdapterAutoProcess(attrDef, brickMan)) {
 							Set<HAPManualAdapter> adapterDefs = attrDef.getAdapters();
 							Map<String, HAPAdapter> adapterExeByName = new LinkedHashMap<String, HAPAdapter>();
 							for(HAPAdapter adapter : attrExe.getAdapters()) {

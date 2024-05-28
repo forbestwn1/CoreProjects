@@ -69,7 +69,7 @@ public class HAPUtilityBrick {
 		if(brickResult!=null) {
 			return brickResult.getInternalBrick();
 		}
-		throw new RuntimeException();
+		return null;
 	}
 	
 	public static HAPResultBrick getDescdentBrickResult(HAPBundle bundle, HAPPath path) {
@@ -90,15 +90,12 @@ public class HAPUtilityBrick {
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
 				return new HAPResultBrick(((HAPWithBrick)attrValueWrapper).getBrick());
 			}
-			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
-				throw new RuntimeException();
-			}
 			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 				HAPWrapperValueOfReferenceResource valueWrapper = (HAPWrapperValueOfReferenceResource)attrValueWrapper;
 				return new HAPResultBrick(valueWrapper.getResourceId());
 			}
+			return null;
 		}
-		return null;
 	}
 	
 	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {

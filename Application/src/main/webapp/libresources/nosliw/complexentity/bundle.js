@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_namingConvensionUtility;
 	var node_createEntityDefinition;
+	var node_getEntityTreeNodeInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -74,8 +75,9 @@ var node_createBundleCore = function(parm, configure){
 			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
 			return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
-				success : function(request, mainCoplexEntity){
-					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainCoplexEntity, true);
+				success : function(request, mainEntityRuntime){
+					node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
+					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, undefined, true);
 				}
 			});
 
@@ -155,6 +157,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 

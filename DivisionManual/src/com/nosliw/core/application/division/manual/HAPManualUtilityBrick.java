@@ -78,7 +78,11 @@ public class HAPManualUtilityBrick {
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
 		return HAPManualUtilityBrick.getDescdentBrickDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
 	}
-	
+
+	public static boolean isAdapterAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {
+		return true;
+	}
+
 	public static boolean isAttributeAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {
 		//check attribute relation configure first
 		HAPManualBrickRelationAutoProcess relation = (HAPManualBrickRelationAutoProcess)getEntityRelation(attr, HAPConstantShared.MANUAL_RELATION_TYPE_AUTOPROCESS);
