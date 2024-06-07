@@ -1,0 +1,29 @@
+{
+	"info": {
+		"name" : "dataexpressionlibrary",
+		"status": "disabled1",
+		"description" : "data expression library"
+	},
+	"brick":[
+		{
+			"info": {
+				"name" : "dataexpression1",
+				"status": "disabled1",
+				"description" : "dataexpression1"
+			},
+			"brick" : {
+				"parms" : [
+					{
+						"name" : "serviceParm1",
+						"dataInfo" : "test.string;1.0.0"
+					}
+				],
+				"result" : {
+					
+				}
+			
+			}
+			
+		}
+	]
+}

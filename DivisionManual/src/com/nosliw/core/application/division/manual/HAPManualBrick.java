@@ -9,12 +9,14 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockSimpleTaskWrapper;
 import com.nosliw.data.core.domain.entity.HAPEntity;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
 
@@ -33,7 +35,7 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 	}
 
 	@Override
-	public String getEntityOrReferenceType() {return null;}
+	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK; }
 
 	
 	public HAPIdBrickType getBrickTypeId() {  return this.m_brickTypeId;	}
@@ -82,8 +84,13 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 	}
 	
 	public void setAttributeWithValueValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueValue(attrValue)));	}
-	public void setAttributeWithValueBrick(String attributeName, HAPManualBrick brick) {
-		 this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueBrick(brick)));	
+	public void setAttributeWithValueBrick(String attributeName, HAPEntityOrReference brickOrRef) {
+		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
+			this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueBrick((HAPManualBrick)brickOrRef)));
+		}
+		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
+			this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueReferenceResource((HAPResourceId)brickOrRef)));
+		}
 	}
 	
 	public Object getAttributeValueWithValue(String attributeName){

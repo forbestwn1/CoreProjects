@@ -20,8 +20,8 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
 import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableExpressionData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPUtilityOperand {

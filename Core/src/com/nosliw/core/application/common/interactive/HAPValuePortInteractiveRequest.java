@@ -14,9 +14,9 @@ import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort
 
 public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 
-	private HAPInteractive m_interactive;
+	private HAPInteractiveTask m_interactive;
 	
-	public HAPValuePortInteractiveRequest(HAPInteractive interactive) {
+	public HAPValuePortInteractiveRequest(HAPInteractiveTask interactive) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST));
 		this.getValuePortInfo().setIODirection(HAPConstantShared.IO_DIRECTION_IN);
 		this.m_interactive = interactive;

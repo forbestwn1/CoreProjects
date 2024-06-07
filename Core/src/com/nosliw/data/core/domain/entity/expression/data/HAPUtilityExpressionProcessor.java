@@ -15,6 +15,7 @@ import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.variable.HAPIdVariable;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;

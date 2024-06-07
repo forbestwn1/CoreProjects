@@ -7,7 +7,7 @@ import com.nosliw.core.application.common.valueport.HAPValuePort;
 
 public class HAPUtilityInteractive {
 
-	public static HAPGroupValuePorts buildInteractiveValuePortGroup(HAPInteractive interactive) {
+	public static HAPGroupValuePorts buildInteractiveValuePortGroup(HAPInteractiveTask interactive) {
 
 		HAPGroupValuePorts out = new HAPGroupValuePorts();
 		

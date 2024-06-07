@@ -458,6 +458,8 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_CONTAINERLIST = "containerList";
 		public static final String RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX = "complexContainer";
 		public static final String RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE = "simpleContainer";
+		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB = "dataexpressionlib";
+		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIBELEMENT = "dataexpressionlibelement";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP = "dataexpressiongroup";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP = "dataexpressiongrouptemp";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE = "dataexpressionsingle";

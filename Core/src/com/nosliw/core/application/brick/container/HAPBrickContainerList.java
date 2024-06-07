@@ -12,6 +12,8 @@ public class HAPBrickContainerList extends HAPBrickContainer{
 	@HAPAttribute
 	static final public String LIST = HAPUtilityNosliw.buildNosliwFullName("list");  
 	
+	private List<String> m_sort;
+	
 	@Override
 	public void init() {
 		super.init();

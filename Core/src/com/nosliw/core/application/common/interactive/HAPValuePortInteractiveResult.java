@@ -14,11 +14,11 @@ import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort
 
 public class HAPValuePortInteractiveResult extends HAPValuePortImp{
 
-	private HAPInteractive m_interactive;
+	private HAPInteractiveTask m_interactive;
 	
 	private String m_resultName;
 	
-	public HAPValuePortInteractiveResult(HAPInteractive interactive, String resultName) {
+	public HAPValuePortInteractiveResult(HAPInteractiveTask interactive, String resultName) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT));
 		this.getValuePortInfo().setIODirection(HAPConstantShared.IO_DIRECTION_OUT);
 		this.m_interactive = interactive;

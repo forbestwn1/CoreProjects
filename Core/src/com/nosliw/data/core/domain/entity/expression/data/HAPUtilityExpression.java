@@ -10,6 +10,7 @@ import com.nosliw.common.updatename.HAPUpdateNamePrefix;
 import com.nosliw.core.application.common.structure.HAPInfoVariable;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.component.HAPUtilityComponent;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.valuestructure1.HAPUtilityValueStructure;
