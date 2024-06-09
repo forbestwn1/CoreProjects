@@ -13,7 +13,7 @@ import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;

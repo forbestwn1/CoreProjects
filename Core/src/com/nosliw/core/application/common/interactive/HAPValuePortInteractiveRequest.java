@@ -14,18 +14,17 @@ import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort
 
 public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 
-	private HAPInteractiveTask m_interactive;
+	private List<HAPRequestParmInInteractive> m_requestParms;
 	
-	public HAPValuePortInteractiveRequest(HAPInteractiveTask interactive) {
-		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST));
-		this.getValuePortInfo().setIODirection(HAPConstantShared.IO_DIRECTION_IN);
-		this.m_interactive = interactive;
+	public HAPValuePortInteractiveRequest(List<HAPRequestParmInInteractive> requestParms, String ioDirection) {
+		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST, ioDirection));
+		this.m_requestParms = requestParms;
 	}
 
 	@Override
 	public HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId) {
 		HAPValueStructureInValuePort out = new HAPValueStructureInValuePort();
-		for(HAPRequestParmInInteractiveInterface parm : this.m_interactive.getRequestParms()) {
+		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
 			HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(new HAPElementStructureLeafData(parm.getCriteria()));
 			parm.cloneToEntityInfo(root);
 			out.addRoot(root);

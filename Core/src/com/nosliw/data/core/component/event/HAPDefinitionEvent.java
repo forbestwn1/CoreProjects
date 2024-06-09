@@ -1,8 +1,8 @@
 package com.nosliw.data.core.component.event;
 
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
 
-public class HAPDefinitionEvent extends HAPResultInInteractiveInterface{
+public class HAPDefinitionEvent extends HAPResultInInteractiveTask{
 
 	public HAPDefinitionEvent cloneEventDefinition(){
 		HAPDefinitionEvent out = new HAPDefinitionEvent();

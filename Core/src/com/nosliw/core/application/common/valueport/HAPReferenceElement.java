@@ -4,22 +4,17 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 //criteria for reference
-@HAPEntityWithAttribute
 public class HAPReferenceElement extends HAPReferenceRootElement{
 
 	//path to element (no root name)
-	@HAPAttribute
 	public static final String LEAFPATH = "leafPath";
 
 	//root + leaf path
-	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
 
 	private String m_elementPath;
@@ -30,9 +25,9 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 		this.m_elementPath = eleFullPath;
 	}
 
-	public HAPReferenceElement(HAPReferenceValuePort valuePortRef, String eleFullPath) {
+	public HAPReferenceElement(HAPIdValuePortInBundle valuePortRef, String eleFullPath) {
 		this(eleFullPath);
-		this.setValuePortRef(valuePortRef);
+		this.setValuePortId(valuePortRef);
 	}
 	
 	public HAPReferenceElement(HAPReferenceRootElement rootRef) {

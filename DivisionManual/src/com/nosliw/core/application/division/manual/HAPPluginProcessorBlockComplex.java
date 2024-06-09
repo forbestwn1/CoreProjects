@@ -2,12 +2,9 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrickBlockComplex;
-import com.nosliw.core.application.HAPIdBrickType;
 
 public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 
-	HAPIdBrickType getBrickType();
-	
 	void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
 
 	

@@ -3,7 +3,7 @@ package com.nosliw.data.core.domain.entity.expression.resource;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPSerializeManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.expression.data.HAPIdExpressionSuite;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPIdExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPSupplementResourceId;
 

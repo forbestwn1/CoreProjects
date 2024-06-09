@@ -10,8 +10,8 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityDataExpressionDefinition;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPUtilityDataExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainExpressionScriptGroup extends HAPPluginEntityDefinitionInDomainImpComplex{

@@ -12,7 +12,7 @@ import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
 public class HAPManualBrickValueStructure extends HAPManualBrickBlockSimple{

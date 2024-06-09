@@ -21,11 +21,11 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingConstan
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdRootElement;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
-import com.nosliw.core.application.common.variable.HAPIdRootElement;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -33,8 +33,8 @@ public class HAPManualUtilityDataAssociationMapping {
 
 	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
 		
-		HAPReferenceValuePort toValuePortRef = rootEleId.getValuePortRef();
-		HAPValuePort toValuePort = HAPUtilityValuePort.getValuePort(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
+		HAPIdValuePortInBundle toValuePortRef = rootEleId.getValuePortId();
+		HAPValuePort toValuePort = HAPUtilityValuePort.getValuePortInBundle(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 
 		String toValueStructureId = rootEleId.getValueStructureId();
 		HAPValueStructureInValuePort toValueStructure = toValuePort.getValueStructureDefintion(toValueStructureId); 
@@ -79,7 +79,7 @@ public class HAPManualUtilityDataAssociationMapping {
 							if(matchers.isVoid()) {
 								matchers = null;
 							}
-							HAPEndPointInTunnelValuePort fromEndPoint = new HAPEndPointInTunnelValuePort(relativeEle.getReference().getValuePortRef(), fromValueStructureId, fromItemFullPath);
+							HAPEndPointInTunnelValuePort fromEndPoint = new HAPEndPointInTunnelValuePort(relativeEle.getReference().getValuePortId(), fromValueStructureId, fromItemFullPath);
 							out.add(new HAPTunnel(fromEndPoint, toEndPoint, matchers));
 						}
 					}

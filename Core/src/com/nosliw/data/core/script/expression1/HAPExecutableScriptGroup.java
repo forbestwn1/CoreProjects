@@ -14,8 +14,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
-import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
@@ -58,7 +58,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 			scriptExe.updateConstant(constants);
 		}
 		
-		for(HAPExecutableExpressionData expressionExe : this.m_expressionExe.getAllExpressionItems().values()) {
+		for(HAPExecutableExpressionData1 expressionExe : this.m_expressionExe.getAllExpressionItems().values()) {
 			expressionExe.updateConstant(constants);
 		}
 	}
@@ -69,7 +69,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 			HAPUtilityScriptExpression1.addConstantDefinition(out, scriptExe.discoverConstantsDefinition(null));
 		}
 		
-		for(HAPExecutableExpressionData expressionExe : this.m_expressionExe.getAllExpressionItems().values()) {
+		for(HAPExecutableExpressionData1 expressionExe : this.m_expressionExe.getAllExpressionItems().values()) {
 			HAPUtilityScriptExpression1.addConstantDefinition(out, expressionExe.getConstantsDefinition());
 		}
 		return new HashSet<HAPDefinitionConstant>(out.values());

@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
@@ -53,8 +54,8 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 			for(int i=0; i<varJsonArray.length(); i++) {
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
-				ref.setValuePortRef(HAPUtilityValuePort.normalizeValuePortReference(ref.getValuePortRef(), pathFromRoot, bundle, processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo()));
-				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReference(ref, new HAPConfigureResolveElementReference(), bundle, processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
+				ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableEntity));
+				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.resolveElementReferenceInBrick(ref, new HAPConfigureResolveElementReference(), executableEntity);
 				
 				if(resolve!=null) {
 					resolvedVars.add(resolve);
@@ -65,9 +66,6 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 			executableEntity.setVariables(resolvedVars);
 			executableEntity.setUnknowVariable(unknownVars);
 		}
-		
-		
-		
 	}
 
 	
@@ -166,7 +164,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 			executableEntity.setAttachment(attachments);
 		}
 
-//		System.out.println(new HAPIdVariable(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
+//		System.out.println(new HAPIdElement(resolve.structureId, variable).toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -183,7 +181,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		if(expectedVars!=null) {
 			for(HAPExecutableVariableExpected extendedVar : expectedVars) {
 				HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
-				HAPIdVariable idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), valueStructureComplex, varDef.getGroup(), valueStructureDomain, null);
+				HAPIdElement idVariable = HAPUtilityValueContextReference.resolveVariableName(varDef.getVariableName(), valueStructureComplex, varDef.getGroup(), valueStructureDomain, null);
 				extendedVar.setVariableId(idVariable);
 			}
 		}

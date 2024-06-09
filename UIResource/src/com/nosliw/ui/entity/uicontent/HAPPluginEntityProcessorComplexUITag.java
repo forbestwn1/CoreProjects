@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.variable.HAPIdRootElement;
-import com.nosliw.core.application.common.variable.HAPIdVariable;
+import com.nosliw.core.application.common.valueport.HAPIdRootElement;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
@@ -43,7 +43,7 @@ public class HAPPluginEntityProcessorComplexUITag extends HAPPluginProcessorBric
 		for(String valueStructureId : valueStructureIds) {
 			HAPManualBrickValueStructure valueStructureDef = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureId);
 			for(String rootName : valueStructureDef.getRootNames()) {
-				uiTagExe.addVariableByName(rootName, new HAPIdVariable(new HAPIdRootElement(null, valueStructureId, rootName), null));
+				uiTagExe.addVariableByName(rootName, new HAPIdElement(new HAPIdRootElement(null, valueStructureId, rootName), null));
 			}
 		}
 		

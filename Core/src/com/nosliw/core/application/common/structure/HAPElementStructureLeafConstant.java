@@ -10,7 +10,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 
 @HAPEntityWithAttribute
 public class HAPElementStructureLeafConstant extends HAPElementStructure{

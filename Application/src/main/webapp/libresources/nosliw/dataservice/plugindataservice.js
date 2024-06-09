@@ -118,6 +118,14 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		}
 	};
 
+	var loc_getValuePort = function(valuePortGroup, valuePortName){
+		if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
+			return loc_requestValuePort;
+		}
+		else{
+			return loc_resultValuePort[valuePortName];
+		}
+	};
 	
 	var loc_out = {
 		
@@ -125,14 +133,13 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			return loc_getExecuteTaskRequest(taskInput, handlers, request);
 		},
 		
-		getValuePort : function(valuePortGroup, valuePortName){
-			if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
-				return loc_requestValuePort;
-			}
-			else{
-				return loc_resultValuePort[valuePortName];
-			}
-		}
+		getExternalValuePort : function(valuePortGroup, valuePortName){
+			return loc_getValuePort(valuePortGroup, valuePortName);
+		},
+		
+		getInternalValuePort : function(valuePortGroup, valuePortName){
+			return loc_getValuePort(valuePortGroup, valuePortName);
+		},
 		
 	};
 

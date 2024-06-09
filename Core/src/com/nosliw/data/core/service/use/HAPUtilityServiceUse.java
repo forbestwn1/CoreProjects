@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
-import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.common.variable.HAPVariableInfo;
@@ -67,9 +67,9 @@ public class HAPUtilityServiceUse {
 		return buildValueStructureFromServiceOutputs(serviceInterface.getResultOutput(result));
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPResultOutputInInteractiveInterface> serviceOutput) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceOutputs(List<HAPResultElementInInteractiveTask> serviceOutput) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPResultOutputInInteractiveInterface outParm : serviceOutput) {
+		for(HAPResultElementInInteractiveTask outParm : serviceOutput) {
 			out.addRoot(outParm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(outParm.getCriteria())));
 		}
 		return out;

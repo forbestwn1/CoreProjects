@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.common.variable.HAPIdVariable;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -26,7 +26,7 @@ public class HAPOperandVariable extends HAPOperandImp{
 	
 	protected String m_variableName;
 	
-	protected HAPIdVariable m_variableId;
+	protected HAPIdElement m_variableId;
 	
 	protected String m_variableKey;
 	
@@ -40,8 +40,8 @@ public class HAPOperandVariable extends HAPOperandImp{
 	public String getVariableName(){  return this.m_variableName;  }
 	public void setVariableName(String name){   this.m_variableName = name;  }
 	
-	public HAPIdVariable getVariableId(){  return this.m_variableId;  }
-	public void setVariableId(HAPIdVariable id){   this.m_variableId = id;  }
+	public HAPIdElement getVariableId(){  return this.m_variableId;  }
+	public void setVariableId(HAPIdElement id){   this.m_variableId = id;  }
 	
 	public String getVariableKey() {    return this.m_variableKey;    }
 	public void setVariableKey(String key) {     this.m_variableKey = key;     }

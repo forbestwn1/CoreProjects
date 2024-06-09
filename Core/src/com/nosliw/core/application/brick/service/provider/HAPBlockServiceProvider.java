@@ -28,7 +28,7 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple implements HAPT
 	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueOfValue(SERVICEID);	}
 	 
 	@Override
-	public HAPContainerValuePorts getValuePorts() {
+	public HAPContainerValuePorts getExternalValuePorts() {
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
 		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrick.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
@@ -36,7 +36,7 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple implements HAPT
 		
 		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)this.getResourceManager().getResources(Lists.asList(serviceInterfaceResourceId, new HAPResourceId[0]), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo()).getLoadedResources().get(0).getResourceData();
 		HAPBlockInteractiveInterface serviceInterfaceService = (HAPBlockInteractiveInterface)brickResourceData.getBrick();
-		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildInteractiveValuePortGroup(serviceInterfaceService);
+		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildExternalInteractiveTaskValuePortGroup(serviceInterfaceService);
 		
 		out.addValuePortGroup(valuePortGroup, true);
 		

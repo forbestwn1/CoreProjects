@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPIdValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
@@ -17,11 +17,11 @@ import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPValuePortInteractiveResult extends HAPValuePortImp{
 
-	private HAPResultInInteractiveInterface m_result;
+	private HAPResultInInteractiveTask m_result;
 	
 	private HAPManualBrickValueStructure m_valueStructureDef;
 	
-	public HAPValuePortInteractiveResult(HAPIdValuePort valuePortId, HAPInfoValuePort valuePortInfo, HAPResultInInteractiveInterface result) {
+	public HAPValuePortInteractiveResult(HAPIdValuePortInBrick valuePortId, HAPInfoValuePort valuePortInfo, HAPResultInInteractiveTask result) {
 		super(valuePortId, valuePortInfo);
 		this.m_result = result;
 		this.buildValueStructure();
@@ -41,7 +41,7 @@ public class HAPValuePortInteractiveResult extends HAPValuePortImp{
 
 	private void buildValueStructure() {
 		this.m_valueStructureDef = new HAPManualBrickValueStructure();
-		for(HAPResultOutputInInteractiveInterface output : this.m_result.getOutput()) {
+		for(HAPResultElementInInteractiveTask output : this.m_result.getOutput()) {
 			m_valueStructureDef.addRoot(new HAPRootStructure(new HAPElementStructureLeafData(output.getCriteria()), output));
 		}
 	}

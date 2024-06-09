@@ -30,7 +30,7 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
 
 	@Override
-	public HAPContainerValuePorts getValuePorts(){
+	public HAPContainerValuePorts getInternalValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
 		HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
@@ -38,13 +38,29 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 		valePortGroup.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain), true);
 		out.addValuePortGroup(valePortGroup, true);
 		
-		for(HAPGroupValuePorts group : this.getOtherValuePortGroups()) {
+		for(HAPGroupValuePorts group : this.getInternalOtherValuePortGroups()) {
 			out.addValuePortGroup(group, false);
 		}
 		return out;
 	}
-	
-	protected Set<HAPGroupValuePorts> getOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
+
+	@Override
+	public HAPContainerValuePorts getExternalValuePorts(){
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		
+		HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
+		valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
+		valePortGroup.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain), true);
+		out.addValuePortGroup(valePortGroup, true);
+		
+		for(HAPGroupValuePorts group : this.getExternalOtherValuePortGroups()) {
+			out.addValuePortGroup(group, false);
+		}
+		return out;
+	}
+
+	protected Set<HAPGroupValuePorts> getInternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
+	protected Set<HAPGroupValuePorts> getExternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

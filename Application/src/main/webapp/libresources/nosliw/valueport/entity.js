@@ -34,9 +34,9 @@ var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
 			}
 			else{
 				//variable id object
-				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ROOTELEMENTID];
+				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID];
 				loc_valueStructureRuntimeId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDVARIABLE_ELEMENTPATH]);
+				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH]);
 			}
 		}
 		else{

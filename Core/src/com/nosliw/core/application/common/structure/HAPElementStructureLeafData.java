@@ -11,7 +11,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 
 public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable{
 

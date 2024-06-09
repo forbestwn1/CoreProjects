@@ -74,22 +74,22 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 		return out;
 	}
 	
-	public List<HAPIdElement> getAllElements(){
-		List<HAPIdElement> out = new ArrayList<HAPIdElement>();
+	public List<HAPReferenceElement> getAllElements(){
+		List<HAPReferenceElement> out = new ArrayList<HAPReferenceElement>();
 		this.discoverElements(this.m_rootNode, out);
 		out.addAll(this.m_connections);
 		return out;
 	}
 	
-	public HAPIdElement getRootElementId() {    return this.m_rootNode.getStoryElementId();     }
+	public HAPReferenceElement getRootElementId() {    return this.m_rootNode.getStoryElementId();     }
 	
-	public List<HAPIdElement> searchNodeByType(String categary, String type){
-		List<HAPIdElement> out = new ArrayList<HAPIdElement>();
+	public List<HAPReferenceElement> searchNodeByType(String categary, String type){
+		List<HAPReferenceElement> out = new ArrayList<HAPReferenceElement>();
 		findNodeByType(this.m_rootNode, categary, type, out);
 		return out;
 	}
 
-	private void findNodeByType(HAPUINode node, String categary, String type, List<HAPIdElement> eles){
+	private void findNodeByType(HAPUINode node, String categary, String type, List<HAPReferenceElement> eles){
 		String id = node.getStoryElementId().getId();
 		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(id);
 		if(HAPBasicUtility.isEquals(idInfo.getCategary(), categary) && HAPBasicUtility.isEquals(idInfo.getType(), type)) eles.add(node.getStoryElementId());
@@ -109,7 +109,7 @@ public class HAPUITree extends HAPUINode implements HAPHandlerChange{
 		}
 	}
 	
-	private void discoverElements(HAPUINode rootNode, List<HAPIdElement> eles) {
+	private void discoverElements(HAPUINode rootNode, List<HAPReferenceElement> eles) {
 		eles.add(rootNode.getStoryElementId());
 		for(HAPUINode child : rootNode.getChildren()) {
 			eles.add(child.getStoryElementId());

@@ -22,10 +22,10 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingConstan
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdRootElement;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
-import com.nosliw.core.application.common.variable.HAPIdRootElement;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
@@ -36,7 +36,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 public class HAPUtilityDataAssociation {
 
 	public static List<HAPTunnel> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
-		HAPReferenceValuePort valuePortId = valueMappingItem.getTarget().getValuePortRef();
+		HAPIdValuePortInBundle valuePortId = valueMappingItem.getTarget().getValuePortId();
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
@@ -78,7 +78,7 @@ public class HAPUtilityDataAssociation {
 							if(matchers.isVoid()) {
 								matchers = null;
 							}
-							out.add(new HAPTunnel(relativeEle.getReference().getValuePortRef(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
+							out.add(new HAPTunnel(relativeEle.getReference().getValuePortId(), fromValueStructureId, fromItemFullPath, matchers, valuePortId, toValueStructureId, toItemFullPath));
 						}
 					}
 					
@@ -107,7 +107,7 @@ public class HAPUtilityDataAssociation {
 							matchers = null;
 						}
 						String toItemFullPath = HAPUtilityNamingConversion.cascadePath(toItemPath.getFullName(), mappingPath.getPath());
-						out.add(new HAPTunnel(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortRef(), toValueStructureId, toItemFullPath));
+						out.add(new HAPTunnel(mappingPath1.getFromConstant(), matchers, valueMappingItem.getTarget().getValuePortId(), toValueStructureId, toItemFullPath));
 					}
 				}
 				return null;

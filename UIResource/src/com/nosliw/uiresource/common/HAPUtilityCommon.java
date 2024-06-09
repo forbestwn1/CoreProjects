@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPRequirementContextProcessor;
 import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPManagerExpression;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.runtime.HAPRuntime;
 

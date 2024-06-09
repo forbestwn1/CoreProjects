@@ -1,14 +1,18 @@
 package com.nosliw.core.application.division.manual;
 
+import com.nosliw.core.application.HAPIdBrickType;
+
 public abstract class HAPPluginProcessorBlockSimpleImp implements HAPPluginProcessorBlockSimple{
 
-	private String m_entityType;
+	private HAPIdBrickType m_brickTypeId;
 
-	public HAPPluginProcessorBlockSimpleImp(String entityType) {
-		this.m_entityType = entityType;
+	public HAPPluginProcessorBlockSimpleImp(HAPIdBrickType brickTypeId) {
+		this.m_brickTypeId = brickTypeId;
 	}
 	
 	@Override
-	public String getEntityType() {  return this.m_entityType;  }
+	public HAPIdBrickType getBrickType() {
+		return this.m_brickTypeId;
+	}
 
 }

@@ -24,8 +24,8 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 	
 	//get core entity
 	var valuePortRef = valuePortEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
-	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_BRICKREFERENCE][node_COMMONATRIBUTECONSTANT.REFERENCEBRICKLOCAL_RELATIVEPATH];
-	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_VALUEPORTKEY];
+	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
 	
 	var hostEntityCore = baseEntityCore;
 	if(relativePath!=undefined && relativePath!=""){
@@ -51,7 +51,7 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 		});		
 	}
 	
-	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORT_NAME]);
+	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 };
 
 
@@ -116,7 +116,7 @@ var node_getExecuteMappingDataAssociationRequest = function(association, baseEnt
 	_.each(tunnels, function(tunnel, i){
 		var toEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
 		var toValuePortRef = toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
-		var toValuePortKey = toValuePortRef[node_COMMONATRIBUTECONSTANT.REFERENCEVALUEPORT_KEY];
+		var toValuePortKey = toValuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_KEY];
 		var tunnels = tunnelsByTargets[toValuePortKey];
 		if(tunnels==undefined){
 			tunnels = [];

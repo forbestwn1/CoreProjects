@@ -90,7 +90,7 @@ public class HAPUINode {
 	}
 	
 //	public HAPUINode getFirstDataUINode() {
-//		HAPIdElement eleId = this.getStoryElementId();
+//		HAPReferenceElement eleId = this.getStoryElementId();
 //		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(eleId.getId());
 //		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UIDATA)) 	return this;
 //		for(HAPUIChild child : this.getChildren()) {
@@ -155,7 +155,7 @@ public class HAPUINode {
 	public HAPReferenceElement getStoryNodeRef() {   return this.m_nodeRef;    }
 	
 //	public String getNodeId() {  return this.m_nodeId; 	}
-//	public HAPIdElement getStoryElementId() {    return new HAPIdElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }
+//	public HAPReferenceElement getStoryElementId() {    return new HAPReferenceElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }
 	
 	protected HAPStory getStory() {    return this.m_story;     }
 }

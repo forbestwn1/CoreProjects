@@ -2,12 +2,10 @@ package com.nosliw.core.application.common.interactive;
 
 import java.util.List;
 
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+public interface HAPInteractiveExpression extends HAPInteractive{
 
-public interface HAPInteractiveExpression {
-
-	List<HAPRequestParmInInteractiveInterface> getRequestParms();
+	List<HAPRequestParmInInteractive> getRequestParms();
 	
-	HAPDataTypeCriteria getResult();
+	HAPResultInInteractiveExpression getResult();
 
 }

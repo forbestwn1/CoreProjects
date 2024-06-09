@@ -1,0 +1,40 @@
+package com.nosliw.data.core.domain.entity.expression.data1;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
+import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityContainerComplex;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
+
+@HAPEntityWithAttribute
+public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEntityComplex{
+
+	@HAPAttribute
+	public static String VARIABLEINFOS = "variableInfos";
+
+	@HAPAttribute
+	public static final String ATTRIBUTESREFERENCE = "referenceAttribute";
+
+	@HAPAttribute
+	public static final String REFERENCES = "references";
+
+	public abstract List<HAPExecutableExpressionData1> getAllExpressionItems();
+
+	public HAPExecutableEntityExpressionData() {
+		this.setAttributeValueObject(ATTRIBUTESREFERENCE, new HashSet<String>());
+		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
+	}
+
+	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }
+	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getAttributeValue(VARIABLEINFOS);    }
+	
+	public HAPExecutableEntityContainerComplex getReferences() {   return(HAPExecutableEntityContainerComplex)this.getComplexEntityAttributeValue(REFERENCES);    }
+	
+	public Set<String> getReferenceAttributes(){    return (Set<String>)this.getAttributeValue(ATTRIBUTESREFERENCE);     }
+	
+}

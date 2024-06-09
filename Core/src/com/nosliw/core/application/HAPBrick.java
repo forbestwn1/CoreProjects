@@ -126,8 +126,10 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	}
 	
 	@Override
-	public HAPContainerValuePorts getValuePorts() {		return null;	}
+	public HAPContainerValuePorts getExternalValuePorts() {		return null;	}
 
+	@Override
+	public HAPContainerValuePorts getInternalValuePorts() {		return null;	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

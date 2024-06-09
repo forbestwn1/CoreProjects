@@ -11,8 +11,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.data.HAPContextDataFactory;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
@@ -82,11 +82,11 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		Map<String, HAPContainerStructure> outputExternalContexts = new LinkedHashMap<String, HAPContainerStructure>();
-		Map<String, HAPResultInInteractiveInterface> serviceResult = serviceInterface.getResults();
+		Map<String, HAPResultInInteractiveTask> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
-			List<HAPResultOutputInInteractiveInterface> output = serviceResult.get(resultName).getOutput();
+			List<HAPResultElementInInteractiveTask> output = serviceResult.get(resultName).getOutput();
 			HAPValueStructureDefinitionFlat outputContext = new HAPValueStructureDefinitionFlat();
-			for(HAPResultOutputInInteractiveInterface parm : output) {
+			for(HAPResultElementInInteractiveTask parm : output) {
 				outputContext.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo((parm.getCriteria()))));
 			}
 			outputExternalContexts.put(resultName, HAPContainerStructure.createDefault(outputContext));

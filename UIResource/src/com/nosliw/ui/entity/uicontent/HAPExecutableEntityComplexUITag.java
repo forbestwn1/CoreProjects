@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.variable.HAPIdVariable;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -60,7 +60,7 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	
 	public HAPExecutableEntityComplexUITag() {
 		this.setAttributeValueObject(ATTRIBUTE, new LinkedHashMap<String, String>());
-		this.setAttributeValueObject(VARIABLEBYNAME, new LinkedHashMap<String, HAPIdVariable>());
+		this.setAttributeValueObject(VARIABLEBYNAME, new LinkedHashMap<String, HAPIdElement>());
 	}
 	
 	public void setTagId(String tagId) {   this.setAttributeValueObject(TAGID, tagId);    }
@@ -87,8 +87,8 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	public void setChildRelationConfigure(HAPConfigureParentRelationComplex childRelationConfigure) {this.setAttributeValueObject(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE, childRelationConfigure);    }
 	public HAPConfigureParentRelationComplex getChildRelationConfigure() {    return (HAPConfigureParentRelationComplex)this.getAttributeValue(HAPExecutableEntityComplexUITag.CHILDRELATIONCONFIGURE);   }
 
-	public Map<String, HAPIdVariable> getVariablesByName(){    return (Map<String, HAPIdVariable>)this.getAttributeValue(VARIABLEBYNAME);       }
-	public void addVariableByName(String name, HAPIdVariable variableId) {    this.getVariablesByName().put(name, variableId);     }
+	public Map<String, HAPIdElement> getVariablesByName(){    return (Map<String, HAPIdElement>)this.getAttributeValue(VARIABLEBYNAME);       }
+	public void addVariableByName(String name, HAPIdElement variableId) {    this.getVariablesByName().put(name, variableId);     }
 	
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {

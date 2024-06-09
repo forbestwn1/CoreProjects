@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
@@ -14,11 +14,11 @@ import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPContextStructureReferenceInteractiveRequest implements HAPContextStructureReference{
 
-	private List<HAPRequestParmInInteractiveInterface> m_requestParms;
+	private List<HAPRequestParmInInteractive> m_requestParms;
 
 	private HAPManualBrickValueStructure m_valueStructureDef;
 	
-	public HAPContextStructureReferenceInteractiveRequest(List<HAPRequestParmInInteractiveInterface> requestParms) {
+	public HAPContextStructureReferenceInteractiveRequest(List<HAPRequestParmInInteractive> requestParms) {
 		this.m_requestParms = requestParms;
 		this.buildValueStructure();
 	}
@@ -37,7 +37,7 @@ public class HAPContextStructureReferenceInteractiveRequest implements HAPContex
 
 	private void buildValueStructure() {
 		this.m_valueStructureDef = new HAPManualBrickValueStructure();
-		for(HAPRequestParmInInteractiveInterface parm : this.m_requestParms) {
+		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
 			HAPRootStructure rootStructure = new HAPRootStructure(new HAPElementStructureLeafData(parm.getDataInfo()), parm);
 			rootStructure.setName(parm.getName());
 			m_valueStructureDef.addRoot(rootStructure);

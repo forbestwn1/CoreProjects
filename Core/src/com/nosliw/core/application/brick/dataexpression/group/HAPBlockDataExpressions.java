@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrickBlockComplex;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
 
 @HAPEntityWithAttribute
 public class HAPBlockDataExpressions extends HAPBrickBlockComplex{
@@ -16,7 +16,7 @@ public class HAPBlockDataExpressions extends HAPBrickBlockComplex{
 
 	@Override
 	public void init() {	
-		this.setAttributeValueWithValue(ITEMS, new ArrayList<HAPExecutableExpressionData>());;
+		this.setAttributeValueWithValue(ITEMS, new ArrayList<HAPExecutableExpressionData1>());;
 	}
 
 	

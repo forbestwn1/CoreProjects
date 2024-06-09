@@ -7,8 +7,11 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveExpression;
+import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
 
 @HAPEntityWithAttribute
@@ -17,25 +20,35 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
-	@HAPAttribute
-	public static String PARMS = "parms";
-	
-	@HAPAttribute
-	public static String RESULT = "result";
-	
 	@Override
 	public void init() {
-		this.setAttributeValueWithValue(PARMS, new ArrayList<HAPRequestParmInInteractiveInterface>());
+		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractive>());
 	}
 	
-	public HAPExecutableExpressionData getDataExpression() {	return (HAPExecutableExpressionData)this.getAttributeValueOfValue(EXPRESSION);	}
+	public HAPExecutableExpressionData getExpression() {	return (HAPExecutableExpressionData)this.getAttributeValueOfValue(EXPRESSION);	}
 	
-	public void setDataExpression(HAPExecutableExpressionData dataExpression) {	this.setAttributeValueWithValue(EXPRESSION, dataExpression);	}
+	public void setExpression(HAPExecutableExpressionData dataExpression) {	this.setAttributeValueWithValue(EXPRESSION, dataExpression);	}
 	
 	@Override
-	public List<HAPRequestParmInInteractiveInterface> getRequestParms() {   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValueOfValue(PARMS);  }
+	public List<HAPRequestParmInInteractive> getRequestParms() {   return (List<HAPRequestParmInInteractive>)this.getAttributeValueOfValue(REQUEST);  }
 
 	@Override
-	public HAPDataTypeCriteria getResult() {   return (HAPDataTypeCriteria)this.getAttributeValueOfValue(RESULT);  }
+	public HAPResultInInteractiveExpression getResult() {   return (HAPResultInInteractiveExpression)this.getAttributeValueOfValue(RESULT);  }
+
+	@Override
+	public HAPContainerValuePorts getExternalValuePorts() {
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildExternalInteractiveExpressionValuePortGroup(this);
+		out.addValuePortGroup(valuePortGroup, true);
+		return out;	
+	}
+	
+	@Override
+	public HAPContainerValuePorts getInternalValuePorts() {
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildExternalInteractiveExpressionValuePortGroup(this);
+		out.addValuePortGroup(valuePortGroup, true);
+		return out;	
+	}
 	
 }

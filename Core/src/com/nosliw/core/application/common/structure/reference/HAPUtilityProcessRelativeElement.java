@@ -27,7 +27,7 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingVariabl
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultDesendantResolve;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
@@ -48,11 +48,11 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 public class HAPUtilityProcessRelativeElement {
 
 	public static HAPResultReferenceResolve resolveElementReference(HAPReferenceElement reference, HAPPath defaultTargetBrickPathId ,HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle){
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortRef(), defaultTargetBrickPathId, bundle);
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortId(), defaultTargetBrickPathId, bundle);
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
-		HAPResultReferenceResolve out =  HAPUtilityStructureElementReference.analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
+		HAPResultReferenceResolve out =  HAPUtilityStructureElementReference.resolveElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
 		if(out!=null) {
 			out.eleReference = reference;
 		}
@@ -119,7 +119,7 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	public static void processRelativeInStructure(HAPManualBrickValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	public static void processRelativeInStructure(HAPManualBrickValueStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		if(processRelativeConfigure==null) {
 			processRelativeConfigure = new HAPConfigureProcessorRelative();
 		} 
@@ -130,7 +130,7 @@ public class HAPUtilityProcessRelativeElement {
 		}
 	}
 
-	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processRelativeInStructureElement(HAPInfoElement structureEleInfo, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure defStructureElement = structureEleInfo.getElement();
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
@@ -138,7 +138,7 @@ public class HAPUtilityProcessRelativeElement {
 		{
 			HAPElementStructureLeafRelativeForDefinition relativeStructureElement = (HAPElementStructureLeafRelativeForDefinition)defStructureElement;
 			if(dependency!=null) {
-				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+				dependency.add(relativeStructureElement.getReference().getValuePortId());
 			}
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, relativeEleProcessConfigure, errors, processorContext);
@@ -149,7 +149,7 @@ public class HAPUtilityProcessRelativeElement {
 		{
 			HAPElementStructureLeafRelativeForValue relativeStructureElement = (HAPElementStructureLeafRelativeForValue)defStructureElement;
 			if(dependency!=null) {
-				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+				dependency.add(relativeStructureElement.getReference().getValuePortId());
 			}
 			if(!relativeStructureElement.isProcessed()){
 				out = processRelativeStructureElement(structureEleInfo, relativeEleProcessConfigure, errors, processorContext);

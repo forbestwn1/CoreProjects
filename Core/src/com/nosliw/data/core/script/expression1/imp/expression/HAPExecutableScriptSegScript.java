@@ -17,7 +17,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptImp;
 import com.nosliw.data.core.script.expression1.HAPScriptInScriptExpression;
 import com.nosliw.data.core.script.expression1.HAPUtilityScriptExpression1;

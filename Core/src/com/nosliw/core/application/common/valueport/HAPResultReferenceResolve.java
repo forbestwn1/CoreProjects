@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPReferenceBrickLocal;
+import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 //store result for resolve structure element reference path
@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 public class HAPResultReferenceResolve extends HAPSerializableImp{
 	
 	@HAPAttribute
-	public static final String BRICKREFERENCE = "brickReference";
+	public static final String BRICKID = "brickId";
 	
 	@HAPAttribute
 	public static final String VALUEPORTID = "valuePortId";
@@ -46,10 +46,10 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	
 	
 	//ref to brick
-	public HAPReferenceBrickLocal brickReference;
+	public HAPIdBrickInBundle brickId;
 	
 	//value port id
-	public HAPIdValuePort valuePortId;
+	public HAPIdValuePortInBrick valuePortId;
 	
 	//resolved structure runtime id
 	public String structureId;
@@ -72,7 +72,9 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(BRICKREFERENCE, this.brickReference.toStringValue(HAPSerializationFormat.JSON));
+		if(this.brickId!=null) {
+			jsonMap.put(BRICKID, this.brickId.toStringValue(HAPSerializationFormat.JSON));
+		}
 		jsonMap.put(VALUEPORTID, this.valuePortId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FULLPATH, this.fullPath);
 		jsonMap.put(ROOTNAME, this.rootName);

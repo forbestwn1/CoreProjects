@@ -7,7 +7,7 @@ import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.dataable.HAPManagerDataable;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.dataassociation.HAPProcessorDataAssociation;
-import com.nosliw.data.core.domain.entity.expression.data.HAPManagerExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPManagerExpression;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.HAPManagerProcess;

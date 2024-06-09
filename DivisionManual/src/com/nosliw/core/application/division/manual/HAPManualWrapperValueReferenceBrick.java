@@ -6,7 +6,7 @@ import com.nosliw.core.application.HAPIdBrick;
 public class HAPManualWrapperValueReferenceBrick extends HAPManualWrapperValueWithBrick{
 
 	//reference to attachment
-	public static final String BRICKREFERENCE = "brickReference";
+	public static final String BRICKREFERENCE = "brickId";
 
 	private HAPIdBrick m_localBrickId;
 	

@@ -8,10 +8,10 @@ import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualWrapperValueBrick;
-import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainerSimpleList;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainerList;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implements HAPWithConstantScriptExpression{
@@ -22,7 +22,7 @@ public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implem
 	
 	public HAPManualBrickValueContext() {
 		super(HAPManualEnumBrickType.VALUECONTEXT_100);
-		this.setAttributeWithValueBrick(VALUESTRUCTURE, new HAPManualBrickContainerSimpleList<HAPManualBrickWrapperValueStructure>(HAPManualEnumBrickType.VALUESTRUCTURE_100));
+		this.setAttributeWithValueBrick(VALUESTRUCTURE, new HAPManualBrickContainerList(HAPManualEnumBrickType.VALUESTRUCTURE_100));
 	}
 	
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){
@@ -35,8 +35,8 @@ public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implem
 	
 	public void addValueStructure(HAPManualBrickWrapperValueStructure valueStructure) {    this.getValueStructureContainer().addElement(valueStructure);    }
 	
-	private HAPManualBrickContainerSimpleList<HAPManualBrickWrapperValueStructure> getValueStructureContainer() {
-		return (HAPManualBrickContainerSimpleList<HAPManualBrickWrapperValueStructure>)this.getAttributeValueWithBrick(VALUESTRUCTURE);
+	private HAPManualBrickContainerList getValueStructureContainer() {
+		return (HAPManualBrickContainerList)this.getAttributeValueWithBrick(VALUESTRUCTURE);
 	}
 	
 	@Override

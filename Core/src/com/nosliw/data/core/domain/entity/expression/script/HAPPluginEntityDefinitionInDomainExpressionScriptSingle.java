@@ -6,8 +6,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataGroup;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionEntityExpressionDataSingle;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionEntityExpressionDataGroup;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionEntityExpressionDataSingle;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAPPluginEntityDefinitionInDomainImpComplex{

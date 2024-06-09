@@ -1,5 +1,8 @@
 package com.nosliw.core.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -33,6 +36,11 @@ public class HAPPluginBrickImp implements HAPPluginBrick{
 			e.printStackTrace();
 		}
 		return out;
+	}
+
+	@Override
+	public List<HAPInfoExportResource> getExposeResourceInfo(HAPBrick brick){
+		return new ArrayList<HAPInfoExportResource>();
 	}
 
 }

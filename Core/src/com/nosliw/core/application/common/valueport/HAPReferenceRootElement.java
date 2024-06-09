@@ -27,7 +27,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public static final String ROOTNAME = "rootName";
 
 	//value port Id
-	private HAPReferenceValuePort m_valuePortRef;
+	private HAPIdValuePortInBundle m_valuePortId;
 	
 	//sometimes use value port name, need to translate name to value port id
 	private String m_valuePortName;
@@ -43,13 +43,13 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		this.m_rootName = rootName;
 	}
 
-	public HAPReferenceRootElement(String rootName, HAPReferenceValuePort valuePortRef) {
+	public HAPReferenceRootElement(String rootName, HAPIdValuePortInBundle valuePortId) {
 		this(rootName);
-		this.m_valuePortRef = valuePortRef;
+		this.m_valuePortId = valuePortId;
 	}
 	
-	public HAPReferenceValuePort getValuePortRef() {    return this.m_valuePortRef;     }
-	public void setValuePortRef(HAPReferenceValuePort valuePortRef) {    this.m_valuePortRef = valuePortRef;     }
+	public HAPIdValuePortInBundle getValuePortId() {    return this.m_valuePortId;     }
+	public void setValuePortId(HAPIdValuePortInBundle valuePortRef) {    this.m_valuePortId = valuePortRef;     }
 	
 	public String getValuePortName() {    return this.m_valuePortName;    }
 	
@@ -67,8 +67,8 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 			JSONObject jsonValue = (JSONObject)value;
 			JSONObject valuePortIdJson = jsonValue.optJSONObject(VALUEPORTID);
 			if(valuePortIdJson!=null) {
-				this.m_valuePortRef = new HAPReferenceValuePort();
-				this.m_valuePortRef.buildObject(valuePortIdJson, HAPSerializationFormat.JSON);
+				this.m_valuePortId = new HAPIdValuePortInBundle();
+				this.m_valuePortId.buildObject(valuePortIdJson, HAPSerializationFormat.JSON);
 			}
 			JSONObject valueStructureRefJson = jsonValue.optJSONObject(VALUESTRUCTUREREFERENCE);
 			if(valueStructureRefJson!=null) {
@@ -84,7 +84,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEPORTID, HAPSerializeManager.getInstance().toStringValue(this.m_valuePortRef, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUEPORTID, HAPSerializeManager.getInstance().toStringValue(this.m_valuePortId, HAPSerializationFormat.JSON));
 		jsonMap.put(VALUEPORTNAME, this.m_valuePortName);
 		jsonMap.put(ROOTNAME, this.getRootName());
 		jsonMap.put(VALUESTRUCTUREREFERENCE, HAPSerializeManager.getInstance().toStringValue(this.m_valueStructureReference, HAPSerializationFormat.JSON));
@@ -98,8 +98,8 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	
 	protected void cloneToRootReference(HAPReferenceRootElement rootEleRef) {
 		rootEleRef.m_valuePortName = this.m_valuePortName;
-		if(this.m_valuePortRef!=null) {
-			rootEleRef.m_valuePortRef = this.m_valuePortRef.cloneValue();
+		if(this.m_valuePortId!=null) {
+			rootEleRef.m_valuePortId = this.m_valuePortId.cloneValue();
 		}
 		rootEleRef.m_rootName = this.getRootName();
 	}
@@ -109,7 +109,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		boolean out = false;
 		if(obj instanceof HAPReferenceRootElement) {
 			HAPReferenceRootElement ele = (HAPReferenceRootElement)obj;
-			if(!HAPUtilityBasic.isEquals(this.m_valuePortRef, ele.m_valuePortRef)) {
+			if(!HAPUtilityBasic.isEquals(this.m_valuePortId, ele.m_valuePortId)) {
 				return false;
 			}
 			if(!HAPUtilityBasic.isEquals(this.m_valuePortName, ele.m_valuePortName)) {

@@ -21,7 +21,7 @@ import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntity;
 import com.nosliw.data.core.domain.definition.HAPPluginResourceDefinitionImpEntityThin;
 import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
-import com.nosliw.data.core.domain.entity.expression.data.HAPParserDataExpression;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;

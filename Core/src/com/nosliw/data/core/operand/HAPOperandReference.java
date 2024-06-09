@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.variable.HAPIdVariable;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -51,7 +51,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	private String m_referenceExpressionAttributeName;
 	
 	//resolve map to reference info 
-	private Map<String, HAPIdVariable> m_resolvedVariable = new LinkedHashMap<String, HAPIdVariable>();
+	private Map<String, HAPIdElement> m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
 	private Map<String, HAPElementStructureLeafData> m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
 	
 	private Map<String, HAPMatchers> m_matchers;
@@ -60,7 +60,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
-		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdVariable>();
+		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
 		this.m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
 	}
 	
@@ -78,7 +78,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_mapping.putAll(mapping);
 	}
 
-	public void addResolvedMappingTo(String name, HAPIdVariable variableId, HAPElementStructureLeafData dataStructureEle) {
+	public void addResolvedMappingTo(String name, HAPIdElement variableId, HAPElementStructureLeafData dataStructureEle) {
 		this.m_resolvedVariable.put(name, variableId);
 		this.m_resolvedElement.put(name, dataStructureEle);
 	}

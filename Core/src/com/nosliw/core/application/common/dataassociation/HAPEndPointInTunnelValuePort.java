@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 
 @HAPEntityWithAttribute
 public class HAPEndPointInTunnelValuePort extends HAPEndpointInTunnel{
@@ -18,11 +18,11 @@ public class HAPEndPointInTunnelValuePort extends HAPEndpointInTunnel{
 	@HAPAttribute
 	public static String ITEMPATH = "itemPath";
 
-	private HAPReferenceValuePort m_valuePortRef;
+	private HAPIdValuePortInBundle m_valuePortRef;
 	private String m_valueStructureId;
 	private String m_itemPath;
 
-	public HAPEndPointInTunnelValuePort(HAPReferenceValuePort valuePortRef, String valueStructureId, String itemPath) {
+	public HAPEndPointInTunnelValuePort(HAPIdValuePortInBundle valuePortRef, String valueStructureId, String itemPath) {
 		super(HAPConstantShared.TUNNELENDPOINT_TYPE_VALUEPORT);
 		this.m_valuePortRef = valuePortRef;
 		this.m_valueStructureId = valueStructureId;

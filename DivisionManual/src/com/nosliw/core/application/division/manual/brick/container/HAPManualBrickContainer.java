@@ -5,12 +5,21 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 
 public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
 
+	private HAPIdBrickType m_childBrickTypeId;
+	
+	public HAPManualBrickContainer(HAPIdBrickType childBrickTypeId) {
+		super(HAPEnumBrickType.CONTAINER_100);
+		this.setAttributeIndex(0);
+		this.m_childBrickTypeId = childBrickTypeId;
+	}
+	
 	public HAPManualBrickContainer () {
 		super(HAPEnumBrickType.CONTAINER_100);
 		this.setAttributeIndex(0);

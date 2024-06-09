@@ -15,7 +15,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.entity.expression.data.HAPDefinitionExpressionData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.operand.HAPOperandConstant;
@@ -46,11 +45,6 @@ public class HAPExecutableExpressionData extends HAPExecutableImpEntityInfo{
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
-	public HAPExecutableExpressionData(HAPDefinitionExpressionData expressionDef) {
-		this.m_operand = expressionDef.getOperand().cloneWrapper();
-		expressionDef.cloneToEntityInfo(this);
-	}
-	
 	public HAPExecutableExpressionData(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}

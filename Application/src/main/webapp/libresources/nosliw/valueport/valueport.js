@@ -19,35 +19,56 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 	
 	var loc_rawEntity = rawEntity;
 	
+	var loc_getExternalValuePort = function(valuePortGroup, valuePortName){   
+		var loc_valuePort;
+		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
+			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
+			if(complexEntityInterface!=undefined){
+				loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
+			}
+		}
+		else{
+			if(loc_rawEntity.getValuePort!=undefined){
+				loc_valuePort = loc_rawEntity.getExternalValuePort(valuePortGroup, valuePortName);
+			}
+		}
+		
+		if(loc_valuePort!=undefined){
+			return node_buildValuePort(loc_valuePort);
+		}
+	};
+	
+	var loc_getInternalValuePort = function(valuePortGroup, valuePortName){   
+		var loc_valuePort;
+		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
+			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
+			if(complexEntityInterface!=undefined){
+				loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
+			}
+		}
+		else{
+			if(loc_rawEntity.getValuePort!=undefined){
+				loc_valuePort = loc_rawEntity.getInternalValuePort(valuePortGroup, valuePortName);
+			}
+		}
+		
+		if(loc_valuePort!=undefined){
+			return node_buildValuePort(loc_valuePort);
+		}
+	};
+	
 	var loc_interfaceEntity = {
 
 		getValuePort : function(valuePortGroup, valuePortName){   
-			var loc_valuePort;
-			if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-				var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
-				if(complexEntityInterface!=undefined){
-					loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
-				}
-			}
-			else{
-				if(loc_rawEntity.getValuePort!=undefined){
-					loc_valuePort = loc_rawEntity.getValuePort(valuePortGroup, valuePortName);
-				}
-			}
-			
-			if(loc_valuePort!=undefined){
-				return node_buildValuePort(loc_valuePort);
-			}
+			return loc_getExternalValuePort(valuePortGroup, valuePortName);
 		},
-		
 	};
 
-	
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_WITHVALUEPORT, {
-			getValuePort : function(valuePortType, valuePortName){
-				return loc_interfaceEntity.getValuePort(valuePortType, valuePortName);
+			getValuePort : function(valuePortGroup, valuePortName){
+				return loc_getInternalValuePort(valuePortGroup, valuePortName);
 			}
 		});
 	}

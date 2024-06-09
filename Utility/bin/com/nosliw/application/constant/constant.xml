@@ -983,6 +983,9 @@
 			<definition type="space"/>
 			<definition name="VERSION_DEFAULT" value="1.0.0"/>
 
+			<definition type="space"/>
+			<definition name="NAME_ROOT_RESULT" value="result"/>
+
 		</definitions>
 	</constants>
 </root>

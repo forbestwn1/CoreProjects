@@ -20,7 +20,7 @@ import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

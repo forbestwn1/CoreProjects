@@ -19,7 +19,7 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -164,7 +164,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			HAPBlockInteractiveInterface serviceInterface = (HAPBlockInteractiveInterface)serviceInstance.getDefinition().getServiceInterface();
-			for(HAPRequestParmInInteractiveInterface parm : serviceInterface.getRequestParms()) {
+			for(HAPRequestParmInInteractive parm : serviceInterface.getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;
 				if(parms!=null) {

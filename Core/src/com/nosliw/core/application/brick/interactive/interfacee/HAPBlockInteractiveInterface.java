@@ -8,49 +8,42 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveInterface;
-import com.nosliw.core.application.common.interactive.HAPResultOutputInInteractiveInterface;
+import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
 
 @HAPEntityWithAttribute
 public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple implements HAPInteractiveTask{
 
-	@HAPAttribute
-	public static String REQUEST = "request";
-	
-	@HAPAttribute
-	public static String RESULT = "result";
-
 	@Override
 	public void init() {
-		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractiveInterface>());
-		this.setAttributeValueWithValue(REQUEST, new LinkedHashMap<String, HAPResultInInteractiveInterface>());
+		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractive>());
+		this.setAttributeValueWithValue(REQUEST, new LinkedHashMap<String, HAPResultInInteractiveTask>());
 	}
 	
-	public void addRequestParm(HAPRequestParmInInteractiveInterface parm) { this.getRequestParms().add(parm);  }
+	public void addRequestParm(HAPRequestParmInInteractive parm) { this.getRequestParms().add(parm);  }
 	@Override
-	public List<HAPRequestParmInInteractiveInterface> getRequestParms(){   return (List<HAPRequestParmInInteractiveInterface>)this.getAttributeValueOfValue(REQUEST);   }
+	public List<HAPRequestParmInInteractive> getRequestParms(){   return (List<HAPRequestParmInInteractive>)this.getAttributeValueOfValue(REQUEST);   }
 	
 	@Override
-	public Map<String, HAPResultInInteractiveInterface> getResults(){ return (Map<String, HAPResultInInteractiveInterface>)this.getAttributeValueOfValue(RESULT);  }
-	public HAPResultInInteractiveInterface getResult(String result) {   return this.getResults().get(result);  }
-	public List<HAPResultOutputInInteractiveInterface> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
-	public void addResult(HAPResultInInteractiveInterface result) {  this.getResults().put(result.getName(), result);  }
+	public Map<String, HAPResultInInteractiveTask> getResults(){ return (Map<String, HAPResultInInteractiveTask>)this.getAttributeValueOfValue(RESULT);  }
+	public HAPResultInInteractiveTask getResult(String result) {   return this.getResults().get(result);  }
+	public List<HAPResultElementInInteractiveTask> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
+	public void addResult(HAPResultInInteractiveTask result) {  this.getResults().put(result.getName(), result);  }
 	
 //	public void process(HAPRuntimeEnvironment runtimeEnv) {
-//		for(HAPRequestParmInInteractiveInterface parm : this.getRequestParms()) {
+//		for(HAPRequestParmInInteractive parm : this.getRequestParms()) {
 //			parm.getDataInfo().process(runtimeEnv);
 //		}
 //	}
 	
 //	protected void cloneToInteractive(HAPBlockInteractiveInterface interactive) {
 //		this.cloneToEntityInfo(interactive);
-//		for(HAPRequestParmInInteractiveInterface parm : this.m_requestParms) {
+//		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
 //			interactive.addRequestParm(parm.cloneVariableInfo());
 //		}
 //		for(String resultName : this.m_results.keySet()) {
@@ -62,20 +55,20 @@ public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple implements
 	protected Object buildAttributeValueFormatJson(String attrName, Object obj) {
     	Object out = null;
     	if(REQUEST.equals(attrName)) {
-    		List<HAPRequestParmInInteractiveInterface> rquestParms = new ArrayList<HAPRequestParmInInteractiveInterface>();
+    		List<HAPRequestParmInInteractive> rquestParms = new ArrayList<HAPRequestParmInInteractive>();
 			JSONArray parmsArray = (JSONArray)obj;
 			for(int i=0; i<parmsArray.length(); i++) {
-				HAPRequestParmInInteractiveInterface parm = HAPRequestParmInInteractiveInterface.buildParmFromObject(parmsArray.get(i));
+				HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParmFromObject(parmsArray.get(i));
 				rquestParms.add(parm);
 				out = rquestParms;
 			}
     	}
     	else if(RESULT.equals(attrName)) {
-    		Map<String, HAPResultInInteractiveInterface> results = new LinkedHashMap<String, HAPResultInInteractiveInterface>();
+    		Map<String, HAPResultInInteractiveTask> results = new LinkedHashMap<String, HAPResultInInteractiveTask>();
 			JSONObject resultObject = (JSONObject)obj;
 			for(Object key : resultObject.keySet()) {
 				String name = (String)key;
-				HAPResultInInteractiveInterface resultEle = new HAPResultInInteractiveInterface();
+				HAPResultInInteractiveTask resultEle = new HAPResultInInteractiveTask();
 				resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
 				resultEle.setName(name);
 				results.put(resultEle.getName(), resultEle);

@@ -7,7 +7,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.value.HAPUtilityJsonValue;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
-import com.nosliw.data.core.domain.entity.expression.data.HAPUtilityExpressionProcessConfigure;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPUtilityExpressionProcessConfigure;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;

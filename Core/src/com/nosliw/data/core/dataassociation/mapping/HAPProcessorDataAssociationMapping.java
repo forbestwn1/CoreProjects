@@ -28,12 +28,12 @@ import com.nosliw.core.application.common.structure.reference.HAPProcessorElemen
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
-import com.nosliw.core.application.common.valueport.HAPReferenceValuePort;
+import com.nosliw.core.application.common.valueport.HAPIdRootElement;
+import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
-import com.nosliw.core.application.common.variable.HAPIdRootElement;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.HAPRefIdEntity;
@@ -64,11 +64,11 @@ public class HAPProcessorDataAssociationMapping {
 			
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
 			//process out reference (root name)
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, toProcessorContext);
+			HAPReferenceRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveValueStructureRootReference(targetRef, toProcessorContext);
 			
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, fromProcessorContext);
-			HAPItemValueMapping<HAPIdRootElement> valueMappingItem = new HAPItemValueMapping<HAPIdRootElement>(processedItem, targetRootEleId);
+			HAPItemValueMapping<HAPReferenceRootElement> valueMappingItem = new HAPItemValueMapping<HAPReferenceRootElement>(processedItem, targetRootEleId);
 			out.addItem(valueMappingItem);
 			
 			//build relative assignment path mapping according to relative node
@@ -87,11 +87,11 @@ public class HAPProcessorDataAssociationMapping {
 
 	private static void buildValuePortEntityRelativePath(String baseEntityIdPath, HAPDataAssociationMapping mapping) {
 		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
-			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getBrickReference();
+			HAPRefIdEntity fromEntityIdRef = valueMappingPath.getFromValuePortRef().getBrickId();
 			String fromEntityRelativePath = buildRelativePath(baseEntityIdPath, fromEntityIdRef.getIdPath());
 			fromEntityIdRef.setRelativePath(fromEntityRelativePath);
 			
-			HAPRefIdEntity toEntityIdRef = valueMappingPath.getToValuePortRef().getBrickReference();
+			HAPRefIdEntity toEntityIdRef = valueMappingPath.getToValuePortRef().getBrickId();
 			String toEntityRelativePath = buildRelativePath(baseEntityIdPath, toEntityIdRef.getIdPath());
 			toEntityIdRef.setRelativePath(toEntityRelativePath);
 		}
@@ -103,16 +103,16 @@ public class HAPProcessorDataAssociationMapping {
 	
 	private static void collectRelatedEntity(HAPDataAssociationMapping mapping) {
 		for(HAPTunnel valueMappingPath : mapping.getTunnels()) {
-			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getBrickReference().getIdPath());
-			mapping.addToEntity(valueMappingPath.getToValuePortRef().getBrickReference().getIdPath());
+			mapping.addFromEntity(valueMappingPath.getFromValuePortRef().getBrickId().getIdPath());
+			mapping.addToEntity(valueMappingPath.getToValuePortRef().getBrickId().getIdPath());
 		}
 	}
 	
 
 	private static void normalizeValuePortId(HAPItemValueMapping<HAPReferenceRootElement> mappingItem, HAPExecutableEntity inEntityExe, HAPExecutableEntity outEntityExe) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
-		if(targetRef.getValuePortRef()==null) {
-			targetRef.setValuePortRef(new HAPReferenceValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe)));
+		if(targetRef.getValuePortId()==null) {
+			targetRef.setValuePortId(new HAPIdValuePortInBundle(HAPUtilityValuePort.getDefaultValuePortIdInEntity(outEntityExe)));
 		}
 		
 		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
@@ -121,8 +121,8 @@ public class HAPProcessorDataAssociationMapping {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					if(mappingEle.getReference().getValuePortRef()==null) {
-						mappingEle.getReference().setValuePortRef(new HAPReferenceValuePort(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe)));
+					if(mappingEle.getReference().getValuePortId()==null) {
+						mappingEle.getReference().setValuePortId(new HAPIdValuePortInBundle(HAPUtilityValuePort.getDefaultValuePortIdInEntity(inEntityExe)));
 					}
 				}
 				return null;
@@ -150,14 +150,14 @@ public class HAPProcessorDataAssociationMapping {
 		
 	}
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPReferenceValuePort>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPContextProcessor processorContext) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
 		{
 			HAPElementStructureLeafRelativeForMapping relativeStructureElement = (HAPElementStructureLeafRelativeForMapping)defStructureElement;
 			if(dependency!=null) {
-				dependency.add(relativeStructureElement.getReference().getValuePortRef());
+				dependency.add(relativeStructureElement.getReference().getValuePortId());
 			}
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;

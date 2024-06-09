@@ -6,8 +6,8 @@ import java.util.Set;
 import com.nosliw.common.updatename.HAPUpdateName;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
-import com.nosliw.data.core.domain.entity.expression.data.HAPExecutableEntityExpressionDataGroup;
+import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptImp;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;
 
@@ -15,7 +15,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	private String m_expressionId;
 
-	private HAPExecutableExpressionData m_expressionExe;
+	private HAPExecutableExpressionData1 m_expressionExe;
 
 	public HAPExecutableScriptSegExpression(String id, String expressionId) {
 		super(id);
@@ -44,7 +44,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	@Override
 	public Set<HAPDefinitionConstant> discoverConstantsDefinition(HAPExecutableEntityExpressionDataGroup expressionGroup) {
-		HAPExecutableExpressionData expressionExe = expressionGroup.getAllExpressionItems().get(this.m_expressionId);
+		HAPExecutableExpressionData1 expressionExe = expressionGroup.getAllExpressionItems().get(this.m_expressionId);
 		return expressionExe.getConstantsDefinition();
 	}
 

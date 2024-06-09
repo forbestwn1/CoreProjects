@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.taskwrapper;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrickBlockSimple;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
@@ -9,7 +9,7 @@ import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple
 public class HAPManualPluginProcessorBlockSimpleImpTaskWrapper extends HAPPluginProcessorBlockSimpleImp{
 
 	public HAPManualPluginProcessorBlockSimpleImpTaskWrapper() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKWRAPPER);
+		super(HAPEnumBrickType.TASKWRAPPER_100);
 	}
 
 	@Override

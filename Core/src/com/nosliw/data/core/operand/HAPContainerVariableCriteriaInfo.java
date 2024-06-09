@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.common.variable.HAPIdVariable;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 @HAPEntityWithAttribute
@@ -27,24 +27,24 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
 
-	private Map<HAPIdVariable, HAPInfoCriteria> m_criteriaInfosById;
+	private Map<HAPIdElement, HAPInfoCriteria> m_criteriaInfosById;
 
-	private Map<String, HAPIdVariable> m_variableIdByKey;
+	private Map<String, HAPIdElement> m_variableIdByKey;
 	
 	private int m_nextId = 0;
 	
 	public HAPContainerVariableCriteriaInfo() {
-		this.m_criteriaInfosById = new LinkedHashMap<HAPIdVariable, HAPInfoCriteria>();
-		this.m_variableIdByKey = new LinkedHashMap<String, HAPIdVariable>();
+		this.m_criteriaInfosById = new LinkedHashMap<HAPIdElement, HAPInfoCriteria>();
+		this.m_variableIdByKey = new LinkedHashMap<String, HAPIdElement>();
 	}
 	
-	public Map<HAPIdVariable, HAPInfoCriteria> getVariableCriteriaInfos() {   return this.m_criteriaInfosById; }
+	public Map<HAPIdElement, HAPInfoCriteria> getVariableCriteriaInfos() {   return this.m_criteriaInfosById; }
 	
-	public HAPIdVariable getVariableId(String key) {    return this.m_variableIdByKey.get(key);     }
+	public HAPIdElement getVariableId(String key) {    return this.m_variableIdByKey.get(key);     }
 	
 	public HAPInfoCriteria getVaraibleCriteriaInfo(String key) {   return this.m_criteriaInfosById.get(this.m_variableIdByKey.get(key));     }
 	
-	public String addVariable(HAPIdVariable variableId) {
+	public String addVariable(HAPIdElement variableId) {
 		if(m_criteriaInfosById.get(variableId)!=null) {
 			//already exist
 			for(String key : this.m_variableIdByKey.keySet()) {
@@ -64,7 +64,7 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 		}
 	}
 	
-	public void addVariable(String variableKey, HAPIdVariable variableId, HAPInfoCriteria criteria) {
+	public void addVariable(String variableKey, HAPIdElement variableId, HAPInfoCriteria criteria) {
 		this.m_variableIdByKey.put(variableKey, variableId);
 		this.m_criteriaInfosById.put(variableId, criteria);
 	}
@@ -72,9 +72,9 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	
 	
 	
-	public Set<HAPIdVariable> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
+	public Set<HAPIdElement> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
 	
-//	public HAPInfoCriteria getVariableCriteriaInfo(HAPIdVariable variableId) {     return this.m_criteriaInfosById.get(variableId);     }
+//	public HAPInfoCriteria getVariableCriteriaInfo(HAPIdElement variableId) {     return this.m_criteriaInfosById.get(variableId);     }
 	
 	@Override
 	public HAPContainerVariableCriteriaInfo clone() {

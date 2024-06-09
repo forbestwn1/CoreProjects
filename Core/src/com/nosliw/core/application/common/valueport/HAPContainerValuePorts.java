@@ -40,16 +40,16 @@ public class HAPContainerValuePorts {
 		}
 	}
 
-	public HAPIdValuePort getDefaultValuePortId() {
+	public HAPIdValuePortInBrick getDefaultValuePortId() {
 		String groupId = this.getDefaultGroupName();
 		String valuePortId = null;
 		if(groupId!=null) {
 			valuePortId = this.m_valuePortGroupByName.get(groupId).getDefaultValuePortName();
 		}
-		return new HAPIdValuePort(groupId, valuePortId);
+		return new HAPIdValuePortInBrick(groupId, valuePortId);
 	}
 	
-	public HAPValuePort getValuePort(HAPIdValuePort valuePortId) {
+	public HAPValuePort getValuePort(HAPIdValuePortInBrick valuePortId) {
 		String groupName = null;
 		if(valuePortId==null||valuePortId.getValuePortGroup()==null) {
 			groupName = this.getDefaultGroupName();
@@ -66,10 +66,10 @@ public class HAPContainerValuePorts {
 		return group.getValuePort(valuePortName);
 	}
 
-	public HAPIdValuePort normalizeValuePortId(HAPIdValuePort valuePortId) {
-		HAPIdValuePort out = valuePortId;
+	public HAPIdValuePortInBrick normalizeValuePortId(HAPIdValuePortInBrick valuePortId, String ioDirection) {
+		HAPIdValuePortInBrick out = valuePortId;
 		if(out==null) {
-			out = new HAPIdValuePort();
+			out = new HAPIdValuePortInBrick();
 		}
 		String valuePortGroupId = out.getValuePortGroup();
 		if(valuePortGroupId==null) {
@@ -77,10 +77,10 @@ public class HAPContainerValuePorts {
 			out.setValuePortGroup(valuePortGroupId);
 		}
 		String valuePortName = out.getValuePortName();
-		if(valuePortGroupId!=null) {
+		if(valuePortGroupId!=null&&valuePortName==null) {
 			HAPGroupValuePorts valuePortGroup = this.getValuePortGroup(valuePortGroupId);
 			if(valuePortName==null) {
-				valuePortName = valuePortGroup.getDefaultValuePortName();
+				valuePortName = valuePortGroup.getDefaultValuePortName(ioDirection);
 				out.setValuePortName(valuePortName);
 			}
 		}

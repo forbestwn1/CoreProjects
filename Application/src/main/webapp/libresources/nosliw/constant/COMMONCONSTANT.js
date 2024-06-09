@@ -308,7 +308,7 @@ var COMMONCONSTANT=
   "RUNTIME_RESOURCE_TYPE_CONTAINERLIST": "containerList",
   "RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX": "complexContainer",
   "RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE": "simpleContainer",
-  "RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB": "dataexpressionlib",
+  "RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB": "dataexpressionlibrary",
   "RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIBELEMENT": "dataexpressionlibelement",
   "RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP": "dataexpressiongroup",
   "RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP": "dataexpressiongrouptemp",
@@ -578,7 +578,8 @@ var COMMONCONSTANT=
   "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess",
   "TUNNELENDPOINT_TYPE_CONSTANT": "constant",
   "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort",
-  "VERSION_DEFAULT": "1.0.0"
+  "VERSION_DEFAULT": "1.0.0",
+  "NAME_ROOT_RESULT": "result"
 };
 
 //*******************************************   End Node Definition  ************************************** 	
