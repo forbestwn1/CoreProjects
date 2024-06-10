@@ -6,11 +6,11 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
-import com.nosliw.core.application.HAPBrickImp;
+import com.nosliw.core.application.HAPBrickBlockSimple;
 
 //attribute: id or name of item for attribute name, otherwise, create attribute name
 @HAPEntityWithAttribute
-public class HAPBrickContainer extends HAPBrickImp{
+public class HAPBrickContainer extends HAPBrickBlockSimple{
 
 	@HAPAttribute
 	static final public String ATTRINDEX = HAPUtilityNosliw.buildNosliwFullName("attrIndex");  

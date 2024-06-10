@@ -7,28 +7,61 @@ import java.util.Set;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
-import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.valuecontext.HAPExecutablePartValueContextSimple;
-import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.resource.HAPResourceManager;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityStructureElementReference {
 
 	public static HAPIdRootElement resolveRootReferenceInBundle(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo){
-		HAPResultReferenceResolve resolve = resolveElementReferenceInBundle(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle, resourceMan, runtimeInfo);
+		HAPResultReferenceResolve resolve = analyzeElementReferenceInBundle(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle, resourceMan, runtimeInfo);
 		return new HAPIdRootElement(rootEleCriteria.getValuePortId(), resolve.structureId, rootEleCriteria.getRootName());
 	}
 
-	public static HAPResultReferenceResolve resolveElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+
+/*	
+	//resolve variable name with possible extension
+	public static HAPIdElement resolveVariableName(String variableName, HAPExecutableEntityValueContext valueContext, String extensionStructureGroup, HAPDomainValueStructure valueStructureDomain, HAPConfigureResolveElementReference resolveConfigure){
+		HAPIdElement out = HAPUtilityValueContextReference.resolveVariableReference(new HAPReferenceElement(variableName), null, valueContext, valueStructureDomain, resolveConfigure);
+		if(out==null) {
+			//not able to resolve variable
+			String valueStructureRuntimId = HAPUtilityValueContext.getExtensionValueStructure(valueContext, extensionStructureGroup!=null?extensionStructureGroup:HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+			if(valueStructureRuntimId!=null) {
+				HAPManualBrickValueStructure vs = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureRuntimId);
+				HAPComplexPath varPath = new HAPComplexPath(variableName);
+				HAPUtilityStructure.setDescendant(vs, varPath, new HAPElementStructureLeafData());
+				out = new HAPIdElement(new HAPIdRootElement(valueStructureRuntimId, varPath.getRoot()), varPath.getPath().toString());
+			}
+			else {
+				throw new RuntimeException();
+			}
+		}
+		return out;
+	}
+*/
+	
+	
+	public static HAPIdElement resolveElementReferenceInBrick(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBrick brick) {
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceInBrick(reference, resolveConfigure, brick);
+		return resolveToElementId(refResolve);
+	}
+	
+	public static HAPIdElement resolveElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo){
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceInBundle(reference, resolveConfigure, bundle, resourceMan, runtimeInfo);
+		return resolveToElementId(refResolve);
+	}
+
+	private static HAPIdElement resolveToElementId(HAPResultReferenceResolve refResolve) {
+		if(refResolve==null) {
+			return null;
+		}
+		HAPIdRootElement rootEleId = new HAPIdRootElement(new HAPIdValuePortInBundle(refResolve.brickId, refResolve.valuePortId), refResolve.structureId, refResolve.rootName);
+		return new HAPIdElement(rootEleId, new HAPComplexPath(refResolve.elementPath).getPathStr());
+	}
+	
+	public static HAPResultReferenceResolve analyzeElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInBundle(reference.getValuePortId(), bundle, resourceMan, runtimeInfo);
 
 		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
@@ -40,7 +73,7 @@ public class HAPUtilityStructureElementReference {
 		return resolve;
 	}
 
-	public static HAPResultReferenceResolve resolveElementReferenceInBrick(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBrick brick) {
+	public static HAPResultReferenceResolve analyzeElementReferenceInBrick(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBrick brick) {
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInBrick(reference.getValuePortId(), brick);
 
 		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
@@ -52,7 +85,7 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	//find best resolved element from structure 
-	public static HAPResultReferenceResolve resolveElementReference(String elementPath, List<HAPInfoValueStructureReference> targetStructures, HAPConfigureResolveElementReference resolveConfigure){
+	public static HAPResultReferenceResolve analyzeElementReference(String elementPath, List<HAPInfoValueStructureReference> targetStructures, HAPConfigureResolveElementReference resolveConfigure){
 		if(targetStructures==null) {
 			return null;
 		}
@@ -115,7 +148,7 @@ public class HAPUtilityStructureElementReference {
 
 
 	
-	
+/*	
 	
 	
 	public static HAPResultReferenceResolve resolveElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPContextProcessor processContext){
@@ -123,7 +156,7 @@ public class HAPUtilityStructureElementReference {
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
-		HAPResultReferenceResolve out =  resolveElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
+		HAPResultReferenceResolve out =  analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
 		if(out!=null) {
 			out.eleReference = reference;
 		}
@@ -201,4 +234,5 @@ public class HAPUtilityStructureElementReference {
 		}
 		return null;
 	}
+*/	
 }

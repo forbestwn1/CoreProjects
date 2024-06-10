@@ -21,6 +21,6 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickBlockSimp
 	
 	public String addElement(HAPManualAttribute element) {
 		HAPManualBrickContainer container = (HAPManualBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
-		return container.addElement(container);
+		return container.addElement(element);
 	}
 }

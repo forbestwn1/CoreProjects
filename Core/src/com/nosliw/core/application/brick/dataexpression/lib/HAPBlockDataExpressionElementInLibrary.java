@@ -13,9 +13,10 @@ import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
-public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple implements HAPInteractiveExpression{
+public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple implements HAPInteractiveExpression, HAPDataExpressionUnit{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -23,6 +24,7 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 	@Override
 	public void init() {
 		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractive>());
+		this.setAttributeValueWithValue(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
 	}
 	
 	public HAPExecutableExpressionData getExpression() {	return (HAPExecutableExpressionData)this.getAttributeValueOfValue(EXPRESSION);	}
@@ -34,7 +36,11 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 
 	@Override
 	public HAPResultInInteractiveExpression getResult() {   return (HAPResultInInteractiveExpression)this.getAttributeValueOfValue(RESULT);  }
+	public void setResult(HAPResultInInteractiveExpression result) {    this.setAttributeValueWithValue(RESULT, result);     }
 
+	@Override
+	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getAttributeValueOfValue(VARIABLEINFOS);  }
+	
 	@Override
 	public HAPContainerValuePorts getExternalValuePorts() {
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
@@ -50,5 +56,5 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 		out.addValuePortGroup(valuePortGroup, true);
 		return out;	
 	}
-	
+
 }

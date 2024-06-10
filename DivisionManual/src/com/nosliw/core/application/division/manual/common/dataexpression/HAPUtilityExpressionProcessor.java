@@ -7,12 +7,16 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.collect.Sets;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
+import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
@@ -24,7 +28,6 @@ import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionData;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataSingle;
-import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
 import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
@@ -38,14 +41,19 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPExecutableEntityValueContext valueContext, HAPContainerVariableCriteriaInfo varInfos, HAPDomainValueStructure valueStructureDomain) {
+	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPBrick brick, HAPContainerVariableCriteriaInfo varInfos) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
-					HAPIdElement idVariable = HAPUtilityValueContextReference.resolveVariableName(variableOperand.getVariableName(), valueContext, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC, valueStructureDomain, null);
+					
+					HAPReferenceElement ref = new HAPReferenceElement();
+					ref.buildObject(variableOperand.getVariableName(), HAPSerializationFormat.JSON);
+					ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_IN, brick));
+
+					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceInBrick(ref, null, brick);
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);

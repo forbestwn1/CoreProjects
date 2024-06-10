@@ -35,15 +35,15 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		
 		HAPBundle bundle = processContext.getCurrentBundle();
 		
-		Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getBrickPair(pathFromRoot, bundle);
-		HAPManualBrickTestComplexScript definitionEntity = (HAPManualBrickTestComplexScript)entityPair.getLeft();
-		HAPBlockTestComplexScript executableEntity = (HAPBlockTestComplexScript)entityPair.getRight();
+		Pair<HAPManualBrick, HAPBrick> blockPair = HAPManualUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		HAPManualBrickTestComplexScript definitionBlock = (HAPManualBrickTestComplexScript)blockPair.getLeft();
+		HAPBlockTestComplexScript executableBlock = (HAPBlockTestComplexScript)blockPair.getRight();
 		
-		Map<String, Object> parms = definitionEntity.getParms();
+		Map<String, Object> parms = definitionBlock.getParms();
 
-		executableEntity.setScriptName(definitionEntity.getScriptName());
+		executableBlock.setScriptName(definitionBlock.getScriptName());
 		
-		executableEntity.setParms(parms);
+		executableBlock.setParms(parms);
 	
 		//normal variable
 		Object variables = parms.get(HAPBlockTestComplexScript.VARIABLE);
@@ -54,8 +54,8 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 			for(int i=0; i<varJsonArray.length(); i++) {
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
-				ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableEntity));
-				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.resolveElementReferenceInBrick(ref, new HAPConfigureResolveElementReference(), executableEntity);
+				ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableBlock));
+				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInBrick(ref, new HAPConfigureResolveElementReference(), executableBlock);
 				
 				if(resolve!=null) {
 					resolvedVars.add(resolve);
@@ -63,8 +63,8 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 					unknownVars.add(ref);
 				}
 			}
-			executableEntity.setVariables(resolvedVars);
-			executableEntity.setUnknowVariable(unknownVars);
+			executableBlock.setVariables(resolvedVars);
+			executableBlock.setUnknowVariable(unknownVars);
 		}
 	}
 

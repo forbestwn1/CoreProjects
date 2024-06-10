@@ -10,13 +10,12 @@ import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
 import com.nosliw.core.application.division.manual.HAPUtilityParserBrickFormatJson;
-import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualBrickTestComplexScript;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockDataExpressionLibrary(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBrickTestComplexScript.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.DATAEXPRESSIONLIB_100, HAPManualBlockDataExpressionLibrary.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override

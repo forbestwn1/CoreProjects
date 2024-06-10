@@ -12,16 +12,36 @@
 				"description" : "dataexpression1"
 			},
 			"brick" : {
-				"parms" : [
+				"request" : [
 					{
-						"name" : "serviceParm1",
-						"dataInfo" : "test.string;1.0.0"
+						"name" : "parm1",
+						"dataInfo" : "test.string;1.0.0",
+						"defaultValue" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of baseVarNormal"
+						}
+					},
+					{
+						"name" : "parm2",
+						"dataInfo" : "test.integer;1.0.0",
+						"defaultValue" : {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 5
+						}
+					},
+					{
+						"name" : "parm3",
+						"dataInfo" : "test.integer;1.0.0",
+						"defaultValue" : {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 7
+						}
 					}
 				],
 				"result" : {
-					
-				}
-			
+					"criteria" : "test.string;1.0.0"
+				},
+				"expression" : "!(test.string)!.subString(base:?(parm1)?,from:?(parm2)?,to:?(parm3)?)"
 			}
 			
 		}

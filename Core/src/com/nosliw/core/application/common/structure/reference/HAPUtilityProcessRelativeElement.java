@@ -52,7 +52,7 @@ public class HAPUtilityProcessRelativeElement {
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
-		HAPResultReferenceResolve out =  HAPUtilityStructureElementReference.resolveElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
+		HAPResultReferenceResolve out =  HAPUtilityStructureElementReference.analyzeElementReference(reference.getElementPath(), valueStructureInfos, resolveConfigure);
 		if(out!=null) {
 			out.eleReference = reference;
 		}
@@ -176,7 +176,7 @@ public class HAPUtilityProcessRelativeElement {
 		HAPElementStructureLeafRelative out = defStructureElementRelative;
 		
 		HAPReferenceElement pathReference = defStructureElementRelative.getReference();
-		HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.resolveElementReference(pathReference, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), processContext);
+		HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.analyzeElementReference(pathReference, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), processContext);
 		
 		if(resolveInfo==null) {
 			errors.add(HAPServiceData.createFailureData(structureEleInfo, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));

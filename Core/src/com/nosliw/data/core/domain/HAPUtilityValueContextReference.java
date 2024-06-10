@@ -53,7 +53,7 @@ public class HAPUtilityValueContextReference {
 
 		HAPContextStructureReferenceValueStructure structureRefContext = new HAPContextStructureReferenceValueStructure(valueContext, groupType, valueStructureDomain);
 
-		return HAPUtilityStructureElementReference.resolveElementReference(reference, structureRefContext, resolveConfigure);
+		return HAPUtilityStructureElementReference.analyzeElementReference(reference, structureRefContext, resolveConfigure);
 		
 	}	
 
