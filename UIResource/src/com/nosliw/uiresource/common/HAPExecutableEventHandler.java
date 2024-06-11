@@ -15,7 +15,7 @@ import com.nosliw.data.core.handler.HAPHandler;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -53,7 +53,7 @@ public class HAPExecutableEventHandler  extends HAPEntityInfoImpWrapper implemen
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(this.m_process.getResourceDependency(runtimeInfo, resourceManager));
 		return out;

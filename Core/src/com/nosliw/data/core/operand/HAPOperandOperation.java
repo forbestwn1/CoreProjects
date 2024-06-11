@@ -30,7 +30,7 @@ import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPOperandOperation extends HAPOperandImp{
@@ -257,7 +257,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	}
 
 	@Override
-	public List<HAPResourceIdSimple> getResources(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceIdSimple> getResources(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceIdSimple> out = super.getResources(runtimeInfo, resourceManager);
 		
 		HAPOperationId operationId = this.getOperationId();

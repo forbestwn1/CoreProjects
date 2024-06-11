@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -92,7 +92,7 @@ public class HAPInfoEntityInDomainExecutable extends HAPExecutableImp implements
 	}
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll(super.getResourceDependency(runtimeInfo, resourceManager));
 		this.buildResourceDependencyForExecutable(out, this.m_entity, runtimeInfo, resourceManager);

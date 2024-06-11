@@ -28,7 +28,7 @@ import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPPluginResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPIdResourceType;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -72,7 +72,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	private HAPResourceManager m_resourceManager;
+	private HAPManagerResource m_resourceManager;
 	
 	private HAPManagerTask m_taskManager;
 	
@@ -112,7 +112,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPDataTypeManager dataTypeManager,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPManagerCodeTable codeTableManager,
-			HAPResourceManager resourceMan,
+			HAPManagerResource resourceMan,
 			HAPManagerTask taskManager,
 			HAPManagerActivity activityManager,
 			HAPManagerProcess processManager,
@@ -135,7 +135,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPDataTypeManager dataTypeManager,
 				HAPDataTypeHelper dataTypeHelper,
 				HAPManagerCodeTable codeTableManager,
-				HAPResourceManager resourceMan,
+				HAPManagerResource resourceMan,
 				HAPManagerTask taskManager,
 				HAPManagerActivity activityManager,
 				HAPManagerProcess processManager,
@@ -336,7 +336,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerCodeTable getCodeTableManager() {   return this.m_codeTableManager;      }
 
 	@Override
-	public HAPResourceManager getResourceManager() {		return this.m_resourceManager;	}
+	public HAPManagerResource getResourceManager() {		return this.m_resourceManager;	}
 
 	@Override
 	public HAPManagerTask getTaskManager() {    return this.m_taskManager;    }

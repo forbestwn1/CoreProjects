@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -39,7 +39,7 @@ public class HAPExecutableWrapperTask<T extends HAPExecutableTask> extends HAPEx
 	}
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		this.buildResourceDependencyForExecutable(dependency, m_task, runtimeInfo, resourceManager);
 	}

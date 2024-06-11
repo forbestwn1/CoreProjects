@@ -15,7 +15,7 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -161,7 +161,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;     }
 	protected HAPManagerApplicationBrick getBrickManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
-	protected HAPResourceManager getResourceManager() {    return this.getRuntimeEnvironment().getResourceManager();     }
+	protected HAPManagerResource getResourceManager() {    return this.getRuntimeEnvironment().getResourceManager();     }
 	
 	abstract public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan);
 

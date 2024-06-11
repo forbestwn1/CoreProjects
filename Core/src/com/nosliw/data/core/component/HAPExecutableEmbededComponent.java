@@ -13,7 +13,7 @@ import com.nosliw.data.core.component.event.HAPExecutableHandlerEvent;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableGroupDataAssociationForComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -82,7 +82,7 @@ public class HAPExecutableEmbededComponent extends HAPExecutableImpEntityInfo{
 	
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		this.buildResourceDependencyForExecutable(dependency, m_inDataAssociations, runtimeInfo, resourceManager);
 		this.buildResourceDependencyForExecutable(dependency, m_outDataAssociations, runtimeInfo, resourceManager);

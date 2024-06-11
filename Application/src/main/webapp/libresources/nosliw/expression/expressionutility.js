@@ -465,8 +465,10 @@ var node_utility = function()
 			
 		executeOperationResource : function(resourceId, parmArray, resourcesTree){
 			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
-			var dataOperationFun = dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA];
-			var dataOperationInfo = dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_INFO][node_COMMONATRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
+			var resourceData = dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_RESOURCEDATA];
+			var dataOperationFun = resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATAJSVALUE_VALUE]; 
+			var dataOperationInfo = resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATAJSOPERATIONIMP_OPERATIONINFO];  
+//			dataOperationResource[node_COMMONATRIBUTECONSTANT.RESOURCE_INFO][node_COMMONATRIBUTECONSTANT.RESOURCEMANAGERJSOPERATION_INFO_OPERATIONINFO];
 			
 			//build operation context
 			var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);

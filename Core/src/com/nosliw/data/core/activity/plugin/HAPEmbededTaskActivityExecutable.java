@@ -16,7 +16,7 @@ import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.process1.HAPExecutableActivityNormal;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPEmbededTaskActivityExecutable extends HAPExecutableActivityNormal{
@@ -49,7 +49,7 @@ public class HAPEmbededTaskActivityExecutable extends HAPExecutableActivityNorma
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		dependency.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_PROCESS))));
 		this.buildResourceDependencyForExecutable(dependency, m_process, runtimeInfo, resourceManager);

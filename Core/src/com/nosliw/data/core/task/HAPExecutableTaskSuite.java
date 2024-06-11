@@ -15,7 +15,7 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
@@ -63,7 +63,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {		
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {		
 		//process resources
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		 for(HAPExecutableTask task : this.m_tasks.values()) {

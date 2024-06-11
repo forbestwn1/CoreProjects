@@ -1,33 +1,35 @@
-package com.nosliw.data.core.imp.runtime.js;
+package com.nosliw.data.core.imp.runtime.js.resource;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
+import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
+import com.nosliw.data.core.resource.HAPPluginResourceManager;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPResourceManagerDataAccess extends HAPResourceManagerImp{
+public abstract class HAPPluginResourceManagerWithDataAccess implements HAPPluginResourceManager{
 
 	private HAPDataAccessRuntimeJS m_dataAccess = null;
 
-	public HAPResourceManagerDataAccess(HAPDataAccessRuntimeJS dataAccess, HAPManagerResource rootResourceMan){
-		super(rootResourceMan);
+	public HAPPluginResourceManagerWithDataAccess(HAPDataAccessRuntimeJS dataAccess) {
 		this.m_dataAccess = dataAccess;
 	}
 	
-	@Override
 	protected List<HAPResourceDependency> getResourceDependency(HAPResourceId resourceId, HAPRuntimeInfo runtimeInfo){
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		HAPJSResourceDependency dependency = this.m_dataAccess.getJSResourceDependency((HAPResourceIdSimple)resourceId);
-		if(dependency!=null)  out = dependency.getDependency();
+		if(dependency!=null) {
+			out = dependency.getDependency();
+		}
 		return out;
 	}
 
 	protected HAPDataAccessRuntimeJS getDataAccess(){
 		return this.m_dataAccess;
 	}
+
 }

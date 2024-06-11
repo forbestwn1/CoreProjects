@@ -12,7 +12,7 @@ import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.ui.entity.uitag.HAPUITagAttributeDefinition;
 
@@ -91,7 +91,7 @@ public class HAPExecutableEntityComplexUITag extends HAPExecutableEntityComplexW
 	public void addVariableByName(String name, HAPIdElement variableId) {    this.getVariablesByName().put(name, variableId);     }
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		dependency.add(new HAPResourceDependency(new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, this.getTagId())));
 	}

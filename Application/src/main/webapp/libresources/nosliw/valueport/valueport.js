@@ -28,7 +28,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 			}
 		}
 		else{
-			if(loc_rawEntity.getValuePort!=undefined){
+			if(loc_rawEntity.getExternalValuePort!=undefined){
 				loc_valuePort = loc_rawEntity.getExternalValuePort(valuePortGroup, valuePortName);
 			}
 		}
@@ -47,7 +47,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 			}
 		}
 		else{
-			if(loc_rawEntity.getValuePort!=undefined){
+			if(loc_rawEntity.getInternalValuePort!=undefined){
 				loc_valuePort = loc_rawEntity.getInternalValuePort(valuePortGroup, valuePortName);
 			}
 		}

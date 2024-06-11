@@ -14,7 +14,7 @@ import com.nosliw.data.core.activity.HAPPluginResourceIdActivity;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.process1.HAPExecutableActivityBranch;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.script.expression1.HAPContextProcessScriptExpression;
@@ -57,7 +57,7 @@ public class HAPSwitchActivityExecutable extends HAPExecutableActivityBranch{
 
 	
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.add(new HAPResourceDependency(new HAPPluginResourceIdActivity(new HAPActivityPluginId(HAPConstantShared.ACTIVITY_TYPE_SWITCH))));
 		out.addAll(this.m_scriptExpression.getResourceDependency(runtimeInfo, resourceManager));

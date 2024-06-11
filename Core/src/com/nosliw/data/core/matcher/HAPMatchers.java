@@ -16,7 +16,7 @@ import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -70,7 +70,7 @@ public class HAPMatchers extends HAPExecutableImp{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		for(HAPResourceId resourceId : HAPMatcherUtility.getMatchersResourceId(this)) {
 			dependency.add(new HAPResourceDependency(resourceId));

@@ -6,12 +6,12 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
-	public static HAPIdValuePortInBundle normalizeExternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeExternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
@@ -53,7 +53,7 @@ public class HAPUtilityValuePort {
 		return brick.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}
 
-	public static HAPValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick brick = HAPUtilityBrick.getDescdentBrick(bundle.getBrickWrapper(), new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
 		return brick.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}

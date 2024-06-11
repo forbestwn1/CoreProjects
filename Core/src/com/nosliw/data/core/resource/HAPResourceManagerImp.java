@@ -8,9 +8,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceManagerImp implements HAPResourceManager1{
  
-	protected HAPResourceManager m_rootResourceMan;
+	protected HAPManagerResource m_rootResourceMan;
 	
-	public HAPResourceManagerImp(HAPResourceManager rootResourceMan) {
+	public HAPResourceManagerImp(HAPManagerResource rootResourceMan) {
 		this.m_rootResourceMan = rootResourceMan;
 	}
 	

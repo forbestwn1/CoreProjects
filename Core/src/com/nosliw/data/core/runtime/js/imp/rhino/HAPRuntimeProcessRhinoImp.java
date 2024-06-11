@@ -9,7 +9,7 @@ public class HAPRuntimeProcessRhinoImp {//implements HAPRuntimeProcess{
 	}
 	
 	@Override
-	public void executeProcess(HAPExecutableProcess processExe, HAPContextData input, HAPProcessResultHandler resultHandler, HAPResourceManager resourceManager) {
+	public void executeProcess(HAPExecutableProcess processExe, HAPContextData input, HAPProcessResultHandler resultHandler, HAPManagerResource resourceManager) {
 		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input, resourceManager);
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
@@ -22,7 +22,7 @@ public class HAPRuntimeProcessRhinoImp {//implements HAPRuntimeProcess{
 
 	@Override
 	public void executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> processExe,
-			HAPContextData parentContext, HAPProcessResultHandler resultHandler, HAPResourceManager resourceManager) {
+			HAPContextData parentContext, HAPProcessResultHandler resultHandler, HAPManagerResource resourceManager) {
 		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(processExe, parentContext, resourceManager);
 		HAPServiceData out = m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 		if(out.isSuccess()) {
@@ -35,13 +35,13 @@ public class HAPRuntimeProcessRhinoImp {//implements HAPRuntimeProcess{
 	}
 
 	@Override
-	public HAPServiceData executeProcess(HAPExecutableProcess process, HAPContextData input, HAPResourceManager resourceManager) {
+	public HAPServiceData executeProcess(HAPExecutableProcess process, HAPContextData input, HAPManagerResource resourceManager) {
 		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(process, input, resourceManager);
 		return this.m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 	}
 
 	@Override
-	public HAPServiceData executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContext, HAPResourceManager resourceManager) {
+	public HAPServiceData executeEmbededProcess(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContext, HAPManagerResource resourceManager) {
 		HAPRuntimeTaskExecuteProcessEmbededRhino task = new HAPRuntimeTaskExecuteProcessEmbededRhino(process, parentContext, resourceManager);
 		return this.m_runtimeEnvironment.getRuntime().executeTaskSync(task);
 	}

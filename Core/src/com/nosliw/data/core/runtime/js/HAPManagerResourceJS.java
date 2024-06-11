@@ -20,13 +20,13 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.resource.HAPWrapperResourceData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.system.HAPSystemUtility;
 
-public class HAPResourceManagerJS implements HAPResourceManager{
+public class HAPManagerResourceJS implements HAPManagerResource{
 
 	private Map<String, HAPPluginResourceManager> m_resourceManPlugins = new LinkedHashMap<String, HAPPluginResourceManager>();
 

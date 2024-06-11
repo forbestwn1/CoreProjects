@@ -17,7 +17,7 @@ import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpressi
 import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
 import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceManagerJSImp;
+import com.nosliw.data.core.imp.runtime.js.resource.HAPManagerResourceJSImp;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
@@ -64,7 +64,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(this, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPManagerCodeTable codeTableManager = new HAPManagerCodeTable();
-		HAPResourceManagerJSImp resourceMan = new HAPResourceManagerJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
+		HAPManagerResourceJSImp resourceMan = new HAPManagerResourceJSImp(runtimeJSModule.getRuntimeJSDataAccess(), runtimeJSModule.getDataTypeDataAccess());
 		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPManagerDynamicResource dynamicResourceManager = new HAPManagerDynamicResource();
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);

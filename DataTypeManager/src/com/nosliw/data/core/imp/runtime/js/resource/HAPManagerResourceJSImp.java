@@ -4,12 +4,12 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.resource.HAPIdResourceType;
-import com.nosliw.data.core.runtime.js.HAPResourceManagerJS;
+import com.nosliw.data.core.runtime.js.HAPManagerResourceJS;
 
-public class HAPResourceManagerJSImp extends HAPResourceManagerJS{
+public class HAPManagerResourceJSImp extends HAPManagerResourceJS{
 
-	public HAPResourceManagerJSImp(HAPDataAccessRuntimeJS runtimeJSDataAccess, HAPDataAccessDataType dataTypeDataAccess){
-//		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, new HAPResourceManagerJSOperation(runtimeJSDataAccess, dataTypeDataAccess, this));
+	public HAPManagerResourceJSImp(HAPDataAccessRuntimeJS runtimeJSDataAccess, HAPDataAccessDataType dataTypeDataAccess){
+		this.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, "1.0.0"), new HAPPluginResourceManagerJSOperation(runtimeJSDataAccess, dataTypeDataAccess));
 //		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, new HAPResourceManagerJSConverter(runtimeJSDataAccess, this));
 		
 		

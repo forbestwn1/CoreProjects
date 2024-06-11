@@ -17,7 +17,7 @@ import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -129,7 +129,7 @@ public class HAPExecutableScriptGroup extends HAPExecutableImp{
 	}
 	
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> deps = this.m_expressionExe.getResourceDependency(runtimeInfo, resourceManager);
 		dependency.addAll(deps);
 	}

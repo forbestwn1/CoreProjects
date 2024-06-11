@@ -9,13 +9,13 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 
 public abstract class HAPExecutableImp  extends HAPSerializableImp implements HAPExecutable{
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		this.buildResourceDependency(out, runtimeInfo, resourceManager);
 		return out;
@@ -32,9 +32,9 @@ public abstract class HAPExecutableImp  extends HAPSerializableImp implements HA
 
 	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {	}
 
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {}
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {}
 
-	protected void buildResourceDependencyForExecutable(List<HAPResourceDependency> dependency, HAPExecutable executable, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependencyForExecutable(List<HAPResourceDependency> dependency, HAPExecutable executable, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> resources = executable.getResourceDependency(runtimeInfo, resourceManager);
 		if(resources!=null)   dependency.addAll(resources);
 	}

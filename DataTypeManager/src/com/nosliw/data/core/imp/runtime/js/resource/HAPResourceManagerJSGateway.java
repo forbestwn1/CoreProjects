@@ -3,13 +3,13 @@ package com.nosliw.data.core.imp.runtime.js.resource;
 import com.nosliw.data.core.resource.HAPResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSGateway;
 
 public class HAPResourceManagerJSGateway extends HAPResourceManagerImp{
 
-	public HAPResourceManagerJSGateway(HAPResourceManager rootResourceMan) {
+	public HAPResourceManagerJSGateway(HAPManagerResource rootResourceMan) {
 		super(rootResourceMan);
 	}
 

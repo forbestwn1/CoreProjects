@@ -11,7 +11,7 @@ import com.nosliw.data.core.resource.HAPIdResourceType;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -51,7 +51,7 @@ public class HAPUtilityBrick {
 		return new HAPResultAttribute(attr);
 	}
 
-	public static HAPBrick getDescdentBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPBrick getDescdentBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick out = null;
 		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
 		if(brickResult.isInternalBrick()) {

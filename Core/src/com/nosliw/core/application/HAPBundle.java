@@ -17,7 +17,7 @@ import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -56,7 +56,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.m_exportResourceInfos.add(exportResourceInfo);
 	}
 	
-	public HAPResourceDataBrick getExportResourceData(String name, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public HAPResourceDataBrick getExportResourceData(String name, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		if(name==null) {
 			name = HAPConstantShared.NAME_DEFAULT;
 		}

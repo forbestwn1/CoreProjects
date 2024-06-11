@@ -19,7 +19,7 @@ import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -35,7 +35,7 @@ public class HAPUtilityExpressionResource {
 	 * @param expression
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableEntityExpressionDataGroup> expressions, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	static public List<HAPResourceInfo> discoverResourceRequirement(List<HAPExecutableEntityExpressionDataGroup> expressions, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		for(HAPExecutableEntityExpressionDataGroup expression : expressions){
 			resourceIds.addAll(discoverResources(expression, runtimeInfo, resourceMan));
@@ -43,7 +43,7 @@ public class HAPUtilityExpressionResource {
 		return resourceMan.discoverResources(new ArrayList<HAPResourceId>(resourceIds), runtimeInfo);
 	}
  
-	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableEntityExpressionDataGroup expressions, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager){
+	static public List<HAPResourceIdSimple> discoverResources(HAPExecutableEntityExpressionDataGroup expressions, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager){
 		Set<HAPResourceIdSimple> result = new LinkedHashSet<HAPResourceIdSimple>();
 		Map<String, HAPExecutableExpressionData1> items = expressions.getAllExpressionItems();
 		for(String name : items.keySet()) {
@@ -72,7 +72,7 @@ public class HAPUtilityExpressionResource {
 	 * @param dataOpInfo
 	 * @return the reason the return type is list is because resource has sequence: some resource may need to load before another resoruce
 	 */
-	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	static public List<HAPResourceInfo> discoverResourceRequirement(HAPDataTypeId dataTypeId, String operation, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPOperationId operationId = new HAPOperationId(dataTypeId, operation);
 		HAPResourceId resourceId = new HAPResourceIdOperation(operationId);
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
@@ -80,7 +80,7 @@ public class HAPUtilityExpressionResource {
 		return resourceMan.discoverResources(resourceIds, runtimeInfo);
 	}
 
-	static public List<HAPResourceInfo> discoverResourceRequirement(HAPMatchers matchers, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	static public List<HAPResourceInfo> discoverResourceRequirement(HAPMatchers matchers, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		List<HAPResourceId> resourceIds = new ArrayList<HAPResourceId>();
 		Set<HAPDataTypeConverter> converters = HAPMatcherUtility.getConverterResourceIdFromRelationship(matchers.discoverRelationships());
 		for(HAPDataTypeConverter converter : converters){

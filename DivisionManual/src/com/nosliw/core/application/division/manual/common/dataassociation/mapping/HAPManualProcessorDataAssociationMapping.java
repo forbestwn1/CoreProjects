@@ -45,7 +45,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
@@ -82,7 +82,7 @@ public class HAPManualProcessorDataAssociationMapping {
 		return out;
 	}	
 	
-	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, HAPPath baseBlockPath, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static HAPElementStructure processElementStructure(HAPElementStructure defStructureElement, HAPConfigureProcessorRelative relativeEleProcessConfigure, HAPPath baseBlockPath, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPElementStructure out = defStructureElement;
 		switch(defStructureElement.getType()) {
 		case HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING:
@@ -148,7 +148,7 @@ public class HAPManualProcessorDataAssociationMapping {
 		
 	}
 	
-	private static void normalizeValuePortId(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static void normalizeValuePortId(HAPManualItemValueMapping mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 		
 		final HAPPath in;
@@ -181,7 +181,7 @@ public class HAPManualProcessorDataAssociationMapping {
 		}, targetRef);
 	}
 	
-	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		rootRef.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(rootRef.getValuePortId(), ioDirection, blockPathFromRoot, currentBundle, resourceMan, runtimeInfo));
 	}
 	

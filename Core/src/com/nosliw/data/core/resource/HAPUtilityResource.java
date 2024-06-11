@@ -15,7 +15,7 @@ import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPUtilityResource {
 
-	public static HAPResource getResource(HAPResourceId resourceId, HAPResourceManager resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPResource getResource(HAPResourceId resourceId, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		return resourceMan.getResources(Lists.asList(resourceId, new HAPResourceId[0]), runtimeInfo).getLoadedResource(resourceId);
 	}
 	

@@ -10,7 +10,7 @@ public class HAPResourceIdOperation extends HAPResourceIdSimple{
 
 	private HAPOperationId m_operationId;
 	
-	public HAPResourceIdOperation(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION);      }
+	public HAPResourceIdOperation(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, "1.0.0");      }
 
 	public HAPResourceIdOperation(HAPResourceIdSimple resourceId){
 		this();

@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.HAPExecutableEmbededComponent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.uiresource.common.HAPInfoDecoration;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
@@ -60,7 +60,7 @@ public class HAPExecutableModuleUI extends HAPExecutableEmbededComponent{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		this.buildResourceDependencyForExecutable(dependency, m_page, runtimeInfo, resourceManager);
 	}

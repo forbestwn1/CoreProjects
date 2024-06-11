@@ -9,7 +9,7 @@ import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
@@ -19,9 +19,9 @@ import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPRuntimeTaskExecuteProcessEmbededRhino extends HAPRuntimeTaskExecuteProcessEmbeded{
-	private HAPResourceManager m_resourceManager;
+	private HAPManagerResource m_resourceManager;
 	
-	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData, HAPResourceManager resourceManager) {
+	public HAPRuntimeTaskExecuteProcessEmbededRhino(HAPExecutableWrapperTask<HAPExecutableProcess> process, HAPContextData parentContextData, HAPManagerResource resourceManager) {
 		super(process, parentContextData);
 		this.m_resourceManager = resourceManager;
 	}

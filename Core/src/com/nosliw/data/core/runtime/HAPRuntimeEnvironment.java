@@ -13,7 +13,7 @@ import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpressi
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.script.expression1.HAPManagerScript;
 import com.nosliw.data.core.story.HAPManagerStory;
@@ -47,7 +47,7 @@ public interface HAPRuntimeEnvironment {
 
 	HAPRuntimeProcess getProcessRuntime();
 
-	HAPResourceManager getResourceManager();
+	HAPManagerResource getResourceManager();
 	
 	HAPGatewayManager getGatewayManager();
 

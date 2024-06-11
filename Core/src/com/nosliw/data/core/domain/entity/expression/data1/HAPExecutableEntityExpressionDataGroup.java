@@ -15,7 +15,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.operand.HAPOperand;
 import com.nosliw.data.core.operand.HAPUtilityOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -72,7 +72,7 @@ public class HAPExecutableEntityExpressionDataGroup extends HAPExecutableEntityE
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
 		for(HAPExecutableExpressionData1 expression : this.getAllExpressionItems()) {
 			dependency.addAll(expression.getResourceDependency(runtimeInfo, resourceManager));

@@ -21,7 +21,7 @@ import com.nosliw.data.core.dataassociation.HAPExecutableTask;
 import com.nosliw.data.core.dataassociation.HAPParserDataAssociation;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextScript;
@@ -142,7 +142,7 @@ public class HAPExecutableProcess extends HAPExecutableImp implements HAPExecuta
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {		
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {		
 		//process resources
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		 for(HAPExecutableActivity activity : this.getActivities().values()) {

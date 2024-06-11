@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.component.command.HAPExecutableCommand;
 import com.nosliw.data.core.component.event.HAPExecutableEvent;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.service.use.HAPExecutableServiceUse;
@@ -121,7 +121,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		dependency.addAll(this.m_taskSuite.getResourceDependency(runtimeInfo, resourceManager));
 		for(String serviceName : this.m_services.keySet()) 	dependency.addAll(this.m_services.get(serviceName).getResourceDependency(runtimeInfo, resourceManager));
 		for(String eventName : this.m_events.keySet()) 	dependency.addAll(this.m_events.get(eventName).getResourceDependency(runtimeInfo, resourceManager));

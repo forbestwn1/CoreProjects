@@ -13,33 +13,22 @@ var node_utility =
 {
 		buildResourceTree : function(tree, resource){
 			var resourceId = resource.resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_ID];
-			var typeId = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPEID];
-			var type = typeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_RESOURCETYPE];
-			var version = typeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_VERSION];
+			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE];
 			var id = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			var typeResources = tree[type];
 			if(typeResources==undefined){
 				typeResources = {};
 				tree[type] = typeResources;
 			}
-			var versionResource = typeResources[version];
-			if(versionResource==undefined){
-				versionResource = {};
-				typeResources[version] = versionResource;
-			}
-			versionResource[id] = resource; 
+			typeResources[id] = resource; 
 		},
 
 		getResourceFromTree : function(tree, resourceId){
-			var typeId = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPEID];
-			var type = typeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_RESOURCETYPE];
-			var version = typeId[node_COMMONATRIBUTECONSTANT.IDRESOURCETYPE_VERSION];
+			var type = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE];
 			var id = resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID];
 			var typeResources = tree[type];
 			if(typeResources==undefined)  return undefined;
-			var versionResources = typeResources[version];
-			if(versionResources==undefined)  return;
-			return versionResources[id];
+			return typeResources[id];
 		},
 		
 		getResourcesByTypeFromTree : function(tree, resourceType){
@@ -48,11 +37,11 @@ var node_utility =
 		},
 		
 		createOperationResourceId : function(dataTypeId, operation){
-			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION+";1.0.0", node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation));
+			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION, node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation));
 		},
 
 		createConverterResourceId : function(dataTypeId){
-			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER+";1.0.0", node_namingConvensionUtility.cascadeLevel1(dataTypeId));
+			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER, node_namingConvensionUtility.cascadeLevel1(dataTypeId));
 		},
 		
 		buildReourceCoreIdLiterate : function(id){
@@ -79,6 +68,6 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("utility1", node_utility); 
 
 })(packageObj);

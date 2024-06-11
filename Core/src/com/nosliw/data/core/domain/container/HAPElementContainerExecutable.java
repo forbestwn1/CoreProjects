@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.HAPEmbededExecutable;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutable;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
@@ -32,7 +32,7 @@ public class HAPElementContainerExecutable<T extends HAPEmbededExecutable> exten
 	}
 
 	@Override
-	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
 		out.addAll((this.getEmbededElementEntity()).getResourceDependency(runtimeInfo, resourceManager));
 		return out;

@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceManager;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -78,7 +78,7 @@ public class HAPExecutableServiceUse extends HAPExecutableImp{
 	}
 
 	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPResourceManager resourceManager) {
+	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		dependency.addAll(this.m_serviceUse.getResourceDependency(runtimeInfo, resourceManager));
 		if(this.m_providerMapping!=null)   dependency.addAll(this.m_providerMapping.getResourceDependency(runtimeInfo, resourceManager));
 	}
