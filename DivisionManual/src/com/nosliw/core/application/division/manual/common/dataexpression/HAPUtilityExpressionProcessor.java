@@ -51,7 +51,7 @@ public class HAPUtilityExpressionProcessor {
 					
 					HAPReferenceElement ref = new HAPReferenceElement();
 					ref.buildObject(variableOperand.getVariableName(), HAPSerializationFormat.JSON);
-					ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_IN, brick));
+					ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, brick));
 
 					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceInBrick(ref, null, brick);
 					String variableKey = varInfos.addVariable(idVariable);

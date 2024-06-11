@@ -52,7 +52,7 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 	@Override
 	public HAPContainerValuePorts getInternalValuePorts() {
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
-		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildExternalInteractiveExpressionValuePortGroup(this);
+		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildInternalInteractiveExpressionValuePortGroup(this);
 		out.addValuePortGroup(valuePortGroup, true);
 		return out;	
 	}

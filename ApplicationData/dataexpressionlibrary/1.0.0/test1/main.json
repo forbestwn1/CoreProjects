@@ -14,7 +14,7 @@
 			"brick" : {
 				"request" : [
 					{
-						"name" : "parm1",
+						"name" : "deparm1",
 						"dataInfo" : "test.string;1.0.0",
 						"defaultValue" : {
 							"dataTypeId": "test.string;1.0.0",
@@ -22,7 +22,7 @@
 						}
 					},
 					{
-						"name" : "parm2",
+						"name" : "deparm2",
 						"dataInfo" : "test.integer;1.0.0",
 						"defaultValue" : {
 							"dataTypeId": "test.integer;1.0.0",
@@ -30,7 +30,7 @@
 						}
 					},
 					{
-						"name" : "parm3",
+						"name" : "deparm3",
 						"dataInfo" : "test.integer;1.0.0",
 						"defaultValue" : {
 							"dataTypeId": "test.integer;1.0.0",
@@ -41,7 +41,7 @@
 				"result" : {
 					"criteria" : "test.string;1.0.0"
 				},
-				"expression" : "!(test.string)!.subString(base:?(parm1)?,from:?(parm2)?,to:?(parm3)?)"
+				"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
 			}
 			
 		}

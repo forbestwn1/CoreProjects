@@ -8,5 +8,6 @@ public interface HAPPluginBrick {
 	
 	HAPBrick newInstance();
 
+	//what kind of embeded resource to expose
 	List<HAPInfoExportResource> getExposeResourceInfo(HAPBrick brick);
 }

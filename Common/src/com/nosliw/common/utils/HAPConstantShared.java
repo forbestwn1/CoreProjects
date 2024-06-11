@@ -519,6 +519,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATION = "dataAssociation";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE = "dataAssociationInteractive";
 		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK = "dataAssociationForTask";
+		public static final String RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION = "dataAssociationForExpression";
 		public static final String RUNTIME_RESOURCE_TYPE_UI = "ui";
 		public static final String RUNTIME_RESOURCE_TYPE_PAGE = "page";
 		public static final String RUNTIME_RESOURCE_TYPE_MATCHER = "matcher";

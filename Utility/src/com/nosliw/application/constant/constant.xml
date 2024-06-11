@@ -616,6 +616,8 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATION" value="dataAssociation"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE" value="dataAssociationInteractive"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK" value="dataAssociationForTask"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION" value="dataAssociationForExpression"/>
+
 			<definition name="RUNTIME_RESOURCE_TYPE_UI" value="ui"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PAGE" value="page"/>
 

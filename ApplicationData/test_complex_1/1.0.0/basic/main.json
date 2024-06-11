@@ -4,6 +4,63 @@
 		"description": "include all basic feature"
 	},
 	"brick": [
+	
+		{
+			"info": {
+				"name" : "dataexpression-dataexpressionlibelement",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"isTask" : true,
+			"resourceId":"dataexpressionlibelement|1.0.0|@dataexpression1=dataexpressionlibrary|1.0.0|test1",  
+			"adapter":[
+				{
+					"name" : "dataExpressionAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "deparm1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				}
+			]
+		},
+		
+	
+	
 		{
 			"info": {
 				"name" : "service-serviceprovider",
@@ -77,7 +134,7 @@
 		{
 			"info": {
 				"name" : "variable_reference-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"resourceId":"test_complex_script|1.0.0|*variable",

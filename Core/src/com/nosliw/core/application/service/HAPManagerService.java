@@ -8,16 +8,13 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
-import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.data.core.data.HAPData;
@@ -65,21 +62,11 @@ public class HAPManagerService implements HAPPluginDivision{
 		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
 			HAPBundle bundle = new HAPBundle();
 			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
-			
-			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockServiceProfile.INTERFACE));
-			exposeInteractiveInterface.setName(HAPBlockServiceProfile.CHILD_INTERFACE);
-			bundle.addExportResourceInfo(exposeInteractiveInterface);
-			
 			return bundle;
 		}
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
 			HAPBundle bundle = new HAPBundle();
 			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
-			
-			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockServiceInterface.INTERFACE));
-			exposeInteractiveInterface.setName(HAPBlockServiceInterface.CHILD_INTERFACE);
-			bundle.addExportResourceInfo(exposeInteractiveInterface);
-			
 			return bundle;
 		}
 		return null;

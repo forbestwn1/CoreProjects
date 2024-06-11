@@ -46,6 +46,7 @@ var packageObj = library;
 	var node_createDataAssociationAdapterPlugin;
 	var node_createDataAssociationInteractiveAdapterPlugin;
 	var node_createDataAssociationForTaskAdapterPlugin;
+	var node_createDataAssociationForExpressionAdapterPlugin;
 	var node_createDataServiceEntityPlugin;
 	var node_createDataExpressionGroupPlugin;
 	var node_createDataExpressionSinglePlugin;
@@ -168,6 +169,7 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATION, "1.0.0", node_createDataAssociationAdapterPlugin());
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONINTERACTIVE, "1.0.0", node_createDataAssociationInteractiveAdapterPlugin());
 		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK, "1.0.0", node_createDataAssociationForTaskAdapterPlugin());
+		loc_out.registerAdapterPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION, "1.0.0", node_createDataAssociationForExpressionAdapterPlugin());
 	};
 
 
@@ -337,6 +339,7 @@ nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", f
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForTaskAdapterPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForExpressionAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataServiceEntityPlugin", function(){node_createDataServiceEntityPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionGroupPlugin", function(){node_createDataExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});
