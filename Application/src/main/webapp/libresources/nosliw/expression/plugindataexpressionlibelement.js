@@ -42,10 +42,19 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 	var loc_input = {};
 	var loc_result = {};
 	
+	var loc_envInterface = {};
+	
 	var loc_facade = node_createTaskInterface({
 		getExecuteRequest : function(taskInput, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATASINGLE_EXPRESSION);
-			return node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, loc_input, undefined, undefined, handlers, request)
+			var variablesContainer = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS);
+			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, undefined, {
+				success : function(request, result){
+					loc_result.result = result;
+				}
+			}));
+			return out;
 		},
 	});
 	
@@ -106,7 +115,10 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			return loc_getValuePort(valuePortGroup, valuePortName);
 		},
 		
-		
+		setEnvironmentInterface : function(envInterface){
+			loc_envInterface = envInterface;
+		},
+
 		
 		getEntityInitRequest1 : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

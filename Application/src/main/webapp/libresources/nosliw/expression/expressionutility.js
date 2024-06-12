@@ -32,6 +32,87 @@ var packageObj = library;
 var node_utility = function() 
 {
 	
+	
+	var loc_getExecuteDataExpressionRequest =function(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
+
+		//build variable value according to alias definition in expression item
+		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesContainer, valuePortEnv, {
+			success : function(request, allVariables){
+				//execute operand
+				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
+					success : function(requestInfo, operandResult){
+						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
+						if(outputMatchers!=undefined){
+							return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
+						}
+						else return operandResult;
+					}
+				}, null);
+			}
+		}));
+		return out;
+		
+	};
+
+	var loc_getVariablesValueByKeyRequest = function(varKeys, variablesInfo, valuePortEnv, handlers, request){
+		
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getVariablesValueRequest"), handlers, request);
+					
+		var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
+			success : function(request, results){
+				return results.getResults();
+			}
+		});
+		
+		_.each(varKeys, function(varKey, i){
+			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][varKey];
+			var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
+			
+			var eleInfo = node_createValuePortElementInfo(varId);
+			
+			var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
+			var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+			
+			calVarsRequest.addRequest(varKey, valuePort.getValueRequest(eleInfo, {
+				success : function(request, data){
+					var value = data;
+/*					
+					if(data!=undefined&&data.value!=undefined){
+					    value = data.value;
+					}
+*/					
+					return value;
+				}	
+			}));
+		});
+		
+		out.addRequest(calVarsRequest);
+		return out;		
+	};
+
+	
+	var loc_getExecuteDataExpressionRequest1 = function(expressionItem, variables, constants, references, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
+
+		//build variable value according to alias definition in expression item
+		var allVariables = variables;
+		
+		//execute operand
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
+			success : function(requestInfo, operandResult){
+				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
+				if(outputMatchers!=undefined){
+					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
+				}
+				else return operandResult;
+			}
+		}, null);
+		out.addRequest(executeOperandRequest);
+		return out;
+	};
+	
+	
 	//execute conterter
 	var loc_getExecuteConverterToRequest = function(data, targetDataTypeId, reverse, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteConverter", {"data":data, "targetDataTypeId":targetDataTypeId}), handlers, requestInfo);
@@ -77,26 +158,6 @@ var node_utility = function()
 		return out;
 	};	
 
-	var loc_getExecuteDataExpressionRequest = function(expressionItem, variables, constants, references, handlers, requestInfo){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
-
-		//build variable value according to alias definition in expression item
-		var allVariables = variables;
-		
-		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
-			success : function(requestInfo, operandResult){
-				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
-				if(outputMatchers!=undefined){
-					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
-				}
-				else return operandResult;
-			}
-		}, null);
-		out.addRequest(executeOperandRequest);
-		return out;
-	};
-	
 	//convert individual data according to matchers
 	var loc_getMatchDataTaskRequest = function(data, matchers, handlers, requestInfo){
 		if(data==undefined)  return;
@@ -375,6 +436,7 @@ var node_utility = function()
 		return out;
 	};
 
+
 	var loc_getVariablesValueRequest = function(varKeys, variablesInfo, valueContext, handlers, request){
 		var variables = {};
 		_.each(varKeys, function(key, i){
@@ -533,8 +595,12 @@ var node_utility = function()
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 		
-		getExecuteDataExpressionRequest : function(expressionItem, variables, constants, references, handlers, requestInfo){
+		getExecuteDataExpressionRequest1 : function(expressionItem, variables, constants, references, handlers, requestInfo){
 			return loc_getExecuteDataExpressionRequest(expressionItem, variables, constants, references, handlers, requestInfo);
+		},
+
+		getExecuteDataExpressionRequest : function(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo){
+			return loc_getExecuteDataExpressionRequest(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo);
 		},
 
 		getExecuteDataExpressionItemRequest : function(expressionItem, valueContext, references, expressionDef, handlers, request){

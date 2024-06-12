@@ -13,6 +13,7 @@ var node_getObjectType;
 var node_createValueStructureVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
+//locally reference to element in value port
 var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
 
 	if(node_getObjectType(valueStructureRuntimeId)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID)  return valueStructureRuntimeId;

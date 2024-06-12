@@ -35,6 +35,26 @@
 												"elementPath": "parm1"
 											}
 										}
+									},
+									{
+										"target" : {
+											"rootName" : "deparm2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer1"
+											}
+										}
+									},
+									{
+										"target" : {
+											"rootName" : "deparm3"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer2"
+											}
+										}
 									}
 								]
 							},
@@ -256,6 +276,16 @@
 								"definition":{
 									"criteria": "test.string;1.0.0"
 								}
+							},
+							"integer1": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"integer2": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
 							}
 						},
 						"initValue": {
@@ -270,6 +300,14 @@
 							"output1": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of output1"
+							},
+							"integer1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"integer": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
 							}
 						}
 					}

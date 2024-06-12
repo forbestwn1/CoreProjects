@@ -57,7 +57,7 @@ public class HAPUtilityExpressionProcessor {
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);
-				}
+					expressionExe.addVariableKey(variableKey);				}
 				return true;
 			}
 		});
