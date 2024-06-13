@@ -52,6 +52,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, undefined, {
 				success : function(request, result){
 					loc_result.result = result;
+					return result;
 				}
 			}));
 			return out;
@@ -64,6 +65,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			_.each(setValueInfos, function(setValueInfo, i){
 				target[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
 			});
+			var kkk = 555;
 		}));
 		return out;
 	};

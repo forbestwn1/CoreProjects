@@ -52,7 +52,6 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 		if(attribute.getIsTask()&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
 			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = new HAPManualBlockSimpleTaskWrapper();
 			String taskWrapperAttrName = attribute.getName();
-			
 			attribute.setName(HAPBlockTaskWrapper.TASK);
 			taskWrapperBrick.setAttribute(attribute);
 			this.setAttributeWithValueBrick(taskWrapperAttrName, taskWrapperBrick);

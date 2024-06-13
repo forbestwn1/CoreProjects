@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 
-public class HAPUtilityDefinitionBrickTraverse {
+public class HAPManualUtilityDefinitionBrickTraverse {
 
 	
 	public static void traverseEntityTreeLeaves(HAPManualWrapperBrick rootBrickWrapper, HAPManualProcessorBrickNodeDownwardWithPath processor, Object data) {

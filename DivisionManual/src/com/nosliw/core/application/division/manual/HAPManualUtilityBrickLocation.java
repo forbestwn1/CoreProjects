@@ -15,7 +15,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPUtilityBrickLocation {
+public class HAPManualUtilityBrickLocation {
 
 	private static Map<String, HAPSerializationFormat> m_extensionToFormat = new LinkedHashMap<String, HAPSerializationFormat>(); 
 	

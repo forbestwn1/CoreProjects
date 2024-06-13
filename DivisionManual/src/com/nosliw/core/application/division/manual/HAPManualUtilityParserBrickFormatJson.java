@@ -29,7 +29,7 @@ import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPUtilityParserBrickFormatJson {
+public class HAPManualUtilityParserBrickFormatJson {
 
 	public static HAPManualWrapperBrick parseBrickInfo(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		HAPManualWrapperBrick out = new HAPManualWrapperBrick();
@@ -169,7 +169,7 @@ public class HAPUtilityParserBrickFormatJson {
 	}
 
 	private static HAPManualBrick parseLocalValue(String basePath, HAPIdBrick entityId, HAPManualManagerBrick manualDivisionEntityMan) {
-		HAPManualInfoBrickLocation entityLocationInfo = HAPUtilityBrickLocation.getEntityLocationInfo(entityId);
+		HAPManualInfoBrickLocation entityLocationInfo = HAPManualUtilityBrickLocation.getEntityLocationInfo(entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 		return manualDivisionEntityMan.parseEntityDefinition(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat());
 	}

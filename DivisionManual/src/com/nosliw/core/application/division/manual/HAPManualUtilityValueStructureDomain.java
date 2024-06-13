@@ -47,7 +47,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorInherit;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPUtilityValueStructureDomain {
+public class HAPManualUtilityValueStructureDomain {
 
 	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
 		

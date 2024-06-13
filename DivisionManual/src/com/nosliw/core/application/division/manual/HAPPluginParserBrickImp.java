@@ -108,7 +108,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	
 	protected void parseBrickAttributeSelfJson(HAPManualBrick parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualAttribute attribute = HAPUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getEntityManager());
+			HAPManualAttribute attribute = HAPManualUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getEntityManager());
 			parentEntity.setAttribute(attribute);
 		}
 	}
@@ -146,7 +146,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	
 	protected void parseSimpleEntityAttributeSelfJson(HAPManualBrick parentEntityDefinition, JSONObject attrEntityObj, String attributeName, HAPIdBrickType attrEntityType, HAPIdBrickType adapterType, HAPManualContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualAttribute attributeEntity =  HAPUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, attrEntityType, adapterType, parseContext, manualDivisionEntityMan, entityManager);
+			HAPManualAttribute attributeEntity =  HAPManualUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, attrEntityType, adapterType, parseContext, manualDivisionEntityMan, entityManager);
 			parentEntityDefinition.setAttribute(attributeEntity);
 			
 			parentEntityDefinition.setAttribute(attributeName, attributeEntity, new HAPInfoBrickType(attrEntityType, false));
@@ -167,7 +167,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 		HAPIdEntityInDomain out = null;
 		if(isAttributeEnabledJson(attrEntityObj)) {
 			HAPManualBrick entity = parserContext.getCurrentDomain().getEntityInfoDefinition(entityId).getEntity();
-			HAPEmbededDefinition attributeEntity =  HAPUtilityParserBrickFormatJson.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
+			HAPEmbededDefinition attributeEntity =  HAPManualUtilityParserBrickFormatJson.parseEmbededComplexEntity(attrEntityObj, attrEntityType, adapterType, entityId, parentRelationConfigureDefault, parserContext, this.getRuntimeEnvironment().getDomainEntityDefinitionManager(), this.getRuntimeEnvironment().getResourceDefinitionManager());
 			entity.setAttribute(attributeName, attributeEntity, new HAPInfoBrickType(attrEntityType, true));
 			processReservedAttribute(entity, attributeName);
 			out = (HAPIdEntityInDomain)attributeEntity.getValue();

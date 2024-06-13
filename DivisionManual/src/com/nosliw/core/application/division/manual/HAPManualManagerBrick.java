@@ -78,7 +78,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	@Override
 	public HAPBundle getBundle(HAPIdBrick brickId) {
 		
-		HAPManualInfoBrickLocation entityLocationInfo = HAPUtilityBrickLocation.getEntityLocationInfo(brickId);
+		HAPManualInfoBrickLocation entityLocationInfo = HAPManualUtilityBrickLocation.getEntityLocationInfo(brickId);
 		
 		HAPManualContextParse parseContext = new HAPManualContextParse(entityLocationInfo.getBasePath().getPath(), brickId.getDivision());
 		
@@ -94,7 +94,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		
 		
 		//build path from root
-		HAPUtilityDefinitionBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualProcessorBrickNodeDownwardWithPath() {
+		HAPManualUtilityDefinitionBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualProcessorBrickNodeDownwardWithPath() {
 			@Override
 			public boolean processBrickNode(HAPManualWrapperBrick rootEntityInfo, HAPPath path, Object data) {
 				if(path!=null&&!path.isEmpty()) {
@@ -124,7 +124,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 		if(HAPManualUtilityBrick.isBrickComplex(brickId.getBrickTypeId(), getBrickManager())) {
 			//complex entity, build value context domain
-			HAPUtilityValueStructureDomain.buildValueStructureDomain(out.getBrickWrapper(), processContext, this.m_runtimeEnv);
+			HAPManualUtilityValueStructureDomain.buildValueStructureDomain(out.getBrickWrapper(), processContext, this.m_runtimeEnv);
 		}
 
 		//process entity
@@ -141,7 +141,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	}
 
 	private void normalizeDivisionInReferredResource(HAPManualWrapperBrick brickWrapper) {
-		HAPUtilityDefinitionBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualProcessorBrickNodeDownwardWithPath() {
+		HAPManualUtilityDefinitionBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualProcessorBrickNodeDownwardWithPath() {
 
 			@Override
 			public boolean processBrickNode(HAPManualWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
@@ -339,7 +339,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		HAPManualWrapperBrick out = null;
 		switch(format) {
 		case JSON:
-			out = HAPUtilityParserBrickFormatJson.parseBrickInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), entityTypeId, parseContext, this, this.getBrickManager());
+			out = HAPManualUtilityParserBrickFormatJson.parseBrickInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), entityTypeId, parseContext, this, this.getBrickManager());
 			break;
 		case HTML:
 			break;

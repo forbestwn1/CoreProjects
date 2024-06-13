@@ -9,7 +9,7 @@ import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
-import com.nosliw.core.application.division.manual.HAPUtilityParserBrickFormatJson;
+import com.nosliw.core.application.division.manual.HAPManualUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPPluginParserBrickImpSimple{
@@ -25,7 +25,7 @@ public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPPluginPa
 		JSONArray dataExpressionArray = (JSONArray)jsonValue;
 		for(int i=0; i<dataExpressionArray.length(); i++) {
 			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
-			HAPManualAttribute valueStructureAttr = HAPUtilityParserBrickFormatJson.parseAttribute(null, elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
+			HAPManualAttribute valueStructureAttr = HAPManualUtilityParserBrickFormatJson.parseAttribute(null, elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, null, parseContext, this.getManualDivisionEntityManager(), this.getEntityManager());
 			dataExpressionLibrary.addElement(valueStructureAttr);
 		}
 	}

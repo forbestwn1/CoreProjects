@@ -88,11 +88,11 @@ var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, req
 var loc_setValueToEndPointRequest = function(tunnels, values, baseEntityCore, handlers, request){
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValueToEndPointRequest", {}), handlers, request);
 	
-	var toEndPoint = tunnels[0][node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
-	var toValuePort = loc_getValuePort(toEndPoint, baseEntityCore);
+	var toValuePort = loc_getValuePort(tunnels[0][node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT], baseEntityCore);
 
 	var toValuesInfo = [];
 	_.each(tunnels, function(tunnel, i){
+		var toEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
 		toValuesInfo.push(
 			{
 				elementId : node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]),

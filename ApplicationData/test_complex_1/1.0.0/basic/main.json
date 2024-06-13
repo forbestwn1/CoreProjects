@@ -305,7 +305,7 @@
 								"dataTypeId": "test.integer;1.0.0",
 								"value": 5
 							},
-							"integer": {
+							"integer2": {
 								"dataTypeId": "test.integer;1.0.0",
 								"value": 7
 							}

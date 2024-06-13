@@ -61,11 +61,6 @@ var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
 
 		getFullPath : function(){	return this.getKey();	},
 		
-
-		valueStructureRuntimeId : valueStructureRuntimeId,
-
-		valueStructureVariableInfo : loc_valueStructureVariableInfo,
-
 		//key
 		key : loc_key,
 		
@@ -74,6 +69,9 @@ var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
 	loc_init(valueStructureRuntimeId, n, p);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID);
+	
+	loc_out.valueStructureRuntimeId = valueStructureRuntimeId;
+	loc_out.valueStructureVariableInfo = loc_valueStructureVariableInfo;
 	
 	return loc_out;
 	
