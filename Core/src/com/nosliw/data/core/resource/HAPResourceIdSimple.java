@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 /**
  * Resource Id to identify resource 
@@ -103,18 +102,23 @@ public class HAPResourceIdSimple extends HAPResourceId{
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
-		if(segs.length==2) {
-			this.setResourceTypeId(segs[0]);
-			buildCoreIdByLiterate(segs[1]);
-		}
-		else if(segs.length==1) {
-			if(this.getResourceType()!=null) {
-				buildCoreIdByLiterate(literateValue);
-			} else {
-				this.setResourceType(literateValue);
-			}
-		}
+		
+		HAPResourceId resourceId = HAPFactoryResourceId.newInstance(literateValue);
+		this.cloneFrom((HAPResourceIdSimple)resourceId);
+		
+		
+//		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
+//		if(segs.length==2) {
+//			this.setResourceTypeId(segs[0]);
+//			buildCoreIdByLiterate(segs[1]);
+//		}
+//		else if(segs.length==1) {
+//			if(this.getResourceType()!=null) {
+//				buildCoreIdByLiterate(literateValue);
+//			} else {
+//				this.setResourceType(literateValue);
+//			}
+//		}
 		return true;  
 	}
 

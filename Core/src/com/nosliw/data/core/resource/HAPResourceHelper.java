@@ -33,7 +33,7 @@ public class HAPResourceHelper {
 	public HAPResourceIdSimple buildResourceIdObject(JSONObject jsonObj){
 		HAPResourceIdSimple out = (HAPResourceIdSimple)HAPFactoryResourceId.newInstance(jsonObj);
 		try {
-			Class resourceIdClass = this.m_typeToResourceId.get(out.getResourceType());
+			Class resourceIdClass = this.m_typeToResourceId.get(out.getResourceTypeId().getResourceType());
 			out = (HAPResourceIdSimple)resourceIdClass.getConstructor(HAPResourceIdSimple.class).newInstance(out);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class HAPResourceHelper {
 	public HAPResourceIdSimple buildResourceIdObject(String literate){
 		HAPResourceIdSimple out = (HAPResourceIdSimple)HAPFactoryResourceId.newInstance(literate);
 		try {
-			Class resourceIdClass = this.m_typeToResourceId.get(out.getResourceType());
+			Class resourceIdClass = this.m_typeToResourceId.get(out.getResourceTypeId().getResourceType());
 			out = (HAPResourceIdSimple)resourceIdClass.getConstructor(HAPResourceIdSimple.class).newInstance(out);
 		} catch (Exception e) {
 			e.printStackTrace();

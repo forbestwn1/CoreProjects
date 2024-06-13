@@ -27,6 +27,7 @@ public class HAPDataAccessRuntimeJS extends HAPDataAccess{
 	
 	public HAPJSResourceDependency getJSResourceDependency(HAPResourceIdSimple resourceId){
 		String resourceIdStr = resourceId.toStringValue(HAPSerializationFormat.LITERATE);
+		
 		return (HAPJSResourceDependency)this.queryEntityFromDB(
 				HAPJSResourceDependency._VALUEINFO_NAME, 
 				HAPJSResourceDependency.RESOURCEID+"=?",

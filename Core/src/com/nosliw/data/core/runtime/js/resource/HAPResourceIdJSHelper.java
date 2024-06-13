@@ -9,7 +9,7 @@ public class HAPResourceIdJSHelper extends HAPResourceIdSimple{
 
 	private HAPJSHelperId m_helperId; 
 	
-	public HAPResourceIdJSHelper(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER);      }
+	public HAPResourceIdJSHelper(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER, "1.0.0");      }
 
 	public HAPResourceIdJSHelper(HAPResourceIdSimple resourceId){
 		this();

@@ -174,11 +174,15 @@ public class HAPJSImporter {
 		NativeObject operationRequiresObjJS = (NativeObject)operationObjJS.get("requires");
 		Set<HAPResourceDependency> operationResources = new HashSet<HAPResourceDependency>();
 		//add data type requires first
-		for(HAPResourceDependency dataTypeResourceId : dataTypeResources)	this.addDependentResourceIdToSet(dataTypeResourceId.cloneResourceDependency(), operationResources);
+		for(HAPResourceDependency dataTypeResourceId : dataTypeResources) {
+			this.addDependentResourceIdToSet(dataTypeResourceId.cloneResourceDependency(), operationResources);
+		}
 
     	//get resource from script
     	List<HAPResourceDependency> discoverResources = discoverResources(script);
-    	for(HAPResourceDependency discoverResource : discoverResources)  this.addDependentResourceIdToSet(discoverResource, dataTypeResources);
+    	for(HAPResourceDependency discoverResource : discoverResources) {
+			this.addDependentResourceIdToSet(discoverResource, dataTypeResources);
+		}
 		
     	for(Object requiredTypeObjJS : operationRequiresObjJS.keySet()){
     		String requiredResourceType = (String)requiredTypeObjJS;
@@ -226,7 +230,7 @@ public class HAPJSImporter {
 				break;
 			}
 			else{
-				if(resourceId.getId().getResourceType().equals(resourceIdEle.getId().getResourceType())){
+				if(resourceId.getId().getResourceTypeId().equals(resourceIdEle.getId().getResourceTypeId())){
 					//if found alias under same type, remove it
 					for(String aliasEle : alias){
 						resourceIdEle.removeAlias(aliasEle);
@@ -234,7 +238,9 @@ public class HAPJSImporter {
 				}
 			}
 		}
-		if(!added)  resourceIdSet.add(resourceId);
+		if(!added) {
+			resourceIdSet.add(resourceId);
+		}
 	}
 	
 	private HAPResourceDependency processDependentResource(String type, Object resourceObjJS, String alais){
@@ -353,8 +359,11 @@ public class HAPJSImporter {
 	//For instance, resource type "jshelper", we use "helper" as title  
 	private String getResourceTypeByResourceTitle(String title){
 		String out = titleToResourceType.get(title);
-		if(out!=null)   return out;
-		else return title;
+		if(out!=null) {
+			return out;
+		} else {
+			return title;
+		}
 	}
 	
 	public static void main(String[] args){

@@ -9,7 +9,7 @@ public class HAPResourceIdJSGateway extends HAPResourceIdSimple{
 
 	private HAPJSGatewayId m_gatewayId; 
 	
-	public HAPResourceIdJSGateway(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY);     }
+	public HAPResourceIdJSGateway(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY, "1.0.0");     }
 
 	public HAPResourceIdJSGateway(HAPResourceIdSimple resourceId){
 		this();

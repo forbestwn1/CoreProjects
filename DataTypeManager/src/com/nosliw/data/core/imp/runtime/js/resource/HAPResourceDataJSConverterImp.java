@@ -1,7 +1,14 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSConverter;
 
 public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSConverter{
@@ -22,4 +29,10 @@ public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithI
 	@Override
 	public String getValue(){  return this.getAtomicAncestorValueString(VALUE);  }
 	public void setValue(String value){  this.updateAtomicChildStrValue(VALUE, value);  }
+
+	@Override
+	public HAPResourceDataOrWrapper getDescendant(HAPPath path) {  throw new RuntimeException();  }
+
+	@Override
+	public List<HAPResourceDependency> getResourceDependency(HAPRuntimeInfo runtimeInfo) {   return new ArrayList<HAPResourceDependency>();  }
 }

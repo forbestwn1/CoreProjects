@@ -10,14 +10,14 @@ public class HAPManagerResourceJSImp extends HAPManagerResourceJS{
 
 	public HAPManagerResourceJSImp(HAPDataAccessRuntimeJS runtimeJSDataAccess, HAPDataAccessDataType dataTypeDataAccess){
 		this.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, "1.0.0"), new HAPPluginResourceManagerJSOperation(runtimeJSDataAccess, dataTypeDataAccess));
-//		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, new HAPResourceManagerJSConverter(runtimeJSDataAccess, this));
+		this.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, "1.0.0"), new HAPPluginResourceManagerJSConverter(runtimeJSDataAccess));
 		
 		
 //		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, new HAPResourceManagerJSLibrary(this));
 		this.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, "1.0.0"), new HAPPluginResourceManagerJSLibrary());
 		
 		
-//		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER, new HAPResourceManagerJSHelper(runtimeJSDataAccess, this));
+		this.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER, "1.0.0"), new HAPPluginResourceManagerJSHelper(runtimeJSDataAccess));
 //		this.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY, new HAPResourceManagerJSGateway(this));
 	}
 	

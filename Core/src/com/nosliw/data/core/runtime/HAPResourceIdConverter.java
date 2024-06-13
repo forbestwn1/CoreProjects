@@ -10,7 +10,7 @@ public class HAPResourceIdConverter extends HAPResourceIdSimple{
 
 	private HAPDataTypeConverter m_dataTypeConverter;
 	
-	public HAPResourceIdConverter(){   super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER);     }
+	public HAPResourceIdConverter(){   super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, "1.0.0");     }
 
 	public HAPResourceIdConverter(HAPResourceIdSimple resourceId){
 		this();
