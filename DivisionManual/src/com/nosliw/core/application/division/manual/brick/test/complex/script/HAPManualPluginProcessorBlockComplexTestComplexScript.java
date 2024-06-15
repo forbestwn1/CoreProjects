@@ -41,7 +41,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		
 		Map<String, Object> parms = definitionBlock.getParms();
 
-		executableBlock.setScriptName(definitionBlock.getScriptName());
+		executableBlock.setScript(definitionBlock.getScript());
 		
 		executableBlock.setParms(parms);
 	

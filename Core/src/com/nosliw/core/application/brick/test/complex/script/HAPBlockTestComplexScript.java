@@ -5,14 +5,14 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
@@ -21,9 +21,6 @@ public class HAPBlockTestComplexScript extends HAPBrickBlockComplex{
 	@HAPAttribute
 	public static String SCRIPT = "script";
 	
-	@HAPAttribute
-	public static String SCRIPTNAME = "scriptName";
-
 	@HAPAttribute
 	public static String PARM = "parm";
 
@@ -43,10 +40,8 @@ public class HAPBlockTestComplexScript extends HAPBrickBlockComplex{
 	public HAPBlockTestComplexScript() {
 	}
 	
-	public void setScript(String script) {		this.setAttributeValueObject(SCRIPT, new HAPJsonTypeScript(script));	}
-
-	public void setScriptName(String scriptName) {   this.setAttributeValueWithValue(SCRIPTNAME, scriptName);  }
-	public String getScriptName() {		return (String)this.getAttributeValueOfValue(SCRIPTNAME);	}
+	public void setScript(HAPResourceId scriptResourceId) {   this.setAttributeValueWithValue(SCRIPT, scriptResourceId);  }
+	public HAPResourceId getScrip() {		return (HAPResourceId)this.getAttributeValueOfValue(SCRIPT);	}
 
 	public void setParms(Map<String, Object> parms) {	this.setAttributeValueWithValue(PARM, parms);	}
 

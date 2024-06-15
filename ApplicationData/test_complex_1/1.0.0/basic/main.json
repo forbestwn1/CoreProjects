@@ -190,14 +190,14 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
-				"scriptName": "complexscript_test_value",
+				"script": "complexscript_test_value",
 				"parm" : {
-					"variable1" : ["parent_public"],
-					"variable" : ["child_public", "parent_protected", "parent_private", "parent_internal"]
+					"variable1" : ["output1", "child_public", "parent_protected", "parent_private", "parent_internal"],
+					"variable" : ["child_public"]
 				},
 				"valueContext" : {
 					"brick": [

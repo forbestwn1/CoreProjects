@@ -29,7 +29,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 	var componentResource;
 	if(componentInfo.resourceId != undefined){
 		//resource id
-		componentResourceId = new node_ResourceId(componentInfo.type, componentInfo.resourceId);
+		componentResourceId = new node_ResourceId(componentInfo.resourceId, componentInfo.type);
 		resourceIds.push(componentResourceId);
 	}
 	else{
@@ -54,7 +54,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 
 			if(decorationInfo.resource==undefined){
 				//if no resource in decorationInfo, it means it need to be loaded resource
-				var resourceId = new node_ResourceId(decorationDef.type, decorationInfo.id);
+				var resourceId = new node_ResourceId(decorationInfo.id, decorationDef.type);
 				resourceIds.push(resourceId);
 			}
 		});
@@ -67,7 +67,7 @@ var node_loadComponentResourceRequest = function(componentInfo, decorationDef, h
 			_.each(decorationInfos, function(decorationInfo, i){
 				//build resource in decoration info
 				if(decorationInfo.resource==undefined){
-					decorationInfo.resource = node_resourceUtility.getResourceFromTree(resourceTree, new node_ResourceId(decorationInfo.type, decorationInfo.id)).resourceData;
+					decorationInfo.resource = node_resourceUtility.getResourceFromTree(resourceTree, new node_ResourceId(decorationInfo.id, decorationInfo.type)).resourceData;
 				}
 			});
 			

@@ -53,7 +53,7 @@ $(document).on("nosliwActive", function(){
 
 	var out = node_createServiceRequestInfoSequence(undefined);
 	
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(resourceType, resourceId), configure==""?undefined:configure, runtimeContext, undefined, {
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(resourceId, resourceType), configure==""?undefined:configure, runtimeContext, undefined, {
 		success : function(request, application){
 			var event = new CustomEvent("nosliwApplicationActive", {
 				bubbles: true,

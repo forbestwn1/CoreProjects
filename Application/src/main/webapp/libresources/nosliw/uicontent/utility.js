@@ -129,7 +129,7 @@ var node_utility = function(){
 		},
 		
 		createTagResourceId : function(name){
-			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, name);
+			return new node_ResourceId(name, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG);
 		},
 		
 		callScriptFunction : function(funName, args){

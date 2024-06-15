@@ -95,7 +95,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public void setExtraData(Object data) {   this.m_extraData = data;    }
 
 	
-	public Set<HAPResourceIdSimple> getComplexResourceDependency(){
+	public Set<HAPResourceIdSimple> getResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();
 //		for(HAPInfoResourceIdNormalize normalizedResourceId : this.m_externalComplexEntityDpendency) {
 //			out.add(normalizedResourceId.getRootResourceIdSimple());

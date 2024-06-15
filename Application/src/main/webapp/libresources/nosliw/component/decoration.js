@@ -53,7 +53,7 @@ var node_createDecoration = function(decorationInfo){
 
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.type, loc_decorationInfo.id), loc_decorationInfo.configure);
+			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.id, loc_decorationInfo.type), loc_decorationInfo.configure);
 			out.addRequest(loc_runtimeObject.getPreInitRequest());
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_applyEnvInterface = true;

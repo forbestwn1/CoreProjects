@@ -7,18 +7,25 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
+import com.nosliw.data.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.data.core.resource.HAPIdResourceType;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityBrick {
 
+	public static HAPBundle getBrickBundle(HAPResourceIdSimple resourceId, HAPManagerApplicationBrick brickMan) {
+		HAPBundle bundle = brickMan.getBrickBundle(fromResourceId2BrickId(resourceId));
+		HAPUtilityExport.exportBundle(resourceId, bundle);
+		return bundle;
+	}
+
 	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
-		HAPBundle bundle = brickMan.getBrickBundle(normalizedResourceId.getRootResourceId());
+		HAPBundle bundle = getBrickBundle(normalizedResourceId.getRootResourceId(), brickMan);
 		return getDescdentBrickLocal(bundle.getBrickWrapper(), normalizedResourceId.getPath());
 	}
 	
@@ -217,6 +224,6 @@ public class HAPUtilityBrick {
 	}
 	
 	public static HAPIdResourceType getResourceTypeIdFromBrickTypeId(HAPIdBrickType brickTypeId) {
-		return new HAPIdResourceType(brickTypeId.getBrickType(), brickTypeId.getVersion());
+		return HAPFactoryResourceTypeId.newInstance(brickTypeId.getBrickType(), brickTypeId.getVersion());
 	}
 }

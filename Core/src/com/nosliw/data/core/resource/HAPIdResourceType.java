@@ -26,12 +26,12 @@ public class HAPIdResourceType extends HAPSerializableImp{
 
 	public HAPIdResourceType() {}
 	
-	public HAPIdResourceType(String type, String version) {
+	protected HAPIdResourceType(String type, String version) {
 		this.m_resourceType = type;
 		this.m_version = version;
 	}
 
-	public HAPIdResourceType(String key) {
+	protected HAPIdResourceType(String key) {
 		String[] segs = HAPUtilityNamingConversion.parseLevel1(key);
 		this.m_resourceType = segs[0];
 		if(segs.length>1) {
@@ -48,6 +48,7 @@ public class HAPIdResourceType extends HAPSerializableImp{
 		}
 		return this.m_version;
 	}
+	public void setVersion(String version) {    this.m_version = version;      }
 	
 	public String getKey() {
 		return HAPUtilityNamingConversion.cascadeLevel1(this.getResourceType(), this.getVersion());

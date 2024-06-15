@@ -155,7 +155,7 @@ var loc_loadApplication = function(){
 
 	var out = node_createServiceRequestInfoSequence(undefined);
 	
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(loc_resourceType, loc_resourceId), loc_configure, {}, undefined, {
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId(loc_resourceId, loc_resourceType), loc_configure, {}, undefined, {
 		success : function(request, application){
 			updateApplication(application);
 			return application;

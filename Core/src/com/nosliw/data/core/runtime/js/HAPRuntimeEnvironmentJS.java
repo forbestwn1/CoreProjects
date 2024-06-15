@@ -26,9 +26,9 @@ import com.nosliw.data.core.err.HAPGatewayErrorLogger;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.process1.resource.HAPPluginResourceDefinitionProcess;
-import com.nosliw.data.core.resource.HAPIdResourceType;
-import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.data.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
@@ -205,7 +205,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrick.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEPROFILE_100), new HAPPluginResourceManagerImpBrick(this));
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrick.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEINTERFACE_100), new HAPPluginResourceManagerImpBrick(this));
 
-		this.m_resourceManager.registerResourceManagerPlugin(new HAPIdResourceType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT), new HAPPluginResourceManagerScript());
+		
+		this.m_resourceManager.registerResourceManagerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT), new HAPPluginResourceManagerScript());
 
 		
 /*		

@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
@@ -35,7 +34,7 @@ public class HAPFactoryResourceId {
 	public static HAPResourceId newInstance(String resourceType, String version, Object obj) {
 		HAPResourceId out = null;
 		if(obj instanceof String) {
-			out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, version, (String)obj, false);
+			out = buildResourceIdByLiterate(HAPFactoryResourceTypeId.newInstance(resourceType, version), (String)obj, false);
 		} else if(obj instanceof JSONObject) {
 			out = newInstanceByJSONObect(resourceType, version, (JSONObject)obj);
 		}
@@ -45,10 +44,15 @@ public class HAPFactoryResourceId {
 	private static HAPResourceId newInstanceByJSONObect(String resourceType, String version, JSONObject jsonObj) {
 		Object coreIdObj = jsonObj;
 		
-		Object typeObj = jsonObj.opt(HAPResourceId.RESOURCETYPE);
 		String structure = (String)jsonObj.opt(HAPResourceId.STRUCUTRE);
+		
+		Object typeObj = jsonObj.opt(HAPResourceId.RESOURCETYPEID);
+		HAPIdResourceType resourceTypeId = null;
 		if(typeObj!=null) {
-			resourceType = (String)typeObj;
+			resourceTypeId = HAPFactoryResourceTypeId.newInstance(typeObj, HAPFactoryResourceTypeId.newInstance(resourceType, version));
+		}
+		else {
+			resourceTypeId = HAPFactoryResourceTypeId.newInstance(resourceType, version);
 		}
 		
 		if(structure!=null || typeObj!=null) {
@@ -58,20 +62,16 @@ public class HAPFactoryResourceId {
 		HAPResourceId out = null;
 		if(coreIdObj instanceof String) {
 			if(structure!=null) {
-				out = HAPUtilityResourceId.newInstanceByType(resourceType, version, structure);
+				out = newInstanceByType(resourceTypeId, structure);
 				out.buildCoreIdByLiterate((String)coreIdObj);
 			}
 			else {
-				out = HAPUtilityResourceId.buildResourceIdByLiterate(resourceType, version, (String)coreIdObj, false);
-				
-//				String[] segs = HAPUtilityResourceId.parseResourceCoreIdLiterate((String)coreIdObj);
-//				out = HAPUtilityResourceId.newInstanceByType(resourceType, segs[0]);
-//				out.buildCoreIdByLiterate(segs[1]);
+				out = buildResourceIdByLiterate(resourceTypeId, (String)coreIdObj, false);
 			}
 		}
 		else if(coreIdObj instanceof JSONObject) {
 			JSONObject coreIdJson = (JSONObject)coreIdObj;
-			out = HAPUtilityResourceId.newInstanceByType(resourceType, version, structure);
+			out = newInstanceByType(resourceTypeId, structure);
 			out.buildCoreIdByJSON(coreIdJson);
 		}
 		return out;
@@ -90,10 +90,16 @@ public class HAPFactoryResourceId {
 			String idLiterate = null;
 
 			int index = literate.indexOf(seperator);
+			if(index==-1) {
+				return null;
+			}
 			resourceType = literate.substring(0, index);
 			literate = literate.substring(index+seperator.length());
 			
 			index = literate.indexOf(seperator);
+			if(index==-1) {
+				return null;
+			}
 			version = literate.substring(0, index);
 			idLiterate = literate.substring(index+seperator.length());
 
@@ -104,24 +110,12 @@ public class HAPFactoryResourceId {
 			HAPIdResourceType resourceTypeId = null;
 			Object resourceTypeIdObj = jsonObj.opt(HAPResourceId.RESOURCETYPEID);
 			if(resourceTypeIdObj==null) {
-				resourceTypeId = parseResourceTypeId(jsonObj);
+				resourceTypeId = HAPFactoryResourceTypeId.newInstance(jsonObj);
 			} else {
-				resourceTypeId = parseResourceTypeId(resourceTypeIdObj);
+				resourceTypeId = HAPFactoryResourceTypeId.newInstance(resourceTypeIdObj);
 			}
 			
 			out = newInstance(resourceTypeId.getResourceType(), resourceTypeId.getVersion(), jsonObj.get(HAPResourceId.ID));
-		}
-		return out;
-	}
-	
-	public static HAPIdResourceType parseResourceTypeId(Object obj) {
-		HAPIdResourceType out = null;
-		if(obj instanceof String) {
-			out = new HAPIdResourceType((String)obj);
-		}
-		else if(obj instanceof JSONObject) {
-			out = new HAPIdResourceType();
-			out.buildObject(obj, HAPSerializationFormat.JSON);
 		}
 		return out;
 	}
@@ -143,16 +137,67 @@ public class HAPFactoryResourceId {
 		}
 		return resourceIds;
 	}
-
-
-//	public static HAPResourceId newInstance(String type, Object id) {    
-//		HAPResourceIdSimple out = new HAPResourceIdSimple();
-//		if(id instanceof String)	out.init(type, (String)id, null);
-//		else if(id instanceof JSONObject) {
-//			out.m_type = type;
-//			out.buildObjectByJson(id);
-//		}
-//		return out;
-//	}
 	
+	private static HAPResourceId newInstanceByType(HAPIdResourceType resourceTypeId, String structure) {
+		HAPResourceId out = null;
+		if(structure==null) {
+			structure = getDefaultResourceStructure();
+		}
+		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
+			out = new HAPResourceIdSimple(resourceTypeId.getResourceType(), resourceTypeId.getVersion());
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
+			out = new HAPResourceIdEmbeded(resourceTypeId.getResourceType(), resourceTypeId.getVersion());
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
+			out = new HAPResourceIdDynamic(resourceTypeId.getResourceType());
+		}
+		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
+			out = new HAPResourceIdLocal(resourceTypeId.getResourceType());
+		}
+		return out;
+	}
+	
+	private static String getDefaultResourceStructure() {    return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;     }
+
+	public static HAPResourceId buildResourceIdByLiterate(HAPIdResourceType resourceTypeId, String literate, boolean strict) {
+		String structure = null;
+		String coreIdLiterate = literate;
+		
+		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
+			//embeded resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_EMBEDED;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED.length());
+		}
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL)){
+			//local resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_LOCAL;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL.length());
+		}
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC)){
+			//local resource id
+			structure = HAPConstantShared.RESOURCEID_TYPE_DYNAMIC;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC.length());
+		}
+		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE)){
+			//simple
+			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE.length());
+		}
+		else if(!strict) {
+			//if no sign, then by default simple
+			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
+			coreIdLiterate = literate;
+		}
+
+		if(structure==null) {
+			return null;
+		}
+		
+		HAPResourceId out = newInstanceByType(resourceTypeId, structure);
+		out.buildCoreIdByLiterate(coreIdLiterate);
+		return out;
+	}
+	
+
 }

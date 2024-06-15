@@ -7,10 +7,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
-import com.nosliw.common.exception.HAPErrorUtility;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.component.HAPPathLocationBase;
@@ -63,10 +59,6 @@ public class HAPUtilityResourceId {
 		return out.toString();
 	}
 	
-	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String version, String literate) {
-		return buildResourceIdByLiterate(resourceType, version, literate, false);
-	}
-	
 	public static boolean isResourceIdLiterate(String literate) {
 		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
 			return true;
@@ -78,65 +70,6 @@ public class HAPUtilityResourceId {
 			return true;
 		}
 		return false;
-	}
-	
-	public static HAPResourceId buildResourceIdByLiterate(String resourceType, String version, String literate, boolean strict) {
-		String structure = null;
-		String coreIdLiterate = literate;
-		
-		if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED)) {
-			//embeded resource id
-			structure = HAPConstantShared.RESOURCEID_TYPE_EMBEDED;
-			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_EMBEDED.length());
-		}
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL)){
-			//local resource id
-			structure = HAPConstantShared.RESOURCEID_TYPE_LOCAL;
-			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_LOCAL.length());
-		}
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC)){
-			//local resource id
-			structure = HAPConstantShared.RESOURCEID_TYPE_DYNAMIC;
-			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_DYNAMIC.length());
-		}
-		else if(literate.startsWith(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE)){
-			//simple
-			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
-			coreIdLiterate = literate.substring(HAPConstantShared.RESOURCEID_LITERATE_STARTER_SIMPLE.length());
-		}
-		else if(!strict) {
-			//if no sign, then by default simple
-			structure = HAPConstantShared.RESOURCEID_TYPE_SIMPLE;
-			coreIdLiterate = literate;
-		}
-
-		if(structure==null) {
-			return null;
-		}
-		
-		HAPResourceId out = newInstanceByType(resourceType, version, structure);
-		out.buildCoreIdByLiterate(coreIdLiterate);
-		return out;
-	}
-	
-	public static HAPResourceId newInstanceByType(String resourceType, String version, String structure) {
-		HAPResourceId out = null;
-		if(structure==null) {
-			structure = getDefaultResourceStructure();
-		}
-		if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE)) {
-			out = new HAPResourceIdSimple(resourceType, version);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_EMBEDED)) {
-			out = new HAPResourceIdEmbeded(resourceType, version);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_DYNAMIC)) {
-			out = new HAPResourceIdDynamic(resourceType);
-		}
-		else if(structure.equals(HAPConstantShared.RESOURCEID_TYPE_LOCAL)) {
-			out = new HAPResourceIdLocal(resourceType);
-		}
-		return out;
 	}
 	
 
@@ -152,30 +85,6 @@ public class HAPUtilityResourceId {
 			return getResourceLocationInfo(basePath, resourceId.getId());
 		}
 	}
-	
-	public static HAPInfoResourceLocation getResourceLocationInfo(String basePath, String resourceId) {
-		String newBasePath = basePath+"/"+resourceId;
-		File folder = new File(newBasePath);
-		Pair<File, HAPSerializationFormat> result;
-		if(folder.isDirectory()&&folder.exists()) {
-			//from folder
-			result = findResourceFile(folder, "main");
-		}
-		else {
-			//from file
-			newBasePath = basePath;
-			result = findResourceFile(new File(newBasePath), resourceId);
-		}
-		
-		if(result!=null) {
-			return new HAPInfoResourceLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
-		}
-		else {
-			HAPErrorUtility.invalid("Cannot find module resource " + resourceId);
-		}
-		return null;
-	}
-
 
 	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
 		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
@@ -186,21 +95,6 @@ public class HAPUtilityResourceId {
 	}
 
 
-	public static boolean isLocalReference(HAPResourceId resourceId) {
-		//kkk
-		if(resourceId.getResourceType()==null) {
-			return true;
-		}
-		return false;
-	}
-	
-	public static HAPResourceId buildLocalReferenceResourceId(String name) {
-		HAPResourceIdSimple out = new HAPResourceIdSimple();
-		out.setId(name);
-		return out;
-	}
-	
-	public static String getDefaultResourceStructure() {    return HAPConstantShared.RESOURCEID_TYPE_SIMPLE;     }
 	
 	private static final String FILEBASERESOURCE_STARTER = "file_";
 	public static HAPResourceIdSimple createFileBaseResourceId(String resourceType, String fileName) {

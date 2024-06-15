@@ -37,11 +37,11 @@ var node_utility =
 		},
 		
 		createOperationResourceId : function(dataTypeId, operation){
-			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION, node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation));
+			return new node_ResourceId(node_namingConvensionUtility.cascadeLevel1(dataTypeId, operation), node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_OPERATION);
 		},
 
 		createConverterResourceId : function(dataTypeId){
-			return new node_ResourceId(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER, node_namingConvensionUtility.cascadeLevel1(dataTypeId));
+			return new node_ResourceId(node_namingConvensionUtility.cascadeLevel1(dataTypeId), node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONVERTER);
 		},
 		
 		buildReourceCoreIdLiterate : function(id){

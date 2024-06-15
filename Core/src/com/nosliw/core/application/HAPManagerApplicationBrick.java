@@ -119,10 +119,6 @@ public class HAPManagerApplicationBrick {
 		return bundle;
 	}
 	
-	public HAPBundle getBrickBundle(HAPResourceIdSimple resourceId) {
-		return this.getBrickBundle(HAPUtilityBrick.parseBrickId(resourceId));
-	}
-
 	public HAPApplicationPackage getBrickPackage(HAPResourceId resourceId) {
 		HAPApplicationPackage out = new HAPApplicationPackage();
 
@@ -136,7 +132,7 @@ public class HAPManagerApplicationBrick {
 			out.addDependency(bundleId);
 		}
 		
-		HAPUtilityExport.exportEntityPackage(out, this, this.m_runtimeEnv.getRuntime().getRuntimeInfo());
+//		HAPUtilityExport.exportEntityPackage(out, this, this.m_runtimeEnv.getRuntime().getRuntimeInfo());
 		return out;
 	}
 	
@@ -145,7 +141,7 @@ public class HAPManagerApplicationBrick {
 			dependency.add(complexEntityResourceId);
 
 			HAPBundle bundle = this.getBrickBundle(HAPUtilityBrick.parseBrickId(complexEntityResourceId));
-			Set<HAPResourceIdSimple> bundleDependency = bundle.getComplexResourceDependency();
+			Set<HAPResourceIdSimple> bundleDependency = bundle.getResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {
 				buildDependencyGroup(id, dependency);
 			}

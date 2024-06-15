@@ -264,7 +264,7 @@ var node_createResourceService = function(resourceManager){
 			
 			//get resource request
 			var resourceIds = [];
-			for(var i in ids)		resourceIds.push(new node_ResourceId(resourceType, ids[i]));
+			for(var i in ids)		resourceIds.push(new node_ResourceId(ids[i], resourceType));
 			var loadResourceRequest = this.getGetResourcesRequest(resourceIds);
 			
 			out.setDependentService(new node_DependentServiceRequestInfo(loadResourceRequest, {

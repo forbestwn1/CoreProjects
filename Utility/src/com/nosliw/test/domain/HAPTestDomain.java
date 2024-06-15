@@ -1,7 +1,7 @@
 package com.nosliw.test.domain;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPApplicationPackage;
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
@@ -44,7 +44,10 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPApplicationPackage executablePackage = runtimeEnvironment.getBrickManager().getBrickPackage(resourceId);		
+		HAPBundle bundle = HAPUtilityBrick.getBrickBundle(resourceId, runtimeEnvironment.getBrickManager());
+		
+//		HAPApplicationPackage executablePackage = runtimeEnvironment.getBrickManager().getBrickPackage(resourceId);
+		
 //		System.out.println();
 //		System.out.println();
 //		System.out.println("*******************************************************************************");

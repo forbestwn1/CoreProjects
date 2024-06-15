@@ -34,7 +34,7 @@ public abstract class HAPResourceId extends HAPSerializableImp implements HAPRes
 	private HAPSupplementResourceId m_supplement;
 
 	public HAPResourceId(String type, String version) {
-		this.m_resourceTypeId = new HAPIdResourceType(type, version); 
+		this.m_resourceTypeId =HAPFactoryResourceTypeId.newInstance(type, version); 
 	}
 	
 	@Override

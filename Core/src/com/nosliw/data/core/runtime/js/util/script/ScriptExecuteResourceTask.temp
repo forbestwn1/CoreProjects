@@ -9,7 +9,7 @@
 	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
 
 	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteTask"));
-	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("||resourceType||", "||resourceId||"), undefined, undefined, undefined, {
+	out.addRequest(nosliw.runtime.getComplexEntityService().getCreateApplicationRequest(new node_ResourceId("||resourceId||", "||resourceType||"), undefined, undefined, undefined, {
 		success : function(request, application){
 			var taskEntityCore = application.getMainEntityRuntime().getCoreEntity();
 			var appInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);

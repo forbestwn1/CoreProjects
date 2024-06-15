@@ -37,6 +37,7 @@ public class HAPSystemFolderUtility {
 	
 	public static String getTempFolder(){		return HAPSystemUtility.getTempFolder();	}
 
+	public static String getBundleExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"bundleexport/";  }
 	public static String getExecutablePackageExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"executablepackageexport/";  }
 	public static String getScriptExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"scriptexport/scripts/";  }
 	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPRuntimeEnvironment.id + "/";  }
