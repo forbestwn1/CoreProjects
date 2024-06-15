@@ -78,7 +78,7 @@ var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, req
 			}));
 		}
 		else if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_CONSTANT){
-			
+			fromValues.push(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELCONSTANT_VALUE]);			
 		}
 	});
 	out.addRequest(executeFromEndPointsRequest);

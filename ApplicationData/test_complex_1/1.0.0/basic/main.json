@@ -8,7 +8,7 @@
 		{
 			"info": {
 				"name" : "dataexpression-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -240,7 +240,7 @@
 									},
 									"definition" : {
 										"mapping" : {
-											"elementPath": "output1"
+											"elementPath": "parent_public_constant_string"
 										}
 									}
 								}
@@ -285,6 +285,14 @@
 							"integer2": {
 								"definition":{
 									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"parent_public_constant_string": {
+								"definition":{
+									"value": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "value of parent_public_constant_string"
+									} 
 								}
 							}
 						},

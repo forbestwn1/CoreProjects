@@ -1,6 +1,5 @@
 package com.nosliw.core.application.common.structure;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,9 @@ public class HAPUtilityStructure {
 
 	public static HAPRootStructure getRootFromStructure(HAPStructure1 structure, HAPReferenceRootInStrucutre rootRef) {
 		List<HAPRootStructure> roots = structure.resolveRoot(rootRef, false);
-		if(roots==null || roots.size()==0)  return null;
+		if(roots==null || roots.size()==0) {
+			return null;
+		}
 		return roots.get(0);
 	}
 
@@ -40,8 +41,11 @@ public class HAPUtilityStructure {
 		HAPElementStructure out = element;
 		HAPPath pathObj = new HAPPath(path);
 		for(String pathSeg : pathObj.getPathSegments()) {
-			if(out!=null)			out = out.getChild(pathSeg);
-			else throw new RuntimeException();
+			if(out!=null) {
+				out = out.getChild(pathSeg);
+			} else {
+				throw new RuntimeException();
+			}
 		}
 		return out;
 	}
@@ -58,10 +62,14 @@ public class HAPUtilityStructure {
 					HAPElementStructure solidEle = null;
 					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solvedElment.getType())) {
 						solidEle = ((HAPElementStructureNode)solvedElment).getChildren().get(pathSeg);
-						if(solidEle==null)   return null;   //not valid path
+						if(solidEle==null)
+						 {
+							return null;   //not valid path
+						}
 					}
-					if(solidEle==null) 		remainingPath = remainingPath.appendSegment(pathSeg);
-					else{
+					if(solidEle==null) {
+						remainingPath = remainingPath.appendSegment(pathSeg);
+					} else{
 						solvedElment = solidEle;
 						solvedPath = solvedPath.appendSegment(pathSeg);
 					}
@@ -74,7 +82,9 @@ public class HAPUtilityStructure {
 		}
 		HAPResultDesendantResolve out = new HAPResultDesendantResolve();
 		out.resolvedElement = solvedElment;
-		if(remainingPath!=null)  out.remainPath = remainingPath;
+		if(remainingPath!=null) {
+			out.remainPath = remainingPath;
+		}
 		out.solvedPath = solvedPath;
 		return out;
 	}
@@ -96,7 +106,10 @@ public class HAPUtilityStructure {
 	public static void setDescendant(HAPRootStructure targetRoot, HAPPath path, HAPElementStructure ele) {
 		String[] pathSegs = path.getPathSegments();
 		if(pathSegs.length==0) {
-			if(targetRoot.getDefinition()!=null && !targetRoot.getDefinition().getType().equals(ele.getType()))  HAPErrorUtility.invalid("");  //should be same type
+			if(targetRoot.getDefinition()!=null && !targetRoot.getDefinition().getType().equals(ele.getType()))
+			 {
+				HAPErrorUtility.invalid("");  //should be same type
+			}
 			targetRoot.setDefinition(ele);
 		}
 		else {
@@ -116,8 +129,10 @@ public class HAPUtilityStructure {
 				parentEle = child;
 				seg = pathSegs[i+1];
 			}
-			if(((HAPElementStructureNode)parentEle).getChild(seg)!=null && !((HAPElementStructureNode)parentEle).getChild(seg).getType().equals(ele.getType())) 
+			if(((HAPElementStructureNode)parentEle).getChild(seg)!=null && !((HAPElementStructureNode)parentEle).getChild(seg).getType().equals(ele.getType()))
+			 {
 				HAPErrorUtility.invalid("");  //should be same type
+			}
 			((HAPElementStructureNode)parentEle).addChild(seg, ele);
 		}
 	}
@@ -135,7 +150,9 @@ public class HAPUtilityStructure {
 		Pair<Boolean, HAPElementStructure> processOut = processor.process(elementInfo, value);
 		boolean going = true;
 		if(processOut!=null) {
-			if(processOut.getLeft()!=null)    going = processOut.getLeft();
+			if(processOut.getLeft()!=null) {
+				going = processOut.getLeft();
+			}
 			if(processOut.getRight()!=null) {
 				element = processOut.getRight();
 				elementInfo.setElement(element);
@@ -204,7 +221,9 @@ public class HAPUtilityStructure {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
 						HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
 						Object value = constantEle.getDataValue();
-						if(value==null)   value = constantEle.getValue();
+						if(value==null) {
+							value = constantEle.getValue();
+						}
 						constantsById.put(eleInfo.getElementPath().getFullName(), value);
 					}
 					return null;
@@ -262,8 +281,11 @@ public class HAPUtilityStructure {
 	
 	public static HAPRootStructure getRootByName(String name, HAPStructure1 structure) {
 		List<HAPRootStructure> allRoots = resolveRoot(name, structure, false);
-		if(allRoots==null || allRoots.size()==0)  return null;
-		else return allRoots.get(0);
+		if(allRoots==null || allRoots.size()==0) {
+			return null;
+		} else {
+			return allRoots.get(0);
+		}
 	}
 	
 	public static HAPRootStructure addRoot(HAPStructure1 structure, String rootReference, HAPRootStructure root) {
@@ -297,7 +319,9 @@ public class HAPUtilityStructure {
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
 	public static void mergeElement(HAPElementStructure fromDef1, HAPElementStructure toDef1, boolean modifyStructure, List<HAPPathElementMapping> mappingPaths, String path, HAPRuntimeEnvironment runtimeEnv){
-		if(path==null)  path = "";
+		if(path==null) {
+			path = "";
+		}
 		//merge is about solid
 		HAPElementStructure fromDef = fromDef1.getSolidStructureElement();
 		HAPElementStructure toDef = toDef1.getSolidStructureElement();
@@ -320,12 +344,6 @@ public class HAPUtilityStructure {
 			}
 			}
 		}
-		if(fromDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_PROVIDE)) {
-			HAPElementStructureLeafProvide dataFrom = (HAPElementStructureLeafProvide)fromDef.getSolidStructureElement();
-			List<HAPPathElementMapping> providerMappingPaths = new ArrayList<HAPPathElementMapping>();
-			mergeElement(dataFrom.getDefinition(), toDef1, modifyStructure, providerMappingPaths, path, runtimeEnv);
-			mappingPaths.add(new HAPPathElementMappingProvideToVariable(path, providerMappingPaths));
-		}
 		else if(toDef.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {  //kkkkk
 			HAPErrorUtility.invalid("");
 //			switch(fromDef.getType()) {
@@ -341,7 +359,10 @@ public class HAPUtilityStructure {
 //			}
 		}
 		else {
-			if(!fromDef.getType().equals(toType))   HAPErrorUtility.invalid("");   //not same type, error
+			if(!fromDef.getType().equals(toType))
+			 {
+				HAPErrorUtility.invalid("");   //not same type, error
+			}
 			switch(toType) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
 			{
