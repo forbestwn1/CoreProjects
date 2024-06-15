@@ -45,7 +45,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 	var loc_envInterface = {};
 	
 	var loc_facade = node_createTaskInterface({
-		getExecuteRequest : function(taskInput, handlers, request){
+		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATASINGLE_EXPRESSION);
 			var variablesContainer = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS);
@@ -65,7 +65,6 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			_.each(setValueInfos, function(setValueInfo, i){
 				target[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
 			});
-			var kkk = 555;
 		}));
 		return out;
 	};
@@ -91,7 +90,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 	var loc_resultValuePort = {
 		getValueRequest : function(elmentId, handlers, request){ 
 			return loc_getValueRequest(loc_result, elmentId, handlers, request);
-		 },
+		},
 
 		setValuesRequest : function(setValueInfos, handlers, request){
 			return loc_setValueRequest(loc_result, setValueInfos, handlers, request);
@@ -103,7 +102,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			return loc_requestValuePort;
 		}
 		else{
-			return loc_resultValuePort[valuePortName];
+			return loc_resultValuePort;
 		}
 	};
 
