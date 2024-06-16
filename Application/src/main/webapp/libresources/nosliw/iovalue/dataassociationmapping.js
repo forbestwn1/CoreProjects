@@ -65,21 +65,34 @@ var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, req
 		}
 	});
 	_.each(tunnels, function(tunnel, i){
-		var fromEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_FROMENDPOINT];
+		var matchers = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_MATCHERS];
 		
+		var fromEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_FROMENDPOINT];
 		var fromEndPointType = fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNEL_TYPE];
 		if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_VALUEPORT){
 			var fromValuePort = loc_getValuePort(fromEndPoint, baseEntityCore);
 			var fromValuePortEleInfo = node_createValuePortElementInfo(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]);
 			executeFromEndPointsRequest.addRequest(fromValuePort.getValueRequest(fromValuePortEleInfo, {
 				success: function(request, value){
-					fromValues.push(value)
+					fromValues.push(value);
 				}
 			}));
 		}
 		else if(fromEndPointType==node_COMMONCONSTANT.TUNNELENDPOINT_TYPE_CONSTANT){
-			fromValues.push(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELCONSTANT_VALUE]);			
+			executeFromEndPointsRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				fromValues.push(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELCONSTANT_VALUE]);			
+			}));
 		}
+		
+		executeFromEndPointsRequest.addRequest(node_createServiceRequestInfoSequence(undefined, {
+			success: function(request){
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(fromValues[fromValues.length-1], matchers, {
+					success: function(request, value){
+						fromValues[fromValues.length-1] = value;
+					}
+				});
+			}
+		}));
 	});
 	out.addRequest(executeFromEndPointsRequest);
 	return out;

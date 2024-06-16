@@ -572,7 +572,7 @@ var node_utility = function()
 
 		executeConvertResource : function(resourceId, data, dataTypeId, reverse, resourcesTree){
 			var dataOperationResource = node_resourceUtility.getResourceFromTree(resourcesTree, resourceId);
-			var dataOperationFun = dataOperationResource.resourceData;
+			var dataOperationFun = dataOperationResource.resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATAJSVALUE_VALUE];
 			
 			//build operation context
 			var operationContext = new node_OperationContext(resourcesTree, dataOperationResource.resourceInfo[node_COMMONATRIBUTECONSTANT.RESOURCEINFO_DEPENDENCY]);

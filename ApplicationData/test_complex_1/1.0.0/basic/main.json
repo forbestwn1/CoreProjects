@@ -197,7 +197,7 @@
 				"script": "complexscript_test_value",
 				"parm" : {
 					"variable1" : ["output1", "child_public", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public"]
+					"variable" : ["child_public", "child_public_string"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -209,12 +209,21 @@
 										"definition":{
 											"criteria": "test.string;1.0.0"
 										}
+									},
+									"child_public_string": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
 									}
 								},
 								"initValue": {
 									"child_public": {
 										"dataTypeId": "test.string;1.0.0",
 										"value": "default value of child_public"
+									},
+									"child_public_string": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public_string"
 									}
 								}
 							}
@@ -235,12 +244,23 @@
 							"direction" : "downStream",
 							"mapping" : [
 								{
+									"status": "disabled1",
 									"target" : {
 										"rootName" : "child_public"
 									},
 									"definition" : {
 										"mapping" : {
 											"elementPath": "parent_public_constant_string"
+										}
+									}
+								},
+								{
+									"target" : {
+										"rootName" : "child_public_string"
+									},
+									"definition" : {
+										"mapping" : {
+											"elementPath": "parent_public_url"
 										}
 									}
 								}
@@ -265,6 +285,11 @@
 							"parent_public": {
 								"definition":{
 									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parent_public_url": {
+								"definition":{
+									"criteria": "test.url;1.0.0"
 								}
 							},
 							"parm1": {
@@ -300,6 +325,10 @@
 							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
+							},
+							"parent_public_url": {
+								"dataTypeId": "test.url;1.0.0",
+								"value": "default value of parent_public_url"
 							},
 							"parm1": {
 								"dataTypeId": "test.string;1.0.0",
