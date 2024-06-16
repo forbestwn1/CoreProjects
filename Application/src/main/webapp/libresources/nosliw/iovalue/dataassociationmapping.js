@@ -61,7 +61,23 @@ var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, req
 	var fromValues = [];
 	var executeFromEndPointsRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("fromEndPoint", {}), {
 		success : function(request){
-			return fromValues;
+			var matchersRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("getAllMatchersRequest", {}), {
+				success : function(){
+					return fromValues;
+				}
+			});
+			
+			_.each(tunnels, function(tunnel, i){
+				var matchers = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_MATCHERS];
+	      		matchersRequest.addRequest(nosliw.runtime.getExpressionService().getMatchDataRequest(fromValues[i], matchers, {
+					success: function(request, value){
+						fromValues[i] = value;
+					}
+				}));
+				
+			});
+			
+			return matchersRequest;
 		}
 	});
 	_.each(tunnels, function(tunnel, i){
@@ -83,18 +99,9 @@ var loc_getAllFromValueRequest = function(tunnels, baseEntityCore, handlers, req
 				fromValues.push(fromEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELCONSTANT_VALUE]);			
 			}));
 		}
-		
-		executeFromEndPointsRequest.addRequest(node_createServiceRequestInfoSequence(undefined, {
-			success: function(request){
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(fromValues[fromValues.length-1], matchers, {
-					success: function(request, value){
-						fromValues[fromValues.length-1] = value;
-					}
-				});
-			}
-		}));
 	});
 	out.addRequest(executeFromEndPointsRequest);
+	
 	return out;
 }
 

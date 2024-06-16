@@ -63,32 +63,6 @@ public class HAPUtilityExpressionProcessor {
 		});
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	public static void processConstant(HAPExecutableEntityComplex containerComplexEntity, HAPExecutableExpressionData1 expressionExe, HAPContextProcessor processContext) {
-		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
-			@Override
-			public boolean processOperand(HAPWrapperOperand operand, Object data) {
-				String opType = operand.getOperand().getType();
-				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
-					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
-					if(constantOperand.getData()==null) {
-						HAPData constantData = containerComplexEntity.getConstantData(constantOperand.getName());
-						constantOperand.setData(constantData);
-					}
-				}
-				return true;
-			}
-		});
-	}
-	
-	
 	public static void resolveReferenceVariableMapping(HAPExecutableEntityExpressionData expressionGroupExe, HAPContextProcessor processContext) {
 		
 		List<HAPExecutableExpressionData1> expressionExeItems = expressionGroupExe.getAllExpressionItems();
@@ -127,6 +101,36 @@ public class HAPUtilityExpressionProcessor {
 			});
 		}
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void processConstant(HAPExecutableEntityComplex containerComplexEntity, HAPExecutableExpressionData1 expressionExe, HAPContextProcessor processContext) {
+		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
+			@Override
+			public boolean processOperand(HAPWrapperOperand operand, Object data) {
+				String opType = operand.getOperand().getType();
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
+					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
+					if(constantOperand.getData()==null) {
+						HAPData constantData = containerComplexEntity.getConstantData(constantOperand.getName());
+						constantOperand.setData(constantData);
+					}
+				}
+				return true;
+			}
+		});
+	}
+	
 	
 	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();

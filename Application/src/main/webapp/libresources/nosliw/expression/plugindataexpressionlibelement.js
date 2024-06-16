@@ -43,6 +43,20 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 	var loc_result = {};
 	
 	var loc_envInterface = {};
+
+	var loc_initRequestValue = function(interactiveEntityDef, parmsValue){
+		
+		var parmDefs = interactiveEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST);
+		_.each(parmDefs, function(parmDef, i){
+			var defaultValue = parmDef[node_COMMONATRIBUTECONSTANT.REQUESTPARMININTERACTIVE_DEFAULTVALUE];
+			if(defaultValue!=undefined){
+				parmsValue[parmDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = defaultValue;
+			}
+		});
+		
+	};
+
+	loc_initRequestValue(loc_complexEntityDef, loc_input);
 	
 	var loc_facade = node_createTaskInterface({
 		getExecuteRequest : function(handlers, request){
