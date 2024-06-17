@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime.js.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -36,7 +36,7 @@ public class HAPResourceIdJSHelper extends HAPResourceIdSimple{
 	public HAPJSHelperId getHelper(){  return this.m_helperId;	}
 	protected void setHelperId(HAPJSHelperId helperId){
 		this.m_helperId = helperId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(helperId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(helperId, HAPSerializationFormat.LITERATE); 
 	}
 	
 	@Override

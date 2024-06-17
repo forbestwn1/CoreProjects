@@ -82,13 +82,15 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 		return out;
 	}
 	
-	public void setAttributeWithValueValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueValue(attrValue)));	}
+	public void setAttributeWithValueWrapper(String attributeName, HAPManualWrapperValue valueWrapper) {	this.setAttribute(new HAPManualAttribute(attributeName, valueWrapper));	}
+	
+	public void setAttributeWithValueValue(String attributeName, Object attrValue) {  this.setAttributeWithValueWrapper(attributeName, new HAPManualWrapperValueValue(attrValue));  }	
 	public void setAttributeWithValueBrick(String attributeName, HAPEntityOrReference brickOrRef) {
 		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueBrick((HAPManualBrick)brickOrRef)));
+			this.setAttributeWithValueWrapper(attributeName, new HAPManualWrapperValueBrick((HAPManualBrick)brickOrRef));
 		}
 		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
-			this.setAttribute(new HAPManualAttribute(attributeName, new HAPManualWrapperValueReferenceResource((HAPResourceId)brickOrRef)));
+			this.setAttributeWithValueWrapper(attributeName, new HAPManualWrapperValueReferenceResource((HAPResourceId)brickOrRef));
 		}
 	}
 	

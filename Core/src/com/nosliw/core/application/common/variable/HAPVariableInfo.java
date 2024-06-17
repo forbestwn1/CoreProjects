@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.data.core.data.HAPData;
@@ -87,7 +87,7 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_dataInfo!=null)	jsonMap.put(DATAINFO, HAPSerializeManager.getInstance().toStringValue(this.m_dataInfo, HAPSerializationFormat.JSON));
+		if(this.m_dataInfo!=null)	jsonMap.put(DATAINFO, HAPManagerSerialize.getInstance().toStringValue(this.m_dataInfo, HAPSerializationFormat.JSON));
 		if(this.m_defaultValue!=null)  jsonMap.put(DEFAULTVALUE, this.m_defaultValue.toStringValue(HAPSerializationFormat.JSON));
 		if(this.m_reference!=null)  jsonMap.put(REFERENCE, this.m_reference.toStringValue(HAPSerializationFormat.JSON));
 	}

@@ -33,12 +33,12 @@ public class HAPUtilityValuePort {
 		return out;
 	}
 
-	public static HAPIdValuePortInBundle normalizeInternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPBrick brick) {
+	public static HAPIdValuePortInBundle normalizeInternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPWithInternalValuePort withValuePort) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
 		}
-		out.setValuePortId(brick.getInternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
+		out.setValuePortId(withValuePort.getInternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
 		return out;
 	}
 	
@@ -49,8 +49,8 @@ public class HAPUtilityValuePort {
 		}
 	}
 
-	public static HAPValuePort getValuePortInBrick(HAPIdValuePortInBundle valuePortRef, HAPBrick brick) {
-		return brick.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
+	public static HAPValuePort getValuePortInternal(HAPIdValuePortInBundle valuePortRef, HAPWithInternalValuePort withValuePort) {
+		return withValuePort.getInternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}
 
 	public static HAPValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {

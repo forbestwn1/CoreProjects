@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPOperationId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -37,7 +37,7 @@ public class HAPResourceIdOperation extends HAPResourceIdSimple{
 	public HAPOperationId getOperationId(){  return this.m_operationId;	}
 	protected void setOperationId(HAPOperationId operationId){
 		this.m_operationId = operationId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(operationId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(operationId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

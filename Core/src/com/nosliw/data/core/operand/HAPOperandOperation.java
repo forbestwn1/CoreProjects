@@ -9,7 +9,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
@@ -78,7 +78,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	public HAPOperandOperation(String dataTypeIdLiterate, String operation, List<HAPParmInOperationOperand> parms){
 		super(HAPConstantShared.EXPRESSION_OPERAND_OPERATION);
-		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
+		this.m_dataTypeId = (HAPDataTypeId)HAPManagerSerialize.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 		this.m_operation = operation;
 		
 		for(HAPParmInOperationOperand opParm : parms){
@@ -146,8 +146,8 @@ public class HAPOperandOperation extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERATION, this.m_operation);
-		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
-		if(this.m_base!=null)	jsonMap.put(BASE, HAPSerializeManager.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
+		jsonMap.put(DATATYPEID, HAPManagerSerialize.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		if(this.m_base!=null)	jsonMap.put(BASE, HAPManagerSerialize.getInstance().toStringValue(this.m_base, HAPSerializationFormat.JSON));
 
 		jsonMap.put(PARMS, HAPUtilityJson.buildJson(this.m_parms, HAPSerializationFormat.JSON));
 		jsonMap.put(MATCHERSPARMS, HAPUtilityJson.buildJson(this.m_parmsMatchers, HAPSerializationFormat.JSON));

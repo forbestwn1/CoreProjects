@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -42,7 +42,7 @@ public class HAPDataTypeCriteriaOr extends HAPDataTypeCriteriaComplex{
 		int i = 0;
 		for(HAPDataTypeCriteria childCriteria : this.getChildren()){
 			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
-			out.append(HAPSerializeManager.getInstance().toStringValue(childCriteria, HAPSerializationFormat.LITERATE));
+			out.append(HAPManagerSerialize.getInstance().toStringValue(childCriteria, HAPSerializationFormat.LITERATE));
 			i++;
 		}
 		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_OR));

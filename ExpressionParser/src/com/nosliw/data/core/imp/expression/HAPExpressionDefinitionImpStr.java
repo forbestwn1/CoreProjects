@@ -37,7 +37,7 @@ extends HAPStringableValueEntity implements HAPDefinitionTask{
 	public void setName(String name){  this.updateAtomicChildStrValue(NAME, name);  }
 	
 	@Override
-	public String getExpression(){ return this.getAtomicAncestorValueString(EXPRESSION); }
+	public String getExpression(){ return this.getAtomicAncestorValueString(VALUE); }
 
 	@Override
 	public HAPInfo getInfo() {	return (HAPInfo)this.getEntityAncestorByPath(INFO); }

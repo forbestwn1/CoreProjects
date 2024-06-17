@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 @HAPEntityWithAttribute
 public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
@@ -36,7 +36,7 @@ public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ROOT, HAPSerializeManager.getInstance().toStringValue(m_roots, HAPSerializationFormat.JSON));
+		jsonMap.put(ROOT, HAPManagerSerialize.getInstance().toStringValue(m_roots, HAPSerializationFormat.JSON));
 	}
 
 }

@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperation;
@@ -70,7 +70,7 @@ public class HAPResourceDataJSOperationImp extends HAPStringableValueEntityWithI
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_operationInfo!=null) {
-			jsonMap.put(OPERATIONINFO, HAPSerializeManager.getInstance().toStringValue(this.m_operationInfo, HAPSerializationFormat.JSON));
+			jsonMap.put(OPERATIONINFO, HAPManagerSerialize.getInstance().toStringValue(this.m_operationInfo, HAPSerializationFormat.JSON));
 		}
 		typeJsonMap.put(VALUE, HAPJsonTypeScript.class);
 	}

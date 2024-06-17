@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
@@ -102,10 +102,10 @@ public class HAPExecutableAppEntry extends HAPEntityInfoImpWrapper implements HA
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(ID, this.m_id);
-		jsonMap.put(MODULE, HAPSerializeManager.getInstance().toStringValue(this.m_modules, HAPSerializationFormat.JSON));
-		jsonMap.put(CONTEXT, HAPSerializeManager.getInstance().toStringValue(this.m_context, HAPSerializationFormat.JSON));
-		jsonMap.put(PROCESS, HAPSerializeManager.getInstance().toStringValue(this.m_processes, HAPSerializationFormat.JSON));
-		jsonMap.put(APPLICATIONDATA, HAPSerializeManager.getInstance().toStringValue(this.m_applicationData, HAPSerializationFormat.JSON));
+		jsonMap.put(MODULE, HAPManagerSerialize.getInstance().toStringValue(this.m_modules, HAPSerializationFormat.JSON));
+		jsonMap.put(CONTEXT, HAPManagerSerialize.getInstance().toStringValue(this.m_context, HAPSerializationFormat.JSON));
+		jsonMap.put(PROCESS, HAPManagerSerialize.getInstance().toStringValue(this.m_processes, HAPSerializationFormat.JSON));
+		jsonMap.put(APPLICATIONDATA, HAPManagerSerialize.getInstance().toStringValue(this.m_applicationData, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

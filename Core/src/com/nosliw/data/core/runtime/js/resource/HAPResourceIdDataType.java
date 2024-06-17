@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime.js.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -37,7 +37,7 @@ public class HAPResourceIdDataType extends HAPResourceIdSimple{
 	public HAPDataTypeId getDataTypeId(){  return this.m_dataTypeId;	}
 	protected void setDataTypeId(HAPDataTypeId dataTypeId){
 		this.m_dataTypeId = dataTypeId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

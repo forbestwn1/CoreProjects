@@ -198,7 +198,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 	
 	@Override
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(VARIDBYNAME, HAPSerializeManager.getInstance().toStringValue(this.m_varIdByName, HAPSerializationFormat.JSON));
+		jsonMap.put(VARIDBYNAME, HAPManagerSerialize.getInstance().toStringValue(this.m_varIdByName, HAPSerializationFormat.JSON));
 
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		for(String varId : this.m_namesByVarId.keySet()) {

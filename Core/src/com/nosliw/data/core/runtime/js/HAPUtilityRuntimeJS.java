@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime.js;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 public class HAPUtilityRuntimeJS {
 	
@@ -18,7 +18,7 @@ public class HAPUtilityRuntimeJS {
 		else if(obj instanceof Boolean)   return ""+obj;
 		else if(obj instanceof Float)   return ""+obj;
 		else if(obj instanceof Double)   return ""+obj;
-		else return HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
+		else return HAPManagerSerialize.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
 	}
 	
 }

@@ -1,7 +1,7 @@
 package com.nosliw.data.core.activity;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.process1.HAPActivityPluginId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -26,7 +26,7 @@ public class HAPPluginResourceIdActivity  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_activityPluginId = activityPluginId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(activityPluginId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(activityPluginId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

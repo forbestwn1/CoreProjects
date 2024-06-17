@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 
@@ -43,7 +43,7 @@ public class HAPManualItemValueMapping extends HAPEntityInfoWritableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DEFINITION, this.m_definition.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.m_target, HAPSerializationFormat.JSON));
+		jsonMap.put(TARGET, HAPManagerSerialize.getInstance().toStringValue(this.m_target, HAPSerializationFormat.JSON));
 	}
 	
 	public HAPManualItemValueMapping cloneValueMappingItem() {

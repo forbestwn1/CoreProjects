@@ -6,7 +6,7 @@ import java.util.List;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 
@@ -50,7 +50,7 @@ public class HAPRelationshipPath extends HAPSerializableImp{
 
 	@Override
 	protected String buildLiterate(){  
-		return HAPSerializeManager.getInstance().toStringValue(m_segments, HAPSerializationFormat.LITERATE); 
+		return HAPManagerSerialize.getInstance().toStringValue(m_segments, HAPSerializationFormat.LITERATE); 
 	}
 	
 	@Override

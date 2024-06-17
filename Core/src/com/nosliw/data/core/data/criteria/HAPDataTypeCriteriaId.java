@@ -6,7 +6,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -64,17 +64,17 @@ public class HAPDataTypeCriteriaId  extends HAPDataTypeCriteriaImp implements HA
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATATYPEID, HAPSerializeManager.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
-		jsonMap.put(ELEMENTDATATYPECRITERIA, HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.JSON));
+		jsonMap.put(DATATYPEID, HAPManagerSerialize.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
+		jsonMap.put(ELEMENTDATATYPECRITERIA, HAPManagerSerialize.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.JSON));
 	}
 
 	@Override
 	protected String buildLiterate(){
 		StringBuffer out = new StringBuffer();
-		out.append(HAPSerializeManager.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
+		out.append(HAPManagerSerialize.getInstance().toStringValue(m_dataTypeId, HAPSerializationFormat.LITERATE));
 		
 		if(this.m_subCriteriaGroup!=null){
-			out.append(HAPSerializeManager.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
+			out.append(HAPManagerSerialize.getInstance().toStringValue(m_subCriteriaGroup, HAPSerializationFormat.LITERATE));
 		}
 		return out.toString(); 
 	}

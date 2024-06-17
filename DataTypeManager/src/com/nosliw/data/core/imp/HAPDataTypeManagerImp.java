@@ -2,7 +2,7 @@ package com.nosliw.data.core.imp;
 
 import java.util.List;
 
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.valueinfo.HAPDBAccess;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -22,7 +22,7 @@ public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 	
 	private void init(){
 		
-		HAPSerializeManager.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
+		HAPManagerSerialize.getInstance().registerClassName(HAPDataTypeId.class.getName(), HAPDataTypeId.class.getName());
 	}
 	
 	@Override

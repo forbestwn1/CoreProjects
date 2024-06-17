@@ -37,6 +37,7 @@ var node_createDataExpressionLibraryElementPlugin = function(){
 var loc_createDataExpressionLibraryElementComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
+	var loc_expressionData = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE);
 	var loc_referencedRuntime = {};
 	
 	var loc_input = {};
@@ -46,7 +47,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 
 	var loc_initRequestValue = function(interactiveEntityDef, parmsValue){
 		
-		var parmDefs = interactiveEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST);
+		var parmDefs = interactiveEntityDef[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
 		_.each(parmDefs, function(parmDef, i){
 			var defaultValue = parmDef[node_COMMONATRIBUTECONSTANT.REQUESTPARMININTERACTIVE_DEFAULTVALUE];
 			if(defaultValue!=undefined){
@@ -56,13 +57,13 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 		
 	};
 
-	loc_initRequestValue(loc_complexEntityDef, loc_input);
+	loc_initRequestValue(loc_expressionData, loc_input);
 	
 	var loc_facade = node_createTaskInterface({
 		getExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-			var expressionItem = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATASINGLE_EXPRESSION);
-			var variablesContainer = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS);
+			var expressionItem = loc_expressionData[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATASINGLE_EXPRESSION];
+			var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS];
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, undefined, {
 				success : function(request, result){
 					loc_result.result = result;

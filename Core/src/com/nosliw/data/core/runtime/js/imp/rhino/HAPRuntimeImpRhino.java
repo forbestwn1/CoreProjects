@@ -17,7 +17,7 @@ import com.google.common.util.concurrent.SettableFuture;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -276,7 +276,7 @@ public class HAPRuntimeImpRhino implements HAPRuntime{
 			HAPGatewayManager gatewayMan =	this.getRuntimeEnvironment().getGatewayManager();
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			
-			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPSerializeManager.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
+			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPManagerSerialize.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
 			HAPServiceData serviceData = gatewayMan.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPUtilityJson.buildMapJson(jsonMap)), this.getRuntimeInfo());
 
 			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();

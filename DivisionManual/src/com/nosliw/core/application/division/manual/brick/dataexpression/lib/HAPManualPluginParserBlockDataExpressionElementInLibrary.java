@@ -15,8 +15,10 @@ public class HAPManualPluginParserBlockDataExpressionElementInLibrary extends HA
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
-		HAPManualBlockDataExpressionElementInLibrary entity = (HAPManualBlockDataExpressionElementInLibrary)entityDefinition;
-		entity.buildObject(jsonValue, HAPSerializationFormat.JSON);
+	protected void parseDefinitionContentJson(HAPManualBrick brickDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickDefinition;
+		HAPManualDataExpressionLibraryElement value = new HAPManualDataExpressionLibraryElement();
+		value.buildObject(jsonValue, HAPSerializationFormat.JSON);
+		brick.setValue(value);
 	}
 }

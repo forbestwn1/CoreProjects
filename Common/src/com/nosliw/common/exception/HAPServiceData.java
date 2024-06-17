@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 
 /*
@@ -104,7 +104,7 @@ public class HAPServiceData extends HAPSerializableImp{
 		String dataString = null;
 		if(data!=null){
 			
-			dataString = HAPSerializeManager.getInstance().toStringValue(data, format);
+			dataString = HAPManagerSerialize.getInstance().toStringValue(data, format);
 			
 //			if(data instanceof HAPSerializable){
 //				dataString = ((HAPSerializable)data).toStringValue(format);

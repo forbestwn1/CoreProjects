@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -90,8 +90,8 @@ public abstract class HAPEmbeded extends HAPSerializableImp implements HAPExpand
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
-		jsonMap.put(ADAPTER, HAPSerializeManager.getInstance().toStringValue(this.getAdapters(), HAPSerializationFormat.JSON));
-		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
+		jsonMap.put(ADAPTER, HAPManagerSerialize.getInstance().toStringValue(this.getAdapters(), HAPSerializationFormat.JSON));
+		jsonMap.put(VALUE, HAPManagerSerialize.getInstance().toStringValue(this.getValue(), HAPSerializationFormat.JSON));
 		jsonMap.put(VALUETYPE, this.m_valueType);
 	}
 	

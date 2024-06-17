@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -37,7 +37,7 @@ public abstract class HAPDataTypeCriteriaImp extends HAPSerializableImp implemen
 	}
 	
 	@Override
-	protected String buildLiterate(){  return HAPSerializeManager.getInstance().toStringValue(this, HAPSerializationFormat.LITERATE); }
+	protected String buildLiterate(){  return HAPManagerSerialize.getInstance().toStringValue(this, HAPSerializationFormat.LITERATE); }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

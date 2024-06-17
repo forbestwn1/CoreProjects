@@ -111,7 +111,7 @@ extends HAPSerializableImp implements HAPDefinitionTask{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(NAME, m_name);
-		jsonMap.put(EXPRESSION, m_expression);
+		jsonMap.put(VALUE, m_expression);
 		jsonMap.put(VARIABLECRITERIAS, HAPJsonUtility.buildJson(this.m_variableCriterias, HAPSerializationFormat.JSON));
 		jsonMap.put(CONSTANTS, HAPJsonUtility.buildJson(this.m_constants, HAPSerializationFormat.JSON));
 		jsonMap.put(REFERENCES, HAPJsonUtility.buildJson(this.m_references, HAPSerializationFormat.JSON));

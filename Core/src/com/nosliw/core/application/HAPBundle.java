@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -108,7 +108,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EXTRADATA, HAPSerializeManager.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JSON));
+		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -116,7 +116,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
-		jsonMap.put(EXTRADATA, HAPSerializeManager.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JAVASCRIPT));
 	}
 	
 	@Override

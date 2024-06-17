@@ -1,7 +1,7 @@
 package com.nosliw.data.core.service.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.service.HAPIdServcieInterface;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -26,7 +26,7 @@ public class HAPResourceIdServiceInterface  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_serviceInterfaceId = serviceInterfaceId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(serviceInterfaceId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(serviceInterfaceId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

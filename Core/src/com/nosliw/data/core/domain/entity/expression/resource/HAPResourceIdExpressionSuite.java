@@ -1,7 +1,7 @@
 package com.nosliw.data.core.domain.entity.expression.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPIdExpressionSuite;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -27,7 +27,7 @@ public class HAPResourceIdExpressionSuite  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_expressionSuiteId = expressionSuiteId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(expressionSuiteId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(expressionSuiteId, HAPSerializationFormat.LITERATE); 
 	}
 
 	public HAPResourceIdExpressionSuite(String id, HAPSupplementResourceId supplement){

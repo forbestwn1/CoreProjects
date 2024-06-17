@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -69,9 +69,9 @@ public class HAPRelationshipImp extends HAPStringableValueEntityWithID implement
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(SOURCE, HAPSerializeManager.getInstance().toStringValue(this.getSource(), HAPSerializationFormat.LITERATE));
-		jsonMap.put(TARGET, HAPSerializeManager.getInstance().toStringValue(this.getTarget(), HAPSerializationFormat.LITERATE));
-		jsonMap.put(PATH, HAPSerializeManager.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(SOURCE, HAPManagerSerialize.getInstance().toStringValue(this.getSource(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(TARGET, HAPManagerSerialize.getInstance().toStringValue(this.getTarget(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(PATH, HAPManagerSerialize.getInstance().toStringValue(this.getPath(), HAPSerializationFormat.LITERATE));
 		jsonMap.put(TARGETTYPE, this.getTargetType());
 	}
 	

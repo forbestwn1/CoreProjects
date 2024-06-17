@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
 
 /**
@@ -60,27 +60,27 @@ public class HAPResource extends HAPSerializableImp{
 	
 	@Override
 	protected void buildFullJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
-		jsonMap.put(RESOURCEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON_FULL));
-		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(ID, HAPManagerSerialize.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOURCEDATA, HAPManagerSerialize.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON_FULL));
+		jsonMap.put(INFO, HAPManagerSerialize.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
-		jsonMap.put(RESOURCEDATA, HAPSerializeManager.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON));
-		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(ID, HAPManagerSerialize.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOURCEDATA, HAPManagerSerialize.getInstance().toStringValue(this.m_resourceData, HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPManagerSerialize.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	public String toString() {
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
-		jsonMap.put(ID, HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
+		jsonMap.put(ID, HAPManagerSerialize.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
 		if(this.m_resourceData instanceof HAPResourceDataJSValue)  jsonMap.put(RESOURCEDATA, ((HAPResourceDataJSValue)this.m_resourceData).getValue());
 		else jsonMap.put(RESOURCEDATA, this.m_resourceData.toString());
 		typeJsonMap.put(RESOURCEDATA, HAPJsonTypeScript.class);
-		jsonMap.put(INFO, HAPSerializeManager.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
+		jsonMap.put(INFO, HAPManagerSerialize.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);
 	}
 }

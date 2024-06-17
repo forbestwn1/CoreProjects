@@ -21,6 +21,4 @@ public class HAPBlockDataExpressionLibrary extends HAPBrickBlockSimple{
 		return (HAPBrickContainer)this.getAttributeValueOfBrick(ITEM);
 	}
 
-	
-	
 }

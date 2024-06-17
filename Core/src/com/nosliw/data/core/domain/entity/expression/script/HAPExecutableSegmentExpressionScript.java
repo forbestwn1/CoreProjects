@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
@@ -36,7 +36,7 @@ public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentEx
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> partJsonArray = new ArrayList<String>();
 		for(Object part : this.m_parts) {
-			partJsonArray.add(HAPSerializeManager.getInstance().toStringValue(part, HAPSerializationFormat.JSON));
+			partJsonArray.add(HAPManagerSerialize.getInstance().toStringValue(part, HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(PART, HAPUtilityJson.buildArrayJson(partJsonArray.toArray(new String[0])));
 	}

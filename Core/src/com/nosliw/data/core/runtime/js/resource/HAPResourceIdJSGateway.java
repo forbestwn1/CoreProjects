@@ -1,7 +1,7 @@
 package com.nosliw.data.core.runtime.js.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -36,7 +36,7 @@ public class HAPResourceIdJSGateway extends HAPResourceIdSimple{
 	public HAPJSGatewayId getGatewayId(){  return this.m_gatewayId;	}
 	protected void setGatewayId(HAPJSGatewayId gatewayId){
 		this.m_gatewayId = gatewayId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(gatewayId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(gatewayId, HAPSerializationFormat.LITERATE); 
 	}
 	
 	@Override

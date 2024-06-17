@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -32,13 +32,13 @@ public class HAPWrapperValueOfBrick extends HAPWrapperValue implements HAPWithBr
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, HAPSerializeManager.getInstance().toStringValue(this.m_brick, HAPSerializationFormat.JSON));
+		jsonMap.put(BRICK, HAPManagerSerialize.getInstance().toStringValue(this.m_brick, HAPSerializationFormat.JSON));
 	}
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, HAPSerializeManager.getInstance().toStringValue(this.m_brick, HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(BRICK, HAPManagerSerialize.getInstance().toStringValue(this.m_brick, HAPSerializationFormat.JAVASCRIPT));
 	}
 
 	@Override

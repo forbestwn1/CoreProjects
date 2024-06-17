@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
@@ -41,8 +41,8 @@ public abstract class HAPAttachmentImp extends HAPEntityInfoWritableImp implemen
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUETYPE, this.getValueType());
-		jsonMap.put(RAWVALUE, HAPSerializeManager.getInstance().toStringValue(this.m_rawValue, HAPSerializationFormat.JSON));
-		jsonMap.put(ENTITYID, HAPSerializeManager.getInstance().toStringValue(this.m_entityId, HAPSerializationFormat.JSON));
+		jsonMap.put(RAWVALUE, HAPManagerSerialize.getInstance().toStringValue(this.m_rawValue, HAPSerializationFormat.JSON));
+		jsonMap.put(ENTITYID, HAPManagerSerialize.getInstance().toStringValue(this.m_entityId, HAPSerializationFormat.JSON));
 	}
 
 	@Override

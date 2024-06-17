@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 @HAPEntityWithAttribute
 public class HAPGatewayOutput extends HAPSerializableImp{
@@ -35,8 +35,8 @@ public class HAPGatewayOutput extends HAPSerializableImp{
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
-		jsonMap.put(SCRIPTS, HAPSerializeManager.getInstance().toStringValue(this.m_scripts, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, HAPManagerSerialize.getInstance().toStringValue(this.m_data, HAPSerializationFormat.JSON));
+		jsonMap.put(SCRIPTS, HAPManagerSerialize.getInstance().toStringValue(this.m_scripts, HAPSerializationFormat.JSON));
 	}
 
 }

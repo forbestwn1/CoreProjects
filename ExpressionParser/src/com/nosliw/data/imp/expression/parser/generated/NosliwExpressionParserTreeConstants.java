@@ -30,7 +30,7 @@ public interface NosliwExpressionParserTreeConstants
     "PARMNAME",
     "REFERENCE",
     "PARAMETER",
-    "EXPRESSION",
+    "VALUE",
     "EXPRESSION1",
   };
 }

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -38,7 +38,7 @@ public class HAPAttachmentReferenceExternal extends HAPAttachmentReference{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_adaptor!=null)		jsonMap.put(ADAPTOR, HAPSerializeManager.getInstance().toStringValue(this.m_adaptor, HAPSerializationFormat.JSON));
+		if(this.m_adaptor!=null)		jsonMap.put(ADAPTOR, HAPManagerSerialize.getInstance().toStringValue(this.m_adaptor, HAPSerializationFormat.JSON));
 	}
 
 	@Override

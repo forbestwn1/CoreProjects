@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureUnknown;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
@@ -74,9 +74,9 @@ public class HAPExecutableDataAssociationMapping2 extends HAPExecutableDataAssoc
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(MAPPINGPATH, HAPSerializeManager.getInstance().toStringValue(this.m_relativePathMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(ITEM, HAPSerializeManager.getInstance().toStringValue(this.m_items, HAPSerializationFormat.JSON));
-		jsonMap.put(PROVIDE, HAPSerializeManager.getInstance().toStringValue(this.m_providers, HAPSerializationFormat.JSON));
+		jsonMap.put(MAPPINGPATH, HAPManagerSerialize.getInstance().toStringValue(this.m_relativePathMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(ITEM, HAPManagerSerialize.getInstance().toStringValue(this.m_items, HAPSerializationFormat.JSON));
+		jsonMap.put(PROVIDE, HAPManagerSerialize.getInstance().toStringValue(this.m_providers, HAPSerializationFormat.JSON));
 	}
 
 	@Override

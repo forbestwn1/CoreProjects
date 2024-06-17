@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -88,10 +88,10 @@ public class HAPUtilityExport {
 		}
 
 		//write package definition
-		HAPUtilityFile.writeJsonFile(bundleFolder, "extra.json", HAPSerializeManager.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
+		HAPUtilityFile.writeJsonFile(bundleFolder, "extra.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 		
 		//write package executable
-		HAPUtilityFile.writeJsonFile(bundleFolder, "executable.json", HAPSerializeManager.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
+		HAPUtilityFile.writeJsonFile(bundleFolder, "executable.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
 		
 		//external complex entity dependency
 		Set<HAPResourceIdSimple> dependency = bundle.getResourceDependency();
@@ -150,10 +150,10 @@ public class HAPUtilityExport {
 			}
 
 			//write package definition
-			HAPUtilityFile.writeJsonFile(packageFolder, "extra.json", HAPSerializeManager.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
+			HAPUtilityFile.writeJsonFile(packageFolder, "extra.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 			
 			//write package executable
-			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", HAPSerializeManager.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
+			HAPUtilityFile.writeJsonFile(packageFolder, "executable.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
 			
 			//external complex entity dependency
 			Set<HAPResourceIdSimple> dependency = bundle.getResourceDependency();

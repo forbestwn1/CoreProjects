@@ -10,7 +10,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPRelationship;
@@ -94,8 +94,8 @@ public class HAPMatchers extends HAPExecutableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		for(HAPDataTypeId dataTypeId : this.m_matchers.keySet()){
 			HAPMatcher matcher = this.m_matchers.get(dataTypeId);
-			jsonMap.put(HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE),
-					HAPSerializeManager.getInstance().toStringValue(matcher, HAPSerializationFormat.JSON));
+			jsonMap.put(HAPManagerSerialize.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE),
+					HAPManagerSerialize.getInstance().toStringValue(matcher, HAPSerializationFormat.JSON));
 		}
 	}
 	

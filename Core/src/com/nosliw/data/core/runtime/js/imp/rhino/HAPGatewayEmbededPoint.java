@@ -11,7 +11,7 @@ import org.mozilla.javascript.json.JsonParser;
 import com.google.gson.GsonBuilder;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
@@ -65,13 +65,13 @@ public class HAPGatewayEmbededPoint {
 		Object out = null;
 		Context context = Context.enter();
 		try{
-			String serviceDataStr = HAPSerializeManager.getInstance().toStringValue(outServiceData, HAPSerializationFormat.JSON);
+			String serviceDataStr = HAPManagerSerialize.getInstance().toStringValue(outServiceData, HAPSerializationFormat.JSON);
 			JsonParser jsonParser = new JsonParser(context, this.m_scope);
 			out = jsonParser.parseValue(serviceDataStr);
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			String serviceDataStr = HAPSerializeManager.getInstance().toStringValue(HAPServiceData.createFailureData(), HAPSerializationFormat.JSON);
+			String serviceDataStr = HAPManagerSerialize.getInstance().toStringValue(HAPServiceData.createFailureData(), HAPSerializationFormat.JSON);
 			out = context.evaluateString(this.m_scope, serviceDataStr, null, 0, null);
 		}
 		finally{

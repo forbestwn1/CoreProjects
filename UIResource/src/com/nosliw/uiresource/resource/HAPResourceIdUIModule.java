@@ -1,7 +1,7 @@
 package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -25,7 +25,7 @@ public class HAPResourceIdUIModule  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_uiModuleId = uiModuleId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(uiModuleId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(uiModuleId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

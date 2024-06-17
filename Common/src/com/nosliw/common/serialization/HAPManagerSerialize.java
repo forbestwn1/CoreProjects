@@ -9,20 +9,20 @@ import com.nosliw.common.literate.HAPLiterateManager;
  * Manager class to do serialzation job 
  * @param <K>
  */
-public class HAPSerializeManager {
+public class HAPManagerSerialize {
 
 	private Map<String, Class> m_classMaps;
 	
-	private static HAPSerializeManager m_instance;
+	private static HAPManagerSerialize m_instance;
 	
-	public static HAPSerializeManager getInstance(){
+	public static HAPManagerSerialize getInstance(){
 		if(m_instance==null){
-			m_instance = new HAPSerializeManager();
+			m_instance = new HAPManagerSerialize();
 		}
 		return m_instance;
 	}
 	
-	private HAPSerializeManager(){
+	private HAPManagerSerialize(){
 		this.m_classMaps = new LinkedHashMap<String, Class>();
 	}
 	

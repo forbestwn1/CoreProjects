@@ -35,16 +35,16 @@ public class HAPManualUtilityParserBrickFormatJson {
 		HAPManualWrapperBrick out = new HAPManualWrapperBrick();
 		
 		//try with definition
-		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = HAPUtilityBrick.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		Object brickTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
+		HAPIdBrickType brickTypeId = HAPUtilityBrick.parseBrickTypeId(brickTypeObj, entityTypeIfNotProvided, entityManager);
 		
-		Object entityObj = jsonObj.opt(HAPManualWithBrick.BRICK);
-		if(entityObj==null)
+		Object brickObj = jsonObj.opt(HAPManualWithBrick.BRICK);
+		if(brickObj==null)
 		{
-			entityObj = jsonObj;    //if no entity node, then using root
+			brickObj = jsonObj;    //if no entity node, then using root
 		}
-		HAPManualBrick entityDef = manualDivisionEntityMan.parseEntityDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
-		out.setEntity(entityDef);
+		HAPManualBrick brickDef = manualDivisionEntityMan.parseEntityDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+		out.setEntity(brickDef);
 		
 		Object infoObj = jsonObj.opt(HAPManualWrapperBrick.INFO);
 		out.buildEntityInfoByJson(infoObj);

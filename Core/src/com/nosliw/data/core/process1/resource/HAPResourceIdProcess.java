@@ -1,7 +1,7 @@
 package com.nosliw.data.core.process1.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -25,7 +25,7 @@ public class HAPResourceIdProcess  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_processId = processId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(processId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(processId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

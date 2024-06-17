@@ -478,7 +478,7 @@ operation parm
 represent any expression
 */
   final public SimpleNode Expression(String index) throws ParseException {
- /*@bgen(jjtree) EXPRESSION */
+ /*@bgen(jjtree) VALUE */
         SimpleNode jjtn000 = new SimpleNode(JJTEXPRESSION);
         boolean jjtc000 = true;
         jjtree.openNodeScope(jjtn000);int i = 0;

@@ -11,7 +11,7 @@ import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -103,7 +103,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 				//parse literate to get data type and value parts
 				String[] parts = HAPUtilityNamingConversion.splitTextByComponents(text.substring(TOKEN_LITERATE.length()), SEPERATOR_DATATYPE);
 				if(parts.length<2)   return false;
-				this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), parts[0], HAPSerializationFormat.LITERATE);
+				this.m_dataTypeId = (HAPDataTypeId)HAPManagerSerialize.getInstance().buildObject(HAPDataTypeId.class.getName(), parts[0], HAPSerializationFormat.LITERATE);
 				this.m_value = parts[1];
 				return true;
 			}
@@ -122,7 +122,7 @@ public class HAPDataWrapper  extends HAPSerializableImp implements HAPData{
 		//data type id
 		String dataTypeIdLiterate = jsonObj.optString(DATATYPEID);
 		if(HAPUtilityBasic.isStringEmpty(dataTypeIdLiterate))  return false;
-		this.m_dataTypeId = (HAPDataTypeId)HAPSerializeManager.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
+		this.m_dataTypeId = (HAPDataTypeId)HAPManagerSerialize.getInstance().buildObject(HAPDataTypeId.class.getName(), dataTypeIdLiterate, HAPSerializationFormat.LITERATE);
 
 		//value format
 		Object valueFormat = jsonObj.opt(VALUEFORMAT);

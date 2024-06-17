@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataTypeConverter;
@@ -140,11 +140,11 @@ public class HAPOperandDataSource{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(DATASOURCE_NAME, this.m_dataSourceName);
-		jsonMap.put(DATASOURCE_DEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_dataSourceDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(DATASOURCE_CONSTANT, HAPSerializeManager.getInstance().toStringValue(this.m_constants, HAPSerializationFormat.JSON));
-		jsonMap.put(DATASOURCE_VARMAPPING, HAPSerializeManager.getInstance().toStringValue(this.m_varMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(DATASOURCE_VARCONFIGURE, HAPSerializeManager.getInstance().toStringValue(this.m_varMapping, HAPSerializationFormat.JSON));
-		jsonMap.put(DATASOURCE_PARMMATCHERS, HAPSerializeManager.getInstance().toStringValue(this.m_parmsMatchers, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASOURCE_DEFINITION, HAPManagerSerialize.getInstance().toStringValue(this.m_dataSourceDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASOURCE_CONSTANT, HAPManagerSerialize.getInstance().toStringValue(this.m_constants, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASOURCE_VARMAPPING, HAPManagerSerialize.getInstance().toStringValue(this.m_varMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASOURCE_VARCONFIGURE, HAPManagerSerialize.getInstance().toStringValue(this.m_varMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(DATASOURCE_PARMMATCHERS, HAPManagerSerialize.getInstance().toStringValue(this.m_parmsMatchers, HAPSerializationFormat.JSON));
 		
 	}
 */	

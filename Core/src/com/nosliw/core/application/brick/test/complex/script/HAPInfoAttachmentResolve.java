@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 
 @HAPEntityWithAttribute
@@ -45,7 +45,7 @@ public class HAPInfoAttachmentResolve extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUETYPE, this.m_valueType);
 		jsonMap.put(ITEMNAME, this.m_itemName);
-		jsonMap.put(ATTACHMENT, HAPSerializeManager.getInstance().toStringValue(this.m_attachment, HAPSerializationFormat.JSON));
+		jsonMap.put(ATTACHMENT, HAPManagerSerialize.getInstance().toStringValue(this.m_attachment, HAPSerializationFormat.JSON));
 		jsonMap.put(ENTITYSTR, this.m_entityStr);
 	}
 

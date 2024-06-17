@@ -12,7 +12,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
@@ -50,7 +50,7 @@ public class HAPBrowseComplexEntityServlet extends HAPServiceServlet{
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
 		List<HAPContainerComplexEntity> entitys =  new HAPBrowseComplexEntityServlet().buildComplexEntityContainer(runtimeEnvironment);		
-		System.out.println(HAPUtilityJson.formatJson(HAPSerializeManager.getInstance().toStringValue(entitys, HAPSerializationFormat.JSON)));
+		System.out.println(HAPUtilityJson.formatJson(HAPManagerSerialize.getInstance().toStringValue(entitys, HAPSerializationFormat.JSON)));
 	}
 	
 	private List<HAPContainerComplexEntity> buildComplexEntityContainer(HAPRuntimeEnvironmentImpBrowser runtimeEnv){

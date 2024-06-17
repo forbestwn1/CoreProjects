@@ -1,7 +1,7 @@
 package com.nosliw.data.core.script.expression1.resource;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.script.expression1.HAPIdScriptGroup;
@@ -26,7 +26,7 @@ public class HAPResourceIdScriptGroup  extends HAPResourceIdSimple{
 		this();
 		init(null, null);
 		this.m_scriptId = scriptId;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(scriptId, HAPSerializationFormat.LITERATE); 
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(scriptId, HAPSerializationFormat.LITERATE); 
 	}
 
 	@Override

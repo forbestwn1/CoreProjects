@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.brick.dataexpression.lib.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
@@ -19,19 +20,21 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 
 	@Override
 	public void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
-		HAPBlockDataExpressionElementInLibrary eleExe = (HAPBlockDataExpressionElementInLibrary)blockExe;
-		HAPManualBlockDataExpressionElementInLibrary eleDef = (HAPManualBlockDataExpressionElementInLibrary)blockDef;
+		HAPDataExpressionElementInLibrary exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
+		HAPManualDataExpressionLibraryElement def = ((HAPManualBlockDataExpressionElementInLibrary)blockDef).getValue();
+		
+		def.cloneToEntityInfo(exe);
 		
 		//build expression in executable
-		HAPOperand operand = processContext.getRuntimeEnv().getDataExpressionParser().parseExpression(eleDef.getExpression());
-		eleExe.setExpression(new HAPExecutableExpressionData(new HAPWrapperOperand(operand)));
+		HAPOperand operand = processContext.getRuntimeEnv().getDataExpressionParser().parseExpression(def.getExpression());
+		exe.setExpression(new HAPExecutableExpressionData(new HAPWrapperOperand(operand)));
 
 		//
-		eleExe.setResult(eleDef.getResult());
-		eleExe.getRequestParms().addAll(eleDef.getRequestParms());
+		exe.setResult(def.getResult());
+		exe.getRequestParms().addAll(def.getRequestParms());
 		
 		//resolve variable name
-		HAPUtilityExpressionProcessor.resolveVariableName(eleExe.getExpression(), eleExe, eleExe.getVariablesInfo());
+		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), exe, exe.getVariablesInfo());
 		
 		//process reference
 		

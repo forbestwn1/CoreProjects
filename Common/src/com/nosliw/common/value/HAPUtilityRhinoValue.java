@@ -23,7 +23,7 @@ import org.mozilla.javascript.Undefined;
 
 import com.nosliw.common.serialization.HAPJsonTypeUnchange;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson; 
  
 /**
@@ -42,7 +42,7 @@ public class HAPUtilityRhinoValue
     public static ScriptableObject toRhinoScriptableObjectFromObject(Object obj) throws Exception 
     { 
         // Parse JSON string 
-		String jsonString = HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
+		String jsonString = HAPManagerSerialize.getInstance().toStringValue(obj, HAPSerializationFormat.JSON);
 		Object json = null;
 
 		try{json = new JSONObject(jsonString);}catch(Exception e){}
@@ -148,7 +148,7 @@ public class HAPUtilityRhinoValue
         	Object javaObj = ((NativeJavaObject)nativeObject).unwrap();
         	out = toJson(javaObj);
         	if(out==null){
-            	String jsonStr = HAPSerializeManager.getInstance().toStringValue(javaObj, HAPSerializationFormat.JSON);
+            	String jsonStr = HAPManagerSerialize.getInstance().toStringValue(javaObj, HAPSerializationFormat.JSON);
             	if(javaObj instanceof List || javaObj instanceof Set)  out = new JSONArray(jsonStr);
             	else out = new JSONObject(jsonStr);
         	}

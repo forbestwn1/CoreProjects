@@ -10,13 +10,13 @@ import com.google.common.collect.Sets;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
+import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
@@ -41,7 +41,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPBrick brick, HAPContainerVariableCriteriaInfo varInfos) {
+	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPWithInternalValuePort withInternalBrick, HAPContainerVariableCriteriaInfo varInfos) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -51,9 +51,9 @@ public class HAPUtilityExpressionProcessor {
 					
 					HAPReferenceElement ref = new HAPReferenceElement();
 					ref.buildObject(variableOperand.getVariableName(), HAPSerializationFormat.JSON);
-					ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, brick));
+					ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, withInternalBrick));
 
-					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceInBrick(ref, null, brick);
+					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceInternal(ref, null, withInternalBrick);
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);

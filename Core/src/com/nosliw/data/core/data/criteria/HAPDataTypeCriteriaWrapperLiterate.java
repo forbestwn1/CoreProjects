@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -53,7 +53,7 @@ public class HAPDataTypeCriteriaWrapperLiterate extends HAPSerializableImp imple
 	@Override
 	protected String buildLiterate(){
 		if(this.m_literateValue==null){
-			HAPSerializeManager.getInstance().toStringValue(this.m_criteria, HAPSerializationFormat.LITERATE);
+			HAPManagerSerialize.getInstance().toStringValue(this.m_criteria, HAPSerializationFormat.LITERATE);
 		}
 		return this.m_literateValue;
 	}

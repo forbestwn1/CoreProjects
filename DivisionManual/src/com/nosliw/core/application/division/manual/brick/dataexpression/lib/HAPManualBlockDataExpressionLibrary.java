@@ -4,6 +4,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionLibrary;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.HAPManualWrapperValue;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainer;
 
 public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickBlockSimple{
@@ -15,12 +16,18 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickBlockSimp
 	}
 
 	public String addElement(HAPManualBlockDataExpressionElementInLibrary element) {
-		HAPManualBrickContainer container = (HAPManualBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
-		return container.addElement(container);
+		return this.getContainer().addElement(element);
+	}
+	
+	public String addElement(HAPManualWrapperValue elementValueWrapper) {
+		return this.getContainer().addElement(elementValueWrapper);
 	}
 	
 	public String addElement(HAPManualAttribute element) {
-		HAPManualBrickContainer container = (HAPManualBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
-		return container.addElement(element);
+		return this.getContainer().addElement(element);
+	}
+	
+	private HAPManualBrickContainer getContainer() {
+		return (HAPManualBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
 	}
 }

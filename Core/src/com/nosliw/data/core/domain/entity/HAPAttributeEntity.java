@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPInfoBrickType;
@@ -52,8 +52,8 @@ public abstract class HAPAttributeEntity<T> extends HAPEntityInfoImp implements 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {	
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUETYPEINFO, HAPSerializeManager.getInstance().toStringValue(this.m_valueTypeInfo, HAPSerializationFormat.JSON));
-		jsonMap.put(VALUE, HAPSerializeManager.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUETYPEINFO, HAPManagerSerialize.getInstance().toStringValue(this.m_valueTypeInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUE, HAPManagerSerialize.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JSON));
 	}
 
 	@Override

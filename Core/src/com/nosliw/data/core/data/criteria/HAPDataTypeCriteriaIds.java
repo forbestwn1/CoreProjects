@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -64,7 +64,7 @@ public class HAPDataTypeCriteriaIds extends HAPDataTypeCriteriaImp{
 		int i = 0;
 		for(HAPDataTypeCriteria idCriteria : this.getChildren()){
 			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
-			out.append(HAPSerializeManager.getInstance().toStringValue(idCriteria, HAPSerializationFormat.LITERATE));
+			out.append(HAPManagerSerialize.getInstance().toStringValue(idCriteria, HAPSerializationFormat.LITERATE));
 			i++;
 		}
 		out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.END_IDS));

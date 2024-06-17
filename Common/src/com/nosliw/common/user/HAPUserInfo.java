@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 @HAPEntityWithAttribute
 public class HAPUserInfo extends HAPSerializableImp{
@@ -51,7 +51,7 @@ public class HAPUserInfo extends HAPSerializableImp{
 		JSONObject jsonObj = (JSONObject)json;
 		JSONObject userJsonObj = jsonObj.optJSONObject(USER);
 		if(userJsonObj!=null) {
-			this.m_user = (HAPUser)HAPSerializeManager.getInstance().buildObject(HAPUser.class.getName(), userJsonObj, HAPSerializationFormat.JSON);
+			this.m_user = (HAPUser)HAPManagerSerialize.getInstance().buildObject(HAPUser.class.getName(), userJsonObj, HAPSerializationFormat.JSON);
 		}
 		return true;
 	}

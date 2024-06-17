@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
@@ -58,7 +58,7 @@ public class HAPDefinitionServiceUse extends HAPEntityInfoWritableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(PROVIDER, this.m_provider);
 		jsonMap.put(DATAASSOCIATION, HAPUtilityJson.buildJson(this.m_dataAssociations, HAPSerializationFormat.JSON));
-		jsonMap.put(INTERFACE, HAPSerializeManager.getInstance().toStringValue(this.m_interfaceId, HAPSerializationFormat.JSON));
+		jsonMap.put(INTERFACE, HAPManagerSerialize.getInstance().toStringValue(this.m_interfaceId, HAPSerializationFormat.JSON));
 	}
 
 	@Override

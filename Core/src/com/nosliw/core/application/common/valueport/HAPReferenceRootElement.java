@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
@@ -84,10 +84,10 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEPORTID, HAPSerializeManager.getInstance().toStringValue(this.m_valuePortId, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUEPORTID, HAPManagerSerialize.getInstance().toStringValue(this.m_valuePortId, HAPSerializationFormat.JSON));
 		jsonMap.put(VALUEPORTNAME, this.m_valuePortName);
 		jsonMap.put(ROOTNAME, this.getRootName());
-		jsonMap.put(VALUESTRUCTUREREFERENCE, HAPSerializeManager.getInstance().toStringValue(this.m_valueStructureReference, HAPSerializationFormat.JSON));
+		jsonMap.put(VALUESTRUCTUREREFERENCE, HAPManagerSerialize.getInstance().toStringValue(this.m_valueStructureReference, HAPSerializationFormat.JSON));
 	}
 	
 	public HAPReferenceRootElement cloneRootElementReference() {

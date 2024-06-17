@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.variable.HAPVariableInfo;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -288,8 +288,8 @@ extends HAPSerializableImp implements HAPExpression{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ID, this.getId());
 		jsonMap.put(NAME, this.getName());
-		jsonMap.put(EXPRESSIONDEFINITION, HAPSerializeManager.getInstance().toStringValue(this.m_expressionDefinition, HAPSerializationFormat.JSON));
-		jsonMap.put(OPERAND, HAPSerializeManager.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONDEFINITION, HAPManagerSerialize.getInstance().toStringValue(this.m_expressionDefinition, HAPSerializationFormat.JSON));
+		jsonMap.put(OPERAND, HAPManagerSerialize.getInstance().toStringValue(this.m_operand, HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEINFOS, HAPJsonUtility.buildJson(this.getVariableInfos(), HAPSerializationFormat.JSON));
 		jsonMap.put(ERRORMSGS, HAPJsonUtility.buildJson(m_errorMsgs, HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLESMATCHERS, HAPJsonUtility.buildJson(this.m_varsMatchers, HAPSerializationFormat.JSON));

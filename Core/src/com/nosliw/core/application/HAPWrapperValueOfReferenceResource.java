@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -40,7 +40,7 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(RESOURCEID, HAPSerializeManager.getInstance().toStringValue(this.m_resourceId, HAPSerializationFormat.JSON));
+		jsonMap.put(RESOURCEID, HAPManagerSerialize.getInstance().toStringValue(this.m_resourceId, HAPSerializationFormat.JSON));
 	}
 
 	@Override

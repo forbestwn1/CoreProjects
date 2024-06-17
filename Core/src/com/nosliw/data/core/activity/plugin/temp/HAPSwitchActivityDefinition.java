@@ -4,7 +4,7 @@ public class HAPSwitchActivityDefinition{
 //extends HAPDefinitionActivityBranch{
 //
 //	@HAPAttribute
-//	public static String EXPRESSION = "expression";
+//	public static String VALUE = "expression";
 //	
 //	private HAPDefinitionScriptExpression m_expression;
 //	
@@ -20,7 +20,7 @@ public class HAPSwitchActivityDefinition{
 //		super.buildObjectByJson(json);
 //		JSONObject jsonObj = (JSONObject)json;
 //		this.buildDefaultInputMapping();
-//		String expressionStr = jsonObj.optString(EXPRESSION);
+//		String expressionStr = jsonObj.optString(VALUE);
 //		this.setExpression(expressionStr);
 //		return true;  
 //	}
@@ -28,7 +28,7 @@ public class HAPSwitchActivityDefinition{
 //	@Override
 //	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 //		super.buildJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(EXPRESSION, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
+//		jsonMap.put(VALUE, HAPJsonUtility.buildJson(this.m_expression, HAPSerializationFormat.JSON));
 //	}
 //	
 //	@Override

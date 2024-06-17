@@ -9,7 +9,7 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -41,7 +41,7 @@ public class HAPDataAssociationMapping extends HAPDataAssociation{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TUNNEL, HAPSerializeManager.getInstance().toStringValue(this.m_tunnel, HAPSerializationFormat.JSON));
+		jsonMap.put(TUNNEL, HAPManagerSerialize.getInstance().toStringValue(this.m_tunnel, HAPSerializationFormat.JSON));
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class HAPUtilitySerialize {
 					ele = jsonArray.opt(i);
 				}
 				else {
-					ele = HAPSerializeManager.getInstance().buildObject(className, jsonArray.opt(i), HAPSerializationFormat.JSON);
+					ele = HAPManagerSerialize.getInstance().buildObject(className, jsonArray.opt(i), HAPSerializationFormat.JSON);
 				}
 				out.add(ele);
 			}
@@ -61,7 +61,7 @@ public class HAPUtilitySerialize {
 					ele = jsonObj.opt((String)key);
 				}
 				else {
-					ele = HAPSerializeManager.getInstance().buildObject(className, jsonObj.opt((String)key), HAPSerializationFormat.JSON);
+					ele = HAPManagerSerialize.getInstance().buildObject(className, jsonObj.opt((String)key), HAPSerializationFormat.JSON);
 				}
 				out.put(key, ele);
 			}

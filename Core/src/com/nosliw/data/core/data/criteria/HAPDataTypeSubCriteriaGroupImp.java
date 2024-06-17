@@ -7,7 +7,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implements HAPDataTypeSubCriteriaGroup{
@@ -77,7 +77,7 @@ public class HAPDataTypeSubCriteriaGroupImp extends HAPSerializableImp implement
 			if(i!=0)   out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.COMMAR));
 			out.append(name);
 			out.append(HAPParserCriteria.getInstance().getToken(HAPParserCriteria.ASSIGNMENT));
-			out.append(HAPSerializeManager.getInstance().toStringValue(this.m_subCriterias.get(name), HAPSerializationFormat.LITERATE));
+			out.append(HAPManagerSerialize.getInstance().toStringValue(this.m_subCriterias.get(name), HAPSerializationFormat.LITERATE));
 			i++;
 		}
 		

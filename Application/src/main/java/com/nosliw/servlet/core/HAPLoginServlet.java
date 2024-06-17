@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.user.HAPUser;
 import com.nosliw.common.user.HAPUserInfo;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -30,7 +30,7 @@ public class HAPLoginServlet  extends HAPServiceServlet{
 		{
 			String userId = null;
 			if(parms!=null) {
-				HAPUserInfo inUserInfo = ((HAPUserInfo)HAPSerializeManager.getInstance().buildObject(HAPUserInfo.class.getName(), parms, HAPSerializationFormat.JSON));
+				HAPUserInfo inUserInfo = ((HAPUserInfo)HAPManagerSerialize.getInstance().buildObject(HAPUserInfo.class.getName(), parms, HAPSerializationFormat.JSON));
 				HAPUser user = inUserInfo.getUser();
 				if(user!=null) {
 					userId = user.getId();

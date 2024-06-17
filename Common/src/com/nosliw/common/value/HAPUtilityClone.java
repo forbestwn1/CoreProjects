@@ -10,7 +10,7 @@ import java.util.Set;
 import com.nosliw.common.interfac.HAPCloneable;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 public class HAPUtilityClone {
 
@@ -43,7 +43,7 @@ public class HAPUtilityClone {
 			out = ((HAPCloneable)obj).cloneValue();
 		}
 		else if(obj instanceof HAPSerializable) {
-			out = HAPSerializeManager.getInstance().buildObject(obj.getClass().toString(), HAPSerializeManager.getInstance().toStringValue(obj, HAPSerializationFormat.JSON), HAPSerializationFormat.JSON);
+			out = HAPManagerSerialize.getInstance().buildObject(obj.getClass().toString(), HAPManagerSerialize.getInstance().toStringValue(obj, HAPSerializationFormat.JSON), HAPSerializationFormat.JSON);
 		}
 		else {
 			out = obj;

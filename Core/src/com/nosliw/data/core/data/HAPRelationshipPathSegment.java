@@ -2,7 +2,7 @@ package com.nosliw.data.core.data;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -21,12 +21,12 @@ public class HAPRelationshipPathSegment extends HAPSerializableImp{
 	
 	public HAPRelationshipPathSegment(HAPDataTypeId dataTypeId){
 		this.m_type = HAPConstantShared.DATATYPE_PATHSEGMENT_PARENT;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE);
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(dataTypeId, HAPSerializationFormat.LITERATE);
 	}
 
 	public HAPRelationshipPathSegment(HAPDataTypeVersion dataTypeVersion){
 		this.m_type = HAPConstantShared.DATATYPE_PATHSEGMENT_LINKED;
-		this.m_id = HAPSerializeManager.getInstance().toStringValue(dataTypeVersion, HAPSerializationFormat.LITERATE);
+		this.m_id = HAPManagerSerialize.getInstance().toStringValue(dataTypeVersion, HAPSerializationFormat.LITERATE);
 	}
 
 	public String getType(){		return this.m_type;	}

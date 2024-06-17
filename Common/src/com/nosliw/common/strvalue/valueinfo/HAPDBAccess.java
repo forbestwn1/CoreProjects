@@ -16,7 +16,7 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.literate.HAPLiterateType;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
@@ -212,10 +212,10 @@ public class HAPDBAccess {
 					statement.setFloat(i+1, (Float)columnValue);
 				}
 				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_OBJECT.equals(dataType)){
-					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
+					statement.setString(i+1, HAPManagerSerialize.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
 				}
 				else if(HAPConstantShared.STRINGABLE_ATOMICVALUETYPE_ARRAY.equals(dataType)){
-					statement.setString(i+1, HAPSerializeManager.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
+					statement.setString(i+1, HAPManagerSerialize.getInstance().toStringValue(columnValue, HAPSerializationFormat.LITERATE));
 				}
 			}
 			statement.execute();

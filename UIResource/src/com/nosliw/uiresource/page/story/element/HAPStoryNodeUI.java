@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
@@ -42,7 +42,7 @@ public class HAPStoryNodeUI extends HAPStoryNodeImp{
 		else {
 			out = new HAPChangeResult();
 			if(DATASTRUCTURE.equals(path)) {
-				HAPUIDataStructureInfo dataStructureInfo = (HAPUIDataStructureInfo)HAPSerializeManager.getInstance().buildObject(HAPUIDataStructureInfo.class.getName(), value, HAPSerializationFormat.JSON);
+				HAPUIDataStructureInfo dataStructureInfo = (HAPUIDataStructureInfo)HAPManagerSerialize.getInstance().buildObject(HAPUIDataStructureInfo.class.getName(), value, HAPSerializationFormat.JSON);
 				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, DATASTRUCTURE, this.m_dataStructureInfo.cloneUIDataStructureInfo()));
 				this.m_dataStructureInfo = dataStructureInfo;
 				return out;

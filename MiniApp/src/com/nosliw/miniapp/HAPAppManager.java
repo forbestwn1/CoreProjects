@@ -5,7 +5,7 @@ import java.io.File;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.user.HAPUserInfo;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.imp.io.HAPDBSource;
@@ -29,7 +29,7 @@ public class HAPAppManager {
 	
 	public HAPDefinitionApp getMinAppDefinition(String minAppDefId) {
 		String file = HAPSystemFolderUtility.getMiniAppFolder()+minAppDefId+".res";
-		HAPDefinitionApp out = (HAPDefinitionApp)HAPSerializeManager.getInstance().buildObject(HAPDefinitionApp.class.getName(), new JSONObject(HAPUtilityFile.readFile(new File(file))), HAPSerializationFormat.JSON);
+		HAPDefinitionApp out = (HAPDefinitionApp)HAPManagerSerialize.getInstance().buildObject(HAPDefinitionApp.class.getName(), new JSONObject(HAPUtilityFile.readFile(new File(file))), HAPSerializationFormat.JSON);
 		out.setId(minAppDefId);
 		return out;
 	}

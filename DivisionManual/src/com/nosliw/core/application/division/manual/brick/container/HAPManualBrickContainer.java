@@ -1,6 +1,5 @@
 package com.nosliw.core.application.division.manual.brick.container;
 
-import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -9,6 +8,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.HAPManualWrapperValue;
 
 public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
 
@@ -33,22 +33,14 @@ public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
 		return attr.getName();
 	}
 	
-	public String addElement(HAPEntityOrReference brickOrRef) {
-		String attrName = null;
-		String brickOrRefType = brickOrRef.getEntityOrReferenceType();
-		if(brickOrRefType.equals(HAPConstantShared.BRICK)) {
-			if(brickOrRef instanceof HAPEntityInfo) {
-				attrName = ((HAPEntityInfo)brickOrRef).getId();
-				this.setAttributeWithValueBrick(attrName, brickOrRef);
-			}
-			else {
-				attrName = this.addElementAnom(brickOrRef);
-			}
-		}
-		else if(brickOrRefType.equals(HAPConstantShared.RESOURCEID)) {
-			attrName = this.addElementAnom(brickOrRef);
-		}
+	public String addElement(HAPManualWrapperValue valueWrapper) {
+		String attrName = generateAttributeName();
+		this.setAttributeWithValueWrapper(attrName, valueWrapper);
 		return attrName;
+	}
+	
+	public String addElement(HAPEntityOrReference brickOrRef) {
+		return this.addElementAnom(brickOrRef);
 	}
 	
 	private String addElementAnom(HAPEntityOrReference brickOrRef) {

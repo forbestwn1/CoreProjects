@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -55,10 +55,10 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	public Set<String> getNames() {   return this.m_values.keySet();  }
 
 	@Override
-	protected String buildFullJson(){	return HAPSerializeManager.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON_FULL);	}
+	protected String buildFullJson(){	return HAPManagerSerialize.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON_FULL);	}
 
 	@Override
-	protected String buildJson(){	return HAPSerializeManager.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON);	}
+	protected String buildJson(){	return HAPManagerSerialize.getInstance().toStringValue(m_values, HAPSerializationFormat.JSON);	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -112,7 +112,7 @@ public class HAPInfoImpSimple extends HAPSerializableImp implements HAPInfo{
 	protected String buildLiterate(){
 		List<String> segs = new ArrayList<String>();
 		for(String name : this.m_values.keySet()) {
-			segs.add(HAPUtilityNamingConversion.cascadeComponents(new String[] {name, HAPSerializeManager.getInstance().toStringValue(this.m_values.get(name), HAPSerializationFormat.LITERATE)}, this.m_seperator2));
+			segs.add(HAPUtilityNamingConversion.cascadeComponents(new String[] {name, HAPManagerSerialize.getInstance().toStringValue(this.m_values.get(name), HAPSerializationFormat.LITERATE)}, this.m_seperator2));
 		}
 		return HAPUtilityNamingConversion.cascadeComponents(segs.toArray(new String[0]), this.m_seperator1); 
 	}

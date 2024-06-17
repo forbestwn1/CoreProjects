@@ -55,7 +55,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableBlock));
-				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInBrick(ref, new HAPConfigureResolveElementReference(), executableBlock);
+				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInternal(ref, new HAPConfigureResolveElementReference(), executableBlock);
 				
 				if(resolve!=null) {
 					resolvedVars.add(resolve);

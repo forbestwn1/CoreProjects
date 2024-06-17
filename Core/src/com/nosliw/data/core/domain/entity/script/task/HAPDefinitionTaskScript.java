@@ -11,7 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.domain.entity.task.HAPRequirementTask;
 
 @HAPEntityWithAttribute
@@ -31,7 +31,7 @@ public class HAPDefinitionTaskScript extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(REQUIREMENT, HAPSerializeManager.getInstance().toStringValue(m_requirement, HAPSerializationFormat.JSON));
+		jsonMap.put(REQUIREMENT, HAPManagerSerialize.getInstance().toStringValue(m_requirement, HAPSerializationFormat.JSON));
 	}
 
 	@Override

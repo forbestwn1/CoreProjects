@@ -6,44 +6,39 @@
 	},
 	"brick":[
 		{
-			"info": {
-				"name" : "dataexpression1",
-				"status": "disabled1",
-				"description" : "dataexpression1"
-			},
-			"brick" : {
-				"request" : [
-					{
-						"name" : "deparm1",
-						"dataInfo" : "test.string;1.0.0",
-						"defaultValue" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of baseVarNormal"
-						}
-					},
-					{
-						"name" : "deparm2",
-						"dataInfo" : "test.integer;1.0.0",
-						"defaultValue" : {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 3
-						}
-					},
-					{
-						"name" : "deparm3",
-						"dataInfo" : "test.integer;1.0.0",
-						"defaultValue" : {
-							"dataTypeId": "test.integer;1.0.0",
-							"value": 10
-						}
+			"name" : "dataexpression1",
+			"status": "disabled1",
+			"description" : "dataexpression1",
+			"request" : [
+				{
+					"name" : "deparm1",
+					"dataInfo" : "test.string;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "default value of baseVarNormal"
 					}
-				],
-				"result" : {
-					"criteria" : "test.string;1.0.0"
 				},
-				"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
-			}
-			
+				{
+					"name" : "deparm2",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 3
+					}
+				},
+				{
+					"name" : "deparm3",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 10
+					}
+				}
+			],
+			"result" : {
+				"criteria" : "test.string;1.0.0"
+			},
+			"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
 		}
 	]
 }

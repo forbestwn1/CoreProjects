@@ -10,7 +10,7 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -83,7 +83,7 @@ public class HAPUtilityRuntimeJSScript {
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		templateParms.put("resourceInfo", resourceInfo.toStringValue(HAPSerializationFormat.JSON));
 		
-		String infoJson = HAPSerializeManager.getInstance().toStringValue(resource.getInfo(), HAPSerializationFormat.JSON);
+		String infoJson = HAPManagerSerialize.getInstance().toStringValue(resource.getInfo(), HAPSerializationFormat.JSON);
 		if(HAPUtilityBasic.isStringEmpty(infoJson)){
 			templateParms.put(HAPResource.INFO, "undefined");
 		}

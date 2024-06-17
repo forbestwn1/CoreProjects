@@ -7,7 +7,6 @@ import java.util.Set;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -43,8 +42,8 @@ public class HAPUtilityStructureElementReference {
 */
 	
 	
-	public static HAPIdElement resolveElementReferenceInBrick(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBrick brick) {
-		HAPResultReferenceResolve refResolve = analyzeElementReferenceInBrick(reference, resolveConfigure, brick);
+	public static HAPIdElement resolveElementReferenceInternal(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPWithInternalValuePort withValuePort) {
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceInternal(reference, resolveConfigure, withValuePort);
 		return resolveToElementId(refResolve);
 	}
 	
@@ -73,8 +72,8 @@ public class HAPUtilityStructureElementReference {
 		return resolve;
 	}
 
-	public static HAPResultReferenceResolve analyzeElementReferenceInBrick(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBrick brick) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInBrick(reference.getValuePortId(), brick);
+	public static HAPResultReferenceResolve analyzeElementReferenceInternal(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPWithInternalValuePort withValuePort) {
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInternal(reference.getValuePortId(), withValuePort);
 
 		HAPResultReferenceResolve resolve  = valuePort.resolveReference(reference, resolveConfigure);
 		if(resolve!=null) {

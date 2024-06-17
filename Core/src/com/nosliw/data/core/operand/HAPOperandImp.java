@@ -8,7 +8,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
@@ -66,7 +66,7 @@ public abstract class HAPOperandImp  extends HAPSerializableImp implements HAPOp
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(STATUS, this.getStatus());
-		jsonMap.put(OUTPUTCRITERIA, HAPSerializeManager.getInstance().toStringValue(this.getOutputCriteria(), HAPSerializationFormat.LITERATE));
+		jsonMap.put(OUTPUTCRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getOutputCriteria(), HAPSerializationFormat.LITERATE));
 	}
 
 	

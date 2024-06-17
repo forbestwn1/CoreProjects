@@ -15,7 +15,7 @@ import com.nosliw.common.literate.HAPLiterateManager;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
@@ -84,7 +84,7 @@ public class HAPResourceDependency extends HAPSerializableImp{
 	@Override
 	protected String buildLiterate(){
 		String aliasLiterate = HAPLiterateManager.getInstance().valueToString(this.m_alias);
-		String idLiterate = HAPSerializeManager.getInstance().toStringValue(this.m_id, HAPSerializationFormat.LITERATE);
+		String idLiterate = HAPManagerSerialize.getInstance().toStringValue(this.m_id, HAPSerializationFormat.LITERATE);
 		return HAPUtilityNamingConversion.cascadeLevel3(new String[]{idLiterate, aliasLiterate});
 	}
 	

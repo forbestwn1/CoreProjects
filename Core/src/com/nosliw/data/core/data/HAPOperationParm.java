@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPSerializeManager;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 
 @HAPEntityWithAttribute
 public class HAPOperationParm extends HAPSerializableImp{
@@ -37,7 +37,7 @@ public class HAPOperationParm extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(NAME, m_name);
-		jsonMap.put(DATA, HAPSerializeManager.getInstance().toStringValue(m_data, HAPSerializationFormat.JSON));
+		jsonMap.put(DATA, HAPManagerSerialize.getInstance().toStringValue(m_data, HAPSerializationFormat.JSON));
 	}	
 
 }
