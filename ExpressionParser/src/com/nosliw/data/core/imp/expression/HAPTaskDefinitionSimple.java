@@ -8,9 +8,9 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPWrapperOperand;
 
 public class HAPTaskDefinitionSimple{ 
 

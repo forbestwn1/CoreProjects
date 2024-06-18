@@ -1,4 +1,4 @@
-package com.nosliw.data.core.dataexpression;
+package com.nosliw.data.core.application.common.dataexpression;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -17,10 +17,6 @@ import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionData;
 import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
-import com.nosliw.data.core.operand.HAPOperandConstant;
-import com.nosliw.data.core.operand.HAPUtilityOperand;
-import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;

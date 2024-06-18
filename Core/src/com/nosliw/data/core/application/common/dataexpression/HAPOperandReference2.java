@@ -1,4 +1,4 @@
-package com.nosliw.data.core.operand;
+package com.nosliw.data.core.application.common.dataexpression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,7 +21,7 @@ import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
-public class HAPOperandReference extends HAPOperandImp{
+public class HAPOperandReference2 extends HAPOperandImp{
 
 	@HAPAttribute
 	public static final String REFERENCE = "reference";
@@ -56,7 +56,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	private Map<String, HAPMatchers> m_matchers;
 	
-	private HAPOperandReference(){
+	private HAPOperandReference2(){
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
@@ -64,7 +64,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
 	}
 	
-	public HAPOperandReference(String reference){
+	public HAPOperandReference2(String reference){
 		this();
 		this.m_reference = reference;
 	}
@@ -131,12 +131,12 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	@Override
 	public HAPOperand cloneOperand() {
-		HAPOperandReference out = new HAPOperandReference();
+		HAPOperandReference2 out = new HAPOperandReference2();
 		this.cloneTo(out);
 		return out;
 	}
 	
-	protected void cloneTo(HAPOperandReference operand){
+	protected void cloneTo(HAPOperandReference2 operand){
 		super.cloneTo(operand);
 		operand.m_reference = this.m_reference;
 		operand.m_referenceExpressionAttributeName = this.m_referenceExpressionAttributeName;

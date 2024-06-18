@@ -7,14 +7,14 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandAttribute;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandConstant;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandOperation;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandReference;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandVariable;
+import com.nosliw.data.core.application.common.dataexpression.HAPParmInOperationOperand;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
-import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPOperandAttribute;
-import com.nosliw.data.core.operand.HAPOperandConstant;
-import com.nosliw.data.core.operand.HAPOperandOperation;
-import com.nosliw.data.core.operand.HAPOperandReference;
-import com.nosliw.data.core.operand.HAPOperandVariable;
-import com.nosliw.data.core.operand.HAPParmInOperationOperand;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
 

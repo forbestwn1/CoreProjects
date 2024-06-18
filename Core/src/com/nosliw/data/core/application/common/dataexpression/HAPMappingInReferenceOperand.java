@@ -1,4 +1,4 @@
-package com.nosliw.data.core.operand;
+package com.nosliw.data.core.application.common.dataexpression;
 
 public class HAPMappingInReferenceOperand {
 

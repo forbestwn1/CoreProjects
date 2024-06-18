@@ -1,8 +1,7 @@
-package com.nosliw.core.application.brick.dataexpression.lib;
+package com.nosliw.data.core.application.common.dataexpression;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
 public interface HAPDataExpressionUnit {

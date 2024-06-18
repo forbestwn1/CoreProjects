@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity.expression.data1;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPExecutableBundle;

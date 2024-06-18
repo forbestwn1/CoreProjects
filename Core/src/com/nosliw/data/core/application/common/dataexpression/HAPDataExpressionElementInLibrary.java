@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.dataexpression.lib;
+package com.nosliw.data.core.application.common.dataexpression;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultInInteractiveExpression;
@@ -16,8 +16,6 @@ import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
 public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implements HAPInteractiveExpression, HAPDataExpressionUnit, HAPWithValuePort{

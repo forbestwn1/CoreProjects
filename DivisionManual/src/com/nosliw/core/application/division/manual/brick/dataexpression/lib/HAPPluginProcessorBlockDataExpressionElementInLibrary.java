@@ -3,14 +3,14 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.brick.dataexpression.lib.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
-import com.nosliw.data.core.operand.HAPOperand;
-import com.nosliw.data.core.operand.HAPWrapperOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPWrapperOperand;
 
 public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
 

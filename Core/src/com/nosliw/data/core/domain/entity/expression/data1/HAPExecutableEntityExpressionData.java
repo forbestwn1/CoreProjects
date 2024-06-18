@@ -6,10 +6,10 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.container.HAPExecutableEntityContainerComplex;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 @HAPEntityWithAttribute
 public abstract class HAPExecutableEntityExpressionData extends HAPExecutableEntityComplex{

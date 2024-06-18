@@ -1,4 +1,4 @@
-package com.nosliw.data.core.operand;
+package com.nosliw.data.core.application.common.dataexpression;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +20,6 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 

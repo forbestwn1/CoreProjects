@@ -17,10 +17,17 @@ import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
+import com.nosliw.data.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.application.common.dataexpression.HAPInterfaceProcessOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandConstant;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandReference;
+import com.nosliw.data.core.application.common.dataexpression.HAPOperandVariable;
+import com.nosliw.data.core.application.common.dataexpression.HAPUtilityOperand;
+import com.nosliw.data.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPUtilityDomain;
 import com.nosliw.data.core.domain.HAPUtilityValueContextReference;
@@ -30,13 +37,6 @@ import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityEx
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataSingle;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
-import com.nosliw.data.core.operand.HAPInterfaceProcessOperand;
-import com.nosliw.data.core.operand.HAPOperandConstant;
-import com.nosliw.data.core.operand.HAPOperandReference;
-import com.nosliw.data.core.operand.HAPOperandVariable;
-import com.nosliw.data.core.operand.HAPUtilityOperand;
-import com.nosliw.data.core.operand.HAPWrapperOperand;
 import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPUtilityExpressionProcessor {

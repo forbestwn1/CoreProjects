@@ -15,12 +15,12 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
+import com.nosliw.data.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
 import com.nosliw.data.core.domain.valuecontext.HAPInfoPartSimple;
 import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
-import com.nosliw.data.core.operand.HAPContainerVariableCriteriaInfo;
 
 public class HAPUtilityValueStructure {
 

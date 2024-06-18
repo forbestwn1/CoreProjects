@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrickBlockComplex;
-import com.nosliw.data.core.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.data.core.application.common.dataexpression.HAPExecutableExpressionData1;
 
 @HAPEntityWithAttribute
 public class HAPBlockDataExpressions extends HAPBrickBlockComplex{
