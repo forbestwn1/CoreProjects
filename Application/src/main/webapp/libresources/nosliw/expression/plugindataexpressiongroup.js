@@ -79,7 +79,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		getItemVariableInfos : function(itemId){
 			var variableInfoContainer = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_VARIABLEINFOS];
 			var expressionItem = loc_getItemById(itemId);
-			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS];
+			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS];
 			
 			var out = [];
 			_.each(varKeys, function(key, i){

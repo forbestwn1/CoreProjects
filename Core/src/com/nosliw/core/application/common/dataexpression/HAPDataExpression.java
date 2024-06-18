@@ -8,23 +8,23 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpressionData extends HAPExecutableImpEntityInfo{
+public class HAPDataExpression extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -41,7 +41,7 @@ public class HAPExecutableExpressionData extends HAPExecutableImpEntityInfo{
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
-	public HAPExecutableExpressionData(HAPWrapperOperand operand) {
+	public HAPDataExpression(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}
 	

@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
-import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
@@ -41,7 +41,7 @@ import com.nosliw.data.core.runtime.HAPExecutable;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveVariableName(HAPExecutableExpressionData expressionExe, HAPWithInternalValuePort withInternalBrick, HAPContainerVariableCriteriaInfo varInfos) {
+	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalBrick, HAPContainerVariableCriteriaInfo varInfos) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {

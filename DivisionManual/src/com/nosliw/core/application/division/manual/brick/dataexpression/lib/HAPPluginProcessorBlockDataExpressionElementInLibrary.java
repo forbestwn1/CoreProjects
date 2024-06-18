@@ -4,7 +4,7 @@ import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
-import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
@@ -27,7 +27,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		
 		//build expression in executable
 		HAPOperand operand = processContext.getRuntimeEnv().getDataExpressionParser().parseExpression(def.getExpression());
-		exe.setExpression(new HAPExecutableExpressionData(new HAPWrapperOperand(operand)));
+		exe.setExpression(new HAPDataExpression(new HAPWrapperOperand(operand)));
 
 		//
 		exe.setResult(def.getResult());

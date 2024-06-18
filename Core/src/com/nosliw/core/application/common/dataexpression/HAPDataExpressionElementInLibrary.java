@@ -23,7 +23,7 @@ public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implemen
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 	
-	private HAPExecutableExpressionData m_dataExpression;
+	private HAPDataExpression m_dataExpression;
 	
 	private List<HAPRequestParmInInteractive> m_requestParms;
 	
@@ -36,9 +36,9 @@ public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implemen
 		this.m_variableInfo = new HAPContainerVariableCriteriaInfo();
 	}
 	
-	public HAPExecutableExpressionData getExpression() {	return m_dataExpression;	}
+	public HAPDataExpression getExpression() {	return m_dataExpression;	}
 	
-	public void setExpression(HAPExecutableExpressionData dataExpression) {	this.m_dataExpression = dataExpression;	}
+	public void setExpression(HAPDataExpression dataExpression) {	this.m_dataExpression = dataExpression;	}
 	
 	@Override
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }

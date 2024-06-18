@@ -37,12 +37,12 @@ var node_utility = function()
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
-		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesContainer, valuePortEnv, {
+		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS], variablesContainer, valuePortEnv, {
 			success : function(request, allVariables){
 				//execute operand
-				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
+				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OPERAND], allVariables, constants, references, {
 					success : function(requestInfo, operandResult){
-						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
+						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OUTPUTMATCHERS];
 						if(outputMatchers!=undefined){
 							return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
 						}
@@ -99,9 +99,9 @@ var node_utility = function()
 		var allVariables = variables;
 		
 		//execute operand
-		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OPERAND], allVariables, constants, references, {
+		var executeOperandRequest = loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OPERAND], allVariables, constants, references, {
 			success : function(requestInfo, operandResult){
-				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_OUTPUTMATCHERS];
+				var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OUTPUTMATCHERS];
 				if(outputMatchers!=undefined){
 					return node_expressionUtility.getMatchDataTaskRequest(operandResult, outputMatchers);
 				}
@@ -477,7 +477,7 @@ var node_utility = function()
 	var loc_getExecuteDataExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
 		var variablesInfo = expressionDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_VARIABLEINFOS);
-		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSIONDATA_VARIABLEKEYS], variablesInfo, valueContext, {
+		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS], variablesInfo, valueContext, {
 			success : function(request, varValues){
 				return loc_getExecuteDataExpressionRequest(expressionItem, varValues, undefined, references);
 			}
