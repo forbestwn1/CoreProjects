@@ -21,6 +21,22 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_taskUtility = {
+		
+	getExecuteTaskRequest : function(taskInterface, handlers, request){
+		var result;
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(taskInterface.getInitRequest());
+		out.addRequest(taskInterface.getExecuteRequest({
+			success : function(request, result1){
+				result = result1;
+			}
+		}));
+		out.addRequest(taskInterface.getDestroyRequest());
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			return result;
+		}));
+		return out;
+	},
 	
 	getInvokeTaskRequest : function(taskInfo, taskInput, requirement, bundleCore, handlers, request){
 		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();

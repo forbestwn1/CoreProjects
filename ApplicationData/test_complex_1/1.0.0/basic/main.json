@@ -261,8 +261,9 @@
 									},
 									"definition" : {
 										"mapping" : {
-											"elementPath": "parent_public_url",
-											"elementPath1": "parent_public"
+											"elementPath0": "parent_public_url",
+											"elementPath1": "parent_public",
+											"elementPath": "output1"
 										}
 									}
 								}

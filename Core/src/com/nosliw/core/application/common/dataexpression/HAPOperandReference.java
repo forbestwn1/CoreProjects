@@ -12,14 +12,13 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPOperandReference extends HAPOperandImp{
 
@@ -30,37 +29,23 @@ public class HAPOperandReference extends HAPOperandImp{
 	public static final String VARMAPPING = "varMapping";
 	
 	@HAPAttribute
-	public static final String RESOLVED_VARIABLE = "resolvedVariable";
-	
-	@HAPAttribute
-	public static final String RESOLVED_ELEMENT = "resolvedElement";
-	
-	@HAPAttribute
 	public static final String VARMATCHERS = "varMatchers";
 	
 	//reference to expression (attachent name or resource id)
 	private String m_reference;
 	
 	private HAPDataExpressionElementInLibrary m_referedDataExpression;
+	private HAPResourceId m_referedDataExpressionLibElementResourceId;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
 	private Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
 
 	private Map<String, HAPMatchers> m_matchers;
 	
-	
-	
-	
-	//resolve map to reference info 
-	private Map<String, HAPIdElement> m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
-	private Map<String, HAPElementStructureLeafData> m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
-	
 	private HAPOperandReference(){
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
-		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
-		this.m_resolvedElement = new LinkedHashMap<String, HAPElementStructureLeafData>();
 	}
 	
 	public HAPOperandReference(String reference){
@@ -77,11 +62,6 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_mapping.putAll(mapping);
 	}
 
-	public void addResolvedMappingTo(String name, HAPIdElement variableId, HAPElementStructureLeafData dataStructureEle) {
-		this.m_resolvedVariable.put(name, variableId);
-		this.m_resolvedElement.put(name, dataStructureEle);
-	}
-	
 	@Override
 	public List<HAPWrapperOperand> getChildren(){
 		List<HAPWrapperOperand> out = new ArrayList<HAPWrapperOperand>();
@@ -122,8 +102,6 @@ public class HAPOperandReference extends HAPOperandImp{
 		jsonMap.put(REFERENCE, m_reference);
 		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
-		jsonMap.put(RESOLVED_VARIABLE, HAPUtilityJson.buildJson(this.m_resolvedVariable, HAPSerializationFormat.JSON));
-		jsonMap.put(RESOLVED_ELEMENT, HAPUtilityJson.buildJson(this.m_resolvedElement, HAPSerializationFormat.JSON));
 	}
 
 	@Override
@@ -141,12 +119,6 @@ public class HAPOperandReference extends HAPOperandImp{
 		}
 		for(String varId : this.m_matchers.keySet()) {
 			operand.m_matchers.put(varId, this.m_matchers.get(varId).cloneMatchers());
-		}
-		for(String name : this.m_resolvedVariable.keySet()) {
-			operand.m_resolvedVariable.put(name, this.m_resolvedVariable.get(name));
-		}
-		for(String name : this.m_resolvedElement.keySet()) {
-			operand.m_resolvedElement.put(name, this.m_resolvedElement.get(name));
 		}
 	}
 	

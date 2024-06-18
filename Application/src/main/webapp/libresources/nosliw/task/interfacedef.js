@@ -13,6 +13,21 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createTaskInterface = function(rawInterfaceObj){
+	
+	var interfaceDef = {
+		
+		getInitRequest : function(handlers, request){},
+		
+		getExecuteRequest : function(handlers, request){},
+		
+		getDestroyRequest : function(handlers, request){},
+	};
+	return _.extend({}, interfaceDef, rawInterfaceObj);
+};
+
+
+
 var node_createTaskContainerInterface = function(rawInterfaceObj){
 	var interfaceDef = {
 		getAllItemIds : function(){	},
@@ -26,7 +41,7 @@ var node_createTaskContainerInterface = function(rawInterfaceObj){
 	return _.extend({}, interfaceDef, rawInterfaceObj);
 };
 
-var node_createTaskInterface = function(rawInterfaceObj){
+var node_createTaskInterface1 = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
