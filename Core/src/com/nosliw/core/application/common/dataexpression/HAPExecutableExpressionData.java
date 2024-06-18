@@ -1,4 +1,4 @@
-package com.nosliw.data.core.application.common.dataexpression;
+package com.nosliw.core.application.common.dataexpression;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -15,7 +15,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionData;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -25,7 +24,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
+public class HAPExecutableExpressionData extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
@@ -42,12 +41,7 @@ public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
-	public HAPExecutableExpressionData1(HAPDefinitionExpressionData expressionDef) {
-		this.m_operand = expressionDef.getOperand().cloneWrapper();
-		expressionDef.cloneToEntityInfo(this);
-	}
-	
-	public HAPExecutableExpressionData1(HAPWrapperOperand operand) {
+	public HAPExecutableExpressionData(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}
 	

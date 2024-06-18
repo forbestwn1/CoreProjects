@@ -1,4 +1,4 @@
-package com.nosliw.data.core.application.common.dataexpression;
+package com.nosliw.core.application.common.dataexpression;
 
 import java.util.List;
 import java.util.Set;

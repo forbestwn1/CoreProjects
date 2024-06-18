@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
-import com.nosliw.data.core.application.common.dataexpression.HAPWrapperOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 
 public class HAPDefinitionExpressionData extends HAPEntityInfoWritableImp{
 

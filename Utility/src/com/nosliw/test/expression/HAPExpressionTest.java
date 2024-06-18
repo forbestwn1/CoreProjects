@@ -1,6 +1,6 @@
 package com.nosliw.test.expression;
 
-import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
 
 public class HAPExpressionTest {

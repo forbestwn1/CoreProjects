@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity.expression.data1;
 
-import com.nosliw.data.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperand;
 
 public interface HAPParserDataExpression {
 

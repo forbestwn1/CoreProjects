@@ -1,4 +1,4 @@
-package com.nosliw.data.core.application.common.dataexpression;
+package com.nosliw.core.application.common.dataexpression;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;

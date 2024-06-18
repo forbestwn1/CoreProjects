@@ -2,9 +2,9 @@ package com.nosliw.core.application.brick.dataexpression.lib;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.data.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 
 @HAPEntityWithAttribute
 public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple{

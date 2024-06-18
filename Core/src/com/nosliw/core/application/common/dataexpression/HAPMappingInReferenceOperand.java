@@ -1,12 +1,12 @@
-package com.nosliw.data.core.application.common.dataexpression;
+package com.nosliw.core.application.common.dataexpression;
 
-public class HAPParmInOperationOperand {
+public class HAPMappingInReferenceOperand {
 
 	private String m_name;
 	
 	private HAPOperand m_operand;
 	
-	public HAPParmInOperationOperand(String name, HAPOperand operand){
+	public HAPMappingInReferenceOperand(String name, HAPOperand operand){
 		this.m_name = name;
 		this.m_operand = operand;
 	}
