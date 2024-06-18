@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
@@ -26,7 +27,13 @@ public class HAPOperandReference extends HAPOperandImp{
 	public static final String REFERENCE = "reference";
 	
 	@HAPAttribute
+	public static final String REFDATAEXPRESSION = "referenceDataExpression";
+	
+	@HAPAttribute
 	public static final String VARMAPPING = "varMapping";
+	
+	@HAPAttribute
+	public static final String VARRESOLVE = "varResolve";
 	
 	@HAPAttribute
 	public static final String VARMATCHERS = "varMatchers";
@@ -38,14 +45,15 @@ public class HAPOperandReference extends HAPOperandImp{
 	private HAPResourceId m_referedDataExpressionLibElementResourceId;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
-	private Map<String, HAPWrapperOperand> m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
-
+	private Map<String, HAPWrapperOperand> m_variableMapping = new LinkedHashMap<String, HAPWrapperOperand>();
+	private Map<String, HAPIdElement> m_resolvedVariable;
 	private Map<String, HAPMatchers> m_matchers;
 	
 	private HAPOperandReference(){
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
-		this.m_mapping = new LinkedHashMap<String, HAPWrapperOperand>();
+		this.m_variableMapping = new LinkedHashMap<String, HAPWrapperOperand>();
+		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
 	}
 	
 	public HAPOperandReference(String reference){
@@ -55,17 +63,22 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public String getReference(){  return this.m_reference;  }
 	
-	public void addMapping(String varName, HAPOperand operand) {	this.m_mapping.put(varName, this.createOperandWrapper(operand));	}
-	public Map<String, HAPWrapperOperand> getMapping(){    return this.m_mapping;      }
+	public void addMapping(String varName, HAPOperand operand) {	this.m_variableMapping.put(varName, this.createOperandWrapper(operand));	}
+	public Map<String, HAPWrapperOperand> getMapping(){    return this.m_variableMapping;      }
 	public void setMapping(Map<String, HAPWrapperOperand> mapping) {    
-		this.m_mapping.clear();
-		this.m_mapping.putAll(mapping);
+		this.m_variableMapping.clear();
+		this.m_variableMapping.putAll(mapping);
 	}
 
+	public void addResolvedVariable(String varName, HAPIdElement varId) {	this.m_resolvedVariable.put(varName, varId);	}
+	
+	public void setReferencedDataExpression(HAPDataExpressionElementInLibrary referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
+	public HAPDataExpressionElementInLibrary getReferencedDataExpression() {    return this.m_referedDataExpression;      }
+	
 	@Override
 	public List<HAPWrapperOperand> getChildren(){
 		List<HAPWrapperOperand> out = new ArrayList<HAPWrapperOperand>();
-		out.addAll(this.m_mapping.values());
+		out.addAll(this.m_variableMapping.values());
 		return out;
 	}
 
@@ -86,8 +99,8 @@ public class HAPOperandReference extends HAPOperandImp{
 			HAPDataTypeHelper dataTypeHelper) {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		
-		for(String name : this.m_mapping.keySet()) {
-			HAPMatchers matchers = this.m_mapping.get(name).getOperand().discover(variablesInfo, this.m_resolvedElement.get(name).getCriteria(), processTracker, dataTypeHelper);
+		for(String name : this.m_variableMapping.keySet()) {
+			HAPMatchers matchers = this.m_variableMapping.get(name).getOperand().discover(variablesInfo, this.m_resolvedElement.get(name).getCriteria(), processTracker, dataTypeHelper);
 			if(matchers!=null) {
 				this.m_matchers.put(name, matchers);
 			}
@@ -100,7 +113,9 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCE, m_reference);
-		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_mapping, HAPSerializationFormat.JSON));
+		jsonMap.put(REFDATAEXPRESSION, HAPUtilityJson.buildJson(this.m_referedDataExpression, HAPSerializationFormat.JSON));
+		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_variableMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(VARRESOLVE, HAPUtilityJson.buildJson(this.m_resolvedVariable, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 	}
 
@@ -114,8 +129,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void cloneTo(HAPOperandReference operand){
 		super.cloneTo(operand);
 		operand.m_reference = this.m_reference;
-		for(String name : this.m_mapping.keySet()) {
-			operand.m_mapping.put(name, this.m_mapping.get(name).cloneWrapper());
+		for(String name : this.m_variableMapping.keySet()) {
+			operand.m_variableMapping.put(name, this.m_variableMapping.get(name).cloneWrapper());
 		}
 		for(String varId : this.m_matchers.keySet()) {
 			operand.m_matchers.put(varId, this.m_matchers.get(varId).cloneMatchers());

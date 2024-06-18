@@ -11,7 +11,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
-	public static HAPIdValuePortInBundle normalizeExternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
@@ -41,7 +41,16 @@ public class HAPUtilityValuePort {
 		out.setValuePortId(withValuePort.getInternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
 		return out;
 	}
-	
+
+	public static HAPIdValuePortInBundle normalizeExternalValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPWithExternalValuePort withValuePort) {
+		HAPIdValuePortInBundle out = valuePortIdInBundle;
+		if(out==null) {
+			out = new HAPIdValuePortInBundle();
+		}
+		out.setValuePortId(withValuePort.getExternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
+		return out;
+	}
+
 	public static void normalizeValuePortRelativeBrickPath(HAPIdValuePortInBundle valuePortRef, HAPPath blockPathFromRoot) {
 		HAPIdBrickInBundle brickRef = valuePortRef.getBrickId();
 		if(brickRef.getRelativePath()==null) {
@@ -51,6 +60,10 @@ public class HAPUtilityValuePort {
 
 	public static HAPValuePort getValuePortInternal(HAPIdValuePortInBundle valuePortRef, HAPWithInternalValuePort withValuePort) {
 		return withValuePort.getInternalValuePorts().getValuePort(valuePortRef.getValuePortId());
+	}
+
+	public static HAPValuePort getValuePortExternal(HAPIdValuePortInBundle valuePortRef, HAPWithExternalValuePort withValuePort) {
+		return withValuePort.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}
 
 	public static HAPValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {

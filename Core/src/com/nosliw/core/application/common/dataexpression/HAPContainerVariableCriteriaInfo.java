@@ -45,6 +45,10 @@ public class HAPContainerVariableCriteriaInfo extends HAPSerializableImp{
 	public HAPInfoCriteria getVaraibleCriteriaInfo(String key) {   return this.m_criteriaInfosById.get(this.m_variableIdByKey.get(key));     }
 	
 	public String addVariable(HAPIdElement variableId) {
+		if(variableId==null) {
+			throw new RuntimeException();
+		}
+		
 		if(m_criteriaInfosById.get(variableId)!=null) {
 			//already exist
 			for(String key : this.m_variableIdByKey.keySet()) {

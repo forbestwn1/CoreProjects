@@ -3,8 +3,8 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
@@ -37,7 +37,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), exe, exe.getVariablesInfo());
 		
 		//process reference
-		
+		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(exe.getExpression(), processContext.getRuntimeEnv());
 		
 		//discover
 		

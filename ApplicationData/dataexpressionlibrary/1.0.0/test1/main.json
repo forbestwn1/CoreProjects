@@ -23,6 +23,41 @@
 					"dataInfo" : "test.integer;1.0.0",
 					"defaultValue" : {
 						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					}
+				},
+				{
+					"name" : "deparm3",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 6
+					}
+				}
+			],
+			"result" : {
+				"criteria" : "test.string;1.0.0"
+			},
+			"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
+		},
+		{
+			"name" : "reference_resource",
+			"status": "disabled1",
+			"description" : "reference_resource",
+			"request" : [
+				{
+					"name" : "deparm1",
+					"dataInfo" : "test.string;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "default value of baseVarNormal"
+					}
+				},
+				{
+					"name" : "deparm2",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
 						"value": 3
 					}
 				},
@@ -38,7 +73,7 @@
 			"result" : {
 				"criteria" : "test.string;1.0.0"
 			},
-			"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
+			"expression" : "<(dataexpressionlibelement|1.0.0|@ContainerElement_1=dataexpressionlibrary|1.0.0|test2;manual)>.with(deparm21:?(deparm1)?,deparm22:?(deparm2)?,deparm23:?(deparm3)?)"
 		}
 	]
 }

@@ -1,6 +1,6 @@
 package com.nosliw.core.application.common.valueport;
 
-public interface HAPWithValuePort extends HAPWithInternalValuePort, HAPWithExpternalValuePort{
+public interface HAPWithValuePort extends HAPWithInternalValuePort, HAPWithExternalValuePort{
 
 	
 }

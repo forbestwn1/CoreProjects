@@ -1,6 +1,5 @@
 package com.nosliw.core.application.brick.service.provider;
 
-import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrickBlockSimple;
@@ -13,10 +12,9 @@ import com.nosliw.core.application.common.interactive.HAPUtilityInteractive;
 import com.nosliw.core.application.common.task.HAPTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.resource.HAPResourceDataBrick;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 
 @HAPEntityWithAttribute
 public class HAPBlockServiceProvider extends HAPBrickBlockSimple implements HAPTask{
@@ -33,9 +31,8 @@ public class HAPBlockServiceProvider extends HAPBrickBlockSimple implements HAPT
 		
 		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrick.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
 		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBlockServiceProfile.INTERFACE);
-		
-		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)this.getResourceManager().getResources(Lists.asList(serviceInterfaceResourceId, new HAPResourceId[0]), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo()).getLoadedResources().get(0).getResourceData();
-		HAPBlockInteractiveInterface serviceInterfaceService = (HAPBlockInteractiveInterface)brickResourceData.getBrick();
+
+		HAPBlockInteractiveInterface serviceInterfaceService = (HAPBlockInteractiveInterface)HAPUtilityResource.getResourceDataBrick(serviceInterfaceResourceId, getResourceManager(), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo());
 		HAPGroupValuePorts valuePortGroup = HAPUtilityInteractive.buildExternalInteractiveTaskValuePortGroup(serviceInterfaceService);
 		
 		out.addValuePortGroup(valuePortGroup, true);
