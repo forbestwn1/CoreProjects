@@ -9,6 +9,7 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
@@ -66,13 +67,14 @@ public class HAPUtilityExpressionProcessor {
 					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
 					
 					HAPResourceId refResourceId = HAPFactoryResourceId.newInstance(referenceOperand.getReference());
+					referenceOperand.setResourceId(refResourceId);
 					HAPBlockDataExpressionElementInLibrary brickResourceData = (HAPBlockDataExpressionElementInLibrary)HAPUtilityResource.getResourceDataBrick(refResourceId, runtimEnv.getResourceManager(), runtimEnv.getRuntime().getRuntimeInfo());
-					referenceOperand.setReferencedDataExpression(brickResourceData.getValue());
+					HAPDataExpressionElementInLibrary dataExpressionInLib = brickResourceData.getValue();
 					
 					Map<String, HAPWrapperOperand> referenceMapping = referenceOperand.getMapping();
 					for(String varName : referenceMapping.keySet()) {
-						HAPReferenceElement ref = HAPUtilityStructureElementReference.buildExternalElementReference(varName, HAPConstantShared.IO_DIRECTION_IN, referenceOperand.getReferencedDataExpression()); 
-						HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceExternal(ref, null, referenceOperand.getReferencedDataExpression());
+						HAPReferenceElement ref = HAPUtilityStructureElementReference.buildExternalElementReference(varName, HAPConstantShared.IO_DIRECTION_IN, dataExpressionInLib); 
+						HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveElementReferenceExternal(ref, null, dataExpressionInLib);
 						referenceOperand.addResolvedVariable(varName, idVariable);
 					}
 				}

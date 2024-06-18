@@ -109,6 +109,10 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 				loc_initRequestValue(loc_expressionData, loc_input);
 			}, handlers, request);
 		},
+		
+		getExecuteRequest : function(handlers, request){
+			return loc_getExecuteRequest(handlers, request);
+		},
 
 		getExternalValuePort : function(valuePortGroup, valuePortName){
 			return loc_getValuePort(valuePortGroup, valuePortName);
@@ -116,10 +120,6 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 		
 		getInternalValuePort : function(valuePortGroup, valuePortName){
 			return loc_getValuePort(valuePortGroup, valuePortName);
-		},
-		
-		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteRequest(handlers, request);
 		},
 	};
 	return loc_out;

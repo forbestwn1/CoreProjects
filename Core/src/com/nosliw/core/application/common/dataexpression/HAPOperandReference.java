@@ -28,7 +28,10 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	@HAPAttribute
 	public static final String REFDATAEXPRESSION = "referenceDataExpression";
-	
+
+	@HAPAttribute
+	public static final String RESOURCEID = "resourceId";
+
 	@HAPAttribute
 	public static final String VARMAPPING = "varMapping";
 	
@@ -45,7 +48,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	private HAPResourceId m_referedDataExpressionLibElementResourceId;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
-	private Map<String, HAPWrapperOperand> m_variableMapping = new LinkedHashMap<String, HAPWrapperOperand>();
+	private Map<String, HAPWrapperOperand> m_variableMapping;
 	private Map<String, HAPIdElement> m_resolvedVariable;
 	private Map<String, HAPMatchers> m_matchers;
 	
@@ -72,8 +75,10 @@ public class HAPOperandReference extends HAPOperandImp{
 
 	public void addResolvedVariable(String varName, HAPIdElement varId) {	this.m_resolvedVariable.put(varName, varId);	}
 	
-	public void setReferencedDataExpression(HAPDataExpressionElementInLibrary referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
-	public HAPDataExpressionElementInLibrary getReferencedDataExpression() {    return this.m_referedDataExpression;      }
+	public void setResourceId(HAPResourceId resourceId) {   this.m_referedDataExpressionLibElementResourceId = resourceId;     }
+	
+//	public void setReferencedDataExpression(HAPDataExpressionElementInLibrary referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
+//	public HAPDataExpressionElementInLibrary getReferencedDataExpression() {    return this.m_referedDataExpression;      }
 	
 	@Override
 	public List<HAPWrapperOperand> getChildren(){
@@ -113,6 +118,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(REFERENCE, m_reference);
+		jsonMap.put(RESOURCEID, this.m_referedDataExpressionLibElementResourceId.toStringValue(HAPSerializationFormat.LITERATE));
 		jsonMap.put(REFDATAEXPRESSION, HAPUtilityJson.buildJson(this.m_referedDataExpression, HAPSerializationFormat.JSON));
 		jsonMap.put(VARMAPPING, HAPUtilityJson.buildJson(this.m_variableMapping, HAPSerializationFormat.JSON));
 		jsonMap.put(VARRESOLVE, HAPUtilityJson.buildJson(this.m_resolvedVariable, HAPSerializationFormat.JSON));

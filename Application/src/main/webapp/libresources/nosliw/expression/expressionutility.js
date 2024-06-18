@@ -337,31 +337,40 @@ var node_utility = function()
 		//cal all mapping operands
 		var refVarsMapping = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
 		var refVarsInOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalRefVarsInOperandRequest", {"refVarsMapping":refVarsMapping}), {
-			success : function(requestInfo, setResult){
-				var refVarsInValue = setResult.getResults();
-				
-				//match parms and base
-				var refVarsInMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {}), {
-					success : function(requestInfo, refVarsInMatchResult){
-						var referedExpressionEntity = references[referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCEATTRIBUTENAME]];
-
-						var mappingToReferencedExpressionRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("MappingToReferencedExpression", {}), {});
-						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOLVED_VARIABLE];
-						_.each(refVarsInMatchResult.getResults(), function(value, name){
-							var varId = node_createValuePortElementInfo(varsId[name]);
-							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, varId.getValueStructureRuntimeId(), varId.getRootName(), varId.getElementPath(), value));
-						});
+			success : function(request, setResult){
+				var out1 = node_createServiceRequestInfoSequence(undefined);
+				out1.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOURCEID], undefined, {
+					success: function(request, bundleRuntime){
+						var dataExpressionLibEleCore = bundleRuntime.getCoreEntity().getMainEntityCore();
+						valuePortEnv = node_getWithValuePortInterface(dataExpressionLibEleCore);
 						
-						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-						mappingToReferencedExpressionRequest.addRequest(dataExpressionSingleInterface.getExecuteRequest());
-						return mappingToReferencedExpressionRequest;			
+						var valueMappings = setResult.getResults();
+						var valuePortId;
+						var toValuesInfo = [];
+						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARRESOLVE];
+						_.each(valueMappings, function(value, name){
+							valuePortId = varsId[name][node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
+							toValuesInfo.push(
+								{
+									elementId : node_createValuePortElementInfo(varsId[name]),
+									value : value 
+								}
+							);
+						});
+						var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+						return valuePort.setValuesRequest(toValuesInfo, {
+							success : function(request){
+								var expressionInterface = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION);
+								return node_taskUtility.getExecuteTaskRequest(expressionInterface, {
+									success : function(request, expressionResult){
+										return expressionResult;
+									}
+								});
+							}
+						});
 					}
-				});
-				_.each(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS], function(varMatchers, varId, list){
-					var refVarInMatchRequest = loc_getMatchDataTaskRequest(refVarsInValue[varId], varMatchers, {});
-					refVarsInMatcherRequest.addRequest(varId, refVarInMatchRequest);
-				}, this);
-				return refVarsInMatcherRequest;
+				}));
+				return out1;
 			}
 		});
 		
