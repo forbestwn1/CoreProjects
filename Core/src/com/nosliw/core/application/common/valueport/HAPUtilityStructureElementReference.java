@@ -8,7 +8,6 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -19,14 +18,14 @@ public class HAPUtilityStructureElementReference {
 	public static HAPReferenceElement buildInternalElementReference(String name, String ioDirection, HAPWithInternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
-		ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, withValuePort));
+		ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
 		return ref;
 	}
 	
 	public static HAPReferenceElement buildExternalElementReference(String name, String ioDirection, HAPWithExternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
-		ref.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, withValuePort));
+		ref.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
 		return ref;
 	}
 	

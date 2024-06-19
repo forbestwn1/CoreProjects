@@ -26,6 +26,9 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
 	var node_createValuePortElementInfo;
+	var node_ResourceId;
+	var node_getWithValuePortInterface;
+	var node_taskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -360,7 +363,7 @@ var node_utility = function()
 						var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 						return valuePort.setValuesRequest(toValuesInfo, {
 							success : function(request){
-								var expressionInterface = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION);
+								var expressionInterface = node_getApplicationInterface(dataExpressionLibEleCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION);
 								return node_taskUtility.getExecuteTaskRequest(expressionInterface, {
 									success : function(request, expressionResult){
 										return expressionResult;
@@ -676,6 +679,9 @@ nosliw.registerSetNodeDataEvent("complexentity.valueContextUtility", function(){
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
+nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
