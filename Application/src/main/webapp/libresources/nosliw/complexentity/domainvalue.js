@@ -232,7 +232,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 
 		createVariableById : function(variableIdEntity){
 			var variableInfo = node_createValuePortElementInfo(variableIdEntity);
-			return this.createVariable(variableInfo.getValueStructureRuntimeId(), variableInfo.getRootName(), variableInfo.getElementPath());
+			return this.createVariable(variableInfo.getValueStructureId(), variableInfo.getRootName(), variableInfo.getElementPath());
 		},
 		
 		//

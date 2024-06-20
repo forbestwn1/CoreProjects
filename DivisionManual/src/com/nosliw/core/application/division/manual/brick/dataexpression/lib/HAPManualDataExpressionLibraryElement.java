@@ -9,13 +9,13 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
-import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
+import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveExpression;
+import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveExpression;
 
-public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp implements HAPInteractiveExpression{
+public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp implements HAPInteractive{
 
-	private HAPResultInInteractiveExpression m_result;
+	private HAPResultElementInInteractiveExpression m_result;
 	
 	private List<HAPRequestParmInInteractive> m_requestParms;
 	
@@ -25,13 +25,11 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
 	}
 	
-	@Override
 	public List<HAPRequestParmInInteractive> getRequestParms() {  return this.m_requestParms;  }
 	public void addRequestParm(HAPRequestParmInInteractive requestParm) {	this.getRequestParms().add(requestParm);	}
 	
-	@Override
-	public HAPResultInInteractiveExpression getResult() {   return this.m_result;  } 
-	public void setResult(HAPResultInInteractiveExpression result) {   this.m_result = result;      }
+	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  } 
+	public void setResult(HAPResultElementInInteractiveExpression result) {   this.m_result = result;      }
 	
 	public String getExpression() {	return this.m_expression;	}
 	public void setExpression(String expressionStr) {   this.m_expression = expressionStr;     }
@@ -53,7 +51,7 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 		
 		JSONObject resultObj = jsonObj.optJSONObject(RESULT);
 		if(resultObj!=null) {
-			HAPResultInInteractiveExpression result = new HAPResultInInteractiveExpression();
+			HAPResultElementInInteractiveExpression result = new HAPResultElementInInteractiveExpression();
 			result.buildObject(resultObj, HAPSerializationFormat.JSON);
 			this.setResult(result);
 		}

@@ -389,56 +389,7 @@ var node_utility = function()
 		
 		return out;
 	};
-	
-	//execute reference operand
-	var loc_getExecuteReferenceOperandRequest1 = function(referenceOperand, variables, constants, references, handlers, requestInfo){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
-
-		//cal all mapping operands
-		var refVarsMapping = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMAPPING];
-		var refVarsInOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalRefVarsInOperandRequest", {"refVarsMapping":refVarsMapping}), {
-			success : function(requestInfo, setResult){
-				var refVarsInValue = setResult.getResults();
-				
-				//match parms and base
-				var refVarsInMatcherRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("MatchOperationParms", {}), {
-					success : function(requestInfo, refVarsInMatchResult){
-						var referedExpressionEntity = references[referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_REFERENCEATTRIBUTENAME]];
-
-						var mappingToReferencedExpressionRequest = node_createServiceRequestInfoSequence(new node_ServiceInfo("MappingToReferencedExpression", {}), {});
-						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOLVED_VARIABLE];
-						_.each(refVarsInMatchResult.getResults(), function(value, name){
-							var varId = node_createValuePortElementInfo(varsId[name]);
-							mappingToReferencedExpressionRequest.addRequest(node_valueContextUtility.getSetValueRequest(referedExpressionEntity, varId.getValueStructureRuntimeId(), varId.getRootName(), varId.getElementPath(), value));
-						});
-						
-						var dataExpressionSingleInterface = node_getApplicationInterface(node_complexEntityUtility.getComplexCoreEntity(referedExpressionEntity), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-						mappingToReferencedExpressionRequest.addRequest(dataExpressionSingleInterface.getExecuteRequest());
-						return mappingToReferencedExpressionRequest;			
-					}
-				});
-				_.each(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARMATCHERS], function(varMatchers, varId, list){
-					var refVarInMatchRequest = loc_getMatchDataTaskRequest(refVarsInValue[varId], varMatchers, {});
-					refVarsInMatcherRequest.addRequest(varId, refVarInMatchRequest);
-				}, this);
-				return refVarsInMatcherRequest;
-			}
-		});
 		
-		_.each(refVarsMapping, function(refVarInOperand, refVarId, list){
-			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, constants, references, {
-				success :function(request, refVarInValue){
-					return refVarInValue;
-				}
-			});
-			refVarsInOperandRequest.addRequest(refVarId, refVarInOperandRequest);
-		}, this);
-		out.addRequest(refVarsInOperandRequest);
-		
-		return out;
-	};
-	
-	
 	//execute reference operand
 	var loc_getExecuteOperandRequest = function(operand, variables, constants, references, handlers, requestInfo){
 		var out;
@@ -482,7 +433,7 @@ var node_utility = function()
 			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
 			var varId = node_createValuePortElementInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
 			var variable = valueContext.createVariable(
-					varId.getValueStructureRuntimeId(), 
+					varId.getValueStructureId(), 
 					varId.getRootName(),
 					varId.getElementPath());
 			variables[varKey] = variable;

@@ -15,14 +15,26 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityStructureElementReference {
 
-	public static HAPReferenceElement buildInternalElementReference(String name, String ioDirection, HAPWithInternalValuePort withValuePort) {
+	public static HAPIdElement resolveNameFromInternal(String name, String ioDirection, HAPConfigureResolveElementReference resolveConfigure, HAPWithInternalValuePort withValuePort) {
+		HAPReferenceElement ref = HAPUtilityStructureElementReference.buildInternalElementReference(name, ioDirection, withValuePort); 
+		HAPIdElement eleId = HAPUtilityStructureElementReference.resolveElementReferenceInternal(ref, null, withValuePort);
+		return eleId;
+	}
+	
+	public static HAPIdElement resolveNameFromExternal(String name, String ioDirection, HAPConfigureResolveElementReference resolveConfigure, HAPWithExternalValuePort withValuePort) {
+		HAPReferenceElement ref = HAPUtilityStructureElementReference.buildExternalElementReference(name, ioDirection, withValuePort); 
+		HAPIdElement eleId = HAPUtilityStructureElementReference.resolveElementReferenceExternal(ref, null, withValuePort);
+		return eleId;
+	}
+	
+	private static HAPReferenceElement buildInternalElementReference(String name, String ioDirection, HAPWithInternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
 		ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
 		return ref;
 	}
 	
-	public static HAPReferenceElement buildExternalElementReference(String name, String ioDirection, HAPWithExternalValuePort withValuePort) {
+	private static HAPReferenceElement buildExternalElementReference(String name, String ioDirection, HAPWithExternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
 		ref.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));

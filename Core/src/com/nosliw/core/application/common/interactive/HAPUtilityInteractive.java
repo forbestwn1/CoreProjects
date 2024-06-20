@@ -24,31 +24,4 @@ public class HAPUtilityInteractive {
 		return out;
 	}
 
-	public static HAPGroupValuePorts buildExternalInteractiveExpressionValuePortGroup(HAPInteractiveExpression interactive) {
-		HAPGroupValuePorts out = new HAPGroupValuePorts();
-		
-		HAPValuePort requestValuePort = new HAPValuePortInteractiveRequest(interactive.getRequestParms(), HAPConstantShared.IO_DIRECTION_IN);
-		requestValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST);
-		out.addValuePort(requestValuePort, true);
-		
-		HAPValuePort resultValuePort = new HAPValuePortInteractiveExpressionResult(interactive.getResult(), HAPConstantShared.IO_DIRECTION_OUT);
-		resultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
-		out.addValuePort(resultValuePort, true);
-
-		return out;
-	}
-
-	public static HAPGroupValuePorts buildInternalInteractiveExpressionValuePortGroup(HAPInteractiveExpression interactive) {
-		HAPGroupValuePorts out = new HAPGroupValuePorts();
-		
-		HAPValuePort requestValuePort = new HAPValuePortInteractiveRequest(interactive.getRequestParms(), HAPConstantShared.IO_DIRECTION_OUT);
-		requestValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST);
-		out.addValuePort(requestValuePort, true);
-		
-		HAPValuePort resultValuePort = new HAPValuePortInteractiveExpressionResult(interactive.getResult(), HAPConstantShared.IO_DIRECTION_IN);
-		resultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
-		out.addValuePort(resultValuePort, true);
-
-		return out;
-	}
 }

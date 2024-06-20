@@ -14,42 +14,42 @@ var node_createValueStructureVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //locally reference to element in value port
-var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
+var node_createValuePortElementInfo = function(elementId, n, p){
 
-	if(node_getObjectType(valueStructureRuntimeId)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID)  return valueStructureRuntimeId;
+	if(node_getObjectType(elementId)==node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID)  return elementId;
 
-	var loc_valueStructureRuntimeId;
+	var loc_valueStructureId;
 
 	var loc_valueStructureVariableInfo;
 
 	var loc_key;
 
-	var loc_init = function(valueStructureRuntimeId, n, p){
+	var loc_init = function(elementId, n, p){
 		if(n==undefined&&p==undefined){
-			if(node_basicUtility.isStringValue(valueStructureRuntimeId)){
-				var index = valueStructureRuntimeId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+			if(node_basicUtility.isStringValue(elementId)){
+				var index = elementId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
 				if(index!=-1){
-					loc_valueStructureRuntimeId = valueStructureRuntimeId.substring(0, index);
-					loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(valueStructureRuntimeId.substring(index+1));
+					loc_valueStructureId = elementId.substring(0, index);
+					loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(elementId.substring(index+1));
 				}
 			}
 			else{
 				//variable id object
-				var rootEleId = valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID];
-				loc_valueStructureRuntimeId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], valueStructureRuntimeId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH]);
+				var rootEleId = elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID];
+				loc_valueStructureId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
+				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH]);
 			}
 		}
 		else{
-			loc_valueStructureRuntimeId = valueStructureRuntimeId;
+			loc_valueStructureId = elementId;
 			loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(n, p);
 		}
-		loc_key = node_namingConvensionUtility.cascadePath(loc_valueStructureRuntimeId, loc_valueStructureVariableInfo.key);
+		loc_key = node_namingConvensionUtility.cascadePath(loc_valueStructureId, loc_valueStructureVariableInfo.key);
 	};
 
 	var loc_out = {
 
-		getValueStructureRuntimeId : function(){   return  loc_valueStructureRuntimeId;    },
+		getValueStructureId : function(){   return  loc_valueStructureId;    },
 		
 		getValueStructureVariableInfo : function(){    return loc_valueStructureVariableInfo;    },
 
@@ -66,11 +66,11 @@ var node_createValuePortElementInfo = function(valueStructureRuntimeId, n, p){
 		
 	};
 	
-	loc_init(valueStructureRuntimeId, n, p);
+	loc_init(elementId, n, p);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VALUEPORTELEMENTID);
 	
-	loc_out.valueStructureRuntimeId = valueStructureRuntimeId;
+	loc_out.elementId = elementId;
 	loc_out.valueStructureVariableInfo = loc_valueStructureVariableInfo;
 	
 	return loc_out;

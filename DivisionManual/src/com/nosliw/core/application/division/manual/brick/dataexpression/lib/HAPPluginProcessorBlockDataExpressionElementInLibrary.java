@@ -7,6 +7,7 @@ import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
+import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
@@ -30,8 +31,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		exe.setExpression(new HAPDataExpression(new HAPWrapperOperand(operand)));
 
 		//
-		exe.setResult(def.getResult());
-		exe.getRequestParms().addAll(def.getRequestParms());
+		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
 		//resolve variable name
 		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), exe, exe.getVariablesInfo());

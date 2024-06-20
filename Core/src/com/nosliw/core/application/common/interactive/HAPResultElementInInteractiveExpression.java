@@ -9,16 +9,16 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 
 @HAPEntityWithAttribute
-public class HAPResultInInteractiveExpression extends HAPSerializableImp{
+public class HAPResultElementInInteractiveExpression extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String DATACRITERIA = "criteria";
 
 	private HAPDataTypeCriteria m_dataCriteria;
 	
-	public HAPResultInInteractiveExpression() {}
+	public HAPResultElementInInteractiveExpression() {}
 	
-	public HAPResultInInteractiveExpression(HAPDataTypeCriteria dataCriteria) {
+	public HAPResultElementInInteractiveExpression(HAPDataTypeCriteria dataCriteria) {
 		this.m_dataCriteria = dataCriteria;
 	}
 	

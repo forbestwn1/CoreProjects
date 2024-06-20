@@ -1,8 +1,6 @@
 package com.nosliw.core.application.common.valueport;
 
-import com.nosliw.common.info.HAPEntityInfo;
-
-public interface HAPValuePort extends HAPEntityInfo{
+public interface HAPValuePort{
 
 	HAPInfoValuePort getValuePortInfo();
 	

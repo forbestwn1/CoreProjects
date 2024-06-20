@@ -15,73 +15,7 @@ var packageObj = library.getChildPackage();
 	var node_uiDataOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_makeObjectWithValuePortInterface = function(rawEntity){
-	
-	var loc_rawEntity = rawEntity;
-	
-	var loc_getExternalValuePort = function(valuePortGroup, valuePortName){   
-		var loc_valuePort;
-		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
-			if(complexEntityInterface!=undefined){
-				loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
-			}
-		}
-		else{
-			if(loc_rawEntity.getExternalValuePort!=undefined){
-				loc_valuePort = loc_rawEntity.getExternalValuePort(valuePortGroup, valuePortName);
-			}
-		}
-		
-		if(loc_valuePort!=undefined){
-			return node_buildValuePort(loc_valuePort);
-		}
-	};
-	
-	var loc_getInternalValuePort = function(valuePortGroup, valuePortName){   
-		var loc_valuePort;
-		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
-			if(complexEntityInterface!=undefined){
-				loc_valuePort = loc_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
-			}
-		}
-		else{
-			if(loc_rawEntity.getInternalValuePort!=undefined){
-				loc_valuePort = loc_rawEntity.getInternalValuePort(valuePortGroup, valuePortName);
-			}
-		}
-		
-		if(loc_valuePort!=undefined){
-			return node_buildValuePort(loc_valuePort);
-		}
-	};
-	
-	var loc_interfaceEntity = {
-
-		getValuePort : function(valuePortGroup, valuePortName){   
-			return loc_getExternalValuePort(valuePortGroup, valuePortName);
-		},
-	};
-
-	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
-	if(embededEntityInterface!=null){
-		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_WITHVALUEPORT, {
-			getValuePort : function(valuePortGroup, valuePortName){
-				return loc_getInternalValuePort(valuePortGroup, valuePortName);
-			}
-		});
-	}
-	
-	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_WITHVALUEPORT, loc_interfaceEntity);
-};
-	
-var node_getWithValuePortInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_WITHVALUEPORT);
-};
-
-
-var loc_createValuePortValueContext = function(valueContextId, varDomain){
+var node_createValuePortValueContext = function(valueContextId, varDomain){
 	
 	var loc_varDomain = varDomain;
 	var loc_valueContext = varDomain.getValueContext(valueContextId);
@@ -95,7 +29,7 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 		
 		getValueRequest : function(elementId, handlers, request){        
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
-			out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+			out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
 				success: function(request, dataValue){
 					return dataValue.value;
 				}
@@ -104,14 +38,14 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 		},
 
 		setValueRequest : function(elementId, value, handlers, request){        
-			return loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
+			return loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
 		},
 		
 		setValuesRequest : function(setValueInfos, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
 			_.each(setValueInfos, function(setValueInfo, i){
 				var elementId = setValueInfo.elementId;
-				out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureRuntimeId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+				out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
 			});
 			return out;			
 		},
@@ -121,19 +55,50 @@ var loc_createValuePortValueContext = function(valueContextId, varDomain){
 	return loc_out;
 };
 
-
-//interface for component external env
-var node_buildValuePort = function(rawValuePort){
-	var interfaceDef = {
-		
-		getValueRequest : function(elmentId, handlers, request){        },
-
-		setValueRequest : function(elmentId, value, handlers, request){        },
-		setValuesRequest : function(setValueInfos, handlers, request){        },
-
-		createVariable : function(elementId){},
+var node_createValuePortValue = function(){
+	
+	var loc_value = {};
+	
+	var loc_setValueRequest = function(target, setValueInfos, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			_.each(setValueInfos, function(setValueInfo, i){
+				var elementId = setValueInfo.elementId;
+				var valueStructureId = elementId.getValueStructureId();
+				var valueStructure = source[valueStructureId];
+				if(valueStructure==undefined){
+					valueStructure = {};
+					source[valueStructureId] = valueStructure;
+				}
+				valueStructure[elementId.getRootName()] = setValueInfo.value; 
+			});
+		}));
+		return out;
 	};
-	return _.extend({}, interfaceDef, rawValuePort);
+	
+	var loc_getValueRequest = function(source, elmentId, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var valueStructureId = elementId.getValueStructureId();
+			var valueStructure = source[valueStructureId];
+			if(valueStructure!=undefined){
+				return valueStructure[elmentId.getRootName()];
+			}
+		}));
+		return out;
+	};
+	
+	var loc_out = {
+		getValueRequest : function(elmentId, handlers, request){ 
+			return loc_getValueRequest(loc_value, elmentId, handlers, request);
+        },
+
+		setValuesRequest : function(setValueInfos, handlers, request){
+			return loc_setValueRequest(loc_value, setValueInfos, handlers, request);
+		},
+	};
+	
+	return loc_out;
 };
 
 
@@ -152,8 +117,7 @@ nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("makeObjectWithValuePortInterface", node_makeObjectWithValuePortInterface); 
-packageObj.createChildNode("getWithValuePortInterface", node_getWithValuePortInterface); 
-packageObj.createChildNode("buildValuePort", node_buildValuePort); 
+packageObj.createChildNode("createValuePortValueContext", node_createValuePortValueContext); 
+packageObj.createChildNode("createValuePortValue", node_createValuePortValue); 
 
 })(packageObj);

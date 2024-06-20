@@ -14,9 +14,9 @@ import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort
 
 public class HAPValuePortInteractiveExpressionResult extends HAPValuePortImp{
 
-	private HAPResultInInteractiveExpression m_expressionResult;
+	private HAPResultElementInInteractiveExpression m_expressionResult;
 	
-	public HAPValuePortInteractiveExpressionResult(HAPResultInInteractiveExpression expressionResult, String ioDirection) {
+	public HAPValuePortInteractiveExpressionResult(HAPResultElementInInteractiveExpression expressionResult, String ioDirection) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, ioDirection));
 		this.m_expressionResult = expressionResult;
 	}

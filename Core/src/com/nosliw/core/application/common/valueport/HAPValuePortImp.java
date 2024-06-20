@@ -3,9 +3,7 @@ package com.nosliw.core.application.common.valueport;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.info.HAPEntityInfoImp;
-
-public abstract class HAPValuePortImp extends HAPEntityInfoImp implements HAPValuePort{
+public abstract class HAPValuePortImp implements HAPValuePort{
 
 	private HAPInfoValuePort m_valuePortInfo;
 	

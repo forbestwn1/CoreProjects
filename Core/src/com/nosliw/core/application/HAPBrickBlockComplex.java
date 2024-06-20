@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
@@ -35,7 +36,7 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 		
 		HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 		valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
-		valePortGroup.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain), true);
+		valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
 		out.addValuePortGroup(valePortGroup, true);
 		
 		for(HAPGroupValuePorts group : this.getInternalOtherValuePortGroups()) {
@@ -50,7 +51,7 @@ public class HAPBrickBlockComplex extends HAPBrickBlock{
 		
 		HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 		valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
-		valePortGroup.addValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain), true);
+		valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
 		out.addValuePortGroup(valePortGroup, true);
 		
 		for(HAPGroupValuePorts group : this.getExternalOtherValuePortGroups()) {

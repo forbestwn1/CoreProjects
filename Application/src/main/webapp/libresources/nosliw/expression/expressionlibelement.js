@@ -27,6 +27,8 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 
 	var loc_expressionData = expressionData;
 	
+	var loc_requestValuePort = node_createValuePortValue();
+	
 	var loc_initRequestValue = function(interactiveEntityDef, parmsValue){
 		var parmDefs = interactiveEntityDef[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
 		_.each(parmDefs, function(parmDef, i){
@@ -73,7 +75,7 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 		return out;
 	};
 	
-	var loc_requestValuePort = {
+	var loc_requestValuePort1 = {
 		getValueRequest : function(elmentId, handlers, request){ 
 			return loc_getValueRequest(loc_input, elmentId, handlers, request);
         },

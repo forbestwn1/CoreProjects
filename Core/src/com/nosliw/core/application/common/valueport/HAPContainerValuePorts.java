@@ -40,15 +40,6 @@ public class HAPContainerValuePorts {
 		}
 	}
 
-	public HAPIdValuePortInBrick getDefaultValuePortId() {
-		String groupId = this.getDefaultGroupName();
-		String valuePortId = null;
-		if(groupId!=null) {
-			valuePortId = this.m_valuePortGroupByName.get(groupId).getDefaultValuePortName();
-		}
-		return new HAPIdValuePortInBrick(groupId, valuePortId);
-	}
-	
 	public HAPValuePort getValuePort(HAPIdValuePortInBrick valuePortId) {
 		String groupName = null;
 		if(valuePortId==null||valuePortId.getValuePortGroup()==null) {
@@ -63,7 +54,7 @@ public class HAPContainerValuePorts {
 		
 		HAPGroupValuePorts group = this.m_valuePortGroupByName.get(groupName);
 		String valuePortName = valuePortId==null?null:valuePortId.getValuePortName();
-		return group.getValuePort(valuePortName);
+		return group.getValuePort(valuePortName).getValuePort();
 	}
 
 	public HAPIdValuePortInBrick normalizeValuePortId(HAPIdValuePortInBrick valuePortId, String ioDirection) {
