@@ -17,31 +17,34 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
     var node_createTaskContainerInterface;
 	var node_createTaskInterface;
+	var node_createValuePortValueFlat;
+	var node_interactiveUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createDataExpressionElementInLibrary = function(expressionData){
 	
-	var loc_input = {};
-	var loc_result = {};
-
 	var loc_expressionData = expressionData;
 	
-	var loc_requestValuePort = node_createValuePortValue();
+	var loc_requestValuePort = node_createValuePortValueFlat();
+	var loc_resultValuePort = node_createValuePortValueFlat();
 	
-	var loc_initRequestValue = function(interactiveEntityDef, parmsValue){
-		var parmDefs = interactiveEntityDef[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
+	var loc_init = function(){
+		var parmsValue = {};
+		var interactive = loc_expressionData[node_COMMONATRIBUTECONSTANT.WITHINTERACTIVE_INTERACTIVE];
+		var parmDefs = interactive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST][node_COMMONATRIBUTECONSTANT.INTERACTIVEREQUEST_PARM];
 		_.each(parmDefs, function(parmDef, i){
 			var defaultValue = parmDef[node_COMMONATRIBUTECONSTANT.REQUESTPARMININTERACTIVE_DEFAULTVALUE];
 			if(defaultValue!=undefined){
 				parmsValue[parmDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = defaultValue;
 			}
 		});
+		loc_requestValuePort.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionData));
 	};
-
+	
 	var loc_getExecuteRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		var expressionItem = loc_expressionData[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATASINGLE_EXPRESSION];
+		var expressionItem = loc_expressionData[node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONELEMENTINLIBRARY_EXPRESSION];
 		var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS];
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
@@ -50,51 +53,13 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 		};
 		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, withValuePortInterface, undefined, undefined, {
 			success : function(request, result){
-				loc_result.result = result;
+				loc_resultValuePort.setValue("result", result);
 				return result;
 			}
 		}));
 		return out;
 	};
 	
-	var loc_setValueRequest = function(target, setValueInfos, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			_.each(setValueInfos, function(setValueInfo, i){
-				target[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
-			});
-		}));
-		return out;
-	};
-	
-	var loc_getValueRequest = function(source, elmentId, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			return source[elmentId.getRootName()];
-		}));
-		return out;
-	};
-	
-	var loc_requestValuePort1 = {
-		getValueRequest : function(elmentId, handlers, request){ 
-			return loc_getValueRequest(loc_input, elmentId, handlers, request);
-        },
-
-		setValuesRequest : function(setValueInfos, handlers, request){
-			return loc_setValueRequest(loc_input, setValueInfos, handlers, request);
-		},
-	};
-
-	var loc_resultValuePort = {
-		getValueRequest : function(elmentId, handlers, request){ 
-			return loc_getValueRequest(loc_result, elmentId, handlers, request);
-		},
-
-		setValuesRequest : function(setValueInfos, handlers, request){
-			return loc_setValueRequest(loc_result, setValueInfos, handlers, request);
-		},
-	};
-
 	var loc_getValuePort = function(valuePortGroup, valuePortName){
 		if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
 			return loc_requestValuePort;
@@ -107,9 +72,11 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 	var loc_out = {
 		
 		getInitRequest : function(handlers, request){
-			return node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_initRequestValue(loc_expressionData, loc_input);
-			}, handlers, request);
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				loc_init();
+			}));
+			return out;
 		},
 		
 		getExecuteRequest : function(handlers, request){
@@ -144,6 +111,8 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 

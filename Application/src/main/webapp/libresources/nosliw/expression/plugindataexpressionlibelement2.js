@@ -174,6 +174,6 @@ nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionLibraryElementPlugin", node_createDataExpressionLibraryElementPlugin); 
+packageObj.createChildNode("createDataExpressionLibraryElementPlugin1", node_createDataExpressionLibraryElementPlugin); 
 
 })(packageObj);

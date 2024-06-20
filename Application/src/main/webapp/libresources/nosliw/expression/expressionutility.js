@@ -62,35 +62,41 @@ var node_utility = function()
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getVariablesValueRequest"), handlers, request);
 					
-		var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
-			success : function(request, results){
-				return results.getResults();
+		var out1 = node_createServiceRequestInfoSequence(undefined, {
+			success : function(request){
+				var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
+					success : function(request, results){
+						return results.getResults();
+					}
+				});
+				
+				_.each(varKeys, function(varKey, i){
+					var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][varKey];
+					var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
+					
+					var eleInfo = node_createValuePortElementInfo(varId);
+					
+					var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
+					var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+					
+					calVarsRequest.addRequest(varKey, valuePort.getValueRequest(eleInfo, {
+						success : function(request, data){
+							var value = data;
+		/*					
+							if(data!=undefined&&data.value!=undefined){
+							    value = data.value;
+							}
+		*/					
+							return value;
+						}	
+					}));
+				});
+				return calVarsRequest;
 			}
 		});
+
 		
-		_.each(varKeys, function(varKey, i){
-			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][varKey];
-			var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
-			
-			var eleInfo = node_createValuePortElementInfo(varId);
-			
-			var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
-			var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
-			
-			calVarsRequest.addRequest(varKey, valuePort.getValueRequest(eleInfo, {
-				success : function(request, data){
-					var value = data;
-/*					
-					if(data!=undefined&&data.value!=undefined){
-					    value = data.value;
-					}
-*/					
-					return value;
-				}	
-			}));
-		});
-		
-		out.addRequest(calVarsRequest);
+		out.addRequest(out1);
 		return out;		
 	};
 

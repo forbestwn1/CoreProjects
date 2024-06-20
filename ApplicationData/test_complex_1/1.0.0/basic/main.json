@@ -47,7 +47,7 @@
 										}
 									},
 									{
-										"status": "disabled1",
+										"status": "disabled",
 										"target" : {
 											"rootName" : "deparm3"
 										},

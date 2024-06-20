@@ -8,6 +8,7 @@ var packageObj = library.getChildPackage();
 	var node_CONSTANT;
 	var node_ServiceInfo;
 	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
 	var node_getEmbededEntityInterface;
 	var node_buildInterface;
 	var node_getEntityObjectInterface;
@@ -55,7 +56,7 @@ var node_createValuePortValueContext = function(valueContextId, varDomain){
 	return loc_out;
 };
 
-var node_createValuePortValue = function(){
+var node_createValuePortValueFlat = function(){
 	
 	var loc_value = {};
 	
@@ -64,13 +65,7 @@ var node_createValuePortValue = function(){
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			_.each(setValueInfos, function(setValueInfo, i){
 				var elementId = setValueInfo.elementId;
-				var valueStructureId = elementId.getValueStructureId();
-				var valueStructure = source[valueStructureId];
-				if(valueStructure==undefined){
-					valueStructure = {};
-					source[valueStructureId] = valueStructure;
-				}
-				valueStructure[elementId.getRootName()] = setValueInfo.value; 
+				target[elementId.getRootName()] = setValueInfo.value; 
 			});
 		}));
 		return out;
@@ -79,16 +74,13 @@ var node_createValuePortValue = function(){
 	var loc_getValueRequest = function(source, elmentId, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			var valueStructureId = elementId.getValueStructureId();
-			var valueStructure = source[valueStructureId];
-			if(valueStructure!=undefined){
-				return valueStructure[elmentId.getRootName()];
-			}
+			return source[elmentId.getRootName()];
 		}));
 		return out;
 	};
 	
 	var loc_out = {
+		
 		getValueRequest : function(elmentId, handlers, request){ 
 			return loc_getValueRequest(loc_value, elmentId, handlers, request);
         },
@@ -96,6 +88,17 @@ var node_createValuePortValue = function(){
 		setValuesRequest : function(setValueInfos, handlers, request){
 			return loc_setValueRequest(loc_value, setValueInfos, handlers, request);
 		},
+		
+		setValue : function(name, value){
+			loc_value[name] = value;
+		},
+		
+		init : function(valueByName){
+			loc_value = {};
+			_.each(valueByName, function(value, name){
+				loc_value[name] = value;
+			});
+		}
 	};
 	
 	return loc_out;
@@ -109,6 +112,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
@@ -118,6 +122,6 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 
 //Register Node by Name
 packageObj.createChildNode("createValuePortValueContext", node_createValuePortValueContext); 
-packageObj.createChildNode("createValuePortValue", node_createValuePortValue); 
+packageObj.createChildNode("createValuePortValueFlat", node_createValuePortValueFlat); 
 
 })(packageObj);
