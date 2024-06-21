@@ -26,20 +26,10 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 	
 	var loc_expressionData = expressionData;
 	
-	var loc_requestValuePort = node_createValuePortValueFlat();
-	var loc_resultValuePort = node_createValuePortValueFlat();
+	var loc_interactiveValuePorts =  node_createInteractiveValuePortsExpression();
 	
 	var loc_init = function(){
-		var parmsValue = {};
-		var interactive = loc_expressionData[node_COMMONATRIBUTECONSTANT.WITHINTERACTIVE_INTERACTIVE];
-		var parmDefs = interactive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST][node_COMMONATRIBUTECONSTANT.INTERACTIVEREQUEST_PARM];
-		_.each(parmDefs, function(parmDef, i){
-			var defaultValue = parmDef[node_COMMONATRIBUTECONSTANT.REQUESTPARMININTERACTIVE_DEFAULTVALUE];
-			if(defaultValue!=undefined){
-				parmsValue[parmDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]] = defaultValue;
-			}
-		});
-		loc_requestValuePort.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionData));
+		loc_interactiveValuePorts.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionData));
 	};
 	
 	var loc_getExecuteRequest = function(handlers, request){
@@ -48,25 +38,16 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 		var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.DATAEXPRESSIONUNIT_VARIABLEINFOS];
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
-				return loc_getValuePort(valuePortGroup, valuePortName);
+				return loc_interactiveValuePorts.getValuePort(valuePortName);
 			}
 		};
 		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, withValuePortInterface, undefined, undefined, {
 			success : function(request, result){
-				loc_resultValuePort.setValue("result", result);
+				loc_interactiveValuePorts.setResultValue(result);
 				return result;
 			}
 		}));
 		return out;
-	};
-	
-	var loc_getValuePort = function(valuePortGroup, valuePortName){
-		if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
-			return loc_requestValuePort;
-		}
-		else{
-			return loc_resultValuePort;
-		}
 	};
 	
 	var loc_out = {
@@ -84,11 +65,11 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 		},
 
 		getExternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_getValuePort(valuePortGroup, valuePortName);
+			return loc_interactiveValuePorts.getValuePort(valuePortName);
 		},
 		
 		getInternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_getValuePort(valuePortGroup, valuePortName);
+			return loc_interactiveValuePorts.getValuePort(valuePortName);
 		},
 	};
 	return loc_out;
@@ -113,6 +94,7 @@ nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.createInteractiveValuePortsExpression", function(){	node_createInteractiveValuePortsExpression = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 

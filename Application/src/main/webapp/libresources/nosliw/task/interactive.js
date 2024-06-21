@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_namingConvensionUtility;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
+	var node_createValuePortValueFlat;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -43,6 +44,80 @@ var node_interactiveUtility = function(){
 	return loc_out;
 }();
 
+var node_createInteractiveValuePortsExpression = function(){
+	
+	var loc_requestValuePort = node_createValuePortValueFlat();
+	var loc_resultValuePort = node_createValuePortValueFlat();
+	
+	var loc_out = {
+		
+		init : function(defaultValueByName){
+			loc_requestValuePort.init(defaultValueByName);
+		},
+		
+		setResultValue : function(resultValue){
+			loc_resultValuePort.setValue("result", resultValue);
+		},
+		
+		getValuePort : function(valuePortName){
+			if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
+				return loc_requestValuePort;
+			}
+			else{
+				return loc_resultValuePort;
+			}
+		},
+	};
+	return loc_out;
+};
+
+
+var node_createInteractiveValuePortsTask = function(){
+	
+	var loc_requestValuePort = node_createValuePortValueFlat();
+	var loc_resultValuePorts = {};
+	
+	var loc_getResultValuePort = function(resultValuePortName){
+		var valuePort = loc_resultValuePorts[resultValuePortName];
+		if(valuePort==null){
+			valuePort = node_createValuePortValueFlat();
+			loc_resultValuePorts[resultValuePortName] = valuePort;
+		}
+		return valuePort;
+	};
+	
+	var loc_getResultValuePortNameByResultName = function(resultName){
+		return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
+	};
+	
+	var loc_out = {
+		
+		init : function(defaultValueByName){
+			loc_requestValuePort.init(defaultValueByName);
+		},
+		
+		setResultValue : function(result){
+			var valuePort = loc_getResultValuePort(loc_getResultValuePortNameByResultName(result.resultName));
+			_.each(result.resultValue, function(value, name){
+				valuePort.setValue(name, value);
+			});
+		},
+		
+		getValuePort : function(valuePortName){
+			if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
+				return loc_requestValuePort;
+			}
+			else{
+				return loc_getResultValuePort(valuePortName);
+			}
+		},
+	};
+	return loc_out;
+};
+
+
+
+
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
@@ -59,8 +134,11 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("interactiveUtility", node_interactiveUtility); 
+packageObj.createChildNode("createInteractiveValuePortsExpression", node_createInteractiveValuePortsExpression); 
+packageObj.createChildNode("createInteractiveValuePortsTask", node_createInteractiveValuePortsTask); 
 
 })(packageObj);

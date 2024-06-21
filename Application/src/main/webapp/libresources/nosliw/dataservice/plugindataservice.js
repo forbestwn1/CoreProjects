@@ -17,6 +17,8 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_createTaskInterface;
 	var node_makeObjectWithApplicationInterface;
+	var node_createValuePortValueFlat;
+	var node_createInteractiveValuePortsTask;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -41,8 +43,7 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_configure = configure;
 	
-	var loc_input = {};
-	var loc_result;
+	var loc_interactiveValuePort = node_createInteractiveValuePortsTask();
 
 	var loc_getExecuteTaskRequest = function(handlers, request){
 
@@ -53,19 +54,19 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			        "outputInService1": {
 			            "dataTypeId": "test.string;1.0.0",
 			            "valueFormat": "JSON",
-			            "value": "default value of parm1",
+			            "value": "default value of parm111111",
 			            "info": {}
 			        },
 			        "outputInService2": {
 			            "dataTypeId": "test.string;1.0.0",
 			            "valueFormat": "JSON",
-			            "value": "default value of parm1",
+			            "value": "default value of parm222222",
 			            "info": {}
 			        }
 			    }
 			};
-			loc_result = {};
-			loc_result.success = result.resultValue;
+			
+			loc_interactiveValuePort.setResultValue(result);
 			return result;
 		}, handlers, request);
 
@@ -90,43 +91,6 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		}
 	});
 
-	var loc_requestValuePort = {
-		setValueRequest : function(elmentId, value, handlers, request){        
-			
-		},
-
-		setValuesRequest : function(setValueInfos, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				_.each(setValueInfos, function(setValueInfo, i){
-					loc_input[setValueInfo.elementId.getRootName()] = setValueInfo.value; 
-				});
-			}));
-			return out;
-		},
-	};
-
-	var loc_resultValuePort = {
-		"interactiveResult_success" : {
-			getValueRequest : function(elmentId, handlers, request){ 
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_result.success[elmentId.getRootName()];
-				}));
-				return out;
-			 }
-		}
-	};
-
-	var loc_getValuePort = function(valuePortGroup, valuePortName){
-		if(valuePortName==node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST){
-			return loc_requestValuePort;
-		}
-		else{
-			return loc_resultValuePort[valuePortName];
-		}
-	};
-	
 	var loc_out = {
 		
 		getExecuteTaskRequest: function(taskInput, handlers, request){
@@ -134,11 +98,11 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		},
 		
 		getExternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_getValuePort(valuePortGroup, valuePortName);
+			return loc_interactiveValuePort.getValuePort(valuePortName);
 		},
 		
 		getInternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_getValuePort(valuePortGroup, valuePortName);
+			return loc_interactiveValuePort.getValuePort(valuePortName);
 		},
 		
 	};
@@ -163,6 +127,8 @@ nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.createInteractiveValuePortsTask", function(){	node_createInteractiveValuePortsTask = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createDataServiceEntityPlugin", node_createDataServiceEntityPlugin); 

@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.common.interactive.HAPInteractiveTaskImp;
+import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
 @HAPEntityWithAttribute
@@ -18,10 +18,10 @@ public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple{
 
 	@Override
 	public void init() {
-		this.setAttributeValueWithValue(VALUE, new HAPInteractiveTaskImp());;
+		this.setAttributeValueWithValue(VALUE, new HAPInteractiveTask());;
 	}
 	
-	public HAPInteractiveTaskImp getValue(){	return (HAPInteractiveTaskImp)this.getAttributeValueOfValue(VALUE);	}
+	public HAPInteractiveTask getValue(){	return (HAPInteractiveTask)this.getAttributeValueOfValue(VALUE);	}
 	
 	@Override
 	public HAPContainerValuePorts getExternalValuePorts() {
