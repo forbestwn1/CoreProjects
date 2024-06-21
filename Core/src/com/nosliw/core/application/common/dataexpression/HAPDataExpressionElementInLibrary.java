@@ -9,11 +9,11 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithValuePort;
+import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 
 @HAPEntityWithAttribute
-public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implements HAPWithInteractive, HAPDataExpressionUnit, HAPWithValuePort{
+public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implements HAPWithInteractive, HAPDataExpressionUnit, HAPWithValuePortGroup{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -38,10 +38,10 @@ public class HAPDataExpressionElementInLibrary extends HAPEntityInfoImp implemen
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;  }
 	
 	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {   return this.m_interactive.getExternalValuePorts();  }
+	public HAPGroupValuePorts getExternalValuePortGroup() {   return this.m_interactive.getExternalValuePortGroup();  }
 	
 	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {   return this.m_interactive.getInternalValuePorts();  }
+	public HAPGroupValuePorts getInternalValuePortGroup() {   return this.m_interactive.getInternalValuePortGroup();  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

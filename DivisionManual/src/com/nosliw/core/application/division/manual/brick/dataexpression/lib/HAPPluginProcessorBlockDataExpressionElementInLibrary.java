@@ -34,7 +34,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
 		//resolve variable name
-		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), exe, exe.getVariablesInfo());
+		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), blockExe, exe.getVariablesInfo());
 		
 		//process reference
 		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(exe.getExpression(), processContext.getRuntimeEnv());

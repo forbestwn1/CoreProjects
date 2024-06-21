@@ -21,12 +21,16 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 	
 	@Override
 	public HAPContainerValuePorts getExternalValuePorts() {
-		return this.getValue().getExternalValuePorts();
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		out.addValuePortGroup(this.getValue().getExternalValuePortGroup(), true);
+		return out;
 	}
 	
 	@Override
 	public HAPContainerValuePorts getInternalValuePorts() {
-		return this.getValue().getInternalValuePorts();
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		out.addValuePortGroup(this.getValue().getInternalValuePortGroup(), true);
+		return out;
 	}
 
 }

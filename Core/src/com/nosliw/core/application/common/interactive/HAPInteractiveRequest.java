@@ -34,16 +34,20 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	private HAPValuePort m_externalValuePort;
 	
 	public HAPInteractiveRequest() {
-		this.m_internalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
-		this.m_externalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
 		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
 	}
 	
 	public HAPInteractiveRequest(List<HAPRequestParmInInteractive> requestParms) {
 		this();
 		this.m_requestParms = requestParms;
+		this.initValuePort();
 	}
 
+	private void initValuePort() {
+		this.m_internalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
+		this.m_externalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
+	}
+	
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }
 	
 	public HAPValuePort getInternalValuePort() {	return this.m_internalValuePort;	}
@@ -57,6 +61,7 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 			HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParmFromObject(parmsArray.get(i));
 			m_requestParms.add(parm);
 		}
+		this.initValuePort();
 		return true;  
 	}
 

@@ -8,7 +8,7 @@
 		{
 			"info": {
 				"name" : "dataexpression-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -85,13 +85,13 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"isTask" : true,
 			"brick":{
 				"serviceKey" : {
-					"id" : "TestReferenceService"
+					"id" : "TestBasicService"
 				}
 			},		
 			"adapter":[

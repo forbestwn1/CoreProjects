@@ -28,9 +28,9 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPProcessorElementRelative;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
@@ -94,7 +94,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
-//				pathReference.setValuePortRef(HAPUtilityValuePort.normalizeValuePortReference(pathReference.getValuePortRef(), baseBlockPath, currentBundle, resourceMan, runtimeInfo));
+//				pathReference.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(pathReference.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, baseBlockPath, currentBundle, resourceMan, runtimeInfo));
 				
 				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
 				

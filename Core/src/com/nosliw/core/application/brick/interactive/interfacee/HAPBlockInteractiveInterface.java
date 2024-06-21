@@ -1,80 +1,46 @@
 package com.nosliw.core.application.brick.interactive.interfacee;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrickBlockSimple;
-import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.common.interactive.HAPInteractiveTaskImp;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
 @HAPEntityWithAttribute
-public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple implements HAPInteractiveTask{
+public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple{
+
+	@HAPAttribute
+	public static String VALUE = "value";
 
 	@Override
 	public void init() {
-		this.setAttributeValueWithValue(REQUEST, new ArrayList<HAPRequestParmInInteractive>());
-		this.setAttributeValueWithValue(REQUEST, new LinkedHashMap<String, HAPInteractiveResultTask>());
+		this.setAttributeValueWithValue(VALUE, new HAPInteractiveTaskImp());;
 	}
 	
-	public void addRequestParm(HAPRequestParmInInteractive parm) { this.getRequestParms().add(parm);  }
-	@Override
-	public List<HAPRequestParmInInteractive> getRequestParms(){   return (List<HAPRequestParmInInteractive>)this.getAttributeValueOfValue(REQUEST);   }
+	public HAPInteractiveTaskImp getValue(){	return (HAPInteractiveTaskImp)this.getAttributeValueOfValue(VALUE);	}
 	
 	@Override
-	public Map<String, HAPInteractiveResultTask> getResults(){ return (Map<String, HAPInteractiveResultTask>)this.getAttributeValueOfValue(RESULT);  }
-	public HAPInteractiveResultTask getResult(String result) {   return this.getResults().get(result);  }
-	public List<HAPResultElementInInteractiveTask> getResultOutput(String result) {  return this.getResult(result).getOutput();  }
-	public void addResult(HAPInteractiveResultTask result) {  this.getResults().put(result.getName(), result);  }
+	public HAPContainerValuePorts getExternalValuePorts() {
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		out.addValuePortGroup(this.getValue().getExternalValuePortGroup(), true);
+		return out;
+	}
 	
-//	public void process(HAPRuntimeEnvironment runtimeEnv) {
-//		for(HAPRequestParmInInteractive parm : this.getRequestParms()) {
-//			parm.getDataInfo().process(runtimeEnv);
-//		}
-//	}
+	@Override
+	public HAPContainerValuePorts getInternalValuePorts() {
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		out.addValuePortGroup(this.getValue().getInternalValuePortGroup(), true);
+		return out;
+	}
 	
-//	protected void cloneToInteractive(HAPBlockInteractiveInterface interactive) {
-//		this.cloneToEntityInfo(interactive);
-//		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
-//			interactive.addRequestParm(parm.cloneVariableInfo());
-//		}
-//		for(String resultName : this.m_results.keySet()) {
-//			interactive.addResult(resultName, this.m_results.get(resultName).cloneInteractiveResult());
-//		}
-//	}
-	
-    @Override
-	protected Object buildAttributeValueFormatJson(String attrName, Object obj) {
-    	Object out = null;
-    	if(REQUEST.equals(attrName)) {
-    		List<HAPRequestParmInInteractive> rquestParms = new ArrayList<HAPRequestParmInInteractive>();
-			JSONArray parmsArray = (JSONArray)obj;
-			for(int i=0; i<parmsArray.length(); i++) {
-				HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParmFromObject(parmsArray.get(i));
-				rquestParms.add(parm);
-				out = rquestParms;
-			}
-    	}
-    	else if(RESULT.equals(attrName)) {
-    		Map<String, HAPInteractiveResultTask> results = new LinkedHashMap<String, HAPInteractiveResultTask>();
-			JSONObject resultObject = (JSONObject)obj;
-			for(Object key : resultObject.keySet()) {
-				String name = (String)key;
-				HAPInteractiveResultTask resultEle = new HAPInteractiveResultTask();
-				resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
-				resultEle.setName(name);
-				results.put(resultEle.getName(), resultEle);
-			}
-			out = results;
-    	}
-    	return out;
-    }
+	@Override
+	protected boolean buildBrickFormatJson(JSONObject jsonObj, HAPManagerApplicationBrick brickMan) {
+		this.getValue().buildObject(jsonObj, HAPSerializationFormat.JSON);
+		return true;
+	}
+
 }

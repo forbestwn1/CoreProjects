@@ -8,13 +8,12 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithValuePort;
+import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 
 @HAPEntityWithAttribute
-public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive, HAPWithValuePort{
+public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive, HAPWithValuePortGroup{
 	
 	private HAPInteractiveRequest m_request;
 	private HAPInteractiveResultExpression m_result;
@@ -55,7 +54,7 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 */
 	
 	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {
+	public HAPGroupValuePorts getExternalValuePortGroup() {
 		HAPGroupValuePorts group = new HAPGroupValuePorts();
 
 		//request
@@ -68,13 +67,11 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 		resultValuePortWrapper.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
 		group.addValuePort(resultValuePortWrapper, true);
 
-		HAPContainerValuePorts out = new HAPContainerValuePorts();
-		out.addValuePortGroup(group, true);
-		return out;	
+		return group;	
 	}
 	
 	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {
+	public HAPGroupValuePorts getInternalValuePortGroup() {
 		HAPGroupValuePorts group = new HAPGroupValuePorts();
 		
 		//request
@@ -87,9 +84,7 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 		resultValuePortWrapper.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
 		group.addValuePort(resultValuePortWrapper, true);
 		
-		HAPContainerValuePorts out = new HAPContainerValuePorts();
-		out.addValuePortGroup(group, true);
-		return out;	
+		return group;	
 	}
 	
 	@Override
