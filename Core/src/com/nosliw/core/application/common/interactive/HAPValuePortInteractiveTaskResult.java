@@ -14,9 +14,9 @@ import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort
 
 public class HAPValuePortInteractiveTaskResult extends HAPValuePortImp{
 
-	private HAPResultInInteractiveTask m_taskResult;
+	private HAPInteractiveResultTask m_taskResult;
 	
-	public HAPValuePortInteractiveTaskResult(HAPResultInInteractiveTask taskResult, String ioDirection) {
+	public HAPValuePortInteractiveTaskResult(HAPInteractiveResultTask taskResult, String ioDirection) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, ioDirection));
 		this.m_taskResult = taskResult;
 	}

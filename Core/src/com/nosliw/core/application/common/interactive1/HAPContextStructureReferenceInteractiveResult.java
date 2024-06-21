@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
@@ -15,11 +15,11 @@ import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPContextStructureReferenceInteractiveResult implements HAPContextStructureReference{
 
-	private HAPResultInInteractiveTask m_result;
+	private HAPInteractiveResultTask m_result;
 	
 	private HAPManualBrickValueStructure m_valueStructureDef;
 	
-	public HAPContextStructureReferenceInteractiveResult(HAPResultInInteractiveTask result) {
+	public HAPContextStructureReferenceInteractiveResult(HAPInteractiveResultTask result) {
 		this.m_result = result;
 		this.buildValueStructure();
 	}

@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.data.HAPContextDataFactory;
@@ -82,7 +82,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		}
 
 		Map<String, HAPContainerStructure> outputExternalContexts = new LinkedHashMap<String, HAPContainerStructure>();
-		Map<String, HAPResultInInteractiveTask> serviceResult = serviceInterface.getResults();
+		Map<String, HAPInteractiveResultTask> serviceResult = serviceInterface.getResults();
 		for(String resultName : serviceResult.keySet()) {
 			List<HAPResultElementInInteractiveTask> output = serviceResult.get(resultName).getOutput();
 			HAPValueStructureDefinitionFlat outputContext = new HAPValueStructureDefinitionFlat();

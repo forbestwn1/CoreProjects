@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
-import com.nosliw.core.application.common.interactive.HAPResultInInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive1.HAPBrickInteractive;
 import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveRequest;
 import com.nosliw.core.application.common.interactive1.HAPContextStructureReferenceInteractiveResult;
@@ -48,7 +48,7 @@ public class HAPPluginAdapterProcessorDataAssociationInteractive extends HAPPlug
 		dataAssociationGroupExe.setInDataAssociation(inExe);
 
 		//data association for result
-		Map<String, HAPResultInInteractiveTask> results = interactiveExe.getResults();
+		Map<String, HAPInteractiveResultTask> results = interactiveExe.getResults();
 		Map<String, HAPDefinitionDataAssociation> outDAs = dataAssociationGroup.getOutDataAssociations();
 		for(String resultName : outDAs.keySet()) {
 			HAPExecutableDataAssociation outExe = HAPProcessorDataAssociation.processDataAssociation(

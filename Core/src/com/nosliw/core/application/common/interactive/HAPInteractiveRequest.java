@@ -1,7 +1,10 @@
 package com.nosliw.core.application.common.interactive;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.json.JSONArray;
 
 import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
@@ -30,10 +33,15 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	private HAPValuePort m_internalValuePort;
 	private HAPValuePort m_externalValuePort;
 	
-	public HAPInteractiveRequest(List<HAPRequestParmInInteractive> requestParms) {
-		this.m_requestParms = requestParms;
+	public HAPInteractiveRequest() {
 		this.m_internalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
 		this.m_externalValuePort = new HAPValuePortInteractiveRequest1(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
+		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
+	}
+	
+	public HAPInteractiveRequest(List<HAPRequestParmInInteractive> requestParms) {
+		this();
+		this.m_requestParms = requestParms;
 	}
 
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }
@@ -42,6 +50,16 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	
 	public HAPValuePort getExternalValuePort() {	return this.m_externalValuePort;	}
 	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONArray parmsArray = (JSONArray)json;
+		for(int i=0; i<parmsArray.length(); i++) {
+			HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParmFromObject(parmsArray.get(i));
+			m_requestParms.add(parm);
+		}
+		return true;  
+	}
+
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(PARM, HAPManagerSerialize.getInstance().toStringValue(this.getRequestParms(), HAPSerializationFormat.JSON));
