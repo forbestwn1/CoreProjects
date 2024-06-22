@@ -85,9 +85,6 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	var loc_facade = node_createTaskInterface({
 		getExecuteRequest : function(handlers, request){
 			return loc_getExecuteTaskRequest(handlers, request);
-		},
-		getExecuteRequest1 : function(taskInput, requirement, handlers, request){
-			return loc_getExecuteTaskRequest(taskInput, handlers, request);
 		}
 	});
 

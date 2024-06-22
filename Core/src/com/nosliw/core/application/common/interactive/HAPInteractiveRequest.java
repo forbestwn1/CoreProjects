@@ -13,10 +13,13 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
+import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
@@ -95,6 +98,16 @@ class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 	protected List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria,
 			HAPConfigureResolveElementReference configure) {
 		return Lists.asList(HAPConstantShared.NAME_DEFAULT, new String[0]);
+	}
+
+	@Override
+	protected HAPResultReferenceResolve extendValueStructure(String valueStructureInValuePort, String elementPath, HAPElementStructure structureEle, HAPConfigureResolveElementReference resolveConfigure) {
+		HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParm(elementPath, null);
+		this.m_requestParms.add(parm);
+		
+		List<HAPInfoValueStructureReference> targetStructures = new ArrayList<HAPInfoValueStructureReference>();
+		targetStructures.add(new HAPInfoValueStructureReference(valueStructureInValuePort, this.getValueStructureDefintion(valueStructureInValuePort)));
+		return analyzeElementReference(elementPath, targetStructures, resolveConfigure);
 	}
 }
 

@@ -28,7 +28,7 @@
 								"mapping" : [
 									{
 										"target" : {
-											"rootName" : "deparm1"
+											"rootName" : "extension"
 										},
 										"definition" : {
 											"mapping" : {
@@ -80,12 +80,10 @@
 			]
 		},
 		
-	
-	
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,

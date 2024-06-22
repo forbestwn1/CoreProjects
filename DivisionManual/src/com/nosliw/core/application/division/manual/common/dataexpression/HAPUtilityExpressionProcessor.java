@@ -18,8 +18,12 @@ import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -35,7 +39,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableCriteriaInfo varInfos) {
+	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableCriteriaInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -43,11 +47,12 @@ public class HAPUtilityExpressionProcessor {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
 
-					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, null, withInternalValuePort);
+					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure, withInternalValuePort);
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);
-					expressionExe.addVariableKey(variableKey);				}
+					expressionExe.addVariableKey(variableKey);				
+				}
 				return true;
 			}
 		});
@@ -75,6 +80,26 @@ public class HAPUtilityExpressionProcessor {
 				return true;
 			}
 		});
+	}
+
+	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
+		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
+		for(HAPIdElement varId : variables.keySet()) {
+			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
+			
+			HAPValuePort valuePort = withInternalValuePort.getInternalValuePorts().getValuePort(varId.getRootElementId().getValuePortId().getValuePortId());
+			HAPValueStructureInValuePort valueStructureInValuePort = valuePort.getValueStructureDefintion(varId.getRootElementId().getValueStructureId());
+			
+			HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(valueStructureInValuePort.getRoot(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());
+			
+//			HAPElementStructure structureEle = HAPUtilityValueContext.getStructureElement(varId, valueStructureDomain);
+			String eleType = structureEle.getType();
+			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
+				varCriteriaInfo.setCriteria(dataEle.getCriteria());
+				varCriteriaInfo.setStatus(dataEle.getStatus());
+			}
+		}
 	}
 
 
@@ -107,20 +132,6 @@ public class HAPUtilityExpressionProcessor {
 	}
 	
 	
-	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
-		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
-		for(HAPIdElement varId : variables.keySet()) {
-			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
-			HAPElementStructure structureEle = HAPUtilityValueContext.getStructureElement(varId, valueStructureDomain);
-			String eleType = structureEle.getType();
-			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
-				varCriteriaInfo.setCriteria(dataEle.getCriteria());
-				varCriteriaInfo.setStatus(dataEle.getStatus());
-			}
-		}
-	}
-
 	//update value context according to vairable info
 	public static void updateValueContext(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();

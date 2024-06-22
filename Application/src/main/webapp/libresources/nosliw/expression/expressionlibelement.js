@@ -53,11 +53,6 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 	var loc_out = {
 		
 		getInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_init();
-			}));
-			return out;
 		},
 		
 		getExecuteRequest : function(handlers, request){
@@ -72,6 +67,8 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 			return loc_interactiveValuePorts.getValuePort(valuePortName);
 		},
 	};
+	
+	loc_init();
 	return loc_out;
 };
 

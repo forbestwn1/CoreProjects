@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.HAPData;
@@ -49,8 +49,12 @@ public class HAPRequestParmInInteractive extends HAPEntityInfoWritableImp{
 	public static HAPRequestParmInInteractive buildParm(String name, HAPDataTypeCriteria criteria) {
 		HAPRequestParmInInteractive out = new HAPRequestParmInInteractive();
 		if(criteria!=null) {
-			out.m_dataInfo = new HAPVariableDataInfo(criteria);
+			out.getDataInfo().setCriteria(criteria);
 		}
+		else {
+			
+		}
+		
 		if(name!=null) {
 			out.setName(name);
 		}

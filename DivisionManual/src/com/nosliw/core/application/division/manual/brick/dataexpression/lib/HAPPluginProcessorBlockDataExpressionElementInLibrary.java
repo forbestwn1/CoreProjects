@@ -1,17 +1,24 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
+import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
 
@@ -34,13 +41,27 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
 		//resolve variable name
-		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), blockExe, exe.getVariablesInfo());
+		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), blockExe, exe.getVariablesInfo(), null);
+		
+		HAPUtilityExpressionProcessor.buildVariableInfo(exe.getVariablesInfo(), blockExe);
 		
 		//process reference
 		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(exe.getExpression(), processContext.getRuntimeEnv());
 		
 		//discover
+		List<HAPOperand> operands = new ArrayList<HAPOperand>();
+		operands.add(exe.getExpression().getOperand().getOperand());
+		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
+		HAPContainerVariableCriteriaInfo variableInfos = HAPUtilityOperand.discover(
+				operands,
+				null,
+				exe.getVariablesInfo(),
+				matchers,
+				processContext.getRuntimeEnv().getDataTypeHelper(),
+				new HAPProcessTracker());
 		
 	}
 
+
+	
 }

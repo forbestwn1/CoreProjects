@@ -20,6 +20,7 @@ import com.nosliw.data.core.data.HAPDataTypeOperation;
 import com.nosliw.data.core.data.HAPDataWrapper;
 import com.nosliw.data.core.data.HAPOperationParmInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
@@ -121,14 +122,22 @@ public class HAPUtilityOperand {
 			String path = HAPUtilityNamingConversion.cascadePath(attrInfo.path.toArray(new String[0]));
 			
 			Map<String, String> opTypeByName = new LinkedHashMap<String, String>();
-			for(String varName : dataVarNames)   opTypeByName.put(varName, HAPConstantShared.EXPRESSION_OPERAND_VARIABLE);
-			for(String constantName : dataConstantNames)   opTypeByName.put(constantName, HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
+			for(String varName : dataVarNames) {
+				opTypeByName.put(varName, HAPConstantShared.EXPRESSION_OPERAND_VARIABLE);
+			}
+			for(String constantName : dataConstantNames) {
+				opTypeByName.put(constantName, HAPConstantShared.EXPRESSION_OPERAND_CONSTANT);
+			}
 			
 			for(String name : opTypeByName.keySet()){
 				if(path.equals(name)){
 					String opType = opTypeByName.get(name);
-					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE))   attrInfo.lastAttrOperand.setOperand(new HAPOperandVariable(name));  //replace with variable operand
-					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT))   attrInfo.lastAttrOperand.setOperand(new HAPOperandConstant(name));  //replace with constant operand
+					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)) {
+						attrInfo.lastAttrOperand.setOperand(new HAPOperandVariable(name));  //replace with variable operand
+					} else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT))
+					 {
+						attrInfo.lastAttrOperand.setOperand(new HAPOperandConstant(name));  //replace with constant operand
+					}
 					break;
 				}
 				else if(path.startsWith(name+".")){
@@ -173,7 +182,9 @@ public class HAPUtilityOperand {
 					if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 						HAPOperandVariable variableChild = (HAPOperandVariable)operand.getOperand();
 						String newName = nameUpdate.getUpdatedName(variableChild.getVariableName()); 
-						if(newName!=null)	variableChild.setVariableName(newName);
+						if(newName!=null) {
+							variableChild.setVariableName(newName);
+						}
 					}
 					else if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE)){
 						HAPOperandReference referenceChild = (HAPOperandReference)operand.getOperand();
@@ -352,7 +363,12 @@ public class HAPUtilityOperand {
 			varsInfo = varsInfo.clone();
 			processTracker.clear();
 			for(int i=0; i<operands.size(); i++) {
-				matchers.add(operands.get(i).discover(varsInfo, expectOutputs.get(i), processTracker, dataTypeHelper));
+				HAPDataTypeCriteria expectOutput = null;
+				if(expectOutputs==null||expectOutputs.get(i)==null) {
+					expectOutput = HAPDataTypeCriteriaAny.getCriteria(); 
+				}
+				
+				matchers.add(operands.get(i).discover(varsInfo, expectOutput, processTracker, dataTypeHelper));
 			}
 		}while(!HAPUtilityBasic.isEqualMaps(varsInfo.getVariableCriteriaInfos(), oldVarsInfo.getVariableCriteriaInfos()) && processTracker.isSuccess());
 		return varsInfo;

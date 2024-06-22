@@ -39,6 +39,13 @@ public class HAPConfigureResolveElementReference extends HAPInfoImpSimple{
 	public Set<String> getElementTypes(){   return (Set<String>)this.getValue(ELEMENTTYPE);    }
 	public void setElementTypes(Set<String> elementTypes) {     this.setValue(ELEMENTTYPE, elementTypes);       }
 	
+	
+	public boolean isExtension() {return true;}
+	
+	public HAPReferenceValueStructure getValueStructureForExtension() {
+		return null;
+	}
+	
 	public HAPConfigureResolveElementReference() {
 		this.setSearchMode(HAPConstant.RESOLVEPARENTMODE_BEST);
 		this.setGroupTypes(new HashSet<String>(Arrays.asList(HAPUtilityValueStructure.getVisibleToChildCategaries())));
