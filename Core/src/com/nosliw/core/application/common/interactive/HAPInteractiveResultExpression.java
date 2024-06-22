@@ -32,8 +32,8 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 	
 	public HAPInteractiveResultExpression(HAPResultElementInInteractiveExpression result) {
 		this.m_result = result;
-		this.m_internalValuePort = new HAPValuePortInteractiveExpressionResult1(this.m_result, HAPConstantShared.IO_DIRECTION_IN);
-		this.m_externalValuePort = new HAPValuePortInteractiveExpressionResult1(this.m_result, HAPConstantShared.IO_DIRECTION_OUT);
+		this.m_internalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_IN);
+		this.m_externalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_OUT);
 	}
 	
 	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  }
@@ -49,11 +49,11 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 }
 
 
-class HAPValuePortInteractiveExpressionResult1 extends HAPValuePortImp{
+class HAPValuePortInteractiveExpressionResult extends HAPValuePortImp{
 
 	private HAPResultElementInInteractiveExpression m_expressionResult;
 	
-	public HAPValuePortInteractiveExpressionResult1(HAPResultElementInInteractiveExpression expressionResult, String ioDirection) {
+	public HAPValuePortInteractiveExpressionResult(HAPResultElementInInteractiveExpression expressionResult, String ioDirection) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, ioDirection));
 		this.m_expressionResult = expressionResult;
 	}
