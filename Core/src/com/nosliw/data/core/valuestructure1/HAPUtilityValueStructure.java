@@ -200,7 +200,7 @@ public class HAPUtilityValueStructure {
 			root.setName(nameUpdate.getUpdatedName(root.getName()));
 			HAPUtilityContext.processContextRootElement(root, rootName, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+				public Pair<Boolean, HAPElement> process(HAPInfoElementResolve eleInfo, Object value) {
 					if(eleInfo.getElement() instanceof HAPElementLeafRelative) {
 						HAPElementLeafRelative relative = (HAPElementLeafRelative)eleInfo.getElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_SELF.equals(relative.getParent())) {
@@ -213,7 +213,7 @@ public class HAPUtilityValueStructure {
 				}
 
 				@Override
-				public void postProcess(HAPInfoElement ele, Object value) { }
+				public void postProcess(HAPInfoElementResolve ele, Object value) { }
 			}, null);
 			//update root name
 			this.m_roots.remove(rootName);
@@ -227,7 +227,7 @@ public class HAPUtilityValueStructure {
 			HAPRoot root = this.getRoot(eleName);
 			HAPUtilityContext.processContextRootElement(root, eleName, new HAPProcessorContextDefinitionElement() {
 				@Override
-				public Pair<Boolean, HAPElement> process(HAPInfoElement eleInfo, Object value) {
+				public Pair<Boolean, HAPElement> process(HAPInfoElementResolve eleInfo, Object value) {
 					if(eleInfo.getElement() instanceof HAPElementLeafRelative) {
 						HAPElementLeafRelative relative = (HAPElementLeafRelative)eleInfo.getElement();
 						if(HAPConstantShared.DATAASSOCIATION_RELATEDENTITY_DEFAULT.equals(relative.getParent())) {
@@ -240,7 +240,7 @@ public class HAPUtilityValueStructure {
 				}
 
 				@Override
-				public void postProcess(HAPInfoElement ele, Object value) { }
+				public void postProcess(HAPInfoElementResolve ele, Object value) { }
 			}, null);
 		}
 	}

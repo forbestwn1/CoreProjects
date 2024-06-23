@@ -18,6 +18,7 @@ import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
@@ -40,28 +41,40 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		//
 		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
-		//resolve variable name
+		//resolve variable name, build var info container
 		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), blockExe, exe.getVariablesInfo(), null);
 		
+		//build var criteria infor in var info container according to value port def
 		HAPUtilityExpressionProcessor.buildVariableInfo(exe.getVariablesInfo(), blockExe);
 		
-		//process reference
+		//process reference operand
 		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(exe.getExpression(), processContext.getRuntimeEnv());
 		
 		//discover
 		List<HAPOperand> operands = new ArrayList<HAPOperand>();
 		operands.add(exe.getExpression().getOperand().getOperand());
+		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
+		expectOutputs.add(exe.getInteractive().getResult().getDataCriteria());
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		HAPContainerVariableCriteriaInfo variableInfos = HAPUtilityOperand.discover(
 				operands,
-				null,
+				expectOutputs,
 				exe.getVariablesInfo(),
 				matchers,
 				processContext.getRuntimeEnv().getDataTypeHelper(),
 				new HAPProcessTracker());
+		exe.setVariablesInfo(variableInfos);
 		
+		//update value port element according to var info container after resolve
+		HAPUtilityExpressionProcessor.updateValuePortElements(exe.getVariablesInfo(), blockExe);
+		
+		//result
+		HAPDataTypeCriteria resultCriteria = exe.getExpression().getOperand().getOperand().getOutputCriteria();
+		if(exe.getInteractive().getResult().getDataCriteria()==null) {
+			exe.getInteractive().getResult().setDataCriteria(resultCriteria);
+		}
+		else {
+			exe.setResultMatchers(matchers.get(0));
+		}
 	}
-
-
-	
 }

@@ -261,7 +261,7 @@ public class HAPManualUtilityValueStructureDomain {
 						}
 						
 						@Override
-						public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+						public Pair<Boolean, HAPElementStructure> process(HAPInfoElementResolve eleInfo, Object value) {
 							HAPElementStructure defStructureElement = eleInfo.getElement();
 							HAPElementStructure out = defStructureElement;
 							switch(defStructureElement.getType()) {
@@ -281,7 +281,7 @@ public class HAPManualUtilityValueStructureDomain {
 						}
 
 						@Override
-						public void postProcess(HAPInfoElement eleInfo, Object value) {}
+						public void postProcess(HAPInfoElementResolve eleInfo, Object value) {}
 					}, null);
 					
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();

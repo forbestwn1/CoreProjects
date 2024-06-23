@@ -98,7 +98,7 @@
 				}
 			],
 			"result" : {
-				"criteria" : "test.string;1.0.0"
+				"criteria1" : "test.string;1.0.0"
 			},
 			"expression" : "!(test.string)!.subString(base:?(extension)?,from:?(deparm2)?,to:?(deparm3)?)"
 		}

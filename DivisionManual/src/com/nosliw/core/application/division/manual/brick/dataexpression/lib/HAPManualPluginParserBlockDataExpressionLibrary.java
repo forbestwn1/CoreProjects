@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextParse;
@@ -24,7 +25,9 @@ public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPPluginPa
 		JSONArray dataExpressionArray = (JSONArray)jsonValue;
 		for(int i=0; i<dataExpressionArray.length(); i++) {
 			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
-			dataExpressionLibrary.addElement(HAPManualUtilityParserBrickFormatJson.parseWrapperValue(elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getEntityManager()));
+			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
+				dataExpressionLibrary.addElement(HAPManualUtilityParserBrickFormatJson.parseWrapperValue(elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getEntityManager()));
+			}
 		}
 	}
 

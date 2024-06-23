@@ -15,7 +15,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -30,15 +29,10 @@ public class HAPDataExpression extends HAPExecutableImp{
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute
-	public static String OUTPUTMATCHERS = "outputMatchers";
-
-	@HAPAttribute
 	public static String VARIABLEKEYS = "variableKeys";
 	
 	private HAPWrapperOperand m_operand;
 
-	private HAPMatchers m_outputMatchers;
-	
 	private Set<String> m_varKeys = new HashSet<String>();
 
 	public HAPDataExpression(HAPWrapperOperand operand) {
@@ -49,9 +43,6 @@ public class HAPDataExpression extends HAPExecutableImp{
 
 	public HAPDataTypeCriteria getOutputCriteria() {  return this.m_operand.getOperand().getOutputCriteria(); }
 	
-	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
-	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
-
 	public Set<String> getVariablesInfo(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
 
@@ -98,12 +89,6 @@ public class HAPDataExpression extends HAPExecutableImp{
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
-		//get converter resource id from var converter in expression 
-		HAPMatchers matchers = this.getOutputMatchers();
-		if(matchers!=null){
-			dependency.addAll(matchers.getResourceDependency(runtimeInfo, resourceManager));
-		}
-		
 		HAPUtilityOperand.processAllOperand(this.getOperand(), dependency, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -122,7 +107,6 @@ public class HAPDataExpression extends HAPExecutableImp{
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERAND, HAPManagerSerialize.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
 	}
 }

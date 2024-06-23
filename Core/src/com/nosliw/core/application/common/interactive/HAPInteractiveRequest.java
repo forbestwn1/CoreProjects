@@ -16,6 +16,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
@@ -108,6 +109,16 @@ class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 		List<HAPInfoValueStructureReference> targetStructures = new ArrayList<HAPInfoValueStructureReference>();
 		targetStructures.add(new HAPInfoValueStructureReference(valueStructureInValuePort, this.getValueStructureDefintion(valueStructureInValuePort)));
 		return analyzeElementReference(elementPath, targetStructures, resolveConfigure);
+	}
+
+	@Override
+	public void updateElement(HAPIdElement elementId, HAPElementStructure structureElement) {
+		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
+			if(parm.getName().equals(elementId.getRootElementId().getRootName())) {
+				parm.setCriteria(((HAPElementStructureLeafData)structureElement).getCriteria());
+				return;
+			}
+		}		
 	}
 }
 

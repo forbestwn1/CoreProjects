@@ -50,6 +50,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
 	private Map<String, HAPWrapperOperand> m_variableMapping;
 	private Map<String, HAPIdElement> m_resolvedVariable;
+	private Map<String, HAPDataTypeCriteria> m_resolvedVariableCriteria;
 	private Map<String, HAPMatchers> m_matchers;
 	
 	private HAPOperandReference(){
@@ -57,6 +58,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_variableMapping = new LinkedHashMap<String, HAPWrapperOperand>();
 		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
+		this.m_resolvedVariableCriteria = new LinkedHashMap<String, HAPDataTypeCriteria>();
 	}
 	
 	public HAPOperandReference(String reference){
@@ -73,7 +75,10 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_variableMapping.putAll(mapping);
 	}
 
-	public void addResolvedVariable(String varName, HAPIdElement varId) {	this.m_resolvedVariable.put(varName, varId);	}
+	public void addResolvedVariable(String varName, HAPIdElement varId, HAPDataTypeCriteria varCriteria) {	
+		this.m_resolvedVariable.put(varName, varId);	
+		this.m_resolvedVariableCriteria.put(varName, varCriteria);
+	}
 	
 	public void setResourceId(HAPResourceId resourceId) {   this.m_referedDataExpressionLibElementResourceId = resourceId;     }
 	
@@ -105,7 +110,7 @@ public class HAPOperandReference extends HAPOperandImp{
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
 		
 		for(String name : this.m_variableMapping.keySet()) {
-			HAPMatchers matchers = this.m_variableMapping.get(name).getOperand().discover(variablesInfo, this.m_resolvedElement.get(name).getCriteria(), processTracker, dataTypeHelper);
+			HAPMatchers matchers = this.m_variableMapping.get(name).getOperand().discover(variablesInfo, this.m_resolvedVariableCriteria.get(name), processTracker, dataTypeHelper);
 			if(matchers!=null) {
 				this.m_matchers.put(name, matchers);
 			}

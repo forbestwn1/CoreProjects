@@ -33,7 +33,11 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	
 	public HAPElementStructureLeafData(HAPDataTypeCriteria dataTypeCriteria){
 		this.m_dataInfo = new HAPVariableDataInfo(dataTypeCriteria);
-		this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN;
+		if(dataTypeCriteria==null) {
+			this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN;
+		} else {
+			this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_CLOSE;
+		}
 	}	
 
 	public HAPElementStructureLeafData(HAPVariableDataInfo dataInfo){
@@ -52,7 +56,9 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	
 	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo==null?null:this.m_dataInfo.getCriteria();  }
 	public void setCriteria(HAPDataTypeCriteria criteria) {
-		if(this.m_dataInfo==null) 	this.m_dataInfo = new HAPVariableDataInfo();
+		if(this.m_dataInfo==null) {
+			this.m_dataInfo = new HAPVariableDataInfo();
+		}
 		this.m_dataInfo.setCriteria(criteria);;
 	}
 	
@@ -61,7 +67,9 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_dataInfo!=null)  	jsonMap.put(CRITERIA, this.m_dataInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_dataInfo!=null) {
+			jsonMap.put(CRITERIA, this.m_dataInfo.toStringValue(HAPSerializationFormat.JSON));
+		}
 		jsonMap.put(STATUS, this.m_status);
 	}
 
@@ -76,7 +84,9 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
 		HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)out;
-		if(this.m_dataInfo!=null)		dataEle.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
+		if(this.m_dataInfo!=null) {
+			dataEle.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
+		}
 		dataEle.m_status = this.m_status;
 	}
 
@@ -88,13 +98,19 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 
 	@Override
 	public boolean equals(Object obj) {
-		if(!super.equals(obj))  return false;
+		if(!super.equals(obj)) {
+			return false;
+		}
 
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafData) {
 			HAPElementStructureLeafData ele = (HAPElementStructureLeafData)obj;
-			if(!HAPUtilityBasic.isEquals(this.m_dataInfo, ele.m_dataInfo))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_status, ele.m_status))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_dataInfo, ele.m_dataInfo)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_status, ele.m_status)) {
+				return false;
+			}
 			out = true;
 		}
 		return out;
