@@ -44,7 +44,7 @@ public class HAPOperandReference extends HAPOperandImp{
 	//reference to expression (attachent name or resource id)
 	private String m_reference;
 	
-	private HAPDataExpressionElementInLibrary m_referedDataExpression;
+	private HAPElementInLibraryDataExpression m_referedDataExpression;
 	private HAPResourceId m_referedDataExpressionLibElementResourceId;
 	
 	//mapping from this expression to referenced expression variable (ref variable id path --  source operand)
@@ -82,8 +82,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	public void setResourceId(HAPResourceId resourceId) {   this.m_referedDataExpressionLibElementResourceId = resourceId;     }
 	
-//	public void setReferencedDataExpression(HAPDataExpressionElementInLibrary referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
-//	public HAPDataExpressionElementInLibrary getReferencedDataExpression() {    return this.m_referedDataExpression;      }
+//	public void setReferencedDataExpression(HAPElementInLibraryDataExpression referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
+//	public HAPElementInLibraryDataExpression getReferencedDataExpression() {    return this.m_referedDataExpression;      }
 	
 	@Override
 	public List<HAPWrapperOperand> getChildren(){

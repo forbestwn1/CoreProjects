@@ -9,7 +9,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPContainerVariableCriteriaInfo;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
+import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
@@ -29,7 +29,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 
 	@Override
 	public void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
-		HAPDataExpressionElementInLibrary exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
+		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
 		def.cloneToEntityInfo(exe);

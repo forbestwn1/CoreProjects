@@ -1,0 +1,57 @@
+{
+	"info": {
+		"name": "test.expression",
+		"description": "test expression group entity"
+	},
+	"brick": {
+		"value": {
+			"item" : [
+				{
+					"name" : "normal_cleardatatype",
+					"status": "disabled1",
+					"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+				}
+			]
+		},
+		"valueContext" : {
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root" : {
+							"baseVarNormal": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parm1" : {
+								"definition": {
+									"criteria" : "test.integer"
+								}
+							},
+							"parm2" : {
+								"definition": {
+									"criteria" : "test.integer"
+								}
+							}
+						},
+						"initValue": {
+							"baseVarNormal": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of baseVarNormal"
+							},
+							"parm1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"parm2": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+}

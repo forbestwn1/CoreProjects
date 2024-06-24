@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpressionElementInLibrary;
+import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveExpression;
@@ -56,7 +56,7 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 			this.setResult(result);
 		}
 		
-		this.setExpression(jsonObj.getString(HAPDataExpressionElementInLibrary.EXPRESSION));
+		this.setExpression(jsonObj.getString(HAPElementInLibraryDataExpression.EXPRESSION));
 		
 		return true;  
 	}

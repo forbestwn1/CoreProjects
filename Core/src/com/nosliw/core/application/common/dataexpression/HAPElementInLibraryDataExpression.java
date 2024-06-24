@@ -19,7 +19,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPDataExpressionElementInLibrary extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPDataExpressionUnit, HAPWithValuePortGroup{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPUnitDataExpression, HAPWithValuePortGroup{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -35,7 +35,7 @@ public class HAPDataExpressionElementInLibrary extends HAPExecutableImpEntityInf
 	
 	private HAPContainerVariableCriteriaInfo m_variableInfo;
 	
-	public HAPDataExpressionElementInLibrary() {
+	public HAPElementInLibraryDataExpression() {
 		this.m_variableInfo = new HAPContainerVariableCriteriaInfo();
 	}
 	
@@ -61,7 +61,7 @@ public class HAPDataExpressionElementInLibrary extends HAPExecutableImpEntityInf
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(INTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
-		jsonMap.put(HAPDataExpressionUnit.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.getVariablesInfo(), HAPSerializationFormat.JSON));
+		jsonMap.put(HAPUnitDataExpression.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.getVariablesInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JSON));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));
 	}

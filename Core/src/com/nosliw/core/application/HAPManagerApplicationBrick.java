@@ -15,6 +15,7 @@ import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataA
 import com.nosliw.core.application.brick.adapter.dataassociationforexpression.HAPAdapterDataAssociationForExpression;
 import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
+import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.brick.dataexpression.lib.HAPPluginBrickDataExpressionLibrary;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
@@ -65,6 +66,8 @@ public class HAPManagerApplicationBrick {
 
 		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIB_100, false), this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, false), HAPBlockDataExpressionElementInLibrary.class, this.m_runtimeEnv));
+
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, true), HAPBlockDataExpressionGroup.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.CONTAINER_100, false), HAPBrickContainer.class, this.m_runtimeEnv));
 		

@@ -25,6 +25,6 @@ public class HAPPluginParserBrickImpComplex extends HAPPluginParserBrickImp{
 		this.parseComplexDefinitionContentJson(brickDefinition, jsonObj, parseContext);
 	}
 
-	protected void parseComplexDefinitionContentJson(HAPManualBrick entityDefinition, JSONObject jsonObj, HAPManualContextParse parseContext) {}
+	protected void parseComplexDefinitionContentJson(HAPManualBrick brickDefinition, JSONObject jsonObj, HAPManualContextParse parseContext) {}
 
 }
