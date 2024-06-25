@@ -9,7 +9,6 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
@@ -77,7 +76,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickIm
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.entityType = HAPUtilityBrickId.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
+				out.entityType = HAPUtilityBrickId.parseBrickTypeIdAggresive(pair.getLeft(), this.getBrickManager()); 
 				str = pair.getRight();
 			}
 		}
@@ -85,12 +84,12 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickIm
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.adapterType = HAPUtilityBrick.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager());
+				out.adapterType = HAPUtilityBrickId.parseBrickTypeIdAggresive(pair.getLeft(), this.getBrickManager());
 				str = pair.getRight();
 			}
 		}
 
-		out.isComplex = HAPManualUtilityBrick.isBrickComplex(out.entityType, getEntityManager()); 
+		out.isComplex = HAPManualUtilityBrick.isBrickComplex(out.entityType, getBrickManager()); 
 		
 		return out;
 	}

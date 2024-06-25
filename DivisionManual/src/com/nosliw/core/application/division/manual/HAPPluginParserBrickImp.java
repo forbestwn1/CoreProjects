@@ -33,11 +33,27 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	}
 
 	@Override
+	public HAPManualBrick newBrick() {
+		HAPManualBrick out = null;
+		try {
+			out = this.m_brickClass.newInstance();
+			out.setManualBrickManager(this.getManualDivisionEntityManager());
+			out.init();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return out;
+	}
+
+	
+	@Override
 	public HAPManualBrick parse(Object content, HAPSerializationFormat format, HAPManualContextParse parseContext) {
 		HAPManualBrick out = null;
 		
 		try {
-			out = this.m_brickClass.newInstance();
+			out = this.newBrick();
+			
 			postNewInstance(out);
 			
 			
@@ -94,7 +110,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	}
 
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {    return this.m_runtimeEnv;    }
-	protected HAPManagerApplicationBrick getEntityManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
+	protected HAPManagerApplicationBrick getBrickManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
 	protected HAPManualManagerBrick getManualDivisionEntityManager() {    return this.m_manualBrickMan;     }
 	
 	//*************************************   Json format parse helper
@@ -108,7 +124,7 @@ public class HAPPluginParserBrickImp implements HAPPluginParserBrick{
 	
 	protected void parseBrickAttributeSelfJson(HAPManualBrick parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualAttribute attribute = HAPManualUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getEntityManager());
+			HAPManualAttribute attribute = HAPManualUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getBrickManager());
 			parentEntity.setAttribute(attribute);
 		}
 	}

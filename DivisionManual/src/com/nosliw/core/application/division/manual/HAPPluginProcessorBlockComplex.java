@@ -17,6 +17,7 @@ public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 	
 	void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
 
+	void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
 	
 	
 	

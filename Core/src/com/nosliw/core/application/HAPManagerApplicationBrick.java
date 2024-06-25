@@ -58,16 +58,16 @@ public class HAPManagerApplicationBrick {
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TASKWRAPPER_100, false), HAPBlockTaskWrapper.class, this.m_runtimeEnv));
 		
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false), HAPBlockServiceProvider.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false, HAPConstantShared.TASK_TYPE_TASK), HAPBlockServiceProvider.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickServiceProfile(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROFILE_100, false), this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickServiceInterface(new HAPInfoBrickType(HAPEnumBrickType.SERVICEINTERFACE_100, false), this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.INTERACTIVEINTERFACE_100, false), HAPBlockInteractiveInterface.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIB_100, false), this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, false), HAPBlockDataExpressionElementInLibrary.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, false, HAPConstantShared.TASK_TYPE_EXPRESSION), HAPBlockDataExpressionElementInLibrary.class, this.m_runtimeEnv));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, true), HAPBlockDataExpressionGroup.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, true, HAPConstantShared.TASK_TYPE_CONTAINER_EXPRESSION), HAPBlockDataExpressionGroup.class, this.m_runtimeEnv));
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.CONTAINER_100, false), HAPBrickContainer.class, this.m_runtimeEnv));
 		

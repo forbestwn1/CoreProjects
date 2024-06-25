@@ -63,7 +63,7 @@ var loc_createTaskCore = function(taskDef, configure){
 		
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(adForTaskName, handlers, request){
+		getExecuteTaskThroughAdapterRequest : function(adForTaskName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 			//create task entity runtime
@@ -76,15 +76,24 @@ var loc_createTaskCore = function(taskDef, configure){
 				}
 			}));
 			
-			//init entity runtime
-			
-			
-			
-			//execute da for task
-			
-			
-			//destroy task entity runtime
+			return out;			
+		},
 
+		getExecuteTaskThroughRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+			//create task entity runtime
+			var childId = loc_createTaskId();
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(childId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+				success : function(request){
+					var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(childId);
+					var taskCoreEntity = childNodeObj.getChildValue().getCoreEntity();
+					var expressionInterface = node_getApplicationInterface(taskCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION);
+					
+					return node_taskUtility.getExecuteTaskRequest(expressionInterface);
+				}
+			}));
+			
 			return out;			
 		},
 		

@@ -28,18 +28,24 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 	private List<HAPManualAttribute> m_attributes;
 	
 	private HAPIdBrickType m_brickTypeId;
+
+	private HAPManualManagerBrick m_manualBrickMan;
 	
 	protected HAPManualBrick (HAPIdBrickType brickTypeId) {
 		this.m_attributes = new ArrayList<HAPManualAttribute>();
 		this.m_brickTypeId = brickTypeId;
 	}
 
+	protected void init() {}
+	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK; }
 
-	
 	public HAPIdBrickType getBrickTypeId() {  return this.m_brickTypeId;	}
-
+	
+	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }
+	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;     }
+	
 	public void setAttribute(HAPManualAttribute attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
 			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
@@ -48,9 +54,15 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPEn
 			}
 		}
 		
-		//insert task wrapper if attribute value is task, the reason is wrapper can create instance for each task execute
-		if(attribute.getIsTask()&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
-			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = new HAPManualBlockSimpleTaskWrapper();
+		boolean isTaskAttr = false;
+		HAPIdBrickType attrBrickTypeId = HAPManualUtilityBrick.getBrickType(attribute.getValueWrapper());
+		if(attrBrickTypeId!=null) {
+			isTaskAttr = this.getManualBrickManager().getBrickTypeInfo(attrBrickTypeId).getTaskType()!=null;
+		}
+		
+		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
+			//insert task wrapper if attribute value is task, the reason is wrapper can create instance for each task execute
+			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)this.getManualBrickManager().newBrick(HAPEnumBrickType.TASKWRAPPER_100); 
 			String taskWrapperAttrName = attribute.getName();
 			attribute.setName(HAPBlockTaskWrapper.TASK);
 			taskWrapperBrick.setAttribute(attribute);

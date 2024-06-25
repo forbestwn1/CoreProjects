@@ -9,10 +9,4 @@ public class HAPManualBlockTestComplex1 extends HAPManualBrickBlockComplex{
 		super(HAPEnumBrickType.TEST_COMPLEX_1_100);
 	}
 
-	@Override
-	public String getEntityOrReferenceType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -91,7 +91,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
 						attributeView.append(adapterView);
 						adapterView.click(function() {
-							var taskWrapperExeRequest = childEntityCore.getExecuteTaskRequest(adapterName);
+							var taskWrapperExeRequest = childEntityCore.getExecuteTaskThroughAdapterRequest(adapterName);
 							node_requestServiceProcessor.processRequest(taskWrapperExeRequest);
 						});
 					});					

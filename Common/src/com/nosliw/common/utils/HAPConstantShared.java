@@ -839,9 +839,10 @@ public class HAPConstantShared {
 
 
 
-		public static final String TASK_TYPE_ACTIVITY = "activity";
-		public static final String TASK_TYPE_SEQUENCE = "sequence";
-		public static final String TASK_TYPE_PPROCESS = "process";
+		public static final String TASK_TYPE_EXPRESSION = "expression";
+		public static final String TASK_TYPE_TASK = "task";
+		public static final String TASK_TYPE_CONTAINER_EXPRESSION = "expressionContainer";
+		public static final String TASK_TYPE_CONTAINER_TASK = "taskContainer";
 
 
 

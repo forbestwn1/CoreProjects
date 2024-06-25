@@ -7,7 +7,7 @@
 	"brick":[
 		{
 			"name" : "dataexpression1",
-			"status": "disabled",
+			"status": "disabled1",
 			"description" : "dataexpression1",
 			"request" : [
 				{

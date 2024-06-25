@@ -26,6 +26,8 @@ public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProc
 
 	@Override
 	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	@Override
+	public void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
 
 	

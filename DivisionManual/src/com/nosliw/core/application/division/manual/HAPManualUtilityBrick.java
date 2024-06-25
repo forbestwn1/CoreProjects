@@ -11,9 +11,33 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPTreeNodeBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickId;
 
 public class HAPManualUtilityBrick {
 
+	public static HAPIdBrickType getBrickType(HAPManualWrapperValue attrValueWrapper) {
+		HAPIdBrickType out = null;
+		String attrValueWrapperType = attrValueWrapper.getValueType();
+		if(attrValueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
+			HAPManualWrapperValueBrick brickWrapper = (HAPManualWrapperValueBrick)attrValueWrapper;
+			out = brickWrapper.getBrickTypeId();
+		}
+		else if(attrValueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
+			HAPManualWrapperValueReferenceResource resourceWrapper = (HAPManualWrapperValueReferenceResource)attrValueWrapper;
+			out = HAPUtilityBrickId.getBrickTypeIdFromResourceTypeId(resourceWrapper.getResourceId().getResourceTypeId());
+		}
+		else if(attrValueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICKREFERENCE)) {
+			HAPManualWrapperValueReferenceBrick brickRefWrapper = (HAPManualWrapperValueReferenceBrick)attrValueWrapper;
+			out = brickRefWrapper.getBrickTypeId();
+		}
+		else if(attrValueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE)) {
+			HAPManualWrapperValueReferenceAttachment attachmentRefWrapper = (HAPManualWrapperValueReferenceAttachment)attrValueWrapper;
+			out = attachmentRefWrapper.getBrickTypeId();
+		}
+		
+		return out;
+	}
+	
 	public static Pair<HAPManualBrick, HAPBrick> getBrickPair(HAPPath path, HAPBundle bundle){
 		HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData();
 		HAPManualBrick entityDef = getDescdentBrickDefinition(rootEntityDefInfo, path);

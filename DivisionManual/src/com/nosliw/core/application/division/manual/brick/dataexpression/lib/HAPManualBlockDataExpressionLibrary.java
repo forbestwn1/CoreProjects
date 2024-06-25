@@ -11,8 +11,11 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickBlockSimp
 
 	public HAPManualBlockDataExpressionLibrary() {
 		super(HAPEnumBrickType.DATAEXPRESSIONLIB_100);
-		
-		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, new HAPManualBrickContainer());
+	}
+	
+	@Override
+	protected void init() {
+		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrick(HAPEnumBrickType.CONTAINER_100));
 	}
 
 	public String addElement(HAPManualBlockDataExpressionElementInLibrary element) {

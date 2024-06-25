@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
@@ -22,7 +23,11 @@ public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implem
 	
 	public HAPManualBrickValueContext() {
 		super(HAPManualEnumBrickType.VALUECONTEXT_100);
-		this.setAttributeWithValueBrick(VALUESTRUCTURE, new HAPManualBrickContainerList(HAPManualEnumBrickType.VALUESTRUCTURE_100));
+	}
+	
+	@Override
+	protected void init() {
+		this.setAttributeWithValueBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrick(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){

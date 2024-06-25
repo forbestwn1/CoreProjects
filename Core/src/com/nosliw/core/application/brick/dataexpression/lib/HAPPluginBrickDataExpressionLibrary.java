@@ -9,6 +9,7 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginBrickImp;
+import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrickImp{
@@ -25,7 +26,7 @@ public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrickImp{
 		HAPBlockDataExpressionLibrary library = (HAPBlockDataExpressionLibrary)brick;
 		List<HAPAttributeInBrick> eleAttrs = library.getItems().getElements();
 		for(HAPAttributeInBrick eleAttr : eleAttrs) {
-			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockDataExpressionLibrary.ITEM).appendSegment(eleAttr.getName()));
+			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockDataExpressionLibrary.ITEM).appendSegment(eleAttr.getName()).appendSegment(HAPBlockTaskWrapper.TASK));
 			exposeInteractiveInterface.setName(eleAttr.getName());
 			out.add(exposeInteractiveInterface);
 		}

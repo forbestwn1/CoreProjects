@@ -1,6 +1,5 @@
 package com.nosliw.core.application;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -8,8 +7,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -44,8 +43,10 @@ public class HAPUtilityExport {
 		String si = null; 
 		try {
 			Properties prop = new Properties();
-			prop.load(new FileInputStream(infoFilePath));
+			FileInputStream inputStream = new FileInputStream(infoFilePath);
+			prop.load(inputStream);
 			si = prop.getProperty(SESSIONID);
+			inputStream.close();
 		}
 		catch(Exception e) {
 //			e.printStackTrace();
@@ -53,7 +54,7 @@ public class HAPUtilityExport {
 
 		String out = null;
 		if(!sessionId.equals(si)) {
-			new File(tempFolder).delete();
+			HAPUtilityFile.deleteFolder(tempFolder);
 			out = HAPUtilityFile.getValidFolder(tempFolder);
 			
 			try {

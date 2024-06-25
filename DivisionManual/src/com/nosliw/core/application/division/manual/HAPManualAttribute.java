@@ -10,8 +10,8 @@ import java.util.Set;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 
@@ -43,8 +43,6 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	//path from root
 	private HAPPath m_pathFromRoot;
 
-	private boolean m_isTask = false;
-	
 	//parent entity
 	private HAPManualBrick m_parent;
 	
@@ -67,9 +65,6 @@ public class HAPManualAttribute extends HAPEntityInfoImp implements HAPTreeNode{
 	
 	public void addRelation(HAPManualBrickRelation relation) {    this.m_relations.add(relation);      }
 	public List<HAPManualBrickRelation> getRelations(){    return this.m_relations;     }
-	
-	public boolean getIsTask() {   return this.m_isTask;    }
-	public void setIsTask(boolean isTask) {    this.m_isTask = isTask;     }
 	
 	@Override
 	public HAPPath getPathFromRoot() {   return this.m_pathFromRoot;  }

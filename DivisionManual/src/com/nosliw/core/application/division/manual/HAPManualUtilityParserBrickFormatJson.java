@@ -60,12 +60,6 @@ public class HAPManualUtilityParserBrickFormatJson {
 		if(HAPUtilityEntityInfo.isEnabled(info)) {
 			out = new HAPManualAttribute();
 			
-			//parse is task
-			Object isTaskObj = jsonObj.opt(HAPManualAttribute.ISTASK);
-			if(isTaskObj!=null) {
-				out.setIsTask((Boolean)isTaskObj);
-			}
-			
 			//parse attribute value
 			HAPManualWrapperValue attrValueInfo = parseWrapperValue(jsonObj, entityTypeIfNotProvided, parseContext, manualDivisionEntityMan, entityManager);
 			out.setValueWrapper(attrValueInfo);

@@ -9,4 +9,5 @@ public interface HAPPluginParserBrick {
 	
 	HAPManualBrick parse(Object obj, HAPSerializationFormat format, HAPManualContextParse parseContext);
 
+	HAPManualBrick newBrick();
 }

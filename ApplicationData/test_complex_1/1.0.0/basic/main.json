@@ -12,7 +12,7 @@
 				"description" : ""
 			},
 			"isTask" : true,
-			"resourceId":"dataexpressionlibelement|1.0.0|@ContainerElement_3=dataexpressionlibrary|1.0.0|test1",  
+			"resourceId":"dataexpressionlibelement|1.0.0|@ContainerElement_1=dataexpressionlibrary|1.0.0|test1",  
 			"adapter":[
 				{
 					"name" : "dataExpressionAdapter",
@@ -28,7 +28,7 @@
 								"mapping" : [
 									{
 										"target" : {
-											"rootName" : "extension"
+											"rootName" : "deparm1"
 										},
 										"definition" : {
 											"mapping" : {
@@ -189,7 +189,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{

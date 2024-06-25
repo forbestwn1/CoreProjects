@@ -7,4 +7,6 @@ public interface HAPPluginProcessorBlockSimple extends HAPPluginProcessorBlock{
 	//process
 	void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext);
 
+	void postProcess(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext);
+
 }

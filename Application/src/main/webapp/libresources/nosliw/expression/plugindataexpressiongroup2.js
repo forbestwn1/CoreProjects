@@ -46,32 +46,6 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	
 	var loc_referenceContainer;
 
-	var loc_expressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONGROUP_VALUE);
-
-	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
-
-	var loc_getExecuteItemRequest = function(itemName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM][itemName];
-		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ELEMENTINGROUPDATAEXPRESSION_EXPRESSION]; 
-		var variablesContainer = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.UNITDATAEXPRESSION_VARIABLEINFOS];
-		var withValuePortInterface = {
-			getValuePort : function(valuePortGroup, valuePortName){
-				return loc_interactiveValuePorts.getValuePort(valuePortName);
-			}
-		};
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, variablesContainer, withValuePortInterface, undefined, undefined, {
-			success : function(request, result){
-				loc_interactiveValuePorts.setResultValue(result);
-				return result;
-			}
-		}));
-		return out;
-	};
-
-
-
-
 	var loc_getItemById = function(itemId){
 		var expressions = loc_getAllExpressionItems();
 		var out;		
@@ -195,6 +169,6 @@ nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_cre
 
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionGroupPlugin", node_createDataExpressionGroupPlugin); 
+packageObj.createChildNode("createDataExpressionGroupPlugin2", node_createDataExpressionGroupPlugin); 
 
 })(packageObj);

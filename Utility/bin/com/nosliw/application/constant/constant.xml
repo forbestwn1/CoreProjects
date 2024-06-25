@@ -890,9 +890,10 @@
 			<definition name="STRUCTURE_TYPE_MAPPING" value="mapping"/>
 			
 			<definition type="space"/>
-			<definition name="TASK_TYPE_ACTIVITY" value="activity"/>
-			<definition name="TASK_TYPE_SEQUENCE" value="sequence"/>
-			<definition name="TASK_TYPE_PPROCESS" value="process"/>
+			<definition name="TASK_TYPE_EXPRESSION" value="expression"/>
+			<definition name="TASK_TYPE_TASK" value="task"/>
+			<definition name="TASK_TYPE_CONTAINER_EXPRESSION" value="expressionContainer"/>
+			<definition name="TASK_TYPE_CONTAINER_TASK" value="taskContainer"/>
 			
 			<definition type="space"/>
 			<definition name="VALUESTRUCTUREPART_TYPE_SIMPLE" value="simple"/>
