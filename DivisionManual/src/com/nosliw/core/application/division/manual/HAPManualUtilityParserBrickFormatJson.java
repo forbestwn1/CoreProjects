@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -36,7 +36,7 @@ public class HAPManualUtilityParserBrickFormatJson {
 		
 		//try with definition
 		Object brickTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType brickTypeId = HAPUtilityBrick.parseBrickTypeId(brickTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		Object brickObj = jsonObj.opt(HAPManualWithBrick.BRICK);
 		if(brickObj==null)
@@ -115,13 +115,13 @@ public class HAPManualUtilityParserBrickFormatJson {
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = HAPUtilityBrick.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdBrickType entityTypeId = HAPUtilityBrickId.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
 		
 		//local entity reference
 		if(out==null) {
 			Object entityRefObj = jsonObj.opt(HAPManualWrapperValueReferenceBrick.BRICKREFERENCE);
 			if(entityRefObj!=null) {
-				HAPIdBrick entityId = HAPUtilityBrick.parseBrickIdAgressive(entityRefObj, parseContext.getBrickDivision(), entityManager); 
+				HAPIdBrick entityId = HAPUtilityBrickId.parseBrickIdAgressive(entityRefObj, parseContext.getBrickDivision(), entityManager); 
 				out = new HAPManualWrapperValueReferenceBrick(entityId);
 				HAPManualBrick refEntity = parseLocalValue(parseContext.getBasePath(), entityId, manualDivisionEntityMan);
 				((HAPManualWrapperValueReferenceBrick)out).setBrick(refEntity);

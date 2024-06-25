@@ -9,15 +9,15 @@ import java.util.Set;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -69,7 +69,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		}
 		
 		HAPResourceDataBrick out = null;
-		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(m_brickWrapper, exportInfo.getPathFromRoot());
+		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot());
 		if(brickResult.isInternalBrick()) {
 			HAPBrick brick = brickResult.getInternalBrick();
 			if(brick.getBrickTypeInfo().getIsComplex()) {

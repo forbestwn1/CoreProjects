@@ -10,13 +10,14 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImp;
 import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
+import com.nosliw.core.application.division.manual.HAPPluginParserBrickImp;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -42,7 +43,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickIm
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrick.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
+						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrickId.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
 						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);							
@@ -76,7 +77,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickIm
 		{
 			if(HAPUtilityBasic.isStringNotEmpty(str)) {
 				Pair<String, String> pair = this.parseString(str);
-				out.entityType = HAPUtilityBrick.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
+				out.entityType = HAPUtilityBrickId.parseBrickTypeIdAggresive(pair.getLeft(), this.getEntityManager()); 
 				str = pair.getRight();
 			}
 		}

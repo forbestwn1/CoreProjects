@@ -6,78 +6,25 @@ import com.nosliw.common.path.HAPPath;
 
 public class HAPUtilityBrickTraverse {
 
-	public static void trasversExecutableEntityTreeUpward(HAPBrick entity, HAPProcessorEntityExecutableUpward processor, Object object) {
-//		HAPPath path = new HAPPath();
-//		boolean result =  processor.process(entity, null, object);
-//		while(result) {
-//			HAPExecutableEntity parent = entity.getParent();
-//			if(parent==null) {
-//				break;
-//			} else {
-//				result = processor.process(parent, path.appendSegment(HAPConstantShared.NAME_PARENT), processContext, object);
-//			}
-//		}
-	}
-	
-	//traverse only entity leaves that marked as auto process
-//	public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrickRoot rootEntityInfo, HAPHandlerDownward processor, HAPManualContextProcess processContext) {
-//		traverseExecutableEntity(
-//				rootEntityInfo, 
-//			new HAPHandlerBrickWrapper(processor) {
-//				@Override
-//				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
-//					HAPManualAttribute attrDef = (HAPManualAttribute)HAPUtilityDefinitionBrick.getDefTreeNodeFromExeTreeNode(attr, processContext.getCurrentBundle());
-//					
-//					HAPUtilityDefinitionBrick.isAttributeAutoProcess(attrDef, null)
-//					
-//					if(attr.isAttributeAutoProcess()) {
-//						return true;
-//					}
-//					return false;
-//				}
-//			}, 
-//			processContext);
-//	}
-	
 	//traverse only leaves that is local complex entity
-	public static void traverseTreeLocalComplexBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseTreeComplexBrick(
+	public static void traverseTreeWithLocalBrickComplex(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+		traverseTreeWithLocalBrick(
 				rootBrickWrapper, 
-			new HAPHandlerBrickWrapper(processor) {
-				@Override
-				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
-					if(attr.getValueWrapper() instanceof HAPWithBrick) {
-						return true;
-					}
-					return false;
-				}
-			}, 
-			brickMan,
-			data);
-	}
-	
-	
-	//traverse only leafs that is complex entity
-	public static void traverseTreeComplexBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseTree(
-			rootBrickWrapper, 
-			new HAPHandlerBrickWrapper(processor) {
+			new HAPHandlerBrickWrapper(processor, true) {
 				@Override
 				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
 					HAPWrapperValue attrValueInfo = attr.getValueWrapper();
-					if(attrValueInfo instanceof HAPWithBrick) {
-						return HAPUtilityBrick.isBrickComplex(((HAPWithBrick)attrValueInfo).getBrick().getBrickType(), brickMan);
-					}
-					return false;
+					return HAPUtilityBrick.isBrickComplex(((HAPWithBrick)attrValueInfo).getBrick().getBrickType(), brickMan);
 				}
 			}, 
 			brickMan,
 			data);
 	}
 	
-	//traverse only entity leaves that marked as auto process
-	public static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseExecutableTree(
+	
+	//traverse only local brick
+	public static void traverseTreeWithLocalBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+		traverseTree(
 			rootBrickWrapper, 
 			new HAPHandlerBrickWrapper(processor) {
 				@Override
@@ -93,11 +40,11 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	//traverse all leave (complex, simiple, solid, not solid ...)
-	public static void traverseExecutableTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseExecutableTreeLeaves(rootBrickWrapper, null, processor, brickMan, data);
+	public static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+		traverseTree(rootBrickWrapper, null, processor, brickMan, data);
 	}
 	
-	private static void traverseExecutableTreeLeaves(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	private static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		if(path==null) {
 			path = new HAPPath();
 		}
@@ -106,10 +53,11 @@ public class HAPUtilityBrickTraverse {
 			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
 			
 			if(leafBrick!=null) {
+				//only process child for brick
 				List<HAPAttributeInBrick> attrsExe = leafBrick.getAttributes();
 				for(HAPAttributeInBrick attrExe : attrsExe) {
 					HAPPath attrPath = path.appendSegment(attrExe.getName());
-					traverseExecutableTreeLeaves(rootBrickWrapper, attrPath, processor, brickMan, data);
+					traverseTree(rootBrickWrapper, attrPath, processor, brickMan, data);
 				}
 			}
 		}
@@ -122,10 +70,17 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 
 	private HAPHandlerDownward m_processor;
 	
-	public HAPHandlerBrickWrapper(HAPHandlerDownward processor) {
-		this.m_processor = processor;
-	}
+	private boolean m_continueIfNotValidAttribute = false;
 	
+	public HAPHandlerBrickWrapper(HAPHandlerDownward processor) {
+		this(processor, false);
+	}
+
+	public HAPHandlerBrickWrapper(HAPHandlerDownward processor, boolean continueIfNotValidAttribute) {
+		this.m_processor = processor;
+		this.m_continueIfNotValidAttribute = continueIfNotValidAttribute;
+	}
+
 	abstract protected boolean isValidAttribute(HAPAttributeInBrick attr);
 	
 	@Override
@@ -138,7 +93,7 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 			if(this.isValidAttribute(attr)) {
 				return this.m_processor.processBrickNode(rootBrickWrapper, path, data);
 			}
-			return false;
+			return m_continueIfNotValidAttribute;
 		}
 	}
 
@@ -155,3 +110,37 @@ abstract class HAPHandlerBrickWrapper extends HAPHandlerDownward{
 		}
 	}
 }
+
+//public static void trasversExecutableEntityTreeUpward(HAPBrick entity, HAPProcessorEntityExecutableUpward processor, Object object) {
+//HAPPath path = new HAPPath();
+//boolean result =  processor.process(entity, null, object);
+//while(result) {
+//	HAPExecutableEntity parent = entity.getParent();
+//	if(parent==null) {
+//		break;
+//	} else {
+//		result = processor.process(parent, path.appendSegment(HAPConstantShared.NAME_PARENT), processContext, object);
+//	}
+//}
+//}
+
+//traverse only entity leaves that marked as auto process
+//public static void traverseExecutableTreeAutoProcessed(HAPWrapperBrickRoot rootEntityInfo, HAPHandlerDownward processor, HAPManualContextProcess processContext) {
+//traverseExecutableEntity(
+//		rootEntityInfo, 
+//	new HAPHandlerBrickWrapper(processor) {
+//		@Override
+//		protected boolean isValidAttribute(HAPAttributeInBrick attr) {
+//			HAPManualAttribute attrDef = (HAPManualAttribute)HAPUtilityDefinitionBrick.getDefTreeNodeFromExeTreeNode(attr, processContext.getCurrentBundle());
+//			
+//			HAPUtilityDefinitionBrick.isAttributeAutoProcess(attrDef, null)
+//			
+//			if(attr.isAttributeAutoProcess()) {
+//				return true;
+//			}
+//			return false;
+//		}
+//	}, 
+//	processContext);
+//}
+

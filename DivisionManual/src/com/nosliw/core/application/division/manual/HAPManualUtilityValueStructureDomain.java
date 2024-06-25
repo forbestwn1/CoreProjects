@@ -62,7 +62,7 @@ public class HAPManualUtilityValueStructureDomain {
 
 	//build value structure in complex tree and add to value structure domain
 	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityBrickTraverse.traverseTreeLocalComplexBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
+		HAPUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {

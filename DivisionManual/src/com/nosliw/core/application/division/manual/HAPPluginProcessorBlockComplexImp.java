@@ -1,6 +1,9 @@
 package com.nosliw.core.application.division.manual;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.HAPIdBrickType;
 
@@ -15,25 +18,31 @@ public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProc
 	@Override
 	public HAPIdBrickType getBrickType() {    return this.m_brickTypeId;    }
 
+	//process definition before value context
+	@Override
+	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	@Override
+	public void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
 	@Override
 	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
+
+	
+	
+	
 	
 	@Override
 	public void extendConstantValue(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	
-	//process definition before value context
-	@Override
-	public void processValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
-	@Override
-	public void postProcessValueContext(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 
+	
+	
 	//value context extension, variable resolve
 	@Override
-	public void processValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	@Override
-	public void postProcessValueContextExtension(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	
 	//matcher
 	@Override
@@ -46,14 +55,8 @@ public abstract class HAPPluginProcessorBlockComplexImp implements HAPPluginProc
 	@Override
 	public void postProcessEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
 
-//	protected HAPManualBrick getEntityDefinition(HAPExecutableEntity entityExe, HAPContextProcessor processContext) {
-//		return processContext.getCurrentBundle().getDefinitionDomain().getEntityInfoDefinition(entityExe.getDefinitionEntityId()).getEntity();
-//	}
-//	
-//	public Pair<HAPManualBrickBlockComplex,HAPExecutableEntityComplex> getEntityPair(HAPIdEntityInDomain exeEntityId, HAPContextProcessor processContext) {
-//		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
-//		HAPManualBrickBlockComplex entityDef = (HAPManualBrickBlockComplex)currentBundle.getDefinitionDomain().getEntityInfoDefinition(currentBundle.getDefinitionEntityIdByExecutableEntityId(exeEntityId)).getEntity();
-//		HAPExecutableEntityComplex entityExe = currentBundle.getExecutableDomain().getEntityInfoExecutable(exeEntityId).getEntity();
-//		return Pair.of(entityDef, entityExe);
-//	}
+
+	protected Pair<HAPManualBrick, HAPBrick> getBrickPair(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext){
+		return HAPManualUtilityBrick.getBrickPair(pathFromRoot, processContext.getCurrentBundle());
+	}
 }

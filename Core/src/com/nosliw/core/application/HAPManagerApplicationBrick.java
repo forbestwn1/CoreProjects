@@ -143,7 +143,7 @@ public class HAPManagerApplicationBrick {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);
 
-			HAPBundle bundle = this.getBrickBundle(HAPUtilityBrick.parseBrickId(complexEntityResourceId));
+			HAPBundle bundle = this.getBrickBundle(HAPUtilityBrickId.parseBrickId(complexEntityResourceId));
 			Set<HAPResourceIdSimple> bundleDependency = bundle.getResourceDependency();
 			for(HAPResourceIdSimple id : bundleDependency) {
 				buildDependencyGroup(id, dependency);
@@ -172,7 +172,7 @@ public class HAPManagerApplicationBrick {
 				String[] segs = HAPUtilityNamingConversion.parseLevel1(simpleResourceId.getId());
 				if(segs.length<=1) {
 					String id = segs[0];
-					String division = this.m_divisionByBrickType.get(HAPUtilityBrick.getBrickTypeIdFromResourceTypeId(simpleResourceId.getResourceTypeId()));
+					String division = this.m_divisionByBrickType.get(HAPUtilityBrickId.getBrickTypeIdFromResourceTypeId(simpleResourceId.getResourceTypeId()));
 					if(division==null) {
 						division = divisionDefault;
 					}

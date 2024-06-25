@@ -21,6 +21,8 @@ public class HAPGroupDataExpression implements HAPUnitDataExpression{
 		this.m_items = new ArrayList<HAPElementInGroupDataExpression>();
 	}
 
+	public void addItem(HAPElementInGroupDataExpression item) {    this.m_items.add(item);     }
+	public List<HAPElementInGroupDataExpression> getItems(){   return this.m_items;    }
 	
 	@Override
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;   }

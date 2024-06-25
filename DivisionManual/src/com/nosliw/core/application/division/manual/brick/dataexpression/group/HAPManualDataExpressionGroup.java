@@ -25,6 +25,8 @@ public class HAPManualDataExpressionGroup extends HAPSerializableImp{
 		this.m_items.add(item);
 	}
 	
+	public List<HAPManualDataExpressionItemInGroup> getItems(){    return this.m_items;      }
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONArray dataExpressionArray = ((JSONObject)json).getJSONArray(HAPGroupDataExpression.ITEM);

@@ -65,7 +65,7 @@ public class HAPBrickImp extends HAPBrick{
 				if(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK.equals(valueType)) {
 					//brick
 					JSONObject brickJsonObj =  valueWrapperJsonObj.getJSONObject(HAPWrapperValueOfBlock.BLOCK);
-					blockType = HAPUtilityBrick.parseBrickTypeId(brickJsonObj.opt(HAPBrick.BRICKTYPE));
+					blockType = HAPUtilityBrickId.parseBrickTypeId(brickJsonObj.opt(HAPBrick.BRICKTYPE));
 					HAPBrick attrBrick = brickMan.newBrickInstance(blockType);
 					attrBrick.buildBrick(brickJsonObj, HAPSerializationFormat.JSON, brickMan);
 					attribute.setValueOfBrick(attrBrick);
@@ -74,7 +74,7 @@ public class HAPBrickImp extends HAPBrick{
 					//ref to resource
 					HAPResourceId resourceId = HAPFactoryResourceId.newInstance(valueWrapperJsonObj.opt(HAPWrapperValueOfReferenceResource.RESOURCEID));
 					attribute.setValueOfResourceId(resourceId);
-					blockType = HAPUtilityBrick.getBrickTypeIdFromResourceId(resourceId);
+					blockType = HAPUtilityBrickId.getBrickTypeIdFromResourceId(resourceId);
 				}
 
 				//parse adapter

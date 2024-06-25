@@ -33,7 +33,7 @@ public class HAPManualUtilityBrick {
 	}
 	
 	public static HAPManualBrick getDescdentBrickDefinition(HAPManualWrapperBrick rootEntityInfo, HAPPath path) {
-		return getDescendantEntity(rootEntityInfo.getBrick(), path);
+		return getDescendantBrick(rootEntityInfo.getBrick(), path);
 	}
 	
 	public static HAPManualAttribute getDescendantAttribute(HAPManualBrick brickManual, HAPPath path) {
@@ -55,7 +55,7 @@ public class HAPManualUtilityBrick {
 		return out;
 	}
 
-	private static HAPManualBrick getDescendantEntity(HAPManualBrick entityDef, HAPPath path) {
+	private static HAPManualBrick getDescendantBrick(HAPManualBrick entityDef, HAPPath path) {
 		HAPManualBrick out = null;
 		if(path==null||path.isEmpty()) {
 			out = entityDef;
@@ -83,27 +83,6 @@ public class HAPManualUtilityBrick {
 		return true;
 	}
 
-	public static boolean isAttributeAutoProcess(HAPManualAttribute attr, HAPManagerApplicationBrick entityMan) {
-		//check attribute relation configure first
-		HAPManualBrickRelationAutoProcess relation = (HAPManualBrickRelationAutoProcess)getEntityRelation(attr, HAPConstantShared.MANUAL_RELATION_TYPE_AUTOPROCESS);
-		if(relation!=null) {
-			return relation.isAutoProcess();
-		}
-		
-		HAPManualWrapperValue attrValueWrapper = attr.getValueWrapper();
-		String valueWrapperType = attrValueWrapper.getValueType();
-		if(!valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_VALUE)) {
-			if(valueWrapperType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
-				HAPManualWrapperValueBrick brickValueWrapper = (HAPManualWrapperValueBrick)attrValueWrapper;
-				if(brickValueWrapper.getBrickTypeId().getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
-					return false;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
-	
 	public static HAPManualBrickRelation getEntityRelation(HAPManualAttribute attr, String relationType) {
 		for(HAPManualBrickRelation relation : attr.getRelations()) {
 			if(relation.getType().equals(relationType)) {
