@@ -42,6 +42,7 @@ nosliw.init = function(configure){
 		"nosliw.uiapp",
 		"nosliw.iovalue",
 		"nosliw.valueport",
+		"nosliw.scriptbased",
 		"nosliw.statemachine",
 		"nosliw.runtimebrowsertest",
 		"nosliw.security",
