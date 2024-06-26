@@ -30,6 +30,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPManagerApplicationBrick {
 
@@ -110,6 +111,9 @@ public class HAPManagerApplicationBrick {
 		String division = brickId.getDivision();
 		if(division==null) {
 			division = this.m_divisionByBrickType.get(brickId.getBrickTypeId());
+		}
+		if(division==null) {
+			division = HAPSystemUtility.getDefaultDivision();
 		}
 		
 		HAPPluginDivision divisionPlugin = this.m_divisionPlugin.get(division);

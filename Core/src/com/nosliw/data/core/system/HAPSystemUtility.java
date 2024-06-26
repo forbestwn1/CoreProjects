@@ -45,5 +45,5 @@ public class HAPSystemUtility {
 	public static String getLoadResourceByFileMode() {
 		return prop.getProperty("LoadResourceByFileMode");
 	}
-	
+	public static String getDefaultDivision() {    return prop.getProperty("DefaultDivision");    }
 }

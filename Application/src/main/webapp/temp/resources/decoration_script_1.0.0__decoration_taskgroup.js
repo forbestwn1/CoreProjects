@@ -12,7 +12,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "displayName":"script",
 "info":{},
 "valueWrapper":{"valueType":"value",
-"value":"function(complexEntityDef, valueContextId, bundleCore, configure){
+"value":function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
 	var node_createServiceRequestInfoCommon = nosliw.getNodeData("request.request.createServiceRequestInfoCommon");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -152,7 +152,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	loc_init();
 	return loc_out;
 }
-"
+
 },
 "adapter":[]
 }],

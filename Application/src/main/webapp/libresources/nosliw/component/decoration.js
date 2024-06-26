@@ -54,13 +54,13 @@ var node_createDecoration = function(decorationInfo){
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var resourceId = new node_ResourceId(loc_decorationInfo.id, loc_decorationInfo.type, loc_decorationInfo.version);
-			out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(resourceId, loc_decorationInfo.configure), {
+			out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(resourceId, loc_decorationInfo.configure, {
 				success : function(request, bundleRuntime){
 					loc_runtimeObject = bundleRuntime;
 					loc_applyEnvInterface = true;
 					loc_applyEnvInterfaceToRuntime();
 				}
-			});
+			}));
 			return out;
 		},
 
@@ -74,7 +74,7 @@ var node_createDecoration = function(decorationInfo){
 		},
 
 		updateBackupStateObject : function(backupStateObj){
-			loc_runtimeObject.updateBackupStateObject(backupStateObj);
+//			loc_runtimeObject.updateBackupStateObject(backupStateObj);
 		},
 		
 		updateLifecycleEntityObject : function(lifecycleEntityObj){
