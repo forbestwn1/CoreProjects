@@ -53,12 +53,14 @@ var node_createDecoration = function(decorationInfo){
 
 		getPreInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			loc_runtimeObject = nosliw.runtime.getComplexEntityService().createPackageRuntime(new node_ResourceId(loc_decorationInfo.id, loc_decorationInfo.type), loc_decorationInfo.configure);
-			out.addRequest(loc_runtimeObject.getPreInitRequest());
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_applyEnvInterface = true;
-				loc_applyEnvInterfaceToRuntime();
-			}));
+			var resourceId = new node_ResourceId(loc_decorationInfo.id, loc_decorationInfo.type, loc_decorationInfo.version);
+			out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(resourceId, loc_decorationInfo.configure), {
+				success : function(request, bundleRuntime){
+					loc_runtimeObject = bundleRuntime;
+					loc_applyEnvInterface = true;
+					loc_applyEnvInterfaceToRuntime();
+				}
+			});
 			return out;
 		},
 

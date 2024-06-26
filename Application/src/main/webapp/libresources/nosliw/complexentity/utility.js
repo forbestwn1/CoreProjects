@@ -153,10 +153,10 @@ var node_complexEntityUtility = function(){
 					settingName = configure.substring(index+1);
 				}
 				
-				var configureResourceId = new node_ResourceId(configureName, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONFIGURE);
+				var configureResourceId = new node_ResourceId(configureName, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONFIGURE, "1.0.0");
 				getConfigureValueRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(configureResourceId, {
 					success : function(requestInfo, resourceTree){
-						var configureValue = node_resourceUtility.getResourceFromTree(resourceTree, configureResourceId).resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLECONFIGURE_SCRIPT];
+						var configureValue = node_resourceUtility.getResourceFromTree(resourceTree, configureResourceId).resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATACONFIGURE_CONFIGURE];
 						if(settingName!=undefined)   configureValue = configureValue[settingName];
 						return configureValue;
 					}

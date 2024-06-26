@@ -1,8 +1,7 @@
-package com.nosliw.core.application.script;
+package com.nosliw.core.application.common.script;
 
 import java.io.File;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.data.core.resource.HAPPluginResourceManager;
 import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
@@ -12,12 +11,16 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginResourceManagerScript implements HAPPluginResourceManager{
 
-	public HAPPluginResourceManagerScript() {}
+	private String m_resourceType;
+	
+	public HAPPluginResourceManagerScript(String resourceType) {
+		this.m_resourceType = resourceType;
+	}
 
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {
 		String scriptId = simpleResourceId.getId();
-		String scriptFileName = HAPSystemFolderUtility.getManualEntityBaseFolder() + HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT + "/" + scriptId + ".js";
+		String scriptFileName = HAPSystemFolderUtility.getManualEntityBaseFolder() + this.m_resourceType + "/" + scriptId + ".js";
 		File scriptFile = new File(scriptFileName);
 		String script = HAPUtilityFile.readFile(scriptFile);
 		

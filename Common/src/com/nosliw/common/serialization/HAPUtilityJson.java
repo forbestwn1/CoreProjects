@@ -105,7 +105,7 @@ public class HAPUtilityJson {
 			if (typeMap != null) {
 				jsonType = typeMap.get(key);
 			}
-
+			
 			boolean lastOne = i >= map.size() - 1;
 			String json = buildAttributeJson(key, value, lastOne, jsonType);
 			if (json != null) {

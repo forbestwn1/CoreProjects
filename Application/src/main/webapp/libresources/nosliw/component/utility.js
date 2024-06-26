@@ -92,7 +92,7 @@ var node_componentUtility = {
 				var decConfigure = childConfigureInfo.configure;
 				var decInfoConfigureValue = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_INFO)).getConfigureValue();
 				var decCoreConfigure = decConfigure.getChildConfigure(node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_DECORATION_CORE));
-				decorationInfos.push(new node_DecorationInfo(decInfoConfigureValue.name, decInfoConfigureValue.type, decInfoConfigureValue.id, decCoreConfigure));
+				decorationInfos.push(new node_DecorationInfo(decInfoConfigureValue.name, decInfoConfigureValue.type, decInfoConfigureValue.version, decInfoConfigureValue.id, decCoreConfigure));
 			});
 		}
 		else{
@@ -105,7 +105,7 @@ var node_componentUtility = {
 		};
 	},
 	
-	buildDecorationInfoArrayFromConfigure : function(configure, path, type){
+	buildDecorationInfoArrayFromConfigure111 : function(configure, path, type){
 		var out = [ ];
 		var idSet = configure.getChildrenIdSet(path);
 		_.each(idSet, function(id, index){

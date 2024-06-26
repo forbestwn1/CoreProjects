@@ -25,6 +25,7 @@ import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvide
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
+import com.nosliw.core.application.common.script.HAPBlockScriptComplex;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -76,7 +77,7 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, false), HAPAdapterDataAssociationForTask.class, this.m_runtimeEnv));
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, false), HAPAdapterDataAssociationForExpression.class, this.m_runtimeEnv));
 		
-		
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DECORATIONSCRIPT_100, true), HAPBlockScriptComplex.class, this.m_runtimeEnv));
 		
 	}
 

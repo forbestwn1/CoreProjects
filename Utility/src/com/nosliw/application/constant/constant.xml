@@ -973,6 +973,7 @@
 			<definition type="space"/>
 			<definition name="BRICK_DIVISION_MANUAL" value="manual"/>
 			<definition name="BRICK_DIVISION_SERVICE" value="service"/>
+			<definition name="BRICK_DIVISION_SCRIPT" value="script"/>
 
 			<definition type="space"/>
 			<definition name="MANUAL_RELATION_TYPE_VALUECONTEXT" value="valueContext"/>

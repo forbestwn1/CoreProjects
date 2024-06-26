@@ -42,6 +42,7 @@ $(document).on("nosliwActive", function(){
 	var parms = node_basicUtility.getParmsInUrl();
 	var resourceType = node_namingConvensionUtility.cascadeLevel1(parms.resourceType, "1.0.0");
 	var resourceId = node_namingConvensionUtility.cascadeLevel1(parms.resourceId, "manual");
+	var resourceId = parms.resourceId;
 	var configure = parms.configure;
 	
 	var runtimeContext = {

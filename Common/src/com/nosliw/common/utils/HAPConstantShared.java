@@ -935,6 +935,7 @@ public class HAPConstantShared {
 
 		public static final String BRICK_DIVISION_MANUAL = "manual";
 		public static final String BRICK_DIVISION_SERVICE = "service";
+		public static final String BRICK_DIVISION_SCRIPT = "script";
 
 
 

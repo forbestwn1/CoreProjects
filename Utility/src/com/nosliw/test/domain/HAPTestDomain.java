@@ -14,8 +14,10 @@ public class HAPTestDomain {
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 //		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager(), runtimeEnvironment.getResourceDefinitionManager());
-		
-		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic");
+
+		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "decoration_taskgroup");
+
+//		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic");
 		
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB, "test1");
 
@@ -66,8 +68,13 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(executableResult.getDomainContext().getExecutableDomain().toString()));
 	}
 	
-	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
+	private static HAPResourceIdSimple createResourceIdManual(String resourceType, String id) {
 		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), HAPConstantShared.BRICK_DIVISION_MANUAL, id);
+		return HAPUtilityBrickId.fromBrickId2ResourceId(entityId);
+	}
+
+	private static HAPResourceIdSimple createResourceId(String resourceType, String id) {
+		HAPIdBrick entityId = new HAPIdBrick(new HAPIdBrickType(resourceType, "1.0.0"), null, id);
 		return HAPUtilityBrickId.fromBrickId2ResourceId(entityId);
 	}
 }

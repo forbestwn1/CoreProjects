@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.common.script;
 
-import com.nosliw.core.application.script.HAPResourceDataScript;
+import com.nosliw.core.application.common.script.HAPResourceDataScript;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;

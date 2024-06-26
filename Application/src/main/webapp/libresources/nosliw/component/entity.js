@@ -21,9 +21,10 @@ var node_CommandInfo = function(commandName, commandParm){
 	this.commandParm = commandParm;
 };
 
-var node_DecorationInfo = function(name, type, id, configure){
+var node_DecorationInfo = function(name, type, version, id, configure){
 	this.name = name;
 	this.type = type;
+	this.version = version;
 	this.id = id;
 	this.configure = configure;
 };
