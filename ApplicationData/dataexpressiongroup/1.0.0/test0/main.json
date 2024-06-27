@@ -42,11 +42,11 @@
 							},
 							"parm1": {
 								"dataTypeId": "test.integer;1.0.0",
-								"value": 5
+								"value": 3
 							},
 							"parm2": {
 								"dataTypeId": "test.integer;1.0.0",
-								"value": 5
+								"value": 7
 							}
 						}
 					}

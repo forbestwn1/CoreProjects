@@ -67,8 +67,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 		var info = eval(loc_infoView.val());
 
-		var taskInput = node_createTaskInput(info, taskInputRequirement);
-		var request = taskContainerInterface.getExecuteItemRequest(itemId, taskInput, {
+//		var taskInput = node_createTaskInput(info, taskInputRequirement);
+		var request = taskContainerInterface.getExecuteItemRequest(itemId, {
 			success : function(request, result){
 				loc_resultView.val(JSON.stringify(result));
 			}

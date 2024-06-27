@@ -18,6 +18,8 @@ var packageObj = library;
 	var node_createServiceRequestInfoSet;
 	var node_createTaskContainerInterface;
 	var node_createTaskInterface;
+	var node_createValuePortValueContext;
+	var node_expressionUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -48,7 +50,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 	var loc_expressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONGROUP_VALUE);
 
-//	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
+	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
 
 	var loc_getAllExpressionItems = function(){
 		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM];
@@ -62,26 +64,13 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
 			});
 			return out;
-		}
+		},
+		
+		getExecuteItemRequest : function(dataExpressionId, handlers, request){
+			return loc_getExecuteItemRequest(dataExpressionId, handlers, request);
+		},
+		
 	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	var loc_getExecuteItemRequest = function(itemName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
@@ -90,17 +79,34 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		var variablesContainer = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.UNITDATAEXPRESSION_VARIABLEINFOS];
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
-				return loc_interactiveValuePorts.getValuePort(valuePortName);
+				return loc_valuePort;
 			}
 		};
 		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, variablesContainer, withValuePortInterface, undefined, undefined, {
 			success : function(request, result){
-				loc_interactiveValuePorts.setResultValue(result);
 				return result;
 			}
 		}));
 		return out;
 	};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -116,7 +122,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		return out;
 	};
 
-	var loc_getExecuteItemRequest = function(dataExpressionId, handlers, request){
+	var loc_getExecuteItemRequest1 = function(dataExpressionId, handlers, request){
 		var expressionItem = loc_getItemById(dataExpressionId);
 		return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
 	};
@@ -195,6 +201,9 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", 
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){	node_createValuePortValueContext = this.getData();	});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
+
 
 
 //Register Node by Name

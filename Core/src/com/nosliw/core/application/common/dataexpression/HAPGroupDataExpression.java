@@ -1,6 +1,7 @@
 package com.nosliw.core.application.common.dataexpression;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 
 @HAPEntityWithAttribute
 public class HAPGroupDataExpression extends HAPSerializableImp implements HAPUnitDataExpression{
@@ -34,7 +36,11 @@ public class HAPGroupDataExpression extends HAPSerializableImp implements HAPUni
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(ITEM, HAPManagerSerialize.getInstance().toStringValue(this.m_items, HAPSerializationFormat.JSON));
+		Map<String, String> itemMap = new LinkedHashMap<String, String>();
+		for(HAPElementInGroupDataExpression item : this.m_items) {
+			itemMap.put(item.getId(), item.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));
 		jsonMap.put(HAPUnitDataExpression.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.m_variableInfo, HAPSerializationFormat.JSON));
 	}
 

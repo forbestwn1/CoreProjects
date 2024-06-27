@@ -51,9 +51,9 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getExpression(), blockPair.getRight(), groupExe.getVariablesInfo(), null);
 		}
 		
-		//resolve variable name, build var info container
+		//build var info container
 		for(HAPElementInGroupDataExpression itemExe : groupExe.getItems()) {
-			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getExpression(), blockPair.getRight(), groupExe.getVariablesInfo(), null);
+			HAPUtilityExpressionProcessor.buildVariableInfo(groupExe.getVariablesInfo(), blockPair.getRight());
 		}
 
 	}

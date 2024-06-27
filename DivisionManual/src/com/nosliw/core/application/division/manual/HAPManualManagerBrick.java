@@ -127,14 +127,15 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		out.setBrickWrapper(new HAPWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext)));
 
 		if(HAPManualUtilityBrick.isBrickComplex(brickId.getBrickTypeId(), getBrickManager())) {
+			
+			//init
+			processComplexBrickInit(out.getBrickWrapper(), processContext);
+
 			//complex entity, build value context domain, create extension value structure if needed
 			HAPManualUtilityValueStructureDomain.buildValueStructureDomain(out.getBrickWrapper(), processContext, this.m_runtimeEnv);
 
 			//value context extension, variable resolve
 			processComplexBrickVariableResolve(out.getBrickWrapper(), processContext);
-			
-			//init
-			processComplexBrickInit(out.getBrickWrapper(), processContext);
 		}
 
 		//process entity
