@@ -25,7 +25,7 @@ var node_createDataExpressionGroupPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createDataExpressionGroupComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
@@ -48,7 +48,40 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 	var loc_expressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONGROUP_VALUE);
 
-	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
+//	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
+
+	var loc_getAllExpressionItems = function(){
+		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM];
+	};
+
+	var loc_facadeTaskContainer = node_createTaskContainerInterface({
+		getAllItemIds : function(){
+			var out = [];
+			var expressions = loc_getAllExpressionItems()
+			_.each(expressions, function(expression, i){
+				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
+			});
+			return out;
+		}
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	var loc_getExecuteItemRequest = function(itemName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
@@ -88,36 +121,6 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
 	};
 
-	var loc_getAllExpressionItems = function(){
-		return loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATAGROUP_EXPRESSIONS);
-	};
-
-	var loc_facadeTaskContainer = node_createTaskContainerInterface({
-		getAllItemIds : function(){
-			var out = [];
-			var expressions = loc_getAllExpressionItems()
-			_.each(expressions, function(expression, i){
-				out.push(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
-			});
-			return out;
-		},
-		
-		getItemVariableInfos : function(itemId){
-			var variableInfoContainer = loc_complexEntityDef[node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_VARIABLEINFOS];
-			var expressionItem = loc_getItemById(itemId);
-			var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS];
-			
-			var out = [];
-			_.each(varKeys, function(key, i){
-				out.push(variableInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key][node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
-			});
-			return out;
-		},
-		
-		getExecuteItemRequest : function(dataExpressionId, taskInput, handlers, request){
-			return loc_getExecuteItemRequest(dataExpressionId, handlers, request);
-		},
-	});
 	
 	var loc_facadeTask = node_createTaskInterface({
 		getExecuteRequest : function(taskInput, handlers, request){
@@ -141,7 +144,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	
 	var loc_out = {
 		
-		getEntityInitRequest : function(handlers, request){
+		getEntityInitRequest1 : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_REFERENCES, undefined, {

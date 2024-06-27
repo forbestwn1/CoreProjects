@@ -2,12 +2,16 @@ package com.nosliw.core.application.common.dataexpression;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPGroupDataExpression implements HAPUnitDataExpression{
+public class HAPGroupDataExpression extends HAPSerializableImp implements HAPUnitDataExpression{
 
 	@HAPAttribute
 	public static String ITEM = "item";
@@ -27,6 +31,11 @@ public class HAPGroupDataExpression implements HAPUnitDataExpression{
 	@Override
 	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;   }
 
-	
-	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ITEM, HAPManagerSerialize.getInstance().toStringValue(this.m_items, HAPSerializationFormat.JSON));
+		jsonMap.put(HAPUnitDataExpression.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.m_variableInfo, HAPSerializationFormat.JSON));
+	}
+
 }
