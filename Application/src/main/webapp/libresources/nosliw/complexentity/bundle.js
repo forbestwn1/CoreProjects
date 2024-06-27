@@ -100,7 +100,7 @@ var node_createBundleCore = function(parm, configure){
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
-		getPreInitRequest1 : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
+		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
 
 		getLifeCycleRequest : function(transitName, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

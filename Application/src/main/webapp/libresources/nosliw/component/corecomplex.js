@@ -19,7 +19,12 @@ var packageObj = library;
 	var node_getObjectId;
 	var node_getEmbededEntityInterface;
 	var node_getObjectType;
-	
+	var node_makeObjectWithComponentManagementInterface;
+	var node_makeObjectEntityTreeNodeInterface;
+	var node_makeObjectWithEmbededEntityInterface;
+	var node_makeObjectBasicEntityObjectInterface;
+	var node_makeObjectWithComponentInterface;
+
 //*******************************************   Start Node Definition  ************************************** 	
 //ComponentCore complex is a structure that composed of a ComponentCore at the bottom and a list of decoration on top of it
 //decoration may change the behavior of ComponentCore by event processing, command request, view appearance, exposed env interface
@@ -192,7 +197,7 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 			return node_getComponentInterface(loc_layers[layerNum]);
 		}
 		else{
-			return loc_layers[layerNum];
+			return  node_getComponentInterface(loc_layers[layerNum]);
 		}
 	};
 	
@@ -236,11 +241,22 @@ var node_createComponentCoreComplex = function(componentCore, decorationInfos){
 	
 	loc_addDecoration = function(decorationInfo){
 		var decoration = node_createDecoration(decorationInfo);
+
+		decoration = node_makeObjectWithEmbededEntityInterface(decoration);
+
+		decoration = node_makeObjectBasicEntityObjectInterface(decoration);
+		
+		decoration = node_makeObjectEntityTreeNodeInterface(decoration);
+
+		decoration = node_makeObjectWithComponentInterface(node_getObjectType(decoration), decoration, false);
+
+		node_makeObjectWithComponentManagementInterface(decoration, decoration);
+		
 		var commands = {};
 		commands[node_CONSTANT.INTERFACE_ENV_DECORATION_COMMAND_GETCORE] = function(){
 			return loc_getCore();
 		};
-		decoration.setEnvironmentInterface(node_CONSTANT.INTERFACE_ENV_DECORATION, commands);
+		node_getEmbededEntityInterface(decoration).setEnvironmentInterface(node_CONSTANT.INTERFACE_ENV_DECORATION, commands);
 		
 		loc_addLayer(decoration);
 	};
@@ -361,6 +377,11 @@ nosliw.registerSetNodeDataEvent("component.getComponentInterface", function(){no
 nosliw.registerSetNodeDataEvent("common.objectwithid.getObjectId", function(){node_getObjectId = this.getData();});
 nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.makeObjectEntityTreeNodeInterface", function(){node_makeObjectEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.makeObjectBasicEntityObjectInterface", function(){node_makeObjectBasicEntityObjectInterface = this.getData();}); 
+nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentInterface", function(){node_makeObjectWithComponentInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentCoreComplex", node_createComponentCoreComplex); 

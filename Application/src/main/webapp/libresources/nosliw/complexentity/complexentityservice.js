@@ -255,8 +255,17 @@ var node_createComplexEntityRuntimeService = function() {
 			return node_createComponentRuntime(packageCore, undefined, request); 
 		},
 */
-				
+
 		getCreateBundleRuntimeRequest : function(parm, configure, handlers, request){
+			return node_createServiceRequestInfoSimple("createBundleRuntimeRequest", function(request){
+				var bundleCore = node_createBundleCore(parm, configure);
+				bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
+				var bundleRuntime = node_createComponentRuntime(bundleCore, undefined);
+				return bundleRuntime;
+			}, handlers, request);
+		},
+				
+		getCreateBundleRuntimeRequest1 : function(parm, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence("createBundleRuntimeRequest", handlers, request);
 			var bundleCore = node_createBundleCore(parm, configure);
 			bundleCore = loc_buildOtherObject(bundleCore, parm, configure);

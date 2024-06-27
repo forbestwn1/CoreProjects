@@ -16,9 +16,10 @@ var packageObj = library;
 	var node_buildDecorationPlugInObject;
 	var node_basicUtility;
 	var node_ResourceId;
-	var node_makeObjectWithEmbededEntityInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+
+var loc_BUNDLE_NAME = "bundle";	
 
 var node_createDecoration = function(decorationInfo){
 	
@@ -56,9 +57,10 @@ var node_createDecoration = function(decorationInfo){
 			var resourceId = new node_ResourceId(loc_decorationInfo.id, loc_decorationInfo.type, loc_decorationInfo.version);
 			out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(resourceId, loc_decorationInfo.configure, {
 				success : function(request, bundleRuntime){
-					loc_runtimeObject = bundleRuntime;
+					loc_runtimeObject = bundleRuntime;//.getCoreEntity().getMainEntityRuntime();
 					loc_applyEnvInterface = true;
 					loc_applyEnvInterfaceToRuntime();
+					loc_environmentInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_BUNDLE_NAME, bundleRuntime);
 				}
 			}));
 			return out;
@@ -68,9 +70,9 @@ var node_createDecoration = function(decorationInfo){
 			return loc_runtimeObject.getPostInitRequest(handlers, request);
 		},
 
-		setEnvironmentInterface : function(name, envInterface){
-			loc_environmentInterface[name] = envInterface;
-				loc_applyEnvInterfaceToRuntime();
+		setEnvironmentInterface : function(envInterface){
+			loc_environmentInterface = envInterface;
+			loc_applyEnvInterfaceToRuntime();
 		},
 
 		updateBackupStateObject : function(backupStateObj){
@@ -209,7 +211,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("component.buildDecorationPlugInObject", function(){node_buildDecorationPlugInObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_ResourceId = this.getData();	});
-nosliw.registerSetNodeDataEvent("common.embeded.makeObjectWithEmbededEntityInterface", function(){node_makeObjectWithEmbededEntityInterface = this.getData();});
 
 //Register Node by Name
 //packageObj.createChildNode("createComponentCoreDecoration", node_createComponentCoreDecoration); 
