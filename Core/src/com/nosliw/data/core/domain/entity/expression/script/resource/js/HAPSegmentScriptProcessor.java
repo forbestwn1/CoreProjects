@@ -1,11 +1,11 @@
 package com.nosliw.data.core.domain.entity.expression.script.resource.js;
 
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
 
 public interface HAPSegmentScriptProcessor {
 
 	HAPOutputScriptProcessor processor(
-		HAPExecutableSegmentExpression scriptExe,
+		HAPSegmentScriptExpression scriptExe,
 		String funciontParmName,
 		String expressionsDataParmName,
 		String constantsDataParmName,

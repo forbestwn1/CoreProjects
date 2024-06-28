@@ -1,6 +1,7 @@
 package com.nosliw.data.core.domain.entity.expression.script;
 
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
@@ -25,7 +26,7 @@ public class HAPPluginEntityProcessorComplexExpressionScriptGroup extends HAPPlu
 		HAPDefinitionEntityExpressionScriptGroup expressionGroupDef = (HAPDefinitionEntityExpressionScriptGroup)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		
 		for(HAPDefinitionExpression expressionDef : expressionGroupDef.getEntityElements()) {
-			HAPExecutableExpression expressionExe = HAPUtilityScriptExpressionExecute.processExpression(expressionDef, executableExpresionGroup, processContext, new HAPGeneratorId());
+			HAPExpressionScript expressionExe = HAPUtilityScriptExpressionExecute.processExpression(expressionDef, executableExpresionGroup, processContext, new HAPGeneratorId());
 			executableExpresionGroup.addExpressionItem(expressionExe);
 		}
 	}

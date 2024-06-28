@@ -29,7 +29,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 
 	@Override
 	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup) {
-//		HAPExecutableExpression expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
+//		HAPExpressionScript expressionExe = expressionGroup.getExpressionItems().get(this.m_expressionId);
 //		return expressionExe.getVariablesInfo());
 		return null;
 	}

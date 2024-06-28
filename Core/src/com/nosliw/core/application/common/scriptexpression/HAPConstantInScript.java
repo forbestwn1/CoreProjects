@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression.script;
+package com.nosliw.core.application.common.scriptexpression;
 
 import java.util.Map;
 
@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 @HAPEntityWithAttribute
-public class HAPExecutableConstantInScript extends HAPExecutableImp{
+public class HAPConstantInScript extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String CONSTANTNAME = "constantName";
@@ -21,7 +21,7 @@ public class HAPExecutableConstantInScript extends HAPExecutableImp{
 	
 	private Object m_value;
 
-	public HAPExecutableConstantInScript(String name, Object value){
+	public HAPConstantInScript(String name, Object value){
 		this.m_constantName = name;
 		this.m_value = value;
 	}
@@ -30,8 +30,8 @@ public class HAPExecutableConstantInScript extends HAPExecutableImp{
 
 	public Object getValue() {    return this.m_value;    }
 	
-	public HAPExecutableConstantInScript cloneConstantInScript() {
-		HAPExecutableConstantInScript out = new HAPExecutableConstantInScript(this.m_constantName, this.m_value);
+	public HAPConstantInScript cloneConstantInScript() {
+		HAPConstantInScript out = new HAPConstantInScript(this.m_constantName, this.m_value);
 		return out;
 	}
 

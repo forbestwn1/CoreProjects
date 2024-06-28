@@ -1,18 +1,18 @@
-package com.nosliw.data.core.domain.entity.expression.script;
+package com.nosliw.core.application.common.scriptexpression;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPExecutableSegmentExpressionText extends HAPExecutableSegmentExpression{
+public class HAPSegmentScriptExpressionText extends HAPSegmentScriptExpression{
 
 	@HAPAttribute
 	public static String CONTENT = "content";
 
 	private String m_content;
 	
-	public HAPExecutableSegmentExpressionText(String id, String content) {
+	public HAPSegmentScriptExpressionText(String id, String content) {
 		super(id);
 		this.m_content = content;
 	}

@@ -3,19 +3,19 @@ package com.nosliw.data.core.domain.entity.expression.script.resource.js;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpressionDataScript;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionDataScript;
 
 public class HAPSegmentScriptProcessorDataScript implements HAPSegmentScriptProcessor{
 
 	@Override
-	public HAPOutputScriptProcessor processor(HAPExecutableSegmentExpression scriptExe, String funciontParmName,
+	public HAPOutputScriptProcessor processor(HAPSegmentScriptExpression scriptExe, String funciontParmName,
 			String expressionsDataParmName, String constantsDataParmName, String variablesDataParmName) {
-		HAPExecutableSegmentExpressionDataScript dataScriptScriptExe = (HAPExecutableSegmentExpressionDataScript)scriptExe;
-		List<HAPExecutableSegmentExpression> segments = dataScriptScriptExe.getSegments();
+		HAPSegmentScriptExpressionDataScript dataScriptScriptExe = (HAPSegmentScriptExpressionDataScript)scriptExe;
+		List<HAPSegmentScriptExpression> segments = dataScriptScriptExe.getSegments();
 		
 		StringBuffer scrip = new StringBuffer();
-		for(HAPExecutableSegmentExpression segment : segments) {
+		for(HAPSegmentScriptExpression segment : segments) {
 			HAPOutputScriptProcessor segmentProcessOutput = null;
 			String segType = segment.getType();
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {

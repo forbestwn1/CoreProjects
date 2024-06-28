@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression.script;
+package com.nosliw.core.application.common.scriptexpression;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +22,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
+public class HAPExpressionScript extends HAPExecutableImpEntityInfo{
 
 	@HAPAttribute
 	public final static String TYPE = "type";
@@ -47,21 +47,21 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 
 	private String m_type;
 	
-	private List<HAPExecutableSegmentExpression> m_segments;
+	private List<HAPSegmentScriptExpression> m_segments;
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
 	private Set<String> m_dataExpressionId = new HashSet<String>();
 	
-	public HAPExecutableExpression(String type) {
-		this.m_segments = new ArrayList<HAPExecutableSegmentExpression>();
+	public HAPExpressionScript(String type) {
+		this.m_segments = new ArrayList<HAPSegmentScriptExpression>();
 		this.m_type = type;
 	}
 	
 	public String getType() {     return this.m_type;      }
 
-	protected void addSegment(HAPExecutableSegmentExpression segment) {	this.m_segments.add(segment);	}
-	public List<HAPExecutableSegmentExpression> getSegments(){    return this.m_segments;     }
+	protected void addSegment(HAPSegmentScriptExpression segment) {	this.m_segments.add(segment);	}
+	public List<HAPSegmentScriptExpression> getSegments(){    return this.m_segments;     }
 	
 	public Set<String> getVariableKeys(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
@@ -77,7 +77,7 @@ public class HAPExecutableExpression extends HAPExecutableImpEntityInfo{
 		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
 		
 		List<String> segmentArrayStr = new ArrayList<String>();
-		for(HAPExecutableSegmentExpression segment : this.m_segments) {
+		for(HAPSegmentScriptExpression segment : this.m_segments) {
 			segmentArrayStr.add(segment.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentArrayStr.toArray(new String[0])));

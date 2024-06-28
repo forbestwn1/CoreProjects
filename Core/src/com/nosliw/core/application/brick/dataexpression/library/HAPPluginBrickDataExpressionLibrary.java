@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.dataexpression.lib;
+package com.nosliw.core.application.brick.dataexpression.library;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionLibrary;
 import com.nosliw.core.application.division.manual.HAPManualAttribute;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualWrapperValue;

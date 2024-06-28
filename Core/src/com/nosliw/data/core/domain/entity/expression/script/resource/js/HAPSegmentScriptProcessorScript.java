@@ -2,20 +2,20 @@ package com.nosliw.data.core.domain.entity.expression.script.resource.js;
 
 import java.util.List;
 
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableConstantInScript;
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpressionScript;
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableVariableInScript;
+import com.nosliw.core.application.common.scriptexpression.HAPConstantInScript;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScript;
+import com.nosliw.core.application.common.scriptexpression.HAPVariableInScript;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 
 public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcessor{
 
 	@Override
-	public HAPOutputScriptProcessor processor(HAPExecutableSegmentExpression scriptExe, String funciontParmName,
+	public HAPOutputScriptProcessor processor(HAPSegmentScriptExpression scriptExe, String funciontParmName,
 			String expressionsDataParmName, String constantsDataParmName, String variablesDataParmName) {
 		
 		HAPOutputScriptProcessor out = new HAPOutputScriptProcessor();
-		HAPExecutableSegmentExpressionScript scriptScriptExe = (HAPExecutableSegmentExpressionScript)scriptExe;
+		HAPSegmentScriptExpressionScript scriptScriptExe = (HAPSegmentScriptExpressionScript)scriptExe;
 
 		StringBuffer funScript = new StringBuffer();
 		List<Object> scriptSegmentEles = scriptScriptExe.getParts();
@@ -23,19 +23,19 @@ public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcesso
 			if(scriptSegmentEle instanceof String){
 				funScript.append((String)scriptSegmentEle);
 			}
-			else if(scriptSegmentEle instanceof HAPExecutableConstantInScript){
-				HAPExecutableConstantInScript constantInScript = (HAPExecutableConstantInScript)scriptSegmentEle;
+			else if(scriptSegmentEle instanceof HAPConstantInScript){
+				HAPConstantInScript constantInScript = (HAPConstantInScript)scriptSegmentEle;
 				Object constantValue = constantInScript.getValue();
 				if(constantValue==null) {
 					//if constant value not processed, then wait until runtime
-					funScript.append(constantsDataParmName + "[\"" + ((HAPExecutableConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
+					funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 				}
 				else {
 					funScript.append("("+HAPUtilityRuntimeJS.buildConstantValue(constantValue)+")");
 				}
 			}
-			else if(scriptSegmentEle instanceof HAPExecutableVariableInScript){
-				String varKey = ((HAPExecutableVariableInScript)scriptSegmentEle).getVariableKey();
+			else if(scriptSegmentEle instanceof HAPVariableInScript){
+				String varKey = ((HAPVariableInScript)scriptSegmentEle).getVariableKey();
 				String varValueScript = variablesDataParmName + "[\"" + varKey +"\"]";
 				funScript.append("("+varValueScript+"!=undefined?"+varValueScript+":''"+")");
 			}

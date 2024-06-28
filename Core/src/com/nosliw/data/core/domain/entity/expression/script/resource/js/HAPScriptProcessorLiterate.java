@@ -1,6 +1,6 @@
 package com.nosliw.data.core.domain.entity.expression.script.resource.js;
 
-import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableSegmentExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
 import com.nosliw.data.core.script.expression1.HAPExecutableScript;
 import com.nosliw.data.core.script.expression1.imp.literate.HAPExecutableScriptEntityLiterate;
 import com.nosliw.data.core.script.expression1.imp.literate.HAPExecutableScriptSegExpressionScript;
@@ -10,7 +10,7 @@ public class HAPScriptProcessorLiterate implements HAPSegmentScriptProcessor{
 
 	@Override
 	public HAPOutputScriptProcessor processor(
-			HAPExecutableSegmentExpression scriptExe, 
+			HAPSegmentScriptExpression scriptExe, 
 			String funciontParmName,
 			String expressionsDataParmName, 
 			String constantsDataParmName, 

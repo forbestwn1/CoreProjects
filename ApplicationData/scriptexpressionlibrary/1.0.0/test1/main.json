@@ -1,0 +1,44 @@
+{
+	"info": {
+		"name" : "dataexpressionlibrary",
+		"status": "disabled1",
+		"description" : "data expression library"
+	},
+	"brick":[
+		{
+			"name" : "dataexpression1",
+			"status": "disabled1",
+			"description" : "dataexpression1",
+			"request" : [
+				{
+					"name" : "deparm1",
+					"dataInfo" : "test.string;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "default value of baseVarNormal"
+					}
+				},
+				{
+					"name" : "deparm2",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 1
+					}
+				},
+				{
+					"name" : "deparm3",
+					"dataInfo" : "test.integer;1.0.0",
+					"defaultValue" : {
+						"dataTypeId": "test.integer;1.0.0",
+						"value": 6
+					}
+				}
+			],
+			"result" : {
+				"criteria" : "test.string;1.0.0"
+			},
+			"expression": "HaHaHa  <%=(#|!(test.string)!.subString(?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)|#.value+?(deparm3)?.value)+?(deparm2)?.value%>  End!!!!"
+		}
+	]
+}

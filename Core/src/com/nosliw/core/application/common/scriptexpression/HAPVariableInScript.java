@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression.script;
+package com.nosliw.core.application.common.scriptexpression;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 @HAPEntityWithAttribute
-public class HAPExecutableVariableInScript extends HAPExecutableImp{
+public class HAPVariableInScript extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String VARIABLENAME = "variableName";
@@ -19,7 +19,7 @@ public class HAPExecutableVariableInScript extends HAPExecutableImp{
 	
 	private String m_variableKey;
 	
-	public HAPExecutableVariableInScript(String name, String varKey){
+	public HAPVariableInScript(String name, String varKey){
 		this.m_variableName = name;
 		this.m_variableKey = varKey;
 	}
@@ -28,8 +28,8 @@ public class HAPExecutableVariableInScript extends HAPExecutableImp{
 
 	public String getVariableKey() {    return this.m_variableKey;     }
 	
-	public HAPExecutableVariableInScript cloneVariableInScript() {
-		return new HAPExecutableVariableInScript(this.m_variableName, this.m_variableKey);
+	public HAPVariableInScript cloneVariableInScript() {
+		return new HAPVariableInScript(this.m_variableName, this.m_variableKey);
 	}
 
 	@Override

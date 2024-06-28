@@ -16,8 +16,8 @@ import com.nosliw.core.application.brick.adapter.dataassociationforexpression.HA
 import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
-import com.nosliw.core.application.brick.dataexpression.lib.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.brick.dataexpression.lib.HAPPluginBrickDataExpressionLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;

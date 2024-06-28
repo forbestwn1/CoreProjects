@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression.script;
+package com.nosliw.data.core.domain.entity.expression.script1;
 
 import java.util.Map;
 

@@ -35,7 +35,7 @@ var node_createDataExpressionElementInLibrary = function(expressionData){
 	var loc_getExecuteRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 		var expressionItem = loc_expressionData[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
-		var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.UNITDATAEXPRESSION_VARIABLEINFOS];
+		var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS];
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_interactiveValuePorts.getValuePort(valuePortName);

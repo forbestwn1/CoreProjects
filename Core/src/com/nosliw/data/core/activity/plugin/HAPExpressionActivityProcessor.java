@@ -58,7 +58,7 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 //				HAPExecutableScriptEntity scriptExpression = scriptExpressionGroup.getScript(null);
 //				if(scriptExpression.isDataExpression()) {
 //					//if script expression is data expression only, then affect result
-//					HAPExecutableExpression expExe = scriptExpressionGroup.getExpression().getExpressionItems().values().iterator().next();
+//					HAPExpressionScript expExe = scriptExpressionGroup.getExpression().getExpressionItems().values().iterator().next();
 //					HAPDataTypeCriteria outputCriteria = expExe.getOperand().getOperand().getOutputCriteria();
 //					out.addRoot(HAPSystemUtility.buildSystemName(outputVar), new HAPElementStructureLeafData(new HAPVariableDataInfo(outputCriteria)));
 //				}

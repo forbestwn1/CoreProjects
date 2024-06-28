@@ -11,9 +11,11 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPWithVariable;
 
 @HAPEntityWithAttribute
-public class HAPGroupDataExpression extends HAPSerializableImp implements HAPUnitDataExpression{
+public class HAPGroupDataExpression extends HAPSerializableImp implements HAPWithVariable{
 
 	@HAPAttribute
 	public static String ITEM = "item";
@@ -41,7 +43,7 @@ public class HAPGroupDataExpression extends HAPSerializableImp implements HAPUni
 			itemMap.put(item.getId(), item.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));
-		jsonMap.put(HAPUnitDataExpression.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.m_variableInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.m_variableInfo, HAPSerializationFormat.JSON));
 	}
 
 }

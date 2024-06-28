@@ -2,6 +2,7 @@ package com.nosliw.data.core.domain.entity.expression.script;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 
 @HAPEntityWithAttribute
 public class HAPExecutableEntityExpressionScriptSingle extends HAPExecutableEntityExpressionScript{
@@ -11,7 +12,7 @@ public class HAPExecutableEntityExpressionScriptSingle extends HAPExecutableEnti
 	
 	public HAPExecutableEntityExpressionScriptSingle() {	}
 
-	public HAPExecutableExpression getExpression(){   return (HAPExecutableExpression)this.getAttributeValue(EXPRESSION);  }
-	public void setExpression(HAPExecutableExpression expression) {    this.setAttributeValueObject(EXPRESSION, expression);       }
+	public HAPExpressionScript getExpression(){   return (HAPExpressionScript)this.getAttributeValue(EXPRESSION);  }
+	public void setExpression(HAPExpressionScript expression) {    this.setAttributeValueObject(EXPRESSION, expression);       }
 
 }
