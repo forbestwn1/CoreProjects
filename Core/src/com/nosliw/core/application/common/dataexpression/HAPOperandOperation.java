@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -160,7 +160,7 @@ public class HAPOperandOperation extends HAPOperandImp{
 	
 	@Override
 	public HAPMatchers discover(
-			HAPContainerVariableCriteriaInfo variablesInfo,
+			HAPContainerVariableInfo variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker context,
 			HAPDataTypeHelper dataTypeHelper) {

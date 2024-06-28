@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
@@ -37,7 +37,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableCriteriaInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
+	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -87,7 +87,7 @@ public class HAPUtilityExpressionProcessor {
 		});
 	}
 
-	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
+	public static void buildVariableInfo(HAPContainerVariableInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
@@ -103,7 +103,7 @@ public class HAPUtilityExpressionProcessor {
 	}
 	
 	//update value context according to vairable info
-	public static void updateValuePortElements(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
+	public static void updateValuePortElements(HAPContainerVariableInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);

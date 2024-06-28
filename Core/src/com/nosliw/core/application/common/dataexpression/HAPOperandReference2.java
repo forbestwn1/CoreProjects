@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
@@ -105,7 +105,7 @@ public class HAPOperandReference2 extends HAPOperandImp{
 
 	@Override
 	public HAPMatchers discover(
-			HAPContainerVariableCriteriaInfo variablesInfo,
+			HAPContainerVariableInfo variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {

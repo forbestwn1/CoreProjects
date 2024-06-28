@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPInfoAlias;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
@@ -27,13 +27,13 @@ public class HAPUtilityValueStructure {
 	
 
 	
-	public static HAPContainerVariableCriteriaInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
+	public static HAPContainerVariableInfo discoverDataVariablesInStructure(String valueStructureComplexId, HAPDomainValueStructure valueStructureDomain) {
 		
 		HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureComplexId).getValueStructure();
 		
 		
 		HAPManualBrickValueContext valueStructureComplex = valueStructureDomain.getValueContext(valueStructureComplexId);
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		HAPContainerVariableInfo out = new HAPContainerVariableInfo();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
 			discoverDataVariablesInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
@@ -41,7 +41,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 
-	public static void discoverDataVariablesInStructure(HAPContainerVariableCriteriaInfo varCriteriaInfoContainer, String sturctureId, HAPValueStructureInValuePort structure) {
+	public static void discoverDataVariablesInStructure(HAPContainerVariableInfo varCriteriaInfoContainer, String sturctureId, HAPValueStructureInValuePort structure) {
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			varCriteriaInfoContainer.addVariable(HAPUtilityNamingConversion.cascadeComponentPath(sturctureId, idPath), dataVarsInfoByIdPath.get(idPath));

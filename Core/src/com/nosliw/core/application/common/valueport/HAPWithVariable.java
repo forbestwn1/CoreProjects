@@ -9,6 +9,6 @@ public interface HAPWithVariable {
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 
-	HAPContainerVariableCriteriaInfo getVariablesInfo();
+	HAPContainerVariableInfo getVariablesInfo();
 
 }

@@ -18,7 +18,7 @@ import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.data.core.data.HAPData;
@@ -74,7 +74,7 @@ public class HAPUtilityExpressionProcessor {
 		}
 	}
 	
-	public static void buildVariableInfo(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
+	public static void buildVariableInfo(HAPContainerVariableInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
@@ -89,7 +89,7 @@ public class HAPUtilityExpressionProcessor {
 	}
 
 	//update value context according to vairable info
-	public static void updateValueContext(HAPContainerVariableCriteriaInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
+	public static void updateValueContext(HAPContainerVariableInfo varCrteriaInfoInExpression, HAPDomainValueStructure valueStructureDomain) {
 		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
@@ -124,7 +124,7 @@ public class HAPUtilityExpressionProcessor {
 		});
 	}
 	
-	public static void resolveVariableName(HAPExecutableExpressionData1 expressionExe, HAPExecutableEntityValueContext valueContext, HAPContainerVariableCriteriaInfo varInfos, HAPDomainValueStructure valueStructureDomain) {
+	public static void resolveVariableName(HAPExecutableExpressionData1 expressionExe, HAPExecutableEntityValueContext valueContext, HAPContainerVariableInfo varInfos, HAPDomainValueStructure valueStructureDomain) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {

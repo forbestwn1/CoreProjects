@@ -21,7 +21,7 @@ public class HAPUtilityScriptExpression1 {
 
 //	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
 //		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);
-//		HAPContainerVariableCriteriaInfo varInfos = scriptExe.discoverVariablesInfo1(scriptExpressionGroup.getExpression());
+//		HAPContainerVariableInfo varInfos = scriptExe.discoverVariablesInfo1(scriptExpressionGroup.getExpression());
 //		Set<HAPVariableInfo> out = new HashSet<HAPVariableInfo>();
 //		for(String name : varInfos.keySet()) {
 //			HAPVariableInfo varInfo = HAPVariableInfo.buildVariableInfo(name, varInfos.get(name).getCriteria());

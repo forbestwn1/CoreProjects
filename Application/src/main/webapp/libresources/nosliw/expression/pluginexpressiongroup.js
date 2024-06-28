@@ -81,7 +81,7 @@ var loc_createExpressionGroupComponentCore = function(complexEntityDef, valueCon
 			
 			var out = [];
 			_.each(varKeys, function(key, i){
-				out.push(variableInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key][node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
+				out.push(variableInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLES][key][node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEID]);
 			});
 			return out;
 		},

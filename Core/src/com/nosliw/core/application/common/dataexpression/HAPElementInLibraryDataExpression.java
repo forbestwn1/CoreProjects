@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 import com.nosliw.core.application.common.valueport.HAPWithVariable;
@@ -35,10 +35,10 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 
 	private HAPInteractiveExpression m_interactive;
 	
-	private HAPContainerVariableCriteriaInfo m_variableInfo;
+	private HAPContainerVariableInfo m_variableInfo;
 	
 	public HAPElementInLibraryDataExpression() {
-		this.m_variableInfo = new HAPContainerVariableCriteriaInfo();
+		this.m_variableInfo = new HAPContainerVariableInfo();
 	}
 	
 	public HAPDataExpression getExpression() {	return m_dataExpression;	}
@@ -51,8 +51,8 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	public void setInteractive(HAPInteractiveExpression interactive) {    this.m_interactive = interactive;     }
 	
 	@Override
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return this.m_variableInfo;  }
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varsInfo) {    this.m_variableInfo = varsInfo;     }
+	public HAPContainerVariableInfo getVariablesInfo() {   return this.m_variableInfo;  }
+	public void setVariablesInfo(HAPContainerVariableInfo varsInfo) {    this.m_variableInfo = varsInfo;     }
 	
 	@Override
 	public HAPGroupValuePorts getExternalValuePortGroup() {   return this.m_interactive.getExternalValuePortGroup();  }

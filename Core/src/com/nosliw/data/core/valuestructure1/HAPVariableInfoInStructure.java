@@ -103,20 +103,20 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 
 	public Set<String> getDataVariableNames(){		return this.m_varIdByName.keySet();	}
 	
-	public HAPContainerVariableCriteriaInfo buildSubContainer(Set<String> aliases) {
+	public HAPContainerVariableInfo buildSubContainer(Set<String> aliases) {
 		Set<String> varIds = new HashSet<String>();
 		for(String alias : aliases) {
 			varIds.add(this.m_varIdByName.get(alias));
 		}
 		
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		HAPContainerVariableInfo out = new HAPContainerVariableInfo();
 		for(String varId : varIds) {
 			out.addVariableCriteriaInfo(this.getVariableCriteriaInfoById(varId), varId, this.getVariableInfoById(varId));
 		}
 		return out;
 	}
 	
-	public HAPContainerVariableCriteriaInfo groupVariables(Set<String> aliases) {
+	public HAPContainerVariableInfo groupVariables(Set<String> aliases) {
 		Map<String, Set<String>> group = new LinkedHashMap<String, Set<String>>();
 		for(String alias : aliases) {
 			String varId = this.m_varIdByName.get(alias);
@@ -128,7 +128,7 @@ public class HAPVariableInfoInStructure extends HAPSerializableImp{
 			groupAliases.add(alias);
 		}
 		
-		HAPContainerVariableCriteriaInfo out = new HAPContainerVariableCriteriaInfo();
+		HAPContainerVariableInfo out = new HAPContainerVariableInfo();
 		for(String varId : group.keySet()) {
 			out.addVariableCriteriaInfo(this.m_criteriaInfosById.get(varId), varId, group.get(varId));
 		}

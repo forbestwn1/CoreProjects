@@ -30,8 +30,8 @@ var node_aliasUtility = function(){
 		},
 		
 		expandInputByVariablesInfoContainer : function(inputValue, varsInfoContainer){
-			var varIdByName = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIDBYNAME];
-			var namesByVarId = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_NAMESBYVARID];
+			var varIdByName = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIDBYNAME];
+			var namesByVarId = varsInfoContainer[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_NAMESBYVARID];
 			return this.expandInput(inputValue, varIdByName, namesByVarId);
 		},
 			

@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -53,7 +53,7 @@ public class HAPOperandAttribute extends HAPOperandImp{
 
 	@Override
 	public HAPMatchers discover(
-			HAPContainerVariableCriteriaInfo variablesInfo,
+			HAPContainerVariableInfo variablesInfo,
 			HAPDataTypeCriteria expectCriteria, 
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {

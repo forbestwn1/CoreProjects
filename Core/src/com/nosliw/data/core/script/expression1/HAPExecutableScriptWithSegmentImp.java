@@ -45,7 +45,7 @@ public abstract class HAPExecutableScriptWithSegmentImp extends HAPExecutableScr
 		if(this.m_variableInfos==null) {
 			this.m_variableInfos = new HAPVariableInfoInStructure();
 			for(HAPExecutableScript seg : this.m_segs) {
-//				HAPContainerVariableCriteriaInfo varInfos = seg.discoverVariablesInfo1(expressionGroup);
+//				HAPContainerVariableInfo varInfos = seg.discoverVariablesInfo1(expressionGroup);
 //				for(String name : varInfos.keySet()) {
 //					HAPUtilityScriptExpression.addVariableInfo(this.m_variableInfos, varInfos.get(name), name);
 //				}

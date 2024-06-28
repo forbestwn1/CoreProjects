@@ -13,7 +13,7 @@ import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
@@ -56,7 +56,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
 		expectOutputs.add(exe.getInteractive().getResult().getDataCriteria());
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
-		HAPContainerVariableCriteriaInfo variableInfos = HAPUtilityOperand.discover(
+		HAPContainerVariableInfo variableInfos = HAPUtilityOperand.discover(
 				operands,
 				expectOutputs,
 				exe.getVariablesInfo(),

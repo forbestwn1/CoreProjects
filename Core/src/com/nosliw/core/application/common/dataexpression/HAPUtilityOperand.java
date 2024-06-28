@@ -13,7 +13,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -346,17 +346,17 @@ public class HAPUtilityOperand {
 		}
 	}
 
-	static public HAPContainerVariableCriteriaInfo discover(
+	static public HAPContainerVariableInfo discover(
 			List<HAPOperand> operands, 
 			List<HAPDataTypeCriteria> expectOutputs,
-			HAPContainerVariableCriteriaInfo inVariablesInfo, 
+			HAPContainerVariableInfo inVariablesInfo, 
 			List<HAPMatchers> matchers,
 			HAPDataTypeHelper dataTypeHelper,
 			HAPProcessTracker processTracker) {
 		//do discovery on operand
-		HAPContainerVariableCriteriaInfo varsInfo = inVariablesInfo.clone();
+		HAPContainerVariableInfo varsInfo = inVariablesInfo.clone();
 		
-		HAPContainerVariableCriteriaInfo oldVarsInfo;
+		HAPContainerVariableInfo oldVarsInfo;
 		//Do discovery until local vars definition not change or fail 
 		do{
 			matchers.clear();

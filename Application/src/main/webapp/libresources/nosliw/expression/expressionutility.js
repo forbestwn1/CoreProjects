@@ -71,8 +71,8 @@ var node_utility = function()
 				});
 				
 				_.each(varKeys, function(varKey, i){
-					var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][varKey];
-					var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID];
+					var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLES][varKey];
+					var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEID];
 					
 					var eleInfo = node_createValuePortElementInfo(varId);
 					
@@ -435,9 +435,9 @@ var node_utility = function()
 	var loc_getVariablesValueRequest = function(varKeys, variablesInfo, valueContext, handlers, request){
 		var variables = {};
 		_.each(varKeys, function(key, i){
-			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLES][key];
-			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEKEY]; 
-			var varId = node_createValuePortElementInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLECRITERIAINFO_VARIABLEID]);
+			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLES][key];
+			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEKEY]; 
+			var varId = node_createValuePortElementInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEID]);
 			var variable = valueContext.createVariable(
 					varId.getValueStructureId(), 
 					varId.getRootName(),

@@ -13,6 +13,7 @@ public class HAPBlockDataExpressionGroup extends HAPBrickBlockComplex{
 	
 	@Override
 	public void init() {
+		super.init();
 		this.setAttributeValueWithValue(VALUE, new HAPGroupDataExpression());;
 	}
 	

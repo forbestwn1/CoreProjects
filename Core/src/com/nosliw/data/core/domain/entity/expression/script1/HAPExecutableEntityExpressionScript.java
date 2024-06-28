@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity.expression.script1;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableCriteriaInfo;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 @HAPEntityWithAttribute
@@ -12,9 +12,9 @@ public class HAPExecutableEntityExpressionScript extends HAPExecutableEntityComp
 	public static String VARIABLEINFOS = "variableInfos";
 	
 	public HAPExecutableEntityExpressionScript() {
-		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableCriteriaInfo());
+		this.setAttributeValueObject(VARIABLEINFOS, new HAPContainerVariableInfo());
 	}
 
-	public void setVariablesInfo(HAPContainerVariableCriteriaInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }
-	public HAPContainerVariableCriteriaInfo getVariablesInfo() {   return (HAPContainerVariableCriteriaInfo)this.getAttributeValue(VARIABLEINFOS);    }
+	public void setVariablesInfo(HAPContainerVariableInfo varInfo) {  this.setAttributeValueObject(VARIABLEINFOS, varInfo);  }
+	public HAPContainerVariableInfo getVariablesInfo() {   return (HAPContainerVariableInfo)this.getAttributeValue(VARIABLEINFOS);    }
 }
