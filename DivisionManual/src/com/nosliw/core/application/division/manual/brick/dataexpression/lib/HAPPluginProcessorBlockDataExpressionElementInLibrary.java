@@ -1,16 +1,13 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.commons.lang3.tuple.Pair;
 
-import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
-import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
@@ -41,6 +38,22 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		//
 		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
+		Pair<HAPContainerVariableInfo, HAPMatchers> pair =  HAPUtilityExpressionProcessor.processDataExpression(exe.getExpression(), exe.getInteractive().getResult().getDataCriteria(), exe.getVariablesInfo(), blockExe, processContext.getRuntimeEnv());
+		exe.setVariablesInfo(pair.getLeft());
+		
+		//result
+		HAPDataTypeCriteria resultCriteria = exe.getExpression().getOperand().getOperand().getOutputCriteria();
+		if(exe.getInteractive().getResult().getDataCriteria()==null) {
+			exe.getInteractive().getResult().setDataCriteria(resultCriteria);
+		}
+		else {
+			exe.setResultMatchers(pair.getRight());
+		}
+
+		
+		
+		
+/*		
 		//resolve variable name, build var info container
 		HAPUtilityExpressionProcessor.resolveVariableName(exe.getExpression(), blockExe, exe.getVariablesInfo(), null);
 		
@@ -76,5 +89,8 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		else {
 			exe.setResultMatchers(matchers.get(0));
 		}
+*/		
 	}
+	
+	
 }

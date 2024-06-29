@@ -15,8 +15,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.entity.expression.script.resource.js.HAPScriptFunctionInfo;
 import com.nosliw.data.core.domain.entity.expression.script.resource.js.HAPUtilityScriptForExecuteJSScript;
-import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
@@ -60,7 +60,7 @@ public class HAPExpressionScript extends HAPExecutableImpEntityInfo{
 	
 	public String getType() {     return this.m_type;      }
 
-	protected void addSegment(HAPSegmentScriptExpression segment) {	this.m_segments.add(segment);	}
+	public void addSegment(HAPSegmentScriptExpression segment) {	this.m_segments.add(segment);	}
 	public List<HAPSegmentScriptExpression> getSegments(){    return this.m_segments;     }
 	
 	public Set<String> getVariableKeys(){   return this.m_varKeys;    }

@@ -26,6 +26,10 @@ public class HAPGroupDataExpression extends HAPSerializableImp{
 	public void addItem(HAPElementInGroupDataExpression item) {    this.m_items.add(item);     }
 	public List<HAPElementInGroupDataExpression> getItems(){   return this.m_items;    }
 	
+	public String addItem(HAPDataExpression dataExpression) {
+		
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

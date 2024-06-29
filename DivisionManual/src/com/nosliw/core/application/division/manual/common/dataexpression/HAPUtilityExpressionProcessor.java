@@ -1,15 +1,22 @@
 package com.nosliw.core.application.division.manual.common.dataexpression;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPElementInGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
+import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
 import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
 import com.nosliw.core.application.common.dataexpression.HAPOperandVariable;
@@ -26,10 +33,12 @@ import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionData;
+import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResource;
@@ -37,6 +46,51 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExpressionProcessor {
 
+	public static Pair<HAPContainerVariableInfo, List<HAPMatchers>> processDataExpressionGroup(HAPGroupDataExpression dataExpressionGroup, List<HAPDataTypeCriteria> expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
+		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
+		HAPContainerVariableInfo currentVarInfoContainer = varInfoContainer;
+		for(int i=0; i<dataExpressionGroup.getItems().size(); i++) {
+			HAPElementInGroupDataExpression item = dataExpressionGroup.getItems().get(i); 
+			Pair<HAPContainerVariableInfo, HAPMatchers> pair = processDataExpression(item.getExpression(), expectOutput.get(i), varInfoContainer, withInternalValuePort, runtimeEnv);
+			currentVarInfoContainer = pair.getLeft();
+			matchers.add(pair.getRight());
+		}
+		return Pair.of(currentVarInfoContainer, matchers);
+	}
+	
+	public static Pair<HAPContainerVariableInfo, HAPMatchers> processDataExpression(HAPDataExpression dataExpression, HAPDataTypeCriteria expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
+		
+		//resolve variable name, build var info container
+		HAPUtilityExpressionProcessor.resolveVariableName(dataExpression, withInternalValuePort, varInfoContainer, null);
+		
+		//build var criteria infor in var info container according to value port def
+		HAPUtilityExpressionProcessor.buildVariableInfo(varInfoContainer, withInternalValuePort);
+		
+		//process reference operand
+		HAPUtilityExpressionProcessor.resolveReferenceVariableMapping(dataExpression, runtimeEnv);
+		
+		//discover
+		List<HAPOperand> operands = new ArrayList<HAPOperand>();
+		operands.add(dataExpression.getOperand().getOperand());
+		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
+		expectOutputs.add(expectOutput);
+		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
+		HAPContainerVariableInfo variableInfos = HAPUtilityOperand.discover(
+				operands,
+				expectOutputs,
+				varInfoContainer,
+				matchers,
+				runtimeEnv.getDataTypeHelper(),
+				new HAPProcessTracker());
+		
+		//update value port element according to var info container after resolve
+		HAPUtilityExpressionProcessor.updateValuePortElements(varInfoContainer, withInternalValuePort);
+
+		return Pair.of(variableInfos, matchers.get(0));
+	}
+	
+
+	
 	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPInterfaceProcessOperand(){
 			@Override

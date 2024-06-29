@@ -1,13 +1,13 @@
-package com.nosliw.core.application.brick.dataexpression.library;
+package com.nosliw.core.application.brick.scriptexpression.library;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
+import com.nosliw.core.application.common.script.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
 @HAPEntityWithAttribute
-public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple{
+public class HAPBlockScriptExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple{
 
 	@HAPAttribute
 	public static String VALUE = "value";
@@ -15,10 +15,10 @@ public class HAPBlockDataExpressionElementInLibrary extends HAPBrickWithEntityIn
 	@Override
 	public void init() {
 		super.init();
-		this.setAttributeValueWithValue(VALUE, new HAPElementInLibraryDataExpression());;
+		this.setAttributeValueWithValue(VALUE, new HAPElementInLibraryScriptExpression());;
 	}
 	
-	public HAPElementInLibraryDataExpression getValue(){	return (HAPElementInLibraryDataExpression)this.getAttributeValueOfValue(VALUE);	}
+	public HAPElementInLibraryScriptExpression getValue(){	return (HAPElementInLibraryScriptExpression)this.getAttributeValueOfValue(VALUE);	}
 	
 	@Override
 	public HAPContainerValuePorts getExternalValuePorts() {

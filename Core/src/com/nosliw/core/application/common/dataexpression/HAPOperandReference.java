@@ -83,8 +83,8 @@ public class HAPOperandReference extends HAPOperandImp{
 	
 	public void setResourceId(HAPResourceId resourceId) {   this.m_referedDataExpressionLibElementResourceId = resourceId;     }
 	
-//	public void setReferencedDataExpression(HAPElementInLibraryDataExpression referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
-//	public HAPElementInLibraryDataExpression getReferencedDataExpression() {    return this.m_referedDataExpression;      }
+//	public void setReferencedDataExpression(HAPElementInLibraryScriptExpression referedDataExpression) {   this.m_referedDataExpression = referedDataExpression; }
+//	public HAPElementInLibraryScriptExpression getReferencedDataExpression() {    return this.m_referedDataExpression;      }
 	
 	@Override
 	public List<HAPWrapperOperand> getChildren(){
