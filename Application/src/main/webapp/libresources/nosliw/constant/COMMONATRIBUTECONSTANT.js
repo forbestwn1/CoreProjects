@@ -344,7 +344,7 @@ var COMMONATRIBUTECONSTANT=
   "BRICK_ATTRIBUTE": "attribute",
   "BRICK_BRICKTYPE": "brickType",
   "BRICK_ISCOMPLEX": "isComplex",
-  "BRICKBLOCK_VALUECONTEXT": "valueContext",
+  "BRICKBLOCKCOMPLEX_VALUECONTEXT": "valueContext",
   "BUNDLE_BRICK": "brick",
   "BUNDLE_VALUESTRUCTUREDOMAIN": "valueStructureDomain",
   "BUNDLE_EXTRADATA": "extraData",

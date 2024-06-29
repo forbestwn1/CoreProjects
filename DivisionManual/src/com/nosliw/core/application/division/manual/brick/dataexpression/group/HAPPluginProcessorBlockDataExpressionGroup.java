@@ -44,16 +44,17 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualBrick, HAPBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDataExpressionGroup groupDef = ((HAPManualBlockDataExpressionGroup)blockPair.getLeft()).getValue();
+		HAPBlockDataExpressionGroup groupBlock = (HAPBlockDataExpressionGroup)blockPair.getRight();
 		HAPGroupDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
 	
 		//resolve variable name, build var info container
 		for(HAPElementInGroupDataExpression itemExe : groupExe.getItems()) {
-			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getExpression(), blockPair.getRight(), groupExe.getVariablesInfo(), null);
+			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getExpression(), blockPair.getRight(), groupBlock.getVariablesInfo(), null);
 		}
 		
 		//build var info container
 		for(HAPElementInGroupDataExpression itemExe : groupExe.getItems()) {
-			HAPUtilityExpressionProcessor.buildVariableInfo(groupExe.getVariablesInfo(), blockPair.getRight());
+			HAPUtilityExpressionProcessor.buildVariableInfo(groupBlock.getVariablesInfo(), blockPair.getRight());
 		}
 
 	}

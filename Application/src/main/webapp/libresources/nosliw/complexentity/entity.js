@@ -64,6 +64,10 @@ var node_createEntityDefinition = function(original){
 			var attr = this.getAttribute(attrName);
 			return attr==undefined? undefined : attr.getAttributeValueWrapper().getValue();
 		},
+
+		getOtherAttributeValue : function(attrName){
+			return loc_entityDef[attrName];
+		},
 		
 		original : loc_entityDef
 		

@@ -7,6 +7,7 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
@@ -18,6 +19,7 @@ import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 
+@HAPEntityWithAttribute
 public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithVariable{
 
 	@HAPAttribute

@@ -117,7 +117,7 @@ var node_createComplexEntityRuntimeService = function() {
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		//build value context
-		var valueContextDef = entityDef[node_COMMONATRIBUTECONSTANT.BRICKBLOCK_VALUECONTEXT];
+		var valueContextDef = entityDef[node_COMMONATRIBUTECONSTANT.BRICKBLOCKCOMPLEX_VALUECONTEXT];
 		var parentValueContextId = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getValueContextId();
 		var valueContextId = bundleCore.getVariableDomain().creatValueContext(valueContextDef, parentValueContextId);
 		

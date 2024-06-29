@@ -76,7 +76,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM][itemName];
 		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ELEMENTINGROUPDATAEXPRESSION_EXPRESSION]; 
-		var variablesContainer = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS];
+		var variablesContainer = loc_complexEntityDef.getOtherAttributeValue(node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS);
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_valuePort;
