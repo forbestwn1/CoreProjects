@@ -19,15 +19,24 @@ public class HAPGroupDataExpression extends HAPSerializableImp{
 
 	private List<HAPElementInGroupDataExpression> m_items;
 	
+	private int m_idIndex;
+	
 	public HAPGroupDataExpression() {
 		this.m_items = new ArrayList<HAPElementInGroupDataExpression>();
+		this.m_idIndex = 0;
 	}
 
 	public void addItem(HAPElementInGroupDataExpression item) {    this.m_items.add(item);     }
 	public List<HAPElementInGroupDataExpression> getItems(){   return this.m_items;    }
 	
 	public String addItem(HAPDataExpression dataExpression) {
-		
+		String id = this.m_idIndex+"";
+		this.m_idIndex++;
+		HAPElementInGroupDataExpression item = new HAPElementInGroupDataExpression();
+		item.setName(id);
+		item.setId(id);
+		this.addItem(item);
+		return id;
 	}
 	
 	@Override

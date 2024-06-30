@@ -47,6 +47,10 @@ import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPM
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualPluginParserBlockDataExpressionLibrary;
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPPluginProcessorBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPPluginProcessorBlockDataExpressionLibrary;
+import com.nosliw.core.application.division.manual.brick.scriptexpression.library.HAPManualPluginParserBlockScriptExpressionElementInLibrary;
+import com.nosliw.core.application.division.manual.brick.scriptexpression.library.HAPManualPluginParserBlockScriptExpressionLibrary;
+import com.nosliw.core.application.division.manual.brick.scriptexpression.library.HAPPluginProcessorBlockScriptExpressionElementInLibrary;
+import com.nosliw.core.application.division.manual.brick.scriptexpression.library.HAPPluginProcessorBlockScriptExpressionLibrary;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginParserBlockServiceProvider;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginProcessorBlockSimpleImpServiceProvider;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualPluginParserBlockTaskWrapper;
@@ -337,6 +341,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIB_100, new HAPManualPluginParserBlockDataExpressionLibrary(this, this.m_runtimeEnv), new HAPPluginProcessorBlockDataExpressionLibrary()); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, new HAPManualPluginParserBlockDataExpressionElementInLibrary(this, this.m_runtimeEnv), new HAPPluginProcessorBlockDataExpressionElementInLibrary()); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, new HAPManualPluginParserBlockDataExpressionGroup(this, this.m_runtimeEnv), new HAPPluginProcessorBlockDataExpressionGroup()); 
+
+		this.registerBlockPluginInfo(HAPEnumBrickType.SCRIPTEXPRESSIONLIB_100, new HAPManualPluginParserBlockScriptExpressionLibrary(this, this.m_runtimeEnv), new HAPPluginProcessorBlockScriptExpressionLibrary()); 
+		this.registerBlockPluginInfo(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, new HAPManualPluginParserBlockScriptExpressionElementInLibrary(this, this.m_runtimeEnv), new HAPPluginProcessorBlockScriptExpressionElementInLibrary()); 
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINER_100, new HAPPluginParserBrickImp(HAPEnumBrickType.CONTAINER_100, HAPManualBrickContainer.class, this, this.m_runtimeEnv), new HAPPluginProcessorBlockSimpleImpEmpty(HAPEnumBrickType.CONTAINER_100)); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINERLIST_100, new HAPPluginParserBrickImp(HAPEnumBrickType.CONTAINERLIST_100, HAPManualBrickContainerList.class, this, this.m_runtimeEnv), new HAPPluginProcessorBlockSimpleImpEmpty(HAPEnumBrickType.CONTAINERLIST_100)); 

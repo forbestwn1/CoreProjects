@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.entity.expression.script.resource.js;
+package com.nosliw.core.application.common.scriptexpression.serialization.javascript;
 
 import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
 import com.nosliw.data.core.script.expression1.HAPExecutableScript;

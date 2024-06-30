@@ -27,6 +27,7 @@ public class HAPVariableInScript extends HAPExecutableImp{
 	public String getVariableName(){	return this.m_variableName;	}
 
 	public String getVariableKey() {    return this.m_variableKey;     }
+	public void setVariableKey(String varKey) {     this.m_variableKey = varKey;      }
 	
 	public HAPVariableInScript cloneVariableInScript() {
 		return new HAPVariableInScript(this.m_variableName, this.m_variableKey);

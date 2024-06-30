@@ -19,6 +19,8 @@ import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpres
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
+import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
@@ -71,6 +73,10 @@ public class HAPManagerApplicationBrick {
 
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, true, HAPConstantShared.TASK_TYPE_CONTAINER_EXPRESSION), HAPBlockDataExpressionGroup.class, this.m_runtimeEnv));
 
+		this.registerBrickPlugin(new HAPPluginBrickScriptExpressionLibrary(new HAPInfoBrickType(HAPEnumBrickType.SCRIPTEXPRESSIONLIB_100, false), this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, false, HAPConstantShared.TASK_TYPE_EXPRESSION), HAPBlockScriptExpressionElementInLibrary.class, this.m_runtimeEnv));
+
+		
 		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.CONTAINER_100, false), HAPBrickContainer.class, this.m_runtimeEnv));
 		
 		
