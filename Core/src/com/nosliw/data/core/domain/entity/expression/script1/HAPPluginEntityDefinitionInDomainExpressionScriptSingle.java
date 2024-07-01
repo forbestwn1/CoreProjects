@@ -19,7 +19,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptSingle extends HAP
 	@Override
 	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj, HAPContextParser parserContext) {
 		HAPDefinitionEntityExpressionScriptSingle expressionSingleEntity = (HAPDefinitionEntityExpressionScriptSingle)this.getEntity(entityId, parserContext);
-		HAPDefinitionEntityExpressionDataGroup dataExpressionGroup = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(expressionSingleEntity.getDataExpressionGroup(), parserContext); 
+		HAPDefinitionEntityExpressionDataGroup dataExpressionGroup = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(expressionSingleEntity.getDataExpressions(), parserContext); 
 
 		String expressionType = (String)jsonObj.opt(HAPDefinitionEntityExpressionDataSingle.ATTR_TYPE);
 		HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(jsonObj.getString(HAPDefinitionEntityExpressionDataSingle.ATTR_EXPRESSION), expressionType, dataExpressionGroup, this.getRuntimeEnvironment().getDataExpressionParser());

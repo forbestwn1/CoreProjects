@@ -32,7 +32,7 @@ public class HAPGroupDataExpression extends HAPSerializableImp{
 	public String addItem(HAPDataExpression dataExpression) {
 		String id = this.m_idIndex+"";
 		this.m_idIndex++;
-		HAPElementInGroupDataExpression item = new HAPElementInGroupDataExpression();
+		HAPElementInGroupDataExpression item = new HAPElementInGroupDataExpression(dataExpression);
 		item.setName(id);
 		item.setId(id);
 		this.addItem(item);

@@ -3,7 +3,7 @@ package com.nosliw.core.application.brick.scriptexpression.library;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
-import com.nosliw.core.application.common.script.HAPElementInLibraryScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
 @HAPEntityWithAttribute

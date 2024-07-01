@@ -4,8 +4,8 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 @HAPEntityWithAttribute
@@ -21,6 +21,10 @@ public class HAPConstantInScript extends HAPExecutableImp{
 	
 	private Object m_value;
 
+	public HAPConstantInScript(String name){
+		this.m_constantName = name;
+	}
+	
 	public HAPConstantInScript(String name, Object value){
 		this.m_constantName = name;
 		this.m_value = value;

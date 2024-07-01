@@ -19,6 +19,10 @@ public class HAPVariableInScript extends HAPExecutableImp{
 	
 	private String m_variableKey;
 	
+	public HAPVariableInScript(String name){
+		this.m_variableName = name;
+	}
+	
 	public HAPVariableInScript(String name, String varKey){
 		this.m_variableName = name;
 		this.m_variableKey = varKey;

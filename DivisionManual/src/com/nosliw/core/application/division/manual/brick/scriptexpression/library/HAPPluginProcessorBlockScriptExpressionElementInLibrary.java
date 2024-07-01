@@ -9,7 +9,8 @@ import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPElementInGroupDataExpression;
-import com.nosliw.core.application.common.script.HAPElementInLibraryScriptExpression;
+import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionDataScript;
@@ -41,13 +42,16 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 		//entity info
 		def.cloneToEntityInfo(exe);
 		
+		//set interactive
+		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
+		
 		//expression
-		HAPExpressionScript scriptExpression = HAPUtilityScriptExpressionParser.parseDefinitionExpression(def.getExpression(), null, exe.getDataExpressionGroup(), processContext.getRuntimeEnv().getDataExpressionParser());
+		HAPExpressionScript scriptExpression = HAPUtilityScriptExpressionParser.parseDefinitionExpression(def.getExpression(), null, exe.getDataExpressions(), processContext.getRuntimeEnv().getDataExpressionParser());
 		exe.setExpression(scriptExpression);
 		
 		//process expression group
 		HAPContainerVariableInfo currentVarInfoContainer = exe.getVariablesInfo();
-		for(HAPElementInGroupDataExpression item : exe.getDataExpressionGroup().getItems()) {
+		for(HAPElementInGroupDataExpression item : exe.getDataExpressions().getItems()) {
 			Pair<HAPContainerVariableInfo, HAPMatchers> pair = HAPUtilityExpressionProcessor.processDataExpression(item.getExpression(), null, currentVarInfoContainer, blockExe, processContext.getRuntimeEnv());
 			currentVarInfoContainer = pair.getLeft();
 		}
@@ -59,6 +63,11 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 			collectVariableKeys(segment, exe.getVariablesInfo(), blockExe, null);
 		}
 		
+		//collect all variables in script expression
+		
+		
+		
+		//collection all expressions in script expression
 		
 		
 	}
@@ -69,7 +78,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 			for(Object s : scriptSegment.getParts()) {
 				if(s instanceof HAPVariableInScript) {
 					HAPVariableInScript varInScript = (HAPVariableInScript)s;
-					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(varInScript.getVariableKey(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure, withInternalValuePort).getElementId();
+					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(varInScript.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure, withInternalValuePort).getElementId();
 					String variableKey = varInfoContainer.addVariable(idVariable);
 					varInScript.setVariableKey(variableKey);
 				}

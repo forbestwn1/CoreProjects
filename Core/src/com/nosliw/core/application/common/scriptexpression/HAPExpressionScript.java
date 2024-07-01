@@ -84,8 +84,8 @@ public class HAPExpressionScript extends HAPExecutableImpEntityInfo{
 	}
 	
 	@Override
-	protected void buildResourceJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap, HAPRuntimeInfo runtimeInfo) {
-		super.buildResourceJsonMap(jsonMap, typeJsonMap, runtimeInfo);
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
 		HAPScriptFunctionInfo scriptFunctionInfo = HAPUtilityScriptForExecuteJSScript.buildExpressionFunctionInfo(this);
 		
 		String functionParmValue = "{}";

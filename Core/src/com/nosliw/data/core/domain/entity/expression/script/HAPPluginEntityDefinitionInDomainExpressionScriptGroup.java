@@ -34,7 +34,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptGroup extends HAPP
 	protected void parseComplexDefinitionContentJson(HAPIdEntityInDomain entityId, JSONObject jsonObj,	HAPContextParser parserContext) {
 		
 		HAPDefinitionEntityExpressionScriptGroup expressionGroupEntity = (HAPDefinitionEntityExpressionScriptGroup)this.getEntity(entityId, parserContext);
-		HAPDefinitionEntityExpressionDataGroup dataExpressionGroup = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(expressionGroupEntity.getDataExpressionGroup(), parserContext); 
+		HAPDefinitionEntityExpressionDataGroup dataExpressionGroup = (HAPDefinitionEntityExpressionDataGroup)this.getEntity(expressionGroupEntity.getDataExpressions(), parserContext); 
 		
 		JSONArray eleArrayJson = jsonObj.optJSONArray(HAPDefinitionEntityExpressionScriptGroup.ELEMENT);
 		if(eleArrayJson!=null) {
@@ -56,7 +56,7 @@ public class HAPPluginEntityDefinitionInDomainExpressionScriptGroup extends HAPP
 //			}
 		}
 		
-		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionGroupEntity.getDataExpressionGroup(), parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
+		HAPUtilityDataExpressionDefinition.processReferenceInExpression(expressionGroupEntity.getDataExpressions(), parserContext, this.getRuntimeEnvironment().getResourceDefinitionManager());
 	}
 
 }

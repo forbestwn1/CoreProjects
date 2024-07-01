@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.script;
+package com.nosliw.core.application.common.scriptexpression;
 
 import java.util.List;
 import java.util.Map;
@@ -9,9 +9,9 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPWithDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
-import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
@@ -23,7 +23,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithVariable, HAPWithValuePortGroup{
+public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithVariable, HAPWithValuePortGroup, HAPWithDataExpression{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -49,7 +49,9 @@ public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityI
 	public HAPExpressionScript getExpression() {	return m_scriptExpression;	}
 	public void setExpression(HAPExpressionScript scriptExpression) {	this.m_scriptExpression = scriptExpression;	}
 
-	public HAPGroupDataExpression getDataExpressionGroup() {    return this.m_dataExpressionGroup;     }
+	@Override
+	public HAPGroupDataExpression getDataExpressions() {    return this.m_dataExpressionGroup;     }
+	
 	
 	public HAPMatchers getResultMatchers() {		return this.m_resultMatchers;	}
 	public void setResultMatchers(HAPMatchers matchers) {    this.m_resultMatchers = matchers;    }
@@ -73,6 +75,13 @@ public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityI
 		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.getVariablesInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JSON));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));
+		jsonMap.put(DATAEXPRESSION, this.m_dataExpressionGroup.toStringValue(HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JAVASCRIPT));
 	}
 	
 	@Override
@@ -84,5 +93,5 @@ public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityI
 			dependency.addAll(matchers.getResourceDependency(runtimeInfo, resourceManager));
 		}
 	}
-	
+
 }

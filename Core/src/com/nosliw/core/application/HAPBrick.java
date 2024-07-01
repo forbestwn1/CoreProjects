@@ -13,9 +13,9 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -133,12 +133,12 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 		if(m_brickTypeInfo!=null) {
 			jsonMap.put(BRICKTYPE, this.m_brickTypeInfo.getBrickTypeId().toStringValue(HAPSerializationFormat.JSON));
 			jsonMap.put(ISCOMPLEX, this.m_brickTypeInfo.getIsComplex()+"");
 			typeJsonMap.put(ISCOMPLEX, Boolean.class);
 		}
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

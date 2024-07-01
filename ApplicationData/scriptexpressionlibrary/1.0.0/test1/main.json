@@ -38,7 +38,9 @@
 			"result" : {
 				"criteria" : "test.string;1.0.0"
 			},
-			"expression": "HaHaHa  <%=(#|!(test.string)!.subString(?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)|#.value+?(deparm3)?.value)+?(deparm2)?.value%>  End!!!!"
+			"expression": "HaHaHa  <%=(#|!(test.string)!.subString(?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)|#.value+?(deparm3)?.value)+?(deparm2)?.value%>  End!!!!",
+			"expression2": "HaHaHa  End!!!!",
+			"expression3": "HaHaHa  <%=(?(deparm3)?.value)+?(deparm2)?.value%>  End!!!!"
 		}
 	]
 }
