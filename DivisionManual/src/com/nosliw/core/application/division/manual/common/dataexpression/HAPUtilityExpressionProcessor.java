@@ -12,9 +12,9 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPElementInGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
-import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
@@ -46,11 +46,11 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExpressionProcessor {
 
-	public static Pair<HAPContainerVariableInfo, List<HAPMatchers>> processDataExpressionGroup(HAPGroupDataExpression dataExpressionGroup, List<HAPDataTypeCriteria> expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
+	public static Pair<HAPContainerVariableInfo, List<HAPMatchers>> processDataExpressionGroup(HAPContainerDataExpression dataExpressionGroup, List<HAPDataTypeCriteria> expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		HAPContainerVariableInfo currentVarInfoContainer = varInfoContainer;
 		for(int i=0; i<dataExpressionGroup.getItems().size(); i++) {
-			HAPElementInGroupDataExpression item = dataExpressionGroup.getItems().get(i); 
+			HAPElementInContainerDataExpression item = dataExpressionGroup.getItems().get(i); 
 			Pair<HAPContainerVariableInfo, HAPMatchers> pair = processDataExpression(item.getExpression(), expectOutput.get(i), varInfoContainer, withInternalValuePort, runtimeEnv);
 			currentVarInfoContainer = pair.getLeft();
 			matchers.add(pair.getRight());

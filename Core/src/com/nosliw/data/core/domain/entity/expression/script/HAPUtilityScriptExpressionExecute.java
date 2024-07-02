@@ -60,7 +60,7 @@ public class HAPUtilityScriptExpressionExecute {
 		}
 		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
 			HAPSegmentScriptExpressionDataScript dataScriptSegment = (HAPSegmentScriptExpressionDataScript)segment;
-			for(HAPSegmentScriptExpression s : dataScriptSegment.getSegments()) {
+			for(HAPSegmentScriptExpression s : dataScriptSegment.getChildren()) {
 				collectDataExpressionId(s, expressionIds);
 			}
 		}
@@ -85,7 +85,7 @@ public class HAPUtilityScriptExpressionExecute {
 		}
 		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
 			HAPSegmentScriptExpressionDataScript dataScriptSegment = (HAPSegmentScriptExpressionDataScript)segment;
-			for(HAPSegmentScriptExpression s : dataScriptSegment.getSegments()) {
+			for(HAPSegmentScriptExpression s : dataScriptSegment.getChildren()) {
 				collectVariableKeys(s, varKeys);
 			}
 		}

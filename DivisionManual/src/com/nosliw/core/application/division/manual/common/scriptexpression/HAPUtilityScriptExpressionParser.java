@@ -6,7 +6,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.common.scriptexpression.HAPConstantInScript;
@@ -36,7 +36,7 @@ public class HAPUtilityScriptExpressionParser {
 		return !isText(content);
 	}
 
-	public static HAPExpressionScript parseDefinitionExpression(String content, String scriptType, HAPGroupDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
+	public static HAPExpressionScript parseDefinitionExpression(String content, String scriptType, HAPContainerDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
 		HAPExpressionScript out = null;
 		
 		if(scriptType==null) {
@@ -71,7 +71,7 @@ public class HAPUtilityScriptExpressionParser {
 		return out;
 	}
 	
-	public static HAPExpressionScript parseDefinitionExpressionScript(String content, HAPGroupDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
+	public static HAPExpressionScript parseDefinitionExpressionScript(String content, HAPContainerDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
 		HAPExpressionScript out = new HAPExpressionScript(HAPConstantShared.EXPRESSION_TYPE_SCRIPT);
 		HAPGeneratorId idGenerator = new HAPGeneratorId();
 		HAPSegmentScriptExpressionDataScript scriptSeg = parseDefinitionSegmentExpressionDataScript(content, dataExpressionGroup, expressionParser, idGenerator);
@@ -79,7 +79,7 @@ public class HAPUtilityScriptExpressionParser {
 		return out;
 	}
 	
-	public static HAPExpressionScript parseDefinitionExpressionLiterate(String script, HAPGroupDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
+	public static HAPExpressionScript parseDefinitionExpressionLiterate(String script, HAPContainerDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser) {
 		HAPExpressionScript out = new HAPExpressionScript(HAPConstantShared.EXPRESSION_TYPE_LITERATE);
 		HAPGeneratorId idGenerator = new HAPGeneratorId();
 		
@@ -175,7 +175,7 @@ public class HAPUtilityScriptExpressionParser {
 	}
 
 	
-	private static HAPSegmentScriptExpressionDataScript parseDefinitionSegmentExpressionDataScript(String script, HAPGroupDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser, HAPGeneratorId idGenerator) {
+	private static HAPSegmentScriptExpressionDataScript parseDefinitionSegmentExpressionDataScript(String script, HAPContainerDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser, HAPGeneratorId idGenerator) {
 		HAPSegmentScriptExpressionDataScript out = new HAPSegmentScriptExpressionDataScript(idGenerator.generateId());
 		String content = script;
 		int i = 0;
@@ -206,7 +206,7 @@ public class HAPUtilityScriptExpressionParser {
 		return out;
 	}
 
-	private static HAPSegmentScriptExpressionData parseDefinitionSegmentExpressionData(String dataExpressionScript, HAPGroupDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser, HAPGeneratorId idGenerator) {
+	private static HAPSegmentScriptExpressionData parseDefinitionSegmentExpressionData(String dataExpressionScript, HAPContainerDataExpression dataExpressionGroup, HAPParserDataExpression expressionParser, HAPGeneratorId idGenerator) {
 		HAPOperand operand = expressionParser.parseExpression(dataExpressionScript);
 		HAPDataExpression dataExpression = (new HAPDataExpression(new HAPWrapperOperand(operand)));
 		String dataExpressionId = dataExpressionGroup.addItem(dataExpression);

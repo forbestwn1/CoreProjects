@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPWithDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
@@ -39,18 +39,18 @@ public class HAPElementInLibraryScriptExpression extends HAPExecutableImpEntityI
 	
 	private HAPContainerVariableInfo m_variableInfo;
 	
-	private HAPGroupDataExpression m_dataExpressionGroup;
+	private HAPContainerDataExpression m_dataExpressionGroup;
 	
 	public HAPElementInLibraryScriptExpression() {
 		this.m_variableInfo = new HAPContainerVariableInfo();
-		this.m_dataExpressionGroup = new HAPGroupDataExpression();
+		this.m_dataExpressionGroup = new HAPContainerDataExpression();
 	}
 	
 	public HAPExpressionScript getExpression() {	return m_scriptExpression;	}
 	public void setExpression(HAPExpressionScript scriptExpression) {	this.m_scriptExpression = scriptExpression;	}
 
 	@Override
-	public HAPGroupDataExpression getDataExpressions() {    return this.m_dataExpressionGroup;     }
+	public HAPContainerDataExpression getDataExpressions() {    return this.m_dataExpressionGroup;     }
 	
 	
 	public HAPMatchers getResultMatchers() {		return this.m_resultMatchers;	}

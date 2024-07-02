@@ -9,7 +9,7 @@ public interface HAPWithDataExpression {
 	@HAPAttribute
 	public static String DATAEXPRESSION = "dataExpression";
 
-	HAPGroupDataExpression getDataExpressions();
+	HAPContainerDataExpression getDataExpressions();
 	
 	
 }

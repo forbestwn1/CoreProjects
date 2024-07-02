@@ -53,7 +53,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
 
 	var loc_getAllExpressionItems = function(){
-		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM];
+		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.CONTAINERDATAEXPRESSION_ITEM];
 	};
 
 	var loc_facadeTaskContainer = node_createTaskContainerInterface({
@@ -74,8 +74,8 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 	var loc_getExecuteItemRequest = function(itemName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM][itemName];
-		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ELEMENTINGROUPDATAEXPRESSION_EXPRESSION]; 
+		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.CONTAINERDATAEXPRESSION_ITEM][itemName];
+		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ELEMENTINCONTAINERDATAEXPRESSION_EXPRESSION]; 
 		var variablesContainer = loc_complexEntityDef.getOtherAttributeValue(node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS);
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){

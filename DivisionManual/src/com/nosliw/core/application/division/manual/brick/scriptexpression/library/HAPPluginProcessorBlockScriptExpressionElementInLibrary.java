@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
-import com.nosliw.core.application.common.dataexpression.HAPElementInGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
@@ -51,7 +51,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 		
 		//process expression group
 		HAPContainerVariableInfo currentVarInfoContainer = exe.getVariablesInfo();
-		for(HAPElementInGroupDataExpression item : exe.getDataExpressions().getItems()) {
+		for(HAPElementInContainerDataExpression item : exe.getDataExpressions().getItems()) {
 			Pair<HAPContainerVariableInfo, HAPMatchers> pair = HAPUtilityExpressionProcessor.processDataExpression(item.getExpression(), null, currentVarInfoContainer, blockExe, processContext.getRuntimeEnv());
 			currentVarInfoContainer = pair.getLeft();
 		}
@@ -86,7 +86,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 		}
 		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
 			HAPSegmentScriptExpressionDataScript dataScriptSegment = (HAPSegmentScriptExpressionDataScript)segment;
-			for(HAPSegmentScriptExpression s : dataScriptSegment.getSegments()) {
+			for(HAPSegmentScriptExpression s : dataScriptSegment.getChildren()) {
 				collectVariableKeys(s, varInfoContainer, withInternalValuePort, resolveConfigure);
 			}
 		}

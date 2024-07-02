@@ -9,16 +9,16 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPElementInGroupDataExpression extends HAPEntityInfoImp{
+public class HAPElementInContainerDataExpression extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 
 	private HAPDataExpression m_dataExpression;
 	
-	public HAPElementInGroupDataExpression() {}
+	public HAPElementInContainerDataExpression() {}
 	
-	public HAPElementInGroupDataExpression(HAPDataExpression dataExpression) {
+	public HAPElementInContainerDataExpression(HAPDataExpression dataExpression) {
 		this.m_dataExpression = dataExpression;
 	}
 	

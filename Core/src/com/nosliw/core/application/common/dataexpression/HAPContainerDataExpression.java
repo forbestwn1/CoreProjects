@@ -12,27 +12,27 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 
 @HAPEntityWithAttribute
-public class HAPGroupDataExpression extends HAPSerializableImp{
+public class HAPContainerDataExpression extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ITEM = "item";
 
-	private List<HAPElementInGroupDataExpression> m_items;
+	private List<HAPElementInContainerDataExpression> m_items;
 	
 	private int m_idIndex;
 	
-	public HAPGroupDataExpression() {
-		this.m_items = new ArrayList<HAPElementInGroupDataExpression>();
+	public HAPContainerDataExpression() {
+		this.m_items = new ArrayList<HAPElementInContainerDataExpression>();
 		this.m_idIndex = 0;
 	}
 
-	public void addItem(HAPElementInGroupDataExpression item) {    this.m_items.add(item);     }
-	public List<HAPElementInGroupDataExpression> getItems(){   return this.m_items;    }
+	public void addItem(HAPElementInContainerDataExpression item) {    this.m_items.add(item);     }
+	public List<HAPElementInContainerDataExpression> getItems(){   return this.m_items;    }
 	
 	public String addItem(HAPDataExpression dataExpression) {
 		String id = this.m_idIndex+"";
 		this.m_idIndex++;
-		HAPElementInGroupDataExpression item = new HAPElementInGroupDataExpression(dataExpression);
+		HAPElementInContainerDataExpression item = new HAPElementInContainerDataExpression(dataExpression);
 		item.setName(id);
 		item.setId(id);
 		this.addItem(item);
@@ -43,7 +43,7 @@ public class HAPGroupDataExpression extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		Map<String, String> itemMap = new LinkedHashMap<String, String>();
-		for(HAPElementInGroupDataExpression item : this.m_items) {
+		for(HAPElementInContainerDataExpression item : this.m_items) {
 			itemMap.put(item.getId(), item.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));

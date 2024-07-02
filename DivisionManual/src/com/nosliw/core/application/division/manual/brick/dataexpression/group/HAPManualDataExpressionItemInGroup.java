@@ -5,7 +5,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.core.application.common.dataexpression.HAPElementInGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 
 public class HAPManualDataExpressionItemInGroup extends HAPEntityInfoImp{
 
@@ -18,14 +18,14 @@ public class HAPManualDataExpressionItemInGroup extends HAPEntityInfoImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(jsonObj);
-		this.m_expression = jsonObj.getString(HAPElementInGroupDataExpression.EXPRESSION);
+		this.m_expression = jsonObj.getString(HAPElementInContainerDataExpression.EXPRESSION);
 		return true;  
 	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPElementInGroupDataExpression.EXPRESSION, m_expression);
+		jsonMap.put(HAPElementInContainerDataExpression.EXPRESSION, m_expression);
 	}
 
 }

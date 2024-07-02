@@ -1,10 +1,10 @@
 package com.nosliw.core.application.common.scriptexpression;
 
-import com.nosliw.core.application.common.dataexpression.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 
 public class HAPGroupExpressionScript {
 
-	private HAPGroupDataExpression dataExpressionGroup;
+	private HAPContainerDataExpression dataExpressionGroup;
 
 
 

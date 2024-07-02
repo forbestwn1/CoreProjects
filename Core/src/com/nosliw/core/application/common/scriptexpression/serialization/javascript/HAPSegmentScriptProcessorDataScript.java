@@ -12,7 +12,7 @@ public class HAPSegmentScriptProcessorDataScript implements HAPSegmentScriptProc
 	public HAPOutputScriptProcessor processor(HAPSegmentScriptExpression scriptExe, String funciontParmName,
 			String expressionsDataParmName, String constantsDataParmName, String variablesDataParmName) {
 		HAPSegmentScriptExpressionDataScript dataScriptScriptExe = (HAPSegmentScriptExpressionDataScript)scriptExe;
-		List<HAPSegmentScriptExpression> segments = dataScriptScriptExe.getSegments();
+		List<HAPSegmentScriptExpression> segments = dataScriptScriptExe.getChildren();
 		
 		StringBuffer scrip = new StringBuffer();
 		for(HAPSegmentScriptExpression segment : segments) {

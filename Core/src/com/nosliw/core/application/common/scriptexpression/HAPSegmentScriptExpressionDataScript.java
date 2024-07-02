@@ -14,27 +14,28 @@ public class HAPSegmentScriptExpressionDataScript extends HAPSegmentScriptExpres
 	@HAPAttribute
 	public static String SEGMENT = "segment";
 	
-	private List<HAPSegmentScriptExpression> m_segments;
+	private List<HAPSegmentScriptExpression> m_children;
 	
 	public HAPSegmentScriptExpressionDataScript(String id) {
 		super(id);
-		this.m_segments = new ArrayList<HAPSegmentScriptExpression>();
+		this.m_children = new ArrayList<HAPSegmentScriptExpression>();
 	}
 	
 	@Override
 	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT;  }
+	 
+	@Override
+	public List<HAPSegmentScriptExpression> getChildren(){     return this.m_children;      }
 	
-	public List<HAPSegmentScriptExpression> getSegments(){     return this.m_segments;      }
+	public void addSegmentScript(HAPSegmentScriptExpressionScript scriptSegment) {	this.m_children.add(scriptSegment);	}
 	
-	public void addSegmentScript(HAPSegmentScriptExpressionScript scriptSegment) {	this.m_segments.add(scriptSegment);	}
-	
-	public void addSegmentData(HAPSegmentScriptExpressionData dataSegment) {	this.m_segments.add(dataSegment);	}
+	public void addSegmentData(HAPSegmentScriptExpressionData dataSegment) {	this.m_children.add(dataSegment);	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> segmentJsonArray = new ArrayList<String>();
-		for(HAPSegmentScriptExpression segment : this.m_segments) {
+		for(HAPSegmentScriptExpression segment : this.m_children) {
 			segmentJsonArray.add(segment.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentJsonArray.toArray(new String[0])));

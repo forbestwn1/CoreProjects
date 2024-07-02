@@ -1,5 +1,7 @@
 package com.nosliw.core.application.common.scriptexpression;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -24,6 +26,8 @@ abstract public class HAPSegmentScriptExpression extends HAPExecutableImp{
 	public abstract String getType();
 
 	public String getId() {    return this.m_id;   }
+
+	public List<HAPSegmentScriptExpression> getChildren(){     return new ArrayList<HAPSegmentScriptExpression>();      }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
