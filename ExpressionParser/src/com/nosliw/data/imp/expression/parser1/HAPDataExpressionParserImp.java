@@ -1,19 +1,19 @@
-package com.nosliw.data.imp.expression.parser;
+package com.nosliw.data.imp.expression.parser1;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperand;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandAttribute;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandConstant;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandOperation;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandReference;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandVariable;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionParmInOperationOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.HAPOperandAttribute;
+import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
+import com.nosliw.core.application.common.dataexpression.HAPOperandOperation;
+import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
+import com.nosliw.core.application.common.dataexpression.HAPOperandVariable;
+import com.nosliw.core.application.common.dataexpression.HAPParmInOperationOperand;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
@@ -28,7 +28,7 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 	}
 	
 	  @Override
-	public HAPDefinitionOperand parseExpression(String expression){
+	public HAPOperand parseExpression(String expression){
 		  SimpleNode root = null;
 		  try{
 			  InputStream is = new ByteArrayInputStream(expression.getBytes());
@@ -43,28 +43,28 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
           return processExpressionNode(root);
 	  }
 	  
-	  private HAPDefinitionOperand processExpressionNode(SimpleNode parentNode){
-		  HAPDefinitionOperand out = null;
+	  private HAPOperand processExpressionNode(SimpleNode parentNode){
+		  HAPOperand out = null;
 		  
 		  ExpressionElements expressionEles = getExpressionElements(parentNode);
 
-		  HAPDefinitionOperand operand = null;
+		  HAPOperand operand = null;
 		  if(expressionEles.constantNode!=null){
 			//it is a constant operand  
-			 operand = new HAPDefinitionOperandConstant(HAPExpressionEscape.deescape(getName(expressionEles.constantNode, NosliwExpressionParser.JJTCONSTANTNAME)));
+			 operand = new HAPOperandConstant(HAPExpressionEscape.deescape(getName(expressionEles.constantNode, NosliwExpressionParser.JJTCONSTANTNAME)));
 		  }
 		  else if(expressionEles.variableNode!=null){
 			  //it is a variable operand
-			 operand = new HAPDefinitionOperandVariable(getName(expressionEles.variableNode, NosliwExpressionParser.JJTVAIRALBENAME));
+			 operand = new HAPOperandVariable(getName(expressionEles.variableNode, NosliwExpressionParser.JJTVAIRALBENAME));
 		  }
 		  else if(expressionEles.referenceNode!=null){
 			  //it is a reference operand
-			 operand = new HAPDefinitionOperandReference(getName(expressionEles.referenceNode, NosliwExpressionParser.JJTREFERENCENAME));
+			 operand = new HAPOperandReference(getName(expressionEles.referenceNode, NosliwExpressionParser.JJTREFERENCENAME));
 		  }
 		  else if(expressionEles.dataTypeNode!=null){
 			  String dataTypeInfo = getName(expressionEles.dataTypeNode, NosliwExpressionParser.JJTDATATYPENAME);
 			  String operation = (String)expressionEles.nameNode.jjtGetValue();
-			  operand = new HAPDefinitionOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
+			  operand = new HAPOperandOperation(dataTypeInfo, operation, getOperationParms(expressionEles.expressionNodes));
 		  }
 		  
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
@@ -85,42 +85,40 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 		  return out;
 	  }
 	  
-	  private HAPDefinitionOperand processExpression1Node(SimpleNode parentNode, HAPDefinitionOperand aheadOperand){
-		  if(isNodeEmpty(parentNode)) {
-			return aheadOperand;
-		}
+	  private HAPOperand processExpression1Node(SimpleNode parentNode, HAPOperand aheadOperand){
+		  if(isNodeEmpty(parentNode))  return aheadOperand;
 
-		  HAPDefinitionOperand out = null;
+		  HAPOperand out = null;
 		  ExpressionElements expressionEles = getExpressionElements(parentNode);
 		  String name = (String)expressionEles.nameNode.jjtGetValue();
-		  HAPDefinitionOperand operand = null;
+		  HAPOperand operand = null;
 		  if("function".equals(parentNode.jjtGetValue())){
 			  //function call
 			  if(aheadOperand!=null && HAPUtilityBasic.isEquals(aheadOperand.getType(), HAPConstantShared.EXPRESSION_OPERAND_REFERENCE) && HAPUtilityBasic.isEquals(name, "with")) {
 				  //reference
 				  for(Parm parm : expressionEles.expressionNodes){
-					  ((HAPDefinitionOperandReference)aheadOperand).addMapping(parm.name, processExpressionNode(parm.valuNode));
+					  ((HAPOperandReference)aheadOperand).addMapping(parm.name, processExpressionNode(parm.valuNode));
 				  }
 				  operand = aheadOperand;
 			  }
 			  else {
 				  //operation
-				  operand = new HAPDefinitionOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
+				  operand = new HAPOperandOperation(aheadOperand, name, getOperationParms(expressionEles.expressionNodes));
 			  }
 		  }
 		  else{
 			  //path
-			  operand = new HAPDefinitionOperandAttribute(aheadOperand, name);
+			  operand = new HAPOperandAttribute(aheadOperand, name);
 		  }
 		  out = processExpression1Node(expressionEles.expression1Node, operand);
 		  return out;
 	  }
 
-	  private List<HAPDefinitionParmInOperationOperand> getOperationParms(List<Parm> expressionParms){
-		  List<HAPDefinitionParmInOperationOperand> out = new ArrayList<HAPDefinitionParmInOperationOperand>();
+	  private List<HAPParmInOperationOperand> getOperationParms(List<Parm> expressionParms){
+		  List<HAPParmInOperationOperand> out = new ArrayList<HAPParmInOperationOperand>();
 		  for(Parm parm : expressionParms){
-			  HAPDefinitionOperand op = processExpressionNode(parm.valuNode);
-			  out.add(new HAPDefinitionParmInOperationOperand(parm.name, op));
+			  HAPOperand op = processExpressionNode(parm.valuNode);
+			  out.add(new HAPParmInOperationOperand(parm.name, op));
 		  }
 		  return out;
 	  }
@@ -193,9 +191,7 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 	  }
 	  
 	  private static boolean isNodeEmpty(SimpleNode node){
-		  if(node.jjtGetNumChildren()==0) {
-			return true;
-		}
+		  if(node.jjtGetNumChildren()==0)   return true;
 		  return false;
 	  } 
 	  

@@ -3,16 +3,16 @@ package com.nosliw.core.application.common.dataexpression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPOperandConstant extends HAPOperandImp{
@@ -50,7 +50,6 @@ public class HAPOperandConstant extends HAPOperandImp{
 	public void setName(String name) {  this.m_name = name;   }
 	
 	public HAPData getData(){  return this.m_data;  }
-	
 	public void setData(HAPData data){ 	this.m_data = data;	}
 	
 	@Override

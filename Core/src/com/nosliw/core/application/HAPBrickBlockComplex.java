@@ -9,31 +9,21 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPWithDataExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithVariable;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 
 @HAPEntityWithAttribute
-public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithValueContext, HAPWithVariable, HAPWithDataExpression{
+public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithValueContext{
 
-	private HAPContainerVariableInfo m_variableContainer;
-	
-	private HAPContainerDataExpression m_dataExpressionContainer;
-	
 	private HAPValueContext m_valueContext;
 
 	private HAPDomainValueStructure m_valueStructureDomain; 
 	
 	public HAPBrickBlockComplex() {
-		this.m_variableContainer = new HAPContainerVariableInfo();
-		this.m_dataExpressionContainer = new HAPContainerDataExpression();
 		this.m_valueContext = new HAPValueContext(); 
 	}
 	
@@ -42,12 +32,6 @@ public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithValueC
 	
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
 
-	@Override
-	public HAPContainerVariableInfo getVariablesInfo() {   return this.m_variableContainer;  }
-	
-	@Override
-	public HAPContainerDataExpression getDataExpressions() {    return this.m_dataExpressionContainer;  }
-	
 	@Override
 	public HAPContainerValuePorts getInternalValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
@@ -86,14 +70,6 @@ public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithValueC
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		if(this.m_valueContext!=null) {
 			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
-		}
-		
-		if(!this.m_variableContainer.isEmpty()) {
-			jsonMap.put(VARIABLEINFOS, this.m_variableContainer.toStringValue(HAPSerializationFormat.JSON));
-		}
-		
-		if(!this.m_dataExpressionContainer.isEmpty()) {
-			jsonMap.put(DATAEXPRESSION, this.m_dataExpressionContainer.toStringValue(HAPSerializationFormat.JSON));
 		}
 		
 	}

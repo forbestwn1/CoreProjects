@@ -1,8 +1,8 @@
 package com.nosliw.data.core.domain.entity.expression.data1;
 
-import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperand;
 
 public interface HAPParserDataExpression {
 
-	  HAPOperand parseExpression(String expression);
+	  HAPDefinitionOperand parseExpression(String expression);
 }

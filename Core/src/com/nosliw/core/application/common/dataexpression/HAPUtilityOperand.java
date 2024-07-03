@@ -164,7 +164,7 @@ public class HAPUtilityOperand {
 //			public boolean processOperand(HAPOperandWrapper operand, Object data) {
 //				String opType = operand.getOperand().getType();
 //				if(opType.equals(HAPConstant.EXPRESSION_OPERAND_REFERENCE)){
-//					HAPOperandReference referenceOperand = (HAPOperandReference)operand.getOperand();
+//					HAPDefinitionOperandReference referenceOperand = (HAPDefinitionOperandReference)operand.getOperand();
 //					referenceOperand.updateReferenceExecute(references);
 //				}
 //				return true;
