@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -22,10 +21,7 @@ import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 
 @HAPEntityWithAttribute
-public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithVariable, HAPWithDataExpression{
-
-	@HAPAttribute
-	public static final String VALUECONTEXT = "valueContext";
+public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithValueContext, HAPWithVariable, HAPWithDataExpression{
 
 	private HAPContainerVariableInfo m_variableContainer;
 	
@@ -37,10 +33,11 @@ public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithVariab
 	
 	public HAPBrickBlockComplex() {
 		this.m_variableContainer = new HAPContainerVariableInfo();
-		this.m_dataExpressionContainer = new HAPContainerDataExpression(); 
+		this.m_dataExpressionContainer = new HAPContainerDataExpression();
+		this.m_valueContext = new HAPValueContext(); 
 	}
 	
-	public void setValueContext(HAPValueContext valueContext) {     this.m_valueContext = valueContext;      }
+	@Override
 	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
 	
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
@@ -94,6 +91,11 @@ public class HAPBrickBlockComplex extends HAPBrickBlock implements HAPWithVariab
 		if(!this.m_variableContainer.isEmpty()) {
 			jsonMap.put(VARIABLEINFOS, this.m_variableContainer.toStringValue(HAPSerializationFormat.JSON));
 		}
+		
+		if(!this.m_dataExpressionContainer.isEmpty()) {
+			jsonMap.put(DATAEXPRESSION, this.m_dataExpressionContainer.toStringValue(HAPSerializationFormat.JSON));
+		}
+		
 	}
 	
 	@Override

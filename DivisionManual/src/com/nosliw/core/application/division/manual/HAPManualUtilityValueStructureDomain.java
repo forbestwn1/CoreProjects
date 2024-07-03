@@ -24,8 +24,9 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
-import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
+import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
@@ -81,7 +82,7 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPManualBrickValueContext valueContextEntityDef = complexEntityDef.getValueContextBrick();
 				
 				//value context
-				HAPValueContext valueContextExe = new HAPValueContext();
+				HAPValueContext valueContextExe = complexEntityExe.getValueContext();
 				if(valueContextEntityDef!=null) {
 					{
 						List<HAPInfoValueStructure> wrappers = new ArrayList<HAPInfoValueStructure>();
@@ -105,7 +106,6 @@ public class HAPManualUtilityValueStructureDomain {
 						valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoDefault(), valueStructureDomain);
 					}
 				}
-				complexEntityExe.setValueContext(valueContextExe);
 				return true;
 			}
 		}, runtimeEnv.getBrickManager(), processContext);

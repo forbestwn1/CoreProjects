@@ -138,8 +138,13 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 			//complex entity, build value context domain, create extension value structure if needed
 			HAPManualUtilityValueStructureDomain.buildValueStructureDomain(out.getBrickWrapper(), processContext, this.m_runtimeEnv);
 
-			//value context extension, variable resolve
+			//variable resolve (variable extension)-----impact data container
 			processComplexBrickVariableResolve(out.getBrickWrapper(), processContext);
+		
+			//variable criteria discovery ---- impact data container and value structure in context domain
+			
+			//
+			
 		}
 
 		//process entity

@@ -39,6 +39,8 @@ public class HAPContainerDataExpression extends HAPSerializableImp{
 		return id;
 	}
 	
+	public boolean isEmpty() {   return this.m_items.isEmpty();    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
