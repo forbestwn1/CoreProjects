@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -26,20 +22,6 @@ public class HAPManualDataExpressionGroup extends HAPSerializableImp{
 	}
 	
 	public List<HAPManualDataExpressionItemInGroup> getItems(){    return this.m_items;      }
-	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONArray dataExpressionArray = ((JSONObject)json).getJSONArray(HAPContainerDataExpression.ITEM);
-		for(int i=0; i<dataExpressionArray.length(); i++) {
-			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
-			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				HAPManualDataExpressionItemInGroup item = new HAPManualDataExpressionItemInGroup();
-				item.buildObject(elementObj, HAPSerializationFormat.JSON);
-				this.addItem(item);
-			}
-		}
-		return true;  
-	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

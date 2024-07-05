@@ -6,9 +6,10 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
+import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
@@ -26,11 +27,10 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualBrick, HAPBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDataExpressionGroup groupDef = ((HAPManualBlockDataExpressionGroup)blockPair.getLeft()).getValue();
-		HAPContainerDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
+		HAPGroupDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
 	
 		for(HAPManualDataExpressionItemInGroup itemDef : groupDef.getItems()) {
 			HAPElementInContainerDataExpression itemExe = new HAPElementInContainerDataExpression();
-
 			itemDef.cloneToEntityInfo(itemExe);
 			
 			//build expression in executable

@@ -3,9 +3,9 @@ package com.nosliw.core.application.common.structure;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
 
 public class HAPElementStructureUnknown extends HAPElementStructure{
 

@@ -1,5 +1,6 @@
-package com.nosliw.core.application.common.operand.definition;
+package com.nosliw.core.application.common.dataexpression.definition;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,4 +73,13 @@ public class HAPDefinitionOperandOperation extends HAPDefinitionOperand{
 		return out;  
 	}
 	
+	@Override
+	public List<HAPDefinitionOperand> getChildren(){
+		List<HAPDefinitionOperand> out = new ArrayList<HAPDefinitionOperand>();
+		if(this.m_base!=null) {
+			out.add(this.m_base);
+		}
+		out.addAll(this.m_parms.values());
+		return out;
+	}
 }

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.operand.definition;
+package com.nosliw.core.application.common.dataexpression.definition;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

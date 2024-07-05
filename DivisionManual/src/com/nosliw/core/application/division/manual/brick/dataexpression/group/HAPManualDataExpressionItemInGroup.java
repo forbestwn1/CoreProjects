@@ -2,30 +2,26 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.group;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 
 public class HAPManualDataExpressionItemInGroup extends HAPEntityInfoImp{
 
-	private String m_expression;
+	private HAPDefinitionDataExpression m_expression;
 	
-	public String getExpression() {    return this.m_expression;     }
-	public void setExpression(String expression) {    this.m_expression = expression;    }
-	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
-		this.m_expression = jsonObj.getString(HAPElementInContainerDataExpression.EXPRESSION);
-		return true;  
+	public HAPManualDataExpressionItemInGroup(HAPDefinitionDataExpression expression) {
+		this.m_expression = expression;
 	}
-
+	
+	public HAPDefinitionDataExpression getExpression() {    return this.m_expression;     }
+	public void setExpression(HAPDefinitionDataExpression expression) {    this.m_expression = expression;    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(HAPElementInContainerDataExpression.EXPRESSION, m_expression);
+		jsonMap.put(HAPElementInContainerDataExpression.EXPRESSION, m_expression.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 }

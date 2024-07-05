@@ -5,18 +5,20 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 
 @HAPEntityWithAttribute
 public class HAPItemInGroupDataExpression extends HAPEntityInfoImp{
 
 	@HAPAttribute
-	public static String DATAEXPRESSIONID = "dataExpressionId";
+	public static String DATAEXPRESSION = "dataExpression";
 	
-	private String m_dataExpressionId;
+	private HAPDataExpression m_dataExpression;
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATAEXPRESSIONID, this.m_dataExpressionId);
+		jsonMap.put(DATAEXPRESSION, this.m_dataExpression.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

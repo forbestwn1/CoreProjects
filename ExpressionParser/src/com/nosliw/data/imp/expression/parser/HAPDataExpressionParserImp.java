@@ -7,14 +7,15 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperand;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandAttribute;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandConstant;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandOperation;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandReference;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionOperandVariable;
-import com.nosliw.core.application.common.operand.definition.HAPDefinitionParmInOperationOperand;
-import com.nosliw.data.core.domain.entity.expression.data1.HAPParserDataExpression;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperand;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandAttribute;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandConstant;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandOperation;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandReference;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandVariable;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionParmInOperationOperand;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.data.imp.expression.parser.generated.NosliwExpressionParser;
 import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
 
@@ -27,8 +28,8 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 	public HAPDataExpressionParserImp(){
 	}
 	
-	  @Override
-	public HAPDefinitionOperand parseExpression(String expression){
+	@Override
+	public HAPDefinitionDataExpression parseExpression(String expression){
 		  SimpleNode root = null;
 		  try{
 			  InputStream is = new ByteArrayInputStream(expression.getBytes());
@@ -40,7 +41,8 @@ public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 			  System.out.println(expression);
 			  return null;
 		  }
-          return processExpressionNode(root);
+          HAPDefinitionOperand operand = processExpressionNode(root);
+          return new HAPDefinitionDataExpression(operand);
 	  }
 	  
 	  private HAPDefinitionOperand processExpressionNode(SimpleNode parentNode){
