@@ -8,47 +8,35 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.common.dataexpression.HAPInterfaceProcessOperand;
+import com.nosliw.core.application.common.dataexpression1.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionData;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
+public class HAPDataExpression2 extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String OPERAND = "operand";
 	
 	@HAPAttribute
-	public static String OUTPUTMATCHERS = "outputMatchers";
-
-	@HAPAttribute
 	public static String VARIABLEKEYS = "variableKeys";
 	
 	private HAPWrapperOperand m_operand;
 
-	private HAPMatchers m_outputMatchers;
-	
 	private Set<String> m_varKeys = new HashSet<String>();
 
-	public HAPExecutableExpressionData1(HAPDefinitionExpressionData expressionDef) {
-		this.m_operand = expressionDef.getOperand().cloneWrapper();
-		expressionDef.cloneToEntityInfo(this);
-	}
-	
-	public HAPExecutableExpressionData1(HAPWrapperOperand operand) {
+	public HAPDataExpression2(HAPWrapperOperand operand) {
 		this.m_operand = operand;
 	}
 	
@@ -56,9 +44,6 @@ public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
 
 	public HAPDataTypeCriteria getOutputCriteria() {  return this.m_operand.getOperand().getOutputCriteria(); }
 	
-	public HAPMatchers getOutputMatchers() {		return this.m_outputMatchers;	}
-	public void setOutputMatchers(HAPMatchers matchers) {    this.m_outputMatchers = matchers;    }
-
 	public Set<String> getVariablesInfo(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
 
@@ -105,12 +90,6 @@ public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
 	@Override
 	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 		super.buildResourceDependency(dependency, runtimeInfo, resourceManager);
-		//get converter resource id from var converter in expression 
-		HAPMatchers matchers = this.getOutputMatchers();
-		if(matchers!=null){
-			dependency.addAll(matchers.getResourceDependency(runtimeInfo, resourceManager));
-		}
-		
 		HAPUtilityOperand.processAllOperand(this.getOperand(), dependency, new HAPInterfaceProcessOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -129,7 +108,6 @@ public class HAPExecutableExpressionData1 extends HAPExecutableImpEntityInfo{
 	public void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(OPERAND, HAPManagerSerialize.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JSON));
-		jsonMap.put(OUTPUTMATCHERS, HAPUtilityJson.buildJson(this.getOutputMatchers(), HAPSerializationFormat.JSON));
 		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
 	}
 }

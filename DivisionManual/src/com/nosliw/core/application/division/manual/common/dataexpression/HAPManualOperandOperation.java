@@ -1,13 +1,26 @@
 package com.nosliw.core.application.division.manual.common.dataexpression;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandOperation;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandOperation;
+import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
+import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.data.core.data.HAPDataTypeOperation;
+import com.nosliw.data.core.data.HAPDataWrapper;
+import com.nosliw.data.core.data.HAPOperationOutInfo;
+import com.nosliw.data.core.data.HAPOperationParmInfo;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPManualOperandOperation extends HAPManualOperand implements HAPOperandOperation{
@@ -20,11 +33,12 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 	
 	private Map<String, HAPManualWrapperOperand> m_parms;
 	
-	private Map<String, HAPMatchers> m_parmMatchers;
+	private Map<String, HAPMatchers> m_parmsMatchers;
 	
 	public HAPManualOperandOperation(HAPDefinitionOperandOperation operandDefinition) {
 		super(HAPConstantShared.EXPRESSION_OPERAND_OPERATION, operandDefinition);
-		this.m_parmMatchers = new LinkedHashMap<String, HAPMatchers>();
+		this.m_parms = new LinkedHashMap<String, HAPManualWrapperOperand>(); 
+		this.m_parmsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_dataTypeId = operandDefinition.getDataTypeId();
 		this.m_operation = operandDefinition.getOperaion();
 	}
@@ -52,6 +66,104 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 	public String getOperaion() {   return this.m_operation;   }
 
 	@Override
-	public Map<String, HAPMatchers> getParmMatchers() {   return this.m_parmMatchers;   }
+	public Map<String, HAPMatchers> getParmMatchers() {   return this.m_parmsMatchers;   }
+
+	@Override
+	public List<HAPManualWrapperOperand> getChildren(){   
+		List<HAPManualWrapperOperand> out = new ArrayList<HAPManualWrapperOperand>();
+		if(this.m_base!=null) {
+			out.add(this.m_base);
+		}
+		for(String name : this.m_parms.keySet()) {
+			out.add(this.m_parms.get(name));
+		}
+		return out;
+	}
+	
+	@Override
+	public HAPMatchers discover(
+			HAPContainerVariableInfo variablesInfo,
+			HAPDataTypeCriteria expectCriteria, 
+			HAPProcessTracker context,
+			HAPDataTypeHelper dataTypeHelper) {
+		//clear old matchers
+		this.resetMatchers();
+		
+		//process base first
+		if(this.m_base!=null) {
+			HAPDataTypeCriteria baseCriteria = null;
+			if(this.m_dataTypeId!=null) {
+				baseCriteria = new HAPDataTypeCriteriaId(this.m_dataTypeId, null);
+			}
+			this.m_base.getOperand().discover(variablesInfo, baseCriteria, context, dataTypeHelper);
+		}
+		
+		//define seperate one, do not work on original one
+		HAPDataTypeId dataTypeId = this.m_dataTypeId;
+		
+		//try to get operation data type according to base 
+		if(dataTypeId==null && this.m_base!=null){
+			//if data type is not determined, then use trunk data type of base data type if it has any
+			HAPDataTypeCriteria baseDataTypeCriteria = this.m_base.getOperand().getOutputCriteria();
+			if(baseDataTypeCriteria!=null) {
+				dataTypeId = dataTypeHelper.getTrunkDataType(baseDataTypeCriteria);
+			}
+		}
+
+		if(dataTypeId !=null){
+			//discover parms by operation definition
+			HAPDataTypeOperation dataTypeOperation = dataTypeHelper.getOperationInfoByName(dataTypeId, m_operation);
+			this.m_dataTypeId = dataTypeOperation.getTargetDataType().getTarget();
+			
+			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
+			for(HAPOperationParmInfo parmInfo : parmsInfo){
+				HAPManualWrapperOperand parmOperandWrapper = this.m_parms.get(parmInfo.getName());
+				if(parmOperandWrapper==null && this.m_base!=null && parmInfo.getIsBase()){
+					//if parm does not exist, then try to use base
+					parmOperandWrapper = this.createOperandWrapper(this.m_base.getOperand());
+					this.m_parms.put(parmInfo.getName(), parmOperandWrapper);
+					this.setBase(null);
+				}
+				
+				HAPMatchers matchers = parmOperandWrapper.getOperand().discover(variablesInfo, parmInfo.getCriteria(), context, dataTypeHelper);
+				if(matchers!=null){
+					this.m_parmsMatchers.put(parmInfo.getName(), matchers);
+				}
+			}
+			
+			HAPOperationOutInfo outputInfo = dataTypeOperation.getOperationInfo().getOutputInfo();
+			if(outputInfo!=null){
+				//for criteria containing expression, execute expression here, using parmName : parmOperand for each parm for expression
+				Map<String, HAPData> expressionParms = new LinkedHashMap<String, HAPData>();
+				for(HAPOperationParmInfo parmInfo : parmsInfo){
+					String parmName = parmInfo.getName();
+					HAPOperand parmOperand = this.m_parms.get(parmName).getOperand();
+					HAPData expressionParmData = new HAPDataWrapper(new HAPDataTypeId("test.parm"), parmOperand); 
+					expressionParms.put(parmName, expressionParmData);
+				}
+				
+				dataTypeHelper.processExpressionCriteria(outputInfo.getCriteria(), expressionParms);
+				this.setOutputCriteria(outputInfo.getCriteria());
+			}
+			//check if output compatible with expect
+			if(dataTypeHelper.convertable(this.getOutputCriteria(), expectCriteria)==null){
+				context.addMessage("Error");
+			}
+			return HAPUtilityCriteria.isMatchable(outputInfo.getCriteria(), expectCriteria, dataTypeHelper);
+		}
+		else{
+			//if we don't have operation data type 
+			for(String parm: this.m_parms.keySet()){
+				HAPManualOperand parmDataType = this.m_parms.get(parm).getOperand();
+				parmDataType.discover(variablesInfo, null, context, dataTypeHelper);
+			}
+			this.setOutputCriteria(null);
+			return null;
+		}
+	}
+
+	private void resetMatchers(){
+		this.m_parmsMatchers = new LinkedHashMap<String,HAPMatchers>();
+	}
 
 }

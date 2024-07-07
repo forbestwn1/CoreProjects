@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
-import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.data.HAPDataTypeConverter;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.HAPOperationId;

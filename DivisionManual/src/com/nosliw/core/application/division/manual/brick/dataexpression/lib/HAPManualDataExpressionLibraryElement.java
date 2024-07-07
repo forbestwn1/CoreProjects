@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveExpression;
@@ -19,7 +20,9 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 	
 	private List<HAPRequestParmInInteractive> m_requestParms;
 	
-	private String m_expression;
+	private String m_expressionStr;
+	
+	private HAPDefinitionDataExpression m_expression;
 	
 	public HAPManualDataExpressionLibraryElement() {
 		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
@@ -31,8 +34,10 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  } 
 	public void setResult(HAPResultElementInInteractiveExpression result) {   this.m_result = result;      }
 	
-	public String getExpression() {	return this.m_expression;	}
-	public void setExpression(String expressionStr) {   this.m_expression = expressionStr;     }
+	public String getExpressionStr() {    return this.m_expressionStr;     }
+	
+	public HAPDefinitionDataExpression getExpression() {	return this.m_expression;	}
+	public void setExpression(HAPDefinitionDataExpression expression) {   this.m_expression = expression;     }
 
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -56,7 +61,7 @@ public class HAPManualDataExpressionLibraryElement extends HAPEntityInfoImp impl
 			this.setResult(result);
 		}
 		
-		this.setExpression(jsonObj.getString(HAPElementInLibraryDataExpression.EXPRESSION));
+		this.m_expressionStr = jsonObj.getString(HAPElementInLibraryDataExpression.EXPRESSION);
 		
 		return true;  
 	}

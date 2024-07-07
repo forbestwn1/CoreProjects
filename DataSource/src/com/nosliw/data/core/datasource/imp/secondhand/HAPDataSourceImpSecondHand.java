@@ -7,10 +7,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.application.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandVariable;
 import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.HAPDataUtility;
 import com.nosliw.data.core.datasource.HAPExecutableDataSource;

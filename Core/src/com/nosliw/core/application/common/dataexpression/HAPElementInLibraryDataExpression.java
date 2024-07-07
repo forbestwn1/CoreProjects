@@ -10,10 +10,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
-import com.nosliw.core.application.common.valueport.HAPWithVariable;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -21,7 +19,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithVariable, HAPWithValuePortGroup{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithValuePortGroup{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -35,10 +33,7 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 
 	private HAPInteractiveExpression m_interactive;
 	
-	private HAPContainerVariableInfo m_variableInfo;
-	
 	public HAPElementInLibraryDataExpression() {
-		this.m_variableInfo = new HAPContainerVariableInfo();
 	}
 	
 	public HAPDataExpression getExpression() {	return m_dataExpression;	}
@@ -51,10 +46,6 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	public void setInteractive(HAPInteractiveExpression interactive) {    this.m_interactive = interactive;     }
 	
 	@Override
-	public HAPContainerVariableInfo getVariablesInfo() {   return this.m_variableInfo;  }
-	public void setVariablesInfo(HAPContainerVariableInfo varsInfo) {    this.m_variableInfo = varsInfo;     }
-	
-	@Override
 	public HAPGroupValuePorts getExternalValuePortGroup() {   return this.m_interactive.getExternalValuePortGroup();  }
 	
 	@Override
@@ -63,7 +54,6 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(INTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
-		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.getVariablesInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JSON));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));
 	}

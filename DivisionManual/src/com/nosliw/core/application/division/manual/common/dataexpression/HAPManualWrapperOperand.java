@@ -17,14 +17,12 @@ public class HAPManualWrapperOperand extends HAPSerializableImp{
 	
 	public HAPManualWrapperOperand(){}
 	
-	public HAPManualOperand getOperand(){
-		return this.m_operand;
-	}
+	public HAPManualOperand getOperand(){		return this.m_operand;	}
 	
-	public void setOperand(HAPManualOperand operand){
-		this.m_operand = operand;
-	}
+	public void setOperand(HAPManualOperand operand){	this.m_operand = operand;	}
 
+	public String getOperandType() {   return this.getOperand().getType();     }
+	
 	@Override
 	public String toStringValue(HAPSerializationFormat format) {
 		return this.m_operand.toStringValue(format);

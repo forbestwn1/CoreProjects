@@ -19,6 +19,9 @@ public class HAPManualPluginParserBlockDataExpressionElementInLibrary extends HA
 		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickDefinition;
 		HAPManualDataExpressionLibraryElement value = new HAPManualDataExpressionLibraryElement();
 		value.buildObject(jsonValue, HAPSerializationFormat.JSON);
+		
+		value.setExpression(this.getRuntimeEnvironment().getDataExpressionParser().parseExpression(value.getExpressionStr()));
+		
 		brick.setValue(value);
 	}
 }
