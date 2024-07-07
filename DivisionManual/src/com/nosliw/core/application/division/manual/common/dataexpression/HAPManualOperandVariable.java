@@ -1,11 +1,12 @@
 package com.nosliw.core.application.division.manual.common.dataexpression;
 
+import java.util.Map;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.dataexpression.HAPOperandVariable;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandVariable;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
@@ -14,7 +15,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPManualOperandVariable extends HAPManualOperand implements HAPOperandVariable{
 
-	private HAPIdElement m_variableId;
+	private String m_variableKey;
 	
 	private String m_variableName;
 	
@@ -24,8 +25,8 @@ public class HAPManualOperandVariable extends HAPManualOperand implements HAPOpe
 	}
 
 	@Override
-	public HAPIdElement getVariableId() {    return this.m_variableId;    }
-	public void setVariableId(HAPIdElement varId) {    this.m_variableId = varId;      }
+	public String getVariableKey() {    return this.m_variableKey;    }
+	public void setVariableKey(String varKey) {    this.m_variableKey = varKey;      }
 
 	@Override
 	public String getVariableName() {   return this.m_variableName;   }
@@ -37,7 +38,7 @@ public class HAPManualOperandVariable extends HAPManualOperand implements HAPOpe
 			HAPProcessTracker processTracker,
 			HAPDataTypeHelper dataTypeHelper) {
 		
-		HAPInfoCriteria variableInfo = variablesInfo.getVaraibleCriteriaInfo(this.getVariableId());
+		HAPInfoCriteria variableInfo = variablesInfo.getVaraibleCriteriaInfo(this.getVariableKey());
 		
 		HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(variableInfo, expectCriteria, dataTypeHelper);
 		
@@ -46,5 +47,14 @@ public class HAPManualOperandVariable extends HAPManualOperand implements HAPOpe
 
 		//cal converter
 		return matchers;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(VARIABLENAME, m_variableName);
+		if(m_variableKey!=null) {
+			jsonMap.put(VARIABLEKEY, this.m_variableKey);
+		}
 	}
 }

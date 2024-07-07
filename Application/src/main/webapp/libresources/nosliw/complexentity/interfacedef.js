@@ -110,9 +110,14 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, valueContextId, b
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(attrValueWrapper.getResourceId(), childConfigure, {
 						success: function(request, bundleRuntime){
 							node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return loc_createAdaptersRequest(attrDef, bundleRuntime, {
-								success : function(request, adapters){
-									return treeNodeEntityInterface.addChild(childName, bundleRuntime, adapters, true);
+
+							return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
+								success : function(request){
+									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
+										success : function(request, adapters){
+											return treeNodeEntityInterface.addChild(childName, bundleRuntime, adapters, true);
+										}
+									});
 								}
 							});
 						}

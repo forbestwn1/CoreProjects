@@ -143,7 +143,7 @@ public abstract class HAPBrick extends HAPSerializableImp implements HAPEntityOr
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildJsonMap(jsonMap, typeJsonMap);
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
 
 		List<String> attrJsonList = new ArrayList<String>();
 		for(HAPAttributeInBrick attr : this.m_attributes) {

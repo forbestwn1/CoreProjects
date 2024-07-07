@@ -19,9 +19,13 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 
 	public static String CRITERIA = "criteria";
 
-	private Map<HAPIdElement, HAPInfoCriteria> m_criteriaInfosById;
-
 	private Map<String, Map<String, HAPIdElement>> m_variableIdByName;
+	
+	private Map<String, HAPInfoCriteria> m_criteriaInfosByKey;
+
+	private Map<String, HAPIdElement> m_variableIdByKey;
+	
+	private Map<HAPIdElement, String> m_keyByvariableId;
 	
 	private int m_nextId = 0;
 	
@@ -29,38 +33,42 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	
 	public HAPContainerVariableInfo(HAPWithInternalValuePort withInternalValuePort) {
 		this.m_withInternalValuePort = withInternalValuePort;
-		this.m_criteriaInfosById = new LinkedHashMap<HAPIdElement, HAPInfoCriteria>();
+		this.m_criteriaInfosByKey = new LinkedHashMap<String, HAPInfoCriteria>();
 		this.m_variableIdByName = new LinkedHashMap<String, Map<String, HAPIdElement>>();
+		this.m_variableIdByKey = new LinkedHashMap<String, HAPIdElement>();
+		this.m_keyByvariableId = new LinkedHashMap<HAPIdElement, String>(); 
 	}
 
-	public HAPIdElement addVariable(String variableName, String varIODirection, HAPConfigureResolveElementReference resolveConfigure) {
-		HAPIdElement out = this.getVariableId(variableName, varIODirection);
-		if(out==null) {
-			out = HAPUtilityStructureElementReference.resolveNameFromInternal(variableName, varIODirection, resolveConfigure, this.m_withInternalValuePort).getElementId();
+	public String addVariable(String variableName, String varIODirection, HAPConfigureResolveElementReference resolveConfigure) {
+		HAPIdElement eleId = this.getVariableId(variableName, varIODirection);
+		if(eleId==null) {
+			eleId = HAPUtilityStructureElementReference.resolveNameFromInternal(variableName, varIODirection, resolveConfigure, this.m_withInternalValuePort).getElementId();
 			Map<String, HAPIdElement> varIdByIoDirection = this.m_variableIdByName.get(variableName);
 			if(varIdByIoDirection==null) {
 				varIdByIoDirection = new LinkedHashMap<String, HAPIdElement>();
 				this.m_variableIdByName.put(variableName, varIdByIoDirection);
 			}
-			varIdByIoDirection.put(varIODirection, out);
+			varIdByIoDirection.put(varIODirection, eleId);
 		}
 		
-		if(this.m_criteriaInfosById.get(out)==null) {
-			this.m_criteriaInfosById.put(out, new HAPInfoCriteria());
+		String key = this.m_keyByvariableId.get(eleId);
+		if(key==null) {
+			//variable id not exist
+			key = this.m_nextId++ + "";
+			this.m_criteriaInfosByKey.put(key, new HAPInfoCriteria());
+			this.m_variableIdByKey.put(key, eleId);
+			this.m_keyByvariableId.put(eleId, key);
 		}
 		
-		return out;
+		return key;
 	}
 	
 	public boolean isEmpty() {	return this.m_variableIdByName.isEmpty();	}
 	
-	public Map<HAPIdElement, HAPInfoCriteria> getVariableCriteriaInfos() {   return this.m_criteriaInfosById; }
-
-	public HAPInfoCriteria getVaraibleCriteriaInfo(HAPIdElement varId) {   return this.m_criteriaInfosById.get(varId);     }
-
-	public void addVariable(HAPIdElement variableId, HAPInfoCriteria criteria) {
-		this.m_criteriaInfosById.put(variableId, criteria);
-	}
+	public HAPInfoCriteria getVaraibleCriteriaInfo(String key) {   return this.m_criteriaInfosByKey.get(key);     }
+	public Map<String, HAPInfoCriteria> getVariableCriteriaInfos(){   return this.m_criteriaInfosByKey;     }
+	public HAPIdElement getVariableId(String key) {    return this.m_variableIdByKey.get(key);      }
+	public Map<String, HAPIdElement> getVariables(){   return this.m_variableIdByKey;      }
 	
 	private HAPIdElement getVariableId(String variableName, String ioDirection) {
 		HAPIdElement out = null;
@@ -74,7 +82,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	@Override
 	public HAPContainerVariableInfo clone() {
 		HAPContainerVariableInfo out = new HAPContainerVariableInfo(this.m_withInternalValuePort);
-		out.m_criteriaInfosById.putAll(this.m_criteriaInfosById);
+		out.m_criteriaInfosByKey.putAll(this.m_criteriaInfosByKey);
 		out.m_variableIdByName.putAll(this.m_variableIdByName);
 		return out;
 	}
@@ -90,7 +98,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 			throw new RuntimeException();
 		}
 		
-		if(m_criteriaInfosById.get(variableId)!=null) {
+		if(m_criteriaInfosByKey.get(variableId)!=null) {
 			//already exist
 			for(String key : this.m_variableIdByName.keySet()) {
 				if(variableId.equals(this.m_variableIdByName.get(key))) {
@@ -104,7 +112,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 			String key = this.m_nextId + "";
 			this.m_nextId++;
 			this.m_variableIdByName.put(key, variableId);
-			this.m_criteriaInfosById.put(variableId, new HAPInfoCriteria());
+			this.m_criteriaInfosByKey.put(variableId, new HAPInfoCriteria());
 			return key;
 		}
 	}
@@ -113,7 +121,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	
 	
 	
-	public Set<HAPIdElement> getVariablesId(){    return this.m_criteriaInfosById.keySet();     }
+	public Set<HAPIdElement> getVariablesId(){    return this.m_criteriaInfosByKey.keySet();     }
 	
 //	public HAPInfoCriteria getVariableCriteriaInfo(HAPIdElement variableId) {     return this.m_criteriaInfosById.get(variableId);     }
 	
@@ -126,7 +134,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 			Map<String, String> entryMap = new LinkedHashMap<String, String>();
 			entryMap.put(VARIABLENAME, name);
 			entryMap.put(VARIABLEID, m_variableIdByName.get(name).toStringValue(HAPSerializationFormat.JSON));
-			entryMap.put(CRITERIA, this.m_criteriaInfosById.get(m_variableIdByName.get(name)).toStringValue(HAPSerializationFormat.JSON));
+			entryMap.put(CRITERIA, this.m_criteriaInfosByKey.get(m_variableIdByName.get(name)).toStringValue(HAPSerializationFormat.JSON));
 			outMap.put(name, HAPUtilityJson.buildMapJson(entryMap));
 		}
 		

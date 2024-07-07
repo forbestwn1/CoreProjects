@@ -40,7 +40,9 @@ public class HAPManagerSerialize {
 	}
 	
 	public String toStringValue(Object obj, HAPSerializationFormat format){
-		if(obj == null)   return null;
+		if(obj == null) {
+			return null;
+		}
 
 		if(obj instanceof HAPSerializable){
 			return ((HAPSerializable)obj).toStringValue(format);
@@ -51,6 +53,7 @@ public class HAPManagerSerialize {
 			return HAPLiterateManager.getInstance().valueToString(obj);
 		case JSON:
 		case JSON_FULL:
+		case JAVASCRIPT:
 			return HAPUtilityJson.buildJson(obj, format);
 		default:
 			return obj.toString();
@@ -58,13 +61,18 @@ public class HAPManagerSerialize {
 	}
 	
 	public HAPSerializable buildObject(String className, Object value, HAPSerializationFormat format){
-		if(value==null)   return null;
+		if(value==null) {
+			return null;
+		}
 		HAPSerializable out = null;
 		try {
 			Class cs = this.m_classMaps.get(className);
-			if(cs==null)	cs = Class.forName(className);
-			if(value.getClass()==cs)  out = (HAPSerializable)value;
-			else {
+			if(cs==null) {
+				cs = Class.forName(className);
+			}
+			if(value.getClass()==cs) {
+				out = (HAPSerializable)value;
+			} else {
 				out = ((HAPSerializable)cs.newInstance());
 				if(!out.buildObject(value, format)){
 					//build failed

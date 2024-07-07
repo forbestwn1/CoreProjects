@@ -15,7 +15,6 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
@@ -63,8 +62,8 @@ public class HAPManualUtilityProcessorDataExpression {
 				String opType = operand.getOperandType();
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 					HAPManualOperandVariable variableOperand = (HAPManualOperandVariable)operand.getOperand();
-					HAPIdElement idVariable = varInfoContainer.addVariable(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure);
-					variableOperand.setVariableId(idVariable);
+					String variableKey = varInfoContainer.addVariable(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure);
+					variableOperand.setVariableKey(variableKey);
 				}
 				return true;
 			}

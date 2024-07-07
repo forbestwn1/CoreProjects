@@ -16,7 +16,7 @@
 			"adapter":[
 				{
 					"name" : "dataExpressionAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForExpression",
 						"version": "1.0.0"
@@ -189,7 +189,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{

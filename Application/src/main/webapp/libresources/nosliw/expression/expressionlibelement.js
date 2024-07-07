@@ -22,26 +22,25 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDataExpressionElementInLibrary = function(expressionData){
+var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibrary){
 	
-	var loc_expressionData = expressionData;
+	var loc_expressionDataEleInLibrary = expressionDataEleInLibrary;
 	
 	var loc_interactiveValuePorts =  node_createInteractiveValuePortsExpression();
 	
 	var loc_init = function(){
-		loc_interactiveValuePorts.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionData));
+		loc_interactiveValuePorts.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionDataEleInLibrary));
 	};
 	
 	var loc_getExecuteRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		var expressionItem = loc_expressionData[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
-		var variablesContainer = loc_expressionData[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS];
+		var dataExpression = loc_expressionDataEleInLibrary[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_interactiveValuePorts.getValuePort(valuePortName);
 			}
 		};
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionItem, variablesContainer, withValuePortInterface, undefined, undefined, {
+		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, withValuePortInterface, undefined, undefined, {
 			success : function(request, result){
 				loc_interactiveValuePorts.setResultValue(result);
 				return result;

@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
@@ -166,4 +169,16 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 		this.m_parmsMatchers = new LinkedHashMap<String,HAPMatchers>();
 	}
 
+	@Override
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(OPERATION, this.m_operation);
+		jsonMap.put(DATATYPEID, HAPManagerSerialize.getInstance().toStringValue(this.m_dataTypeId, HAPSerializationFormat.LITERATE));
+		if(this.m_base!=null) {
+			jsonMap.put(BASE, HAPManagerSerialize.getInstance().toStringValue(this.getBase(), HAPSerializationFormat.JAVASCRIPT));
+		}
+
+		jsonMap.put(PARMS, HAPUtilityJson.buildJson(this.getParms(), HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(MATCHERSPARMS, HAPUtilityJson.buildJson(this.getParmMatchers(), HAPSerializationFormat.JAVASCRIPT));
+	}
 }

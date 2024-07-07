@@ -42,7 +42,7 @@
 		},
 		{
 			"name" : "reference_resource",
-			"status": "disabled1",
+			"status": "disabled",
 			"description" : "reference_resource",
 			"request" : [
 				{
@@ -77,7 +77,7 @@
 		},
 		{
 			"name" : "extension",
-			"status": "disabled1",
+			"status": "disabled",
 			"description" : "dataexpression1",
 			"request" : [
 				{

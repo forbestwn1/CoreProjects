@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.data.core.common.HAPWithValueContext;
+import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginParserBrickImpComplex extends HAPPluginParserBrickImp{

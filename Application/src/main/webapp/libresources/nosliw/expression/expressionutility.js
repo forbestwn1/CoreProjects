@@ -35,12 +35,11 @@ var packageObj = library;
 var node_utility = function() 
 {
 	
-	
-	var loc_getExecuteDataExpressionRequest =function(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo){
+	var loc_getExecuteDataExpressionRequest =function(expressionItem, valuePortEnv, constants, references, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
-		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS], variablesContainer, valuePortEnv, {
+		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS], valuePortEnv, {
 			success : function(request, allVariables){
 				//execute operand
 				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OPERAND], allVariables, constants, references, {
@@ -55,10 +54,9 @@ var node_utility = function()
 			}
 		}));
 		return out;
-		
 	};
 
-	var loc_getVariablesValueByKeyRequest = function(varKeys, variablesInfo, valuePortEnv, handlers, request){
+	var loc_getVariablesValueByKeyRequest = function(varInfos, valuePortEnv, handlers, request){
 		
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getVariablesValueRequest"), handlers, request);
 					
@@ -70,23 +68,14 @@ var node_utility = function()
 					}
 				});
 				
-				_.each(varKeys, function(varKey, i){
-					var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLES][varKey];
-					var varId = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEID];
-					
+				_.each(varInfos, function(varId, varKey){
 					var eleInfo = node_createValuePortElementInfo(varId);
-					
 					var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
 					var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 					
 					calVarsRequest.addRequest(varKey, valuePort.getValueRequest(eleInfo, {
 						success : function(request, data){
 							var value = data;
-		/*					
-							if(data!=undefined&&data.value!=undefined){
-							    value = data.value;
-							}
-		*/					
 							return value;
 						}	
 					}));
@@ -94,7 +83,6 @@ var node_utility = function()
 				return calVarsRequest;
 			}
 		});
-
 		
 		out.addRequest(out1);
 		return out;		
@@ -589,13 +577,17 @@ var node_utility = function()
 		getMatchDataTaskRequest : function(data, matchers, handlers, requester_parent){
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
+
+		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constants, references, handlers, requestInfo){
+			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, constants, references, handlers, requestInfo);
+		},
+
+
+
+
 		
 		getExecuteDataExpressionRequest1 : function(expressionItem, variables, constants, references, handlers, requestInfo){
 			return loc_getExecuteDataExpressionRequest(expressionItem, variables, constants, references, handlers, requestInfo);
-		},
-
-		getExecuteDataExpressionRequest : function(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo){
-			return loc_getExecuteDataExpressionRequest(expressionItem, variablesContainer, valuePortEnv, constants, references, handlers, requestInfo);
 		},
 
 		getExecuteDataExpressionItemRequest : function(expressionItem, valueContext, references, expressionDef, handlers, request){

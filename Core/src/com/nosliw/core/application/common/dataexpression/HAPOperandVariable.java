@@ -1,7 +1,6 @@
 package com.nosliw.core.application.common.dataexpression;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
 
 public interface HAPOperandVariable extends HAPOperand{
  
@@ -9,10 +8,10 @@ public interface HAPOperandVariable extends HAPOperand{
 	public final static String VARIABLENAME = "variableName";
 	
 	@HAPAttribute
-	public final static String VARIABLEID = "variableId";
+	public final static String VARIABLEKEY = "variableKey";
 	
 	String getVariableName();
 	
-	HAPIdElement getVariableId();
+	String getVariableKey();
 	
 }

@@ -1,36 +1,13 @@
 package com.nosliw.core.application.common.valueport;
 
-import java.util.Map;
-
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityStructureElementReference {
 
-	public static void buildVariableInfo(HAPContainerVariableInfo varCrteriaInfoInExpression, HAPWithInternalValuePort withInternalValuePort) {
-		Map<HAPIdElement, HAPInfoCriteria> variables = varCrteriaInfoInExpression.getVariableCriteriaInfos();
-		for(HAPIdElement varId : variables.keySet()) {
-			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
-			
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, withInternalValuePort); 
-			String eleType = structureEle.getType();
-			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
-				varCriteriaInfo.setCriteria(dataEle.getCriteria());
-				varCriteriaInfo.setStatus(dataEle.getStatus());
-			}
-		}
-	}
-
-	
-	
 	public static HAPInfoElementResolve resolveNameFromInternal(String name, String ioDirection, HAPConfigureResolveElementReference resolveConfigure, HAPWithInternalValuePort withValuePort) {
 		HAPReferenceElement ref = HAPUtilityStructureElementReference.buildInternalElementReference(name, ioDirection, withValuePort); 
 		return HAPUtilityStructureElementReference.resolveElementReferenceInternal(ref, null, withValuePort);

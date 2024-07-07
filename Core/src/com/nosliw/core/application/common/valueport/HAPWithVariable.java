@@ -1,5 +1,7 @@
 package com.nosliw.core.application.common.valueport;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
@@ -9,6 +11,6 @@ public interface HAPWithVariable {
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 
-	HAPContainerVariableInfo getVariablesInfo();
+	Map<String, HAPIdElement> getVariablesInfo();
 
 }
