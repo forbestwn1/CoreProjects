@@ -2,8 +2,6 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
-import com.nosliw.data.core.common.HAPWithValueContext;
-import com.nosliw.data.core.domain.HAPContextParser;
 
 //entity that have data value structure and attachment
 public abstract class HAPManualBrickBlockComplex extends HAPManualBrickBlock{
@@ -19,7 +17,7 @@ public abstract class HAPManualBrickBlockComplex extends HAPManualBrickBlock{
 
 	public void setValueContextEntity(HAPManualBrickValueContext valueContext) {}
 
-	public HAPManualBrickValueContext getValueContextBrick(HAPContextParser parserContext) {  return (HAPManualBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
+//	public HAPManualBrickValueContext getValueContextBrick(HAPContextParser parserContext) {  return (HAPManualBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
 	
 //	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithAttachment.ATTACHMENT);  }
 //	public HAPDefinitionEntityContainerAttachment getAttachmentEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityContainerAttachment)this.getAttributeValueEntity(HAPWithAttachment.ATTACHMENT, parserContext);  }

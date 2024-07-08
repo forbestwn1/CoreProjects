@@ -15,10 +15,12 @@ public class HAPItemInGroupDataExpression extends HAPEntityInfoImp{
 	public static String DATAEXPRESSION = "dataExpression";
 	
 	private HAPDataExpression m_dataExpression;
+
+	public void setDataExpression(HAPDataExpression dataExpression) {     this.m_dataExpression = dataExpression;      }
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATAEXPRESSION, this.m_dataExpression.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(DATAEXPRESSION, this.m_dataExpression.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 }

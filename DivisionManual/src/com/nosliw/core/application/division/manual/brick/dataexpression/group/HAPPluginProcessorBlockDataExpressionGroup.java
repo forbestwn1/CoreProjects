@@ -7,14 +7,13 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
+import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPOperand;
-import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplexImp;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 
 public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplexImp{
@@ -30,12 +29,9 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 		HAPGroupDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
 	
 		for(HAPManualDataExpressionItemInGroup itemDef : groupDef.getItems()) {
-			HAPElementInContainerDataExpression itemExe = new HAPElementInContainerDataExpression();
+			HAPItemInGroupDataExpression itemExe = new HAPItemInGroupDataExpression();
 			itemDef.cloneToEntityInfo(itemExe);
-			
-			//build expression in executable
-			HAPOperand operand = processContext.getRuntimeEnv().getDataExpressionParser().parseExpression(itemDef.getExpression());
-			itemExe.setExpression(new HAPDataExpression(new HAPWrapperOperand(operand)));
+			itemExe.setDataExpression(HAPManualUtilityProcessorDataExpression.buildManualDataExpression(itemDef.getExpression()));
 			groupExe.addItem(itemExe);
 		}
 	}

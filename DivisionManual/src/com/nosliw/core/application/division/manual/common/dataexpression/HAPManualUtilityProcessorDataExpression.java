@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperand;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandAttribute;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandConstant;
@@ -68,6 +69,10 @@ public class HAPManualUtilityProcessorDataExpression {
 				return true;
 			}
 		}, null);
+	}
+	
+	public static HAPManualDataExpression buildManualDataExpression(HAPDefinitionDataExpression dataExpressionDef) {
+		return new HAPManualDataExpression(HAPManualUtilityProcessorDataExpression.buildManualOperand(dataExpressionDef.getOperand()));
 	}
 	
 	public static HAPManualOperand buildManualOperand(HAPDefinitionOperand operandDef) {

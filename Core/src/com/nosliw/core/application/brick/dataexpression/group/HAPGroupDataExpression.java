@@ -28,10 +28,10 @@ public class HAPGroupDataExpression extends HAPSerializableImp{
 	public void addItem(HAPItemInGroupDataExpression item) {     this.m_items.add(item);       }
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> itemMap = new LinkedHashMap<String, String>();
 		for(HAPItemInGroupDataExpression item : this.m_items) {
-			itemMap.put(item.getName(), item.toStringValue(HAPSerializationFormat.JSON));
+			itemMap.put(item.getName(), item.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
 		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));
 	}
