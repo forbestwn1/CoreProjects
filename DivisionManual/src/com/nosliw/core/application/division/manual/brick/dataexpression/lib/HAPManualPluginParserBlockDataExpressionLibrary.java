@@ -5,28 +5,28 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityParserBrickFormatJson;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockDataExpressionLibrary(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.DATAEXPRESSIONLIB_100, HAPManualBlockDataExpressionLibrary.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualBlockDataExpressionLibrary dataExpressionLibrary = (HAPManualBlockDataExpressionLibrary)entityDefinition;
 
 		JSONArray dataExpressionArray = (JSONArray)jsonValue;
 		for(int i=0; i<dataExpressionArray.length(); i++) {
 			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				dataExpressionLibrary.addElement(HAPManualUtilityParserBrickFormatJson.parseWrapperValue(elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
+				dataExpressionLibrary.addElement(HAPManualDefinitionUtilityParserBrickFormatJson.parseWrapperValue(elementObj, HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
 			}
 		}
 	}

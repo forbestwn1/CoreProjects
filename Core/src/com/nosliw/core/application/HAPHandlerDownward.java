@@ -1,6 +1,8 @@
 package com.nosliw.core.application;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
+import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 
 public abstract class HAPHandlerDownward {
 

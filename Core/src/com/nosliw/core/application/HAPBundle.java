@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPManagerResource;

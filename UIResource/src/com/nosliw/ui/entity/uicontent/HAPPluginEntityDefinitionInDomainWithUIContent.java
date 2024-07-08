@@ -4,8 +4,8 @@ import org.jsoup.nodes.Element;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;

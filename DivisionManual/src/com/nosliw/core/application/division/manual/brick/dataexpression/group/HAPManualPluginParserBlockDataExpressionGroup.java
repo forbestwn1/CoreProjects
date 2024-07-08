@@ -8,20 +8,20 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBlockDataExpressionGroup extends HAPPluginParserBrickImpComplex{
+public class HAPManualPluginParserBlockDataExpressionGroup extends HAPManualDefinitionPluginParserBrickImpComplex{
 
 	public HAPManualPluginParserBlockDataExpressionGroup(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualBlockDataExpressionGroup.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseComplexDefinitionContentJson(HAPManualBrick brickDef, JSONObject jsonObj, HAPManualContextParse parseContext) {
+	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick brickDef, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualBlockDataExpressionGroup groupBlock = (HAPManualBlockDataExpressionGroup)brickDef;
 
 		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPContainerDataExpression.ITEM);

@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
@@ -21,11 +20,12 @@ import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPUtilityScriptExpressionParser;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
@@ -35,7 +35,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 	}
 
 	@Override
-	public void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
+	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
 		HAPElementInLibraryScriptExpression exe = ((HAPBlockScriptExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualScriptExpressionLibraryElement def = ((HAPManualBlockScriptExpressionElementInLibrary)blockDef).getValue();
 		

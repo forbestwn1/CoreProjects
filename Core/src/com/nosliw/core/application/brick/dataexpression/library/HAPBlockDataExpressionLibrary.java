@@ -2,8 +2,8 @@ package com.nosliw.core.application.brick.dataexpression.library;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockSimple;
 
 @HAPEntityWithAttribute
 public class HAPBlockDataExpressionLibrary extends HAPBrickBlockSimple{

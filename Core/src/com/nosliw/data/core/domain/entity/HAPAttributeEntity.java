@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPInfoBrickType;
+import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPExpandable;
 

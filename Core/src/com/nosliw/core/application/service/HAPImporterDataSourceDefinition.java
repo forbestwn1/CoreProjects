@@ -13,8 +13,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPUtilitySerializeJson;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
+import com.nosliw.core.application.division.manual.executable.HAPUtilitySerializeJson;
 
 public class HAPImporterDataSourceDefinition {
 

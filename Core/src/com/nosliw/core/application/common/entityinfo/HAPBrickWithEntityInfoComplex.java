@@ -2,7 +2,7 @@ package com.nosliw.core.application.common.entityinfo;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.core.application.HAPBrickBlockComplex;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
 
 public class HAPBrickWithEntityInfoComplex extends HAPBrickBlockComplex implements HAPEntityInfo{
 

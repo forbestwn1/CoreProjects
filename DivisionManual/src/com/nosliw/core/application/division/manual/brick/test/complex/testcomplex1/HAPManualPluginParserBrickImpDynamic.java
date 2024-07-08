@@ -11,31 +11,31 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPWithValueContext;
-import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImp;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImp;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.data.core.component.HAPWithAttachment;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickImp{
+public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPluginParserBrickImp{
 
 	public final static String PREFIX_IGNORE = "ignore";
 
-	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualDefinitionBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(entityTypeId, entityClass, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		JSONArray jsonArray = (JSONArray)jsonValue;
 		
 		for(int i=0; i<jsonArray.length(); i++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj, HAPManualAttribute.INFO);
+			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj, HAPManualDefinitionAttributeInBrick.INFO);
 
 			if(HAPUtilityEntityInfo.isEnabled(info)) {
 				String attrName = info.getName();
@@ -89,7 +89,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPPluginParserBrickIm
 			}
 		}
 
-		out.isComplex = HAPManualUtilityBrick.isBrickComplex(out.entityType, getBrickManager()); 
+		out.isComplex = HAPManualDefinitionUtilityBrick.isBrickComplex(out.entityType, getBrickManager()); 
 		
 		return out;
 	}

@@ -1,13 +1,13 @@
 package com.nosliw.core.application.division.manual.brick.taskwrapper;
 
-import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 
 public class HAPManualPluginProcessorBlockSimpleImpTaskWrapper extends HAPPluginProcessorBlockSimpleImp{
 
@@ -16,8 +16,8 @@ public class HAPManualPluginProcessorBlockSimpleImpTaskWrapper extends HAPPlugin
 	}
 
 	@Override
-	public void process(HAPBrickBlockSimple blockExe, HAPManualBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
-		HAPIdBrickType brickTypeId = HAPManualUtilityBrick.getBrickType(blockDef.getAttribute(HAPBlockTaskWrapper.TASK).getValueWrapper());
+	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
+		HAPIdBrickType brickTypeId = HAPManualDefinitionUtilityBrick.getBrickType(blockDef.getAttribute(HAPBlockTaskWrapper.TASK).getValueWrapper());
 		String taskType = processContext.getRuntimeEnv().getBrickManager().getBrickTypeInfo(brickTypeId).getTaskType();
 		
 		HAPBlockTaskWrapper taskWrapperExe = (HAPBlockTaskWrapper)blockExe;

@@ -1,7 +1,7 @@
 package com.nosliw.core.application.common.script;
 
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.core.application.HAPBrickBlockComplex;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
 
 public class HAPBlockScriptComplex extends HAPBrickBlockComplex implements HAPWithScript{
 

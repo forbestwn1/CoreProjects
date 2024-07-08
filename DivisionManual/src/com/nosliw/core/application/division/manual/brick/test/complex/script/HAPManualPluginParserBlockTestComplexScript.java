@@ -5,30 +5,30 @@ import org.json.JSONObject;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBlockTestComplexScript extends HAPPluginParserBrickImpComplex{
+public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefinitionPluginParserBrickImpComplex{
 
 	public HAPManualPluginParserBlockTestComplexScript(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBrickTestComplexScript.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualDefinitionBrickTestComplexScript.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseComplexDefinitionContentJson(HAPManualBrick entityDefinition, JSONObject jsonObj, HAPManualContextParse parseContext) {
-		HAPManualBrickTestComplexScript scriptEntity = (HAPManualBrickTestComplexScript)entityDefinition;
+	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
+		HAPManualDefinitionBrickTestComplexScript scriptEntity = (HAPManualDefinitionBrickTestComplexScript)entityDefinition;
 		//script
 		Object scriptObj = jsonObj.opt(HAPBlockTestComplexScript.SCRIPT);
 		HAPResourceId scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, null, scriptObj, false);
 		scriptEntity.setScript(scriptResourceId);
 		
 //		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualBrickTestComplexScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
+//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualDefinitionBrickTestComplexScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexScript.PARM);

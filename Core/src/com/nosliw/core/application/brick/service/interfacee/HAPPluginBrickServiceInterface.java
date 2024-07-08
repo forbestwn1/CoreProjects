@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
-import com.nosliw.core.application.HAPPluginBrickImp;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
+import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
+import com.nosliw.core.application.division.manual.executable.HAPPluginBrickImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginBrickServiceInterface extends HAPPluginBrickImp{

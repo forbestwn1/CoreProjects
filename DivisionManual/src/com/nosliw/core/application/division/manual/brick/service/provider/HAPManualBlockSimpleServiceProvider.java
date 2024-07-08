@@ -5,9 +5,9 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 
-public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickBlockSimple{
+public class HAPManualBlockSimpleServiceProvider extends HAPManualDefinitionBrickBlockSimple{
 
 	public static final String SERVICEKEY = "serviceKey";
 

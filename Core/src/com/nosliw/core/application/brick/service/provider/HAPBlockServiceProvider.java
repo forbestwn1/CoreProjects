@@ -2,7 +2,6 @@ package com.nosliw.core.application.brick.service.provider;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
@@ -10,6 +9,7 @@ import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteract
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.task.HAPTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockSimple;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPUtilityResource;

@@ -9,12 +9,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
-import com.nosliw.core.application.HAPHandlerDownwardImpTreeNode;
-import com.nosliw.core.application.HAPTreeNodeBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -32,6 +28,14 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualRootInValueStructure;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
+import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
+import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
 import com.nosliw.core.application.valuecontext.HAPUtilityValueContext;
@@ -71,14 +75,14 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPBrickBlockComplex complexEntityExe = (HAPBrickBlockComplex)this.getBrickFromNode(treeNode);
+				HAPManualBrickBlockComplex complexEntityExe = (HAPManualBrickBlockComplex)this.getBrickFromNode(treeNode);
 				
-				HAPManualWrapperBrick rootEntityDefInfo = (HAPManualWrapperBrick)bundle.getExtraData(); 
+				HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData(); 
 				
-				Pair<HAPManualBrick, HAPBrick> entityPair = HAPManualUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
+				Pair<HAPManualDefinitionBrick, HAPManualBrick> entityPair = HAPManualDefinitionUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
 				
-				HAPManualBrickBlockComplex rootEntityDef = (HAPManualBrickBlockComplex)rootEntityDefInfo.getBrick();
-				HAPManualBrickBlockComplex complexEntityDef = (HAPManualBrickBlockComplex)entityPair.getLeft();
+				HAPManualDefinitionBrickBlockComplex rootEntityDef = (HAPManualDefinitionBrickBlockComplex)rootEntityDefInfo.getBrick();
+				HAPManualDefinitionBrickBlockComplex complexEntityDef = (HAPManualDefinitionBrickBlockComplex)entityPair.getLeft();
 				HAPManualBrickValueContext valueContextEntityDef = complexEntityDef.getValueContextBrick();
 				
 				//value context

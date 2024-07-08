@@ -2,20 +2,20 @@ package com.nosliw.core.application.division.manual.brick.scriptexpression.libra
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBlockScriptExpressionElementInLibrary extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserBlockScriptExpressionElementInLibrary extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockScriptExpressionElementInLibrary(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, HAPManualBlockScriptExpressionElementInLibrary.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick brickDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualBlockScriptExpressionElementInLibrary brick = (HAPManualBlockScriptExpressionElementInLibrary)brickDefinition;
 		HAPManualScriptExpressionLibraryElement value = new HAPManualScriptExpressionLibraryElement();
 		value.buildObject(jsonValue, HAPSerializationFormat.JSON);

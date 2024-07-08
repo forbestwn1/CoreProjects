@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.group;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 
-public class HAPManualBlockDataExpressionGroup extends HAPManualBrickBlockComplex{
+public class HAPManualBlockDataExpressionGroup extends HAPManualDefinitionBrickBlockComplex{
 
 	public HAPManualBlockDataExpressionGroup() {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100);

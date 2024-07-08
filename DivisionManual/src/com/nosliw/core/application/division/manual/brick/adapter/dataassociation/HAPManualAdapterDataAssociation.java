@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrickAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
 
-public class HAPManualAdapterDataAssociation extends HAPManualBrickAdapter{
+public class HAPManualAdapterDataAssociation extends HAPManualDefinitionBrickAdapter{
 
 	public static final String DEFINITION = "definition";
 

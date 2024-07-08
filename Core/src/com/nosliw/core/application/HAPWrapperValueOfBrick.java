@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

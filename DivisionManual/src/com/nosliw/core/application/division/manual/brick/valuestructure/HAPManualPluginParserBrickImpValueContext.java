@@ -6,23 +6,23 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityParserBrickFormatJson;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBrickImpValueContext extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPManualEnumBrickType.VALUECONTEXT_100, HAPManualBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualBrickValueContext valueContext = (HAPManualBrickValueContext)entityDefinition;
 
 		if(jsonValue instanceof JSONArray) {
@@ -39,14 +39,14 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPPluginParserBr
 		}
 	}
 
-	private HAPManualBrickWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualContextParse parseContext) {
+	private HAPManualBrickWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualDefinitionContextParse parseContext) {
 		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null) {
 			valueStructureJsonObj = wrapperObj;
 		}
 
 		HAPManualBrickWrapperValueStructure out = (HAPManualBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrick(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
-		HAPManualAttribute valueStructureAttr = HAPManualUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
+		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
 		out.setAttribute(valueStructureAttr);
 
 		String groupName = (String)wrapperObj.opt(HAPManualBrickWrapperValueStructure.NAME);

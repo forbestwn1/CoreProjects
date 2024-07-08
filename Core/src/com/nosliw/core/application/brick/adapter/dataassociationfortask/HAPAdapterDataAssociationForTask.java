@@ -2,8 +2,8 @@ package com.nosliw.core.application.brick.adapter.dataassociationfortask;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.HAPBrickAdapter;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForTask;
+import com.nosliw.core.application.division.manual.executable.HAPBrickAdapter;
 
 @HAPEntityWithAttribute
 public class HAPAdapterDataAssociationForTask extends HAPBrickAdapter{

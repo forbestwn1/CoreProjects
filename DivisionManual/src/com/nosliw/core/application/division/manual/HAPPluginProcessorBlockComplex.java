@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.HAPBrickBlockComplex;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
 
 public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 
@@ -22,14 +22,14 @@ public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 	
 	
 	//supply custom constant value
-	void extendConstantValue(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void extendConstantValue(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 	
 	//matcher
-	void processValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessValueContextDiscovery(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 	
 	//process entity after value context
-	void processEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessEntity(HAPBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void processEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	void postProcessEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
 
 }

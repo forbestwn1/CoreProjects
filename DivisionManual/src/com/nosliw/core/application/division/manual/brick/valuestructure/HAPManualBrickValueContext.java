@@ -6,16 +6,16 @@ import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualWrapperValueBrick;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainerList;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
-public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implements HAPWithConstantScriptExpression{
+public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPWithConstantScriptExpression{
 
 	public static final String VALUESTRUCTURE = "valueStructure";
 	
@@ -32,8 +32,8 @@ public class HAPManualBrickValueContext extends HAPManualBrickBlockSimple implem
 	
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){
 		List<HAPManualBrickWrapperValueStructure> out = new ArrayList<HAPManualBrickWrapperValueStructure>();
-		for(HAPManualAttribute attr: this.getValueStructureContainer().getPublicAttributes()) {
-			out.add((HAPManualBrickWrapperValueStructure)((HAPManualWrapperValueBrick)attr.getValueWrapper()).getBrick());
+		for(HAPManualDefinitionAttributeInBrick attr: this.getValueStructureContainer().getPublicAttributes()) {
+			out.add((HAPManualBrickWrapperValueStructure)((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick());
 		}
 		return out;
 	}

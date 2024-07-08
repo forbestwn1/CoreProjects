@@ -6,11 +6,11 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.division.manual.HAPManualAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
-import com.nosliw.core.application.division.manual.HAPManualWrapperValue;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
-public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
+public class HAPManualBrickContainer extends HAPManualDefinitionBrickBlockSimple{
 
 	private HAPIdBrickType m_childBrickTypeId;
 	
@@ -25,7 +25,7 @@ public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
 		this.setAttributeIndex(0);
 	}
 	
-	public String addElement(HAPManualAttribute attr) {
+	public String addElement(HAPManualDefinitionAttributeInBrick attr) {
 		if(HAPUtilityBasic.isStringEmpty(attr.getName())) {
 			attr.setName(this.generateAttributeName());
 		}
@@ -33,7 +33,7 @@ public class HAPManualBrickContainer extends HAPManualBrickBlockSimple{
 		return attr.getName();
 	}
 	
-	public String addElement(HAPManualWrapperValue valueWrapper) {
+	public String addElement(HAPManualDefinitionWrapperValue valueWrapper) {
 		String attrName = generateAttributeName();
 		this.setAttributeWithValueWrapper(attrName, valueWrapper);
 		return attrName;

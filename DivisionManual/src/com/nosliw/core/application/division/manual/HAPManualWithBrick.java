@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual;
 
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
 public interface HAPManualWithBrick {
 
@@ -9,7 +10,7 @@ public interface HAPManualWithBrick {
 
 	public static final String BRICKTYPEID = "brickTypeId";
 
-	HAPManualBrick getBrick();
+	HAPManualDefinitionBrick getBrick();
 	
 	HAPIdBrickType getBrickTypeId();
 	

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
@@ -13,6 +12,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginDivisionScript implements HAPPluginDivision{

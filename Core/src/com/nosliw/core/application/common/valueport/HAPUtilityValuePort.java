@@ -2,12 +2,12 @@ package com.nosliw.core.application.common.valueport;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
-import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

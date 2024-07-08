@@ -2,6 +2,10 @@ package com.nosliw.core.application;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.executable.HAPAttributeInBrick;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
+import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.manual.executable.HAPUtilityExport;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResource;

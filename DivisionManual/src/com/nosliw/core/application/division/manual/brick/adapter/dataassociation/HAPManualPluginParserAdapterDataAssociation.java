@@ -4,22 +4,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualParserDataAssociation;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserAdapterDataAssociation  extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserAdapterDataAssociation  extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserAdapterDataAssociation(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.DATAASSOCIATION_100, HAPManualAdapterDataAssociation.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick brickManual, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualAdapterDataAssociation entity = (HAPManualAdapterDataAssociation)brickManual;
 		
 		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualAdapterDataAssociation.DEFINITION);

@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBrickBlockComplex;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;

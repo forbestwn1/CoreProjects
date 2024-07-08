@@ -5,10 +5,10 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPBrickBlockSimple;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.division.manual.executable.HAPBrickBlockSimple;
 
 @HAPEntityWithAttribute
 public class HAPBlockInteractiveInterface extends HAPBrickBlockSimple{

@@ -10,21 +10,21 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualContextParse;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginParserBrickImpValueStructure extends HAPPluginParserBrickImpSimple{
+public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueStructure(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPManualEnumBrickType.VALUESTRUCTURE_100, HAPManualBrickValueStructure.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualBrick entityDefinition, Object jsonValue, HAPManualContextParse parseContext) {
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		JSONObject structureJson = (JSONObject)jsonValue;
 		if(structureJson!=null) {
 			HAPManualBrickValueStructure valueStructure = (HAPManualBrickValueStructure)entityDefinition;

@@ -3,6 +3,8 @@ package com.nosliw.core.application;
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.division.manual.executable.HAPAttributeInBrick;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 
 public class HAPUtilityBrickTraverse {
 

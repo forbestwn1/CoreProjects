@@ -3,6 +3,7 @@ package com.nosliw.core.application;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.division.manual.executable.HAPBrick;
 
 public abstract class HAPHandlerDownwardImpAttribute extends HAPHandlerDownward{
 

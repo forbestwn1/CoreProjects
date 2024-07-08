@@ -5,8 +5,8 @@ import java.util.Map;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.division.manual.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPExpandable;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
@@ -14,7 +14,7 @@ import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualBrickWrapperValueStructure extends HAPManualBrickBlockSimple implements HAPWithConstantScriptExpression, HAPExpandable{
+public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBrickBlockSimple implements HAPWithConstantScriptExpression, HAPExpandable{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";
