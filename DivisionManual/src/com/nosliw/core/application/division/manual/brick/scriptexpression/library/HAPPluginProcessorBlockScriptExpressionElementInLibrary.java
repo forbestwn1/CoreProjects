@@ -21,14 +21,14 @@ import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
-public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
+public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAPPluginProcessorBlockSimple{
 
 	public HAPPluginProcessorBlockScriptExpressionElementInLibrary() {
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100);

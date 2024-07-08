@@ -27,7 +27,7 @@ public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSim
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrick(HAPEnumBrickType.CONTAINERLIST_100));
+		this.setAttributeWithValueBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	
 	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){

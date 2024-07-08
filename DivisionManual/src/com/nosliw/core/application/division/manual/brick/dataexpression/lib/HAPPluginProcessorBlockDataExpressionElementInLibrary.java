@@ -13,7 +13,7 @@ import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualOperand;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityOperand;
@@ -24,7 +24,7 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickBloc
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
-public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimpleImp{
+public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimple{
 
 	public HAPPluginProcessorBlockDataExpressionElementInLibrary() {
 		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100);

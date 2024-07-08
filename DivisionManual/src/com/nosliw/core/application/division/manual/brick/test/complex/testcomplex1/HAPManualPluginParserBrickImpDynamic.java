@@ -89,7 +89,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 			}
 		}
 
-		out.isComplex = HAPManualDefinitionUtilityBrick.isBrickComplex(out.entityType, getBrickManager()); 
+		out.isComplex = HAPManualDefinitionUtilityBrick.isBrickComplex(out.entityType, this.getManualDivisionEntityManager()); 
 		
 		return out;
 	}

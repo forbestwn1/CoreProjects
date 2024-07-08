@@ -19,15 +19,15 @@ import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplexImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 
-public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPluginProcessorBlockComplexImp{
+public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPluginProcessorBlockComplex{
 
 	public HAPManualPluginProcessorBlockComplexTestComplexScript() {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100);
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		HAPBundle bundle = processContext.getCurrentBundle();
 		
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
-		HAPManualDefinitionBrickTestComplexScript definitionBlock = (HAPManualDefinitionBrickTestComplexScript)blockPair.getLeft();
-		HAPBlockTestComplexScript executableBlock = (HAPBlockTestComplexScript)blockPair.getRight();
+		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
+		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
 		
 		Map<String, Object> parms = definitionBlock.getParms();
 
@@ -80,7 +80,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		HAPBlockTestComplexScript executableEntity = (HAPBlockTestComplexScript)complexEntityExecutable;
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = executableEntity.getDefinitionEntityId();
-		HAPManualDefinitionBrickTestComplexScript definitionEntity = (HAPManualDefinitionBrickTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		HAPManualDefinitionBlockTestComplexScript definitionEntity = (HAPManualDefinitionBlockTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		Map<String, Object> parms = definitionEntity.getParms();
 		
 		//extended variable
@@ -112,7 +112,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPl
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = complexEntityExecutable.getDefinitionEntityId();
-		HAPManualDefinitionBrickTestComplexScript definitionEntity = (HAPManualDefinitionBrickTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		HAPManualDefinitionBlockTestComplexScript definitionEntity = (HAPManualDefinitionBlockTestComplexScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 
 		
 		HAPEntityBundle bundle = processContext.getCurrentBundle();

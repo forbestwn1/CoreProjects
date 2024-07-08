@@ -7,7 +7,11 @@ public class HAPInfoTreeNode {
 	private HAPPath m_pathFromRoot;
 	
 	private HAPManualBrick m_parent;
-	
+
+	public HAPInfoTreeNode() {
+		this(new HAPPath(), null);
+	}
+
 	public HAPInfoTreeNode(HAPPath pathFromRoot, HAPManualBrick parent) {
 		this.m_pathFromRoot = pathFromRoot;
 		this.m_parent = parent;

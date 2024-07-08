@@ -45,7 +45,7 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefiniti
 			valueStructureJsonObj = wrapperObj;
 		}
 
-		HAPManualBrickWrapperValueStructure out = (HAPManualBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrick(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
+		HAPManualBrickWrapperValueStructure out = (HAPManualBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
 		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
 		out.setAttribute(valueStructureAttr);
 

@@ -11,7 +11,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
-import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -32,9 +31,10 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
-import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
+import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
@@ -54,9 +54,9 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
 		
-		buildValueStructureComplexTree(rootEntityInfo, processContext, runtimeEnv);
+		buildValueStructureComplexTree(rootEntityInfo, processContext, manualBrickMan, runtimeEnv);
 		
 //		buildExtensionValueStructure(complexEntity, processContext);
 		
@@ -66,8 +66,8 @@ public class HAPManualUtilityValueStructureDomain {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPRuntimeEnvironment runtimeEnv) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
+	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -112,7 +112,7 @@ public class HAPManualUtilityValueStructureDomain {
 				}
 				return true;
 			}
-		}, runtimeEnv.getBrickManager(), processContext);
+		}, runtimeEnv.getBrickManager(), manualBrickMan, processContext);
 	}
 
 	private static void createExtensionPart(HAPValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {

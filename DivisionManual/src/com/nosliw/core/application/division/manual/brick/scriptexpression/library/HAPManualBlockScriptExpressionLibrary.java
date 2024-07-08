@@ -15,7 +15,7 @@ public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBr
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(HAPBlockScriptExpressionLibrary.ITEM, this.getManualBrickManager().newBrick(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeWithValueBrick(HAPBlockScriptExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
 	public String addElement(HAPManualBlockScriptExpressionElementInLibrary element) {

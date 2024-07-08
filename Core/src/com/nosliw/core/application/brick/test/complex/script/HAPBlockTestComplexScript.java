@@ -5,18 +5,13 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPBlockTestComplexScript extends HAPBrickBlockComplex{
+public interface HAPBlockTestComplexScript extends HAPBrick{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";
@@ -37,27 +32,17 @@ public class HAPBlockTestComplexScript extends HAPBrickBlockComplex{
 	public static String VARIABLEEXTENDED = "variableExtended";
 	
 	
-	public HAPBlockTestComplexScript() {
-	}
-	
-	public void setScript(HAPResourceId scriptResourceId) {   this.setAttributeValueWithValue(SCRIPT, scriptResourceId);  }
-	public HAPResourceId getScrip() {		return (HAPResourceId)this.getAttributeValueOfValue(SCRIPT);	}
+	HAPResourceId getScrip();
+	Map<String, Object> getParms();
+	List<HAPResultReferenceResolve> getVariables();
+	List<HAPReferenceElement> getUnknownVariables();
+	List<HAPExecutableVariableExpected> getExtendedVariables();
+	List<HAPInfoAttachmentResolve> getAttachments();
 
-	public void setParms(Map<String, Object> parms) {	this.setAttributeValueWithValue(PARM, parms);	}
-
-	public void setVariables(List<HAPResultReferenceResolve> vars) {    this.setAttributeValueWithValue(VARIABLE, vars);	}
-	
-	public void setUnknowVariable(List<HAPReferenceElement> unknowns) {   this.setAttributeValueWithValue(UNKNOWNVARIABLE, unknowns);   }
-
-	public List<HAPExecutableVariableExpected> getExtendedVariables(){    return (List<HAPExecutableVariableExpected>)this.getAttributeValueOfValue(VARIABLEEXTENDED);         }
-	public void setExtendedVariables(List<HAPExecutableVariableExpected> vars) {    this.setAttributeValueObject(VARIABLEEXTENDED, vars);	}
-
-	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setAttributeValueObject(ATTACHMENT, attachments);	}
-	
-	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
-		HAPResourceDependency scriptResource = new HAPResourceDependency(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, this.getScriptName()));
-		dependency.add(scriptResource);
-	}
+//	@Override
+//	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
+//		HAPResourceDependency scriptResource = new HAPResourceDependency(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, this.getScriptName()));
+//		dependency.add(scriptResource);
+//	}
 
 }

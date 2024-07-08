@@ -9,16 +9,17 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
-import com.nosliw.core.application.division.manual.executable.HAPAttributeInBrick;
-import com.nosliw.core.application.division.manual.executable.HAPBrickBlockSimple;
+import com.nosliw.core.application.HAPAttributeInBrick;
+import com.nosliw.core.application.HAPBrick;
 
 //attribute: id or name of item for attribute name, otherwise, create attribute name
 @HAPEntityWithAttribute
-public class HAPBrickContainer extends HAPBrickBlockSimple{
+public interface HAPBrickContainer extends HAPBrick{
 
 	@HAPAttribute
 	static final public String ATTRINDEX = HAPUtilityNosliw.buildNosliwFullName("attrIndex");  
 
+/*	
 	@Override
 	public void init() {
 		this.setAttributeIndex(0);
@@ -64,7 +65,7 @@ public class HAPBrickContainer extends HAPBrickBlockSimple{
 	}
 	
 	private void setAttributeIndex(Integer index) {		this.setAttributeValueWithValue(ATTRINDEX, index);	}
-
+*/
 
 	
 //	public void addElement(String attrName, HAPEntityOrReference brickOrRef) {   this.setAttributeValueWithBrick(attrName, brickOrRef);     }

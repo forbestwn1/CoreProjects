@@ -63,7 +63,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
 			//insert task wrapper if attribute value is task, the reason is wrapper can create instance for each task execute
-			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)this.getManualBrickManager().newBrick(HAPEnumBrickType.TASKWRAPPER_100); 
+			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.TASKWRAPPER_100); 
 			String taskWrapperAttrName = attribute.getName();
 			attribute.setName(HAPBlockTaskWrapper.TASK);
 			taskWrapperBrick.setAttribute(attribute);

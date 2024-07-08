@@ -15,7 +15,7 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualDefinitionBric
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrick(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
 	public String addElement(HAPManualBlockDataExpressionElementInLibrary element) {

@@ -4,18 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
-import com.nosliw.core.application.division.manual.executable.HAPInfoTreeNode;
-import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPWrapperBrickRoot extends HAPSerializableImp implements HAPTreeNodeBrick, HAPWithBrick, HAPWithResourceDependency{
+public class HAPWrapperBrickRoot extends HAPSerializableImp implements HAPWithBrick, HAPWithResourceDependency{
 
 	private HAPBrick m_brick;
 
@@ -26,12 +22,6 @@ public class HAPWrapperBrickRoot extends HAPSerializableImp implements HAPTreeNo
 	@Override
 	public HAPBrick getBrick() {   return this.m_brick;     }
 	public void setEntity(HAPBrick entity) {     this.m_brick = entity;     }
-
-	@Override
-	public HAPInfoTreeNode getTreeNodeInfo() {  return new HAPInfoTreeNode(new HAPPath(), null);  }
-
-	@Override
-	public Object getNodeValue() {  return this.getBrick();   }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

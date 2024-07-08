@@ -2,10 +2,6 @@ package com.nosliw.core.application;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.executable.HAPAttributeInBrick;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
-import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
-import com.nosliw.core.application.division.manual.executable.HAPUtilityExport;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -35,7 +31,7 @@ public class HAPUtilityBrick {
 		HAPBrick currentBrick = brick;
 		for(int i=0; i<path.getLength(); i++) {
 			String attrName = path.getPathSegments()[i];
-			attr = currentBrick.getAttribute(attrName);
+			attr = getAttributeInBrick(currentBrick, attrName);
 			HAPWrapperValue attrValueWrapper = attr.getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
@@ -48,6 +44,16 @@ public class HAPUtilityBrick {
 			}
 		}
 		return attr;
+	}
+	
+	public static HAPAttributeInBrick getAttributeInBrick(HAPBrick brick, String attrName) {
+		HAPAttributeInBrick out = null;
+		for(HAPAttributeInBrick attr : brick.getAttributes()) {
+			if(attrName.equals(attr.getName())) {
+				return attr;
+			}
+		}
+		return out;
 	}
 	
 	public static HAPBrick getDescdentBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
@@ -96,19 +102,5 @@ public class HAPUtilityBrick {
 		}
 	}
 	
-	public static HAPTreeNodeBrick getDescdentTreeNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		HAPTreeNodeBrick out = null;
-		if(path==null || path.isEmpty()) {
-			out = rootBrickWrapper;
-		}
-		else {
-			out = getDescendantAttribute(rootBrickWrapper.getBrick(), path);
-		}
-		return out;
-	}
-	
-	public static boolean isBrickComplex(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick brickAppMan) {
-		return brickAppMan.getBrickTypeInfo(brickTypeId).getIsComplex();
-	}
 	
 }

@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
-import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
-import com.nosliw.core.application.division.manual.executable.HAPPluginBrickImp;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.HAPPluginBrick;
 
-public class HAPPluginBrickServiceProfile extends HAPPluginBrickImp{
+public class HAPPluginBrickServiceProfile extends HAPPluginBrick{
 
-	public HAPPluginBrickServiceProfile(HAPInfoBrickType brickTypeInfo, HAPRuntimeEnvironment runtimeEnv) {
-		super(brickTypeInfo, HAPBlockServiceProfile.class, runtimeEnv);
+	public HAPPluginBrickServiceProfile() {
+		super(HAPEnumBrickType.SERVICEPROFILE_100);
 	}
 
 	@Override

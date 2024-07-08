@@ -3,11 +3,11 @@ package com.nosliw.core.application.division.manual.brick.service.provider;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimpleImp;
+import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 
-public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPPluginProcessorBlockSimpleImp{
+public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPPluginProcessorBlockSimple{
 
 	public HAPManualPluginProcessorBlockSimpleImpServiceProvider() {
 		super(HAPEnumBrickType.SERVICEPROVIDER_100);

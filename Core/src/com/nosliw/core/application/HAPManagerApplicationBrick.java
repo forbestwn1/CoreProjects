@@ -11,27 +11,10 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
-import com.nosliw.core.application.brick.adapter.dataassociationforexpression.HAPAdapterDataAssociationForExpression;
-import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
-import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
-import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
-import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
-import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
-import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.testcomplex1.HAPBlockTestComplex1;
-import com.nosliw.core.application.common.script.HAPBlockScriptComplex;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
-import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
-import com.nosliw.core.application.division.manual.executable.HAPPluginBrick;
-import com.nosliw.core.application.division.manual.executable.HAPPluginBrickImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -42,13 +25,13 @@ public class HAPManagerApplicationBrick {
 
 	private Map<String, HAPPluginDivision> m_divisionPlugin;
 	
-	//
+	//some brick type blong to particular division
 	private Map<HAPIdBrickType, String> m_divisionByBrickType;
-	
-	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
 	private Map<String, HAPIdBrickType> m_adapterTypeByBlockType;
 	
+	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
+
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
@@ -64,13 +47,13 @@ public class HAPManagerApplicationBrick {
 		Collections.sort(brickPlugins, new Comparator<HAPPluginBrick>(){
 			@Override
 			public int compare(HAPPluginBrick arg0, HAPPluginBrick arg1) {
-				return arg0.getBrickTypeInfo().getBrickTypeId().getVersion().compareTo(arg1.getBrickTypeInfo().getBrickTypeId().getVersion());
+				return arg0.getBrickType().getVersion().compareTo(arg1.getBrickType().getVersion());
 			}
 		});
 		
 		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
 		for(HAPPluginBrick brickPlugin : brickPlugins) {
-			out.add(brickPlugin.getBrickTypeInfo().getBrickTypeId());
+			out.add(brickPlugin.getBrickType());
 		}
 		
 		return out;
@@ -154,7 +137,7 @@ public class HAPManagerApplicationBrick {
 	}
 	
 	public void registerBrickPlugin(HAPPluginBrick brickPlugin) {
-		HAPIdBrickType entityTypeId = brickPlugin.getBrickTypeInfo().getBrickTypeId();
+		HAPIdBrickType entityTypeId = brickPlugin.getBrickType();
 		
 		Map<String, HAPPluginBrick> byVersion = this.m_brickPlugins.get(entityTypeId.getBrickType());
 		if(byVersion==null) {
@@ -182,41 +165,37 @@ public class HAPManagerApplicationBrick {
 	
 	private void init() {
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_1_100, true), HAPBlockTestComplex1.class, this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, true), HAPBlockTestComplexScript.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_1_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.TASKWRAPPER_100, false), HAPBlockTaskWrapper.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASKWRAPPER_100));
 		
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROVIDER_100, false, HAPConstantShared.TASK_TYPE_TASK), HAPBlockServiceProvider.class, this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickServiceProfile(new HAPInfoBrickType(HAPEnumBrickType.SERVICEPROFILE_100, false), this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickServiceInterface(new HAPInfoBrickType(HAPEnumBrickType.SERVICEINTERFACE_100, false), this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100));
+		this.registerBrickPlugin(new HAPPluginBrickServiceProfile());
+		this.registerBrickPlugin(new HAPPluginBrickServiceInterface());
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.INTERACTIVEINTERFACE_100, false), HAPBlockInteractiveInterface.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEINTERFACE_100));
 
-		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIB_100, false), this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, false, HAPConstantShared.TASK_TYPE_EXPRESSION), HAPBlockDataExpressionElementInLibrary.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary());
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100));
 
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, true, HAPConstantShared.TASK_TYPE_CONTAINER_EXPRESSION), HAPBlockDataExpressionGroup.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONGROUP_100));
 
-		this.registerBrickPlugin(new HAPPluginBrickScriptExpressionLibrary(new HAPInfoBrickType(HAPEnumBrickType.SCRIPTEXPRESSIONLIB_100, false), this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, false, HAPConstantShared.TASK_TYPE_EXPRESSION), HAPBlockScriptExpressionElementInLibrary.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrickScriptExpressionLibrary());
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100));
 
 		
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.CONTAINER_100, false), HAPBrickContainer.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINER_100));
 		
 		
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATION_100, false), HAPAdapterDataAssociation.class, this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, false), HAPAdapterDataAssociationForTask.class, this.m_runtimeEnv));
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, false), HAPAdapterDataAssociationForExpression.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATION_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100));
 		
-		this.registerBrickPlugin(new HAPPluginBrickImp(new HAPInfoBrickType(HAPEnumBrickType.DECORATIONSCRIPT_100, true), HAPBlockScriptComplex.class, this.m_runtimeEnv));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DECORATIONSCRIPT_100));
 		
 	}
 
-	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).getBrickTypeInfo();	}
-	
-	
-	public HAPBrick newBrickInstance(HAPIdBrickType brickTypeId) {		return this.getBrickPlugin(brickTypeId).newInstance();	}
 
 	private void buildDependencyGroup(HAPResourceId complexEntityResourceId, Set<HAPResourceId> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {

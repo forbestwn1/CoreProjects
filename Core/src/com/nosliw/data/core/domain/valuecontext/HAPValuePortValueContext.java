@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
-import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -23,7 +23,7 @@ public class HAPValuePortValueContext extends HAPValuePortImp{
 	private HAPValueContext m_valueContext;
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPValuePortValueContext(HAPBrickBlockComplex complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
+	public HAPValuePortValueContext(HAPBrick complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.IO_DIRECTION_BOTH));
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;

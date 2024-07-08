@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPAttributeInBrick;
+import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
+import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
-import com.nosliw.core.application.division.manual.executable.HAPAttributeInBrick;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
-import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
-import com.nosliw.core.application.division.manual.executable.HAPPluginBrickImp;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrickImp{
+public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrick{
 
-	public HAPPluginBrickDataExpressionLibrary(HAPInfoBrickType brickTypeInfo, HAPRuntimeEnvironment runtimeEnv) {
-		super(brickTypeInfo, HAPBlockDataExpressionLibrary.class, runtimeEnv);
+	public HAPPluginBrickDataExpressionLibrary() {
+		super(HAPEnumBrickType.DATAEXPRESSIONLIB_100);
 	}
 
 	@Override

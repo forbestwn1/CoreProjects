@@ -12,7 +12,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBlockTestComplex1 extends HAPManualPluginParserBrickImpDynamic{
 
 	public HAPManualPluginParserBlockTestComplex1(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TEST_COMPLEX_1_100, HAPManualBlockTestComplex1.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.TEST_COMPLEX_1_100, HAPManualDefinitionBlockTestComplex1.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override

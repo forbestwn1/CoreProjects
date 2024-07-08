@@ -1,7 +1,6 @@
 package com.nosliw.core.application.division.manual.executable;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -21,16 +20,10 @@ import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 @HAPEntityWithAttribute
 public class HAPManualBrickBlockComplex extends HAPManualBrickBlock implements HAPWithValueContext{
 
-	private HAPValueContext m_valueContext;
-
 	private HAPDomainValueStructure m_valueStructureDomain; 
 	
 	public HAPManualBrickBlockComplex() {
-		this.m_valueContext = new HAPValueContext(); 
 	}
-	
-	@Override
-	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
 	
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
 
@@ -66,23 +59,6 @@ public class HAPManualBrickBlockComplex extends HAPManualBrickBlock implements H
 
 	protected Set<HAPGroupValuePorts> getInternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
 	protected Set<HAPGroupValuePorts> getExternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
-	
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_valueContext!=null) {
-			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
-		}
-		
-	}
-	
-	@Override
-	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		if(this.m_valueContext!=null) {
-			jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JAVASCRIPT));
-		}
-	}
 	
 	@Override
 	protected boolean buildBrickFormatJson(JSONObject jsonObj, HAPManagerApplicationBrick brickMan) {

@@ -13,7 +13,6 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -73,12 +72,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot());
 		if(brickResult.isInternalBrick()) {
 			HAPBrick brick = brickResult.getInternalBrick();
-			if(brick.getBrickTypeInfo().getIsComplex()) {
-				out = new HAPResourceDataBrick(brick, this.m_valueStructureDomain);
-			}
-			else {
-				out = new HAPResourceDataBrick(brick);
-			}
+			out = new HAPResourceDataBrick(brick, this.m_valueStructureDomain);
 		}
 		else {
 			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();
@@ -87,7 +81,6 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	}
 	
 	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}
-	
 	
 	public HAPWrapperBrickRoot getBrickWrapper() {    return this.m_brickWrapper;     }
 	public void setBrickWrapper(HAPWrapperBrickRoot brickWrapper) {     this.m_brickWrapper = brickWrapper;      }

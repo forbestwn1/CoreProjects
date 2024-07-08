@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
@@ -18,28 +18,38 @@ import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPManualBrick extends HAPBrick{
+public abstract class HAPManualBrick extends HAPSerializableImp implements HAPBrick{
 
 	public final static String ISCOMPLEX = "isComplex"; 
 
 	//all attributes
 	private List<HAPManualAttributeInBrick> m_attributes;
 	
+	private HAPValueContext m_valueContext;
+
+	
 	private HAPInfoTreeNode m_tempTreeNodeInfo;
 
 	private HAPInfoBrickType m_brickTypeInfo;
 	
+	private HAPIdBrickType m_brickTypeId;
+	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 
 	public HAPManualBrick() {
+		this.m_valueContext = new HAPValueContext(); 
 		this.m_attributes = new ArrayList<HAPManualAttributeInBrick>();
 	}
+	
+	@Override
+	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
@@ -51,11 +61,14 @@ public abstract class HAPManualBrick extends HAPBrick{
 
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
-	@Override
-	public HAPIdBrickType getBrickType() {   return this.getBrickTypeInfo().getBrickTypeId();     }
+	
+	public void setBrickType(HAPIdBrickType brickTypeId) {   this.m_brickTypeId = brickTypeId;     }
 	
 	@Override
-	public List<HAPAttributeInBrick> getAttributes(){     return this.m_attributes;      }
+	public HAPIdBrickType getBrickType() {   return this.m_brickTypeId;     }
+	
+	@Override
+	public List<HAPAttributeInBrick> getAttributes(){     return (List)this.m_attributes;	}
 	public HAPManualAttributeInBrick getAttribute(String attrName) {
 		for(HAPManualAttributeInBrick attr : this.m_attributes) {
 			if(attrName.equals(attr.getName())) {
@@ -113,7 +126,7 @@ public abstract class HAPManualBrick extends HAPBrick{
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
 	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
 		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPWrapperValueOfBrick((HAPManualBrick)brickOrRef)));
+			this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPManualWrapperValueOfBrick((HAPManualBrick)brickOrRef)));
 		}
 		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
 			this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
@@ -130,24 +143,8 @@ public abstract class HAPManualBrick extends HAPBrick{
 	public HAPContainerValuePorts getInternalValuePorts() {		return null;	}
 	
 	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		if(m_brickTypeInfo!=null) {
-			jsonMap.put(BRICKTYPE, this.m_brickTypeInfo.getBrickTypeId().toStringValue(HAPSerializationFormat.JSON));
-			jsonMap.put(ISCOMPLEX, this.m_brickTypeInfo.getIsComplex()+"");
-			typeJsonMap.put(ISCOMPLEX, Boolean.class);
-		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildJson(this.m_attributes, HAPSerializationFormat.JSON));
-	}
-	
-	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJSJsonMap(jsonMap, typeJsonMap);
-
-		List<String> attrJsonList = new ArrayList<String>();
-		for(HAPManualAttributeInBrick attr : this.m_attributes) {
-			attrJsonList.add(attr.toStringValue(HAPSerializationFormat.JAVASCRIPT));
-		}
-		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
+		HAPBrick.buildJSJsonMap(this, jsonMap, typeJsonMap);
 	}
 
 	@Override

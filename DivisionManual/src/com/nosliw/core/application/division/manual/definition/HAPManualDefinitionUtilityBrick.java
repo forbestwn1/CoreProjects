@@ -10,6 +10,8 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
@@ -42,7 +44,7 @@ public class HAPManualDefinitionUtilityBrick {
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath path, HAPBundle bundle){
 		HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData();
 		HAPManualDefinitionBrick entityDef = getDescdentBrickDefinition(rootEntityDefInfo, path);
-		HAPManualBrick entityExe = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
+		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	
@@ -117,11 +119,11 @@ public class HAPManualDefinitionUtilityBrick {
 		return null;
 	}
 	
-	public static boolean isBrickComplex(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick entityMan) {
+	public static boolean isBrickComplex(HAPIdBrickType brickTypeId, HAPManualManagerBrick manualBrickMan) {
 		if(brickTypeId.getBrickType().equals(HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT)) {
 			return false;
 		} else {
-			return HAPUtilityBrick.isBrickComplex(brickTypeId, entityMan);
+			return HAPManualUtilityBrick.isBrickComplex(brickTypeId, manualBrickMan);
 		}
 	}
 	

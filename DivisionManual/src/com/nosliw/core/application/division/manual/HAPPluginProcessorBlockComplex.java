@@ -1,35 +1,51 @@
 package com.nosliw.core.application.division.manual;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
 
-public interface HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
+public abstract class HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
+
+	public HAPPluginProcessorBlockComplex(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass) {
+		super(brickType, brickClass);
+	}
+
 
 	//process definition before value context
-	void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
-	void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
+	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
+	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+
+
+	
+	
+	
+	
+	public void extendConstantValue(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	
+
+	
+	
 	//value context extension, variable resolve
-	void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
-	void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
-	
-
-	
-	void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
-
-	void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext);
-	
-	
-	
-	//supply custom constant value
-	void extendConstantValue(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	
 	//matcher
-	void processValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	public void processValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
+	public void postProcessValueContextDiscovery(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
 	
-	//process entity after value context
-	void processEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
-	void postProcessEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext);
+	public void processEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
+	public void postProcessEntity(HAPManualBrickBlockComplex complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
 
+
+	protected Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext){
+		return HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, processContext.getCurrentBundle());
+	}
 }

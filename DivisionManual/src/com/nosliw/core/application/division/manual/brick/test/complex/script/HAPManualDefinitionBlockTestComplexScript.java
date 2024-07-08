@@ -8,9 +8,9 @@ import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplex
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPManualDefinitionBrickTestComplexScript extends HAPManualDefinitionBrickBlockComplex{
+public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefinitionBrickBlockComplex{
 
-	public HAPManualDefinitionBrickTestComplexScript() {
+	public HAPManualDefinitionBlockTestComplexScript() {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100);
 		this.setAttributeWithValueValue(HAPBlockTestComplexScript.PARM, new LinkedHashMap<String, Object>());
 	}
