@@ -15,14 +15,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserAdapterDataAssociation  extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserAdapterDataAssociation(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAASSOCIATION_100, HAPManualAdapterDataAssociation.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.DATAASSOCIATION_100, HAPManualDefinitionAdapterDataAssociation.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualAdapterDataAssociation entity = (HAPManualAdapterDataAssociation)brickManual;
+		HAPManualDefinitionAdapterDataAssociation entity = (HAPManualDefinitionAdapterDataAssociation)brickManual;
 		
-		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualAdapterDataAssociation.DEFINITION);
+		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualDefinitionAdapterDataAssociation.DEFINITION);
 		if(daObj instanceof JSONObject) {
 			HAPManualDataAssociation da = HAPManualParserDataAssociation.buildDefinitionByJson((JSONObject)daObj);
 			entity.addDataAssciation(da);

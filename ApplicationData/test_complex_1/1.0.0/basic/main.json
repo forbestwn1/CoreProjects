@@ -83,7 +83,7 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -233,7 +233,7 @@
 			"adapter": [
 				{
 					"name" : "dataassociation",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociation",
 						"version": "1.0.0"

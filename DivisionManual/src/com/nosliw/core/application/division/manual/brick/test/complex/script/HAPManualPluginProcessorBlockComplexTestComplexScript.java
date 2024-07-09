@@ -23,11 +23,12 @@ import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComple
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPluginProcessorBlockComplex{
 
-	public HAPManualPluginProcessorBlockComplexTestComplexScript() {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class);
+	public HAPManualPluginProcessorBlockComplexTestComplexScript(HAPRuntimeEnvironment runtimeEnv) {
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class, runtimeEnv);
 	}
 
 	@Override

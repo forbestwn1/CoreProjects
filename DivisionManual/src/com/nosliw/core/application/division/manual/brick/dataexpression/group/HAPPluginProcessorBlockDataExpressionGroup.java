@@ -15,10 +15,11 @@ import com.nosliw.core.application.division.manual.common.dataexpression.HAPManu
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplex{
 
-	public HAPPluginProcessorBlockDataExpressionGroup() {
+	public HAPPluginProcessorBlockDataExpressionGroup(HAPRuntimeEnvironment runtimeEnv) {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100);
 	}
 

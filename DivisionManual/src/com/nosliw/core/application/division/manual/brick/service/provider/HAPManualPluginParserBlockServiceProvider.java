@@ -11,12 +11,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBlockServiceProvider extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockServiceProvider(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.SERVICEPROVIDER_100, HAPManualBlockSimpleServiceProvider.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.SERVICEPROVIDER_100, HAPManualDefinitionBlockSimpleServiceProvider.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualBlockSimpleServiceProvider entity = (HAPManualBlockSimpleServiceProvider)entityDefinition;
+		HAPManualDefinitionBlockSimpleServiceProvider entity = (HAPManualDefinitionBlockSimpleServiceProvider)entityDefinition;
 		entity.buildObject(jsonValue, HAPSerializationFormat.JSON);
 	}
 }

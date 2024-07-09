@@ -16,7 +16,6 @@ public abstract class HAPAdapter extends HAPEntityInfoImp implements HAPWithReso
 	
 	public abstract HAPWrapperValue getValueWrapper();
 	
-	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		this.buildJsonMap(jsonMap, typeJsonMap);

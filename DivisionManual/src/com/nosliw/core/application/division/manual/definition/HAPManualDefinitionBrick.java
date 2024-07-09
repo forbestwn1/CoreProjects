@@ -15,7 +15,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockSimpleTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -63,7 +63,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
 			//insert task wrapper if attribute value is task, the reason is wrapper can create instance for each task execute
-			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.TASKWRAPPER_100); 
+			HAPManualDefinitionBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualDefinitionBlockSimpleTaskWrapper)this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.TASKWRAPPER_100); 
 			String taskWrapperAttrName = attribute.getName();
 			attribute.setName(HAPBlockTaskWrapper.TASK);
 			taskWrapperBrick.setAttribute(attribute);

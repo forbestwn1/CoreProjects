@@ -1,45 +1,23 @@
 package com.nosliw.core.application.division.manual.executable;
 
 import java.util.List;
-import java.util.Map;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.HAPAdapter;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-@HAPEntityWithAttribute
-public class HAPManualAdapter extends HAPEntityInfoImp implements HAPWithResourceDependency{
+public class HAPManualAdapter extends HAPAdapter{
 
-	@HAPAttribute
-	public static final String VALUEWRAPPER = "valueWrapper";
-	
 	private HAPWrapperValue m_valueWrapper;
 	
 	public HAPManualAdapter(HAPWrapperValue valueWrapper) {
 		this.m_valueWrapper = valueWrapper;
 	}
 	
+	@Override
 	public HAPWrapperValue getValueWrapper() {
 		return this.m_valueWrapper;
-	}
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_valueWrapper!=null) {
-			jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JSON));
-		}
-	}
-	
-	@Override
-	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		this.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(VALUEWRAPPER, this.m_valueWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 
 	@Override

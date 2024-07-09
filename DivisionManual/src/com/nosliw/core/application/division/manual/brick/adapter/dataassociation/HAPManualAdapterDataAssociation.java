@@ -1,22 +1,14 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociation;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
+public class HAPManualAdapterDataAssociation extends HAPManualBrickAdapter implements HAPAdapterDataAssociation{
 
-public class HAPManualAdapterDataAssociation extends HAPManualDefinitionBrickAdapter{
+	@Override
+	public HAPDataAssociation getDataAssociation() {   return (HAPDataAssociation)this.getAttributeValueOfValue(DATAASSOCIATION);     }
 
-	public static final String DEFINITION = "definition";
-
-	public HAPManualAdapterDataAssociation() {
-		super(HAPEnumBrickType.DATAASSOCIATION_100);
-		this.setAttributeWithValueValue(DEFINITION, new ArrayList<HAPManualDataAssociation>());
-	}
-	
-	public void addDataAssciation(HAPManualDataAssociation dataAssciation) {    this.getDataAssociation().add(dataAssciation);    }
-	public List<HAPManualDataAssociation> getDataAssociation() {   return (List<HAPManualDataAssociation>)this.getAttributeValueWithValue(DEFINITION);     }
+	public void setDataAssciation(HAPDataAssociation dataAssciation) {    this.setAttributeValueWithValue(DATAASSOCIATION, dataAssciation);    }
 
 }

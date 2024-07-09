@@ -1,37 +1,29 @@
 package com.nosliw.core.application.division.manual.brick.service.provider;
 
-import org.json.JSONObject;
-
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPIdBrick;
+import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
+import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.data.core.resource.HAPUtilityResource;
 
-public class HAPManualBlockSimpleServiceProvider extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickBlockSimple implements HAPBlockServiceProvider{
 
-	public static final String SERVICEKEY = "serviceKey";
-
-	public HAPManualBlockSimpleServiceProvider() {
-		super(HAPEnumBrickType.SERVICEPROVIDER_100);
-	}
-
-	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeWithValueValue(SERVICEKEY, serviceKey);	}
-
-	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueWithValue(SERVICEKEY);	}
-	
+	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeValueWithValue(SERVICEID, serviceKey);	}
+	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueOfValue(SERVICEID);	}
+	 
 	@Override
-	protected boolean buildObjectByJson(Object json){  
-		try{
-			JSONObject objJson = (JSONObject)json;
-			JSONObject serviceKeyJsonObj = objJson.getJSONObject(SERVICEKEY);
-			HAPKeyService serviceKey = new HAPKeyService();
-			serviceKey.buildObject(serviceKeyJsonObj, HAPSerializationFormat.JSON);
-			this.setServiceKey(serviceKey);
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-		return true;  
+	public HAPContainerValuePorts getExternalValuePorts() {
+		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
+		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBlockServiceProfile.INTERFACE);
+
+		HAPBlockInteractiveInterface serviceInterfaceService = (HAPBlockInteractiveInterface)HAPUtilityResource.getResourceDataBrick(serviceInterfaceResourceId, getResourceManager(), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo());
+		return serviceInterfaceService.getExternalValuePorts();
 	}
 }

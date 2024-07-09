@@ -1,18 +1,11 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociationforexpression;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
+import com.nosliw.core.application.brick.adapter.dataassociationforexpression.HAPAdapterDataAssociationForExpression;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForExpression;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
 
-public class HAPManualAdapterDataAssociationForExpression extends HAPManualDefinitionBrickAdapter{
+public class HAPManualAdapterDataAssociationForExpression extends HAPManualBrickAdapter implements HAPAdapterDataAssociationForExpression{
 
-	public static final String DEFINITION = "definition";
-
-	public HAPManualAdapterDataAssociationForExpression() {
-		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100);
-	}
-	
-	public void setDataAssciation(HAPManualDataAssociationForExpression dataAssciation) {    this.setAttributeWithValueValue(DEFINITION, dataAssciation);    }
-	public HAPManualDataAssociationForExpression getDataAssociation() {   return (HAPManualDataAssociationForExpression)this.getAttributeValueWithValue(DEFINITION);     }
-	
+	public void setDataAssciation(HAPDataAssociationForExpression dataAssciation) {    this.setAttributeValueWithValue(DATAASSOCIATION, dataAssciation);    }
+	public HAPDataAssociationForExpression getDataAssociation() {   return (HAPDataAssociationForExpression)this.getAttributeValueOfValue(DATAASSOCIATION);     }
 }

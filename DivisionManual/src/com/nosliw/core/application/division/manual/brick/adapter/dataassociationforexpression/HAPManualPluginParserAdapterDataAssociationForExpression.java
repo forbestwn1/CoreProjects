@@ -14,14 +14,14 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserAdapterDataAssociationForExpression  extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserAdapterDataAssociationForExpression(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, HAPManualAdapterDataAssociationForExpression.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, HAPManualDefinitionAdapterDataAssociationForExpression.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualAdapterDataAssociationForExpression entity = (HAPManualAdapterDataAssociationForExpression)brickManual;
+		HAPManualDefinitionAdapterDataAssociationForExpression entity = (HAPManualDefinitionAdapterDataAssociationForExpression)brickManual;
 		
-		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualAdapterDataAssociationForExpression.DEFINITION);
+		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualDefinitionAdapterDataAssociationForExpression.DEFINITION);
 		HAPManualDataAssociationForExpression dataAssociationForExpression = new HAPManualDataAssociationForExpression();
 		dataAssociationForExpression.buildObject(daJsonObj, HAPSerializationFormat.JSON);
 		

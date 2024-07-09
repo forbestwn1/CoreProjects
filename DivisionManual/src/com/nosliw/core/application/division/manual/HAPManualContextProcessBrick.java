@@ -9,12 +9,18 @@ public class HAPManualContextProcessBrick {
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPManualContextProcessBrick(HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv) {
+	private HAPManualManagerBrick m_manualBrickMan;
+	
+	public HAPManualContextProcessBrick(HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		this.m_bundle = bundle;
 		this.m_runtimeEnv = runtimeEnv;
+		this.m_manualBrickMan = manualBrickMan;
 	}
 	
 	public HAPBundle getCurrentBundle(){   return this.m_bundle;  }
 
 	public HAPRuntimeEnvironment getRuntimeEnv() {   return this.m_runtimeEnv;    }
+	
+	public HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;      }
+	
 }

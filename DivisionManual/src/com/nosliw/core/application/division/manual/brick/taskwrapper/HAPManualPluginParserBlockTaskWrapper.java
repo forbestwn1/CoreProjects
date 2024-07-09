@@ -10,7 +10,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBlockTaskWrapper extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockTaskWrapper(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TASKWRAPPER_100, HAPManualBlockSimpleTaskWrapper.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.TASKWRAPPER_100, HAPManualDefinitionBlockSimpleTaskWrapper.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
