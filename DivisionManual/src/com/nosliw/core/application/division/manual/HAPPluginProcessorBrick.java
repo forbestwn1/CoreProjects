@@ -12,10 +12,13 @@ public class HAPPluginProcessorBrick {
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPPluginProcessorBrick(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv) {
+	private HAPManualManagerBrick m_manualBrickMan;
+
+	public HAPPluginProcessorBrick(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		this.m_brickType = brickType;
 		this.m_brickClass = brickClass;
 		this.m_runtimeEnv = runtimeEnv;
+		this.m_manualBrickMan = manualBrickMan;
 	}
 	
 	public HAPIdBrickType getBrickType() {    return this.m_brickType;     }
@@ -26,6 +29,7 @@ public class HAPPluginProcessorBrick {
 			out = this.m_brickClass.newInstance();
 			out.setBrickType(m_brickType);
 			out.setRuntimeEnvironment(this.getRuntimeEnvironment());
+			out.setManualBrickManager(this.m_manualBrickMan);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

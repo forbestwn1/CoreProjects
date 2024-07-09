@@ -7,6 +7,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForTask;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessAdapter;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForTask;
@@ -19,8 +20,8 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPP
 
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
-	public HAPManaualPluginAdapterProcessorDataAssociationForTask(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class, runtimeEnv);
+	public HAPManaualPluginAdapterProcessorDataAssociationForTask(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class, runtimeEnv, manualBrickMan);
 		this.m_runtimeEnv = runtimeEnv;
 	}
 

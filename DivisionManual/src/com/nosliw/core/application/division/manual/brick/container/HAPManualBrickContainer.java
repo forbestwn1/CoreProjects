@@ -1,61 +1,61 @@
 package com.nosliw.core.application.division.manual.brick.container;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
+import com.nosliw.core.application.division.manual.executable.HAPManaualBrickWithEntityInfoSimple;
 
-public class HAPManualBrickContainer extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualBrickContainer extends HAPManaualBrickWithEntityInfoSimple implements HAPBrickContainer{
 
-	private HAPIdBrickType m_childBrickTypeId;
-	
-	public HAPManualBrickContainer(HAPIdBrickType childBrickTypeId) {
-		super(HAPEnumBrickType.CONTAINER_100);
-		this.setAttributeIndex(0);
-		this.m_childBrickTypeId = childBrickTypeId;
-	}
-	
-	public HAPManualBrickContainer () {
-		super(HAPEnumBrickType.CONTAINER_100);
+	@Override
+	public void init() {
 		this.setAttributeIndex(0);
 	}
 	
-	public String addElement(HAPManualDefinitionAttributeInBrick attr) {
-		if(HAPUtilityBasic.isStringEmpty(attr.getName())) {
-			attr.setName(this.generateAttributeName());
+	@Override
+	public List<HAPAttributeInBrick> getElements(){
+		List<HAPAttributeInBrick> out = new ArrayList<HAPAttributeInBrick>();
+
+		for(HAPAttributeInBrick attr : this.getAttributes()) {
+			if(!ATTRINDEX.equals(attr.getName())) {
+				out.add(attr);
+			}
 		}
-		this.setAttribute(attr);
-		return attr.getName();
+		
+		return out;
 	}
-	
-	public String addElement(HAPManualDefinitionWrapperValue valueWrapper) {
-		String attrName = generateAttributeName();
-		this.setAttributeWithValueWrapper(attrName, valueWrapper);
-		return attrName;
-	}
-	
+	 
 	public String addElement(HAPEntityOrReference brickOrRef) {
-		return this.addElementAnom(brickOrRef);
+		String attrName = null;
+		String brickOrRefType = brickOrRef.getEntityOrReferenceType();
+		if(brickOrRefType.equals(HAPConstantShared.BRICK)) {
+			if(brickOrRef instanceof HAPEntityInfo) {
+				attrName = ((HAPEntityInfo)brickOrRef).getId();
+				this.setAttributeValueWithBrick(attrName, brickOrRef);
+			}
+			else {
+				attrName = this.addElementAnom(brickOrRef);
+			}
+		}
+		else if(brickOrRefType.equals(HAPConstantShared.RESOURCEID)) {
+			attrName = this.addElementAnom(brickOrRef);
+		}
+		return attrName;
 	}
 	
 	private String addElementAnom(HAPEntityOrReference brickOrRef) {
-		String attrName = this.generateAttributeName();
-		this.setAttributeWithValueBrick(attrName, brickOrRef);
+		Integer index = (Integer)this.getAttributeValueOfValue(ATTRINDEX);
+		index++;
+		this.setAttributeValueWithValue(ATTRINDEX, index);
+		String attrName = index+"";
+		this.setAttributeValueWithBrick(attrName, brickOrRef);
 		return attrName;
 	}
 	
-	private String generateAttributeName() {
-		Integer index = (Integer)this.getAttributeValueWithValue(HAPBrickContainer.ATTRINDEX);
-		index++;
-		this.setAttributeWithValueValue(HAPBrickContainer.ATTRINDEX, index);
-		return HAPConstantShared.PREFIX_ELEMENTID_COTAINER+index+"";
-	}
-	
-	private void setAttributeIndex(Integer index) {		this.setAttributeWithValueValue(HAPBrickContainer.ATTRINDEX, index);	}
-
+	private void setAttributeIndex(Integer index) {		this.setAttributeValueWithValue(ATTRINDEX, index);	}
 }

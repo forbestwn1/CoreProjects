@@ -14,7 +14,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
-import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
+import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute

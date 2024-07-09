@@ -8,8 +8,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginProcessorBlockSimple extends HAPPluginProcessorBlock{
 
-	public HAPPluginProcessorBlockSimple(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv) {
-		super(brickType, brickClass, runtimeEnv);
+	public HAPPluginProcessorBlockSimple(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(brickType, brickClass, runtimeEnv, manualBrickMan);
 	}
 	
 	public void postProcess(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {}

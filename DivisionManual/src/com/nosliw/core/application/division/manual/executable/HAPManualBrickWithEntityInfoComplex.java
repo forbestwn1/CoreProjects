@@ -1,10 +1,10 @@
-package com.nosliw.core.application.common.entityinfo;
+package com.nosliw.core.application.division.manual.executable;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.core.application.division.manual.executable.HAPBrickBlockComplex;
 
-public class HAPBrickWithEntityInfoComplex extends HAPBrickBlockComplex implements HAPEntityInfo{
+public class HAPManualBrickWithEntityInfoComplex extends HAPBrickBlockComplex implements HAPEntityInfo{
 
 	@Override
 	public String getId() {

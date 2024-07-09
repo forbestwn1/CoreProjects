@@ -12,8 +12,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginProcessorBlockComplex extends HAPPluginProcessorBlock{
 
-	public HAPPluginProcessorBlockComplex(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv) {
-		super(brickType, brickClass, runtimeEnv);
+	public HAPPluginProcessorBlockComplex(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass, HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(brickType, brickClass, runtimeEnv, manualBrickMan);
 	}
 
 

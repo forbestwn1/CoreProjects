@@ -13,6 +13,7 @@ import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualOperand;
@@ -23,17 +24,18 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPluginProcessorBlockSimple{
 
-	public HAPPluginProcessorBlockDataExpressionElementInLibrary() {
-		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100);
+	public HAPPluginProcessorBlockDataExpressionElementInLibrary(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualBlockDataExpressionElementInLibrary.class, runtimeEnv, manualBrickMan);
 	}
 
 	@Override
 	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
 		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
-		HAPManualDataExpressionLibraryElement def = ((HAPManualBlockDataExpressionElementInLibrary)blockDef).getValue();
+		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
 		def.cloneToEntityInfo(exe);
 		

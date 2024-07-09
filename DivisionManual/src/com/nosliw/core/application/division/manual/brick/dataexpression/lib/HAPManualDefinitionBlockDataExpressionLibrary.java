@@ -1,24 +1,24 @@
-package com.nosliw.core.application.division.manual.brick.scriptexpression.library;
+package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionLibrary;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
-public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualDefinitionBlockDataExpressionLibrary extends HAPManualDefinitionBrickBlockSimple{
 
-	public HAPManualBlockScriptExpressionLibrary() {
-		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIB_100);
+	public HAPManualDefinitionBlockDataExpressionLibrary() {
+		super(HAPEnumBrickType.DATAEXPRESSIONLIB_100);
 	}
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(HAPBlockScriptExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
-	public String addElement(HAPManualBlockScriptExpressionElementInLibrary element) {
+	public String addElement(HAPManualDefinitionBlockDataExpressionElementInLibrary element) {
 		return this.getContainer().addElement(element);
 	}
 	
@@ -31,6 +31,6 @@ public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBr
 	}
 	
 	private HAPManualDefinitionBrickContainer getContainer() {
-		return (HAPManualDefinitionBrickContainer)this.getAttributeValueWithBrick(HAPBlockScriptExpressionLibrary.ITEM);
+		return (HAPManualDefinitionBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
 	}
 }

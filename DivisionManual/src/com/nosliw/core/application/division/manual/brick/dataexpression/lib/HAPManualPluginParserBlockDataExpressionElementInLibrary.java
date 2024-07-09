@@ -11,12 +11,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBlockDataExpressionElementInLibrary extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBlockDataExpressionElementInLibrary(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualBlockDataExpressionElementInLibrary.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualDefinitionBlockDataExpressionElementInLibrary.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickDefinition;
+		HAPManualDefinitionBlockDataExpressionElementInLibrary brick = (HAPManualDefinitionBlockDataExpressionElementInLibrary)brickDefinition;
 		HAPManualDataExpressionLibraryElement value = new HAPManualDataExpressionLibraryElement();
 		value.buildObject(jsonValue, HAPSerializationFormat.JSON);
 		

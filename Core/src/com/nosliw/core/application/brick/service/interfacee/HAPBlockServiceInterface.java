@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
-import com.nosliw.core.application.common.entityinfo.HAPBrickWithEntityInfoSimple;
+import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
 
 //static information for a service. readable, query for service
 //information needed during configuration time

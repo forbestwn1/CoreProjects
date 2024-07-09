@@ -19,6 +19,7 @@ import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
@@ -27,8 +28,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPPluginProcessorBlockComplex{
 
-	public HAPManualPluginProcessorBlockComplexTestComplexScript(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class, runtimeEnv);
+	public HAPManualPluginProcessorBlockComplexTestComplexScript(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class, runtimeEnv, manualBrickMan);
 	}
 
 	@Override

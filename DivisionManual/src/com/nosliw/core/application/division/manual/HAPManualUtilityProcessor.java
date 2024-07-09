@@ -6,6 +6,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPUtilityBrickTraverse;
+import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
@@ -17,6 +19,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueReferenceResource;
+import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -24,6 +27,8 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdap
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
 import com.nosliw.core.application.division.manual.executable.HAPManualExeUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualWrapperValueOfBrick;
+import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessor {
 
@@ -49,6 +54,18 @@ public class HAPManualUtilityProcessor {
 		return false;
 	}
 
+	public static void initBricks(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
+
+			@Override
+			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
+				HAPManualBrick brick = (HAPManualBrick)this.getBrickFromNode(treeNode);
+				brick.init();
+				return true;
+			}
+		}, runtimeEnv.getBrickManager(), processContext);
+	}
+	
 	public static HAPManualBrick buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan) {
 		HAPManualBrick rootBrickExe = HAPManualExeUtilityBrick.newRootBrickInstance(brickDef.getBrickTypeId(), manualBrickMan); 
 		buildExecutableTree(brickDef, rootBrickExe, processContext, manualBrickMan);

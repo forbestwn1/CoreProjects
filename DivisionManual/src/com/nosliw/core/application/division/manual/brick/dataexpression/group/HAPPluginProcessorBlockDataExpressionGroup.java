@@ -10,6 +10,7 @@ import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupData
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
@@ -19,8 +20,8 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplex{
 
-	public HAPPluginProcessorBlockDataExpressionGroup(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100);
+	public HAPPluginProcessorBlockDataExpressionGroup(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, runtimeEnv, manualBrickMan);
 	}
 
 	@Override
