@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.data.core.activity.HAPDefinitionActivity;
 import com.nosliw.data.core.activity.HAPProcessorActivity;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociation;
@@ -51,7 +51,7 @@ public class HAPSwitchActivityProcessor implements HAPProcessorActivity{
 		out.setScriptExpression(scriptExpression);
 
 		//merge discovered variable in activity back to process variable
-		Map<String, HAPVariableInfo> affectedActivityVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
+		Map<String, HAPVariableDefinition> affectedActivityVariablesInfo = new LinkedHashMap<String, HAPVariableDefinition>();
 		Set<String> relatedVarNames = out.getScriptExpression().getDataVariableNames();  //all the data variables used in script expression
 		for(String varName : relatedVarNames) 	affectedActivityVariablesInfo.put(varName, out.getScriptExpressionProcessContext().getDataVariables().get(varName));
 		HAPUtilityProcess.mergeDataVariableInActivityToProcessContext(affectedActivityVariablesInfo, activityContext, processDataContext);

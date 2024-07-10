@@ -9,17 +9,17 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
+import com.nosliw.core.application.common.valueport.HAPVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPWithVariable;
 
 public class HAPManualDataExpression extends HAPSerializableImp implements HAPDataExpression{
 
 	private HAPManualWrapperOperand m_operand;
 	
-	private Map<String, HAPIdElement> m_variablesInfo;
+	private Map<String, HAPVariableInfo> m_variablesInfo;
 
 	public HAPManualDataExpression(HAPManualOperand operand) {
-		this.m_variablesInfo = new LinkedHashMap<String, HAPIdElement>();
+		this.m_variablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
 		this.m_operand = new HAPManualWrapperOperand(operand);
 	}
 	
@@ -28,8 +28,8 @@ public class HAPManualDataExpression extends HAPSerializableImp implements HAPDa
 	public HAPManualWrapperOperand getOperandWrapper() {   return this.m_operand;     }
 
 	@Override
-	public Map<String, HAPIdElement> getVariablesInfo() {   return this.m_variablesInfo;   }
-	public void setVariableInfo(String key, HAPIdElement varId) {    this.m_variablesInfo.put(key, varId);       }
+	public Map<String, HAPVariableInfo> getVariablesInfo() {   return this.m_variablesInfo;   }
+	public void setVariableInfo(HAPVariableInfo varInfo) {    this.m_variablesInfo.put(varInfo.getVariableKey(), varInfo);       }
 
 	@Override
 	public void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {

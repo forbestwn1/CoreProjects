@@ -23,7 +23,7 @@ extends HAPSerializableImp implements HAPDefinitionTask{
 	
 	private Map<String, HAPData> m_constants;
 	
-	private Map<String, HAPVariableInfo> m_variableCriterias; 
+	private Map<String, HAPVariableDefinition> m_variableCriterias; 
 	
 	private Map<String, HAPReferenceInfo> m_references;
 	
@@ -36,14 +36,14 @@ extends HAPSerializableImp implements HAPDefinitionTask{
 	HAPTaskDefinitionSimple(
 			String name, 
 			Map<String, HAPData> constants,
-			Map<String, HAPVariableInfo> variableCriterias, 
+			Map<String, HAPVariableDefinition> variableCriterias, 
 			Map<String, HAPReferenceInfo> references, 
 			HAPInfo info){
 		this.m_name = name;
 		this.m_constants = constants;
 		if(this.m_constants==null)  this.m_constants = new LinkedHashMap<String, HAPData>();
 		this.m_variableCriterias = variableCriterias;
-		if(this.m_variableCriterias==null)  this.m_variableCriterias = new LinkedHashMap<String, HAPVariableInfo>();
+		if(this.m_variableCriterias==null)  this.m_variableCriterias = new LinkedHashMap<String, HAPVariableDefinition>();
 		this.m_references = references;
 		if(this.m_references==null)   this.m_references = new LinkedHashMap<String, HAPReferenceInfo>();
 		this.m_info = info;
@@ -65,10 +65,10 @@ extends HAPSerializableImp implements HAPDefinitionTask{
 	public Map<String, HAPData> getConstants() {		return this.m_constants;	}
 
 	@Override
-	public Map<String, HAPVariableInfo> getVariableCriterias() {		return this.m_variableCriterias;	}
+	public Map<String, HAPVariableDefinition> getVariableCriterias() {		return this.m_variableCriterias;	}
 	@Override
-	public void setVariableCriterias(Map<String, HAPVariableInfo> varCriterias) {
-		this.m_variableCriterias = new LinkedHashMap<String, HAPVariableInfo>();
+	public void setVariableCriterias(Map<String, HAPVariableDefinition> varCriterias) {
+		this.m_variableCriterias = new LinkedHashMap<String, HAPVariableDefinition>();
 		this.m_variableCriterias.putAll(varCriterias);
 	}
 
@@ -92,7 +92,7 @@ extends HAPSerializableImp implements HAPDefinitionTask{
 		}
 		
 		if(this.m_variableCriterias!=null){
-			out.m_variableCriterias = new LinkedHashMap<String, HAPVariableInfo>();
+			out.m_variableCriterias = new LinkedHashMap<String, HAPVariableDefinition>();
 			out.m_variableCriterias.putAll(this.m_variableCriterias);
 		}
 		

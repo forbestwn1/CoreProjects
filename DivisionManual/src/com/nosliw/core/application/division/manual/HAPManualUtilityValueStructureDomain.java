@@ -9,6 +9,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
@@ -33,7 +34,6 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
 import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
@@ -75,7 +75,7 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPManualBrickBlockComplex complexEntityExe = (HAPManualBrickBlockComplex)this.getBrickFromNode(treeNode);
+				HAPBrick complexEntityExe = this.getBrickFromNode(treeNode);
 				
 				HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData(); 
 				

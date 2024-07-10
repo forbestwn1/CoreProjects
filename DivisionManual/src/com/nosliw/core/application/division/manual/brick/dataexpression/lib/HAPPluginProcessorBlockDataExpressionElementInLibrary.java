@@ -12,6 +12,7 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.common.valueport.HAPVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
@@ -21,7 +22,7 @@ import com.nosliw.core.application.division.manual.common.dataexpression.HAPManu
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualWrapperOperand;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -33,7 +34,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 	}
 
 	@Override
-	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
+	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
 		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
@@ -54,7 +55,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		
 		Map<String, HAPIdElement> varInfos = varInfoContainer.getVariables();
 		for(String key : varInfos.keySet()) {
-			dataExpression.setVariableInfo(key, varInfos.get(key)); 
+			dataExpression.setVariableInfo(new HAPVariableInfo(key, varInfos.get(key))); 
 		}
 		
 		//build var criteria infor in var info container according to value port def

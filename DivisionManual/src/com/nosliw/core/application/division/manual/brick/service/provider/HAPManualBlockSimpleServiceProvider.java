@@ -8,14 +8,15 @@ import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 
-public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickBlockSimple implements HAPBlockServiceProvider{
+public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickImp implements HAPBlockServiceProvider{
 
 	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeValueWithValue(SERVICEID, serviceKey);	}
+	@Override
 	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueOfValue(SERVICEID);	}
 	 
 	@Override

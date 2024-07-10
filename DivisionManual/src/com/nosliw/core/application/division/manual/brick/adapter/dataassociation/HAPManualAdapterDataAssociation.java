@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 
 import com.nosliw.core.application.brick.adapter.dataassociation.HAPAdapterDataAssociation;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
-public class HAPManualAdapterDataAssociation extends HAPManualBrickAdapter implements HAPAdapterDataAssociation{
+public class HAPManualAdapterDataAssociation extends HAPManualBrickImp implements HAPAdapterDataAssociation{
 
 	@Override
 	public HAPDataAssociation getDataAssociation() {   return (HAPDataAssociation)this.getAttributeValueOfValue(DATAASSOCIATION);     }

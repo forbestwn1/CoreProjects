@@ -17,12 +17,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBlockDataExpressionGroup extends HAPManualDefinitionPluginParserBrickImpComplex{
 
 	public HAPManualPluginParserBlockDataExpressionGroup(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualBlockDataExpressionGroup.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualDefinitionBlockDataExpressionGroup.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick brickDef, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
-		HAPManualBlockDataExpressionGroup groupBlock = (HAPManualBlockDataExpressionGroup)brickDef;
+		HAPManualDefinitionBlockDataExpressionGroup groupBlock = (HAPManualDefinitionBlockDataExpressionGroup)brickDef;
 
 		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPContainerDataExpression.ITEM);
 		for(int i=0; i<dataExpressionArray.length(); i++) {

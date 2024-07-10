@@ -5,7 +5,7 @@ import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPPluginProcessorBlockSimple{
@@ -15,7 +15,7 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPPl
 	}
 
 	@Override
-	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef,
+	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef,
 			HAPManualContextProcessBrick processContext) {
 		HAPManualDefinitionBlockSimpleServiceProvider serviceProviderDef = (HAPManualDefinitionBlockSimpleServiceProvider)blockDef;
 		HAPManualBlockSimpleServiceProvider serviceProviderExe = (HAPManualBlockSimpleServiceProvider)blockExe;

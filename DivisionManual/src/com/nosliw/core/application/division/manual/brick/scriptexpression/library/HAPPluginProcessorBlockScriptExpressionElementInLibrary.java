@@ -25,7 +25,7 @@ import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAPPluginProcessorBlockSimple{
@@ -35,7 +35,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 	}
 
 	@Override
-	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
+	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
 		HAPElementInLibraryScriptExpression exe = ((HAPBlockScriptExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualScriptExpressionLibraryElement def = ((HAPManualBlockScriptExpressionElementInLibrary)blockDef).getValue();
 		

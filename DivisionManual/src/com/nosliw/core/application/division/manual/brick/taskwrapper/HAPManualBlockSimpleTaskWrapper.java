@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.taskwrapper;
 
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
-public class HAPManualBlockSimpleTaskWrapper extends HAPManualBrickBlockSimple implements HAPBlockTaskWrapper{
+public class HAPManualBlockSimpleTaskWrapper extends HAPManualBrickImp implements HAPBlockTaskWrapper{
 
 	
 	@Override

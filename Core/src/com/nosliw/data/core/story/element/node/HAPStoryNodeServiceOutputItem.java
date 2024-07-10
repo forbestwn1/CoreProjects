@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.HAPStoryElement;
 import com.nosliw.data.core.story.HAPStoryNodeImp;
@@ -22,11 +22,11 @@ public class HAPStoryNodeServiceOutputItem extends HAPStoryNodeImp{
 	@HAPAttribute
 	public static final String OUTPUTITEM = "outputItem";
 
-	private HAPVariableInfo m_outputItem;
+	private HAPVariableDefinition m_outputItem;
 	
 	public HAPStoryNodeServiceOutputItem() {}
 	
-	public HAPStoryNodeServiceOutputItem(HAPVariableInfo outputItem) {
+	public HAPStoryNodeServiceOutputItem(HAPVariableDefinition outputItem) {
 		super(STORYNODE_TYPE);
 		this.m_outputItem = outputItem;
 	}
@@ -50,7 +50,7 @@ public class HAPStoryNodeServiceOutputItem extends HAPStoryNodeImp{
 		super.buildObjectByJson(jsonObj);
 		JSONObject defJsonObj = jsonObj.optJSONObject(OUTPUTITEM);
 		if(defJsonObj!=null) {
-			this.m_outputItem = HAPVariableInfo.buildVariableInfoFromObject(defJsonObj); 
+			this.m_outputItem = HAPVariableDefinition.buildVariableInfoFromObject(defJsonObj); 
 		}
 		return true;  
 	}

@@ -15,7 +15,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
@@ -29,7 +29,7 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 public class HAPUtilityInteractive {
 
 	public static void solidateRelative(HAPDefinitionInteractive withInteractive, HAPContainerStructure parentStructures, String mode, Boolean relativeInheritRule, Set<String> elementTypes) {
-		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
+		for(HAPVariableDefinition parm : withInteractive.getRequestParms()) {
 			if(parm.getCriteria()==null || HAPDataTypeCriteriaAny.getCriteria().equals(parm.getCriteria())) {
 				//no data criteria, then try to get it from reference
 				HAPDataTypeCriteria dataTypeCriteria = getDataTypeCriteriaFromReference(parm.getReferenceInfo(), parentStructures, mode, relativeInheritRule, elementTypes);
@@ -63,7 +63,7 @@ public class HAPUtilityInteractive {
 	public static HAPDefinitionGroupDataAssociationForTask buildDataAssociation(HAPDefinitionInteractive withInteractive) {
 		HAPDefinitionGroupDataAssociationForTask out = new HAPDefinitionGroupDataAssociationForTask();
 		HAPDefinitionDataAssociationMapping inputMapping = new HAPDefinitionDataAssociationMapping();
-		for(HAPVariableInfo parm : withInteractive.getRequestParms()) {
+		for(HAPVariableDefinition parm : withInteractive.getRequestParms()) {
 			HAPReferenceElement reference = parm.getReferenceInfo();
 			HAPDefinitionValueMapping mapping = inputMapping.getMapping(reference.getParentValueContextName(), true);
 			mapping.addMapping(reference.getPath(), new HAPElementStructureLeafRelative(parm.getName()));
@@ -93,7 +93,7 @@ public class HAPUtilityInteractive {
 	
 	public static HAPValueStructureDefinitionFlat buildInValueStructureFromWithInteractive(HAPDefinitionInteractive withInteractive) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPVariableInfo varInfo : withInteractive.getRequestParms()) {
+		for(HAPVariableDefinition varInfo : withInteractive.getRequestParms()) {
 			out.addRoot(varInfo.getName(), new HAPElementStructureLeafData(varInfo.getCriteria()));
 		}
 		return out;

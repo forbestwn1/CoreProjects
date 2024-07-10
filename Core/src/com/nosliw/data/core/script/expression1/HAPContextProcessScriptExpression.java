@@ -22,7 +22,7 @@ public class HAPContextProcessScriptExpression {
 //	public HAPDefinitionExpressionSuite getExpressionDefinitionSuite(){		return this.m_expressionDefinitionSuite;	}
 //	public void setExpressionDefinitionSuite(HAPDefinitionExpressionSuite expressionSuite) {   this.m_expressionDefinitionSuite = expressionSuite;    }
 //
-//	public Map<String, HAPVariableInfo> getDataVariables(){  return this.m_expressionDefinitionSuite.getVariablesInfo();  }
+//	public Map<String, HAPVariableDefinition> getDataVariables(){  return this.m_expressionDefinitionSuite.getVariablesInfo();  }
 //	
 //	public Map<String, Object> getConstants(){  return this.m_constants;   }
 //	public Map<String, HAPData> getDataConstants(){  return this.m_expressionDefinitionSuite.getConstantDefinitions();  }
@@ -41,12 +41,12 @@ public class HAPContextProcessScriptExpression {
 //	}
 //	public void addExpressionDefinition(String name, HAPResourceDefinitionExpressionGroup expressionDefinition){  this.m_expressionDefinitionSuite.addExpressionDefinition(name, expressionDefinition);  }
 //	public void addExpressionDefinition(Map<String, HAPResourceDefinitionExpressionGroup> expressions){	this.m_expressionDefinitionSuite.addExpressionDefinition(expressions);	}
-//	public void addDataVariables(Map<String, HAPVariableInfo> variables){
+//	public void addDataVariables(Map<String, HAPVariableDefinition> variables){
 //		for(String varName : variables.keySet()) {
 //			this.m_expressionDefinitionSuite.addVariableInfo(varName, variables.get(varName));
 //		}
 //	}
-//	public void addDataVariable(String name, HAPVariableInfo varInfo){  
+//	public void addDataVariable(String name, HAPVariableDefinition varInfo){  
 //		this.m_expressionDefinitionSuite.addVariableInfo(name, varInfo);
 //	}	
 }

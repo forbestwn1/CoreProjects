@@ -16,7 +16,9 @@ public class HAPItemInGroupDataExpression extends HAPEntityInfoImp{
 	
 	private HAPDataExpression m_dataExpression;
 
+	public HAPDataExpression getDataExpression() {    return this.m_dataExpression;     }
 	public void setDataExpression(HAPDataExpression dataExpression) {     this.m_dataExpression = dataExpression;      }
+
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

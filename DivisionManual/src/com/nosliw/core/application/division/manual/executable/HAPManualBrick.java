@@ -1,8 +1,10 @@
 package com.nosliw.core.application.division.manual.executable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -17,8 +19,12 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -45,6 +51,8 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPBr
 	
 	private HAPManualManagerBrick m_manualBrickMan;
 
+	private HAPDomainValueStructure m_valueStructureDomain; 
+
 	public HAPManualBrick() {
 		this.m_valueContext = new HAPValueContext(); 
 		this.m_attributes = new ArrayList<HAPManualAttributeInBrick>();
@@ -58,6 +66,8 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPBr
 
 	public void setRuntimeEnvironment(HAPRuntimeEnvironment runtimeEnv) {     this.m_runtimeEnv = runtimeEnv;      }
 	
+	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
+
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;      }
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {    this.m_manualBrickMan = manualBrickMan;       }
 	
@@ -138,14 +148,57 @@ public abstract class HAPManualBrick extends HAPSerializableImp implements HAPBr
 		}
 	}
 	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {
-		this.setAttributeValueWithBrick(attributeName, this.getBrickManager().newBrickInstance(brickTypeId));
+		this.setAttributeValueWithBrick(attributeName, this.getManualBrickManager().newBrick(brickTypeId));
 	}
 	
 	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {		return null;	}
+	public HAPContainerValuePorts getInternalValuePorts(){
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		
+		if(!this.getValueContext().isEmpty()) {
+			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
+			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
+			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
+			out.addValuePortGroup(valePortGroup, true);
+		}
+			
+		for(HAPGroupValuePorts group : this.getInternalOtherValuePortGroups()) {
+			out.addValuePortGroup(group, false);
+		}
+		return out;
+	}
 
 	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {		return null;	}
+	public HAPContainerValuePorts getExternalValuePorts(){
+		HAPContainerValuePorts out = new HAPContainerValuePorts();
+		
+		if(!this.getValueContext().isEmpty()) {
+			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
+			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
+			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
+			out.addValuePortGroup(valePortGroup, true);
+		}
+		
+		for(HAPGroupValuePorts group : this.getExternalOtherValuePortGroups()) {
+			out.addValuePortGroup(group, false);
+		}
+		return out;
+	}
+
+	protected Set<HAPGroupValuePorts> getInternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
+	protected Set<HAPGroupValuePorts> getExternalOtherValuePortGroups() {   return new HashSet<HAPGroupValuePorts>();   }
+	
+//	@Override
+//	protected boolean buildBrickFormatJson(JSONObject jsonObj, HAPManagerApplicationBrick brickMan) {
+//		super.buildBrickFormatJson(jsonObj, brickMan);
+//		JSONObject valueContextJsonObj = jsonObj.optJSONObject(VALUECONTEXT);
+//		if(valueContextJsonObj!=null) {
+//			this.m_valueContext = new HAPValueContext();
+//			this.m_valueContext.buildObject(valueContextJsonObj, HAPSerializationFormat.JSON);
+//			
+//		}
+//		return true;
+//	}
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

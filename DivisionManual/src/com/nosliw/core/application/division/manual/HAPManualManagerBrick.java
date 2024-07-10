@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPHandlerDownward;
@@ -70,10 +71,6 @@ import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
 import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlock;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -184,14 +181,14 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 			@Override
 			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrickBlockComplex complexBrick = (HAPManualBrickBlockComplex)brickWrapper.getBrick();
+				HAPBrick complexBrick = brickWrapper.getBrick();
 				((HAPPluginProcessorBlockComplex)getBlockProcessPlugin(complexBrick.getBrickType())).processInit(path, processContext);
 				return true;
 			}
 
 			@Override
 			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrickBlockComplex complexBrick = (HAPManualBrickBlockComplex)brickWrapper.getBrick();
+				HAPBrick complexBrick = brickWrapper.getBrick();
 				((HAPPluginProcessorBlockComplex)getBlockProcessPlugin(complexBrick.getBrickType())).postProcessInit(path, processContext);
 			}
 
@@ -203,14 +200,14 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 			@Override
 			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrickBlockComplex complexBrick = (HAPManualBrickBlockComplex)brickWrapper.getBrick();
+				HAPBrick complexBrick = brickWrapper.getBrick();
 				((HAPPluginProcessorBlockComplex)getBlockProcessPlugin(complexBrick.getBrickType())).processVariableResolve(path, processContext);
 				return true;
 			}
 
 			@Override
 			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrickBlockComplex complexBrick = (HAPManualBrickBlockComplex)brickWrapper.getBrick();
+				HAPBrick complexBrick = brickWrapper.getBrick();
 				((HAPPluginProcessorBlockComplex)getBlockProcessPlugin(complexBrick.getBrickType())).postProcessVariableResolve(path, processContext);
 			}
 
@@ -264,7 +261,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 								HAPManualDefinitionWrapperValueBrick adapterWrapperDef = (HAPManualDefinitionWrapperValueBrick)adapterDef.getValueWrapper();
 								HAPPluginProcessorAdapter adapterProcessPlugin = getAdapterProcessPlugin(adapterWrapperDef.getBrick().getBrickTypeId());
 								
-								HAPManualBrickAdapter brick = (HAPManualBrickAdapter)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
+								HAPManualBrick brick = (HAPManualBrick)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
 								adapterProcessPlugin.process(brick, (HAPManualDefinitionBrickAdapter)adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot(), m_runtimeEnv));
 							}
 							
@@ -294,7 +291,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 					HAPTreeNode treeNodeDef = HAPManualDefinitionUtilityBrick.getDefTreeNodeFromExeTreeNode(treeNode, processContext.getCurrentBundle());
 					HAPIdBrickType entityTypeId = null;
 					boolean process = true;
-					HAPManualBrickBlock block = null;
+					HAPManualBrick block = null;
 					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrick) {
 						entityTypeId = ((HAPManualDefinitionWrapperBrick)treeNodeDef).getBrickTypeId();
 					}
@@ -312,7 +309,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 						}
 						else {
 							HAPPluginProcessorBlockSimple plugin = (HAPPluginProcessorBlockSimple)getBlockProcessPlugin(entityTypeId);
-							plugin.process((HAPManualBrickBlockSimple)brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
+							plugin.process(brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
 						}
 						return true;
 					}
@@ -326,7 +323,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 					HAPTreeNode treeNodeDef = HAPManualDefinitionUtilityBrick.getDefTreeNodeFromExeTreeNode(treeNode, processContext.getCurrentBundle());
 					HAPIdBrickType entityTypeId = null;
 					boolean process = true;
-					HAPManualBrickBlock block = null;
+					HAPManualBrick block = null;
 					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrick) {
 						entityTypeId = ((HAPManualDefinitionWrapperBrick)treeNodeDef).getBrickTypeId();
 					}
@@ -344,7 +341,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 						}
 						else {
 							HAPPluginProcessorBlockSimple plugin = (HAPPluginProcessorBlockSimple)getBlockProcessPlugin(entityTypeId);
-							plugin.postProcess((HAPManualBrickBlockSimple)brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
+							plugin.postProcess(brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
 						}
 					}
 				}

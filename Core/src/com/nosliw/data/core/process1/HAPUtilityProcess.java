@@ -14,7 +14,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.activity.HAPDefinitionActivityNormal;
 import com.nosliw.data.core.common.HAPDefinitionConstant;
@@ -91,9 +91,9 @@ public class HAPUtilityProcess {
 	}
 	
 	//data variables infor in activity merge back to process context
-	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableInfo> activityVariablesInfo, HAPValueStructureDefinitionFlat activityContext, HAPValueStructureDefinitionGroup processContext) {
-		Map<String, HAPVariableInfo> expectedVariablesInfo = new LinkedHashMap<String, HAPVariableInfo>();
-		for(HAPVariableInfo expectedVarInfo : activityVariablesInfo) {
+	public static void mergeDataVariableInActivityToProcessContext(Set<HAPVariableDefinition> activityVariablesInfo, HAPValueStructureDefinitionFlat activityContext, HAPValueStructureDefinitionGroup processContext) {
+		Map<String, HAPVariableDefinition> expectedVariablesInfo = new LinkedHashMap<String, HAPVariableDefinition>();
+		for(HAPVariableDefinition expectedVarInfo : activityVariablesInfo) {
 			HAPReferenceElementInStructure varPath = new HAPReferenceElementInStructure(expectedVarInfo.getName());
 			//affect global variable 
 			HAPRootStructure affectedRoot = activityContext.getRoot(varPath.getRootReference().getFullName());
@@ -118,7 +118,7 @@ public class HAPUtilityProcess {
 			}
 			else {
 				//root variable does not exist, generate one
-//				HAPContextDefinitionLeafData dataEle = new HAPContextDefinitionLeafData(new HAPVariableInfo(out.getScriptExpressionProcessContext().getDataVariables().get(varName).getCriteria()));
+//				HAPContextDefinitionLeafData dataEle = new HAPContextDefinitionLeafData(new HAPVariableDefinition(out.getScriptExpressionProcessContext().getDataVariables().get(varName).getCriteria()));
 //				affectedContext.addElement(varName, dataEle);
 				HAPErrorUtility.invalid("");
 			}

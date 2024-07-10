@@ -42,6 +42,8 @@ public class HAPValueContext extends HAPSerializableImp{
 		this.m_valueStructureRuntimeNameById = new LinkedHashMap<String, String>();
 	}
 	
+	public boolean isEmpty() {   return this.m_parts.isEmpty();      }
+	
 	public List<HAPPartInValueContext> getParts(){   return this.m_parts;  }
 	
 	public List<HAPPartInValueContext> getPart(String name) {

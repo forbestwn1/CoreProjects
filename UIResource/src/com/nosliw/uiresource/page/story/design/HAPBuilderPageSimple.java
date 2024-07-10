@@ -18,7 +18,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.HAPData;
@@ -124,7 +124,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		Set<HAPStoryNode> varNodes = HAPUtilityStory.getStoryNodeByType(this.m_story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			HAPVariableInfo varInfo = varNode.getVariableInfo();
+			HAPVariableDefinition varInfo = varNode.getVariableInfo();
 			HAPRootStructure contextEle = new HAPRootStructure(new HAPElementStructureLeafData(varInfo.getDataInfo()));
 			contextEle.setDefaultValue(varInfo.getDefaultValue());
 			contextEle.setName(varNode.getVariableInfo().getName());

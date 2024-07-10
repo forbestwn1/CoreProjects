@@ -5,7 +5,7 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
-public class HAPManaualBrickWithEntityInfoSimple extends HAPManualBrickBlockSimple implements HAPEntityInfo{
+public class HAPManualBrickWithEntityInfoSimple extends HAPManualBrickImp implements HAPEntityInfo{
 
 	@Override
 	public String getId() {   return (String)this.getAttributeValueOfValue(ID);    }

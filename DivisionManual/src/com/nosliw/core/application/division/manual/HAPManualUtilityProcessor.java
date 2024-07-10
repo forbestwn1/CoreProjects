@@ -23,8 +23,6 @@ import com.nosliw.core.application.division.manual.executable.HAPHandlerDownward
 import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
 import com.nosliw.core.application.division.manual.executable.HAPManualExeUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualWrapperValueOfBrick;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
@@ -79,7 +77,7 @@ public class HAPManualUtilityProcessor {
 		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 
 		if(manualBrickMan.getBrickTypeInfo(entityTypeId).getIsComplex()) {
-			((HAPManualBrickBlockComplex)brick).setValueStructureDomain(bundle.getValueStructureDomain());
+			brick.setValueStructureDomain(bundle.getValueStructureDomain());
 		}
 		
 		List<HAPManualDefinitionAttributeInBrick> attrsDef = brickDef.getAllAttributes();
@@ -113,7 +111,7 @@ public class HAPManualUtilityProcessor {
 					if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 						//brick
 						HAPManualDefinitionWrapperValueBrick adpaterValueDefWrapperBrick = (HAPManualDefinitionWrapperValueBrick)adapterValueWrapper;
-						HAPManualBrickAdapter adapterBrick = (HAPManualBrickAdapter)HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), manualBrickMan);
+						HAPManualBrick adapterBrick = HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), manualBrickMan);
 						adapterValueWrapperExe = new HAPWrapperValueOfBrick(adapterBrick);
 						buildExecutableTree(adpaterValueDefWrapperBrick.getBrick(), adapterBrick, processContext, manualBrickMan);
 					}

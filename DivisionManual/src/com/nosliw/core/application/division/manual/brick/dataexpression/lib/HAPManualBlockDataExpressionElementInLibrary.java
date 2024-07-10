@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.division.manual.executable.HAPManaualBrickWithEntityInfoSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfoSimple;
 
-public class HAPManualBlockDataExpressionElementInLibrary extends HAPManaualBrickWithEntityInfoSimple implements HAPBlockDataExpressionElementInLibrary{
+public class HAPManualBlockDataExpressionElementInLibrary extends HAPManualBrickWithEntityInfoSimple implements HAPBlockDataExpressionElementInLibrary{
 
 	@Override
 	public void init() {

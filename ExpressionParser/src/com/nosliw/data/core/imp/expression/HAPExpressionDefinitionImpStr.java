@@ -20,7 +20,7 @@ extends HAPStringableValueEntity implements HAPDefinitionTask{
 	
 	//As when this class is instantiated, the variable attribute is criteria in literate format which can not use directly
 	//This attribute store the real criteria which can be converted from literate fromat
-	Map<String, HAPVariableInfo> m_variabesWithSolidCriteria;
+	Map<String, HAPVariableDefinition> m_variabesWithSolidCriteria;
 	
 	private HAPOperandWrapper m_operand  = new HAPOperandWrapper();
 	
@@ -46,10 +46,10 @@ extends HAPStringableValueEntity implements HAPDefinitionTask{
 	public Map<String, HAPData> getConstants(){return this.getMapAncestorByPath(CONSTANTS).getMapValue();}
 
 	@Override
-	public Map<String, HAPVariableInfo> getVariableCriterias() {
+	public Map<String, HAPVariableDefinition> getVariableCriterias() {
 		if(this.m_variabesWithSolidCriteria == null){
-			this.m_variabesWithSolidCriteria = new LinkedHashMap<String, HAPVariableInfo>(); 
-			Map<String, HAPVariableInfo> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
+			this.m_variabesWithSolidCriteria = new LinkedHashMap<String, HAPVariableDefinition>(); 
+			Map<String, HAPVariableDefinition> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 			for(String varName : vars.keySet()){
 				m_variabesWithSolidCriteria.put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());
 			}
@@ -57,7 +57,7 @@ extends HAPStringableValueEntity implements HAPDefinitionTask{
 		return this.m_variabesWithSolidCriteria;
 	}
 
-	public void setVariableCriterias(Map<String, HAPVariableInfo> varCriterias){
+	public void setVariableCriterias(Map<String, HAPVariableDefinition> varCriterias){
 		this.m_variabesWithSolidCriteria = varCriterias;
 	}
 	
@@ -68,7 +68,7 @@ extends HAPStringableValueEntity implements HAPDefinitionTask{
 	public HAPDefinitionTask cloneTaskDefinition(){
 		HAPExpressionDefinitionImpStr out = this.clone(HAPExpressionDefinitionImpStr.class);
 
-		Map<String, HAPVariableInfo> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
+		Map<String, HAPVariableDefinition> vars = this.getMapAncestorByPath(VARIABLECRITERIAS).getMapValue();
 		
 		for(String varName : vars.keySet()){
 			getVariableCriterias().put(varName, ((HAPDataTypeCriteriaWrapperLiterate)vars.get(varName)).getSolidCriteria());

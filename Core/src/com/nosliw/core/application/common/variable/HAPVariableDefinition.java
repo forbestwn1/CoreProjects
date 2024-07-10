@@ -20,7 +20,7 @@ import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
  * This is variable info for expression 
  */
 @HAPEntityWithAttribute(baseName="VARIABLEINFO")
-public class HAPVariableInfo extends HAPEntityInfoWritableImp{
+public class HAPVariableDefinition extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static String DATAINFO = "dataInfo";
@@ -37,28 +37,28 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 
 	private HAPData m_defaultValue;
 	
-	public static HAPVariableInfo buildUndefinedVariableInfo() {
+	public static HAPVariableDefinition buildUndefinedVariableInfo() {
 		return buildVariableInfo(null);
 	}
 	
-	public static HAPVariableInfo buildVariableInfoFromObject(Object def) {
-		HAPVariableInfo out = new HAPVariableInfo();
+	public static HAPVariableDefinition buildVariableInfoFromObject(Object def) {
+		HAPVariableDefinition out = new HAPVariableDefinition();
 		out.buildObject(def, null);
 		return out;
 	}
 
-	public static HAPVariableInfo buildVariableInfo(HAPDataTypeCriteria criteria) {
+	public static HAPVariableDefinition buildVariableInfo(HAPDataTypeCriteria criteria) {
 		return buildVariableInfo(null, criteria);
 	}
 
-	public static HAPVariableInfo buildVariableInfo(String name, HAPDataTypeCriteria criteria) {
-		HAPVariableInfo out = new HAPVariableInfo();
+	public static HAPVariableDefinition buildVariableInfo(String name, HAPDataTypeCriteria criteria) {
+		HAPVariableDefinition out = new HAPVariableDefinition();
 		if(criteria!=null)		out.m_dataInfo = new HAPVariableDataInfo(criteria);
 		if(name!=null)  out.setName(name);
 		return out;
 	}
 	
-	protected HAPVariableInfo() {
+	protected HAPVariableDefinition() {
 		this.m_dataInfo = new HAPVariableDataInfo();
 	}
 	
@@ -75,8 +75,8 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 	@Override
 	public boolean equals(Object obj){
 		boolean out = false;
-		if(obj instanceof HAPVariableInfo){
-			HAPVariableInfo varInfo = (HAPVariableInfo)obj;
+		if(obj instanceof HAPVariableDefinition){
+			HAPVariableDefinition varInfo = (HAPVariableDefinition)obj;
 			if(HAPUtilityBasic.isEquals(this.m_dataInfo, varInfo.m_dataInfo)){
 				out = true;
 			}
@@ -115,15 +115,15 @@ public class HAPVariableInfo extends HAPEntityInfoWritableImp{
 		return true;
 	}
 	
-	public HAPVariableInfo cloneVariableInfo() {
-		HAPVariableInfo out = new HAPVariableInfo();
+	public HAPVariableDefinition cloneVariableInfo() {
+		HAPVariableDefinition out = new HAPVariableDefinition();
 		this.cloneToEntityInfo(out);
 		this.cloneToVariableInfo(out);
 		if(this.m_reference!=null)  out.m_reference = this.m_reference.cloneReferenceInfo(); 
 		return out;
 	}
 	
-	public void cloneToVariableInfo(HAPVariableInfo varInfo) {
+	public void cloneToVariableInfo(HAPVariableDefinition varInfo) {
 		varInfo.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
 		if(this.m_defaultValue!=null)   varInfo.m_defaultValue = this.m_defaultValue.cloneData();
 		if(this.m_reference!=null)  varInfo.m_reference = this.m_reference.cloneReferenceInfo(); 

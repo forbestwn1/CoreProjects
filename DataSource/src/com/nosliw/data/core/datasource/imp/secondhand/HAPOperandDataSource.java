@@ -89,7 +89,7 @@ public class HAPOperandDataSource{
 	}
 	
 	@Override
-	public HAPMatchers discover(Map<String, HAPVariableInfo> variablesInfo, HAPVariableInfo expectCriteria,
+	public HAPMatchers discover(Map<String, HAPVariableDefinition> variablesInfo, HAPVariableDefinition expectCriteria,
 			HAPProcessExpressionDefinitionContext context, HAPDataTypeHelper dataTypeHelper) {
 		m_parmsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		
@@ -104,14 +104,14 @@ public class HAPOperandDataSource{
 				String mappedParmName = this.m_varConfigure.get(dataSourceParmName);
 				if(mappedParmName!=null){
 					//mapped to different variable name
-					HAPVariableInfo variableInfo = variablesInfo.get(mappedParmName);
+					HAPVariableDefinition variableInfo = variablesInfo.get(mappedParmName);
 					this.m_parmsMatchers.put(dataSourceParmName, this.isMatchable(variableInfo.getCriteria(), dataSourceParm.getVaraibleInfo(), context, dataTypeHelper));
 				}
 				else{
-					HAPVariableInfo variableInfo = variablesInfo.get(dataSourceParmName);
+					HAPVariableDefinition variableInfo = variablesInfo.get(dataSourceParmName);
 					if(variableInfo==null){
 						//add new variable
-						HAPVariableInfo newVariableInfo = new HAPVariableInfo();
+						HAPVariableDefinition newVariableInfo = new HAPVariableDefinition();
 						newVariableInfo.setCriteria(dataSourceParm.getVaraibleInfo());
 						newVariableInfo.setStatus(HAPConstant.EXPRESSION_VARIABLE_STATUS_OPEN);
 						variablesInfo.put(dataSourceParmName, newVariableInfo);

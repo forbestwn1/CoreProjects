@@ -19,12 +19,12 @@ import com.nosliw.data.core.script.expression1.imp.literate.HAPUtilityScriptLite
 
 public class HAPUtilityScriptExpression1 {
 
-//	public static Set<HAPVariableInfo> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
+//	public static Set<HAPVariableDefinition> getDataVariables(HAPExecutableScriptGroup scriptExpressionGroup, String scriptEleName){
 //		HAPExecutableScriptEntity scriptExe = scriptExpressionGroup.getScript(scriptEleName);
 //		HAPContainerVariableInfo varInfos = scriptExe.discoverVariablesInfo1(scriptExpressionGroup.getExpression());
-//		Set<HAPVariableInfo> out = new HashSet<HAPVariableInfo>();
+//		Set<HAPVariableDefinition> out = new HashSet<HAPVariableDefinition>();
 //		for(String name : varInfos.keySet()) {
-//			HAPVariableInfo varInfo = HAPVariableInfo.buildVariableInfo(name, varInfos.get(name).getCriteria());
+//			HAPVariableDefinition varInfo = HAPVariableDefinition.buildVariableInfo(name, varInfos.get(name).getCriteria());
 //			out.add(varInfo);
 //		}
 //		return out;
@@ -101,7 +101,7 @@ public class HAPUtilityScriptExpression1 {
 	//			replace attribute operation with one variable operation
 	//  for attribute operation a.b.c.d which have responding definition a.b.c in context, 
 	//			replace attribute operation with one variable operation(a.b.c) and getChild operation
-//	public static void processAttributeOperandInExpression(HAPResourceDefinitionExpressionGroup expressionDefinition, final Map<String, HAPVariableInfo> varsInfo){
+//	public static void processAttributeOperandInExpression(HAPResourceDefinitionExpressionGroup expressionDefinition, final Map<String, HAPVariableDefinition> varsInfo){
 //		HAPOperandUtility.processAttributeOperandInExpressionOperand(expressionDefinition.getOperand(), varsInfo);
 //	}
 	

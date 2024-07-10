@@ -13,7 +13,7 @@ import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;
 import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
@@ -41,13 +41,13 @@ public class HAPUtilityServiceUse {
 	
 	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(HAPBrickServiceInterface1 serviceInterface) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
-		for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
+		for(HAPVariableDefinition parm : serviceInterface.getRequestParms()) {
 			out.addRoot(parm.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo(parm.getCriteria())));
 		}
 		return out;
 	}
 	
-	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(Map<String, HAPVariableInfo> parms) {
+	public static HAPValueStructureDefinitionFlat buildValueStructureFromServiceParms(Map<String, HAPVariableDefinition> parms) {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		for(String parm : parms.keySet()) {
 			out.addRoot(parm, new HAPElementStructureLeafData(new HAPVariableDataInfo(parms.get(parm).getCriteria())));

@@ -16,7 +16,7 @@ import com.nosliw.core.application.common.interactive.HAPResultElementInInteract
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.data.HAPContextDataFactory;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 import com.nosliw.data.core.dataassociation.HAPExecutableWrapperTask;
@@ -77,7 +77,7 @@ public class HAPFactoryServiceProcess implements HAPFactoryService{
 		//external context from parameter of service
 		HAPValueStructureDefinitionFlat inputExternalContext = new HAPValueStructureDefinitionFlat();
 		HAPBrickServiceInterface1 serviceInterface = staticInfo.getInterface().getActiveInterface();
-		for(HAPVariableInfo parmDef : serviceInterface.getRequestParms()){
+		for(HAPVariableDefinition parmDef : serviceInterface.getRequestParms()){
 			inputExternalContext.addRoot(parmDef.getName(), new HAPElementStructureLeafData(new HAPVariableDataInfo((parmDef.getCriteria()))));
 		}
 

@@ -68,7 +68,8 @@ var node_utility = function()
 					}
 				});
 				
-				_.each(varInfos, function(varId, varKey){
+				_.each(varInfos, function(varInfo, varKey){
+					var varId = varInfo[node_COMMONATRIBUTECONSTANT.VARIABLEINFO_VARIABLEID];
 					var eleInfo = node_createValuePortElementInfo(varId);
 					var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
 					var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
@@ -420,6 +421,15 @@ var node_utility = function()
 	};
 
 
+
+
+
+
+
+
+
+
+
 	var loc_getVariablesValueRequest = function(varKeys, variablesInfo, valueContext, handlers, request){
 		var variables = {};
 		_.each(varKeys, function(key, i){
@@ -501,6 +511,10 @@ var node_utility = function()
 		out.addRequest(prepareRequest);
 		return out;		
 	};
+
+
+
+
 
 	var loc_out = {
 	

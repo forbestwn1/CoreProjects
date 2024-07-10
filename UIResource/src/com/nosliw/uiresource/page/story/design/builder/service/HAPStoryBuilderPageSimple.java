@@ -14,7 +14,7 @@ import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInter
 import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -201,7 +201,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				HAPDisplayResourceNode inputDisplayResource = interfaceDisplayResource.getResourceNode(HAPBrickServiceInterface1.REQUEST);
 				
 				//parms
-				for(HAPVariableInfo parm : serviceInterface.getRequestParms()) {
+				for(HAPVariableDefinition parm : serviceInterface.getRequestParms()) {
 					String parmName = parm.getName();
 					HAPParmBranchInfo parmBranchInfo = new HAPParmBranchInfo();
 					parmBranchInfo.parmDef = parm;
@@ -257,7 +257,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 				dataLayerChangeRequest.addNewChange(HAPUtilityConnection.newConnectionContain(serviceStoryNode.getElementId(), serviceOutputNodeName, HAPConstantShared.SERVICE_CHILD_RESULT));
 				HAPInteractiveResultTask successResult = serviceInterface.getResult("success");
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPBrickServiceInterface1.RESULT);
-				for(HAPVariableInfo parm : successResult.getOutput()) {
+				for(HAPVariableDefinition parm : successResult.getOutput()) {
 					String parmName = parm.getName();
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
 					parmBranchInfo.outputDef = parm;
@@ -600,7 +600,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPOutputBranchInfo{
-		public HAPVariableInfo outputDef;
+		public HAPVariableDefinition outputDef;
 		public HAPDisplayResourceNode displayResource;
 		public HAPDataUIInfo dataUIInfo;
 		public HAPAliasElement variableAlias;
@@ -609,7 +609,7 @@ public class HAPStoryBuilderPageSimple implements HAPBuilderStory{
 	}
 	
 	class HAPParmBranchInfo{
-		public HAPVariableInfo parmDef;
+		public HAPVariableDefinition parmDef;
 		public HAPDisplayResourceNode displayResource;
 		public HAPDataUIInfo dataUIInfo;
 		public HAPAliasElement variableAlias;

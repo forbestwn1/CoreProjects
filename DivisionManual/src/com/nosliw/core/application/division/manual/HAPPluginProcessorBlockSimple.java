@@ -3,7 +3,6 @@ package com.nosliw.core.application.division.manual;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPPluginProcessorBlockSimple extends HAPPluginProcessorBlock{
@@ -12,7 +11,7 @@ public abstract class HAPPluginProcessorBlockSimple extends HAPPluginProcessorBl
 		super(brickType, brickClass, runtimeEnv, manualBrickMan);
 	}
 	
-	public void postProcess(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {}
+	public void postProcess(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {}
 	
-	public abstract void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext);
+	public abstract void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext);
 }

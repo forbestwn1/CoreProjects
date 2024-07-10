@@ -7,7 +7,6 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
 import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
@@ -21,13 +20,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplex{
 
 	public HAPPluginProcessorBlockDataExpressionGroup(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, runtimeEnv, manualBrickMan);
+		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualBlockDataExpressionGroup.class, runtimeEnv, manualBrickMan);
 	}
 
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualDataExpressionGroup groupDef = ((HAPManualBlockDataExpressionGroup)blockPair.getLeft()).getValue();
+		HAPManualDataExpressionGroup groupDef = ((HAPManualDefinitionBlockDataExpressionGroup)blockPair.getLeft()).getValue();
 		HAPGroupDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
 	
 		for(HAPManualDataExpressionItemInGroup itemDef : groupDef.getItems()) {
@@ -41,13 +40,13 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 	@Override
 	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualDataExpressionGroup groupDef = ((HAPManualBlockDataExpressionGroup)blockPair.getLeft()).getValue();
+		HAPManualDataExpressionGroup groupDef = ((HAPManualDefinitionBlockDataExpressionGroup)blockPair.getLeft()).getValue();
 		HAPBlockDataExpressionGroup groupBlock = (HAPBlockDataExpressionGroup)blockPair.getRight();
-		HAPContainerDataExpression groupExe = ((HAPBlockDataExpressionGroup)blockPair.getRight()).getValue();
+		HAPGroupDataExpression groupExe = ((HAPManualBlockDataExpressionGroup)blockPair.getRight()).getValue();
 	
 		//resolve variable name, build var info container
-		for(HAPElementInContainerDataExpression itemExe : groupExe.getItems()) {
-			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getExpression(), blockPair.getRight(), groupBlock.getVariablesInfo(), null);
+		for(HAPItemInGroupDataExpression itemExe : groupExe.getItems()) {
+			HAPUtilityExpressionProcessor.resolveVariableName(itemExe.getDataExpression(), blockPair.getRight(), groupBlock.getVariablesInfo(), null);
 		}
 		
 		//build var info container

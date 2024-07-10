@@ -4,10 +4,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.common.scriptexpression.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
 
 @HAPEntityWithAttribute
-public class HAPBlockScriptExpressionElementInLibrary extends HAPBrickWithEntityInfoSimple{
+public class HAPBlockScriptExpressionElementInLibrary extends HAPManualBrickWithEntityInfoSimple{
 
 	@HAPAttribute
 	public static String VALUE = "value";

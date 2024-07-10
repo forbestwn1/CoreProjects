@@ -8,10 +8,10 @@ import com.nosliw.core.application.brick.test.complex.script.HAPExecutableVariab
 import com.nosliw.core.application.brick.test.complex.script.HAPInfoAttachmentResolve;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickBlockComplex;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPManualBlockTestComplexScript extends HAPManualBrickBlockComplex implements HAPBlockTestComplexScript{
+public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implements HAPBlockTestComplexScript{
 
 	public HAPManualBlockTestComplexScript() {
 	}

@@ -10,7 +10,7 @@ import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickAdapter;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extends HAPPluginProcessorAdapter{
@@ -23,7 +23,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extend
 	}
 
 	@Override
-	public void process(HAPManualBrickAdapter adapterExe, HAPManualDefinitionBrickAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
+	public void process(HAPManualBrick adapterExe, HAPManualDefinitionBrickAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
 		HAPManualDefinitionAdapterDataAssociationForExpression daAdapterDef = (HAPManualDefinitionAdapterDataAssociationForExpression)adapterDef;
 		HAPManualAdapterDataAssociationForExpression daAdapterExe = (HAPManualAdapterDataAssociationForExpression)adapterExe;
 		

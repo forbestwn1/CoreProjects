@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.variable.HAPVariableInfo;
+import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -28,7 +28,7 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 	@HAPAttribute
 	public static final String INITDATA = "initData";
 	
-	private HAPVariableInfo m_variableInfo;
+	private HAPVariableDefinition m_variableInfo;
 	
 	private HAPData m_initData;
 	
@@ -36,13 +36,13 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 		super(STORYNODE_TYPE);
 	}
 	
-	public HAPStoryNodeVariable(HAPVariableInfo variableInfo, HAPData initData) {
+	public HAPStoryNodeVariable(HAPVariableDefinition variableInfo, HAPData initData) {
 		this();
 		this.m_variableInfo = variableInfo;
 		this.m_initData = initData;
 	}
 
-	public HAPVariableInfo getVariableInfo() {   return this.m_variableInfo;    }
+	public HAPVariableDefinition getVariableInfo() {   return this.m_variableInfo;    }
 	public HAPData getInitData() {    return this.m_initData;    }
 	
 	@Override
@@ -53,7 +53,7 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 			out = new HAPChangeResult();
 			if(VARAIBLEINFO.equals(path)) {
 				out.addRevertChange(HAPUtilityChange.buildChangePatch(this, VARAIBLEINFO, this.m_variableInfo));
-				this.m_variableInfo = HAPVariableInfo.buildVariableInfoFromObject(value);
+				this.m_variableInfo = HAPVariableDefinition.buildVariableInfoFromObject(value);
 				return out;
 			}
 			else if(INITDATA.equals(path)) {
@@ -78,7 +78,7 @@ public class HAPStoryNodeVariable extends HAPStoryNodeImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		this.m_variableInfo = HAPVariableInfo.buildVariableInfoFromObject(jsonObj.getJSONObject(VARAIBLEINFO));
+		this.m_variableInfo = HAPVariableDefinition.buildVariableInfoFromObject(jsonObj.getJSONObject(VARAIBLEINFO));
 		JSONObject initDataObj = jsonObj.optJSONObject(INITDATA);
 		this.m_initData = HAPUtilityData.buildDataWrapperFromObject(initDataObj);
 		return true;  

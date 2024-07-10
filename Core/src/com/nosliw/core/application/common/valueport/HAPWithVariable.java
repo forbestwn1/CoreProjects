@@ -11,6 +11,6 @@ public interface HAPWithVariable {
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 
-	Map<String, HAPIdElement> getVariablesInfo();
+	Map<String, HAPVariableInfo> getVariablesInfo();
 
 }
