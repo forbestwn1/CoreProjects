@@ -9,24 +9,24 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 
-public class HAPManualDataExpressionGroup extends HAPSerializableImp{
+public class HAPManualDefinitionDataExpressionGroup extends HAPSerializableImp{
 
-	private List<HAPManualDataExpressionItemInGroup> m_items;
+	private List<HAPManualDefinitionDataExpressionItemInGroup> m_items;
 	
-	public HAPManualDataExpressionGroup() {
-		this.m_items = new ArrayList<HAPManualDataExpressionItemInGroup>();
+	public HAPManualDefinitionDataExpressionGroup() {
+		this.m_items = new ArrayList<HAPManualDefinitionDataExpressionItemInGroup>();
 	}
 	
-	public void addItem(HAPManualDataExpressionItemInGroup item) {
+	public void addItem(HAPManualDefinitionDataExpressionItemInGroup item) {
 		this.m_items.add(item);
 	}
 	
-	public List<HAPManualDataExpressionItemInGroup> getItems(){    return this.m_items;      }
+	public List<HAPManualDefinitionDataExpressionItemInGroup> getItems(){    return this.m_items;      }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		List<String> itemsStr = new ArrayList<String>();
-		for(HAPManualDataExpressionItemInGroup item : this.m_items) {
+		for(HAPManualDefinitionDataExpressionItemInGroup item : this.m_items) {
 			itemsStr.add(item.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(HAPContainerDataExpression.ITEM, HAPUtilityJson.buildArrayJson(itemsStr.toArray(new String[0])));

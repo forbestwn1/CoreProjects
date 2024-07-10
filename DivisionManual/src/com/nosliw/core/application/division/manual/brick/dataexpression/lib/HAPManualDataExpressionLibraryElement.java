@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
+import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;

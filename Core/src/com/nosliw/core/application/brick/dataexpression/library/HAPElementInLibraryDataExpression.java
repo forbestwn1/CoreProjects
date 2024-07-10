@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpression;
+package com.nosliw.core.application.brick.dataexpression.library;
 
 import java.util.List;
 import java.util.Map;
@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;

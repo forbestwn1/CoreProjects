@@ -7,11 +7,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 
-public class HAPManualDataExpressionItemInGroup extends HAPEntityInfoImp{
+public class HAPManualDefinitionDataExpressionItemInGroup extends HAPEntityInfoImp{
 
 	private HAPDefinitionDataExpression m_expression;
 	
-	public HAPManualDataExpressionItemInGroup(HAPDefinitionDataExpression expression) {
+	public HAPManualDefinitionDataExpressionItemInGroup(HAPDefinitionDataExpression expression) {
 		this.m_expression = expression;
 	}
 	

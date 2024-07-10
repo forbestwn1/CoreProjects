@@ -30,7 +30,7 @@ public class HAPManualPluginParserBlockDataExpressionGroup extends HAPManualDefi
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
 				String expressionStr = elementObj.getString(HAPElementInContainerDataExpression.EXPRESSION);
 				HAPDefinitionDataExpression dataExpression =  this.getRuntimeEnvironment().getDataExpressionParser().parseExpression(expressionStr);
-				HAPManualDataExpressionItemInGroup item = new HAPManualDataExpressionItemInGroup(dataExpression);
+				HAPManualDefinitionDataExpressionItemInGroup item = new HAPManualDefinitionDataExpressionItemInGroup(dataExpression);
 				item.buildEntityInfoByJson(elementObj);
 				groupBlock.getValue().addItem(item);
 			}

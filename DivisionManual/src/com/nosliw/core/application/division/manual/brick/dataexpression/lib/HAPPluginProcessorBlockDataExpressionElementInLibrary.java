@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.common.dataexpression.HAPElementInLibraryDataExpression;
+import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
@@ -51,7 +51,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		
 		//resolve variable name, build var info container
 		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(blockExe);
-		HAPManualUtilityProcessorDataExpression.resolveVariable(operandWrapper, varInfoContainer, null);
+		HAPManualUtilityProcessorDataExpression.resolveVariable(dataExpression, varInfoContainer, null);
 		
 		Map<String, HAPIdElement> varInfos = varInfoContainer.getVariables();
 		for(String key : varInfos.keySet()) {
@@ -62,7 +62,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, blockExe);
 
 		//process reference operand
-		HAPManualUtilityProcessorDataExpression.resolveReferenceVariableMapping(operandWrapper, processContext.getRuntimeEnv());
+		HAPManualUtilityProcessorDataExpression.resolveReferenceVariableMapping(dataExpression, processContext.getRuntimeEnv());
 
 		//discover
 		List<HAPManualOperand> operands = new ArrayList<HAPManualOperand>();
