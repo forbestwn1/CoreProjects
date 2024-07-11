@@ -16,10 +16,10 @@ import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpre
 import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPVariableInScript;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;

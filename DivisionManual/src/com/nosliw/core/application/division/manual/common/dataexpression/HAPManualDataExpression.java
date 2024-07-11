@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.valueport.HAPVariableInfo;
-import com.nosliw.core.application.common.valueport.HAPWithVariable;
+import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 
 public class HAPManualDataExpression extends HAPSerializableImp implements HAPDataExpression{
 

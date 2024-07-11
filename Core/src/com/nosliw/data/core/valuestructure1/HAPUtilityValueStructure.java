@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPInfoAlias;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;

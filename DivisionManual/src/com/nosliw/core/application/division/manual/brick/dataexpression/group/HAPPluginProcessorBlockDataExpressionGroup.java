@@ -8,8 +8,8 @@ import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpres
 import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
 import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplex;

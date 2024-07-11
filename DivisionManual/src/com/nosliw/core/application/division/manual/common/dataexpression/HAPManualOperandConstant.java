@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandConstant;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPUtilityData;

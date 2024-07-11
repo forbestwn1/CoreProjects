@@ -2,7 +2,7 @@ package com.nosliw.data.core.domain.entity.expression.script;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
 
 @HAPEntityWithAttribute

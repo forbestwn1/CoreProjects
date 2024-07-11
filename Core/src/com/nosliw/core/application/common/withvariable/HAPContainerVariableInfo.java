@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.valueport;
+package com.nosliw.core.application.common.withvariable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,6 +7,10 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
+import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 public class HAPContainerVariableInfo extends HAPSerializableImp{

@@ -15,9 +15,9 @@ import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitio
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResource;

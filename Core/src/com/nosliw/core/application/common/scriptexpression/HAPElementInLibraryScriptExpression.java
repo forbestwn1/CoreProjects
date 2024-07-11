@@ -12,10 +12,10 @@ import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpress
 import com.nosliw.core.application.common.dataexpression.HAPWithDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
-import com.nosliw.core.application.common.valueport.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
-import com.nosliw.core.application.common.valueport.HAPWithVariable;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
