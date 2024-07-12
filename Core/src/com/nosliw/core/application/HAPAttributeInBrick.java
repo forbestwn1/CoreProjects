@@ -15,7 +15,7 @@ import com.nosliw.data.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public abstract class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPWithResourceDependency{
+public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPWithResourceDependency{
 
 	@HAPAttribute
 	public static final String VALUEWRAPPER = "valueWrapper";

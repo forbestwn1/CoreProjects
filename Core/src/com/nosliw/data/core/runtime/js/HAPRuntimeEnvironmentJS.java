@@ -187,7 +187,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		
 		//brick division
 		this.getBrickManager().registerDivisionInfo(HAPConstantShared.BRICK_DIVISION_SERVICE, this.getServiceManager());
-		this.getBrickManager().registerDivisionInfo(HAPConstantShared.BRICK_DIVISION_SCRIPT, new HAPPluginDivisionScript(this.getBrickManager()));
+		this.getBrickManager().registerDivisionInfo(HAPConstantShared.BRICK_DIVISION_SCRIPT, new HAPPluginDivisionScript());
 
 		
 		

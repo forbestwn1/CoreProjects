@@ -9,18 +9,13 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginDivisionScript implements HAPPluginDivision{
 
-	private HAPManagerApplicationBrick m_brickManager;
-	
-	public HAPPluginDivisionScript(HAPManagerApplicationBrick brickManager) {
-		this.m_brickManager = brickManager;
+	public HAPPluginDivisionScript() {
 	}
 	
 	@Override
@@ -31,15 +26,8 @@ public class HAPPluginDivisionScript implements HAPPluginDivision{
 		File scriptFile = new File(scriptFileName);
 		String script = HAPUtilityFile.readFile(scriptFile);
 
-		HAPBrick scriptBrick = null;
-		if(this.m_brickManager.getBrickTypeInfo(brickTypeId).getIsComplex()) {
-			scriptBrick = this.m_brickManager.newBrickInstance(brickTypeId); 
-			((HAPBlockScriptComplex)scriptBrick).setScript(script);
-		}
-		else {
-			scriptBrick = this.m_brickManager.newBrickInstance(brickTypeId);
-			((HAPBlockScriptSimple)scriptBrick).setScript(script);
-		}
+		HAPBrickScript scriptBrick = new HAPBrickScript(brickTypeId);
+		scriptBrick.setScript(script);
 		
 		HAPBundle bundle = new HAPBundle();
 		bundle.setBrickWrapper(new HAPWrapperBrickRoot(scriptBrick));

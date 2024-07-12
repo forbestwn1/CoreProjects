@@ -7,20 +7,22 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
 import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplex{
+public class HAPPluginProcessorBlockDataExpressionGroup2 extends HAPPluginProcessorBlockComplex{
 
-	public HAPPluginProcessorBlockDataExpressionGroup(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
+	public HAPPluginProcessorBlockDataExpressionGroup2(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualBlockDataExpressionGroup.class, runtimeEnv, manualBrickMan);
 	}
 
@@ -49,20 +51,17 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 
 		//resolve variable name, build var info container
 		for(HAPItemInGroupDataExpression itemExe : groupExe.getItems()) {
-			HAPUtilityWithVarible.resolveVariable(itemExe.getDataExpression(), varInfoContainer, null, getManualBrickManager());
-			//build variable info in data expression
-			HAPUtilityWithVarible.buildVariableInfoInEntity(itemExe.getDataExpression(), varInfoContainer, getManualBrickManager());
+			HAPManualUtilityProcessorDataExpression.resolveVariable((HAPManualDataExpression)itemExe.getDataExpression(), varInfoContainer, null);
 		}
 		
 		//build var criteria infor in var info container according to value port def
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, groupBlock);
+		
+		//build var info container
+		for(HAPElementInContainerDataExpression itemExe : groupExe.getItems()) {
+			HAPUtilityExpressionProcessor.buildVariableInfo(groupBlock.getVariablesInfo(), blockPair.getRight());
+		}
+
 	}
 
-	@Override
-	public void processValueContextDiscovery(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {
-		
-		
-		
-	}
-	
 }
