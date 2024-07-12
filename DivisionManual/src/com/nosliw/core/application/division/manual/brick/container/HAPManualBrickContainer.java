@@ -8,9 +8,9 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfoSimple;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfo;
 
-public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfoSimple implements HAPBrickContainer{
+public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implements HAPBrickContainer{
 
 	@Override
 	public void init() {

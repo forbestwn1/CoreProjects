@@ -91,7 +91,7 @@ public class HAPUtilityExpressionProcessor {
 
 	
 	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
-		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualInterfaceProcessOperand(){
+		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -111,7 +111,7 @@ public class HAPUtilityExpressionProcessor {
 
 	public static void resolveReferenceVariableMapping(HAPDataExpression expressionExe, HAPRuntimeEnvironment runtimEnv) {
 		HAPWrapperOperand operand = expressionExe.getOperand();
-		HAPUtilityOperand.processAllOperand(operand, null, new HAPManualInterfaceProcessOperand(){
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -191,7 +191,7 @@ public class HAPUtilityExpressionProcessor {
 	
 	
 	public static void processConstant(HAPExecutableEntityComplex containerComplexEntity, HAPExecutableExpressionData1 expressionExe, HAPContextProcessor processContext) {
-		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualInterfaceProcessOperand(){
+		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();

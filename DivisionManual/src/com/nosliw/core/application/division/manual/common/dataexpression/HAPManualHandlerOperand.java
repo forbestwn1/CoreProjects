@@ -1,6 +1,6 @@
 package com.nosliw.core.application.division.manual.common.dataexpression;
 
-public abstract class HAPManualInterfaceProcessOperand {
+public abstract class HAPManualHandlerOperand {
 
 	abstract public boolean processOperand(HAPManualWrapperOperand operandWrapper, Object data);
 

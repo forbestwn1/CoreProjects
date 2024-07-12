@@ -2,15 +2,20 @@ package com.nosliw.core.application.common.brick;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.valuecontext.HAPValueContext;
+import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPBrickImp implements HAPBrick{
+public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
 
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
@@ -55,12 +60,26 @@ public abstract class HAPBrickImp implements HAPBrick{
 		this.m_attributes.add(attribute);
 	}
 	
-	private HAPWrapperValue getAttributeValueWrapper(String attributeName) {
-		HAPWrapperValue out = null; 
-		HAPAttributeInBrick attr = this.getAttribute(attributeName);
-		if(attr!=null) {
-			out = attr.getValueWrapper();
+	@Override
+	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(BRICKTYPE, this.getBrickType().toStringValue(HAPSerializationFormat.JSON));
+		
+		List<String> attrJsonList = new ArrayList<String>();
+		for(HAPAttributeInBrick attr : this.getAttributes()) {
+			attrJsonList.add(attr.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
-		return out;
+		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
+		
+		if(this.getValueContext()!=null) {
+			jsonMap.put(VALUECONTEXT, this.getValueContext().toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		}
 	}
+	
+	@Override
+	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
+		for(HAPAttributeInBrick attr : this.getAttributes()) {
+			attr.buildResourceDependency(dependency, runtimeInfo);
+		}
+	}
+
 }

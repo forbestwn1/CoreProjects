@@ -12,6 +12,11 @@ public interface HAPWithVariable {
 	@HAPAttribute
 	public static String VARIABLEINFOS = "variableInfos";
 
+	@HAPAttribute
+	public static String ENTITYTYPE = "entityType";
+
 	Map<String, HAPVariableInfo> getVariablesInfo();
 
+	String getEntityType();
+	
 }

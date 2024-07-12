@@ -14,6 +14,6 @@ public interface HAPPluginProcessorEntityWithVariable {
 	void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure);
 	
 	//discovery
-	Pair<HAPContainerVariableInfo,HAPMatchers>  discover(HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expectOutputs, HAPContainerVariableInfo varInfoContainer);
+	Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>>  discoverVariableCriteria(HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expectOutputs, HAPContainerVariableInfo varInfoContainer);
 
 }

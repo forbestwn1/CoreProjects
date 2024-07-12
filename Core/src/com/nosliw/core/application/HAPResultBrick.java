@@ -1,6 +1,5 @@
 package com.nosliw.core.application;
 
-import com.nosliw.core.application.division.manual.executable.HAPBrick;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPResultBrick {

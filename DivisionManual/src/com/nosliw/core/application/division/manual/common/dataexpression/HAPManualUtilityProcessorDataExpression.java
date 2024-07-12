@@ -26,7 +26,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualUtilityProcessorDataExpression {
 	
 	public static void resolveReferenceVariableMapping(HAPManualDataExpression dataExpression, HAPRuntimeEnvironment runtimEnv) {
-		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualInterfaceProcessOperand(){
+		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPManualWrapperOperand operandWrapper, Object data) {
 				String opType = operandWrapper.getOperandType();
@@ -57,7 +57,7 @@ public class HAPManualUtilityProcessorDataExpression {
 	}
 	
 	public static void resolveVariable(HAPManualDataExpression dataExpression, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
-		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualInterfaceProcessOperand() {
+		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand() {
 			@Override
 			public boolean processOperand(HAPManualWrapperOperand operand, Object data) {
 				String opType = operand.getOperandType();

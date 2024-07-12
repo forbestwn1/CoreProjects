@@ -12,7 +12,7 @@ import com.nosliw.data.core.matcher.HAPMatchers;
 
 public class HAPManualUtilityOperand {
 
-	static public void traverseAllOperand(HAPManualWrapperOperand operandWrapper, HAPManualInterfaceProcessOperand task, Object data){
+	static public void traverseAllOperand(HAPManualWrapperOperand operandWrapper, HAPManualHandlerOperand task, Object data){
 		if(task.processOperand(operandWrapper, data)){
 			List<HAPManualWrapperOperand> children = operandWrapper.getOperand().getChildren();
 			for(HAPManualWrapperOperand child : children){
