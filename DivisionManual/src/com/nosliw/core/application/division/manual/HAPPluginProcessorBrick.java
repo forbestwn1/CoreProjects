@@ -37,4 +37,5 @@ public class HAPPluginProcessorBrick {
 	}
 	
 	protected HAPRuntimeEnvironment getRuntimeEnvironment() {   return this.m_runtimeEnv;     }
+	protected HAPManualManagerBrick getManualBrickManager() {   return this.m_manualBrickMan;      }
 }

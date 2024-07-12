@@ -584,7 +584,8 @@ var COMMONCONSTANT=
   "TUNNELENDPOINT_TYPE_CONSTANT": "constant",
   "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort",
   "VERSION_DEFAULT": "1.0.0",
-  "NAME_ROOT_RESULT": "result"
+  "NAME_ROOT_RESULT": "result",
+  "WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION": "dataExpression"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -7,6 +7,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.valueport.HAPVariableInfo;
@@ -24,12 +25,18 @@ public class HAPManualDataExpression extends HAPSerializableImp implements HAPDa
 	}
 	
 	@Override
+	public String getWithVariableEntityType() {
+		return HAPConstantShared.WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION;
+	}
+
+	@Override
 	public HAPOperand getOperand() {   return this.m_operand.getOperand();  }
 	public HAPManualWrapperOperand getOperandWrapper() {   return this.m_operand;     }
 
 	@Override
 	public Map<String, HAPVariableInfo> getVariablesInfo() {   return this.m_variablesInfo;   }
-	public void setVariableInfo(HAPVariableInfo varInfo) {    this.m_variablesInfo.put(varInfo.getVariableKey(), varInfo);       }
+	@Override
+	public void addVariableInfo(HAPVariableInfo variableInfo) {  this.m_variablesInfo.put(variableInfo.getVariableKey(), variableInfo);  }
 
 	@Override
 	public void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
@@ -37,4 +44,5 @@ public class HAPManualDataExpression extends HAPSerializableImp implements HAPDa
 		jsonMap.put(OPERAND, HAPManagerSerialize.getInstance().toStringValue(this.getOperand(), HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPUtilityJson.buildJson(this.m_variablesInfo, HAPSerializationFormat.JSON));
 	}
+
 }

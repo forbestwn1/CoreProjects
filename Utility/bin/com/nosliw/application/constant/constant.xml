@@ -992,6 +992,11 @@
 			<definition type="space"/>
 			<definition name="NAME_ROOT_RESULT" value="result"/>
 
+			<definition type="space"/>
+			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>
+
+
+
 		</definitions>
 	</constants>
 </root>

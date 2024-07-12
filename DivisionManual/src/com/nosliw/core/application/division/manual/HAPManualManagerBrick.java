@@ -24,6 +24,8 @@ import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
+import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
+import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociation.HAPManaualPluginAdapterProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociation.HAPManualPluginParserAdapterDataAssociation;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociationforexpression.HAPManaualPluginAdapterProcessorDataAssociationForExpression;
@@ -48,6 +50,7 @@ import com.nosliw.core.application.division.manual.brick.test.complex.testcomple
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAdapter;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
@@ -75,13 +78,15 @@ import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBr
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualManagerBrick implements HAPPluginDivision{
+public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithVariablePlugin{
 
 	private Map<String, HAPManualDefinitionPluginParserBrick> m_brickParserPlugin;
 	private Map<String, HAPPluginProcessorBrick> m_brickProcessorPlugin;
 	private Map<String, HAPPluginProcessorBlock> m_blockProcessorPlugin;
 	private Map<String, HAPPluginProcessorAdapter> m_adapterProcessorPlugin;
 	private Map<String, HAPInfoBrickType> m_brickTypeInfo;
+	
+	private Map<String, HAPPluginProcessorEntityWithVariable> m_withVariableProcessorPlugin;
 	
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	
@@ -92,6 +97,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.m_blockProcessorPlugin = new LinkedHashMap<String, HAPPluginProcessorBlock>();
 		this.m_adapterProcessorPlugin = new LinkedHashMap<String, HAPPluginProcessorAdapter>();
 		this.m_brickTypeInfo = new LinkedHashMap<String, HAPInfoBrickType>();
+		this.m_withVariableProcessorPlugin = new LinkedHashMap<String, HAPPluginProcessorEntityWithVariable>();
 		init();
 	}
 	
@@ -383,6 +389,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.registerBrickTypeInfo(HAPManualEnumBrickType.VALUESTRUCTURE_100, new HAPInfoBrickType(false));
 		this.registerBrickTypeInfo(HAPManualEnumBrickType.VALUECONTEXT_100, new HAPInfoBrickType(false));
 		this.registerBrickTypeInfo(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, new HAPInfoBrickType(false));
+		
+		this.registerWithVariableEntityProcessPlugin(new HAPPluginProcessorEntityWithVariableDataExpression(this.m_runtimeEnv));
+		
 	}
 
 	public HAPManualDefinitionBrick parseEntityDefinition(Object entityObj, HAPIdBrickType entityTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
@@ -430,6 +439,11 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	private HAPPluginProcessorBlock getBlockProcessPlugin(HAPIdBrickType entityTypeId) {   return this.m_blockProcessorPlugin.get(entityTypeId.getKey());    }
 	private HAPPluginProcessorAdapter getAdapterProcessPlugin(HAPIdBrickType entityTypeId) {   return this.m_adapterProcessorPlugin.get(entityTypeId.getKey());    }
 
+	@Override
+	public HAPPluginProcessorEntityWithVariable getWithVariableEntityProcessPlugin(String entityType) {  return this.m_withVariableProcessorPlugin.get(entityType);  }
+	public void registerWithVariableEntityProcessPlugin(HAPPluginProcessorEntityWithVariable plugin) {    this.m_withVariableProcessorPlugin.put(plugin.getEntityType(), plugin);     }
+
+	
 	private HAPManagerApplicationBrick getBrickManager() {   return this.m_runtimeEnv.getBrickManager();    }
 
 }

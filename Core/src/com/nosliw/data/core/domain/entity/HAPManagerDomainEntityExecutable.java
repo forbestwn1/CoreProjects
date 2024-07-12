@@ -122,7 +122,7 @@ public class HAPManagerDomainEntityExecutable {
 	}
 	
 	public void registerComplexEntityProcessorPlugin(HAPPluginProcessorBrickDefinitionComplex complexEntityProcessorPlugin) {	this.m_processorComplexEntityPlugins.put(complexEntityProcessorPlugin.getBrickType(), complexEntityProcessorPlugin);	}
-	public void registerSimpleEntityProcessorPlugin(HAPPluginProcessorBrickDefinitionSimple simpleEntityProcessorPlugin) {	this.m_processorSimpleEntityPlugins.put(simpleEntityProcessorPlugin.getEntityType(), simpleEntityProcessorPlugin);	}
+	public void registerSimpleEntityProcessorPlugin(HAPPluginProcessorBrickDefinitionSimple simpleEntityProcessorPlugin) {	this.m_processorSimpleEntityPlugins.put(simpleEntityProcessorPlugin.getWithVariableEntityType(), simpleEntityProcessorPlugin);	}
 	public void registerAdapterProcessorPlugin(HAPPluginAdapterProcessor processorAdapterPlugin) {	this.m_processorAdapterPlugins.put(processorAdapterPlugin.getAdapterType(), processorAdapterPlugin);	}
 	
 

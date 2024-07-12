@@ -959,4 +959,8 @@ public class HAPConstantShared {
 		public static final String NAME_ROOT_RESULT = "result";
 
 
+
+		public static final String WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION = "dataExpression";
+
+
 }

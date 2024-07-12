@@ -1,12 +1,15 @@
 package com.nosliw.core.application.division.manual.common.dataexpression;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
@@ -20,7 +23,38 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 
 	public static String RESULT = "result";
 	
-	private HAPRuntimeEnvironment m_runtimEnv;
+	private HAPRuntimeEnvironment m_runtimeEnv;
+	
+	public HAPPluginProcessorEntityWithVariableDataExpression(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
+	}
+	
+	@Override
+	public String getEntityType() {
+		return HAPConstantShared.WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION;
+	}
+
+	@Override
+	public Set<String> getVariableKeys(HAPWithVariable withVariableEntity){
+		Set<String> out = new HashSet<String>();
+		HAPManualDataExpression dataExpression = (HAPManualDataExpression)withVariableEntity;
+
+		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand() {
+			@Override
+			public boolean processOperand(HAPManualWrapperOperand operand, Object data) {
+				Set<String> varKeys = (Set<String>)data;
+				String opType = operand.getOperandType();
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
+					HAPManualOperandVariable variableOperand = (HAPManualOperandVariable)operand.getOperand();
+					varKeys.add(variableOperand.getVariableKey());
+				}
+				return true;
+			}
+		}, out);
+		
+		return out;
+	}
+
 	
 	@Override
 	public void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer,
@@ -30,7 +64,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 		HAPManualUtilityProcessorDataExpression.resolveVariable(dataExpression, varInfoContainer, resolveConfigure);
 		
 		//process reference operand
-		HAPManualUtilityProcessorDataExpression.resolveReferenceVariableMapping(dataExpression, m_runtimEnv);
+		HAPManualUtilityProcessorDataExpression.resolveReferenceVariableMapping(dataExpression, m_runtimeEnv);
 		
 	}
 
@@ -54,7 +88,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 				expectOutputs,
 				varInfoContainer,
 				matchers,
-				this.m_runtimEnv.getDataTypeHelper(),
+				this.m_runtimeEnv.getDataTypeHelper(),
 				new HAPProcessTracker());
 		
 		Map<String, HAPMatchers> outMatchers = new LinkedHashMap<String, HAPMatchers>();

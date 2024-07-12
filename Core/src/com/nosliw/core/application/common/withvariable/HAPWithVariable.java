@@ -16,7 +16,8 @@ public interface HAPWithVariable {
 	public static String ENTITYTYPE = "entityType";
 
 	Map<String, HAPVariableInfo> getVariablesInfo();
+	void addVariableInfo(HAPVariableInfo variableInfo);
 
-	String getEntityType();
+	String getWithVariableEntityType();
 	
 }
