@@ -1,5 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.group;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
@@ -16,6 +18,7 @@ import com.nosliw.core.application.division.manual.HAPPluginProcessorBlockComple
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcessorBlockComplex{
@@ -41,11 +44,10 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 	@Override
 	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualDefinitionDataExpressionGroup groupDef = ((HAPManualDefinitionBlockDataExpressionGroup)blockPair.getLeft()).getValue();
-		HAPBlockDataExpressionGroup groupBlock = (HAPBlockDataExpressionGroup)blockPair.getRight();
+		HAPManualBlockDataExpressionGroup groupBlock = (HAPManualBlockDataExpressionGroup)blockPair.getRight();
 		HAPGroupDataExpression groupExe = ((HAPManualBlockDataExpressionGroup)blockPair.getRight()).getValue();
 
-		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(groupBlock);
+		HAPContainerVariableInfo varInfoContainer = groupBlock.getVariableInfoContainer();
 
 		//resolve variable name, build var info container
 		for(HAPItemInGroupDataExpression itemExe : groupExe.getItems()) {
@@ -59,10 +61,16 @@ public class HAPPluginProcessorBlockDataExpressionGroup extends HAPPluginProcess
 	}
 
 	@Override
-	public void processValueContextDiscovery(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {
-		
-		
-		
+	public void processValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualBlockDataExpressionGroup groupBlock = (HAPManualBlockDataExpressionGroup)blockPair.getRight();
+		HAPGroupDataExpression groupExe = ((HAPManualBlockDataExpressionGroup)blockPair.getRight()).getValue();
+
+		for(HAPItemInGroupDataExpression itemExe : groupExe.getItems()) {
+			HAPContainerVariableInfo varInfoContainer = groupBlock.getVariableInfoContainer();
+			Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(itemExe.getDataExpression(), null, varInfoContainer, getManualBrickManager());
+			groupBlock.setVariableInfoContainer(discoverResult.getLeft());
+		}
 	}
 	
 }

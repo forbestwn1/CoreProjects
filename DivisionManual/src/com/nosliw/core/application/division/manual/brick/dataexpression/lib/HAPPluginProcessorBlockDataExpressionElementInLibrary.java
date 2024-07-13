@@ -64,7 +64,7 @@ public class HAPPluginProcessorBlockDataExpressionElementInLibrary extends HAPPl
 		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, getManualBrickManager());
 		varInfoContainer = discoverResult.getLeft();
 		
-		//update value port element according to var info container after resolve
+		//update value port element according to var info container after discovery
 		HAPUtilityValuePortVariable.updateValuePortElements(varInfoContainer, blockExe);
 		
 		//result

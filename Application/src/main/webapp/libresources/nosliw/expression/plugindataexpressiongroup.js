@@ -74,15 +74,14 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 	var loc_getExecuteItemRequest = function(itemName, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.CONTAINERDATAEXPRESSION_ITEM][itemName];
-		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ELEMENTINCONTAINERDATAEXPRESSION_EXPRESSION]; 
-		var variablesContainer = loc_complexEntityDef.getOtherAttributeValue(node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS);
+		var expressionItem = loc_expressionGroup[node_COMMONATRIBUTECONSTANT.GROUPDATAEXPRESSION_ITEM][itemName];
+		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINGROUPDATAEXPRESSION_DATAEXPRESSION]; 
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_valuePort;
 			}
 		};
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, variablesContainer, withValuePortInterface, undefined, undefined, {
+		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, withValuePortInterface, undefined, undefined, {
 			success : function(request, result){
 				return result;
 			}
@@ -111,23 +110,6 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 
 
-	var loc_getItemById = function(itemId){
-		var expressions = loc_getAllExpressionItems();
-		var out;		
-		_.each(expressions, function(expression, i){
-			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==itemId){
-				out = expression;
-			}
-		});
-		return out;
-	};
-
-	var loc_getExecuteItemRequest1 = function(dataExpressionId, handlers, request){
-		var expressionItem = loc_getItemById(dataExpressionId);
-		return node_expressionUtility.getExecuteDataExpressionItemRequest(expressionItem, loc_valueContext, loc_referenceContainer.getChildrenEntity(), loc_complexEntityDef, handlers, request);
-	};
-
-	
 	var loc_facadeTask = node_createTaskInterface({
 		getExecuteRequest : function(taskInput, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

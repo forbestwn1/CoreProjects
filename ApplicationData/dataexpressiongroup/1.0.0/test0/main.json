@@ -4,15 +4,13 @@
 		"description": "test expression group entity"
 	},
 	"brick": {
-		"value": {
-			"item" : [
-				{
-					"name" : "normal_cleardatatype",
-					"status": "disabled1",
-					"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
-				}
-			]
-		},
+		"item" : [
+			{
+				"name" : "normal_cleardatatype",
+				"status": "disabled1",
+				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+			}
+		],
 		"valueContext" : {
 			"brick": [
 				{

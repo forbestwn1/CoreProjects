@@ -15,35 +15,25 @@ public abstract class HAPPluginProcessorBlockComplex extends HAPPluginProcessorB
 		super(brickType, brickClass, runtimeEnv, manualBrickMan);
 	}
 
-
 	//process definition before value context
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
+	//value context extension, variable resolve
+	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	
+	//matcher
+	public void processValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+
+	//
 	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
 
 	
 	
-	
-	
-	public void extendConstantValue(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
-	
-
-	
-	
-	//value context extension, variable resolve
-	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
-	public void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
-	
-	//matcher
-	public void processValueContextDiscovery(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
-	public void postProcessValueContextDiscovery(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {}
-	
-	public void processEntity(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
-	public void postProcessEntity(HAPManualBrick complexEntityExecutable, HAPManualContextProcessBrick processContext) {	}
-
 
 	protected Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext){
 		return HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, processContext.getCurrentBundle());

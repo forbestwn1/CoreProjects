@@ -16,6 +16,7 @@ import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -78,9 +79,12 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 		operands.add(dataExpression.getOperandWrapper().getOperand());
 		
 		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
-		HAPDataTypeCriteria resultExpection = expections.get(RESULT);
+		HAPDataTypeCriteria resultExpection = expections==null?null:expections.get(RESULT);
 		if(resultExpection!=null) {
 			expectOutputs.add(resultExpection);
+		}
+		else {
+			expectOutputs.add(HAPDataTypeCriteriaAny.getCriteria()); 
 		}
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		varInfoContainer = HAPManualUtilityOperand.discover(

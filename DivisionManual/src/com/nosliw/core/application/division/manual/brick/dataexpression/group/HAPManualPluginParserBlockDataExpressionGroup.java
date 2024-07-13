@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
+import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
@@ -24,7 +24,7 @@ public class HAPManualPluginParserBlockDataExpressionGroup extends HAPManualDefi
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick brickDef, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockDataExpressionGroup groupBlock = (HAPManualDefinitionBlockDataExpressionGroup)brickDef;
 
-		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPContainerDataExpression.ITEM);
+		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPGroupDataExpression.ITEM);
 		for(int i=0; i<dataExpressionArray.length(); i++) {
 			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {

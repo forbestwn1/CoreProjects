@@ -17,6 +17,7 @@ import com.nosliw.core.application.common.brick.HAPBrickImp;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
+import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
@@ -39,13 +40,19 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 
 	private HAPDomainValueStructure m_valueStructureDomain; 
 
+	private HAPContainerVariableInfo m_varInfoContainer;
+	
 	public HAPManualBrick() {
+		this.m_varInfoContainer = new HAPContainerVariableInfo(this); 
 	}
 	
 	public void setRuntimeEnvironment(HAPRuntimeEnvironment runtimeEnv) {     this.m_runtimeEnv = runtimeEnv;      }
 	
 	public void setValueStructureDomain(HAPDomainValueStructure valueStructureDomain) {   this.m_valueStructureDomain = valueStructureDomain;     }
 
+	public HAPContainerVariableInfo getVariableInfoContainer() {    return this.m_varInfoContainer;      }
+	public void setVariableInfoContainer(HAPContainerVariableInfo varInfoContainer) {     this.m_varInfoContainer = varInfoContainer;      }
+	
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;      }
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {    this.m_manualBrickMan = manualBrickMan;       }
 	
