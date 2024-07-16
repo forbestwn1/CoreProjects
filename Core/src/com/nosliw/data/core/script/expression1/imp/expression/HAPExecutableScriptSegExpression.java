@@ -25,7 +25,7 @@ public class HAPExecutableScriptSegExpression extends HAPExecutableScriptImp{
 	public String getExpressionId() {    return this.m_expressionId;    }
 
 	@Override
-	public String getScriptType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATA;  }
+	public String getScriptType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION;  }
 
 	@Override
 	public HAPVariableInfoInStructure discoverVariablesInfo1(HAPExecutableEntityExpressionDataGroup expressionGroup) {

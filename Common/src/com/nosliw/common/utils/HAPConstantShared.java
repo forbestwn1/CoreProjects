@@ -704,10 +704,10 @@ public class HAPConstantShared {
 
 
 
-		public static final String EXPRESSION_SEG_TYPE_SCRIPT = "scriptSeg";
-		public static final String EXPRESSION_SEG_TYPE_DATA = "expressionSeg";
+		public static final String EXPRESSION_SEG_TYPE_SCRIPTSIMPLE = "scriptSimple";
+		public static final String EXPRESSION_SEG_TYPE_DATAEXPRESSION = "dataExpression";
 		public static final String EXPRESSION_SEG_TYPE_TEXT = "textSeg";
-		public static final String EXPRESSION_SEG_TYPE_DATASCRIPT = "exprssionScriptSeg";
+		public static final String EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX = "scriptComplex";
 
 
 
@@ -961,6 +961,7 @@ public class HAPConstantShared {
 
 
 		public static final String WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION = "dataExpression";
+		public static final String WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION = "scriptExpression";
 
 
 }

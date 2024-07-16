@@ -18,7 +18,7 @@ public class HAPExecutableSegmentExpressionData extends HAPExecutableSegmentExpr
 	}
 	
 	@Override
-	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATA;  }
+	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION;  }
 
 	public String getDataExpressionId() {    return this.m_dataExpressionId;     }
 	

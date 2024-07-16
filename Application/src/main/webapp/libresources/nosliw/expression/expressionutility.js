@@ -42,7 +42,7 @@ var node_utility = function()
 		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS], valuePortEnv, {
 			success : function(request, allVariables){
 				//execute operand
-				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OPERAND], allVariables, constants, references, {
+				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, constants, references, {
 					success : function(requestInfo, operandResult){
 						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OUTPUTMATCHERS];
 						if(outputMatchers!=undefined){

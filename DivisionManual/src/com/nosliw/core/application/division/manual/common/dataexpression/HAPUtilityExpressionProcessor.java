@@ -11,8 +11,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
+import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
@@ -49,15 +49,15 @@ public class HAPUtilityExpressionProcessor {
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		HAPContainerVariableInfo currentVarInfoContainer = varInfoContainer;
 		for(int i=0; i<dataExpressionGroup.getItems().size(); i++) {
-			HAPElementInContainerDataExpression item = dataExpressionGroup.getItems().get(i); 
-			Pair<HAPContainerVariableInfo, HAPMatchers> pair = processDataExpression(item.getExpression(), expectOutput.get(i), varInfoContainer, withInternalValuePort, runtimeEnv);
+			HAPItemInContainerDataExpression item = dataExpressionGroup.getItems().get(i); 
+			Pair<HAPContainerVariableInfo, HAPMatchers> pair = processDataExpression(item.getDataExpression(), expectOutput.get(i), varInfoContainer, withInternalValuePort, runtimeEnv);
 			currentVarInfoContainer = pair.getLeft();
 			matchers.add(pair.getRight());
 		}
 		return Pair.of(currentVarInfoContainer, matchers);
 	}
 	
-	public static Pair<HAPContainerVariableInfo, HAPMatchers> processDataExpression(HAPDataExpression dataExpression, HAPDataTypeCriteria expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
+	public static Pair<HAPContainerVariableInfo, HAPMatchers> processDataExpression(HAPExpressionData dataExpression, HAPDataTypeCriteria expectOutput, HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort, HAPRuntimeEnvironment runtimeEnv) {
 		
 		//resolve variable name, build var info container
 		HAPUtilityExpressionProcessor.resolveVariableName(dataExpression, withInternalValuePort, varInfoContainer, null);
@@ -90,7 +90,7 @@ public class HAPUtilityExpressionProcessor {
 	
 
 	
-	public static void resolveVariableName(HAPDataExpression expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
+	public static void resolveVariableName(HAPExpressionData expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
@@ -109,7 +109,7 @@ public class HAPUtilityExpressionProcessor {
 		});
 	}
 
-	public static void resolveReferenceVariableMapping(HAPDataExpression expressionExe, HAPRuntimeEnvironment runtimEnv) {
+	public static void resolveReferenceVariableMapping(HAPExpressionData expressionExe, HAPRuntimeEnvironment runtimEnv) {
 		HAPWrapperOperand operand = expressionExe.getOperand();
 		HAPUtilityOperand.processAllOperand(operand, null, new HAPManualHandlerOperand(){
 			@Override

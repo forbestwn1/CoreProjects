@@ -455,10 +455,10 @@ var COMMONCONSTANT=
   "EXPRESSION_TYPE_TEXT": "text",
   "EXPRESSION_TYPE_SCRIPT": "script",
   "EXPRESSION_TYPE_LITERATE": "literate",
-  "EXPRESSION_SEG_TYPE_SCRIPT": "scriptSeg",
-  "EXPRESSION_SEG_TYPE_DATA": "expressionSeg",
+  "EXPRESSION_SEG_TYPE_SCRIPTSIMPLE": "scriptSimple",
+  "EXPRESSION_SEG_TYPE_DATAEXPRESSION": "dataExpression",
   "EXPRESSION_SEG_TYPE_TEXT": "textSeg",
-  "EXPRESSION_SEG_TYPE_DATASCRIPT": "exprssionScriptSeg",
+  "EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX": "scriptComplex",
   "STORYELEMENT_CATEGARY_NODE": "node",
   "STORYELEMENT_CATEGARY_CONNECTION": "connection",
   "STORYELEMENT_CATEGARY_GROUP": "group",
@@ -585,7 +585,8 @@ var COMMONCONSTANT=
   "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort",
   "VERSION_DEFAULT": "1.0.0",
   "NAME_ROOT_RESULT": "result",
-  "WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION": "dataExpression"
+  "WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION": "dataExpression",
+  "WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION": "scriptExpression"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

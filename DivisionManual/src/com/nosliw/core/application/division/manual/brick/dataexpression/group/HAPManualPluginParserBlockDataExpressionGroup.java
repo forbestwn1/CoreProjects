@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPElementInContainerDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
@@ -24,13 +24,13 @@ public class HAPManualPluginParserBlockDataExpressionGroup extends HAPManualDefi
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick brickDef, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockDataExpressionGroup groupBlock = (HAPManualDefinitionBlockDataExpressionGroup)brickDef;
 
-		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPGroupDataExpression.ITEM);
+		JSONArray dataExpressionArray = jsonObj.getJSONArray(HAPContainerDataExpression.ITEM);
 		for(int i=0; i<dataExpressionArray.length(); i++) {
 			JSONObject elementObj = dataExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				String expressionStr = elementObj.getString(HAPElementInContainerDataExpression.EXPRESSION);
+				String expressionStr = elementObj.getString(HAPItemInContainerDataExpression.DATAEXPRESSION);
 				HAPDefinitionDataExpression dataExpression =  this.getRuntimeEnvironment().getDataExpressionParser().parseExpression(expressionStr);
-				HAPManualDefinitionDataExpressionItemInGroup item = new HAPManualDefinitionDataExpressionItemInGroup(dataExpression);
+				HAPManualDefinitionDataExpressionItemInContainer item = new HAPManualDefinitionDataExpressionItemInContainer(dataExpression);
 				item.buildEntityInfoByJson(elementObj);
 				groupBlock.getValue().addItem(item);
 			}

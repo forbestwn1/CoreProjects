@@ -22,7 +22,7 @@ public class HAPExecutableSegmentExpressionDataScript extends HAPExecutableSegme
 	}
 	
 	@Override
-	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT;  }
+	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX;  }
 	
 	public List<HAPExecutableSegmentExpression> getSegments(){     return this.m_segments;      }
 	

@@ -21,7 +21,7 @@ public class HAPDefinitionSegmentExpressionScript implements HAPDefinitionSegmen
 	}
 	
 	@Override
-	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT;  }
+	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE;  }
 
 	public String getScript() {    return this.m_script;     }
 

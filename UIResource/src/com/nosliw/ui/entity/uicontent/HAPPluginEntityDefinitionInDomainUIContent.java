@@ -191,7 +191,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 					HAPDefinitionSegmentExpressionText textSegment = (HAPDefinitionSegmentExpressionText)segment;
 					newText.append(textSegment.getContent());
 				}
-				else if(segmentType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
+				else if(segmentType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX)) {
 					HAPDefinitionExpressionLiterate literateExpression = new HAPDefinitionExpressionLiterate();
 					literateExpression.addSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segment);
 					String scriptExpressionId = scriptEntityGroupEntity.addExpression(literateExpression);

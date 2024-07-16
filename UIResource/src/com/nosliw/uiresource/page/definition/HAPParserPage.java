@@ -242,7 +242,7 @@ public class HAPParserPage implements HAPParserResourceEntity{
 				if(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT.equals(scriptType)){
 					newText.append(scriptSeg.getScript());
 				}
-				else if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT.equals(scriptType)) {
+				else if(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX.equals(scriptType)) {
 					List<HAPScript> s = new ArrayList<HAPScript>(); 
 					s.add(scriptSeg);
 					String sStr = HAPUtilityScriptLiterate.buildScriptLiterate(s);

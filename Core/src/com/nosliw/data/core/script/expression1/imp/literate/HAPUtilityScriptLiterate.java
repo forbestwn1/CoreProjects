@@ -28,7 +28,7 @@ public class HAPUtilityScriptLiterate {
 			int expEnd = script.indexOf(UIEXPRESSION_TOKEN_CLOSE, start);
 			int end = expEnd + UIEXPRESSION_TOKEN_CLOSE.length();
 			String expression = script.substring(start+UIEXPRESSION_TOKEN_OPEN.length(), expEnd);
-			out.add(HAPScript.newScript(expression, HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT));
+			out.add(HAPScript.newScript(expression, HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX));
 			//keep searching the rest
 			script=script.substring(end);
 			start = script.indexOf(UIEXPRESSION_TOKEN_OPEN);
@@ -46,7 +46,7 @@ public class HAPUtilityScriptLiterate {
 			if(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT.equals(scriptType)) {
 				out.append(scriptSeg.getScript());
 			}
-			else if(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT.equals(scriptType)) {
+			else if(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX.equals(scriptType)) {
 				out.append(UIEXPRESSION_TOKEN_OPEN).append(scriptSeg.getScript()).append(UIEXPRESSION_TOKEN_CLOSE);
 			}
 		}

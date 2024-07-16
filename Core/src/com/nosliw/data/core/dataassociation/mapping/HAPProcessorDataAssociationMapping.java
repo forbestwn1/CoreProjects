@@ -69,7 +69,7 @@ public class HAPProcessorDataAssociationMapping {
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), null, null, null, fromProcessorContext);
 			HAPItemValueMapping<HAPReferenceRootElement> valueMappingItem = new HAPItemValueMapping<HAPReferenceRootElement>(processedItem, targetRootEleId);
-			out.addItem(valueMappingItem);
+			out.addDataExpression(valueMappingItem);
 			
 			//build relative assignment path mapping according to relative node
 			out.addRelativePathMappings(HAPUtilityDataAssociation.buildRelativePathMapping(valueMappingItem, toProcessorContext));

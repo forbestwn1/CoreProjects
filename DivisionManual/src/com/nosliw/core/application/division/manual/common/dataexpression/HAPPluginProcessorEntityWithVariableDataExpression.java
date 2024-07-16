@@ -38,7 +38,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 	@Override
 	public Set<String> getVariableKeys(HAPWithVariable withVariableEntity){
 		Set<String> out = new HashSet<String>();
-		HAPManualDataExpression dataExpression = (HAPManualDataExpression)withVariableEntity;
+		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 
 		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand() {
 			@Override
@@ -60,7 +60,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 	@Override
 	public void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer,
 			HAPConfigureResolveElementReference resolveConfigure) {
-		HAPManualDataExpression dataExpression = (HAPManualDataExpression)withVariableEntity;
+		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 		
 		HAPManualUtilityProcessorDataExpression.resolveVariable(dataExpression, varInfoContainer, resolveConfigure);
 		
@@ -73,7 +73,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 	public Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverVariableCriteria(
 			HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expections,
 			HAPContainerVariableInfo varInfoContainer) {
-		HAPManualDataExpression dataExpression = (HAPManualDataExpression)withVariableEntity;
+		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 
 		List<HAPManualOperand> operands = new ArrayList<HAPManualOperand>();
 		operands.add(dataExpression.getOperandWrapper().getOperand());

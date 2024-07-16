@@ -21,13 +21,13 @@ public class HAPUtilityScriptExpressionExecute {
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT)) {
 				out.addSegment(processSegmentText((HAPDefinitionSegmentExpressionText)segDef, idGenerator));
 			}
-			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
+			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE)) {
 				out.addSegment(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, expressionEntity, processContext, idGenerator));
 			}
-			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
+			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 				out.addSegment(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
 			}
-			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
+			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX)) {
 				out.addSegment(processSegmentDataScript((HAPDefinitionSegmentExpressionDataScript)segDef, expressionEntity, processContext, idGenerator));
 			}
 		}
@@ -46,11 +46,11 @@ public class HAPUtilityScriptExpressionExecute {
 	}
 
 	private static void collectDataExpressionId(HAPExecutableSegmentExpression segment, Set<String> expressionIds) {
-		if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
+		if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 			HAPExecutableSegmentExpressionData dataSegment = (HAPExecutableSegmentExpressionData)segment;
 			expressionIds.add(dataSegment.getDataExpressionId());
 		}
-		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
+		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX)) {
 			HAPExecutableSegmentExpressionDataScript dataScriptSegment = (HAPExecutableSegmentExpressionDataScript)segment;
 			for(HAPExecutableSegmentExpression s : dataScriptSegment.getSegments()) {
 				collectDataExpressionId(s, expressionIds);
@@ -66,7 +66,7 @@ public class HAPUtilityScriptExpressionExecute {
 	}
 	
 	private static void collectVariableKeys(HAPExecutableSegmentExpression segment, Set<String> varKeys) {
-		if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
+		if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE)) {
 			HAPExecutableSegmentExpressionScript scriptSegment = (HAPExecutableSegmentExpressionScript)segment;
 			for(Object s : scriptSegment.getParts()) {
 				if(s instanceof HAPExecutableVariableInScript) {
@@ -75,7 +75,7 @@ public class HAPUtilityScriptExpressionExecute {
 				}
 			}
 		}
-		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATASCRIPT)) {
+		else if(segment.getType().equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX)) {
 			HAPExecutableSegmentExpressionDataScript dataScriptSegment = (HAPExecutableSegmentExpressionDataScript)segment;
 			for(HAPExecutableSegmentExpression s : dataScriptSegment.getSegments()) {
 				collectVariableKeys(s, varKeys);
@@ -97,10 +97,10 @@ public class HAPUtilityScriptExpressionExecute {
 		
 		for(HAPDefinitionSegmentExpression segDef : dataScriptSegDef.getSegments()) {
 			String segType = segDef.getType();
-			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT)) {
+			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE)) {
 				out.addSegmentScript(processSegmentScript((HAPDefinitionSegmentExpressionScript)segDef, expressionEntity, processContext, idGenerator));
 			}
-			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATA)) {
+			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 				out.addSegmentData(processSegmentData((HAPDefinitionSegmentExpressionData)segDef, idGenerator));
 			}
 		}

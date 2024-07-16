@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.common.dataexpression.HAPDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractive;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
@@ -28,7 +28,7 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	@HAPAttribute
 	public static String RESULTMATCHERS = "resultMatchers";
 
-	private HAPDataExpression m_dataExpression;
+	private HAPExpressionData m_dataExpression;
 	
 	private HAPMatchers m_resultMatchers;
 
@@ -37,8 +37,8 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	public HAPElementInLibraryDataExpression() {
 	}
 	
-	public HAPDataExpression getExpression() {	return m_dataExpression;	}
-	public void setExpression(HAPDataExpression dataExpression) {	this.m_dataExpression = dataExpression;	}
+	public HAPExpressionData getExpression() {	return m_dataExpression;	}
+	public void setExpression(HAPExpressionData dataExpression) {	this.m_dataExpression = dataExpression;	}
 
 	public HAPMatchers getResultMatchers() {		return this.m_resultMatchers;	}
 	public void setResultMatchers(HAPMatchers matchers) {    this.m_resultMatchers = matchers;    }

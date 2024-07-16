@@ -774,10 +774,10 @@
 			<definition name="EXPRESSION_TYPE_LITERATE" value="literate"  description="literate entity"/>
 			
 			<definition type="space"/>
-			<definition name="EXPRESSION_SEG_TYPE_SCRIPT" value="scriptSeg" description="js expression segment"/>
-			<definition name="EXPRESSION_SEG_TYPE_DATA" value="expressionSeg" description="data expression segment"/>
+			<definition name="EXPRESSION_SEG_TYPE_SCRIPTSIMPLE" value="scriptSimple" description="js expression segment"/>
+			<definition name="EXPRESSION_SEG_TYPE_DATAEXPRESSION" value="dataExpression" description="data expression segment"/>
 			<definition name="EXPRESSION_SEG_TYPE_TEXT" value="textSeg" description="plain text segment"/>
-			<definition name="EXPRESSION_SEG_TYPE_DATASCRIPT" value="exprssionScriptSeg" description="script containing data expression and js expression segment"/>
+			<definition name="EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX" value="scriptComplex" description="script containing data expression and js expression segment"/>
 
 			<definition type="space"/>
 			<definition name="STORYELEMENT_CATEGARY_NODE" value="node"/>
@@ -994,7 +994,7 @@
 
 			<definition type="space"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>
-
+			<definition name="WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION" value="scriptExpression"/>
 
 
 		</definitions>

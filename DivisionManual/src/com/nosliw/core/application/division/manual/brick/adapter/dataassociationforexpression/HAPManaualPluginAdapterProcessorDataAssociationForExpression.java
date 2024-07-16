@@ -6,14 +6,14 @@ import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapter;
+import com.nosliw.core.application.division.manual.HAPManualPluginProcessorAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extends HAPPluginProcessorAdapter{
+public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extends HAPManualPluginProcessorAdapter{
 
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	

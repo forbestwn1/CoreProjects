@@ -8,7 +8,7 @@
 			{
 				"name" : "normal_cleardatatype",
 				"status": "disabled1",
-				"expression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
+				"dataExpression" : "!(test.string)!.subString(base:?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)"
 			}
 		],
 		"valueContext" : {

@@ -8,14 +8,14 @@ import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapp
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorAdapter;
+import com.nosliw.core.application.division.manual.HAPManualPluginProcessorAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPPluginProcessorAdapter{
+public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPluginProcessorAdapter{
 
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	

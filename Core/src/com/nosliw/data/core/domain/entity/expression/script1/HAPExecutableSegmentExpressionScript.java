@@ -25,7 +25,7 @@ public class HAPExecutableSegmentExpressionScript extends HAPExecutableSegmentEx
 	}
 	
 	@Override
-	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPT;  }
+	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE;  }
 
 	public List<Object> getParts(){   return this.m_parts;    }
 	

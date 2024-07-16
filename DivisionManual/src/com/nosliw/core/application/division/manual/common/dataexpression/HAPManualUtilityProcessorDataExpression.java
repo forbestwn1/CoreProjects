@@ -25,7 +25,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessorDataExpression {
 	
-	public static void resolveReferenceVariableMapping(HAPManualDataExpression dataExpression, HAPRuntimeEnvironment runtimEnv) {
+	public static void resolveReferenceVariableMapping(HAPManualExpressionData dataExpression, HAPRuntimeEnvironment runtimEnv) {
 		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPManualWrapperOperand operandWrapper, Object data) {
@@ -56,7 +56,7 @@ public class HAPManualUtilityProcessorDataExpression {
 		}, null);
 	}
 	
-	public static void resolveVariable(HAPManualDataExpression dataExpression, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
+	public static void resolveVariable(HAPManualExpressionData dataExpression, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand() {
 			@Override
 			public boolean processOperand(HAPManualWrapperOperand operand, Object data) {
@@ -71,8 +71,8 @@ public class HAPManualUtilityProcessorDataExpression {
 		}, null);
 	}
 	
-	public static HAPManualDataExpression buildManualDataExpression(HAPDefinitionDataExpression dataExpressionDef) {
-		return new HAPManualDataExpression(HAPManualUtilityProcessorDataExpression.buildManualOperand(dataExpressionDef.getOperand()));
+	public static HAPManualExpressionData buildManualDataExpression(HAPDefinitionDataExpression dataExpressionDef) {
+		return new HAPManualExpressionData(HAPManualUtilityProcessorDataExpression.buildManualOperand(dataExpressionDef.getOperand()));
 	}
 	
 	public static HAPManualOperand buildManualOperand(HAPDefinitionOperand operandDef) {
