@@ -184,6 +184,8 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickScriptExpressionLibrary());
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100));
 
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100));
+
 		
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINER_100));
 		

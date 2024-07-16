@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.scriptexpression.group
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 
-public class HAPManualDefinitionBlockScriptExpressionGroup extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualDefinitionBlockScriptExpressionGroup extends HAPManualDefinitionBrickBlockComplex{
 
 	public static final String VALUE = "value";
 	
