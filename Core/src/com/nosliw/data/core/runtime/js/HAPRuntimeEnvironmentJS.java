@@ -205,6 +205,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONLIB_100), new HAPPluginResourceManagerImpBrick(this));
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONGROUP_100), new HAPPluginResourceManagerImpBrick(this));
 
+		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100), new HAPPluginResourceManagerImpBrick(this));
 		
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEPROFILE_100), new HAPPluginResourceManagerImpBrick(this));
 		this.m_resourceManager.registerResourceManagerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEINTERFACE_100), new HAPPluginResourceManagerImpBrick(this));

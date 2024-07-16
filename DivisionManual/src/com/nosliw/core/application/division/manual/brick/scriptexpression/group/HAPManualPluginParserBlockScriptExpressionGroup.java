@@ -29,6 +29,7 @@ public class HAPManualPluginParserBlockScriptExpressionGroup extends HAPManualDe
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
 				String expressionStr = elementObj.getString(HAPItemInContainerScriptExpression.SCRIPTEXPRESSION);
 				HAPManualDefinitionScriptExpressionItemInContainer item = new HAPManualDefinitionScriptExpressionItemInContainer(expressionStr);
+				item.buildEntityInfoByJson(elementObj);
 				groupBlock.getValue().addItem(item);
 			}
 		}

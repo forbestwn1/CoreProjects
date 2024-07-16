@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
 import java.util.ArrayList;
 import java.util.List;

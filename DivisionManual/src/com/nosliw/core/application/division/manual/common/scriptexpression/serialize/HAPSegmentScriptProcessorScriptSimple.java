@@ -1,14 +1,14 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
 import java.util.List;
 
-import com.nosliw.core.application.common.scriptexpression.HAPConstantInScript;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScriptScriptSimple;
-import com.nosliw.core.application.common.scriptexpression.HAPVariableInScript;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualConstantInScript;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpressionScriptSimple;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualVariableInScript;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 
-public class HAPSegmentScriptProcessorScript implements HAPSegmentScriptProcessor{
+public class HAPSegmentScriptProcessorScriptSimple implements HAPSegmentScriptProcessor{
 
 	@Override
 	public HAPOutputScriptProcessor processor(HAPManualSegmentScriptExpression scriptExe, String funciontParmName,

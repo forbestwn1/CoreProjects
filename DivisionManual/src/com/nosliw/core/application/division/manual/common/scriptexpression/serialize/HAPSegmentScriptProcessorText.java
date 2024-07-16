@@ -1,7 +1,7 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionText;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpressionText;
 
 public class HAPSegmentScriptProcessorText implements HAPSegmentScriptProcessor{
 

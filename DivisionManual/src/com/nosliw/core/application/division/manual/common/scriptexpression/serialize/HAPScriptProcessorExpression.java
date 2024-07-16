@@ -1,8 +1,8 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
 import java.util.List;
 
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpression;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.script.expression1.HAPExecutableScript;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptWithSegment;

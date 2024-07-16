@@ -1,12 +1,12 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScriptComplex;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpressionScriptComplex;
 
-public class HAPSegmentScriptProcessorDataScript implements HAPSegmentScriptProcessor{
+public class HAPSegmentScriptProcessorScriptComplex implements HAPSegmentScriptProcessor{
 
 	@Override
 	public HAPOutputScriptProcessor processor(HAPManualSegmentScriptExpression scriptExe, String funciontParmName,
@@ -19,10 +19,10 @@ public class HAPSegmentScriptProcessorDataScript implements HAPSegmentScriptProc
 			HAPOutputScriptProcessor segmentProcessOutput = null;
 			String segType = segment.getType();
 			if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE)) {
-				segmentProcessOutput = new HAPSegmentScriptProcessorScript().processor(segment, funciontParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
+				segmentProcessOutput = new HAPSegmentScriptProcessorScriptSimple().processor(segment, funciontParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
 			}
 			else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
-				segmentProcessOutput = new HAPSegmentScriptProcessorData().processor(segment, funciontParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
+				segmentProcessOutput = new HAPSegmentScriptProcessorDataExpression().processor(segment, funciontParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
 			}
 			scrip.append(segmentProcessOutput.getFunctionBody());
 		}

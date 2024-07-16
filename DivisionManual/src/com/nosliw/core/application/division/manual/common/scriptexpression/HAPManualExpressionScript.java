@@ -16,11 +16,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.withvariable.HAPWithVariableImp;
-import com.nosliw.core.application.division.manual.common.scriptexpression.ser.HAPScriptFunctionInfo;
-import com.nosliw.core.application.division.manual.common.scriptexpression.ser.HAPUtilityScriptForExecuteJSScript;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.application.division.manual.common.scriptexpression.serialize.HAPScriptFunctionInfo;
+import com.nosliw.core.application.division.manual.common.scriptexpression.serialize.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 
 @HAPEntityWithAttribute
@@ -55,25 +52,22 @@ public class HAPManualExpressionScript extends HAPWithVariableImp implements HAP
 	public Set<String> getVariableKeys(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
 
-	public Set<String> getDataExpressionIds(){   return this.m_dataExpressionId;    }
-	public void addDataExpressionId(String id) {   this.m_dataExpressionId.add(id);    }
-
-	@Override
-	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.getType());
-		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
-		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
-		
-		List<String> segmentArrayStr = new ArrayList<String>();
-		for(HAPManualSegmentScriptExpression segment : this.m_segments) {
-			segmentArrayStr.add(segment.toStringValue(HAPSerializationFormat.JSON));
-		}
-		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentArrayStr.toArray(new String[0])));
-	}
+//	@Override
+//	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+//		super.buildJsonMap(jsonMap, typeJsonMap);
+//		jsonMap.put(TYPE, this.getType());
+//		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
+//		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
+//		
+//		List<String> segmentArrayStr = new ArrayList<String>();
+//		for(HAPManualSegmentScriptExpression segment : this.m_segments) {
+//			segmentArrayStr.add(segment.toStringValue(HAPSerializationFormat.JSON));
+//		}
+//		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentArrayStr.toArray(new String[0])));
+//	}
 	
 	@Override
-	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
+	public void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
 		HAPScriptFunctionInfo scriptFunctionInfo = HAPUtilityScriptForExecuteJSScript.buildExpressionFunctionInfo(this);
 		
@@ -93,11 +87,13 @@ public class HAPManualExpressionScript extends HAPWithVariableImp implements HAP
 
 		jsonMap.put(SCRIPTFUNCTION, new HAPJsonTypeScript(scriptFunctionInfo.getMainScript().getScript()).toStringValue(HAPSerializationFormat.JSON_FULL));
 		typeJsonMap.put(SCRIPTFUNCTION, HAPJsonTypeScript.class);
+		
+		jsonMap.put(DATAEXPRESSION, this.m_dataExpressionContainer.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 
-	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
-		
-	}
+//	@Override
+//	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
+//		
+//	}
 
 }

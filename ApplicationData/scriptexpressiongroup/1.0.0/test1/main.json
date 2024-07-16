@@ -10,7 +10,7 @@
 				"status": "disabled1",
 				"scriptExpression": "HaHaHa  <%=(#|!(test.string)!.subString(?(baseVarNormal)?,from:?(parm1)?,to:?(parm2)?)|#.value+?(parm2)?.value)+?(parm1)?.value%>  End!!!!",
 				"scriptExpression2": "HaHaHa  End!!!!",
-				"scriptExpression3": "HaHaHa  <%=(?(parm2)?.value)+?(mparm1)?.value%>  End!!!!"
+				"scriptExpression3": "HaHaHa  <%=(?(parm2)?.value)+?(parm1)?.value%>  End!!!!"
 			}
 		],
 		"valueContext" : {

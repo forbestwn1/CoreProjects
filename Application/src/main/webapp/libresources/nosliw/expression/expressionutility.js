@@ -420,6 +420,37 @@ var node_utility = function()
 		return out;
 	};
 
+	var loc_getExecuteScriptExpressionRequest = function(scriptExpresion, valuePortEnv, handlers, request){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpressionItem", {}), handlers, request);
+
+		//build variable value according to alias definition in expression item
+		out.addRequest(loc_getVariablesValueByKeyRequest(scriptExpresion[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS], valuePortEnv, {
+			success : function(request, allVariables){
+				var dataExpressions = scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_DATAEXPRESSION];
+				
+				var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {
+					success : function(request, results){
+						var expressionResults = results.getResults();
+						var scriptFun = scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_SCRIPTFUNCTION];
+						return scriptFun(scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_SUPPORTFUNCTION], expressionResults, undefined, allVariables);
+					}
+				});
+				_.each(dataExpressions[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM], function(dataExpressionItem, dataExpressionId){
+					var dataExpression = dataExpressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERDATAEXPRESSION_DATAEXPRESSION];
+					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, undefined, undefined, {
+						success : function(requestInfo, operandResult){
+							return operandResult;
+						}
+					}, null));
+				});
+				return calDataExpressionsRequest;
+			}
+		}));
+		return out;
+	};
+
+
+
 
 
 
@@ -592,17 +623,17 @@ var node_utility = function()
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 
-		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constants, references, handlers, requestInfo){
-			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, constants, references, handlers, requestInfo);
+		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constants, references, handlers, request){
+			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, constants, references, handlers, request);
 		},
 
-
+		getExecuteScriptExpressionRequest : function(scriptExpresion, valuePortEnv, handlers, request){
+			return loc_getExecuteScriptExpressionRequest(scriptExpresion, valuePortEnv, handlers, request);
+		},
 
 
 		
-		getExecuteDataExpressionRequest1 : function(expressionItem, variables, constants, references, handlers, requestInfo){
-			return loc_getExecuteDataExpressionRequest(expressionItem, variables, constants, references, handlers, requestInfo);
-		},
+
 
 		getExecuteDataExpressionItemRequest : function(expressionItem, valueContext, references, expressionDef, handlers, request){
 			return loc_getExecuteDataExpressionItemRequest(expressionItem, valueContext, references, expressionDef, handlers, request);

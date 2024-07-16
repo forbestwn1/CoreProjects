@@ -38,8 +38,9 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 			HAPItemInContainerScriptExpression itemExe = new HAPItemInContainerScriptExpression();
 			itemDef.cloneToEntityInfo(itemExe);
 
-			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpressionScript(itemDef.getScriptExpression(), processContext.getRuntimeEnv().getDataExpressionParser());
-			groupExe.addScriptExpression(scriptExpression);
+			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression(), null, processContext.getRuntimeEnv().getDataExpressionParser());
+			itemExe.setScriptExpression(scriptExpression);
+			groupExe.addItem(itemExe);
 		}
 	}
 	

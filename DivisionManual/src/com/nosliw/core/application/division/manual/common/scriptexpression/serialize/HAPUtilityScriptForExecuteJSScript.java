@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.scriptexpression.ser;
+package com.nosliw.core.application.division.manual.common.scriptexpression.serialize;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;
@@ -11,10 +11,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualExpressionScript;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualSegmentScriptExpression;
 import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskScriptExpressionGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
@@ -30,13 +29,13 @@ public class HAPUtilityScriptForExecuteJSScript {
 	private static String variablesDataParmName = "variablesData"; 
 	
 	static {
-		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE, new HAPSegmentScriptProcessorScript());
-		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION, new HAPSegmentScriptProcessorData());
-		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX, new HAPSegmentScriptProcessorDataScript());
+		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE, new HAPSegmentScriptProcessorScriptSimple());
+		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION, new HAPSegmentScriptProcessorDataExpression());
+		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX, new HAPSegmentScriptProcessorScriptComplex());
 		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT, new HAPSegmentScriptProcessorText());
 	}
 	
-	public static HAPScriptFunctionInfo buildExpressionFunctionInfo(HAPExpressionScript expressionExe) {
+	public static HAPScriptFunctionInfo buildExpressionFunctionInfo(HAPManualExpressionScript expressionExe) {
 		HAPScriptFunctionInfo out = new HAPScriptFunctionInfo();
 
 		List<HAPManualSegmentScriptExpression> segments = expressionExe.getSegments();
@@ -47,7 +46,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 		}
 		
 		StringBuffer funScript = buildSegmentFunctionScript(segments);
-		if(expressionExe.getType().equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE))  funScript.append("+\"\"");
+		if(expressionExe.getType().equals(HAPConstantShared.EXPRESSION_TYPE_LITERATE)) {
+			funScript.append("+\"\"");
+		}
 		
 		String script = HAPUtilityScriptForExecuteJSScript.buildFunction(funScript.toString(), functionsParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
 		out.setMainScript(HAPJSScriptInfo.buildByScript(script, null));
@@ -59,7 +60,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 		for(int i=0; i<segments.size(); i++) {
 			HAPManualSegmentScriptExpression segment = segments.get(i);
 			funScript.append(functionsParmName+"[\""+segment.getId()+"\"]("+functionsParmName+", "+expressionsDataParmName+", "+constantsDataParmName+", "+variablesDataParmName+")");
-			if(i<segments.size()-1)   funScript.append("+");
+			if(i<segments.size()-1) {
+				funScript.append("+");
+			}
 		}
 		return funScript;
 	}
