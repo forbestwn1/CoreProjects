@@ -44,7 +44,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 		Set<String> out = new HashSet<String>();
 		HAPManualExpressionScript scriptExpression = (HAPManualExpressionScript)withVariableEntity;
 
-		HAPManualUtilityScriptExpression.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
+		HAPManualUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
 			@Override
 			public boolean process(HAPManualSegmentScriptExpression segment, Object value) {
 				Set<String> varKeys = (Set<String>)value;
@@ -69,7 +69,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 	public void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPManualExpressionScript scriptExpression = (HAPManualExpressionScript)withVariableEntity;
 
-		HAPManualUtilityScriptExpression.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
+		HAPManualUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
 			@Override
 			public boolean process(HAPManualSegmentScriptExpression segment, Object value) {
 				Set<String> varKeys = (Set<String>)value;
@@ -104,7 +104,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 		List<HAPContainerVariableInfo> varInfoContainerWrapper = new ArrayList<HAPContainerVariableInfo>();
 		varInfoContainerWrapper.add(varInfoContainer);
 		
-		HAPManualUtilityScriptExpression.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
+		HAPManualUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
 			@Override
 			public boolean process(HAPManualSegmentScriptExpression segment, Object value) {
 				List<HAPContainerVariableInfo> varInfoContainerWrapper = (List<HAPContainerVariableInfo>)value; 

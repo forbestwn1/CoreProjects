@@ -16,9 +16,7 @@ import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpressionItemInContainer;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualExpressionScript;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -35,15 +33,7 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionContainerScriptExpression groupDef = ((HAPManualDefinitionBlockScriptExpressionGroup)blockPair.getLeft()).getValue();
 		HAPContainerScriptExpression groupExe = ((HAPBlockScriptExpressionGroup)blockPair.getRight()).getValue();
-	
-		for(HAPManualDefinitionScriptExpressionItemInContainer itemDef : groupDef.getItems()) {
-			HAPItemInContainerScriptExpression itemExe = new HAPItemInContainerScriptExpression();
-			itemDef.cloneToEntityInfo(itemExe);
-
-			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression(), null, processContext.getRuntimeEnv().getDataExpressionParser());
-			itemExe.setScriptExpression(scriptExpression);
-			groupExe.addItem(itemExe);
-		}
+		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(groupDef, groupExe, processContext.getRuntimeEnv().getDataExpressionParser());
 	}
 	
 	@Override
@@ -54,12 +44,8 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 
 		HAPContainerVariableInfo varInfoContainer = groupBlock.getVariableInfoContainer();
 
-		//resolve variable name, build var info container
-		for(HAPItemInContainerScriptExpression itemExe : groupExe.getItems()) {
-			HAPUtilityWithVarible.resolveVariable(itemExe.getScriptExpression(), varInfoContainer, null, getManualBrickManager());
-			//build variable info in data expression
-			HAPUtilityWithVarible.buildVariableInfoInEntity(itemExe.getScriptExpression(), varInfoContainer, getManualBrickManager());
-		}
+		//resolve variable name, build var info container, build variable info
+		HAPManualUtilityScriptExpression.processScriptExpressionContainerVariableResolve(groupExe, varInfoContainer, null, getManualBrickManager());
 		
 		//build var criteria infor in var info container according to value port def
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, groupBlock);
