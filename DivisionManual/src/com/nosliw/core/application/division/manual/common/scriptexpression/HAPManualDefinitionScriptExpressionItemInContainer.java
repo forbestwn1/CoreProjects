@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.scriptexpression.group;
+package com.nosliw.core.application.division.manual.common.scriptexpression;
 
 import java.util.Map;
 

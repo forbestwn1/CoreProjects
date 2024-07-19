@@ -8,6 +8,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPItemInContainerScriptExpression;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;

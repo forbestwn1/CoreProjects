@@ -13,14 +13,18 @@ public class HAPManualDefinitionWrapperBrick extends HAPEntityInfoImp implements
 
 	public static final String INFO = "info";
 
-	private HAPManualDefinitionBrick m_entity;
+	private HAPManualDefinitionBrick m_brick;
 
 	public HAPManualDefinitionWrapperBrick() {	}
 
+	public HAPManualDefinitionWrapperBrick(HAPManualDefinitionBrick brick) {
+		this.m_brick = brick;
+	}
+	
 	@Override
-	public HAPManualDefinitionBrick getBrick() {    return this.m_entity;    }
-	public void setEntity(HAPManualDefinitionBrick entity) {    
-		this.m_entity = entity;     
+	public HAPManualDefinitionBrick getBrick() {    return this.m_brick;    }
+	public void setBrick(HAPManualDefinitionBrick brick) {    
+		this.m_brick = brick;     
 	}
 
 	@Override
@@ -31,12 +35,12 @@ public class HAPManualDefinitionWrapperBrick extends HAPEntityInfoImp implements
 	public HAPPath getPathFromRoot() {  return null;  }
 
 	@Override
-	public Object getNodeValue() {  return this.m_entity;  }
+	public Object getNodeValue() {  return this.m_brick;  }
 
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, this.m_entity.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(BRICK, this.m_brick.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

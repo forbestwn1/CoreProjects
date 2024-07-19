@@ -6,7 +6,6 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 //wrapper for value structure

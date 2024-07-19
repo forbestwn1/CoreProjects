@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+		<br>
+		Content:<%=?(child_public)?.value + '   7777 ' %>
+
+</body>
+ 
+	<valuecontext>
+	{
+		"brick": [
+			{
+				"groupType" : "public",
+				"valueStructure" : {
+					"root" : {
+						"child_public": {
+							"definition":{
+								"criteria": "test.string;1.0.0"
+							}
+						}
+					},
+					"initValue": {
+						"child_public": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of child_public"
+						}
+					}
+				}
+			}
+		]
+	}
+	</valuecontext>
+
+</html>

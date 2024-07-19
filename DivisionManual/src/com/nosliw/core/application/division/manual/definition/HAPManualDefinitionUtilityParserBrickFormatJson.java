@@ -45,8 +45,8 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		{
 			brickObj = jsonObj;    //if no entity node, then using root
 		}
-		HAPManualDefinitionBrick brickDef = manualDivisionEntityMan.parseEntityDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
-		out.setEntity(brickDef);
+		HAPManualDefinitionBrick brickDef = manualDivisionEntityMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+		out.setBrick(brickDef);
 		
 		Object infoObj = jsonObj.opt(HAPManualDefinitionWrapperBrick.INFO);
 		out.buildEntityInfoByJson(infoObj);
@@ -157,7 +157,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			{
 				entityObj = jsonObj;    //if no entity node, then using root
 			}
-			HAPManualDefinitionBrick entityDef = manualDivisionEntityMan.parseEntityDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
+			HAPManualDefinitionBrick entityDef = manualDivisionEntityMan.parseBrickDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
 			out = new HAPManualDefinitionWrapperValueBrick(entityDef);
 		}
 

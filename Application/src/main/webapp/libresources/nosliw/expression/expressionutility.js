@@ -450,103 +450,6 @@ var node_utility = function()
 	};
 
 
-
-
-
-
-
-
-
-
-
-
-
-	var loc_getVariablesValueRequest = function(varKeys, variablesInfo, valueContext, handlers, request){
-		var variables = {};
-		_.each(varKeys, function(key, i){
-			var varInfo = variablesInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLES][key];
-			var varKey = varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEKEY]; 
-			var varId = node_createValuePortElementInfo(varInfo[node_COMMONATRIBUTECONSTANT.CONTAINERVARIABLEINFO_VARIABLEID]);
-			var variable = valueContext.createVariable(
-					varId.getValueStructureId(), 
-					varId.getRootName(),
-					varId.getElementPath());
-			variables[varKey] = variable;
-		});
-		
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("getVariablesValueRequest"), handlers, request);
-					
-		var calVarsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calVariables", {}), {
-			success : function(request, results){
-				return results.getResults();
-			}
-		});
-		
-		_.each(variables, function(variable, key){
-			calVarsRequest.addRequest(key, variable.getGetValueRequest({
-				success : function(request, data){
-					var value = data;
-					if(data!=undefined&&data.value!=undefined){
-					    value = data.value;
-					}
-					return value;
-				}	
-			}));
-		});
-		
-		out.addRequest(calVarsRequest);
-		return out;		
-	};
-
-	var loc_getExecuteDataExpressionItemRequest = function(expressionItem, valueContext, references, expressionDef, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("calExpression"), handlers, request);
-		var variablesInfo = expressionDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONDATA_VARIABLEINFOS);
-		out.addRequest(loc_getVariablesValueRequest(expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_VARIABLEKEYS], variablesInfo, valueContext, {
-			success : function(request, varValues){
-				return loc_getExecuteDataExpressionRequest(expressionItem, varValues, undefined, references);
-			}
-		}));
-		return out;		
-	};
-	
-	var loc_getExecuteExpressionRequest = function(expressionItem, valueContext, constants, expressionDef, dataExpressionGroupCore, handlers, request){
-
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("loc_getExecuteExpressionRequest", {}), handlers, request);
-
-		var varKeys = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_VARIABLEKEYS];
-		var dataExpressionIds = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_DATAEXPRESSIONIDS];
-		var scriptFun = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SCRIPTFUNCTION];
-		var supportFuns = expressionItem[node_COMMONATRIBUTECONSTANT.EXECUTABLEEXPRESSION_SUPPORTFUNCTION];
-
-		var prepareRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("prepareRequest", {}), {
-			success : function(request, results){
-				var variableValues = results.getResult("variableValues"); 	
-				var expressionDatas = results.getResult("expressionDatas"); 	
-				return scriptFun.call(undefined, supportFuns, expressionDatas, constants, variableValues);
-			}
-			
-		});
-
-		prepareRequest.addRequest("variableValues", loc_getVariablesValueRequest(varKeys, expressionDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYEXPRESSIONSCRIPT_VARIABLEINFOS), valueContext));
-		
-		var calDataExpressionsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("calDataExpressionsRequest", {}), {
-			success : function(request, results){
-				return results.getResults();
-			}
-		});
-		_.each(dataExpressionIds, function(dataExpressionId, i){
-			calDataExpressionsRequest.addRequest(dataExpressionId, node_getApplicationInterface(dataExpressionGroupCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER).getExecuteItemRequest(dataExpressionId));
-		});
-		prepareRequest.addRequest("expressionDatas", calDataExpressionsRequest);
-
-		out.addRequest(prepareRequest);
-		return out;		
-	};
-
-
-
-
-
 	var loc_out = {
 	
 		getExecuteOperationRequest : function(dataTypeId, operation, parmArray, handlers, requestInfo){
@@ -631,18 +534,6 @@ var node_utility = function()
 			return loc_getExecuteScriptExpressionRequest(scriptExpresion, valuePortEnv, handlers, request);
 		},
 
-
-		
-
-
-		getExecuteDataExpressionItemRequest : function(expressionItem, valueContext, references, expressionDef, handlers, request){
-			return loc_getExecuteDataExpressionItemRequest(expressionItem, valueContext, references, expressionDef, handlers, request);
-		},
-		
-		getExecuteExpressionItemRequest : function(expressionItem, valueContext, constants, expressionDef, dataExpressionGroupCore, handlers, request){
-			return loc_getExecuteExpressionRequest(expressionItem, valueContext, constants, expressionDef, dataExpressionGroupCore, handlers, request);
-		},
-		
 	};
 	return loc_out;
 }();

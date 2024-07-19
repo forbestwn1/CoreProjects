@@ -58,16 +58,42 @@ public class HAPManualUtilityValueStructureDomain {
 		
 		buildValueStructureComplexTree(rootEntityInfo, processContext, manualBrickMan, runtimeEnv);
 		
-//		buildExtensionValueStructure(complexEntity, processContext);
+		buildExtensionValueStructure(rootEntityInfo, processContext, manualBrickMan, runtimeEnv);
 		
 //		normalizeValuePort(complexEntity, processContext);
 		
 //		mergeValueStructure(complexEntity, processContext);
 	}
 
+	//create extension part
+	private static void buildExtensionValueStructure(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+
+			@Override
+			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
+				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
+				HAPBundle bundle = processContext.getCurrentBundle();
+				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
+
+				HAPBrick complexEntityExe = this.getBrickFromNode(treeNode);
+				HAPValueContext valueContextExe = complexEntityExe.getValueContext();
+				
+				String valueStructureExeId = valueStructureDomain.newValueStructure();
+				HAPInfoValueStructure valueStructureWrapperExe = new HAPInfoValueStructure(valueStructureExeId);
+				valueStructureWrapperExe.setGroupType(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+				
+				List<HAPInfoValueStructure> wrappers = new ArrayList<HAPInfoValueStructure>();
+				wrappers.add(valueStructureWrapperExe);
+				valueContextExe.addPartSimple(wrappers, HAPUtilityValueContext.createPartInfoExtension(), valueStructureDomain);
+
+				return true;
+			}
+		}, runtimeEnv.getBrickManager(), manualBrickMan, processContext);
+	}
+
 	//build value structure in complex tree and add to value structure domain
-	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
-		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootEntityInfo, new HAPHandlerDownwardImpTreeNode() {
+	private static void buildValueStructureComplexTree(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -127,7 +153,7 @@ public class HAPManualUtilityValueStructureDomain {
 	}
 
 	//create extension part
-	private static void buildExtensionValueStructure(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
+	private static void buildExtensionValueStructure1(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
 			@Override
 			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {

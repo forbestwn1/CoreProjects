@@ -15,6 +15,8 @@ import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualExpressionScript;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;

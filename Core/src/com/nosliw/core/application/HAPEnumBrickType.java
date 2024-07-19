@@ -35,4 +35,7 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType DECORATIONSCRIPT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0");
 	
 	
+	public static HAPIdBrickType UICONTENT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, "1.0.0");
+	public static HAPIdBrickType UIPAGE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, "1.0.0");
+
 }
