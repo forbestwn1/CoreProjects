@@ -8,16 +8,19 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
-import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructureDomain;
 
 public class HAPUtilityValueContext {
 

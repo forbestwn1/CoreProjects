@@ -3,9 +3,11 @@ package com.nosliw.core.application.brick.ui.uicontent;
 import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
 
+@HAPEntityWithAttribute
 public interface HAPBlockComplexUIContent extends HAPBrick{
 
 	@HAPAttribute

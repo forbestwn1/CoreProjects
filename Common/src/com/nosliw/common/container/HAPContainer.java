@@ -59,4 +59,14 @@ public abstract class HAPContainer<T extends HAPEntityInfo> extends HAPSerializa
 		}
 		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));
 	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		Map<String, String> itemMap = new LinkedHashMap<String, String>();
+		for(T item : this.m_items) {
+			itemMap.put(item.getId(), item.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(ITEM, HAPUtilityJson.buildMapJson(itemMap));
+	}
 }

@@ -3,6 +3,8 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
@@ -21,7 +23,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	}
 
 	public String getHtml() {    return (String)this.getAttributeValueWithValue(HAPBlockComplexUIContent.HTML);  }
-	public void setHtml(String html) {    this.setAttributeWithValueValue(HAPBlockComplexUIContent.HTML, html);      }
+	public void setHtml(String html) {    this.setAttributeWithValueValue(HAPBlockComplexUIContent.HTML, StringEscapeUtils.escapeHtml(html).replaceAll("(\\r|\\n)", ""));      }
 	
 	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContent(){   return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT);       }
 	public void addScriptExpressionInContent(HAPUIEmbededScriptExpressionInContent scriptExpressionInContent) {   this.getScriptExpressionInContent().add(scriptExpressionInContent);    }

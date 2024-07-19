@@ -52,6 +52,8 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		//parse script expression in content
 		parseChildScriptExpressionInContent(element, uiContent, parseContext);
 		
+		uiContent.setHtml(element.html());
+
 	}
 	
 	/*
@@ -83,8 +85,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	private void parseValueContext(Element ele, HAPManualDefinitionBrick brickManualDef, HAPManualDefinitionContextParse parseContext) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			this.parseBrickAttributeSelfJson(brickManualDef, null, null, getBrickType(), getBrickType(), parseContext);
-			parseBrickAttributeJson(brickManualDef, new JSONObject(valueContextEle.html()), HAPWithValueContext.VALUECONTEXT, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);	
+			parseBrickAttributeSelfJson(brickManualDef, new JSONObject(valueContextEle.html()), HAPWithValueContext.VALUECONTEXT, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);	
 			break;
 		}
 		for(Element valueContextEle : valueContextEles) {

@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIPage;
+import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -26,8 +26,8 @@ public class HAPManualPluginParserBlockComplexUIPage extends HAPManualDefinition
 		try{ 
 			Document doc = Jsoup.parse(content, "UTF-8");
 
-			HAPManualDefinitionBrick uiContentDef = this.getManualDivisionEntityManager().parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.JAVASCRIPT, parseContext);
-			uiPage.setAttributeWithValueBrick(HAPBlockComplexUIPage.UICONTENT, uiContentDef);
+			HAPManualDefinitionBrick uiContentDef = this.getManualDivisionEntityManager().parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.HTML, parseContext);
+			uiPage.setAttributeWithValueBrick(HAPWithUIContent.UICONTENT, uiContentDef);
 		}
 		catch(Exception e){
 			e.printStackTrace();

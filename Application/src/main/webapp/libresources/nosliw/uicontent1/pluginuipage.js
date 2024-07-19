@@ -23,7 +23,7 @@ var node_createUIPagePlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createUIPageComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
 			}, handlers, request);
@@ -47,7 +47,7 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 		
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.WITHUICONTENT_UICONTENT, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, undefined, {
 				success : function(request, childNode){
 					loc_uiContent = childNode.getChildValue().getCoreEntity();
 					loc_uiContent.setParentUIEntity(loc_out);
