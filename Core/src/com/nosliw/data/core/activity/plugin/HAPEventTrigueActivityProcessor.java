@@ -38,11 +38,11 @@ public class HAPEventTrigueActivityProcessor implements HAPProcessorActivity{
 			eventDef = ((HAPDefinitionEntityComponent)complexEntity).getEvent(trigueEventActDef.getEventName());
 		}
 
-		HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, valueStructureWrapper.getValueStructure(), runtimeEnv);
+		HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, valueStructureWrapper.getValueStructureBlock(), runtimeEnv);
 		out.setEvent(eventExe);
 		
 		//process input
-		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(trigueEventActDef, valueStructureWrapper.getValueStructure(), runtimeEnv));
+		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(trigueEventActDef, valueStructureWrapper.getValueStructureBlock(), runtimeEnv));
 
 		//process success result
 		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, new HAPExecutableResultActivity());

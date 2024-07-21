@@ -1,40 +1,50 @@
 package com.nosliw.core.application.uitag;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPWithValueContext;
-import com.nosliw.core.application.uitag1.HAPDefinitionEntityUITagDefinition;
-import com.nosliw.core.application.uitag1.HAPUITagAttributeDefinition;
-import com.nosliw.core.application.uitag1.HAPUITagEventDefinition;
-import com.nosliw.data.core.component.HAPWithAttachment;
-import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
+import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 
 public class HAPUtilityUITagDefinitionParser {
 
-	static public HAPBlockUITagDefinition parseUITagDefinition(Object obj) {
+	static private void parseValueContext(HAPUITagValueContextDefinition valueContext, JSONArray valueStructuresArray) {
+		
+		for(int i=0; i<valueStructuresArray.length(); i++) {
+			JSONObject valueStructureWrapperObj = valueStructuresArray.getJSONObject(i);
+			
+			HAPUITagWrapperValueStructure valueStructureWrapper = new HAPUITagWrapperValueStructure();
+			
+			HAPUtilityValueStructureParser.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
+			
+			HAPValueStructureDefinition valueStructure = new HAPValueStructureDefinition();
+			HAPUtilityValueStructureParser.parseValueStructureJson(valueStructureWrapperObj.getJSONObject(HAPWrapperValueStructure.VALUESTRUCTURE), valueStructure);
+			valueStructureWrapper.setValueStructure(valueStructure);
+			
+			valueContext.getValueStructures().add(valueStructureWrapper);
+		}
+	}
+	
+	static public HAPUITagDefinition parseUITagDefinition(JSONObject jsonObj) {
 
-		HAPBlockUITagDefinition out = new HAPBlockUITagDefinition();
-		
+		HAPUITagDefinition out = new HAPUITagDefinition();
+
 		//parse value context
+		HAPUITagValueContextDefinition valueContext = new HAPUITagValueContextDefinition();
+		parseValueContext(valueContext, jsonObj.getJSONArray(HAPWithValueContext.VALUECONTEXT));
+		out.setValueContext(valueContext);
 		
+/*		
+		HAPEntityInfoImp info = new HAPEntityInfoImp();
+		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);
+		out.setInfo(info);
 		
 		
 		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
 		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithValueContext.VALUECONTEXT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_VALUECONTEXT, null, parserContext);
 		
-		HAPEntityInfoImp info = new HAPEntityInfoImp();
-		info.buildObject(jsonObj.optJSONObject(HAPDefinitionEntityUITagDefinition.INFO), HAPSerializationFormat.JSON);
-		uiTagDefinition.setInfo(info);
 		
 		//attribute
 		Map<String, HAPUITagAttributeDefinition> attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
@@ -93,8 +103,9 @@ public class HAPUtilityUITagDefinitionParser {
 			childRelationConfigure.buildObject(childRelationConfigureJson, HAPSerializationFormat.JSON);
 		}
 		uiTagDefinition.setChildRelationConfigure(childRelationConfigure);
+*/		
 		
-		
+		return out;
 	}
 	
 	

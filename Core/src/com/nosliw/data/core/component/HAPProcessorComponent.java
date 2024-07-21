@@ -27,7 +27,7 @@ public class HAPProcessorComponent {
 		HAPManualBrickWrapperValueStructure valueStructureWrapper = definition.getValueStructureWrapper();
 		
 		//expand reference in value structure
-		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)valueStructureWrapper.getValueStructure(), processContext));
+		valueStructureWrapper.setValueStructure(HAPProcessorValueStructureInComponent.expandReference((HAPValueStructureInComplex)valueStructureWrapper.getValueStructureBlock(), processContext));
 
 		//
 		normalizeService(definition, processContext.getRuntimeEnvironment());
@@ -35,7 +35,7 @@ public class HAPProcessorComponent {
 		//enhance value structure according to mapping with service
 		for(String serviceName : definition.getAllServices()) {
 			HAPDefinitionServiceUse service = definition.getService(serviceName);
-			HAPProcessorServiceUse.enhanceValueStructureByService(service, valueStructureWrapper.getValueStructure(), processContext.getRuntimeEnvironment());
+			HAPProcessorServiceUse.enhanceValueStructureByService(service, valueStructureWrapper.getValueStructureBlock(), processContext.getRuntimeEnvironment());
 		}
 
 		//enhance value structure according to mapping with command
@@ -68,7 +68,7 @@ public class HAPProcessorComponent {
 	
 	public static void processServiceUse(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(String serviceName : definition.getAllServices()) {
-			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(definition.getService(serviceName), definition.getValueStructureWrapper().getValueStructure(), definition.getAttachmentContainer(), runtimeEnv);
+			HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(definition.getService(serviceName), definition.getValueStructureWrapper().getValueStructureBlock(), definition.getAttachmentContainer(), runtimeEnv);
 			executable.addServiceUse(serviceName, serviceExe);
 		}
 	}
@@ -82,14 +82,14 @@ public class HAPProcessorComponent {
 	
 	public static void processEvent(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionEvent eventDef : definition.getEvents()) {
-			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, definition.getValueStructureWrapper().getValueStructureBlock(), runtimeEnv);
 			executable.addEvent(eventExe);
 		}
 	}
 	
 	public static void processCommand(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
 		for(HAPDefinitionCommand command : definition.getCommands()) {
-			HAPExecutableCommand commandExe = HAPProcessorCommand.processChildLeaf(command, definition.getValueStructureWrapper().getValueStructure(), runtimeEnv);
+			HAPExecutableCommand commandExe = HAPProcessorCommand.processChildLeaf(command, definition.getValueStructureWrapper().getValueStructureBlock(), runtimeEnv);
 			executable.addCommand(commandExe);
 		}
 	}

@@ -38,10 +38,10 @@ public class HAPExpressionActivityProcessor implements HAPProcessorActivity{
 		out.setScriptExpression(scriptExpressionGroup);
 
 		//process input
-		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(definition, valueStructureWrapper.getValueStructure(), runtimeEnv));
+		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(definition, valueStructureWrapper.getValueStructureBlock(), runtimeEnv));
 		
 		//process success result
-		HAPExecutableResultActivity successResultExe = HAPUtilityActivity.processActivityResult(out, definition, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, valueStructureWrapper.getValueStructure(), m_resultContextBuilder, runtimeEnv);
+		HAPExecutableResultActivity successResultExe = HAPUtilityActivity.processActivityResult(out, definition, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, valueStructureWrapper.getValueStructureBlock(), m_resultContextBuilder, runtimeEnv);
 		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

@@ -115,16 +115,16 @@ public class HAPManualUtilityValueStructureDomain {
 				if(valueContextEntityDef!=null) {
 					{
 						List<HAPInfoValueStructure> wrappers = new ArrayList<HAPInfoValueStructure>();
-						for(HAPManualBrickWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
+						for(HAPManualBrickWrapperValueStructure part : valueContextEntityDef.getManualValueStructures()) {
 							Set<HAPRootInValueStructure> roots = new HashSet<HAPRootInValueStructure>(); 
-							for(HAPRootInValueStructure r : part.getValueStructure().getAllRoots()) {
+							for(HAPRootInValueStructure r : part.getValueStructureBlock().getValue().getAllRoots()) {
 								HAPRootInValueStructure root = new HAPRootInValueStructure();
 								root.setDefinition(r.getDefinition());
 								r.cloneToEntityInfo(root);
 								roots.add(root);
 							}
 							
-							String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getValueStructure().getInitValue(), part.getInfo(), part.getName());
+							String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getValueStructureBlock().getValue().getInitValue(), part.getInfo(), part.getName());
 							HAPInfoValueStructure valueStructureWrapperExe = new HAPInfoValueStructure(valueStructureExeId);
 							valueStructureWrapperExe.setGroupType(part.getGroupType());
 							wrappers.add(valueStructureWrapperExe);
@@ -213,7 +213,7 @@ public class HAPManualUtilityValueStructureDomain {
 				//process relative
 				List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-					HAPInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructure();
+					HAPInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
 					HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
@@ -268,7 +268,7 @@ public class HAPManualUtilityValueStructureDomain {
 				//process relative
 				List<HAPInfoValueStructureSorting> valueStructureInfos = HAPUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-					HAPInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructure();
+					HAPInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
 					HAPManualBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					HAPUtilityValueStructure.traverseElement(valueStructure, new HAPProcessorStructureElement() {
 

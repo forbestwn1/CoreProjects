@@ -58,6 +58,45 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 
 	}
 	
+	
+	/*
+	 * process a tag element 
+	 * return true : this element should be removed after processing
+	 * 		  false : this element should not be removed after processiong
+	 */
+	private boolean parseTag(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, HAPContextParser parserContext){
+		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
+		if(customTagName!=null){
+			//process custome tag
+			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele);
+			if(customTagName.equals("style")) {
+				parseStyle(ele, uiContentId, uiId, parserContext);
+			}
+			else {
+				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
+				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
+				
+				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, HAPSerializationFormat.HTML, parserContext);
+				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
+				uiTag.setUIId(uiId);
+				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
+			}
+			return false;
+		}
+		else{
+			//process regular tag
+			parseChildScriptExpressionInContent(ele, uiContentId, parserContext);
+			//process key attribute
+			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
+			//process elements's attribute that have expression value 
+			parseScriptExpressionInTagAttribute(ele, uiContentId, false, parserContext);
+			//process all descendant tags under this elment
+			parseDescendantTags(ele, uiContentId, parserContext);
+			return false;
+		}
+	}
+
+	
 	/*
 	 * process expression in child text content within element 
 	 */
@@ -204,44 +243,6 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 	
-	/*
-	 * process a tag element 
-	 * return true : this element should be removed after processing
-	 * 		  false : this element should not be removed after processiong
-	 */
-	private boolean parseTag(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
-		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
-		if(customTagName!=null){
-			//process custome tag
-			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele);
-			if(customTagName.equals("style")) {
-				parseStyle(ele, uiContentId, uiId, parserContext);
-			}
-			else {
-				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
-				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
-				
-				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, HAPSerializationFormat.HTML, parserContext);
-				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
-				uiTag.setUIId(uiId);
-				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
-			}
-			return false;
-		}
-		else{
-			//process regular tag
-			parseChildScriptExpressionInContent(ele, uiContentId, parserContext);
-			//process key attribute
-			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
-			//process elements's attribute that have expression value 
-			parseScriptExpressionInTagAttribute(ele, uiContentId, false, parserContext);
-			//process all descendant tags under this elment
-			parseDescendantTags(ele, uiContentId, parserContext);
-			return false;
-		}
-	}
-
 	/*
 	 * process element's attribute that have script expression value
 	 */

@@ -30,7 +30,7 @@ public class HAPUtilityActivity {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPContainerStructure.createDefault(externalValueStructure), 
 				activityDefinition.getInputDataAssociation(), 
-				HAPContainerStructure.createDefault(activityDefinition.getInputValueStructureWrapper().getValueStructure()), 
+				HAPContainerStructure.createDefault(activityDefinition.getInputValueStructureWrapper().getValueStructureBlock()), 
 				null,
 				runtimeEnv);
 		return da;

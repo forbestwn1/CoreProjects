@@ -42,17 +42,17 @@ public class HAPServiceActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		HAPProcessorServiceUse.normalizeServiceUse(serviceUse, processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
-		HAPProcessorServiceUse.enhanceValueStructureByService(serviceUse, serviceActDef.getInputValueStructureWrapper().getValueStructure(), runtimeEnv);
+		HAPProcessorServiceUse.enhanceValueStructureByService(serviceUse, serviceActDef.getInputValueStructureWrapper().getValueStructureBlock(), runtimeEnv);
 
-		HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(serviceUse, valueStructureWrapper.getValueStructure(), processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
+		HAPExecutableServiceUse serviceExe = HAPProcessorServiceUse.process(serviceUse, valueStructureWrapper.getValueStructureBlock(), processContext.getComplexEntity().getAttachmentContainer(), runtimeEnv);
 		out.setService(serviceExe);
 		
 		//process input
-		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(serviceActDef, valueStructureWrapper.getValueStructure(), runtimeEnv));
+		out.setInputDataAssociation(HAPUtilityActivity.processActivityInputDataAssocation(serviceActDef, valueStructureWrapper.getValueStructureBlock(), runtimeEnv));
 
 		//process success result
-		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(serviceActDef.getInputValueStructureWrapper().getValueStructure()); 
-		HAPExecutableResultActivity successResultExe = HAPUtilityActivity.processActivityResult(out, serviceActDef, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, valueStructureWrapper.getValueStructure(), m_resultContextBuilder, runtimeEnv);
+		HAPBuilderResultContext m_resultContextBuilder = new HAPBuilderResultContext1(serviceActDef.getInputValueStructureWrapper().getValueStructureBlock()); 
+		HAPExecutableResultActivity successResultExe = HAPUtilityActivity.processActivityResult(out, serviceActDef, HAPConstantShared.ACTIVITY_RESULT_SUCCESS, valueStructureWrapper.getValueStructureBlock(), m_resultContextBuilder, runtimeEnv);
 		out.addResult(HAPConstantShared.ACTIVITY_RESULT_SUCCESS, successResultExe);
 		
 		return out;

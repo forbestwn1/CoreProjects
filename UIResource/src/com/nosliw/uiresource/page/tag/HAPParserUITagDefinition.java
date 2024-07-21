@@ -74,7 +74,7 @@ public class HAPParserUITagDefinition {
 		JSONObject valueStructureJson = (JSONObject)HAPUtilityRhinoValue.toJson(valueStructureObj);
 		
 		HAPManualBrickWrapperValueStructure valueStructureWrapper = new HAPManualBrickWrapperValueStructure(new HAPValueStructureDefinitionGroup());
-		HAPParserUITagDefinition.parseValueStructureInTagDefinition(valueStructureJson, (HAPValueStructureDefinitionGroup)valueStructureWrapper.getValueStructure());
+		HAPParserUITagDefinition.parseValueStructureInTagDefinition(valueStructureJson, (HAPValueStructureDefinitionGroup)valueStructureWrapper.getValueStructureBlock());
 		definition.setValueStructureDefinitionWrapper(valueStructureWrapper);
 		
 		//parse dependency

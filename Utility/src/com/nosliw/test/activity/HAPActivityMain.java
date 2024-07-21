@@ -30,7 +30,7 @@ public class HAPActivityMain {
 		HAPResourceDefinitionTaskSuite activitySuiteDefinition = (HAPResourceDefinitionTaskSuite)runtimeEnvironment.getResourceDefinitionManager().getLocalResourceDefinition(resourceId);
 		
 		Map<String, Object> input = HAPUtilityAttachment.getTestValueFromAttachment(activitySuiteDefinition, testData);
-		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(taskSuiteExe.getValueStructureDefinitionWrapper().getValueStructure(), input);
+		Map<String, Object> inputById = HAPUtilityValueStructure.replaceValueNameWithId(taskSuiteExe.getValueStructureDefinitionWrapper().getValueStructureBlock(), input);
 
 		HAPRuntimeTaskExecuteTaskRhino task = new HAPRuntimeTaskExecuteTaskRhino(new HAPInfoRuntimeTaskTask1(taskSuiteExe, taskId, inputById), runtimeEnvironment);
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

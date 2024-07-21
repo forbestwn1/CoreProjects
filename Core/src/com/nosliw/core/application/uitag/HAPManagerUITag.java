@@ -14,7 +14,7 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerUITag implements HAPPluginDivision{
 
-	public HAPBlockUITagDefinition getUITagDefinition(HAPIdBrick uiTagDefinitionId) {
+	public HAPUITagDefinition getUITagDefinition(HAPIdBrick uiTagDefinitionId) {
 		String fileName = getUITagFolder(uiTagDefinitionId) + "definition.json";
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(new File(fileName)));
 		return HAPUtilityUITagDefinitionParser.parseUITagDefinition(jsonObj);

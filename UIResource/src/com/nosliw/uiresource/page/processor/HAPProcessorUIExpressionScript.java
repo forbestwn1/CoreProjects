@@ -53,7 +53,7 @@ public class HAPProcessorUIExpressionScript {
 		processScriptContext.setExpressionDefinitionSuite(expressionSuite);
 		
 		//constant from attachment and context
-		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure());
+		Set<HAPDefinitionConstant> constantsDef = HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), body.getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock());
 		for(HAPDefinitionConstant constantDef : constantsDef) {
 			processScriptContext.addConstantDefinition(constantDef);
 		}
@@ -84,7 +84,7 @@ public class HAPProcessorUIExpressionScript {
 		
 		HAPDefinitionScriptGroupImp scriptGroup = new HAPDefinitionScriptGroupImp();
 		scriptGroup.setValueStructureWrapper(exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper());
-		for(HAPDefinitionConstant constantDef : HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure())) {
+		for(HAPDefinitionConstant constantDef : HAPUtilityComplexConstant.buildConstantDefinition(uiUnitDef.getAttachmentContainer(), exeUnit.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock())) {
 			scriptGroup.addConstantDefinition(constantDef);
 		}
 		

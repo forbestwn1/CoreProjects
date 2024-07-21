@@ -22,7 +22,7 @@ public class HAPProcessorEscalate {
 
 	public static void process(HAPTreeNodeValueStructure sourceNode, Set<String> categarys, Map<String, String> cm, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructureInValuePort structure = sourceNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort structure = sourceNode.getValueStructureWrapper().getValueStructureBlock();
 
 		//normalize mapping first
 		Map<String, String> contextMapping = new LinkedHashMap<String, String>();
@@ -48,7 +48,7 @@ public class HAPProcessorEscalate {
 	
 	//escalte context node to parent context group, only absolute variable
 	public static void process(HAPTreeNodeValueStructure sourceNode, String sourceRootId, String escalateTargetPath, Set<String> inheritanceExcludedInfo) {
-		HAPValueStructureInValuePort sourceStructure = sourceNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort sourceStructure = sourceNode.getValueStructureWrapper().getValueStructureBlock();
 		HAPRootStructure sourceRootNode = sourceStructure.getRoot(sourceRootId);
 		if(sourceRootNode.isAbsolute()) {
 			HAPComplexPath complexPath = new HAPComplexPath(escalateTargetPath);
@@ -62,8 +62,8 @@ public class HAPProcessorEscalate {
 	//out.left: true--escalate to existing root node    false--escalate to new root node
 	private static Pair<Boolean, HAPRootStructure> escalate(HAPTreeNodeValueStructure originalNode, String originalRootId, HAPTreeNodeValueStructure parentNode, HAPComplexPath path, Set<String> inheritanceExcludedInfo) {
 		
-		HAPValueStructureInValuePort originalStrucutre = originalNode.getValueStructureWrapper().getValueStructure();
-		HAPValueStructureInValuePort parentStructure = parentNode.getValueStructureWrapper().getValueStructure();
+		HAPValueStructureInValuePort originalStrucutre = originalNode.getValueStructureWrapper().getValueStructureBlock();
+		HAPValueStructureInValuePort parentStructure = parentNode.getValueStructureWrapper().getValueStructureBlock();
 		
 		Pair<Boolean, HAPRootStructure> out = null;
 		HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReference(new HAPReferenceElementInStructure(path.getFullName()), parentStructure, HAPConstant.RESOLVEPARENTMODE_FIRST, null);

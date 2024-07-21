@@ -8,6 +8,7 @@ import com.nosliw.core.application.common.dataexpression.definition.HAPParserDat
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.service.HAPGatewayService;
 import com.nosliw.core.application.service.HAPManagerService;
+import com.nosliw.core.application.uitag.HAPManagerUITag;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
@@ -62,6 +63,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
+		HAPManagerUITag uiTagManager = new HAPManagerUITag();
 		
 		init(
 				dataTypeManager,
@@ -79,6 +81,7 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				dynamicResourceManager,
 				resourceDefManager,
 				brickManager,
+				uiTagManager,
 				cronJobManager,
 				storyManager,
 				runtime

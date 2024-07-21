@@ -13,6 +13,7 @@ import com.nosliw.core.application.configure.HAPPluginResourceManagerConfigure;
 import com.nosliw.core.application.resource.HAPPluginResourceManagerImpBrick;
 import com.nosliw.core.application.service.HAPFactoryServiceProcess;
 import com.nosliw.core.application.service.HAPManagerService;
+import com.nosliw.core.application.uitag.HAPManagerUITag;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.codetable.HAPGatewayCodeTable;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
@@ -100,6 +101,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
  	
 	private HAPManagerApplicationBrick m_brickManager;
 	
+	private HAPManagerUITag m_uiTagManager;
+	
 	private HAPManagerDynamicResource m_dynamicResourceManager;
 	
 	private HAPManagerCronJob m_cronJobManager;
@@ -126,11 +129,12 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
 			HAPManagerApplicationBrick brickManager,
+			HAPManagerUITag uiTagManager,
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){
 		super();
-		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, brickManager, cronJobManager, storyManager, runtime);
+		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, scriptManager, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, brickManager, uiTagManager, cronJobManager, storyManager, runtime);
 	}
 	
 	protected void init(
@@ -149,6 +153,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			    HAPManagerDynamicResource dynamicResourceManager,
 			    HAPManagerResourceDefinition resourceDefManager,
 				HAPManagerApplicationBrick brickManager,
+				HAPManagerUITag uiTagManager,
 			    HAPManagerCronJob cronJobManager,
 			    HAPManagerStory storyManager,
 			    HAPRuntime runtime){ 
@@ -164,6 +169,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		this.m_serviceManager = serviceManager;
 		this.m_resourceDefinitionManager = resourceDefManager;
 		this.m_brickManager = brickManager;
+		this.m_uiTagManager = uiTagManager;
 		this.m_dynamicResourceManager = dynamicResourceManager;
 		this.m_storyManager = storyManager;
 		this.m_cronJobManager = cronJobManager;
@@ -385,6 +391,9 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@Override
 	public HAPManagerApplicationBrick getBrickManager() {   return this.m_brickManager;  }
 
+	@Override
+	public HAPManagerUITag getUITagManager() {   return this.m_uiTagManager;     }
+	
 	@Override
 	public HAPManagerDynamicResource getDynamicResourceManager() {  return this.m_dynamicResourceManager;	}
 

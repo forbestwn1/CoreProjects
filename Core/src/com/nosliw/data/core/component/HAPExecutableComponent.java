@@ -73,7 +73,7 @@ public class HAPExecutableComponent extends HAPExecutableImpEntityInfo{
 
 	public HAPTreeNodeValueStructure getValueStructureDefinitionNode() {   return this.m_valueStructureNode;   }
 	public HAPManualBrickValueContext getValueStructureComplex() {     return this.m_valueStructureNode.getValueContext();   }
-	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructure());}
+	public HAPExecutableValueStructure getValueStructureExe() {	return HAPUtilityValueStructure.buildExecuatableValueStructure(this.m_valueStructureNode.getValueStructureWrapper().getValueStructureBlock());}
 
 	public HAPExecutableTaskSuite getTaskSuite() {    return this.m_taskSuite;    }
 	public void setTaskSuite(HAPExecutableTaskSuite taskSuite) {    this.m_taskSuite = taskSuite;     }

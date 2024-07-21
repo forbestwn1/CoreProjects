@@ -302,12 +302,12 @@ public class HAPPluginEntityProcessorComplexExpressionDataGroup extends HAPPlugi
 						String variablePath = variableOperand.getVariableName();
 						Set<String> types = new HashSet<String>();
 						types.add(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA);
-						HAPResultReferenceResolve resolve = HAPUtilityStructureElementReference.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), null, types);
+						HAPResultReferenceResolve resolve = HAPUtilityStructureElementReference.analyzeElementReference(variablePath, expressionExe.getValueStructureDefinitionWrapper().getValueStructureBlock(), null, types);
 						if(resolve==null || resolve.referredRoot==null || !resolve.elementInfoSolid.remainPath.isEmpty()) {
 							//variable name cannot be resolved
 							HAPRootStructure root = resolve==null?null:resolve.referredRoot;
 							if(root==null) {
-								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinitionWrapper().getValueStructure(), new HAPComplexPath(variablePath).getRoot(), new HAPRootStructure());
+								root = HAPUtilityStructure.addRoot(expressionExe.getValueStructureDefinitionWrapper().getValueStructureBlock(), new HAPComplexPath(variablePath).getRoot(), new HAPRootStructure());
 							}
 							HAPUtilityStructure.setDescendant(root, new HAPComplexPath(variablePath).getPath(), new HAPElementStructureLeafData());
 						}

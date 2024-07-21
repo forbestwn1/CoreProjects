@@ -36,7 +36,7 @@ public class HAPUtilityValueStructure {
 		HAPContainerVariableInfo out = new HAPContainerVariableInfo();
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
-			discoverDataVariablesInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
+			discoverDataVariablesInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructureBlock());
 		}
 		return out;
 	}
@@ -59,7 +59,7 @@ public class HAPUtilityValueStructure {
 	
 	public static HAPValueStructureInValuePort getValueStructureFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
-		return wrapper.getValueStructure();
+		return wrapper.getValueStructureBlock();
 	}
 	
 	public static HAPValueStructureDefinitionFlat getFlateFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
@@ -133,7 +133,7 @@ public class HAPUtilityValueStructure {
 		
 		List<HAPInfoPartSimple> partsInfo = HAPUtilityValueContext.getAllSimpleParts(valueStructureComplex);
 		for(HAPInfoPartSimple partInfo : partsInfo) {
-			discoverDataVariablesDefinitionInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructure());
+			discoverDataVariablesDefinitionInStructure(out, partInfo.getSimpleValueStructurePart().getRuntimeId(), partInfo.getSimpleValueStructurePart().getValueStructureBlock());
 		}
 		return out;
 	}

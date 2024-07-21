@@ -1,10 +1,9 @@
 package com.nosliw.core.application.uitag;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.common.brick.HAPBrickImp;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 
-public class HAPBlockUITagDefinition extends HAPBrickImp{
+public class HAPUITagDefinition{
 
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
@@ -26,6 +25,10 @@ public class HAPBlockUITagDefinition extends HAPBrickImp{
 	public static final String EVENT = "event";
 	
 	
+	private HAPUITagValueContextDefinition m_valueContext;
+	
+	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
+	public void setValueContext(HAPUITagValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }
 	
 	
 	

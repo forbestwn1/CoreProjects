@@ -173,7 +173,7 @@ public class HAPUtilityValueContext {
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		List<HAPExecutablePartValueContextSimple> parts = getAllSimpleParts(valueStructureComplex);
 		for(int i=parts.size()-1; i>=0; i--) {
-			HAPExecutableValueStructure vsExe = HAPUtilityValueStructureDomain.buildExecuatableValueStructure(parts.get(i).getValueStructureWrapper().getValueStructure());
+			HAPExecutableValueStructure vsExe = HAPUtilityValueStructureDomain.buildExecuatableValueStructure(parts.get(i).getValueStructureWrapper().getValueStructureBlock());
 			
 		}
 	}

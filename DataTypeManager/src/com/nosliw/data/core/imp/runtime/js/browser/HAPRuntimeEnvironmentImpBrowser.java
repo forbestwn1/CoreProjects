@@ -8,6 +8,7 @@ import com.nosliw.core.application.common.dataexpression.definition.HAPParserDat
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.service.HAPGatewayService;
 import com.nosliw.core.application.service.HAPManagerService;
+import com.nosliw.core.application.uitag.HAPManagerUITag;
 import com.nosliw.data.core.activity.HAPManagerActivity;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.codetable.HAPManagerCodeTable;
@@ -32,7 +33,6 @@ import com.nosliw.data.core.script.expression1.HAPManagerScript;
 import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
-import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.HAPUIResourceManager;
 import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 
@@ -78,6 +78,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
+		HAPManagerUITag uiTagManager = new HAPManagerUITag();
 		
 		init(
 			dataTypeManager,
@@ -95,12 +96,13 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 			dynamicResourceManager,
 			resourceDefManager,
 			brickManager,
+			uiTagManager,
 			cronJobManager,
 			storyManager,
 			runtime
 		);
 
-		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPManagerUITag(this, dataTypeHelper));
+//		this.m_uiResourceManager = new HAPUIResourceManager(this, new HAPManagerUITag(this, dataTypeHelper));
 
 		//brick division
 		this.getBrickManager().registerDivisionInfo(HAPConstantShared.BRICK_DIVISION_MANUAL, new HAPManualManagerBrick(this));

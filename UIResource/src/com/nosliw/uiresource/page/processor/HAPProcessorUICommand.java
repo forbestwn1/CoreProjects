@@ -57,7 +57,7 @@ public class HAPProcessorUICommand {
 		List<HAPDefinitionEvent> eventsDef = uiUnitDef.getEvents();
 		for(HAPDefinitionEvent eventDef : eventsDef) {
 			HAPDefinitionEvent processedEventDef = eventDef.cloneEventDefinition();
-			processedEventDef.setValueMapping(HAPProcessorContextRelative.process(eventDef.getValueMapping(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+			processedEventDef.setValueMapping(HAPProcessorContextRelative.process(eventDef.getValueMapping(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock()), null, contextProcessorConfig, runtimeEnv));
 			uiExe.getBody().addEventDefinition(processedEventDef);
 		}
 
@@ -68,12 +68,12 @@ public class HAPProcessorUICommand {
 			HAPDefinitionUICommand processedCommendDef = new HAPDefinitionUICommand();
 			commandDef.cloneBasicTo(processedCommendDef);
 			//command parms
-			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+			processedCommendDef.setParms(HAPProcessorContextRelative.process(commandDef.getParms(), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock()), null, contextProcessorConfig, runtimeEnv));
 
 			//command results
 			Map<String, HAPValueStructureDefinitionFlat> results = commandDef.getResults();
 			for(String resultName : results.keySet()) {
-				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure()), null, contextProcessorConfig, runtimeEnv));
+				processedCommendDef.addResult(resultName, HAPProcessorContextRelative.process(results.get(resultName), HAPContainerStructure.createDefault(uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock()), null, contextProcessorConfig, runtimeEnv));
 			}
 			
 			uiExe.getBody().addCommand(processedCommendDef);
@@ -86,7 +86,7 @@ public class HAPProcessorUICommand {
 				
 		//child tag
 		for(HAPExecutableUITag childTag : uiExe.getBody().getUITags()) {
-			processInteractionElement(childTag, (HAPValueStructureDefinitionGroup)uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructure(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
+			processInteractionElement(childTag, (HAPValueStructureDefinitionGroup)uiExe.getBody().getValueStructureDefinitionNode().getValueStructureWrapper().getValueStructureBlock(), null, contextProcessorConfig, uiTagMan, runtimeEnv);			
 		}
 	}
 	

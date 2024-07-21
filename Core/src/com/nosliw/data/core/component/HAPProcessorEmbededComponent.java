@@ -17,9 +17,9 @@ public class HAPProcessorEmbededComponent {
 		//input data mapping between module and page
 		for(HAPDefinitionDataAssociation dataAssociation : embededComponentDef.getInDataAssociations().getDataAssociations()) {
 			HAPExecutableDataAssociation inputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
-					HAPContainerStructure.createDefault(parentComponent.getValueStructure()), 
+					HAPContainerStructure.createDefault(parentComponent.getValueStructureBlock()), 
 					dataAssociation, 
-					HAPContainerStructure.createDefault(childComponent.getValueStructure()), 
+					HAPContainerStructure.createDefault(childComponent.getValueStructureBlock()), 
 					null, 
 					runtimeEnv);
 			embededComponentExe.addInDataAssociation(inputDataAssocation);
@@ -28,9 +28,9 @@ public class HAPProcessorEmbededComponent {
 		//output data mapping
 		for(HAPDefinitionDataAssociation dataAssociation : embededComponentDef.getOutDataAssociations().getDataAssociations()) {
 			HAPExecutableDataAssociation outputDataAssocation = HAPProcessorDataAssociation.processDataAssociation(
-					HAPContainerStructure.createDefault(childComponent.getValueStructure()), 
+					HAPContainerStructure.createDefault(childComponent.getValueStructureBlock()), 
 					dataAssociation,
-					HAPContainerStructure.createDefault(parentComponent.getValueStructure()), 
+					HAPContainerStructure.createDefault(parentComponent.getValueStructureBlock()), 
 					null, 
 					runtimeEnv);
 			embededComponentExe.addOutDataAssociation(outputDataAssocation);
@@ -38,7 +38,7 @@ public class HAPProcessorEmbededComponent {
 
 		//process event handler
 		for(HAPDefinitionHandlerEvent eventHandler : embededComponentDef.getEventHandlers()) {
-			HAPExecutableHandlerEvent eventHandlerExe = HAPProcessEvent.processEventHandler(eventHandler, childComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructure(), runtimeEnv);
+			HAPExecutableHandlerEvent eventHandlerExe = HAPProcessEvent.processEventHandler(eventHandler, childComponent.getEvent(eventHandler.getEventName()), parentComponent.getValueStructureBlock(), runtimeEnv);
 			embededComponentExe.addEventHandler(eventHandlerExe);
 		}
 		

@@ -59,7 +59,7 @@ public class HAPExecutableTaskSuite extends HAPExecutableImp implements HAPWithE
 	public HAPManualBrickWrapperValueStructure getValueStructureDefinitionWrapper() {    return this.m_valueStructureWrapper;    }
 
 	public HAPExecutableValueStructure getValueStructureExe() {
-		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionWrapper().getValueStructure());
+		return HAPUtilityValueStructure.buildExecuatableValueStructure(this.getValueStructureDefinitionWrapper().getValueStructureBlock());
 	}
 
 	@Override

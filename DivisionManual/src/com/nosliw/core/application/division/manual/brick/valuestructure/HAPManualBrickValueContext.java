@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
@@ -13,13 +15,9 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
-public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPWithConstantScriptExpression{
+public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPValueContextDefinition{
 
-	public static final String VALUESTRUCTURE = "valueStructure";
-	
-//	private List<HAPManualBrickWrapperValueStructure> m_valueStructures;
 	
 	public HAPManualBrickValueContext() {
 		super(HAPManualEnumBrickType.VALUECONTEXT_100);
@@ -30,7 +28,9 @@ public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSim
 		this.setAttributeWithValueBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	
-	public List<HAPManualBrickWrapperValueStructure> getValueStructures(){
+	@Override
+	public List<HAPWrapperValueStructure> getValueStructures() {    return (List)getManualValueStructures();  }
+	public List<HAPManualBrickWrapperValueStructure> getManualValueStructures(){
 		List<HAPManualBrickWrapperValueStructure> out = new ArrayList<HAPManualBrickWrapperValueStructure>();
 		for(HAPManualDefinitionAttributeInBrick attr: this.getValueStructureContainer().getPublicAttributes()) {
 			out.add((HAPManualBrickWrapperValueStructure)((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick());
