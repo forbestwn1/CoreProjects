@@ -4,29 +4,27 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.container.HAPItemWrapper;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPItemInContainerDataExpression extends HAPEntityInfoImp{
+public class HAPItemInContainerDataExpression extends HAPItemWrapper{
 
 	@HAPAttribute
 	public static String DATAEXPRESSION = "dataExpression";
 
-	private HAPExpressionData m_dataExpression;
-	
 	public HAPItemInContainerDataExpression() {}
 	
 	public HAPItemInContainerDataExpression(HAPExpressionData dataExpression) {
-		this.m_dataExpression = dataExpression;
+		super(dataExpression);
 	}
 	
-	public HAPExpressionData getDataExpression() {    return this.m_dataExpression;     }
-	public void setDataExpression(HAPExpressionData expression) {    this.m_dataExpression = expression;      }
+	public HAPExpressionData getDataExpression() {    return (HAPExpressionData)this.getValue();     }
+	public void setDataExpression(HAPExpressionData expression) {    this.setValue(expression);      }
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATAEXPRESSION, this.m_dataExpression.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		super.buildJSJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DATAEXPRESSION, this.getDataExpression().toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 }

@@ -54,8 +54,10 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 
+	var loc_envInterface = {};
+
 	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
-	var loc_envInterface = {
+	var loc_envValuePort = {
 		getValuePort : function(valuePortGroup, valuePortName){
 			return loc_valuePort;
 		}
@@ -137,7 +139,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
 
 
-					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envInterface);
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
 					loc_expressionContents.push(embededContent);
 				});
 

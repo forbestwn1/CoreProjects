@@ -13,7 +13,6 @@ var packageObj = library;
 	var node_resourceUtility;
 	var node_componentUtility;
 	var node_createServiceRequestInfoSimple;
-	var node_expressionUtility;
 	var node_makeObjectWithApplicationInterface;
 	var node_createServiceRequestInfoSet;
 	var node_createTaskContainerInterface;
@@ -178,7 +177,6 @@ nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){node_Re
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
-nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});

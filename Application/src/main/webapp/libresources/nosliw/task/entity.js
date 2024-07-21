@@ -16,6 +16,7 @@ var packageObj = library.getChildPackage();
 	var node_ServiceInfo;
 	var node_requestServiceProcessor;
 	var node_basicUtility;
+	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createTaskInfo = function(entityPath, adapterInfo){
@@ -168,9 +169,12 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 	return loc_out;
 };
 
+var loc_getValueInContainer = function(container, itemId){
+	return container[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM][itemId][node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE];
+};
 
 var node_createTaskInContainerWatch = function(container, taskId, valuePortEnv, runtimeEnv){
-	return node_createTaskWatch(container[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM][taskId], valuePortEnv, runtimeEnv);
+	return node_createTaskWatch(loc_getValueInContainer(container, taskId), valuePortEnv, runtimeEnv);
 };
 
 var node_createTaskWatch = function(taskDef, valuePortEnv, runtimeEnv){
@@ -257,7 +261,7 @@ var node_createTaskWatch = function(taskDef, valuePortEnv, runtimeEnv){
 var node_createTaskInContainerWrapper = function(container, taskId, valuePortEnv, runtimeEnv){
 	
 	var loc_container = container;
-	var loc_taskWrapper = node_createTaskWrapper(loc_container[node_COMMONATRIBUTECONSTANT_CONTAINER_ITEM][taskId], valuePortEnv, runtimeEnv);
+	var loc_taskWrapper = node_createTaskWrapper(loc_getValueInContainer(container, taskId), valuePortEnv, runtimeEnv);
 	
 	var loc_out = {
 		
@@ -288,10 +292,10 @@ var node_createTaskWrapper = function(taskDef, valuePortEnv, runtimeEnv){
 		getExecuteRequest : function(handlers, request){
 			var out;
 			var taskType = loc_taskDef[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_ENTITYTYPE];
-			if(taskType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION){
+			if(taskType==node_COMMONCONSTANT.WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION){
 				out = node_expressionUtility.getExecuteDataExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
 			}
-			else if(taskType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION){
+			else if(taskType==node_COMMONCONSTANT.WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION){
 				out = node_expressionUtility.getExecuteScriptExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
 			}
 			return out;
@@ -303,8 +307,8 @@ var node_createTaskWrapper = function(taskDef, valuePortEnv, runtimeEnv){
 		
 		getVariableIds : function(){
 			var variableIds = [];
-			_.each(this.getVariableInfo(), function(varId, varKey){
-				variableIds.push(varId);
+			_.each(this.getVariableInfo(), function(varInfo, i){
+				variableIds.push(varInfo[node_COMMONATRIBUTECONSTANT.VARIABLEINFO_VARIABLEID]);
 			});
 			return variableIds;
 		}
@@ -331,6 +335,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ExecutableResult", node_ExecutableResult); 

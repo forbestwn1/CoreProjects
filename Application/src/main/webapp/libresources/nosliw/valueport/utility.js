@@ -6,6 +6,7 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
 	var node_COMMONCONSTANT;
+	var node_createValuePortElementInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function(){
@@ -80,6 +81,7 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("valuePortUtility", node_utility); 
