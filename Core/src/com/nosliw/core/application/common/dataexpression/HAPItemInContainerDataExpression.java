@@ -5,7 +5,6 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.container.HAPItemWrapper;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
 public class HAPItemInContainerDataExpression extends HAPItemWrapper{
@@ -25,6 +24,5 @@ public class HAPItemInContainerDataExpression extends HAPItemWrapper{
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATAEXPRESSION, this.getDataExpression().toStringValue(HAPSerializationFormat.JAVASCRIPT));
 	}
 }

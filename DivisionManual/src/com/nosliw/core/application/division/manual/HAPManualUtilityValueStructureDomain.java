@@ -27,7 +27,6 @@ import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualRootInValueStructure;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
@@ -118,7 +117,7 @@ public class HAPManualUtilityValueStructureDomain {
 						List<HAPInfoValueStructure> wrappers = new ArrayList<HAPInfoValueStructure>();
 						for(HAPManualBrickWrapperValueStructure part : valueContextEntityDef.getValueStructures()) {
 							Set<HAPRootInValueStructure> roots = new HashSet<HAPRootInValueStructure>(); 
-							for(HAPManualRootInValueStructure r : part.getValueStructure().getAllRoots()) {
+							for(HAPRootInValueStructure r : part.getValueStructure().getAllRoots()) {
 								HAPRootInValueStructure root = new HAPRootInValueStructure();
 								root.setDefinition(r.getDefinition());
 								r.cloneToEntityInfo(root);

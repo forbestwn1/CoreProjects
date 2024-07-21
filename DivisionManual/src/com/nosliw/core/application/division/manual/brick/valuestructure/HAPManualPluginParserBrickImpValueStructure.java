@@ -15,6 +15,7 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
+import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefinitionPluginParserBrickImpSimple{
@@ -35,22 +36,22 @@ public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefini
 			else {
 				valueStructure.setInitValue(structureJson.opt(HAPManualBrickValueStructure.INITVALUE));
 			}
-			List<HAPManualRootInValueStructure> roots = parseStructureRoots(rootsObj);
-			for(HAPManualRootInValueStructure root : roots) {
+			List<HAPRootInValueStructure> roots = parseStructureRoots(rootsObj);
+			for(HAPRootInValueStructure root : roots) {
 				valueStructure.addRoot(root);
 			}
 		}
 	}
 	
-	private List<HAPManualRootInValueStructure> parseStructureRoots(Object rootsObj){
-		List<HAPManualRootInValueStructure> out = new ArrayList<HAPManualRootInValueStructure>();
+	private List<HAPRootInValueStructure> parseStructureRoots(Object rootsObj){
+		List<HAPRootInValueStructure> out = new ArrayList<HAPRootInValueStructure>();
 		if(rootsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)rootsObj;
 			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-				HAPManualRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
+				HAPRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
 				if(root!=null) {
 					root.setName(eleName);
 					out.add(root);
@@ -61,7 +62,7 @@ public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefini
 			JSONArray elementsArray = (JSONArray)rootsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPManualRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
+				HAPRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
 				out.add(root);
 			}
 		}
@@ -69,8 +70,8 @@ public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefini
 	}
 	
 	//parse context root
-	private HAPManualRootInValueStructure parseStructureRootFromJson(JSONObject eleDefJson){
-		HAPManualRootInValueStructure out = new HAPManualRootInValueStructure();
+	private HAPRootInValueStructure parseStructureRootFromJson(JSONObject eleDefJson){
+		HAPRootInValueStructure out = new HAPRootInValueStructure();
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
@@ -79,7 +80,7 @@ public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefini
 		}
 
 		//definition
-		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPManualRootInValueStructure.DEFINITION);
+		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPRootInValueStructure.DEFINITION);
 		if(defJsonObj!=null) {
 			out.setDefinition(HAPParserStructure.parseStructureElement(defJsonObj));
 		} else{

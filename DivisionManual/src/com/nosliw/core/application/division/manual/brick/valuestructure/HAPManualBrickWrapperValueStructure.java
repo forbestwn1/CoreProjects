@@ -28,8 +28,6 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBric
 	
 	private HAPInfoImpSimple m_info;
 	
-	private HAPManualBrickValueStructure m_valueStructure;
-	
 	public HAPManualBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
 	}

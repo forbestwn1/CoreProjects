@@ -55,7 +55,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 				}
 				else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 					HAPManualSegmentScriptExpressionScriptDataExpression dataExpressionSeg = (HAPManualSegmentScriptExpressionScriptDataExpression)segment;
-					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getDataExpressionItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
+					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
 					varKeys.addAll(HAPUtilityWithVarible.getVariableKeys(dataExpression, m_withVariableMan));
 				}
 				return true;
@@ -86,7 +86,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 				}
 				else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 					HAPManualSegmentScriptExpressionScriptDataExpression dataExpressionSeg = (HAPManualSegmentScriptExpressionScriptDataExpression)segment;
-					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getDataExpressionItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
+					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
 					HAPUtilityWithVarible.resolveVariable(dataExpression, varInfoContainer, resolveConfigure, m_withVariableMan);
 				}
 				return true;
@@ -114,7 +114,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 				}
 				else if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_DATAEXPRESSION)) {
 					HAPManualSegmentScriptExpressionScriptDataExpression dataExpressionSeg = (HAPManualSegmentScriptExpressionScriptDataExpression)segment;
-					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getDataExpressionItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
+					HAPExpressionData dataExpression = scriptExpression.getDataExpressionContainer().getItem(dataExpressionSeg.getDataExpressionId()).getDataExpression();
 					Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> resolvePair = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainerWrapper.get(0), m_withVariableMan);
 					varInfoContainerWrapper.add(0, resolvePair.getLeft());
 					matchers.putAll(resolvePair.getRight());

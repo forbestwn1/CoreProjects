@@ -432,7 +432,7 @@ var node_utility = function()
 					}
 				});
 				_.each(dataExpressions[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM], function(dataExpressionItem, dataExpressionId){
-					var dataExpression = dataExpressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERDATAEXPRESSION_DATAEXPRESSION];
+					var dataExpression = dataExpressionItem[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE];
 					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, {
 						success : function(requestInfo, operandResult){
 							return operandResult;

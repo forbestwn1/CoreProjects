@@ -38,7 +38,7 @@ public abstract class HAPContainer<T extends HAPItemWrapper> extends HAPSerializ
 	}
 	public List<T> getItems(){   return this.m_items;    }
 	
-	public T getDataExpressionItem(String id) {
+	public T getItem(String id) {
 		for(T item : this.m_items) {
 			if(id.equals(item.getId())) {
 				return item;

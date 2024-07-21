@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.valuestructure;
+package com.nosliw.core.application.common.structure;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -8,27 +8,28 @@ import java.util.Set;
 
 import com.google.common.collect.Lists;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
-public class HAPManualBrickValueStructure extends HAPManualDefinitionBrickBlockSimple{
+public class HAPValueStructureDefinition {
 
 	public static final String ROOT = "root";
 
 	public static final String INITVALUE = "initValue";
-
-	public HAPManualBrickValueStructure() {
-		super(HAPManualEnumBrickType.VALUESTRUCTURE_100);
-		this.setAttributeWithValueValue(ROOT, new LinkedHashMap<String, HAPRootInValueStructure>());
+	
+	private Map<String, HAPRootInValueStructure> m_roots;
+	
+	private Object m_initValue;
+	
+	public HAPValueStructureDefinition() {
+		this.m_roots = new LinkedHashMap<String, HAPRootInValueStructure>();
 	}
 
-	public void setInitValue(Object defaultValue) {	this.setAttributeWithValueValue(INITVALUE, defaultValue); 	}
-	public Object getInitValue() {    return this.getAttributeValueWithValue(INITVALUE);     } 
+	public void setInitValue(Object initValue) {	this.m_initValue = initValue; 	}
+	public Object getInitValue() {    return this.m_initValue;     } 
 	
 	public HAPRootInValueStructure addRoot(HAPRootInValueStructure root) {
 		String name = root.getName();
@@ -36,7 +37,7 @@ public class HAPManualBrickValueStructure extends HAPManualDefinitionBrickBlockS
 		return root;
 	}
 
-	public Map<String, HAPRootInValueStructure> getRoots(){	return (Map<String, HAPRootInValueStructure>)this.getAttributeValueWithValue(ROOT);    }
+	public Map<String, HAPRootInValueStructure> getRoots(){	return this.m_roots;    }
 	
 	public Set<String> getRootNames(){   return this.getRoots().keySet();    }
 	
@@ -121,5 +122,4 @@ public class HAPManualBrickValueStructure extends HAPManualDefinitionBrickBlockS
 		}
 		return out;
 	}
-
 }
