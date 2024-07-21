@@ -25,6 +25,7 @@ public abstract class HAPWithVariableImp extends HAPSerializableImp implements H
 	public void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPUtilityJson.buildJson(this.m_variablesInfo, HAPSerializationFormat.JSON));
+		jsonMap.put(ENTITYTYPE, this.getWithVariableEntityType());
 	}
 	
 }

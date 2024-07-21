@@ -25,7 +25,7 @@ var node_createViewContainer = function(id, styleId, attrs){
 	var loc_viewReady = false;
 	
 	var loc_setRootView = function(rootView){
-		if (typeof value === 'string') 	rootView = $(rootView);
+		if (typeof rootView === 'string') 	rootView = $(rootView);
 		loc_startEle.after(rootView);
 	};
 	

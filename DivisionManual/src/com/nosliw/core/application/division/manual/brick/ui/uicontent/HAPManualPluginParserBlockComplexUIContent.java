@@ -52,6 +52,8 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		//parse script expression in content
 		parseChildScriptExpressionInContent(element, uiContent, parseContext);
 		
+		HAPUtilityUIResourceParser.addSpanToText(element);
+
 		uiContent.setHtml(element.html());
 
 	}

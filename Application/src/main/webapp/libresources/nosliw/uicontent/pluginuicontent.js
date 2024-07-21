@@ -29,6 +29,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_createTaskInput;
 	var node_taskUtility;
+	var node_createValuePortValueContext;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -52,7 +53,15 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
-	var loc_envInterface = {};
+
+	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
+	var loc_envInterface = {
+		getValuePort : function(valuePortGroup, valuePortName){
+			return loc_valuePort;
+		}
+	};
+
+
 
 	//object store all the functions for js block
 	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT);
@@ -119,23 +128,21 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_HTML));
 			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
 			
-/*			
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP, undefined));
-
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				//init expression in content
-				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContentDef, i){
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContentDef, i){
 					var embededContent = node_createEmbededScriptExpressionInContent(embededContentDef);
 					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
 					
-					var scriptGroupCore = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEX_SCRIPTEEXPRESSIONGROUP).getChildValue().getCoreEntity();
-					
-					node_getLifecycleInterface(embededContent).init(viewEle, scriptGroupCore);
+					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
+
+
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envInterface);
 					loc_expressionContents.push(embededContent);
 				});
 
 			}));
-*/			
+
 			return out;
 		},
 		
@@ -196,6 +203,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskInput", function(){node_createTaskInput = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){	node_createValuePortValueContext = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 

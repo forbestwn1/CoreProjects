@@ -552,6 +552,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP" value="dataexpressiongroup"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP" value="dataexpressiongrouptemp"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE" value="dataexpressionsingle"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_DATAEXPRESSION" value="dataexpression"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONLIB" value="scriptexpressionlibrary"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONLIBELEMENT" value="scriptexpressionlibelement"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP" value="scriptexpressiongroup"/>

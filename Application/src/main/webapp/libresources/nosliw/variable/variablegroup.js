@@ -12,6 +12,7 @@ var packageObj = library.getChildPackage();
 	var node_getLifecycleInterface;
 	var node_createRequestEventGroupHandler;
 	var node_createValuePortElementInfo;
+	var node_valuePortUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * this is a factory to create variables group
@@ -22,27 +23,26 @@ var packageObj = library.getChildPackage();
  * 		thisContext : the this context for event handler
  */
 
-var node_createVariablesGroup = function(valueContext, variableIdsArray, handler, thisContext){
+var node_createVariablesGroup = function(valuePortEnv, variableIdsArray, handler, thisContext){
 
-	//value context
-	var loc_valueContext;
+	//value port env
+	var loc_valuePortEnv;
 	//event handler
 	var loc_handler;
 	//variables
-	var loc_variables = {};
+	var loc_variables = [];
 	
 	var loc_requestEventGroupHandler = undefined;
 	
 	var loc_addElement = function(variableId){
-		variableId = node_createValuePortElementInfo(variableId);
-		var variable = loc_valueContext.createVariableById(variableId);
-		loc_variables[variableId.getKey()] = variable;
+		var variable = node_valuePortUtility.createValuePortVariable(loc_valuePortEnv, variableId);
 		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject());
+		loc_variables.push(variable);
 	};
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(valueContext, variableIdsArray, handler, thisContext){
-		loc_valueContext = valueContext;
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(valuePortEnv, variableIdsArray, handler, thisContext){
+		loc_valuePortEnv = valuePortEnv;
 		loc_handler = handler;
 
 		loc_requestEventGroupHandler = node_createRequestEventGroupHandler(loc_handler, thisContext);
@@ -54,7 +54,7 @@ var node_createVariablesGroup = function(valueContext, variableIdsArray, handler
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(requestInfo){
 		loc_requestEventGroupHandler.destroy(requestInfo);
 		
-		_.each(loc_variables, function(variable, key){
+		_.each(loc_variables, function(variable, i){
 			variable.release(requestInfo);
 		});
 		
@@ -68,8 +68,6 @@ var node_createVariablesGroup = function(valueContext, variableIdsArray, handler
 		 */
 		addVariable : function(contextVariable){	loc_addElement(contextVariable);		},
 		
-		getVariable : function(fullPath){	return loc_variables[fullPath];		},
-		
 		getVariables : function(){  return loc_variables;  },
 		
 		triggerEvent : function(requestInfo){   loc_requestEventGroupHandler.triggerEvent(requestInfo);  },
@@ -79,7 +77,7 @@ var node_createVariablesGroup = function(valueContext, variableIdsArray, handler
 	
 	//append resource and object life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
-	node_getLifecycleInterface(loc_out).init(valueContext, variableIdsArray, handler, thisContext);
+	node_getLifecycleInterface(loc_out).init(valuePortEnv, variableIdsArray, handler, thisContext);
 	
 	return loc_out;
 };
@@ -96,6 +94,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuePortUtility", function(){node_valuePortUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariablesGroup", node_createVariablesGroup); 

@@ -29,20 +29,21 @@ var packageObj = library;
 	var node_ResourceId;
 	var node_getWithValuePortInterface;
 	var node_taskUtility;
+	var node_ElementIdValuePair;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_utility = function() 
 {
 	
-	var loc_getExecuteDataExpressionRequest =function(expressionItem, valuePortEnv, constants, references, handlers, requestInfo){
+	var loc_getExecuteDataExpressionRequest =function(expressionItem, valuePortEnv, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
 		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS], valuePortEnv, {
 			success : function(request, allVariables){
 				//execute operand
-				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, constants, references, {
+				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, {
 					success : function(requestInfo, operandResult){
 						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OUTPUTMATCHERS];
 						if(outputMatchers!=undefined){
@@ -273,7 +274,7 @@ var node_utility = function()
 	};
 
 	//execute operation operand
-	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
 
 		//cal all parms
@@ -316,7 +317,7 @@ var node_utility = function()
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, constants, references, {
+			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, {
 				success :function(request, parmValue){
 					return parmValue;
 				}
@@ -329,7 +330,7 @@ var node_utility = function()
 	};
 
 	//execute reference operand
-	var loc_getExecuteReferenceOperandRequest = function(referenceOperand, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteReferenceOperandRequest = function(referenceOperand, variables, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
 
 		//cal all mapping operands
@@ -348,12 +349,7 @@ var node_utility = function()
 						var varsId = referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_VARRESOLVE];
 						_.each(valueMappings, function(value, name){
 							valuePortId = varsId[name][node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
-							toValuesInfo.push(
-								{
-									elementId : node_createValuePortElementInfo(varsId[name]),
-									value : value 
-								}
-							);
+							toValuesInfo.push(new node_ElementIdValuePair(node_createValuePortElementInfo(varsId[name]), value));
 						});
 						var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 						return valuePort.setValuesRequest(toValuesInfo, {
@@ -373,7 +369,7 @@ var node_utility = function()
 		});
 		
 		_.each(refVarsMapping, function(refVarInOperand, refVarId, list){
-			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, constants, references, {
+			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, {
 				success :function(request, refVarInValue){
 					return refVarInValue;
 				}
@@ -386,12 +382,12 @@ var node_utility = function()
 	};
 		
 	//execute reference operand
-	var loc_getExecuteOperandRequest = function(operand, variables, constants, references, handlers, requestInfo){
+	var loc_getExecuteOperandRequest = function(operand, variables, handlers, requestInfo){
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_CONSTANT:
-			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand, "constants":constants}), 
+			out = node_createServiceRequestInfoSimple(new node_ServiceInfo("ExecuteConstantOperand", {"operand":operand}), 
 					function(requestInfo){
 						var constantName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_NAME];
 						var constantData = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_DATA];
@@ -409,10 +405,10 @@ var node_utility = function()
 					handlers, requestInfo);
 		    break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
-			out = loc_getExecuteOperationOperandRequest(operand, variables, constants, references, handlers, requestInfo);
+			out = loc_getExecuteOperationOperandRequest(operand, variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			out = loc_getExecuteReferenceOperandRequest(operand, variables, constants, references, handlers, requestInfo);
+			out = loc_getExecuteReferenceOperandRequest(operand, variables, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 			break;
@@ -437,7 +433,7 @@ var node_utility = function()
 				});
 				_.each(dataExpressions[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM], function(dataExpressionItem, dataExpressionId){
 					var dataExpression = dataExpressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERDATAEXPRESSION_DATAEXPRESSION];
-					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, undefined, undefined, {
+					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, {
 						success : function(requestInfo, operandResult){
 							return operandResult;
 						}
@@ -518,16 +514,16 @@ var node_utility = function()
 		},
 		
 		//execute general operand
-		getExecuteOperandRequest : function(operand, variables, constants, references, handlers, requester_parent){
-			return loc_getExecuteOperandRequest(operand, variables, constants, references, handlers, requester_parent);
+		getExecuteOperandRequest : function(operand, variables, handlers, requester_parent){
+			return loc_getExecuteOperandRequest(operand, variables, handlers, requester_parent);
 		},
 
 		getMatchDataTaskRequest : function(data, matchers, handlers, requester_parent){
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 
-		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constants, references, handlers, request){
-			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, constants, references, handlers, request);
+		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, handlers, request){
+			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, handlers, request);
 		},
 
 		getExecuteScriptExpressionRequest : function(scriptExpresion, valuePortEnv, handlers, request){
@@ -567,6 +563,7 @@ nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.ElementIdValuePair", function(){node_ElementIdValuePair = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 

@@ -169,6 +169,152 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 };
 
 
+var node_createTaskInContainerWatch = function(container, taskId, valuePortEnv, runtimeEnv){
+	return node_createTaskWatch(container[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM][taskId], valuePortEnv, runtimeEnv);
+};
+
+var node_createTaskWatch = function(taskDef, valuePortEnv, runtimeEnv){
+	
+	var loc_taskWrapper;
+	
+	var loc_taskItemId;
+	
+	var loc_dataEventObject;
+	
+	var loc_contextVarGroup;
+	
+	//store result from last time calculation
+	var loc_result;
+
+	var loc_getExecuteRequest = function(handlers, request){
+		return loc_taskWrapper.getExecuteRequest(handlers, request);
+	};
+
+	var loc_executeExecuteRequest = function(handlers, request){
+		var requestInfo = loc_getExecuteRequest(handlers, request);
+		node_requestServiceProcessor.processRequest(requestInfo);
+	};
+	
+	var loc_varsGroupHandler = function(requestInfo){
+		loc_executeExecuteRequest({
+			success : function(requestInfo, data){
+				loc_result = data;
+				loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_SUCCESS, data);
+			},
+			error : function(requestInfo, serviceData){
+				loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_ERROR, serviceData);
+			},
+			exception : function(requestInfo, serviceData){
+				loc_dataEventObject.triggerEvent(node_CONSTANT.REQUESTRESULT_EVENT_EXCEPTION, serviceData);
+			}
+		}, requestInfo);
+	}
+	
+	var lifecycleCallback = {};
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(taskDef, valuePortEnv, runtimeEnv){
+		loc_taskWrapper = node_createTaskWrapper(taskDef, valuePortEnv, runtimeEnv);
+		loc_dataEventObject = node_createEventObject();
+		loc_contextVarGroup = node_createVariablesGroup(valuePortEnv, loc_taskWrapper.getVariableIds(), loc_varsGroupHandler, this);
+	};
+		
+	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
+		loc_contextVarGroup.destroy();
+	};
+
+	var loc_out = {
+			
+		getExecuteRequest : function(handlers, requester_parent){
+			return loc_getExecuteRequest(handlers, request);
+		},
+
+		executeExecuteRequest : function(handlers, requester_parent){
+			var requestInfo = this.getExecuteRequest(handlers, requester_parent);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
+		registerListener : function(listenerEventObj, handler){
+			loc_dataEventObject.registerListener(undefined, listenerEventObj, handler);
+		},
+		
+		refresh : function(requestInfo){
+			loc_contextVarGroup.triggerEvent(requestInfo);
+		},
+		
+		getResult : function(){
+			return loc_result;
+		},
+
+		destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
+	};
+
+	//append resource and object life cycle method to out obj
+	loc_out = node_makeObjectWithLifecycle(loc_out, lifecycleCallback);
+	node_getLifecycleInterface(loc_out).init(taskDef, valuePortEnv, runtimeEnv);
+	return loc_out;
+};
+
+
+var node_createTaskInContainerWrapper = function(container, taskId, valuePortEnv, runtimeEnv){
+	
+	var loc_container = container;
+	var loc_taskWrapper = node_createTaskWrapper(loc_container[node_COMMONATRIBUTECONSTANT_CONTAINER_ITEM][taskId], valuePortEnv, runtimeEnv);
+	
+	var loc_out = {
+		
+		getExecuteRequest : function(handlers, request){
+			return loc_taskWrapper.getExecuteRequest(handlers, request);
+		},
+		
+		getVariableInfo : function(){
+			return loc_taskWrapper.getVariableInfo();
+		},
+		
+		getVariableIds : function(){
+			return loc_taskWrapper.getVariableIds();
+		}
+	};
+	
+	return loc_out;
+};
+
+var node_createTaskWrapper = function(taskDef, valuePortEnv, runtimeEnv){
+	
+	var loc_taskDef = taskDef;
+	var loc_valuePortEnv = valuePortEnv;
+	var loc_runtimeEnv = runtimeEnv;
+	
+	var loc_out = {
+		
+		getExecuteRequest : function(handlers, request){
+			var out;
+			var taskType = loc_taskDef[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_ENTITYTYPE];
+			if(taskType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSION){
+				out = node_expressionUtility.getExecuteDataExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
+			}
+			else if(taskType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSION){
+				out = node_expressionUtility.getExecuteScriptExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
+			}
+			return out;
+		},
+		
+		getVariableInfo : function(){
+			return loc_taskDef[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS];
+		},
+		
+		getVariableIds : function(){
+			var variableIds = [];
+			_.each(this.getVariableInfo(), function(varId, varKey){
+				variableIds.push(varId);
+			});
+			return variableIds;
+		}
+		
+	};
+	
+	return loc_out;
+};
+
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -191,5 +337,7 @@ packageObj.createChildNode("ExecutableResult", node_ExecutableResult);
 packageObj.createChildNode("createTaskGroupItemWatch", node_createTaskGroupItemWatch); 
 packageObj.createChildNode("createTaskInput1", node_createTaskInput1); 
 packageObj.createChildNode("createTaskInfo", node_createTaskInfo); 
+packageObj.createChildNode("createTaskInContainerWatch", node_createTaskInContainerWatch); 
+
 
 })(packageObj);

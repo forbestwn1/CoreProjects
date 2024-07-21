@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_getWithValuePortInterface;
 	var node_createValuePortElementInfo;
 	var node_getObjectType;
+	var node_ElementIdValuePair;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -113,12 +114,7 @@ var loc_setValueToEndPointRequest = function(tunnels, values, baseEntityCore, ha
 	var toValuesInfo = [];
 	_.each(tunnels, function(tunnel, i){
 		var toEndPoint = tunnel[node_COMMONATRIBUTECONSTANT.TUNNEL_TOENDPOINT];
-		toValuesInfo.push(
-			{
-				elementId : node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]),
-				value : values[i] 
-			}
-		);
+		toValuesInfo.push(new node_ElementIdValuePair(node_createValuePortElementInfo(toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUESTRUCTUREID], toEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_ITEMPATH]), values[i]));
 	});
 
 	out.addRequest(toValuePort.setValuesRequest(toValuesInfo));
@@ -250,6 +246,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.ElementIdValuePair", function(){node_ElementIdValuePair = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

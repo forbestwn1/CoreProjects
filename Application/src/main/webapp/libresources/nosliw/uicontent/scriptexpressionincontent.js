@@ -10,6 +10,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_getLifecycleInterface;
 	var node_createTaskGroupItemWatch;
+	var node_createTaskInContainerWatch;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -42,10 +43,10 @@ var packageObj = library;
 		};
 		
 		var lifecycleCallback = {};
-		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(viewElement, scriptExpressionGroupCore, requestInfo){
+		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(viewElement, scriptExpressionGroup, valuePortEnv, runtimeEnv, requestInfo){
 			loc_ele = viewElement;
 
-			loc_embededSScriptExpressionWatch = node_createTaskGroupItemWatch(scriptExpressionGroupCore, loc_embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_SCRIPTID]);
+			loc_embededSScriptExpressionWatch = node_createTaskInContainerWatch(scriptExpressionGroup, loc_embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_SCRIPTID], valuePortEnv, runtimeEnv);
 			loc_embededSScriptExpressionWatch.registerListener(loc_dataEventObject, loc_scriptExpressionEventHandler);
 
 			loc_out.refresh(requestInfo);
@@ -86,6 +87,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskGroupItemWatch", function(){node_createTaskGroupItemWatch = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskInContainerWatch", function(){node_createTaskInContainerWatch = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createEmbededScriptExpressionInContent", node_createEmbededScriptExpressionInContent); 

@@ -13,6 +13,16 @@ var node_getObjectType;
 var node_createValueStructureVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_VariableIdValuePair = function(varId, value){
+	this.variableId = varId;
+	this.value = value;
+};
+
+var node_ElementIdValuePair = function(elementId, vlaue){
+	this.elementId = elementId;
+	this.value = value;
+};
+
 //locally reference to element in value port
 var node_createValuePortElementInfo = function(elementId, n, p){
 
@@ -92,5 +102,7 @@ nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVar
 
 //Register Node by Name
 packageObj.createChildNode("createValuePortElementInfo", node_createValuePortElementInfo); 
+packageObj.createChildNode("VariableIdValuePair", node_VariableIdValuePair); 
+packageObj.createChildNode("ElementIdValuePair", node_ElementIdValuePair); 
 
 })(packageObj);
