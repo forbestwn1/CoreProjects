@@ -1,4 +1,4 @@
-package com.nosliw.data.core.common;
+package com.nosliw.core.application.common.constant;
 
 import org.json.JSONObject;
 

@@ -37,6 +37,12 @@ public class HAPManualDefinitionWrapperBrick extends HAPEntityInfoImp implements
 	@Override
 	public Object getNodeValue() {  return this.m_brick;  }
 
+	public HAPManualDefinitionWrapperBrick cloneBrickWrapper() {
+		HAPManualDefinitionWrapperBrick out = new HAPManualDefinitionWrapperBrick();
+		this.cloneToEntityInfo(out);
+		out.m_brick = this.m_brick;
+		return out;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

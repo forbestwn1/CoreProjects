@@ -36,14 +36,14 @@ var packageObj = library;
 var node_utility = function() 
 {
 	
-	var loc_getExecuteDataExpressionRequest =function(expressionItem, valuePortEnv, handlers, requestInfo){
+	var loc_getExecuteDataExpressionRequest =function(expressionItem, valuePortEnv, constants, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteExpressionItem", {}), handlers, requestInfo);
 
 		//build variable value according to alias definition in expression item
 		out.addRequest(loc_getVariablesValueByKeyRequest(expressionItem[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_VARIABLEINFOS], valuePortEnv, {
 			success : function(request, allVariables){
 				//execute operand
-				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, {
+				return loc_getExecuteOperandRequest(expressionItem[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, constants, {
 					success : function(requestInfo, operandResult){
 						var outputMatchers = expressionItem[node_COMMONATRIBUTECONSTANT.DATAEXPRESSION_OUTPUTMATCHERS];
 						if(outputMatchers!=undefined){
@@ -274,7 +274,7 @@ var node_utility = function()
 	};
 
 	//execute operation operand
-	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, handlers, requestInfo){
+	var loc_getExecuteOperationOperandRequest = function(operationOperand, variables, constants, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteOperationOperand", {"operationOperand":operationOperand, "variables":variables}), handlers, requestInfo);
 
 		//cal all parms
@@ -317,7 +317,7 @@ var node_utility = function()
 			}
 		});
 		_.each(parmsOperand, function(parmOperand, parmName, list){
-			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, {
+			var parmOperandRequest = loc_getExecuteOperandRequest(parmOperand, variables, constants, {
 				success :function(request, parmValue){
 					return parmValue;
 				}
@@ -330,7 +330,7 @@ var node_utility = function()
 	};
 
 	//execute reference operand
-	var loc_getExecuteReferenceOperandRequest = function(referenceOperand, variables, handlers, requestInfo){
+	var loc_getExecuteReferenceOperandRequest = function(referenceOperand, variables, constants, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteReferenceOperand", {}), handlers, requestInfo);
 
 		//cal all mapping operands
@@ -369,7 +369,7 @@ var node_utility = function()
 		});
 		
 		_.each(refVarsMapping, function(refVarInOperand, refVarId, list){
-			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, {
+			var refVarInOperandRequest = loc_getExecuteOperandRequest(refVarInOperand, variables, constants, {
 				success :function(request, refVarInValue){
 					return refVarInValue;
 				}
@@ -382,7 +382,7 @@ var node_utility = function()
 	};
 		
 	//execute reference operand
-	var loc_getExecuteOperandRequest = function(operand, variables, handlers, requestInfo){
+	var loc_getExecuteOperandRequest = function(operand, variables, constants, handlers, requestInfo){
 		var out;
 		var operandType = operand[node_COMMONATRIBUTECONSTANT.OPERAND_TYPE];
 		switch(operandType){
@@ -391,7 +391,7 @@ var node_utility = function()
 					function(requestInfo){
 						var constantName = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_NAME];
 						var constantData = requestInfo.getService().parms.operand[node_COMMONATRIBUTECONSTANT.OPERAND_DATA];
-						if(constantData==undefined)  constantData = requestInfo.getService().parms.constants[constantName];
+						if(constantData==undefined)  constantData = constants[constantName];
 						return constantData;
 					}, 
 					handlers, requestInfo);
@@ -405,10 +405,10 @@ var node_utility = function()
 					handlers, requestInfo);
 		    break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_OPERATION:
-			out = loc_getExecuteOperationOperandRequest(operand, variables, handlers, requestInfo);
+			out = loc_getExecuteOperationOperandRequest(operand, variables, constants, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_REFERENCE:
-			out = loc_getExecuteReferenceOperandRequest(operand, variables, handlers, requestInfo);
+			out = loc_getExecuteReferenceOperandRequest(operand, variables, constants, handlers, requestInfo);
 			break;
 		case node_COMMONCONSTANT.EXPRESSION_OPERAND_ATTRIBUTEOPERATION:
 			break;
@@ -416,7 +416,7 @@ var node_utility = function()
 		return out;
 	};
 
-	var loc_getExecuteScriptExpressionRequest = function(scriptExpresion, valuePortEnv, handlers, request){
+	var loc_getExecuteScriptExpressionRequest = function(scriptExpresion, valuePortEnv, constants, handlers, request){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpressionItem", {}), handlers, request);
 
 		//build variable value according to alias definition in expression item
@@ -433,7 +433,7 @@ var node_utility = function()
 				});
 				_.each(dataExpressions[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM], function(dataExpressionItem, dataExpressionId){
 					var dataExpression = dataExpressionItem[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE];
-					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, {
+					calDataExpressionsRequest.addRequest(dataExpressionId, loc_getExecuteOperandRequest(dataExpression[node_COMMONATRIBUTECONSTANT.EXPRESSIONDATA_OPERAND], allVariables, constants, {
 						success : function(requestInfo, operandResult){
 							return operandResult;
 						}
@@ -522,7 +522,7 @@ var node_utility = function()
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 
-		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, handlers, request){
+		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constant, handlers, request){
 			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, handlers, request);
 		},
 

@@ -22,11 +22,14 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityAttachment;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAdapter;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelationAttachment;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelationAutoProcess;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
@@ -45,6 +48,22 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessor {
 
+	public static void processAttachment(HAPManualDefinitionBrick brickDef, HAPManualDefinitionBrickRelationAttachment defaultRelation, HAPManualContextProcessBrick processContext) {
+		HAPManualDefinitionAttachment parentAttachment = brickDef.getAttachment();
+		List<HAPManualDefinitionAttributeInBrick> attrsDef = brickDef.getAllAttributes();
+		for(HAPManualDefinitionAttributeInBrick attrDef : attrsDef) {
+			HAPManualDefinitionWrapperValue attrValueInfo = attrDef.getValueWrapper();
+			String attrValueType = attrValueInfo.getValueType();
+			if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
+				HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
+				HAPManualDefinitionAttachment attrAttachment = attrBrickDef.getAttachment();
+				attrAttachment.mergeWith(parentAttachment, HAPManualUtilityAttachment.resolveAttachmentRelation(attrDef, defaultRelation).getMode());
+				
+				processAttachment(attrBrickDef, defaultRelation, processContext);
+			}
+		}
+	}
+	
 	public static void processComplexBrickInit(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownward() {
 
@@ -138,10 +157,10 @@ public class HAPManualUtilityProcessor {
 		}, processContext.getRuntimeEnv().getBrickManager(), manualBrickMan, null);
 	}
 
-	public static void processAdapter(HAPWrapperBrickRoot entityInfo, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
+	public static void processAdapter(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
 		HAPUtilityBrickTraverse.traverseTree(
-				entityInfo, 
+				rootBrickWrapper, 
 			new HAPHandlerDownwardImpTreeNode() {
 					
 				@Override
@@ -182,10 +201,10 @@ public class HAPManualUtilityProcessor {
 			processContext);
 	}
 	
-	public static void processEntity(HAPWrapperBrickRoot entityInfo, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
+	public static void processBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(
-				entityInfo, 
+				rootBrickWrapper, 
 			new HAPHandlerDownwardImpTreeNode() {
 					
 				@Override

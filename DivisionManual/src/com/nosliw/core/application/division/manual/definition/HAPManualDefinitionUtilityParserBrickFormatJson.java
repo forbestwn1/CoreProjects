@@ -33,7 +33,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
 
-	public static HAPManualDefinitionWrapperBrick parseBrickInfo(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+	public static HAPManualDefinitionWrapperBrick parseBrickWrapper(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		HAPManualDefinitionWrapperBrick out = new HAPManualDefinitionWrapperBrick();
 		
 		//try with definition
@@ -119,7 +119,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			if(entityRefObj!=null) {
 				HAPIdBrick entityId = HAPUtilityBrickId.parseBrickIdAgressive(entityRefObj, parseContext.getBrickDivision(), entityManager); 
 				out = new HAPManualDefinitionWrapperValueReferenceBrick(entityId);
-				HAPManualDefinitionBrick refEntity = parseLocalValue(parseContext.getBasePath(), entityId, manualDivisionEntityMan);
+				HAPManualDefinitionBrick refEntity = parseLocalValue(entityId, parseContext, manualDivisionEntityMan);
 				((HAPManualDefinitionWrapperValueReferenceBrick)out).setBrick(refEntity);
 			}
 		}
@@ -164,10 +164,10 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		return out;
 	}
 
-	private static HAPManualDefinitionBrick parseLocalValue(String basePath, HAPIdBrick entityId, HAPManualManagerBrick manualDivisionEntityMan) {
-		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getEntityLocationInfo(entityId);
+	private static HAPManualDefinitionBrick parseLocalValue(HAPIdBrick entityId, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan) {
+		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getLocalEntityLocationInfo(parseContext.getBasePath(), entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
-		return manualDivisionEntityMan.parseEntityDefinition(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat());
+		return manualDivisionEntityMan.parseBrickDefinition(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat(), parseContext);
 	}
 	
 	private static HAPManualDefinitionBrickRelation parseRelation(JSONObject jsonObj) {
@@ -208,6 +208,20 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	}
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public static HAPEmbededDefinition parseEmbededEntity(Object obj, HAPIdBrickType entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {

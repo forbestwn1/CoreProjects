@@ -80,7 +80,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 				return loc_valuePort;
 			}
 		};
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, withValuePortInterface, {
+		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(expressionData, withValuePortInterface, undefined, {
 			success : function(request, result){
 				return result;
 			}

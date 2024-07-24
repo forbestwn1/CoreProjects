@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual.definition;
 
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 
 //entity that have data value structure and attachment
 public abstract class HAPManualDefinitionBrickBlockComplex extends HAPManualDefinitionBrickBlock{
@@ -13,11 +13,11 @@ public abstract class HAPManualDefinitionBrickBlockComplex extends HAPManualDefi
 	}
 	
 	
-	public HAPManualBrickValueContext getValueContextBrick() {    return (HAPManualBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
+	public HAPManualDefinitionBrickValueContext getValueContextBrick() {    return (HAPManualDefinitionBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
 
-	public void setValueContextEntity(HAPManualBrickValueContext valueContext) {}
+	public void setValueContextBrick(HAPManualDefinitionBrickValueContext valueContext) {}
 
-//	public HAPManualBrickValueContext getValueContextBrick(HAPContextParser parserContext) {  return (HAPManualBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
+//	public HAPManualDefinitionBrickValueContext getValueContextBrick(HAPContextParser parserContext) {  return (HAPManualDefinitionBrickValueContext)this.getAttributeValueEntity(HAPWithValueContext.VALUECONTEXT, parserContext);  }  
 	
 //	public HAPIdEntityInDomain getAttachmentContainerEntity() {  return (HAPIdEntityInDomain)this.getAttributeValue(HAPWithAttachment.ATTACHMENT);  }
 //	public HAPDefinitionEntityContainerAttachment getAttachmentEntity(HAPContextParser parserContext) {    return (HAPDefinitionEntityContainerAttachment)this.getAttributeValueEntity(HAPWithAttachment.ATTACHMENT, parserContext);  }

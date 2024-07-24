@@ -601,7 +601,7 @@
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UICONTENT" value="uicontent"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uipage"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_UITAG" value="uitag"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG" value="uicustomertag"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAGDEFINITION" value="uitagdefinition"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAGSCRIPT" value="uitagscript"/>
 

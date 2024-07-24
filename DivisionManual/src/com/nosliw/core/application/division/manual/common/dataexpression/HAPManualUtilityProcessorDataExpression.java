@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperand;
@@ -18,12 +19,30 @@ import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementRe
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessorDataExpression {
+	
+	public static void processConstant(HAPManualExpressionData dataExpression, Map<String, HAPDefinitionConstant> constantsDef) {
+		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand(){
+			@Override
+			public boolean processOperand(HAPManualWrapperOperand operandWrapper, Object data) {
+				String opType = operandWrapper.getOperandType();
+				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
+					HAPManualOperandConstant constantOperand = (HAPManualOperandConstant)operandWrapper.getOperand();
+					if(constantOperand.getData()==null) {
+						HAPData constantData = constantsDef.get(constantOperand.getName()).getData();
+						constantOperand.setData(constantData);
+					}
+				}
+				return true;
+			}
+		}, null);
+	}
 	
 	public static void resolveReferenceVariableMapping(HAPManualExpressionData dataExpression, HAPRuntimeEnvironment runtimEnv) {
 		HAPManualUtilityOperand.traverseAllOperand(dataExpression.getOperandWrapper(), new HAPManualHandlerOperand(){

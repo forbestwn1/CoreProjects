@@ -6,13 +6,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityParserAttachment;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -42,7 +43,8 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPUtilityBrickId.parseBrickTypeId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT), null, parseContext);							
+						HAPManualDefinitionAttachment attachment = HAPManualUtilityParserAttachment.parseAttachmentJson(jsonValue, parseContext, getManualDivisionEntityManager()); 
+						entityDefinition.setAttachment(attachment);
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
 						this.parseBrickAttributeSelfJson(entityDefinition, jsonObj, attrName, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);							

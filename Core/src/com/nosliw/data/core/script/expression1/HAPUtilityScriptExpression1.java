@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPUtilityExpressionProcessConfigure;

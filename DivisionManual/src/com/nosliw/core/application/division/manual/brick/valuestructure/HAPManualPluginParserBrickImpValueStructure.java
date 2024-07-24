@@ -13,12 +13,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBrickImpValueStructure extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueStructure(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPManualEnumBrickType.VALUESTRUCTURE_100, HAPManualBrickValueStructure.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPManualEnumBrickType.VALUESTRUCTURE_100, HAPManualDefinitionBrickValueStructure.class, manualDivisionEntityMan, runtimeEnv);
 	}
 
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualBrickValueStructure manualValueStructure = (HAPManualBrickValueStructure)entityDefinition;
+		HAPManualDefinitionBrickValueStructure manualValueStructure = (HAPManualDefinitionBrickValueStructure)entityDefinition;
 		HAPUtilityValueStructureParser.parseValueStructureJson((JSONObject)jsonValue, manualValueStructure.getValue()); 
 	}
 	

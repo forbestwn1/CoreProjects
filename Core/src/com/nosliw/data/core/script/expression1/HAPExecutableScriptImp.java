@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionDataGroup;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.valuestructure1.HAPVariableInfoInStructure;

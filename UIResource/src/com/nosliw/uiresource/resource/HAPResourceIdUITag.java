@@ -10,7 +10,7 @@ public class HAPResourceIdUITag  extends HAPResourceIdSimple{
 
 	private HAPUITagId m_uiTagId; 
 	
-	public HAPResourceIdUITag(){	super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG);	}
+	public HAPResourceIdUITag(){	super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG);	}
 
 	public HAPResourceIdUITag(HAPResourceIdSimple resourceId){
 		this();

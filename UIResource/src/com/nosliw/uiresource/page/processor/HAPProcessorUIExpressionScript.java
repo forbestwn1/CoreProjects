@@ -3,7 +3,7 @@ package com.nosliw.uiresource.page.processor;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionSuite1;

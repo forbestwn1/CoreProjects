@@ -14,12 +14,16 @@ import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity{
+public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity, HAPWithConstantDefinition{
 
 	public final static String ATTRIBUTE = "attribute"; 
 	
@@ -27,6 +31,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	//all attributes
 	private List<HAPManualDefinitionAttributeInBrick> m_attributes;
+
+	private HAPManualDefinitionAttachment m_attachment;
 	
 	private HAPIdBrickType m_brickTypeId;
 
@@ -34,6 +40,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	
 	protected HAPManualDefinitionBrick (HAPIdBrickType brickTypeId) {
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
+		this.m_attachment = new HAPManualDefinitionAttachment();
 		this.m_brickTypeId = brickTypeId;
 	}
 
@@ -43,6 +50,9 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK; }
 
 	public HAPIdBrickType getBrickTypeId() {  return this.m_brickTypeId;	}
+
+	public void setAttachment(HAPManualDefinitionAttachment attachment) {   this.m_attachment = attachment;	}
+	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
 	
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;     }
@@ -131,6 +141,23 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		return null;
 	}
 
+	@Override
+	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
+		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
+		
+		Map<String, HAPManualDefinitionWrapperBrick> items =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.DATA_100.getBrickType(), HAPEnumBrickType.DATA_100.getVersion());
+		for(String name : items.keySet()) {
+			HAPManualDefinitionWrapperBrick itemWrapper = items.get(name);
+			HAPManualDefinitionBlockData dataItem = (HAPManualDefinitionBlockData)itemWrapper.getBrick();
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
+			itemWrapper.cloneToEntityInfo(constantDef);
+			constantDef.setValue(dataItem.getData());
+		}
+		
+		return out;
+	}
+
+	
 	protected String generateId() {
 		int idIndex = (Integer)this.getAttributeValueWithValue(ATTR_IDINDEX, Integer.valueOf(0));
 		idIndex++;

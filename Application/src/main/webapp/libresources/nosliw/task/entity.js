@@ -293,10 +293,10 @@ var node_createTaskWrapper = function(taskDef, valuePortEnv, runtimeEnv){
 			var out;
 			var taskType = loc_taskDef[node_COMMONATRIBUTECONSTANT.WITHVARIABLE_ENTITYTYPE];
 			if(taskType==node_COMMONCONSTANT.WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION){
-				out = node_expressionUtility.getExecuteDataExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
+				out = node_expressionUtility.getExecuteDataExpressionRequest(loc_taskDef, loc_valuePortEnv, undefined, handlers, request);
 			}
 			else if(taskType==node_COMMONCONSTANT.WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION){
-				out = node_expressionUtility.getExecuteScriptExpressionRequest(loc_taskDef, loc_valuePortEnv, handlers, request);
+				out = node_expressionUtility.getExecuteScriptExpressionRequest(loc_taskDef, loc_valuePortEnv, undefined, handlers, request);
 			}
 			return out;
 		},

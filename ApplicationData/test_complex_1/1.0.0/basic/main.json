@@ -352,6 +352,30 @@
 					}
 				}
 			]
+		},
+		
+		{
+			"info": {
+				"name" : "attachment", 
+				"status": "disabled1"
+			},
+			"brick": {
+				"data" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "constant", 
+								"status": "disabled1"
+							},
+							"entity": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						}
+					]
+				}
+			}
 		}
+		
 	]
 }

@@ -33,9 +33,12 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType SERVICEPROVIDER_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0");
 
 	public static HAPIdBrickType DECORATIONSCRIPT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0");
-	
+
+	public static HAPIdBrickType DATA_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATA, "1.0.0");
+
 	
 	public static HAPIdBrickType UICONTENT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, "1.0.0");
 	public static HAPIdBrickType UIPAGE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, "1.0.0");
+	public static HAPIdBrickType UICUSTOMERTAG_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, "1.0.0");
 
 }

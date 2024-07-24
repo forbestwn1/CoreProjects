@@ -65,7 +65,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	
 		super.setupAttributeForComplexEntity(entityId, parserContext);
 		//create customer tag container attribute
-		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, null, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, null, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityContainer.newSimpleEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SERVICE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SCRIPT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, null, parserContext, getRuntimeEnvironment());
 	}
@@ -152,7 +152,7 @@ public class HAPPluginEntityDefinitionInDomainUIContent extends HAPPluginEntityD
 				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
 				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
 				
-				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, HAPSerializationFormat.HTML, parserContext);
+				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, ele, HAPSerializationFormat.HTML, parserContext);
 				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
 				uiTag.setUIId(uiId);
 				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);

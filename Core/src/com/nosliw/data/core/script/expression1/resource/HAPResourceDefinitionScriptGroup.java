@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 import com.nosliw.data.core.script.expression1.HAPDefinitionScriptEntity;
 import com.nosliw.data.core.script.expression1.HAPDefinitionScriptGroup;

@@ -17,7 +17,7 @@ import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 public class HAPPluginEntityProcessorComplexUITag extends HAPPluginProcessorBrickDefinitionComplexImp{
 
 	public HAPPluginEntityProcessorComplexUITag() {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, HAPExecutableEntityComplexUITag.class);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, HAPExecutableEntityComplexUITag.class);
 	}
 
 	@Override

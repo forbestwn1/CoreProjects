@@ -14,13 +14,13 @@ import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBrickBlockSimple implements HAPWrapperValueStructure, HAPExpandable{
+public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrickBlockSimple implements HAPWrapperValueStructure, HAPExpandable{
 
-	public HAPManualBrickWrapperValueStructure() {
+	public HAPManualDefinitionBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
 	}
 
-	public HAPManualBrickWrapperValueStructure(HAPManualBrickValueStructure valueStructure) {
+	public HAPManualDefinitionBrickWrapperValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {
 		this();
 		this.setValueStructure(valueStructure);
 	}
@@ -29,8 +29,8 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBric
 	public HAPInfo getInfo() {    return (HAPInfo)this.getAttributeValueWithValue(INFO);     }
 	public void setInfo(HAPInfoImpSimple info) {   this.setAttributeWithValueValue(INFO, info);     }
 	
-	public HAPManualBrickValueStructure getValueStructureBlock() {	return (HAPManualBrickValueStructure)this.getAttributeValueWithBrick(VALUESTRUCTURE);   }
-	public void setValueStructure(HAPManualBrickValueStructure valueStructure) {   this.setAttributeWithValueBrick(VALUESTRUCTURE, valueStructure);  }
+	public HAPManualDefinitionBrickValueStructure getValueStructureBlock() {	return (HAPManualDefinitionBrickValueStructure)this.getAttributeValueWithBrick(VALUESTRUCTURE);   }
+	public void setValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {   this.setAttributeWithValueBrick(VALUESTRUCTURE, valueStructure);  }
 	
 	@Override
 	public String getName() {   return (String)this.getAttributeValueWithValue(NAME);   }
@@ -44,7 +44,7 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBric
 
 	@Override
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
-		HAPManualBrickValueStructure valueStructure = (HAPManualBrickValueStructure)parserContext.getGlobalDomain().getEntityInfoDefinition(m_valueStructureId).getAdapter();
+		HAPManualDefinitionBrickValueStructure valueStructure = (HAPManualDefinitionBrickValueStructure)parserContext.getGlobalDomain().getEntityInfoDefinition(m_valueStructureId).getAdapter();
 		valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
 	}
 
@@ -54,8 +54,8 @@ public class HAPManualBrickWrapperValueStructure extends HAPManualDefinitionBric
 	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}
 
-	public HAPManualBrickWrapperValueStructure cloneValueStructureWrapper() {
-		HAPManualBrickWrapperValueStructure out = new HAPManualBrickWrapperValueStructure();
+	public HAPManualDefinitionBrickWrapperValueStructure cloneValueStructureWrapper() {
+		HAPManualDefinitionBrickWrapperValueStructure out = new HAPManualDefinitionBrickWrapperValueStructure();
 		out.m_name = this.m_name;
 		out.m_groupType = this.m_groupType;
 		out.m_info = this.m_info.cloneInfo();

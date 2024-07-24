@@ -16,35 +16,35 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefinitionPluginParserBrickImpSimple{
 
 	public HAPManualPluginParserBrickImpValueContext(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPManualEnumBrickType.VALUECONTEXT_100, HAPManualBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
+		super(HAPManualEnumBrickType.VALUECONTEXT_100, HAPManualDefinitionBrickValueContext.class, manualDivisionEntityMan, runtimeEnv);
 	}
 	
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
-		HAPManualBrickValueContext valueContext = (HAPManualBrickValueContext)entityDefinition;
+		HAPManualDefinitionBrickValueContext valueContext = (HAPManualDefinitionBrickValueContext)entityDefinition;
 
 		if(jsonValue instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)jsonValue;
 			for(int i=0; i<partJsonArray.length(); i++) {
 				JSONObject partObj = partJsonArray.getJSONObject(i);
-				HAPManualBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parseContext);
+				HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper(partObj, parseContext);
 				valueContext.addValueStructure(valueStructureWrapper);
 			}
 		}
 		else if(jsonValue instanceof JSONObject) {
-			HAPManualBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parseContext);
+			HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper = parseValueStructureWrapper((JSONObject)jsonValue, parseContext);
 			valueContext.addValueStructure(valueStructureWrapper);
 		}
 	}
 
-	private HAPManualBrickWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualDefinitionContextParse parseContext) {
-		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE);
+	private HAPManualDefinitionBrickWrapperValueStructure parseValueStructureWrapper(JSONObject wrapperObj, HAPManualDefinitionContextParse parseContext) {
+		JSONObject valueStructureJsonObj = wrapperObj.optJSONObject(HAPManualDefinitionBrickWrapperValueStructure.VALUESTRUCTURE);
 		if(valueStructureJsonObj==null) {
 			valueStructureJsonObj = wrapperObj;
 		}
 
-		HAPManualBrickWrapperValueStructure out = (HAPManualBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
-		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
+		HAPManualDefinitionBrickWrapperValueStructure out = (HAPManualDefinitionBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
+		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualDefinitionBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
 		out.setAttribute(valueStructureAttr);
 
 		HAPUtilityValueStructureParser.parseValueStructureWrapper(out, wrapperObj);

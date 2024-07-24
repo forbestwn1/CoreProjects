@@ -40,7 +40,7 @@ var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibr
 				return loc_interactiveValuePorts.getValuePort(valuePortName);
 			}
 		};
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, withValuePortInterface, {
+		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, withValuePortInterface, undefined, {
 			success : function(request, result){
 				loc_interactiveValuePorts.setResultValue(result);
 				return result;

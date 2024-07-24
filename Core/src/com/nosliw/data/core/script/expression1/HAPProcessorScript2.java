@@ -4,9 +4,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
 import com.nosliw.data.core.domain.entity.HAPUtilityComplexConstant;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPContextProcessAttachmentReferenceExpression;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionEntityExpressionDataGroup;

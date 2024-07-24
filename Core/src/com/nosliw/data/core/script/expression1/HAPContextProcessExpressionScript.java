@@ -5,9 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
+import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
-import com.nosliw.data.core.common.HAPDefinitionConstant;
-import com.nosliw.data.core.common.HAPWithConstantDefinition;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionSuite1;
 

@@ -24,7 +24,7 @@ import com.nosliw.ui.tag.HAPManagerUITag;
 public class HAPPluginEntityDefinitionInDomainUITag extends HAPPluginEntityDefinitionInDomainWithUIContent{
 
 	public HAPPluginEntityDefinitionInDomainUITag(HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, HAPDefinitionEntityComplexUITag.class, runtimeEnv);
+		super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, HAPDefinitionEntityComplexUITag.class, runtimeEnv);
 	}
 
 	@Override

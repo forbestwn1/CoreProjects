@@ -16,10 +16,10 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
-public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPValueContextDefinition{
+public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPValueContextDefinition{
 
 	
-	public HAPManualBrickValueContext() {
+	public HAPManualDefinitionBrickValueContext() {
 		super(HAPManualEnumBrickType.VALUECONTEXT_100);
 	}
 	
@@ -30,15 +30,15 @@ public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSim
 	
 	@Override
 	public List<HAPWrapperValueStructure> getValueStructures() {    return (List)getManualValueStructures();  }
-	public List<HAPManualBrickWrapperValueStructure> getManualValueStructures(){
-		List<HAPManualBrickWrapperValueStructure> out = new ArrayList<HAPManualBrickWrapperValueStructure>();
+	public List<HAPManualDefinitionBrickWrapperValueStructure> getManualValueStructures(){
+		List<HAPManualDefinitionBrickWrapperValueStructure> out = new ArrayList<HAPManualDefinitionBrickWrapperValueStructure>();
 		for(HAPManualDefinitionAttributeInBrick attr: this.getValueStructureContainer().getPublicAttributes()) {
-			out.add((HAPManualBrickWrapperValueStructure)((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick());
+			out.add((HAPManualDefinitionBrickWrapperValueStructure)((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick());
 		}
 		return out;
 	}
 	
-	public void addValueStructure(HAPManualBrickWrapperValueStructure valueStructure) {    this.getValueStructureContainer().addElement(valueStructure);    }
+	public void addValueStructure(HAPManualDefinitionBrickWrapperValueStructure valueStructure) {    this.getValueStructureContainer().addElement(valueStructure);    }
 	
 	private HAPManualDefinitionBrickContainerList getValueStructureContainer() {
 		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueWithBrick(VALUESTRUCTURE);
@@ -46,7 +46,7 @@ public class HAPManualBrickValueContext extends HAPManualDefinitionBrickBlockSim
 	
 	@Override
 	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext,	HAPParserDataExpression expressionParser) {
-		for(HAPManualBrickWrapperValueStructure valueStructure : this.getValueStructures()) {
+		for(HAPManualDefinitionBrickWrapperValueStructure valueStructure : this.getValueStructures()) {
 			valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
 		}
 	}

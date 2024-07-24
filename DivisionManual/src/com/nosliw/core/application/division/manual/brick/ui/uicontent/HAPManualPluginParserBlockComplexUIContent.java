@@ -64,22 +64,23 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	 * return true : this element should be removed after processing
 	 * 		  false : this element should not be removed after processiong
 	 */
-	private boolean parseTag(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, HAPContextParser parserContext){
+	private boolean parseTag(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, HAPManualDefinitionContextParse parserContext){
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
 		if(customTagName!=null){
 			//process custome tag
 			String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele);
 			if(customTagName.equals("style")) {
-				parseStyle(ele, uiContentId, uiId, parserContext);
+//				parseStyle(ele, uiContentId, uiId, parserContext);
 			}
 			else {
-				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
-				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
+//				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
+//				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
 				
-				HAPIdEntityInDomain tagEntityId = this.getRuntimeEnvironment().getDomainEntityDefinitionManager().parseDefinition(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, ele, HAPSerializationFormat.HTML, parserContext);
-				HAPDefinitionEntityComplexUITag uiTag = (HAPDefinitionEntityComplexUITag)parserContext.getGlobalDomain().getEntityInfoDefinition(tagEntityId).getEntity();
-				uiTag.setUIId(uiId);
-				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
+				HAPManualDefinitionBlockComplexUICustomerTag uiContentDef = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionEntityManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
+
+				uiContentDef.setUIId(uiId);
+				uiContentDef.addCustomerTag(uiContentDef);
+//				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
 			}
 			return false;
 		}
@@ -170,7 +171,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	protected void setupAttributeForComplexEntity(HAPIdEntityInDomain entityId, HAPContextParser parserContext) {	
 		super.setupAttributeForComplexEntity(entityId, parserContext);
 		//create customer tag container attribute
-		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAG, null, parserContext, getRuntimeEnvironment());
+		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.CUSTOMERTAG, HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, null, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityContainer.newSimpleEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SERVICE, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, parserContext, getRuntimeEnvironment());
 		HAPUtilityEntityContainer.newComplexEntityContainerAttribute(entityId, HAPExecutableEntityComplexUIContent.SCRIPT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, null, parserContext, getRuntimeEnvironment());
 	}

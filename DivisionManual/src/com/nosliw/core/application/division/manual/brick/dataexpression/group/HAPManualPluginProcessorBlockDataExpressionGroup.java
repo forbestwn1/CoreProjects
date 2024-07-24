@@ -15,6 +15,7 @@ import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualExpressionData;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -49,8 +50,11 @@ public class HAPManualPluginProcessorBlockDataExpressionGroup extends HAPManualP
 
 		HAPContainerVariableInfo varInfoContainer = groupBlock.getVariableInfoContainer();
 
-		//resolve variable name, build var info container
 		for(HAPItemInContainerDataExpression itemExe : groupExe.getItems()) {
+			//resolve constants
+			HAPManualUtilityProcessorDataExpression.processConstant((HAPManualExpressionData)itemExe.getDataExpression(), blockPair.getLeft().getConstantDefinitions());
+			
+			//resolve variable name
 			HAPUtilityWithVarible.resolveVariable(itemExe.getDataExpression(), varInfoContainer, null, getManualBrickManager());
 			//build variable info in data expression
 			HAPUtilityWithVarible.buildVariableInfoInEntity(itemExe.getDataExpression(), varInfoContainer, getManualBrickManager());

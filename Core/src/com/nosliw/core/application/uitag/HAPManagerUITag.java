@@ -14,8 +14,11 @@ import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerUITag implements HAPPluginDivision{
 
-	public HAPUITagDefinition getUITagDefinition(HAPIdBrick uiTagDefinitionId) {
-		String fileName = getUITagFolder(uiTagDefinitionId) + "definition.json";
+	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
+		if(version==null) {
+			version = "1.0.0";
+		}
+		String fileName = getUITagFolder(tagId, version) + "definition.json";
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(new File(fileName)));
 		return HAPUtilityUITagDefinitionParser.parseUITagDefinition(jsonObj);
 	}
@@ -32,8 +35,8 @@ public class HAPManagerUITag implements HAPPluginDivision{
 		return null;
 	}
 
-	private String getUITagFolder(HAPIdBrick uiTagDefinitionId) {
-		return HAPSystemFolderUtility.getTagDefinitionFolder() + uiTagDefinitionId.getBrickTypeId().getVersion() + "/" + uiTagDefinitionId.getId() +"/";
+	private String getUITagFolder(String tagId, String version) {
+		return HAPSystemFolderUtility.getTagDefinitionFolder() + version + "/" + tagId +"/";
 	}
 
 	public static File getUITagScriptFile(String tagId) {

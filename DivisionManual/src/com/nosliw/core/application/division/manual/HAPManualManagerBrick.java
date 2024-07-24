@@ -48,7 +48,7 @@ import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualP
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUIPage;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIContent;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIPage;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
@@ -139,11 +139,15 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, this.m_runtimeEnv, this);
 
+		//build attachment
+		HAPManualUtilityProcessor.processAttachment(brickDef, null, processContext);
+		
 		//build executable tree
 		out.setBrickWrapper(new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this)));
 
 		//brick init
 		HAPManualUtilityProcessor.initBricks(out.getBrickWrapper(), processContext, this, m_runtimeEnv);
+
 		
 		if(HAPManualDefinitionUtilityBrick.isBrickComplex(brickId.getBrickTypeId(), this)) {
 			
@@ -168,7 +172,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		}
 
 		//process entity
-		HAPManualUtilityProcessor.processEntity(out.getBrickWrapper(), processContext, this.getBrickManager());
+		HAPManualUtilityProcessor.processBrick(out.getBrickWrapper(), processContext, this.getBrickManager());
 		
 		//process adapter
 		HAPManualUtilityProcessor.processAdapter(out.getBrickWrapper(), processContext, this.getBrickManager());
@@ -234,7 +238,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		
 		this.registerBlockPluginInfo(HAPManualEnumBrickType.VALUESTRUCTURE_100, new HAPInfoBrickType(false), new HAPManualPluginParserBrickImpValueStructure(this, this.m_runtimeEnv), null);
 		this.registerBlockPluginInfo(HAPManualEnumBrickType.VALUECONTEXT_100, new HAPInfoBrickType(false), new HAPManualPluginParserBrickImpValueContext(this, this.m_runtimeEnv), null);
-		this.registerBlockPluginInfo(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, new HAPInfoBrickType(), new HAPManualDefinitionPluginParserBrickImp(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, HAPManualBrickWrapperValueStructure.class, this, this.m_runtimeEnv), null);
+		this.registerBlockPluginInfo(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, new HAPInfoBrickType(), new HAPManualDefinitionPluginParserBrickImp(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, HAPManualDefinitionBrickWrapperValueStructure.class, this, this.m_runtimeEnv), null);
 		
 		this.registerBrickTypeInfo(HAPManualEnumBrickType.VALUESTRUCTURE_100, new HAPInfoBrickType(false));
 		this.registerBrickTypeInfo(HAPManualEnumBrickType.VALUECONTEXT_100, new HAPInfoBrickType(false));
@@ -250,11 +254,11 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		return entityParserPlugin.parse(entityObj, format, parseContext);
 	}
 
-	private HAPManualDefinitionWrapperBrick parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
+	public HAPManualDefinitionWrapperBrick parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionWrapperBrick out = null;
 		switch(format) {
 		case JSON:
-			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseBrickInfo((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext, this, this.getBrickManager());
+			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseBrickWrapper((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext, this, this.getBrickManager());
 			break;
 		case HTML:
 			out = new HAPManualDefinitionWrapperBrick(parseBrickDefinition(entityObj, brickTypeId, HAPSerializationFormat.HTML, parseContext));

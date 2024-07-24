@@ -38,6 +38,9 @@ public class HAPManualOperandConstant extends HAPManualOperand implements HAPOpe
 
 	@Override
 	public HAPData getData() {   return this.m_data;   }
+	public void setData(HAPData data) {     this.m_data = data;           }
+	
+	public String getName() {    return this.m_name;   }
 
 	@Override
 	public HAPMatchers discover(

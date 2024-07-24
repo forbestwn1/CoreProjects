@@ -71,7 +71,7 @@ var loc_createScriptExpressionGroupComponentCore = function(complexEntityDef, va
 			}
 		};
 		
-		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERSCRIPTEXPRESSION_SCRIPTEXPRESSION], withValuePortInterface, handlers, request);
+		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERSCRIPTEXPRESSION_SCRIPTEXPRESSION], withValuePortInterface, undefind, handlers, request);
 	};
 	
 
