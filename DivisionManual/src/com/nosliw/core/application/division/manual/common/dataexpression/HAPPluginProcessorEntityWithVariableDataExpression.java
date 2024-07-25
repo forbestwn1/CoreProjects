@@ -14,7 +14,6 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
-import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -36,7 +35,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 	}
 
 	@Override
-	public Set<String> getVariableKeys(HAPWithVariable withVariableEntity){
+	public Set<String> getVariableKeys(Object withVariableEntity){
 		Set<String> out = new HashSet<String>();
 		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 
@@ -58,7 +57,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 
 	
 	@Override
-	public void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer,
+	public void resolveVariable(Object withVariableEntity, HAPContainerVariableInfo varInfoContainer,
 			HAPConfigureResolveElementReference resolveConfigure) {
 		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 		
@@ -71,7 +70,7 @@ public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPl
 
 	@Override
 	public Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverVariableCriteria(
-			HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expections,
+			Object withVariableEntity, Map<String, HAPDataTypeCriteria> expections,
 			HAPContainerVariableInfo varInfoContainer) {
 		HAPManualExpressionData dataExpression = (HAPManualExpressionData)withVariableEntity;
 

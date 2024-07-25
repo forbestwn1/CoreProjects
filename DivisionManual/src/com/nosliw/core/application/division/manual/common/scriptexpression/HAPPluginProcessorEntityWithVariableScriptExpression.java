@@ -16,7 +16,6 @@ import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
-import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -40,7 +39,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 	}
 
 	@Override
-	public Set<String> getVariableKeys(HAPWithVariable withVariableEntity){
+	public Set<String> getVariableKeys(Object withVariableEntity){
 		Set<String> out = new HashSet<String>();
 		HAPManualExpressionScript scriptExpression = (HAPManualExpressionScript)withVariableEntity;
 
@@ -66,7 +65,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 
 	
 	@Override
-	public void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
+	public void resolveVariable(Object withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPManualExpressionScript scriptExpression = (HAPManualExpressionScript)withVariableEntity;
 
 		HAPManualUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
@@ -96,7 +95,7 @@ public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAP
 
 	@Override
 	public Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverVariableCriteria(
-			HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expections,
+			Object withVariableEntity, Map<String, HAPDataTypeCriteria> expections,
 			HAPContainerVariableInfo varInfoContainer) {
 		HAPManualExpressionScript scriptExpression = (HAPManualExpressionScript)withVariableEntity;
 

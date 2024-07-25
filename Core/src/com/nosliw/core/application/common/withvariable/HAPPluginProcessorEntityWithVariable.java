@@ -14,12 +14,12 @@ public interface HAPPluginProcessorEntityWithVariable {
 	String getEntityType();
 	
 	//resolve variable
-	void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure);
+	void resolveVariable(Object withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure);
 	
 	//discovery
-	Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>>  discoverVariableCriteria(HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expections, HAPContainerVariableInfo varInfoContainer);
+	Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>>  discoverVariableCriteria(Object withVariableEntity, Map<String, HAPDataTypeCriteria> expections, HAPContainerVariableInfo varInfoContainer);
 
 	//all variables keys in this entity
-	Set<String> getVariableKeys(HAPWithVariable withVariableEntity);
+	Set<String> getVariableKeys(Object withVariableEntity);
 	
 }

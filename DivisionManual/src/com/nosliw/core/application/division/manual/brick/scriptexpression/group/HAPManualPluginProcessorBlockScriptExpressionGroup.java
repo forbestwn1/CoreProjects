@@ -16,6 +16,7 @@ import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualExpressionScript;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -44,8 +45,15 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 
 		HAPContainerVariableInfo varInfoContainer = groupBlock.getVariableInfoContainer();
 
-		//resolve variable name, build var info container, build variable info
-		HAPManualUtilityScriptExpression.processScriptExpressionContainerVariableResolve(groupExe, varInfoContainer, null, getManualBrickManager());
+		for(HAPItemInContainerScriptExpression itemExe : groupExe.getItems()) {
+			//resolve constant
+			HAPManualUtilityScriptExpression.processScriptExpressionConstant((HAPManualExpressionScript)itemExe.getScriptExpression(), blockPair.getLeft().getConstantDefinitions());
+			
+			//variable resolve
+			HAPUtilityWithVarible.resolveVariable(itemExe.getScriptExpression(), varInfoContainer, null, getManualBrickManager());
+			//build variable info in script expression
+			HAPUtilityWithVarible.buildVariableInfoInEntity(itemExe.getScriptExpression(), varInfoContainer, getManualBrickManager());
+		}
 		
 		//build var criteria infor in var info container according to value port def
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, groupBlock);

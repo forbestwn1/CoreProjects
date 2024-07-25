@@ -33,6 +33,7 @@ public class HAPManualConstantInScript extends HAPExecutableImp{
 	public String getConstantName(){	return this.m_constantName;	}
 
 	public Object getValue() {    return this.m_value;    }
+	public void setValue(Object value) {  this.m_value = value;      }
 	
 	public HAPManualConstantInScript cloneConstantInScript() {
 		HAPManualConstantInScript out = new HAPManualConstantInScript(this.m_constantName, this.m_value);
