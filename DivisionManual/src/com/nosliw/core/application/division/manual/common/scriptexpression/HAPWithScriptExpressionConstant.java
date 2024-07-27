@@ -4,10 +4,8 @@ import java.util.Map;
 
 public interface HAPWithScriptExpressionConstant {
 
-	HAPManualDefinitionContainerScriptExpression getScriptExpressionConstantContainer();
+	void discoverConstantScript(HAPManualDefinitionContainerScriptExpression scriptExpressionContainer);
 
-	void discoverConstantScript();
-
-	void solidateConstantScript(Map<String, String> values);
+	void solidateConstantScript(Map<String, Object> values);
 	
 }

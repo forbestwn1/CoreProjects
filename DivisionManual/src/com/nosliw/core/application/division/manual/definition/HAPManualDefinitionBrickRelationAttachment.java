@@ -20,7 +20,7 @@ public class HAPManualDefinitionBrickRelationAttachment extends HAPManualDefinit
 	public String getMode() {   return this.m_mode;    }
 
 	public HAPManualDefinitionBrickRelationAttachment mergeHard(HAPManualDefinitionBrickRelationAttachment configure) {
-		if(configure.m_mode!=null) {
+		if(configure!=null && configure.m_mode!=null) {
 			this.m_mode = configure.m_mode;
 		}
 		return this;

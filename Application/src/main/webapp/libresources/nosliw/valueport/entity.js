@@ -18,7 +18,7 @@ var node_VariableIdValuePair = function(varId, value){
 	this.value = value;
 };
 
-var node_ElementIdValuePair = function(elementId, vlaue){
+var node_ElementIdValuePair = function(elementId, value){
 	this.elementId = elementId;
 	this.value = value;
 };

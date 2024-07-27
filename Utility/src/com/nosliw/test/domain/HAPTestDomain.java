@@ -17,7 +17,7 @@ public class HAPTestDomain {
 
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "decoration_taskgroup");
 
-//		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic");
+		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic");
 		
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB, "test1");
 
@@ -27,7 +27,7 @@ public class HAPTestDomain {
 
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONLIB, "test1");
 
-		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, "test0");
+//		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, "test0");
 
 		
 //		HAPResourceIdSimple resourceId = new HAPResourceIdSimple(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.adapter.dataassociation");

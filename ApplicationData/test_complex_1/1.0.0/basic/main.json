@@ -83,7 +83,7 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -359,7 +359,7 @@
 				"name" : "attachment", 
 				"status": "disabled1"
 			},
-			"brick": {
+			"attachment": {
 				"data" : {
 					"1.0.0" : [
 						{

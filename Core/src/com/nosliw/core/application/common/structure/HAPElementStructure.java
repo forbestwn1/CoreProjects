@@ -5,10 +5,9 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 
 @HAPEntityWithAttribute
-public abstract class HAPElementStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{
+public abstract class HAPElementStructure extends HAPSerializableImp{
 	
 	@HAPAttribute
 	public static final String TYPE = "type";
@@ -48,8 +47,12 @@ public abstract class HAPElementStructure extends HAPSerializableImp implements 
 		boolean out = false;
 		if(obj instanceof HAPElementStructure) {
 			HAPElementStructure ele = (HAPElementStructure)obj;
-			if(!ele.getType().equals(this.getType()))  return false;
-			if(!(ele.m_processed==this.m_processed))  return false;
+			if(!ele.getType().equals(this.getType())) {
+				return false;
+			}
+			if(!(ele.m_processed==this.m_processed)) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

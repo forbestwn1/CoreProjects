@@ -12,7 +12,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrickTraverse;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstant;
+import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup;
 
 public class HAPManualUtilityScriptExpressionConstant {
 
@@ -40,7 +40,9 @@ public class HAPManualUtilityScriptExpressionConstant {
 				if(brickDef instanceof HAPWithScriptExpressionConstant) {
 					HAPWithScriptExpressionConstant withScriptExpressionConstant = (HAPWithScriptExpressionConstant)brickDef;
 					HAPManualDefinitionContainerScriptExpression containerEle = withScriptExpressionConstant.getScriptExpressionConstantContainer();
-					
+					for(HAPManualDefinitionScriptExpressionItemInContainer item :  containerEle.getItems()) {
+						HAPManualDefinitionScriptExpressionItemInContainer newItem = new HAPManualDefinitionScriptExpressionItemInContainer();
+					}
 				}
 				return true;
 			}
@@ -66,7 +68,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 		
 		HAPManualExpressionScript scriptExpression = processScriptExpressionConstant(scriptExpressionDef, constantsDef, runtimeEnvironment.getDataExpressionParser());
 		
-		HAPRuntimeTaskExecuteRhinoScriptExpressionConstant task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstant(scriptExpression, constants, runtimeEnvironment);
+		HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(scriptExpression, constants, runtimeEnvironment);
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);
 		return out;
 	}

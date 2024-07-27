@@ -1,9 +1,8 @@
 package com.nosliw.core.application.common.structure;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 
-public interface HAPWrapperValueStructure extends HAPWithConstantScriptExpression{
+public interface HAPWrapperValueStructure{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";

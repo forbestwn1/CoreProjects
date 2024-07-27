@@ -34,7 +34,6 @@ import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.page.tag.HAPGatewayUITag;
 
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
@@ -113,7 +112,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		
 		this.getGatewayManager().registerGateway(GATEWAY_LOADLIBRARIES, new HAPGatewayBrowserLoadLibrary(this.getGatewayManager()));
 		this.getGatewayManager().registerGateway(GATEWAY_TESTEXPRESSION, new HAPGatewayLoadTestExpression());
-		this.getGatewayManager().registerGateway(GATEWAY_UITAG, new HAPGatewayUITag(this.m_uiResourceManager.getUITagManager()));
+//		this.getGatewayManager().registerGateway(GATEWAY_UITAG, new HAPGatewayUITag(this.m_uiResourceManager.getUITagManager()));
 
 		
 //		this.getDomainEntityDefinitionManager().registerEntityDefinitionPlugin(new HAPPluginEntityDefinitionInDomainUIContent(this));

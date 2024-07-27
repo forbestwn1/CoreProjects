@@ -43,7 +43,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						HAPManualDefinitionAttachment attachment = HAPManualUtilityParserAttachment.parseAttachmentJson(jsonValue, parseContext, getManualDivisionEntityManager()); 
+						HAPManualDefinitionAttachment attachment = HAPManualUtilityParserAttachment.parseAttachmentJson(jsonObj.getJSONObject(HAPWithAttachment.ATTACHMENT), parseContext, getManualDivisionEntityManager()); 
 						entityDefinition.setAttachment(attachment);
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
