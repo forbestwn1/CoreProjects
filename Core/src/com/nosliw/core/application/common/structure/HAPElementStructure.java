@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 
 @HAPEntityWithAttribute
 public abstract class HAPElementStructure extends HAPSerializableImp implements HAPWithConstantScriptExpression{

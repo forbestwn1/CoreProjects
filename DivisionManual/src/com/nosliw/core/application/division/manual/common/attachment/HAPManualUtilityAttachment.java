@@ -1,10 +1,16 @@
 package com.nosliw.core.application.division.manual.common.attachment;
 
+import java.util.List;
+
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
+import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelationAttachment;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
 public class HAPManualUtilityAttachment {
 
@@ -13,7 +19,6 @@ public class HAPManualUtilityAttachment {
 	public static final String OVERRIDE_MODE_NONE = "none"; 
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
-
 
 	public static void setOverridenByParent(HAPManualDefinitionWrapperBrick ele) {
 		ele.getInfo().setValue(ATTRIBUTE_FLAG_OVERRIDE, Boolean.TRUE);
@@ -40,6 +45,22 @@ public class HAPManualUtilityAttachment {
 			}
 		}
 		return out;
+	}
+	
+	public static void processAttachment(HAPManualDefinitionBrick brickDef, HAPManualDefinitionBrickRelationAttachment defaultRelation, HAPManualContextProcessBrick processContext) {
+		HAPManualDefinitionAttachment parentAttachment = brickDef.getAttachment();
+		List<HAPManualDefinitionAttributeInBrick> attrsDef = brickDef.getAllAttributes();
+		for(HAPManualDefinitionAttributeInBrick attrDef : attrsDef) {
+			HAPManualDefinitionWrapperValue attrValueInfo = attrDef.getValueWrapper();
+			String attrValueType = attrValueInfo.getValueType();
+			if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
+				HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
+				HAPManualDefinitionAttachment attrAttachment = attrBrickDef.getAttachment();
+				attrAttachment.mergeWith(parentAttachment, HAPManualUtilityAttachment.resolveAttachmentRelation(attrDef, defaultRelation).getMode());
+				
+				processAttachment(attrBrickDef, defaultRelation, processContext);
+			}
+		}
 	}
 	
 

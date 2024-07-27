@@ -26,8 +26,8 @@ public class HAPImporterDataSourceDefinition {
 			Class cls;
 			try {
 				cls = Class.forName(serviceClasse);
-				List<HAPBlockData> dataSourceDefs = loadDataSourceDefinition(cls);
-				for(HAPBlockData dataSourceDef : dataSourceDefs) {
+				List<HAPBlockValue> dataSourceDefs = loadDataSourceDefinition(cls);
+				for(HAPBlockValue dataSourceDef : dataSourceDefs) {
 					out.add(dataSourceDef);
 				}
 			} catch (ClassNotFoundException e) {

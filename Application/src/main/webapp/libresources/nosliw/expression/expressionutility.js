@@ -522,12 +522,12 @@ var node_utility = function()
 			return 	loc_getMatchDataTaskRequest(data, matchers, handlers, requester_parent);
 		},
 
-		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constant, handlers, request){
-			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, handlers, request);
+		getExecuteDataExpressionRequest : function(dataExpression, valuePortEnv, constants, handlers, request){
+			return loc_getExecuteDataExpressionRequest(dataExpression, valuePortEnv, constants, handlers, request);
 		},
 
-		getExecuteScriptExpressionRequest : function(scriptExpresion, valuePortEnv, handlers, request){
-			return loc_getExecuteScriptExpressionRequest(scriptExpresion, valuePortEnv, handlers, request);
+		getExecuteScriptExpressionRequest : function(scriptExpresion, valuePortEnv, constants, handlers, request){
+			return loc_getExecuteScriptExpressionRequest(scriptExpresion, valuePortEnv, constants, handlers, request);
 		},
 
 	};

@@ -1,17 +1,16 @@
-package com.nosliw.core.application.brick.data;
+package com.nosliw.core.application.brick.value;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.data.core.data.HAPData;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public interface HAPBlockData extends HAPBrick{
+public interface HAPBlockValue extends HAPBrick{
 
 	@HAPAttribute
-	public static final String DATA = "data";
+	public static final String VALUE = "value";
 	
-	HAPData getData();
+	Object getValue();
 
 }

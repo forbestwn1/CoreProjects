@@ -43,7 +43,7 @@ public class HAPManualDefinitionUtilityBrick {
 	
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath path, HAPBundle bundle){
 		HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData();
-		HAPManualDefinitionBrick entityDef = getDescdentBrickDefinition(rootEntityDefInfo, path);
+		HAPManualDefinitionBrick entityDef = getDescendantBrickDefinition(rootEntityDefInfo, path);
 		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
@@ -59,8 +59,8 @@ public class HAPManualDefinitionUtilityBrick {
 		return out;
 	}
 	
-	public static HAPManualDefinitionBrick getDescdentBrickDefinition(HAPManualDefinitionWrapperBrick rootEntityInfo, HAPPath path) {
-		return getDescendantBrick(rootEntityInfo.getBrick(), path);
+	public static HAPManualDefinitionBrick getDescendantBrickDefinition(HAPManualDefinitionWrapperBrick rootEntityInfo, HAPPath path) {
+		return getDescendantBrickDefinition(rootEntityInfo.getBrick(), path);
 	}
 	
 	public static HAPManualDefinitionAttributeInBrick getDescendantAttribute(HAPManualDefinitionBrick brickManual, HAPPath path) {
@@ -82,7 +82,7 @@ public class HAPManualDefinitionUtilityBrick {
 		return out;
 	}
 
-	private static HAPManualDefinitionBrick getDescendantBrick(HAPManualDefinitionBrick entityDef, HAPPath path) {
+	public static HAPManualDefinitionBrick getDescendantBrickDefinition(HAPManualDefinitionBrick entityDef, HAPPath path) {
 		HAPManualDefinitionBrick out = null;
 		if(path==null||path.isEmpty()) {
 			out = entityDef;
@@ -103,7 +103,7 @@ public class HAPManualDefinitionUtilityBrick {
 
 	public static HAPManualDefinitionBrick getEntityDefinitionFromExeTreeNode(HAPTreeNode treeNodeExe, HAPBundle bundle) {
 		HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData();
-		return HAPManualDefinitionUtilityBrick.getDescdentBrickDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
+		return HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootEntityDefInfo, treeNodeExe.getPathFromRoot());
 	}
 
 	public static boolean isAdapterAutoProcess(HAPManualDefinitionAttributeInBrick attr, HAPManagerApplicationBrick entityMan) {

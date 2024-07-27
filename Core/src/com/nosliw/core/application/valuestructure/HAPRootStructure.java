@@ -14,9 +14,9 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
 
 @HAPEntityWithAttribute
 public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWithConstantScriptExpression{

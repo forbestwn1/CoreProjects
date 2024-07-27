@@ -1,7 +1,7 @@
 package com.nosliw.core.application.common.structure;
 
 import com.nosliw.common.info.HAPInfo;
-import com.nosliw.data.core.scriptexpression.HAPWithConstantScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 
 public interface HAPWrapperValueStructure extends HAPWithConstantScriptExpression{
 

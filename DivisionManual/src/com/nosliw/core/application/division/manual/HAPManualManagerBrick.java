@@ -28,6 +28,7 @@ import com.nosliw.core.application.division.manual.brick.adapter.dataassociation
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainer;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
+import com.nosliw.core.application.division.manual.brick.data.HAPManualPluginParserBlockData;
 import com.nosliw.core.application.division.manual.brick.dataexpression.group.HAPManualPluginParserBlockDataExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.dataexpression.group.HAPManualPluginProcessorBlockDataExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualPluginParserBlockDataExpressionElementInLibrary;
@@ -48,9 +49,11 @@ import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualP
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUIPage;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIContent;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIPage;
+import com.nosliw.core.application.division.manual.brick.value.HAPManualPluginParserBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
+import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityAttachment;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPPluginProcessorEntityWithVariableScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
@@ -109,38 +112,41 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 
 		//get definition
-		HAPManualDefinitionWrapperBrick brickWrapper = this.parseBrickDefinitionWrapper(content, brickId.getBrickTypeId(), format, parseContext);
-		HAPManualDefinitionBrick brickDef = brickWrapper.getBrick();
+		HAPManualDefinitionWrapperBrick brick = this.parseBrickDefinitionWrapper(content, brickId.getBrickTypeId(), format, parseContext);
+		HAPManualDefinitionBrick brickDef = brick.getBrick();
 		
 		//build parent and 
 		
 		
 		//build path from root
-		HAPManualDefinitionUtilityBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brick, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 			@Override
-			public boolean processBrickNode(HAPManualDefinitionWrapperBrick rootEntityInfo, HAPPath path, Object data) {
+			public boolean processBrickNode(HAPManualDefinitionBrick rootEntityInfo, HAPPath path, Object data) {
 				if(path!=null&&!path.isEmpty()) {
-					HAPManualDefinitionAttributeInBrick attr = (HAPManualDefinitionAttributeInBrick)HAPManualDefinitionUtilityBrick.getDescdentTreeNode(rootEntityInfo, path);
+					HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootEntityInfo, path);
 					attr.setPathFromRoot(path);
 				}
 				return true;
 			}
-		}, brickWrapper);
+		}, brick);
 		
 
 		//normalize division infor in referred resource id
-		normalizeDivisionInReferredResource(brickWrapper);
+		normalizeDivisionInReferredResource(brick);
 		
 		//process definition
 		HAPBundle out = new HAPBundle();
 		
 		//store manual definition
-		out.setExtraData(brickWrapper);
+		out.setExtraData(brick);
 
 		HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, this.m_runtimeEnv, this);
 
 		//build attachment
-		HAPManualUtilityProcessor.processAttachment(brickDef, null, processContext);
+		HAPManualUtilityAttachment.processAttachment(brickDef, null, processContext);
+
+		//process constant
+		
 		
 		//build executable tree
 		out.setBrickWrapper(new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this)));
@@ -178,22 +184,22 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		HAPManualUtilityProcessor.processAdapter(out.getBrickWrapper(), processContext, this.getBrickManager());
 		
 
-		out.setExtraData(brickWrapper);
+		out.setExtraData(brick);
 //		this.getEntityProcessorInfo(entityId.getEntityTypeId()).getProcessorPlugin().process(entityDefInfo);
 		
 		return out;
 	}
 
 	private void normalizeDivisionInReferredResource(HAPManualDefinitionWrapperBrick brickWrapper) {
-		HAPManualDefinitionUtilityBrickTraverse.traverseEntityTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 
 			@Override
-			public boolean processBrickNode(HAPManualDefinitionWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
+			public boolean processBrickNode(HAPManualDefinitionBrick rootBrick, HAPPath path, Object data) {
 				if(path==null||path.isEmpty()) {
 					return true;
 				}
 				
-				HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootBrickWrapper.getBrick(), path);
+				HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootBrick, path);
 				HAPManualDefinitionWrapperValue valueWrapper = attr.getValueWrapper();
 				if(valueWrapper.getValueType().equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)){
 					HAPManualDefinitionWrapperValueReferenceResource resourceIdValueWrapper = (HAPManualDefinitionWrapperValueReferenceResource)valueWrapper;
@@ -225,6 +231,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.UICONTENT_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockComplexUIContent(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockUIContent(this.m_runtimeEnv, this)); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.UIPAGE_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockComplexUIPage(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockUIPage(this.m_runtimeEnv, this)); 
+
+		this.registerBlockPluginInfo(HAPEnumBrickType.DATA_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockData(this, this.m_runtimeEnv), null); 
+		this.registerBlockPluginInfo(HAPEnumBrickType.VALUE_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockValue(this, this.m_runtimeEnv), null); 
 
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINER_100, new HAPInfoBrickType(false), new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINER_100, HAPManualDefinitionBrickContainer.class, this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpEmpty(HAPEnumBrickType.CONTAINER_100, HAPManualBrickContainer.class, this.m_runtimeEnv, this)); 

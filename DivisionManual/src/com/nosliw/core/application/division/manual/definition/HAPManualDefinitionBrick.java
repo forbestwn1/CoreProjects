@@ -19,6 +19,7 @@ import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -145,14 +146,28 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		
-		Map<String, HAPManualDefinitionWrapperBrick> items =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.DATA_100.getBrickType(), HAPEnumBrickType.DATA_100.getVersion());
-		for(String name : items.keySet()) {
-			HAPManualDefinitionWrapperBrick itemWrapper = items.get(name);
-			HAPManualDefinitionBlockData dataItem = (HAPManualDefinitionBlockData)itemWrapper.getBrick();
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
-			itemWrapper.cloneToEntityInfo(constantDef);
-			constantDef.setValue(dataItem.getData());
+		{
+			Map<String, HAPManualDefinitionWrapperBrick> valueItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.VALUE_100.getBrickType(), HAPEnumBrickType.VALUE_100.getVersion());
+			for(String name : valueItems.keySet()) {
+				HAPManualDefinitionWrapperBrick itemWrapper = valueItems.get(name);
+				HAPManualDefinitionBlockValue valueItem = (HAPManualDefinitionBlockValue)itemWrapper.getBrick();
+				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
+				itemWrapper.cloneToEntityInfo(constantDef);
+				constantDef.setValue(valueItem.getValue());
+			}
 		}
+
+		{
+			Map<String, HAPManualDefinitionWrapperBrick> dataItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.DATA_100.getBrickType(), HAPEnumBrickType.DATA_100.getVersion());
+			for(String name : dataItems.keySet()) {
+				HAPManualDefinitionWrapperBrick itemWrapper = dataItems.get(name);
+				HAPManualDefinitionBlockData dataItem = (HAPManualDefinitionBlockData)itemWrapper.getBrick();
+				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
+				itemWrapper.cloneToEntityInfo(constantDef);
+				constantDef.setValue(dataItem.getData());
+			}
+		}
+
 		
 		return out;
 	}
