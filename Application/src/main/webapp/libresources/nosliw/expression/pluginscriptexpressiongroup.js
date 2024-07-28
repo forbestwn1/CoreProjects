@@ -64,14 +64,21 @@ var loc_createScriptExpressionGroupComponentCore = function(complexEntityDef, va
 	}
 	
 	var loc_getExecuteItemRequest = function(expressionId, handlers, request){
-		var expressionItem = loc_getItemById(expressionId);
+		var expressionItem = loc_getAllExpressionItems()[expressionId];
+		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE]; 
+		
+		
+		
+//		var expressionItem = loc_getItemById(expressionId);
+		
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_valuePort;
 			}
 		};
 		
-		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERSCRIPTEXPRESSION_SCRIPTEXPRESSION], withValuePortInterface, undefind, handlers, request);
+//		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERSCRIPTEXPRESSION_SCRIPTEXPRESSION], withValuePortInterface, undefined, handlers, request);
+		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionData, withValuePortInterface, undefined, handlers, request);
 	};
 	
 
