@@ -52,24 +52,9 @@ var loc_createScriptExpressionGroupComponentCore = function(complexEntityDef, va
 		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];
 	};
 	
-	var loc_getItemById = function(itemId){
-		var expressions = loc_getAllExpressionItems();
-		var out;		
-		_.each(expressions, function(expression, i){
-			if(expression[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==itemId){
-				out = expression;
-			}
-		});
-		return out;
-	}
-	
 	var loc_getExecuteItemRequest = function(expressionId, handlers, request){
 		var expressionItem = loc_getAllExpressionItems()[expressionId];
-		var expressionData = expressionItem[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE]; 
-		
-		
-		
-//		var expressionItem = loc_getItemById(expressionId);
+		var scriptExpression = expressionItem[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE]; 
 		
 		var withValuePortInterface = {
 			getValuePort : function(valuePortGroup, valuePortName){
@@ -77,8 +62,7 @@ var loc_createScriptExpressionGroupComponentCore = function(complexEntityDef, va
 			}
 		};
 		
-//		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionItem[node_COMMONATRIBUTECONSTANT.ITEMINCONTAINERSCRIPTEXPRESSION_SCRIPTEXPRESSION], withValuePortInterface, undefined, handlers, request);
-		return node_expressionUtility.getExecuteScriptExpressionRequest(expressionData, withValuePortInterface, undefined, handlers, request);
+		return node_expressionUtility.getExecuteScriptExpressionRequest(scriptExpression, withValuePortInterface, undefined, handlers, request);
 	};
 	
 
