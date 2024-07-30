@@ -1,4 +1,4 @@
-package com.nosliw.core.application.valuecontext;
+package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,19 +7,19 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
-public class HAPInfoPartSimple {
+public class HAPManualInfoPartSimple {
 
 	public static final String PART = "part";
 	
-	private HAPPartInValueContextSimple m_simpleStructurePart;
+	private HAPManualPartInValueContextSimple m_simpleStructurePart;
 	
 	private List<Integer> m_priority;
 	
-	public HAPInfoPartSimple(HAPPartInValueContextSimple simpleStructurePart) {
+	public HAPManualInfoPartSimple(HAPManualPartInValueContextSimple simpleStructurePart) {
 		this.m_simpleStructurePart = simpleStructurePart;
 	}
 
-	public HAPPartInValueContextSimple getSimpleValueStructurePart() {	return this.m_simpleStructurePart;	}
+	public HAPManualPartInValueContextSimple getSimpleValueStructurePart() {	return this.m_simpleStructurePart;	}
 	
 	public List<Integer> getPriority(){   return this.m_priority;    }
 	public void setPriority(List<Integer> priority) {     this.m_priority = priority;     }

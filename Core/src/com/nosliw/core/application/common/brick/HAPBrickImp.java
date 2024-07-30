@@ -11,7 +11,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -20,17 +19,11 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
 	
-	private HAPValueContext m_valueContext;
-	
 	private HAPIdBrickType m_brickTypeId;
 
 	public HAPBrickImp() {
-		this.m_valueContext = new HAPValueContext(); 
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
-	
-	@Override
-	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }

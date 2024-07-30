@@ -11,6 +11,7 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPValueContext;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
@@ -20,9 +21,10 @@ import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValuePortValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -31,6 +33,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 
 	public final static String ISCOMPLEX = "isComplex"; 
 
+	private HAPManualValueContext m_valueContext;
 	
 	private HAPInfoTreeNode m_tempTreeNodeInfo;
 
@@ -46,7 +49,12 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	
 	public HAPManualBrick() {
 		this.m_varInfoContainer = new HAPContainerVariableInfo(this); 
+		this.m_valueContext = new HAPManualValueContext(); 
 	}
+	
+	@Override
+	public HAPValueContext getValueContext() {    return this.m_valueContext;    }
+	public HAPManualValueContext getManualValueContext() {    return this.m_valueContext;    }
 	
 	public void setRuntimeEnvironment(HAPRuntimeEnvironment runtimeEnv) {     this.m_runtimeEnv = runtimeEnv;      }
 	
@@ -117,7 +125,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		this.setAttributeValueWithBrick(attributeName, this.getManualBrickManager().newBrick(brickTypeId));
 	}
 	
-	public List<HAPPartInValueContext> getValueContextInhertanceDownstream(){
+	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){
 		
 	}
 	
@@ -128,7 +136,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		if(!this.getValueContext().isEmpty()) {
 			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
-			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
+			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPManualValuePortValueContext(this, this.m_valueStructureDomain)), true);
 			out.addValuePortGroup(valePortGroup, true);
 		}
 			
@@ -145,7 +153,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		if(!this.getValueContext().isEmpty()) {
 			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
-			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPValuePortValueContext(this, this.m_valueStructureDomain)), true);
+			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPManualValuePortValueContext(this, this.m_valueStructureDomain)), true);
 			out.addValuePortGroup(valePortGroup, true);
 		}
 		

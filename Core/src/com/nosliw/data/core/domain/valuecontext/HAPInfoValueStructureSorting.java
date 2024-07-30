@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPInfoValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 public class HAPInfoValueStructureSorting {

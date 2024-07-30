@@ -1,0 +1,60 @@
+package com.nosliw.core.application.division.manual.common.valuecontext;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.data.core.domain.HAPDomainValueStructure;
+
+public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInValueContext{
+
+	private List<HAPManualPartInValueContext> m_children;
+	
+	public HAPManualPartInValueContextGroupWithEntity(HAPManualInfoPartInValueContext partInfo) {
+		super(partInfo);
+		this.m_children = new ArrayList<HAPManualPartInValueContext>();
+	}
+	
+	@Override
+	public String getPartType() {    return HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY;    }
+
+	public List<HAPManualPartInValueContext> getChildren(){   return this.m_children;   }
+	
+	public String addChild(HAPManualPartInValueContext child) {
+		if(child.isEmpty())  return null;
+		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());
+		this.m_children.add(child);
+		return child.getPartInfo().getName();
+	}
+	
+	public HAPManualPartInValueContextGroupWithEntity cloneValueStructureComplexPartGroup() {
+		HAPManualPartInValueContextGroupWithEntity out = new HAPManualPartInValueContextGroupWithEntity(this.getPartInfo().cloneValueStructurePartInfo());
+		this.cloneToPartValueContext(out);
+		for(HAPManualPartInValueContext child : this.m_children) {
+			out.addChild(child.cloneValueContextPart());
+		}
+		return out;
+	}
+
+	@Override
+	public HAPManualPartInValueContext cloneValueContextPart() {   return this.cloneValueStructureComplexPartGroup();  }
+
+	@Override
+	public HAPManualPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
+		HAPManualPartInValueContextGroupWithEntity out = new HAPManualPartInValueContextGroupWithEntity(this.getPartInfo().cloneValueStructurePartInfo());
+		this.cloneToPartValueContext(out);
+		for(HAPManualPartInValueContext child : this.m_children) {
+			out.addChild(child.inheritValueContextPart(valueStructureDomain, mode, groupTypeCandidates));
+		}
+		return out;
+	}
+	
+	@Override
+	public boolean isEmpty() {	
+		boolean out = true;
+		for(HAPManualPartInValueContext child : this.m_children) {
+			if(!child.isEmpty())  out = false;
+		}
+		return out;
+	}
+}

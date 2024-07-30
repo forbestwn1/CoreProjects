@@ -201,7 +201,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		if(expectedVars!=null) {
 			for(HAPExecutableVariableExpected extendedVar : expectedVars) {
 				HAPDefinitionVariableExpected varDef = extendedVar.getDefinition();
-				HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPUtilityValueContext.getStructureElement(extendedVar.getVariableId(), valueStructureDomain);
+				HAPElementStructureLeafData dataStructureEle = (HAPElementStructureLeafData)HAPManualUtilityValueContext.getStructureElement(extendedVar.getVariableId(), valueStructureDomain);
 				
 				HAPMatchers matchers = HAPUtilityCriteria.mergeVariableInfo(dataStructureEle.getCriteriaInfo(), new HAPDataTypeCriteriaId(varDef.getDataTypeId(), null), processContext.getRuntimeEnvironment().getDataTypeHelper());
 				extendedVar.setMarchers(matchers);

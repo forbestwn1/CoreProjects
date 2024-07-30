@@ -1,29 +1,30 @@
-package com.nosliw.data.core.domain.valuecontext;
+package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPValueContext;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
-import com.nosliw.core.application.valuecontext.HAPInfoValueStructure;
-import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.application.valuestructure.HAPInfoValueStructureDefinition;
 import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
+import com.nosliw.data.core.domain.valuecontext.HAPInfoValueStructureSorting;
+import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueContext;
 
-public class HAPValuePortValueContext extends HAPValuePortImp{
+public class HAPManualValuePortValueContext extends HAPValuePortImp{
 
 	private HAPValueContext m_valueContext;
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPValuePortValueContext(HAPBrick complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
+	public HAPManualValuePortValueContext(HAPBrick complexEntityExe, HAPDomainValueStructure valueStructureDomain) {
 		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.IO_DIRECTION_BOTH));
 		this.m_valueContext = complexEntityExe.getValueContext();
 		this.m_valueStructureDomain = valueStructureDomain;

@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.domain.HAPDomainEntity;
 import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
@@ -15,7 +16,6 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.expression.script.HAPExecutableEntityExpressionScriptGroup;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
-import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute

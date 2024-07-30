@@ -70,13 +70,17 @@ public class HAPUtilityBrick {
 	}
 	
 	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
+		return getDescdentBrickLocal(rootBrickWrapper.getBrick(), path);
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
+		HAPResultBrick brickResult = getDescendantBrickResult(brick, path);
 		if(brickResult!=null) {
 			return brickResult.getInternalBrick();
 		}
 		return null;
 	}
-	
+
 	public static HAPResultBrick getDescdentBrickResult(HAPBundle bundle, HAPPath path) {
 		return getDescdentBrickResult(bundle.getBrickWrapper(), path);
 	}

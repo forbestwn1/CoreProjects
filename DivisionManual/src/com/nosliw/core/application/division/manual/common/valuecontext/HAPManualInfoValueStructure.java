@@ -1,4 +1,4 @@
-package com.nosliw.core.application.valuecontext;
+package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,7 +10,7 @@ import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPInfoValueStructure extends HAPSerializableImp{
+public class HAPManualInfoValueStructure extends HAPSerializableImp{
 
 	public static final String GROUPTYPE = "groupType";
 	public static final String RUNTIMEID = "runtimeId";
@@ -22,9 +22,9 @@ public class HAPInfoValueStructure extends HAPSerializableImp{
 	
 	private String m_valueStructureRuntimeId;
 	
-	public HAPInfoValueStructure() {}
+	public HAPManualInfoValueStructure() {}
 
-	public HAPInfoValueStructure(String valueStructureRuntimeId) {
+	public HAPManualInfoValueStructure(String valueStructureRuntimeId) {
 		this.m_valueStructureRuntimeId = valueStructureRuntimeId;
 	}
 	
@@ -44,8 +44,8 @@ public class HAPInfoValueStructure extends HAPSerializableImp{
 		this.m_groupType = valueStructureDefWrapper.getGroupType();
 	}
 	
-	public HAPInfoValueStructure cloneValueStructureWrapper() {
-		HAPInfoValueStructure out = new HAPInfoValueStructure();
+	public HAPManualInfoValueStructure cloneValueStructureWrapper() {
+		HAPManualInfoValueStructure out = new HAPManualInfoValueStructure();
 		out.m_valueStructureRuntimeId = this.m_valueStructureRuntimeId;
 		out.m_groupType = this.m_groupType;
 		return out;

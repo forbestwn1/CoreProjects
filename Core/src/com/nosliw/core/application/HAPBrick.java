@@ -11,7 +11,6 @@ import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.valueport.HAPWithValuePort;
-import com.nosliw.core.application.valuecontext.HAPValueContext;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
@@ -27,8 +26,6 @@ public interface HAPBrick extends HAPSerializable, HAPEntityOrReference, HAPWith
 
 	public abstract List<HAPAttributeInBrick> getAttributes();
 
-	@Override
-	public abstract HAPValueContext getValueContext();
 
 	public static void buildJSJsonMap(HAPBrick brick, Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(BRICKTYPE, brick.getBrickType().toStringValue(HAPSerializationFormat.JSON));
