@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual.executable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,9 @@ import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.HAPManualUtilityValueStructureDomain;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValuePortValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -126,14 +129,19 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	}
 	
 	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){
+		List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
 		
+		for(HAPManualPartInValueContext part : this.getManualValueContext().getParts()) {
+			HAPManualUtilityValueStructureDomain.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries());
+		}
+		return out;
 	}
 	
 	@Override
 	public HAPContainerValuePorts getInternalValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
-		if(!this.getValueContext().isEmpty()) {
+		if(!this.getManualValueContext().isEmpty()) {
 			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
 			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPManualValuePortValueContext(this, this.m_valueStructureDomain)), true);
@@ -150,7 +158,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	public HAPContainerValuePorts getExternalValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();
 		
-		if(!this.getValueContext().isEmpty()) {
+		if(!this.getManualValueContext().isEmpty()) {
 			HAPGroupValuePorts valePortGroup = new HAPGroupValuePorts();
 			valePortGroup.setName(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT);
 			valePortGroup.addValuePort(new HAPWrapperValuePort(new HAPManualValuePortValueContext(this, this.m_valueStructureDomain)), true);

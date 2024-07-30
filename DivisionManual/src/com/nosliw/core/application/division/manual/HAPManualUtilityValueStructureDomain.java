@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,7 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextGroupWithEntity;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextSimple;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
@@ -100,7 +102,7 @@ public class HAPManualUtilityValueStructureDomain {
 					List<HAPManualPartInValueContext> fromParentParts = parentBrickManual.getValueContextInhertanceDownstream();
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();
 					for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
-						HAPManualPartInValueContext inheritPart = inheritValueContextPart(fromParentPart, inheritMode, valueStructureDomain);
+						HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
 						if(!inheritPart.isEmpty()) {
 							inheritParts.add(inheritPart);
 						}
@@ -114,14 +116,14 @@ public class HAPManualUtilityValueStructureDomain {
 		}, null, processContext);
 	}
 	
-	private static HAPManualPartInValueContext inheritValueContextPart(HAPManualPartInValueContext part, String inheritMode, HAPDomainValueStructure valueStructureDomain) {
+	private static HAPManualPartInValueContext inheritToChild(HAPManualPartInValueContext part, String inheritMode, HAPDomainValueStructure valueStructureDomain) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
 			HAPManualPartInValueContextGroupWithEntity groupPart = (HAPManualPartInValueContextGroupWithEntity)part;
 			HAPManualPartInValueContextGroupWithEntity out = new HAPManualPartInValueContextGroupWithEntity(part.getPartInfo().cloneValueStructurePartInfo());
 			part.cloneToPartValueContext(out);
 			for(HAPManualPartInValueContext child : groupPart.getChildren()) {
-				out.addChild(inheritValueContextPart(child, inheritMode, valueStructureDomain));
+				out.addChild(inheritToChild(child, inheritMode, valueStructureDomain));
 			}
 			return out;
 		}
@@ -144,6 +146,33 @@ public class HAPManualUtilityValueStructureDomain {
 //						cloned.setValueStructureRuntimeId(valueStructureDomain.createRuntimeByRelativeRef(valueStructure.getValueStructureRuntimeId()));
 				}
 				out.addValueStructure(cloned);
+			}
+			return out;
+		}
+		return null;
+	}
+	
+	public static HAPManualPartInValueContext inheritFromParent(HAPManualPartInValueContext part, String[] groupTypeCandidates) {
+		String partType = part.getPartType();
+		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
+			HAPManualPartInValueContextGroupWithEntity groupPart = (HAPManualPartInValueContextGroupWithEntity)part;
+			HAPManualPartInValueContextGroupWithEntity out = new HAPManualPartInValueContextGroupWithEntity(part.getPartInfo().cloneValueStructurePartInfo());
+			part.cloneToPartValueContext(out);
+			for(HAPManualPartInValueContext child : groupPart.getChildren()) {
+				out.addChild(inheritFromParent(child, groupTypeCandidates));
+			}
+			return out;
+		}
+		else if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
+			HAPManualPartInValueContextSimple simplePart = (HAPManualPartInValueContextSimple)part;
+			HAPManualPartInValueContextSimple out = new HAPManualPartInValueContextSimple(part.getPartInfo().cloneValueStructurePartInfo());
+			part.cloneToPartValueContext(out);
+
+			for(HAPManualInfoValueStructure valueStructure : simplePart.getValueStructures()) {
+				if(groupTypeCandidates==null||groupTypeCandidates.length==0||Arrays.asList(groupTypeCandidates).contains(valueStructure.getGroupType())) {
+					HAPManualInfoValueStructure cloned = valueStructure.cloneValueStructureWrapper();
+					out.addValueStructure(cloned);
+				}
 			}
 			return out;
 		}
@@ -250,8 +279,8 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPBrick complexEntityExe = this.getBrickFromNode(treeNode);
-				HAPValueContext valueContextExe = complexEntityExe.getValueContext();
+				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
+				HAPManualValueContext valueContextExe = complexEntityExe.getManualValueContext();
 				
 				String valueStructureExeId = valueStructureDomain.newValueStructure();
 				HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
@@ -276,7 +305,7 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPBrick complexEntityExe = this.getBrickFromNode(treeNode);
+				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
 				
 				HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData(); 
 				
@@ -287,7 +316,7 @@ public class HAPManualUtilityValueStructureDomain {
 				HAPManualDefinitionBrickValueContext valueContextEntityDef = complexEntityDef.getValueContextBrick();
 				
 				//value context
-				HAPValueContext valueContextExe = complexEntityExe.getValueContext();
+				HAPManualValueContext valueContextExe = complexEntityExe.getManualValueContext();
 				if(valueContextEntityDef!=null) {
 					{
 						List<HAPManualInfoValueStructure> wrappers = new ArrayList<HAPManualInfoValueStructure>();

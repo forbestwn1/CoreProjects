@@ -158,12 +158,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 },
 "adapter":[]
-}],
-"valueContext":{"part":[],
-"valueStructureRuntimeIdByName":{},
-"valueStructureRuntimeNameById":{},
-"valueStructure":[]
-}
+}]
 },
 "valueStructureDomain":{"valueStructureDefinition":{},
 "valueStructureRuntime":{},

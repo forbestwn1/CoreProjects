@@ -29,4 +29,5 @@ public class HAPBrickScript extends HAPBrickImp implements HAPWithScript{
 		return null;
 	}
 
+
 }

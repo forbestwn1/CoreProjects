@@ -28,14 +28,14 @@ public abstract class HAPHandlerDownwardImpTreeNode extends HAPHandlerDownward{
 	//after process attribute
 	protected void postProcessTreeNode(HAPTreeNodeBrick treeNode, Object data) {}
 
-	protected HAPBrick getBrickFromNode(HAPTreeNodeBrick node) {
-		HAPBrick out = null;
+	protected HAPManualBrick getBrickFromNode(HAPTreeNodeBrick node) {
+		HAPManualBrick out = null;
 		Object value = node.getNodeValue();
 		if(value instanceof HAPBrick) {
-			out = (HAPBrick)value;
+			out = (HAPManualBrick)value;
 		}
 		else if(value instanceof HAPWithBrick){
-			out = ((HAPWithBrick)value).getBrick();
+			out = (HAPManualBrick)((HAPWithBrick)value).getBrick();
 		}
 		return out;
 	}
