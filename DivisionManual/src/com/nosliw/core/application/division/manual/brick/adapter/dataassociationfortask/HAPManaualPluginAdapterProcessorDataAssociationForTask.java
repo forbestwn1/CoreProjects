@@ -35,7 +35,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPM
 		HAPDataAssociationForTask daForTaskExe = new HAPDataAssociationForTask(); 
 		
 		HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
-		HAPPath secondBlockPath = baseBlockPath.trimLast().trimLast();
+		HAPPath secondBlockPath = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
 		HAPDataAssociation daForRequest = HAPManualProcessorDataAssociation.processDataAssociation(daForTaskDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), this.m_runtimeEnv);
 		daForTaskExe.setInDataAssociation(daForRequest);
 		

@@ -33,7 +33,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPl
 		List<HAPManualDataAssociation> das = daAdapterDef.getDataAssociation();
 		for(HAPManualDataAssociation da : das) {
 			HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
-			HAPPath secondBlockPath = baseBlockPath.trimLast();
+			HAPPath secondBlockPath = baseBlockPath.trimLast().getLeft();
 			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), this.m_runtimeEnv);
 			for(HAPTunnel tunnel : daMappingExe.getTunnels()) {
 				daExe.addTunnel(tunnel);

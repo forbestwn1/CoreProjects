@@ -44,7 +44,7 @@ public class HAPUtilityPath {
 		String[] segs = relativePath.split("\\"+HAPConstantShared.SEPERATOR_LEVEL2);
 		for(String seg : segs) {
 			if(seg.startsWith(HAPConstantShared.NAME_PARENT)) {
-				path = path.trimLast();
+				path = path.trimLast().getLeft();
 			}
 			else if(seg.startsWith(HAPConstantShared.NAME_CHILD)) {
 				String[] ss = seg.split("\\"+HAPConstantShared.SEPERATOR_LEVEL1);

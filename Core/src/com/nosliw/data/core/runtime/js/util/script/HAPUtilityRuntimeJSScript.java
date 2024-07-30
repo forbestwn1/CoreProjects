@@ -6,26 +6,24 @@ import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.data.core.domain.HAPExecutableBundle;
+import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityRuntimeJSScript {
 
-	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteExpressionScriptConstant(HAPExpressionScript expressionScript, Map<String, Object> constants, String taskId, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildTaskRequestScriptForExecuteExpressionScriptConstant(HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup taskInfo, String taskId, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 		
-		templateParms.put("scriptExpresion", expressionScript.toStringValue(HAPSerializationFormat.JAVASCRIPT));
-		templateParms.put("constants", HAPManagerSerialize.getInstance().toStringValue(constants, HAPSerializationFormat.JSON));
+		templateParms.put("taskInfo", taskInfo.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		
 		buildCommonTemplateParms(templateParms, taskId, runtime);
 		
-		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExecuteScriptExpressionConstant.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ScriptExecuteScriptExpressionConstantGroup.temp");
 		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, taskId);
 		return out;

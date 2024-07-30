@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual.executable;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
@@ -19,6 +20,7 @@ import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.valuecontext.HAPPartInValueContext;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPValuePortValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
@@ -113,6 +115,10 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	}
 	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {
 		this.setAttributeValueWithBrick(attributeName, this.getManualBrickManager().newBrick(brickTypeId));
+	}
+	
+	public List<HAPPartInValueContext> getValueContextInhertanceDownstream(){
+		
 	}
 	
 	@Override

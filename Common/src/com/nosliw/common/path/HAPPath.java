@@ -1,5 +1,7 @@
 package com.nosliw.common.path;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
@@ -56,12 +58,12 @@ public class HAPPath {
 		return out;
 	}
 	
-	public HAPPath trimLast() {
-		HAPPath out = new HAPPath();
+	public Pair<HAPPath, String> trimLast() {
+		HAPPath path = new HAPPath();
 		for(int i=0; i<this.m_pathSegs.length-1; i++) {
-			out = out.appendSegment(m_pathSegs[i]);
+			path = path.appendSegment(m_pathSegs[i]);
 		}
-		return out;
+		return Pair.of(path, this.m_pathSegs[this.m_pathSegs.length-1]);
 	}
 	
 	public HAPPath clonePath() {

@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 
 @HAPEntityWithAttribute
-public abstract class HAPContainer<T extends HAPItemWrapper> extends HAPSerializableImp{
+public class HAPContainer<T extends HAPItemWrapper> extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String ITEM = "item";

@@ -21,10 +21,12 @@ import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity, HAPWithConstantDefinition{
+public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
 
 	public final static String ATTRIBUTE = "attribute"; 
 	
@@ -34,6 +36,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	private List<HAPManualDefinitionAttributeInBrick> m_attributes;
 
 	private HAPManualDefinitionAttachment m_attachment;
+	
+	private HAPManualDefinitionContainerScriptExpression m_constantScriptExpressions;
 	
 	private HAPIdBrickType m_brickTypeId;
 
@@ -54,6 +58,10 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	public void setAttachment(HAPManualDefinitionAttachment attachment) {   this.m_attachment = attachment;	}
 	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
+	
+	@Override
+	public HAPManualDefinitionContainerScriptExpression getScriptExpressionConstantContainer() {   return this.m_constantScriptExpressions;  }
+
 	
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;     }
