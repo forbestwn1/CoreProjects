@@ -31,7 +31,7 @@ public class HAPManualUtilityScriptExpression {
 					for(Object part : simpleScriptSeg.getParts()) {
 						if(part instanceof HAPManualConstantInScript) {
 							HAPManualConstantInScript constantInScript = (HAPManualConstantInScript)part;
-							constantInScript.setValue(constantsDef.get(constantInScript.getConstantName()));
+							constantInScript.setValue(constantsDef.get(constantInScript.getConstantName()).getValue());
 						}
 					}
 				}

@@ -1,0 +1,92 @@
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
+	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+	var node_EntityIdInDomain = nosliw.getNodeData("complexentity.entity.EntityIdInDomain");
+	var node_expressionUtility = nosliw.getNodeData("expression.utility");
+
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpressionConstantGroup"));
+
+	var calItemsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("allItems", {}), {
+		success : function(requestInfo, results){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.responseData = results.getResults();
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "success", parms);
+		},
+		error : function(requestInfo, serviceData){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.responseData = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "error", parms);
+		},
+		exception : function(requestInfo, serviceData){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.responseData = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "exception", parms);
+		}
+	});
+	
+	var taskInfo = {"container":{"item":{"default":{"id":"default",
+"name":"default",
+"displayName":"default",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return "HaHaHa  ";
+} 
+,
+"2":function(functions, expressionsData, constantsData, variablesData){
+	return (({"id":"fromConstant",
+"name":"fromConstant",
+"displayName":"fromConstant",
+"info":{}
+}).value+({"id":"constantValueInteger",
+"name":"constantValueInteger",
+"displayName":"constantValueInteger",
+"info":{}
+}))+({"id":"constantValueString",
+"name":"constantValueString",
+"displayName":"constantValueString",
+"info":{}
+});
+} 
+,
+"4":function(functions, expressionsData, constantsData, variablesData){
+	return "  End!!!!";
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+functions["2"](functions, expressionsData, constantsData, variablesData)+functions["4"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"constantValueString":"aaaaa",
+"constantValueInteger":10000,
+"fromConstant":{"value":"kkkkkkkkk"}
+}
+}
+}
+}
+}
+};
+	var items = taskInfo[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONTAINER][node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];
+	_.each(items, function(item, name){
+		calItemsRequest.addRequest(name, node_expressionUtility.getExecuteScriptExpressionRequest(item[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE][node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_SCRIPTEXPRESSION], undefined, item[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONSTANT]));
+	});
+	
+	out.addRequest(calItemsRequest);
+
+	node_requestServiceProcessor.processRequest(out);

@@ -1,5 +1,6 @@
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
@@ -37,7 +38,7 @@
 	var taskInfo = ||taskInfo||;
 	var items = taskInfo[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONTAINER][node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];
 	_.each(items, function(item, name){
-		calItemsRequest.addRequest(name, node_expressionUtility.getExecuteScriptExpressionRequest(item[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_SCRIPTEXPRESSION], undefined, item[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONSTANT]));
+		calItemsRequest.addRequest(name, node_expressionUtility.getExecuteScriptExpressionRequest(item[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE][node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_SCRIPTEXPRESSION], undefined, item[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONSTANT]));
 	});
 	
 	out.addRequest(calItemsRequest);

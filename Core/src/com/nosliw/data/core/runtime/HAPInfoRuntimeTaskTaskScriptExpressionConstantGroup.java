@@ -60,6 +60,7 @@ public class HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup extends HAPSeri
 		private Map<String, Object> m_constants;
 		
 		public HAPItem(HAPExpressionScript exprssionScript, Map<String, Object> constants) {
+			this.m_exprssionScript = exprssionScript;
 			this.m_constants = new LinkedHashMap<String, Object>();
 			if(constants!=null) {
 				this.m_constants.putAll(constants);

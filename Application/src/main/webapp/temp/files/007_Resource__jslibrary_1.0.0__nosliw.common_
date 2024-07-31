@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.common;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/0_package_common.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/dataoperationutil.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/embeded.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/event.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/interface.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/interfacedef.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/lifecycle.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/namingconversion.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/objectoperationutil.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/objectwithid.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/objectwithname.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/objectwithtype.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/orderedcontainer.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/patternmatcher.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/segmentparser.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/service.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/setting.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/storage.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/common/utility.js"]
+}, {});
+

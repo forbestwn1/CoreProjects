@@ -139,7 +139,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 	
 	public static HAPManualExpressionScript processScriptExpressionConstant(HAPManualDefinitionScriptExpressionConstant scriptExpressionDef, Map<String, HAPDefinitionConstant> constantsDef, HAPParserDataExpression dataExpressionParser) {
 		
-		HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(scriptExpressionDef.getScriptExpression(), scriptExpressionDef.getScriptExpression(), dataExpressionParser);
+		HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(scriptExpressionDef.getScriptExpression(), scriptExpressionDef.getScriptExpressionType(), dataExpressionParser);
 
 		HAPManualUtilityScriptExpression.processScriptExpressionConstant(scriptExpression, constantsDef);
 

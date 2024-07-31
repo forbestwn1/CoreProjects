@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.complexentity;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/0_package_complexentity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/application.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/bundle.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/complexentityservice.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/container.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/domainvalue.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/entity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/interfacedef.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/package.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/plugin.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/utility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/complexentity/utilityvaluecontext.js"]
+}, {});
+
