@@ -20,6 +20,7 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
+import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
@@ -31,6 +32,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public final static String ATTRIBUTE = "attribute"; 
 	
 	final private static String ATTR_IDINDEX = HAPUtilityNosliw.buildNosliwFullName("idIndex"); 
+
+	static private String VALUECONTEXT = "valueContext"; 
 
 	//all attributes
 	private List<HAPManualDefinitionAttributeInBrick> m_attributes;
@@ -47,6 +50,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
 		this.m_attachment = new HAPManualDefinitionAttachment();
 		this.m_brickTypeId = brickTypeId;
+		this.m_constantScriptExpressions = new HAPManualDefinitionContainerScriptExpression();
 	}
 
 	protected void init() {}
@@ -56,11 +60,25 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	public HAPIdBrickType getBrickTypeId() {  return this.m_brickTypeId;	}
 
+	public HAPManualDefinitionBrickValueContext getValueContextBrick() {    return (HAPManualDefinitionBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
+
+	public void setValueContextBrick(HAPManualDefinitionBrickValueContext valueContext) {    this.setAttributeWithValueBrick(VALUECONTEXT, valueContext);      }
+	
 	public void setAttachment(HAPManualDefinitionAttachment attachment) {   this.m_attachment = attachment;	}
 	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
 	
 	@Override
 	public HAPManualDefinitionContainerScriptExpression getScriptExpressionConstantContainer() {   return this.m_constantScriptExpressions;  }
+
+	@Override
+	public void discoverConstantScript() {
+		HAPManualDefinitionUtilityValueContext.discoverConstantScript(getValueContextBrick(), this.getScriptExpressionConstantContainer());
+	}
+
+	@Override
+	public void solidateConstantScript(Map<String, Object> values) {
+		HAPManualDefinitionUtilityValueContext.solidateConstantScript(getValueContextBrick(), values);
+	}
 
 	
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }

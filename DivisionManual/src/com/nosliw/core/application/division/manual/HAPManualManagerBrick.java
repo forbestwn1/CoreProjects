@@ -55,6 +55,7 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityAttachment;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionConstant;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPPluginProcessorEntityWithVariableScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
@@ -146,9 +147,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		HAPManualUtilityAttachment.processAttachment(brickDef, null, processContext);
 
 		//process constant
-//		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef);
-//		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv);
-//		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults);
+		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef);
+		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv);
+		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults);
 		
 		//build executable tree
 		out.setBrickWrapper(new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this)));

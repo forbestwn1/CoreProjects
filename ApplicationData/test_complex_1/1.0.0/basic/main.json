@@ -374,6 +374,17 @@
 						}
 					]
 				}
+			},
+			"value" : {
+				"1.0.0" : [
+					{
+						"info": {
+							"name" : "value1", 
+							"status": "disabled1"
+						},
+						"value": "value111"
+					}
+				]
 			}
 		}
 		
