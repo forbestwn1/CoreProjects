@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
@@ -90,6 +93,19 @@ public class HAPManualValuePortValueContext extends HAPValuePortImp{
 		}
 		
 		return out;
+	}
+
+	@Override
+	public void updateElement(HAPIdElement elementId, HAPElementStructure structureElement) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected HAPResultReferenceResolve extendValueStructure(String valueStructureInValuePort, String elementPath,
+			HAPElementStructure structureEle, HAPConfigureResolveElementReference configure) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

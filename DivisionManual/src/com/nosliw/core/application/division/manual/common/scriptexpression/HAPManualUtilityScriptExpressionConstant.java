@@ -54,7 +54,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 
 			@Override
 			protected boolean processBrick(HAPManualDefinitionBrick brick, Object data) {
-				if(brick instanceof HAPWithScriptExpressionConstant) {
+				if(brick instanceof HAPWithScriptExpressionConstantMaster) {
 					HAPWithScriptExpressionConstantMaster withScriptExpressionConstant = brickDef;
 					withScriptExpressionConstant.discoverConstantScript();
 				}
@@ -82,7 +82,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 							constants.put(name, constantsDef.get(name).getValue());
 						}
 						
-						HAPManualExpressionScript scriptExpression = processScriptExpressionConstant((HAPManualDefinitionScriptExpressionConstant)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
+						HAPManualExpressionScript scriptExpression = processScriptExpressionConstant((HAPManualDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
 						String itemName = null;
 						if(path==null||path.isEmpty()) {
 							itemName = item.getName();
@@ -97,22 +97,24 @@ public class HAPManualUtilityScriptExpressionConstant {
 			
 		}, null);
 
-		HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo, runtTimeEnv);
-
-		HAPServiceData serviceData = runtTimeEnv.getRuntime().executeTaskSync(task);
-		JSONObject serviceDataJson = (JSONObject)serviceData.getData();
-		
 		Map<String, Map<String, Object>> out = new LinkedHashMap<String, Map<String, Object>>();
-		for(Object key : serviceDataJson.keySet()) {
-			String keyStr = (String)key;
-			Pair<HAPPath, String> pair = new HAPPath(keyStr).trimLast();
-			String brickPath = pair.getLeft().isEmpty()?"":pair.getLeft().getPath();
-			Map<String, Object> byBrick = out.get(brickPath);
-			if(byBrick==null) {
-				byBrick = new LinkedHashMap<String, Object>();
-				out.put(brickPath, byBrick);
+		if(!taskInfo.isEmpty()) {
+			HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo, runtTimeEnv);
+
+			HAPServiceData serviceData = runtTimeEnv.getRuntime().executeTaskSync(task);
+			JSONObject serviceDataJson = (JSONObject)serviceData.getData();
+			
+			for(Object key : serviceDataJson.keySet()) {
+				String keyStr = (String)key;
+				Pair<HAPPath, String> pair = new HAPPath(keyStr).trimLast();
+				String brickPath = pair.getLeft().isEmpty()?"":pair.getLeft().getPath();
+				Map<String, Object> byBrick = out.get(brickPath);
+				if(byBrick==null) {
+					byBrick = new LinkedHashMap<String, Object>();
+					out.put(brickPath, byBrick);
+				}
+				byBrick.put(pair.getRight(), serviceDataJson.get((String)key));
 			}
-			byBrick.put(pair.getRight(), out);
 		}
 		
 		return out;
@@ -137,7 +139,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 		return out;
 	}
 	
-	public static HAPManualExpressionScript processScriptExpressionConstant(HAPManualDefinitionScriptExpressionConstant scriptExpressionDef, Map<String, HAPDefinitionConstant> constantsDef, HAPParserDataExpression dataExpressionParser) {
+	public static HAPManualExpressionScript processScriptExpressionConstant(HAPManualDefinitionScriptExpression scriptExpressionDef, Map<String, HAPDefinitionConstant> constantsDef, HAPParserDataExpression dataExpressionParser) {
 		
 		HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(scriptExpressionDef.getScriptExpression(), scriptExpressionDef.getScriptExpressionType(), dataExpressionParser);
 
@@ -146,7 +148,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 		return scriptExpression;
 	}
 
-	public static HAPServiceData executeScriptExpressionConstant(HAPManualDefinitionScriptExpressionConstant scriptExpressionDef, Map<String, Object> constants, HAPRuntimeEnvironmentImpRhino runtimeEnvironment) {
+	public static HAPServiceData executeScriptExpressionConstant(HAPManualDefinitionScriptExpression scriptExpressionDef, Map<String, Object> constants, HAPRuntimeEnvironmentImpRhino runtimeEnvironment) {
 		Map<String, HAPDefinitionConstant> constantsDef = new LinkedHashMap<String, HAPDefinitionConstant>();
 		for(String name : constants.keySet()) {
 			constantsDef.put(name, new HAPDefinitionConstant(name, constants.get(name)));

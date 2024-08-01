@@ -28,7 +28,7 @@ public class HAPContainer<T extends HAPItemWrapper> extends HAPSerializableImp{
 
 	public String addItem(T item) {    
 		if(item.getId()==null) {
-			String id = this.m_idIndex+"";
+			String id = ITEM+this.m_idIndex+"";
 			this.m_idIndex++;
 			item.setName(id);
 			item.setId(id);

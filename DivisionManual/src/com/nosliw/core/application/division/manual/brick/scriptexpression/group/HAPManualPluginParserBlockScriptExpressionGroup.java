@@ -4,10 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPItemInContainerScriptExpression;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -28,8 +30,9 @@ public class HAPManualPluginParserBlockScriptExpressionGroup extends HAPManualDe
 		for(int i=0; i<scriptExpressionArray.length(); i++) {
 			JSONObject elementObj = scriptExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				String expressionStr = elementObj.getString(HAPItemInContainerScriptExpression.SCRIPTEXPRESSION);
-				HAPManualDefinitionScriptExpressionItemInContainer item = new HAPManualDefinitionScriptExpressionItemInContainer(expressionStr);
+				HAPManualDefinitionScriptExpression scriptExpression = new HAPManualDefinitionScriptExpression();
+				scriptExpression.buildObject(elementObj.get(HAPItemInContainerScriptExpression.SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
+				HAPManualDefinitionScriptExpressionItemInContainer item = new HAPManualDefinitionScriptExpressionItemInContainer(scriptExpression);
 				item.buildEntityInfoByJson(elementObj);
 				groupBlock.getValue().addItem(item);
 			}

@@ -299,7 +299,7 @@
 									"criteria": "test.string;1.0.0"
 								}
 							},
-							"output1": {
+							"<%=&(value1)&%>": {
 								"definition":{
 									"criteria": "test.string;1.0.0"
 								}
@@ -367,24 +367,24 @@
 								"name" : "constant", 
 								"status": "disabled1"
 							},
-							"entity": {
+							"brick": {
 								"dataTypeId": "test.integer;1.0.0",
 								"value": 5
 							}
 						}
 					]
+				},
+				"value" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "value1", 
+								"status": "disabled1"
+							},
+							"brick": "output1"
+						}
+					]
 				}
-			},
-			"value" : {
-				"1.0.0" : [
-					{
-						"info": {
-							"name" : "value1", 
-							"status": "disabled1"
-						},
-						"value": "value111"
-					}
-				]
 			}
 		}
 		

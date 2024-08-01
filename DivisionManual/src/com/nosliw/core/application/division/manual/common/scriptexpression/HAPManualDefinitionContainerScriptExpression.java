@@ -4,8 +4,11 @@ import com.nosliw.common.container.HAPContainer;
 
 public class HAPManualDefinitionContainerScriptExpression extends HAPContainer<HAPManualDefinitionScriptExpressionItemInContainer>{
 
-	public String addScriptExpression(String scriptExpression) {
+	public String addScriptExpression(HAPManualDefinitionScriptExpression scriptExpression) {
 		return this.addItem(new HAPManualDefinitionScriptExpressionItemInContainer(scriptExpression));
 	}
 	
+	public String addScriptExpression(String scriptExpression) {
+		return this.addItem(new HAPManualDefinitionScriptExpressionItemInContainer(new HAPManualDefinitionScriptExpression(scriptExpression)));
+	}
 }

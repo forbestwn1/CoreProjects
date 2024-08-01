@@ -180,6 +180,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 				itemWrapper.cloneToEntityInfo(constantDef);
 				constantDef.setValue(valueItem.getValue());
+				out.put(name, constantDef);
 			}
 		}
 
@@ -191,6 +192,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 				itemWrapper.cloneToEntityInfo(constantDef);
 				constantDef.setValue(dataItem.getData());
+				out.put(name, constantDef);
 			}
 		}
 		

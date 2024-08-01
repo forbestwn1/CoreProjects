@@ -17,52 +17,25 @@
 	var calItemsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("allItems", {}), {
 		success : function(requestInfo, results){
 			var parms = {};
-			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__6";
 			parms.responseData = results.getResults();
 			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "success", parms);
 		},
 		error : function(requestInfo, serviceData){
 			var parms = {};
-			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__6";
 			parms.responseData = serviceData;
 			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "error", parms);
 		},
 		exception : function(requestInfo, serviceData){
 			var parms = {};
-			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__0";
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__6";
 			parms.responseData = serviceData;
 			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "exception", parms);
 		}
 	});
 	
-	var taskInfo = {"container":{"item":{"0":{"id":"0",
-"name":"0",
-"displayName":"0",
-"info":{},
-"value":{"scriptExpression":{"variableInfos":{},
-"entityType":"scriptExpression",
-"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
-	return ('output1');
-} 
-
-},
-"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
-	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
-} 
-,
-"dataExpression":{"item":{}
-}
-},
-"constant":{"value1":"output1",
-"constant":{"dataTypeId":"test.integer;1.0.0",
-"valueFormat":"JSON",
-"value":5,
-"info":{}
-}
-}
-}
-}
-}
+	var taskInfo = {"container":{"item":{}
 }
 };
 	var items = taskInfo[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONTAINER][node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];

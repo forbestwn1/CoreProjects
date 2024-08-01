@@ -42,6 +42,8 @@ public class HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup extends HAPSeri
 		return this.m_scriptExpressionInfoContainer.getItems();
 	}
 	
+	public boolean isEmpty() {   return this.m_scriptExpressionInfoContainer.isEmpty();    }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
