@@ -9,32 +9,30 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
-import com.nosliw.core.application.HAPValueContext;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
-import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
+import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualInfoValueStructure;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualInfoValueStructureSorting;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextGroupWithEntity;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextSimple;
@@ -52,30 +50,128 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionGlobal;
-import com.nosliw.data.core.domain.HAPDomainEntityExecutableResourceComplex;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoParentComplex;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorInherit;
-import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityValueStructureDomain {
 
-	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootEntityInfo, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
 		
-		buildValueStructureComplexTree(rootEntityInfo, processContext, manualBrickMan, runtimeEnv);
+		buildValueStructureComplexTree(rootBrickWrapper, processContext, manualBrickMan, runtimeEnv);
 		
-		buildExtensionValueStructure(rootEntityInfo, processContext, manualBrickMan, runtimeEnv);
+		buildExtensionValueStructure(rootBrickWrapper, processContext, manualBrickMan, runtimeEnv);
+		
+		//relative element in value context
+		normalizeRelativeElement(rootBrickWrapper, processContext);
+		resolveRelativeElement(rootBrickWrapper, processContext);
+
+		
+		processInheriatage(rootBrickWrapper, null, processContext);
 		
 //		normalizeValuePort(complexEntity, processContext);
 		
 //		mergeValueStructure(complexEntity, processContext);
 	}
 
+	private static void resolveRelativeElement(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+
+			@Override
+			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
+				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
+				HAPBundle bundle = processContext.getCurrentBundle();
+				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
+
+				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
+				HAPManualValueContext valueContextExe = complexEntityExe.getManualValueContext();
+				
+				for(String valueStructureId : valueContextExe.getValueStructureIds()) {
+				
+					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
+					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
+					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId), null, dependency, errors, bundle, processContext.getRuntimeEnv());
+					
+					
+					for(HAPRootInValueStructure root: valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId).getRoots()) {
+						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
+						HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
+
+							@Override
+							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
+									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
+
+									HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(relativeEle.getReference(), null, processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
+									relativeEle.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
+									
+									return Pair.of(false, null);
+								}
+								return Pair.of(true, null);
+							}
+
+							@Override
+							public void postProcess(HAPInfoElement eleInfo, Object value) {
+							}}, valueContextExe);
+					}
+				}
+				
+				return true;
+			}
+		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), null);
+	}
+	
+	
+	private static void normalizeRelativeElement(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+
+			@Override
+			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
+				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
+				HAPBundle bundle = processContext.getCurrentBundle();
+				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
+
+				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
+				HAPManualValueContext valueContextExe = complexEntityExe.getManualValueContext();
+				
+				for(String valueStructureId : valueContextExe.getValueStructureIds()) {
+					for(HAPRootInValueStructure root: valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId).getRoots()) {
+						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
+						HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
+
+							@Override
+							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
+									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
+									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
+									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
+									relativeEle.getReference().setValuePortId(normalizedValuePortId);
+									return Pair.of(false, null);
+								}
+								return Pair.of(true, null);
+							}
+
+							@Override
+							public void postProcess(HAPInfoElement eleInfo, Object value) {
+							}}, valueContextExe);
+					}
+				}
+				
+				return true;
+			}
+		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), null);
+	}
+	
+	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle) {
+		HAPPath parentPath = HAPUtilityPath.getParentPath(path);
+		while(parentPath!=null) {
+			HAPManualDefinitionBrick parentBrick = HAPManualDefinitionUtilityBrick.getBrick(parentPath, bundle);
+			if(!parentBrick.isValueContextEmpty()) {
+				return parentPath;
+			}
+		}
+		return null;
+	}
 	
 	private static void processInheriatage(HAPWrapperBrickRoot rootBrickWrapper, HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {
 		
@@ -191,84 +287,6 @@ public class HAPManualUtilityValueStructureDomain {
 	}
 
 	
-	
-	private static void processInteritance(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		String inheritMode = valueStructureInheritConfig.getMode();
-		if(!inheritMode.equals(HAPConstantShared.INHERITMODE_NONE)) {
-			List<HAPManualPartInValueContext> newParts = new ArrayList<HAPManualPartInValueContext>();
-			for(HAPManualPartInValueContext part : parentValueContext.getParts()) {
-				HAPManualPartInValueContext newPart = part.inheritValueContextPart(valueStructureDomain, inheritMode, valueStructureInheritConfig.getGroupTypes());
-				if(!newPart.isEmpty()) {
-					newParts.add(newPart);
-				}
-			}
-			valueContext.addPartGroup(newParts, HAPManualUtilityValueContext.createPartInfoFromParent());
-		}
-	}
-
-	
-	//merge value structure between paren and child
-	private static void mergeValueStructure(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownwardImpAttribute() {
-
-			@Override
-			public void processRootEntity(HAPBrick rootEntity, Object data) {}
-
-			@Override
-			public boolean processAttribute(HAPBrick parentBrick, String attributeName, Object data) {
-				HAPManualContextProcessBrick processContext = (HAPManualContextProcessBrick)data;
-				HAPBundle bundle = processContext.getCurrentBundle();
-				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
-
-				HAPAttributeInBrick attribute = HAPUtilityBrick.getAttributeInBrick(parentBrick, attributeName);
-				
-				
-				return false;
-			}
-			
-		}, null, processContext);
-		
-		
-		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
-			@Override
-			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {	}
-
-			@Override
-			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
-				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
-
-				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
-				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
-				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
-
-				HAPExecutableEntityComplex entityExe = parentComplexEntity.getComplexEntityAttributeValue(attribute);
-				HAPIdEntityInDomain entityIdDef = entityExe.getDefinitionEntityId();
-
-				HAPValueContext valueContext = entityExe.getValueContext();
-
-				HAPInfoParentComplex parentInfo = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef);
-				HAPConfigureProcessorValueStructure valueStructureConfig = parentInfo==null?null:parentInfo.getParentRelationConfigure().getValueStructureRelationMode();
-
-				HAPValueContext parentValueContext = parentComplexEntity.getValueContext();
-				
-				//process static
-				
-				//process relative
-				List<HAPManualInfoValueStructureSorting> valueStructureInfos = HAPManualUtilityValueContext.getAllValueStructures(valueContext);
-				for(HAPManualInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-					HAPManualInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
-					HAPManualDefinitionBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
-					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
-					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
-					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
-				}
-
-				//inheritance
-				processInteritance(valueContext, parentValueContext, valueStructureConfig.getInheritProcessorConfigure(), valueStructureDomain);
-				return true;
-			}}, processContext);
-	}
-	
 	//create extension part
 	private static void buildExtensionValueStructure(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
@@ -351,51 +369,10 @@ public class HAPManualUtilityValueStructureDomain {
 	
 	
 	
-	
-	private static void createExtensionPart(HAPValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {
-		List<HAPManualInfoValueStructure> wrappers = new ArrayList<HAPManualInfoValueStructure>();
-		for(String groupType : HAPUtilityValueStructure.getAllCategaries()) {
-			String valueStructureExeId = valueStructureDomain.newValueStructure();
-			HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
-			valueStructureWrapperExe.setGroupType(groupType);
-			wrappers.add(valueStructureWrapperExe);
-		}
-		valueContextExe.addPartSimple(wrappers, HAPManualUtilityValueContext.createPartInfoExtension(), valueStructureDomain);
-	}
-
-	//create extension part
-	private static void buildExtensionValueStructure1(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
-		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
-			@Override
-			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
-				createExtensionPart(((HAPExecutableEntityComplex)complexEntity).getValueContext(), processContext.getCurrentValueStructureDomain());
-			}
-
-			@Override
-			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
-				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
-
-				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
-				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
-				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
-
-				HAPExecutableEntityComplex entityExe = parentComplexEntity.getComplexEntityAttributeValue(attribute);
-				HAPIdEntityInDomain entityIdDef = entityExe.getDefinitionEntityId();
-
-				HAPValueContext valueContext = entityExe.getValueContext();
-
-				HAPInfoParentComplex parentInfo = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef);
-				HAPConfigureProcessorValueStructure valueStructureConfig = parentInfo==null?null:parentInfo.getParentRelationConfigure().getValueStructureRelationMode();
-
-				//extension value structure
-				if(valueStructureConfig==null||!HAPConstantShared.INHERITMODE_RUNTIME.equals(valueStructureConfig.getInheritProcessorConfigure().getMode())) {
-					createExtensionPart(valueContext, valueStructureDomain);
-				}
-				return true;
-			}}, processContext);
-	}
 
 	
+	
+/*	
 	//merge value structure between paren and child
 	private static void mergeValueStructure1(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
@@ -438,20 +415,7 @@ public class HAPManualUtilityValueStructureDomain {
 			}}, processContext);
 	}
 
-	private static void processInteritance1(HAPValueContext valueContext, HAPValueContext parentValueContext, HAPConfigureProcessorInherit valueStructureInheritConfig, HAPDomainValueStructure valueStructureDomain) {
-		String inheritMode = valueStructureInheritConfig.getMode();
-		if(!inheritMode.equals(HAPConstantShared.INHERITMODE_NONE)) {
-			List<HAPManualPartInValueContext> newParts = new ArrayList<HAPManualPartInValueContext>();
-			for(HAPManualPartInValueContext part : parentValueContext.getParts()) {
-				HAPManualPartInValueContext newPart = part.inheritValueContextPart(valueStructureDomain, inheritMode, valueStructureInheritConfig.getGroupTypes());
-				if(!newPart.isEmpty()) {
-					newParts.add(newPart);
-				}
-			}
-			valueContext.addPartGroup(newParts, HAPManualUtilityValueContext.createPartInfoFromParent());
-		}
-	}
-	
+
 	private static void normalizeValuePort(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
 		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
 			@Override
@@ -535,4 +499,64 @@ public class HAPManualUtilityValueStructureDomain {
 				return true;
 			}}, processContext);
 	}
+	
+
+	private static void createExtensionPart(HAPValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {
+		List<HAPManualInfoValueStructure> wrappers = new ArrayList<HAPManualInfoValueStructure>();
+		for(String groupType : HAPUtilityValueStructure.getAllCategaries()) {
+			String valueStructureExeId = valueStructureDomain.newValueStructure();
+			HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
+			valueStructureWrapperExe.setGroupType(groupType);
+			wrappers.add(valueStructureWrapperExe);
+		}
+		valueContextExe.addPartSimple(wrappers, HAPManualUtilityValueContext.createPartInfoExtension(), valueStructureDomain);
+	}
+
+	//create extension part
+	private static void buildExtensionValueStructure1(HAPExecutableEntityComplex complexEntity, HAPContextProcessor processContext) {
+		HAPUtilityEntityExecutableTraverse.traverseExecutableLocalComplexEntityTree(complexEntity, new HAPHandlerDownwardImpAttribute() {
+			@Override
+			public void processRootEntity(HAPExecutableEntity complexEntity, HAPContextProcessor processContext) {
+				createExtensionPart(((HAPExecutableEntityComplex)complexEntity).getValueContext(), processContext.getCurrentValueStructureDomain());
+			}
+
+			@Override
+			public boolean processAttribute(HAPExecutableEntity parentEntity, String attribute, HAPContextProcessor processContext) {
+				HAPExecutableEntityComplex parentComplexEntity = (HAPExecutableEntityComplex)parentEntity;
+
+				HAPDomainEntityDefinitionGlobal definitionGlobalDomain = processContext.getCurrentDefinitionDomain();
+				HAPDomainEntityExecutableResourceComplex exeDomain = processContext.getCurrentExecutableDomain();
+				HAPDomainValueStructure valueStructureDomain = exeDomain.getValueStructureDomain();
+
+				HAPExecutableEntityComplex entityExe = parentComplexEntity.getComplexEntityAttributeValue(attribute);
+				HAPIdEntityInDomain entityIdDef = entityExe.getDefinitionEntityId();
+
+				HAPValueContext valueContext = entityExe.getValueContext();
+
+				HAPInfoParentComplex parentInfo = definitionGlobalDomain.getComplexEntityParentInfo(entityIdDef);
+				HAPConfigureProcessorValueStructure valueStructureConfig = parentInfo==null?null:parentInfo.getParentRelationConfigure().getValueStructureRelationMode();
+
+				//extension value structure
+				if(valueStructureConfig==null||!HAPConstantShared.INHERITMODE_RUNTIME.equals(valueStructureConfig.getInheritProcessorConfigure().getMode())) {
+					createExtensionPart(valueContext, valueStructureDomain);
+				}
+				return true;
+			}}, processContext);
+	}
+
+	
+	private static void processInteritance1(HAPValueContext valueContext, HAPValueContext parentValueContext, HAPConfigureProcessorInherit valueStructureInheritConfig, HAPDomainValueStructure valueStructureDomain) {
+		String inheritMode = valueStructureInheritConfig.getMode();
+		if(!inheritMode.equals(HAPConstantShared.INHERITMODE_NONE)) {
+			List<HAPManualPartInValueContext> newParts = new ArrayList<HAPManualPartInValueContext>();
+			for(HAPManualPartInValueContext part : parentValueContext.getParts()) {
+				HAPManualPartInValueContext newPart = part.inheritValueContextPart(valueStructureDomain, inheritMode, valueStructureInheritConfig.getGroupTypes());
+				if(!newPart.isEmpty()) {
+					newParts.add(newPart);
+				}
+			}
+			valueContext.addPartGroup(newParts, HAPManualUtilityValueContext.createPartInfoFromParent());
+		}
+	}
+*/	
 }

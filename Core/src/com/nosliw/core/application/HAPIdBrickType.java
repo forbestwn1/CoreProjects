@@ -32,11 +32,7 @@ public class HAPIdBrickType extends HAPSerializableImp{
 	}
 	
 	public HAPIdBrickType(String key) {
-		String[] segs = HAPUtilityNamingConversion.parseLevel1(key);
-		this.m_brickType = segs[0];
-		if(segs.length>1) {
-			this.m_version = segs[1];
-		}
+		this.parseKey(key);
 	}
 	
 	public String getBrickType() {    return this.m_brickType;    }
@@ -71,10 +67,23 @@ public class HAPIdBrickType extends HAPSerializableImp{
 
 	@Override
 	protected boolean buildObjectByJson(Object obj){
-		JSONObject jsonObj = (JSONObject)obj;
-		this.m_brickType = (String)jsonObj.opt(BRICKTYPE);
-		this.m_version = jsonObj.optString(VERSION);
+		if(obj instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)obj;
+			this.m_brickType = (String)jsonObj.opt(BRICKTYPE);
+			this.m_version = jsonObj.optString(VERSION);
+		}
+		else if(obj instanceof String) {
+			this.parseKey((String)obj);
+		}
 		return true;  
+	}
+	
+	private void parseKey(String key) {
+		String[] segs = HAPUtilityNamingConversion.parseLevel1(key);
+		this.m_brickType = segs[0];
+		if(segs.length>1) {
+			this.m_version = segs[1];
+		}
 	}
 
 }

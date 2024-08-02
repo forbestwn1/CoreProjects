@@ -1,8 +1,25 @@
 package com.nosliw.common.path;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityPath {
+
+	public static HAPPath getParentPath(HAPPath path){
+		Pair<HAPPath, String> parentInfo = getParentPathInfo(path);
+		if(parentInfo==null) {
+			return null;
+		}
+		return parentInfo.getLeft();
+	}
+
+	public static Pair<HAPPath, String> getParentPathInfo(HAPPath path){
+		if(path==null||path.isEmpty()) {
+			return null;
+		}
+		return path.trimLast();
+	}
 
 	public static String fromAbsoluteToRelativePath(String absolutePath, String basePath) {
 		String[] baseEntityIdPathSegs = new HAPPath(basePath).getPathSegments();

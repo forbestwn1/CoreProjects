@@ -18,6 +18,10 @@ import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 
 public class HAPManualDefinitionUtilityBrick {
 
+	public static HAPManualDefinitionBrick getBrick(HAPPath pathFromRoot, HAPBundle bundle) {
+		return getDescendantBrickDefinition((HAPManualDefinitionBrick)bundle.getExtraData(), pathFromRoot);
+	}
+	
 	public static HAPIdBrickType getBrickType(HAPManualDefinitionWrapperValue attrValueWrapper) {
 		HAPIdBrickType out = null;
 		String attrValueWrapperType = attrValueWrapper.getValueType();

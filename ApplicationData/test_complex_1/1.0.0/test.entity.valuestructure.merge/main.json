@@ -16,6 +16,20 @@
 					}
 				}
 			},			
+			"brickId": "test_complex_script;1.0.0|merge"
+		},
+		{
+			"info": {
+				"name" : "merge_runtime_localresource-test_complex_script",
+				"status": "disabled1"
+			},
+			"parent": {
+				"valuestructure":{
+					"inherit":{
+						"mode" : "runtime"
+					}
+				}
+			},			
 			"resourceId": "test_complex_script|#merge"
 		},
 		{
@@ -51,45 +65,21 @@
 				"name": "valueContext",
 				"status": "disabled1"
 			},
-			"entity": [
+			"brick": [
 				{
 					"groupType" : "public",
 					"valueStructure" : {
-						"parent_public": {
-							"definition":{
-								"criteria": "test.string;1.0.0"
-							},
-							"defaultValue": {
+						"root" : {
+							"parent_public": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
-							}
-						},
-						"parent_matchers_public": {
-							"definition":{
-								"criteria": "test.url;1.0.0"
-							},
-							"defaultValue": {
-								"dataTypeId": "test.url;1.0.0",
-								"value": "default value of parent_matchers_public"
-							}
-						},
-						"parent_public_withchildren": {
-							"definition": {
-								"child" : {
-									"a" : {
-										"child" : {
-											"aa" : {"criteria":"test.string;1.0.0"}
-										}
-									}
-								}
-							},
-							"defaultValue": {
-								"a": {
-									"aa" : {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of a.aa"
-									}
-								}
 							}
 						}
 					}
@@ -97,11 +87,19 @@
 				{
 					"groupType" : "protected",
 					"valueStructure" : {
-						"parent_protected": {
-							"definition":{
-								"criteria": "test.string;1.0.0"
-							},
-							"defaultValue": {
+						"root" : {
+							"parent_protected": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of parent_protected"
+								}
+							}
+						},
+						"initValue": {
+							"parent_protected": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_protected"
 							}
@@ -111,11 +109,19 @@
 				{
 					"groupType" : "private",
 					"valueStructure" : {
-						"parent_private": {
-							"definition":{
-								"criteria": "test.string;1.0.0"
-							},
-							"defaultValue": {
+						"root" : {
+							"parent_private": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of parent_private"
+								}
+							}
+						},
+						"initValue": {
+							"parent_private": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_private"
 							}
@@ -125,11 +131,19 @@
 				{
 					"groupType" : "internal",
 					"valueStructure" : {
-						"parent_public": {
-							"definition":{
-								"criteria": "test.string;1.0.0"
-							},
-							"defaultValue": {
+						"root" : {
+							"parent_internal": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								},
+								"defaultValue": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of parent_internal"
+								}
+							}
+						},
+						"initValue": {
+							"parent_internal": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_internal"
 							}

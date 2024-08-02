@@ -16,6 +16,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
@@ -61,8 +62,15 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public HAPIdBrickType getBrickTypeId() {  return this.m_brickTypeId;	}
 
 	public HAPManualDefinitionBrickValueContext getValueContextBrick() {    return (HAPManualDefinitionBrickValueContext)this.getAttributeValueWithBrick(VALUECONTEXT);       }
-
 	public void setValueContextBrick(HAPManualDefinitionBrickValueContext valueContext) {    this.setAttributeWithValueBrick(VALUECONTEXT, valueContext);      }
+
+	public boolean isValueContextEmpty() {
+		if(this.getValueContextBrick()==null) {
+			return true;
+		}
+		List<HAPWrapperValueStructure> valueStructures = this.getValueContextBrick().getValueStructures();
+		return valueStructures==null||valueStructures.isEmpty();
+	}
 	
 	public void setAttachment(HAPManualDefinitionAttachment attachment) {   this.m_attachment = attachment;	}
 	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
