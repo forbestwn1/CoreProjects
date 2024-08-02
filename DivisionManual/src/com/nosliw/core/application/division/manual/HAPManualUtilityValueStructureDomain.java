@@ -9,7 +9,6 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -22,13 +21,10 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
@@ -91,31 +87,7 @@ public class HAPManualUtilityValueStructureDomain {
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
 					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId), null, dependency, errors, bundle, processContext.getRuntimeEnv());
-					
-					
-					for(HAPRootInValueStructure root: valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureId).getRoots()) {
-						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
-						HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
-
-							@Override
-							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
-									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-
-									HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(relativeEle.getReference(), null, processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
-									relativeEle.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
-									
-									return Pair.of(false, null);
-								}
-								return Pair.of(true, null);
-							}
-
-							@Override
-							public void postProcess(HAPInfoElement eleInfo, Object value) {
-							}}, valueContextExe);
-					}
 				}
-				
 				return true;
 			}
 		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), null);
