@@ -2,11 +2,16 @@ package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInValueContext{
+
+	public static final String CHILDREN = "children";
 
 	private List<HAPManualPartInValueContext> m_children;
 	
@@ -21,7 +26,9 @@ public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInV
 	public List<HAPManualPartInValueContext> getChildren(){   return this.m_children;   }
 	
 	public String addChild(HAPManualPartInValueContext child) {
-		if(child.isEmpty())  return null;
+		if(child.isEmpty()) {
+			return null;
+		}
 		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());
 		this.m_children.add(child);
 		return child.getPartInfo().getName();
@@ -53,8 +60,21 @@ public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInV
 	public boolean isEmpty() {	
 		boolean out = true;
 		for(HAPManualPartInValueContext child : this.m_children) {
-			if(!child.isEmpty())  out = false;
+			if(!child.isEmpty()) {
+				out = false;
+			}
 		}
 		return out;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		List<String> childrenJsonArray = new ArrayList<String>();
+		for(HAPManualPartInValueContext child : this.m_children) {
+			childrenJsonArray.add(child.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(CHILDREN, HAPUtilityJson.buildArrayJson(childrenJsonArray.toArray(new String[0])));
+	}
+	
 }

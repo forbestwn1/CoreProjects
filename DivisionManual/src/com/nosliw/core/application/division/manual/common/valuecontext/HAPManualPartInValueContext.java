@@ -1,9 +1,14 @@
 package com.nosliw.core.application.division.manual.common.valuecontext;
 
+import java.util.Map;
+
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 
 public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
+	
+	public static final String PARTINFO = "partInfo";
 	
 	private HAPManualInfoPartInValueContext m_partInfo;
 	
@@ -31,4 +36,10 @@ public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
 		}  
 		return out;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(PARTINFO, this.m_partInfo.toStringValue(HAPSerializationFormat.JSON));
+	}
+
 }

@@ -179,7 +179,7 @@ public class HAPManualUtilityValueStructureDomain {
 					childBrick.getManualValueContext().addPartGroup(inheritParts, HAPManualUtilityValueContext.createPartInfoFromParent());
 				}
 				
-				return false;
+				return true;
 			}
 			
 		}, null, processContext);

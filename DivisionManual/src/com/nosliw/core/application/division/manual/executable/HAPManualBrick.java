@@ -132,7 +132,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
 		
 		for(HAPManualPartInValueContext part : this.getManualValueContext().getParts()) {
-			HAPManualUtilityValueStructureDomain.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries());
+			out.add(HAPManualUtilityValueStructureDomain.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
 		}
 		return out;
 	}

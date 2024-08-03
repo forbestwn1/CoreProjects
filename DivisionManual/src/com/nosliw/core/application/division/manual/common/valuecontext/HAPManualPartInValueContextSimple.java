@@ -26,7 +26,9 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 
 	public List<HAPManualInfoValueStructure> getValueStructures(){    return this.m_valueStructures;    }
 	public void addValueStructure(HAPManualInfoValueStructure valueStructure) {   
-		if(valueStructure!=null) this.m_valueStructures.add(valueStructure);   
+		if(valueStructure!=null) {
+			this.m_valueStructures.add(valueStructure);
+		}   
 	}
 	
 	@Override
@@ -34,7 +36,9 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 		HAPManualPartInValueContextSimple out = new HAPManualPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
 		this.cloneToPartValueContext(out);
 
-		if(mode.equals(HAPConstantShared.INHERITMODE_NONE))  return out;
+		if(mode.equals(HAPConstantShared.INHERITMODE_NONE)) {
+			return out;
+		}
 
 		for(HAPManualInfoValueStructure valueStructure : this.m_valueStructures) {
 			if(groupTypeCandidates==null||groupTypeCandidates.length==0||Arrays.asList(groupTypeCandidates).contains(valueStructure.getGroupType())) {
@@ -71,6 +75,7 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> valueStructureJsonArray = new ArrayList<String>();
 		for(HAPManualInfoValueStructure valueStructure : this.m_valueStructures) {
 			valueStructureJsonArray.add(valueStructure.toStringValue(HAPSerializationFormat.JSON));

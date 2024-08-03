@@ -118,9 +118,8 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			Object entityRefObj = jsonObj.opt(HAPManualDefinitionWrapperValueReferenceBrick.BRICKREFERENCE);
 			if(entityRefObj!=null) {
 				HAPIdBrick entityId = HAPUtilityBrickId.parseBrickIdAgressive(entityRefObj, brickTypeIfNotProvided, parseContext.getBrickDivision(), entityManager); 
-				out = new HAPManualDefinitionWrapperValueReferenceBrick(entityId);
-				HAPManualDefinitionBrick refEntity = parseLocalValue(entityId, parseContext, manualDivisionEntityMan);
-				((HAPManualDefinitionWrapperValueReferenceBrick)out).setBrick(refEntity);
+				HAPManualDefinitionBrick refBrick = parseLocalValue(entityId, parseContext, manualDivisionEntityMan);
+				out = new HAPManualDefinitionWrapperValueBrick(refBrick);
 			}
 		}
 		
@@ -167,7 +166,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	private static HAPManualDefinitionBrick parseLocalValue(HAPIdBrick entityId, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getLocalEntityLocationInfo(parseContext.getBasePath(), entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
-		return manualDivisionEntityMan.parseBrickDefinition(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat(), parseContext);
+		return manualDivisionEntityMan.parseBrickDefinitionWrapper(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat(), parseContext).getBrick();
 	}
 	
 	private static HAPManualDefinitionBrickRelation parseRelation(JSONObject jsonObj) {

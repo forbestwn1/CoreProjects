@@ -2,9 +2,16 @@ package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class HAPManualInfoPartInValueContext {
+import com.nosliw.common.serialization.HAPSerializableImp;
 
+public class HAPManualInfoPartInValueContext extends HAPSerializableImp{
+
+	public static final String NAME = "name";
+	
+	public static final String PRIORITY = "priority";
+	
 	//type of part : default, from parent, ...
 	private String m_name;
 	
@@ -38,4 +45,13 @@ public class HAPManualInfoPartInValueContext {
 		out.m_priority.addAll(this.m_priority);
 		return out;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(NAME, this.m_name);
+		if(!this.m_priority.isEmpty()) {
+			jsonMap.put(PRIORITY, this.m_priority.get(this.m_priority.size()-1)+"");
+		}
+	}
+
 }
