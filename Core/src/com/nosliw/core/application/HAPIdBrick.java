@@ -42,15 +42,17 @@ public class HAPIdBrick extends HAPSerializableImp{
 	public String getId() {    return this.m_id;    }
 	
 	public String getKey() {
-		return HAPUtilityNamingConversion.cascadeLevel2(new String[] {this.m_brickTypeId.getKey(), this.m_id, this.m_division});
+		return HAPUtilityNamingConversion.cascadeLevel2(new String[] {this.m_id, this.m_brickTypeId.getKey(), this.m_division});
 	}
 	
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){
 		String[] segs = HAPUtilityNamingConversion.parseLevel2(literateValue);
-		this.m_brickTypeId = new HAPIdBrickType();
-		this.m_brickTypeId.buildObject(segs[0], HAPSerializationFormat.LITERATE);
-		this.m_id = segs[1];
+		this.m_id = segs[0];
+		if(segs.length>=2) {
+			this.m_brickTypeId = new HAPIdBrickType();
+			this.m_brickTypeId.buildObject(segs[1], HAPSerializationFormat.LITERATE);
+		}
 		if(segs.length>=3) {
 			this.m_division = segs[2];
 		}

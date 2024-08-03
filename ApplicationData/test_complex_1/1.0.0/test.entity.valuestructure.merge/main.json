@@ -3,62 +3,45 @@
 		"name": "test.entity.valuestructure",
 		"description": "test value structure feature"
 	},
-	"entity": [
+	"brick": [
 		{
 			"info": {
 				"name" : "merge_runtime_localresource-test_complex_script",
 				"status": "disabled1"
 			},
-			"parent": {
-				"valuestructure":{
-					"inherit":{
-						"mode" : "runtime"
-					}
+			"relation": [
+				{
+					"type" : "valueContext",						
+					"mode" : "runtime"
 				}
-			},			
-			"brickId": "test_complex_script;1.0.0|merge"
+			],
+			"brickId": "merge|test_complex_script;1.0.0"
 		},
 		{
 			"info": {
-				"name" : "merge_runtime_localresource-test_complex_script",
-				"status": "disabled1"
-			},
-			"parent": {
-				"valuestructure":{
-					"inherit":{
-						"mode" : "runtime"
-					}
-				}
-			},			
-			"resourceId": "test_complex_script|#merge"
-		},
-		{
-			"info": {
-				"name" : "merge_definition_localresource-test_complex_script", 
+				"name" : "merge_definition_localresource-test_complex_script",
 				"status": "disabled"
 			},
-			"parent": {
-				"valuestructure":{
-					"inherit":{
-						"mode" : "definition"
-					}
+			"relation": [
+				{
+					"type" : "valueContext",						
+					"mode" : "definition"
 				}
-			},
-			"resourceId": "test_complex_script|#merge"
+			],
+			"brickId": "merge|test_complex_script;1.0.0"
 		},
 		{
 			"info": {
 				"name" : "merge_none_localresource-test_complex_script", 
 				"status": "disabled"
 			},
-			"parent": {
-				"valuestructure":{
-					"inherit":{
-						"mode" : "none"
-					}
+			"relation": [
+				{
+					"type" : "valueContext",						
+					"mode" : "none"
 				}
-			},
-			"resourceId": "test_complex_script|#merge"
+			],
+			"brickId": "merge|test_complex_script;1.0.0"
 		},
 		{
 			"info": {

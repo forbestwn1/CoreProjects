@@ -11,7 +11,7 @@ import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBrickId {
 
-	public static HAPIdBrick parseBrickIdAgressive(Object obj, String defaultDivision, HAPManagerApplicationBrick brickMan) {
+	public static HAPIdBrick parseBrickIdAgressive(Object obj, HAPIdBrickType brickTypeIfNotProvided, String defaultDivision, HAPManagerApplicationBrick brickMan) {
 		HAPIdBrick out = new HAPIdBrick();
 		
 		if(obj instanceof String) {
@@ -19,6 +19,10 @@ public class HAPUtilityBrickId {
 		}
 		else if(obj instanceof JSONObject) {
 			out.buildObject(obj, HAPSerializationFormat.JSON);
+		}
+		
+		if(out.getBrickTypeId()==null) {
+			out.setBrickTypeId(brickTypeIfNotProvided);
 		}
 		
 		out.setBrickTypeId(normalizeBrickTypeId(out.getBrickTypeId(), brickMan));

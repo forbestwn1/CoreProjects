@@ -66,6 +66,12 @@ public class HAPIdBrickType extends HAPSerializableImp{
 	}
 
 	@Override
+	protected boolean buildObjectByLiterate(String literateValue){
+		this.parseKey(literateValue);
+		return true;  
+	}
+	
+	@Override
 	protected boolean buildObjectByJson(Object obj){
 		if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;
@@ -85,5 +91,4 @@ public class HAPIdBrickType extends HAPSerializableImp{
 			this.m_version = segs[1];
 		}
 	}
-
 }

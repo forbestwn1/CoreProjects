@@ -41,6 +41,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
@@ -59,8 +60,8 @@ public class HAPManualUtilityValueStructureDomain {
 		buildExtensionValueStructure(rootBrickWrapper, processContext, manualBrickMan, runtimeEnv);
 		
 		//relative element in value context
-		normalizeRelativeElement(rootBrickWrapper, processContext);
-		resolveRelativeElement(rootBrickWrapper, processContext);
+//		normalizeRelativeElement(rootBrickWrapper, processContext);
+//		resolveRelativeElement(rootBrickWrapper, processContext);
 
 		
 		processInheriatage(rootBrickWrapper, null, processContext);
@@ -247,7 +248,7 @@ public class HAPManualUtilityValueStructureDomain {
 		return null;
 	}
 	
-	public static HAPManualDefinitionBrickRelationValueContext resolveValueContextRelation(HAPManualDefinitionAttributeInBrick attrDef, HAPManualDefinitionBrickRelationValueContext defaultRelation) {
+	private static HAPManualDefinitionBrickRelationValueContext resolveValueContextRelation(HAPManualDefinitionAttributeInBrick attrDef, HAPManualDefinitionBrickRelationValueContext defaultRelation) {
 		HAPManualDefinitionBrickRelationValueContext out = new HAPManualDefinitionBrickRelationValueContext();
 		out.mergeHard(defaultRelation);
 		for(HAPManualDefinitionBrickRelation relation : attrDef.getRelations()) {
@@ -255,9 +256,10 @@ public class HAPManualUtilityValueStructureDomain {
 				out.mergeHard((HAPManualDefinitionBrickRelationValueContext)relation);
 			}
 		}
+		
+		out.mergeHard(((HAPManualDefinitionWrapperValueBrick)attrDef.getValueWrapper()).getBrick().getValueContextRelationWithParent());
 		return out;
 	}
-
 	
 	//create extension part
 	private static void buildExtensionValueStructure(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {

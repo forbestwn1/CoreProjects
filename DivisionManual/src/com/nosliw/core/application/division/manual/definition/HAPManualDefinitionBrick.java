@@ -72,6 +72,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		return valueStructures==null||valueStructures.isEmpty();
 	}
 	
+	public HAPManualDefinitionBrickRelationValueContext getValueContextRelationWithParent() {    return null;    }
+	
 	public void setAttachment(HAPManualDefinitionAttachment attachment) {   this.m_attachment = attachment;	}
 	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
 	

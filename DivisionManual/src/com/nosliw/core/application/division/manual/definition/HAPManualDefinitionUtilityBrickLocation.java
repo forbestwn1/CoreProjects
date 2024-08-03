@@ -40,7 +40,7 @@ public class HAPManualDefinitionUtilityBrickLocation {
 			basePath = basePath + entityTypeId.getVersion()+ "/";
 		}
 		
-		String newBasePath = basePath+"/"+entityId.getId();
+		String newBasePath = basePath+entityId.getId()+ "/";
 		File folder = new File(newBasePath);
 		Pair<File, HAPSerializationFormat> result;
 		if(folder.isDirectory()&&folder.exists()) {
@@ -54,7 +54,7 @@ public class HAPManualDefinitionUtilityBrickLocation {
 		}
 		
 		if(result!=null) {
-			return new HAPManualDefinitionInfoBrickLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(basePath));
+			return new HAPManualDefinitionInfoBrickLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
 		}
 		else {
 			HAPErrorUtility.invalid("Cannot find module resource " + entityId);

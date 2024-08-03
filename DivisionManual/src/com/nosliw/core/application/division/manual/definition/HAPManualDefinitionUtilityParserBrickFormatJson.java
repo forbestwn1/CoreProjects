@@ -106,18 +106,18 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	}
 	
 	//parse entity as attribute value (value may be entity or reference(resource, attachment, local))
-	public static HAPManualDefinitionWrapperValue parseWrapperValue(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
+	public static HAPManualDefinitionWrapperValue parseWrapperValue(JSONObject jsonObj, HAPIdBrickType brickTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		HAPManualDefinitionWrapperValue out = null;
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = HAPUtilityBrickId.parseBrickTypeId(entityTypeObj, entityTypeIfNotProvided, entityManager);
+		HAPIdBrickType entityTypeId = HAPUtilityBrickId.parseBrickTypeId(entityTypeObj, brickTypeIfNotProvided, entityManager);
 		
 		//local entity reference
 		if(out==null) {
 			Object entityRefObj = jsonObj.opt(HAPManualDefinitionWrapperValueReferenceBrick.BRICKREFERENCE);
 			if(entityRefObj!=null) {
-				HAPIdBrick entityId = HAPUtilityBrickId.parseBrickIdAgressive(entityRefObj, parseContext.getBrickDivision(), entityManager); 
+				HAPIdBrick entityId = HAPUtilityBrickId.parseBrickIdAgressive(entityRefObj, brickTypeIfNotProvided, parseContext.getBrickDivision(), entityManager); 
 				out = new HAPManualDefinitionWrapperValueReferenceBrick(entityId);
 				HAPManualDefinitionBrick refEntity = parseLocalValue(entityId, parseContext, manualDivisionEntityMan);
 				((HAPManualDefinitionWrapperValueReferenceBrick)out).setBrick(refEntity);
