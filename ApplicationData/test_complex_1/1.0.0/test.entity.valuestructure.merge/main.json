@@ -6,8 +6,28 @@
 	"brick": [
 		{
 			"info": {
-				"name" : "merge_runtime_localresource-test_complex_script",
+				"name" : "relative_localresource-test_complex_script",
 				"status": "disabled1"
+			},
+			"relation": [
+				{
+					"type" : "valueContext",						
+					"mode" : "none"
+				}
+			],
+			"brickId": "relative|test_complex_script;1.0.0"
+		},
+		{
+			"info": {
+				"name" : "merge_default_localresource-test_complex_script",
+				"status": "disabled1"
+			},
+			"brickId": "merge|test_complex_script;1.0.0"
+		},
+		{
+			"info": {
+				"name" : "merge_runtime_localresource-test_complex_script",
+				"status": "disabled"
 			},
 			"relation": [
 				{
@@ -42,6 +62,19 @@
 				}
 			],
 			"brickId": "merge|test_complex_script;1.0.0"
+		},
+		{
+			"info": {
+				"name" : "merge_runtime_globalresource-test_complex_script",
+				"status": "disabled1"
+			},
+			"relation": [
+				{
+					"type" : "valueContext",						
+					"mode" : "runtime"
+				}
+			],
+			"resourceId":"test_complex_script|1.0.0|*merge"
 		},
 		{
 			"info": {

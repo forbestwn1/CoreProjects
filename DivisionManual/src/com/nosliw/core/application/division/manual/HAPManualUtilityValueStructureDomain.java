@@ -60,8 +60,8 @@ public class HAPManualUtilityValueStructureDomain {
 		buildExtensionValueStructure(rootBrickWrapper, processContext, manualBrickMan, runtimeEnv);
 		
 		//relative element in value context
-//		normalizeRelativeElement(rootBrickWrapper, processContext);
-//		resolveRelativeElement(rootBrickWrapper, processContext);
+		normalizeRelativeElement(rootBrickWrapper, processContext);
+		resolveRelativeElement(rootBrickWrapper, processContext);
 
 		
 		processInheriatage(rootBrickWrapper, null, processContext);
@@ -91,7 +91,7 @@ public class HAPManualUtilityValueStructureDomain {
 				}
 				return true;
 			}
-		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), null);
+		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), processContext);
 	}
 	
 	
@@ -132,7 +132,7 @@ public class HAPManualUtilityValueStructureDomain {
 				
 				return true;
 			}
-		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), null);
+		}, processContext.getRuntimeEnv().getBrickManager(), processContext.getManualBrickManager(), processContext);
 	}
 	
 	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle) {

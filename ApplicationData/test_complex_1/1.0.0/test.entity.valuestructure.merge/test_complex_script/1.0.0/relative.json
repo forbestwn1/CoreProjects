@@ -1,0 +1,32 @@
+{
+	"info": {
+		"name" : "merge",
+		"status": "disabled1"
+	},
+	"brick":{
+		"script": "complexscript_test_value",
+		"parm" : {
+			"variable1" : ["parent_public"],
+			"variable" : ["child_public"]
+		},
+		"valueContext" : {
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root" : {
+							"child_public": {
+								"definition":{
+									"link" : {
+										"elementPath": "parent_public"
+									}
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+	
+}
