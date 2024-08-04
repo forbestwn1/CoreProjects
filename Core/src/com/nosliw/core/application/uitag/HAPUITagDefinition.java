@@ -1,7 +1,7 @@
 package com.nosliw.core.application.uitag;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPUITagDefinition{
 
@@ -27,21 +27,12 @@ public class HAPUITagDefinition{
 	
 	private HAPUITagValueContextDefinition m_valueContext;
 	
+	private HAPResourceId m_scriptResourceId;
+	
 	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
 	public void setValueContext(HAPUITagValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }
 	
-	
-	
-	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPResourceId getScriptResourceId() {     return this.m_scriptResourceId;     }
+	public void setScriptResourceId(HAPResourceId scriptResourceId) {     this.m_scriptResourceId = scriptResourceId;         }
 
 }

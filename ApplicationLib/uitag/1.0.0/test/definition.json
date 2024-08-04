@@ -16,11 +16,11 @@
 			"defaultValue" : "attr2DefaultValue"
 		}
 	],
-	"valueContext": {
-		"entity" : [
-			{
-				"groupType" : "public",
-				"valueStructure" : {
+	"valueContext": [
+		{
+			"groupType" : "public",
+			"valueStructure" : {
+				"root": {
 					"internal_data": {
 						"definition": {
 							"link" : {
@@ -33,8 +33,8 @@
 					}
 				}
 			}
-		]
-	}, 
+		}
+	], 
 	"attachment": {
 		"extra": {
 			"status": "disabled1",
@@ -62,7 +62,7 @@
 			]
 		}
 	},
-	"parentRelationConfigure" : {
+	"parentRelations" : {
 	
 	},
 	

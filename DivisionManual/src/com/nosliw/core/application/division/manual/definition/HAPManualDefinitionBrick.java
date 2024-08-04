@@ -87,7 +87,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	@Override
 	public void solidateConstantScript(Map<String, Object> values) {
-		HAPManualDefinitionUtilityValueContext.solidateConstantScript(getValueContextBrick(), values);
+		HAPManualDefinitionUtilityValueContext.solidateConstantScript(this.getValueContextBrick(), values);
 	}
 
 	

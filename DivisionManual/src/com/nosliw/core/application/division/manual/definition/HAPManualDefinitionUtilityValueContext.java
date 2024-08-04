@@ -25,7 +25,7 @@ public class HAPManualDefinitionUtilityValueContext {
 		}
 		for(HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper : valueContext.getManualValueStructures()) {
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
-			for(HAPRootInValueStructure root : valueStructure.getAllRoots()) {
+			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
 				//root name
 				String name = root.getName();
 				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(name)) {
@@ -60,7 +60,7 @@ public class HAPManualDefinitionUtilityValueContext {
 		}
 		for(HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper : valueContext.getManualValueStructures()) {
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
-			for(HAPRootInValueStructure root : valueStructure.getAllRoots()) {
+			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
 				//root name
 				String name = root.getName();
 				String nameId = HAPManualUtilityScriptExpressionConstant.isIdLterate(name);

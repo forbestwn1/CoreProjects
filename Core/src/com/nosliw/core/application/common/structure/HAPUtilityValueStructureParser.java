@@ -34,8 +34,6 @@ public class HAPUtilityValueStructureParser {
 		}
 	}
 	
-
-	
 	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructureDefinition valueStructure) {
 		if(structureJson!=null) {
 			Object rootsObj = structureJson.opt(HAPValueStructureDefinition.ROOT);

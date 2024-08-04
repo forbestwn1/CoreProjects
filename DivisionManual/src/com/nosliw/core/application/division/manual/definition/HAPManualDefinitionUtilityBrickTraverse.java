@@ -4,12 +4,26 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 
 public class HAPManualDefinitionUtilityBrickTraverse {
 
 	
 	public static void traverseBrickTreeLeaves(HAPManualDefinitionWrapperBrick rootBrickWrapper, HAPManualDefinitionProcessorBrickNodeDownwardWithPath processor, Object data) {
 		traverseBrickTreeLeaves(rootBrickWrapper.getBrick(), null, processor, data);
+	}
+
+	public static void traverseBrickTreeLeavesOfBrickComplex(HAPManualDefinitionBrick rootBrick, HAPPath path, HAPManualDefinitionProcessorBrickNodeDownwardWithPath processor, HAPManualManagerBrick manualBrickMan, Object data) {
+		traverseBrickTreeLeavesOfBrick(rootBrick, path, new HAPProcessorBrickWrapper(processor) {
+			@Override
+			protected boolean isValidAttribute(HAPManualDefinitionAttributeInBrick attr) {
+				return HAPManualUtilityBrick.isBrickComplex(((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrickTypeId(), manualBrickMan);
+			}
+
+			@Override
+			protected boolean ifContinueWithInvalideAttribute(HAPManualDefinitionAttributeInBrick attr) {	return true;	}
+		}, data);
 	}
 
 	public static void traverseBrickTreeLeavesOfBrick(HAPManualDefinitionBrick rootBrick, HAPPath path, HAPManualDefinitionProcessorBrickNodeDownwardWithPath processor, Object data) {
@@ -52,6 +66,8 @@ abstract class HAPProcessorBrickWrapper extends HAPManualDefinitionProcessorBric
 	
 	abstract protected boolean isValidAttribute(HAPManualDefinitionAttributeInBrick attr);
 	
+	protected boolean ifContinueWithInvalideAttribute(HAPManualDefinitionAttributeInBrick attr) {	return false;	}
+	
 	@Override
 	public boolean processBrickNode(HAPManualDefinitionBrick rootBrick, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
@@ -62,7 +78,7 @@ abstract class HAPProcessorBrickWrapper extends HAPManualDefinitionProcessorBric
 			if(this.isValidAttribute(attr)) {
 				return this.m_processor.processBrickNode(rootBrick, path, data);
 			}
-			return false;
+			return ifContinueWithInvalideAttribute(attr);
 		}
 	}
 

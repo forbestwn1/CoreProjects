@@ -46,8 +46,10 @@ import com.nosliw.core.application.division.manual.brick.test.complex.script.HAP
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPManualPluginParserBlockTestComplex1;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPManualPluginProcessorBlockComplexImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUIContent;
+import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUICustomerTag;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUIPage;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIContent;
+import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUICustomerTag;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginProcessorBlockUIPage;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualPluginParserBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
@@ -147,9 +149,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		HAPManualUtilityAttachment.processAttachment(brickDef, null, processContext);
 
 		//process constant
-		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef);
-		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv);
-		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults);
+		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, this);
+		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, this);
+		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, this);
 		
 		//build executable tree
 		out.setBrickWrapper(new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this)));
@@ -234,6 +236,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.UICONTENT_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockComplexUIContent(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockUIContent(this.m_runtimeEnv, this)); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.UIPAGE_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockComplexUIPage(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockUIPage(this.m_runtimeEnv, this)); 
+		this.registerBlockPluginInfo(HAPEnumBrickType.UICUSTOMERTAG_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockComplexUICustomerTag(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockUICustomerTag(this.m_runtimeEnv, this)); 
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATA_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockData(this, this.m_runtimeEnv), null); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.VALUE_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockValue(this, this.m_runtimeEnv), null); 

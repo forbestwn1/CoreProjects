@@ -51,7 +51,7 @@ public class HAPManualUtilityScriptExpression {
 			HAPItemInContainerScriptExpression itemExe = new HAPItemInContainerScriptExpression();
 			itemDef.cloneToEntityInfo(itemExe);
 
-			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression(), null, dataExpressionParser);
+			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression().getScriptExpression(), itemDef.getScriptExpression().getScriptExpressionType(), dataExpressionParser);
 			itemExe.setScriptExpression(scriptExpression);
 			groupExe.addItem(itemExe);
 		}

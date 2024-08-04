@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
@@ -49,25 +50,25 @@ public class HAPManualUtilityScriptExpressionConstant {
 	}
 	
 	
-	public static void discoverScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef) {
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrick(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithBrick() {
+	public static void discoverScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef, HAPManualManagerBrick manualBrickMan) {
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithBrick() {
 
 			@Override
 			protected boolean processBrick(HAPManualDefinitionBrick brick, Object data) {
 				if(brick instanceof HAPWithScriptExpressionConstantMaster) {
-					HAPWithScriptExpressionConstantMaster withScriptExpressionConstant = brickDef;
+					HAPWithScriptExpressionConstantMaster withScriptExpressionConstant = brick;
 					withScriptExpressionConstant.discoverConstantScript();
 				}
 				return true;
 			}
 			
-		}, brickDef);
+		}, manualBrickMan, brickDef);
 	}
 
-	public static Map<String, Map<String, Object>> calculateScriptExpressionConstants(HAPManualDefinitionBrick brickDef, HAPRuntimeEnvironment runtTimeEnv) {
+	public static Map<String, Map<String, Object>> calculateScriptExpressionConstants(HAPManualDefinitionBrick brickDef, HAPRuntimeEnvironment runtTimeEnv, HAPManualManagerBrick manualBrickMan) {
 		HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup taskInfo = new HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup();
 		
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrick(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 			@Override
 			public boolean processBrickNode(HAPManualDefinitionBrick rootBrick, HAPPath path, Object data) {
 				HAPManualDefinitionBrick brick = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootBrick, path);
@@ -87,7 +88,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 						if(path==null||path.isEmpty()) {
 							itemName = item.getName();
 						} else {
-							HAPUtilityNamingConversion.cascadePath(path.getPath(), item.getName());
+							itemName = HAPUtilityNamingConversion.cascadePath(path.getPath(), item.getName());
 						}
 						taskInfo.addScriptExpressionInfo(itemName, scriptExpression, constants);
 					}
@@ -95,8 +96,10 @@ public class HAPManualUtilityScriptExpressionConstant {
 				return true;
 			}
 			
-		}, null);
+		}, manualBrickMan, null);
 
+		
+		
 		Map<String, Map<String, Object>> out = new LinkedHashMap<String, Map<String, Object>>();
 		if(!taskInfo.isEmpty()) {
 			HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo, runtTimeEnv);
@@ -121,21 +124,22 @@ public class HAPManualUtilityScriptExpressionConstant {
 	}
 
 	
-	public static HAPManualDefinitionContainerScriptExpression solidateScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef, Map<String, Map<String, Object>> constants) {
+	public static HAPManualDefinitionContainerScriptExpression solidateScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef, Map<String, Map<String, Object>> constants, HAPManualManagerBrick manualBrickMan) {
 		HAPManualDefinitionContainerScriptExpression out = new HAPManualDefinitionContainerScriptExpression();
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrick(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 
 			@Override
 			public boolean processBrickNode(HAPManualDefinitionBrick rootBrick, HAPPath path, Object data) {
-				if(brickDef instanceof HAPWithScriptExpressionConstantMaster) {
-					HAPWithScriptExpressionConstantMaster withScriptExpressionConstant = brickDef;
+				HAPManualDefinitionBrick brick = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootBrick, path);
+				if(brick instanceof HAPWithScriptExpressionConstantMaster) {
+					HAPWithScriptExpressionConstantMaster withScriptExpressionConstant = brick;
 					String brickPath = path==null||path.isEmpty()?"":path.getPath();
 					withScriptExpressionConstant.solidateConstantScript(constants.get(brickPath));
 				}
 				return true;
 			}
 			
-		}, null);
+		}, manualBrickMan, null);
 		return out;
 	}
 	

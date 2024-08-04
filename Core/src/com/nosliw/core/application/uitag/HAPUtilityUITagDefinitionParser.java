@@ -3,10 +3,16 @@ package com.nosliw.core.application.uitag;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.data.core.resource.HAPFactoryResourceId;
+import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityUITagDefinitionParser {
 
@@ -19,7 +25,7 @@ public class HAPUtilityUITagDefinitionParser {
 			
 			HAPUtilityValueStructureParser.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
 			
-			HAPValueStructureDefinition valueStructure = new HAPValueStructureDefinition();
+			HAPValueStructureDefinition valueStructure = new HAPValueStructureDefinitionImp();
 			HAPUtilityValueStructureParser.parseValueStructureJson(valueStructureWrapperObj.getJSONObject(HAPWrapperValueStructure.VALUESTRUCTURE), valueStructure);
 			valueStructureWrapper.setValueStructure(valueStructure);
 			
@@ -35,6 +41,24 @@ public class HAPUtilityUITagDefinitionParser {
 		HAPUITagValueContextDefinition valueContext = new HAPUITagValueContextDefinition();
 		parseValueContext(valueContext, jsonObj.getJSONArray(HAPWithValueContext.VALUECONTEXT));
 		out.setValueContext(valueContext);
+
+		//script
+		Object scriptResourceObj = jsonObj.opt(HAPUITagDefinition.SCRIPT);
+		if(scriptResourceObj==null) {
+		}
+		else {
+			HAPResourceId scriptResourceId = null;
+			if(scriptResourceObj instanceof String) {
+				scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, null, scriptResourceObj);
+			}
+			else if(scriptResourceObj instanceof JSONObject){
+				scriptResourceId = new HAPResourceIdSimple();
+				scriptResourceId.buildObject(scriptResourceObj, HAPSerializationFormat.JSON);
+			}
+			out.setScriptResourceId(scriptResourceId);
+		}
+		
+		
 		
 /*		
 		HAPEntityInfoImp info = new HAPEntityInfoImp();

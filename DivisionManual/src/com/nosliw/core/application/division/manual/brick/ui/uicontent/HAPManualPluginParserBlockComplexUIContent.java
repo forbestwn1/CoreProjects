@@ -3,12 +3,11 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.lang.model.util.Elements;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.select.Elements;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -49,15 +48,39 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		//parse value context
 		parseValueContext(element, brickManualDef, parseContext);
 
+		parseDescendantTags(element, uiContent, parseContext);
+		
 		//parse script expression in content
 		parseChildScriptExpressionInContent(element, uiContent, parseContext);
+
 		
 		HAPUtilityUIResourceParser.addSpanToText(element);
-
 		uiContent.setHtml(element.html());
-
 	}
 	
+	/*
+	 * process all the descendant tags under element
+	 */
+	private void parseDescendantTags(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, HAPManualDefinitionContextParse parserContext){
+		List<Element> removes = new ArrayList<Element>();
+		Elements eles = ele.children();
+		for(Element e : eles){
+			if(HAPUtilityBasic.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
+				//if tag have no ui id, then create ui id for it
+				String id = uiContent.generateId();
+				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);
+			}
+			
+			boolean ifRemove = parseTag(e, uiContent, parserContext);
+			if(ifRemove) {
+				removes.add(e);
+			}
+		}
+		
+		for(Element remove : removes){
+			remove.remove();
+		}
+	}
 	
 	/*
 	 * process a tag element 
@@ -76,23 +99,21 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 //				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
 //				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
 				
-				HAPManualDefinitionBlockComplexUICustomerTag uiContentDef = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionEntityManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
-
-				uiContentDef.setUIId(uiId);
-				uiContentDef.addCustomerTag(uiContentDef);
-//				uiContent.addCustomTag(tagEntityId, uiTag.getParentRelationConfigure(), parserContext);
+				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionEntityManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
+				uiCustomerTag.setUIId(uiId);
+				uiContent.addCustomerTag(uiCustomerTag);
 			}
 			return false;
 		}
 		else{
 			//process regular tag
-			parseChildScriptExpressionInContent(ele, uiContentId, parserContext);
+			parseChildScriptExpressionInContent(ele, uiContent, parserContext);
 			//process key attribute
-			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
+//			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
 			//process elements's attribute that have expression value 
-			parseScriptExpressionInTagAttribute(ele, uiContentId, false, parserContext);
+//			parseScriptExpressionInTagAttribute(ele, uiContentId, false, parserContext);
 			//process all descendant tags under this elment
-			parseDescendantTags(ele, uiContentId, parserContext);
+			parseDescendantTags(ele, uiContent, parserContext);
 			return false;
 		}
 	}
@@ -218,31 +239,6 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 
-	
-	/*
-	 * process all the descendant tags under element
-	 */
-	private void parseDescendantTags(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
-		List<Element> removes = new ArrayList<Element>();
-		Elements eles = ele.children();
-		for(Element e : eles){
-			if(HAPUtilityBasic.isStringEmpty(HAPUtilityUIResourceParser.getUIIdInElement(e))){
-				//if tag have no ui id, then create ui id for it
-				String id = uiContent.generateId();
-				e.attr(HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID, id);
-			}
-			
-			boolean ifRemove = parseTag(e, uiContentId, parserContext);
-			if(ifRemove) {
-				removes.add(e);
-			}
-		}
-		
-		for(Element remove : removes){
-			remove.remove();
-		}
-	}
 	
 	/*
 	 * process element's attribute that have script expression value
