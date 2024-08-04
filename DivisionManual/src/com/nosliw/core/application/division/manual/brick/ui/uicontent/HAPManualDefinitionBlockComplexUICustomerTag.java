@@ -9,7 +9,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefinitionBlockComplxWithUIContent{
 
@@ -21,11 +22,19 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 		this.setAttributeWithValueValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
 	}
 
-	public void setTagId(String tagId) {}
+	public String getTagId() {   return (String)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.UITAGID);     }
+	public void setTagId(String tagId) {   this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.UITAGID, tagId);       }
+
+	public String getBase() {   return (String)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.BASE);     }
+	public void setBase(String base) {   this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.BASE, base);       }
+	
+	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID);     }
+	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID, resourceId);         }
 
 	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
 	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
 
+	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {    this.getParentRelations().add(parentRelation);      }
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueWithValue(PARENTRELATIONS);	}
 	
 	

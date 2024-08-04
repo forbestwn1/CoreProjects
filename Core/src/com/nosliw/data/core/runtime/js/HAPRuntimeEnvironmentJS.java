@@ -129,7 +129,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 		    HAPManagerDynamicResource dynamicResourceManager,
 		    HAPManagerResourceDefinition resourceDefManager,
 			HAPManagerApplicationBrick brickManager,
-			HAPManagerUITag uiTagManager,
+			HAPManagerUITag uiTagManager, 
 		    HAPManagerCronJob cronJobManager,
 		    HAPManagerStory storyManager,
 		    HAPRuntime runtime){

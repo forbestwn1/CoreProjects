@@ -18,6 +18,8 @@ import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
@@ -37,8 +39,6 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;

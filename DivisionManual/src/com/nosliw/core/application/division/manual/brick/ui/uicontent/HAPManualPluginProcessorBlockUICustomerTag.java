@@ -20,7 +20,12 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTagDef = (HAPManualDefinitionBlockComplexUICustomerTag)blockPair.getLeft();
+		HAPManualBlockComplexUICustomerTag uiCustomerTagExe = (HAPManualBlockComplexUICustomerTag)blockPair.getRight();
 		
+		uiCustomerTagExe.setUIId(uiCustomerTagDef.getUIId());
+		uiCustomerTagExe.setBase(uiCustomerTagDef.getBase());
+		uiCustomerTagExe.setScriptResourceId(uiCustomerTagDef.getScriptResourceId());
 		
 	}
 }

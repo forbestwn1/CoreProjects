@@ -9,11 +9,12 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
-public class HAPManagerUITag implements HAPPluginDivision{
+public class HAPManagerUITag{
 
+	public HAPManagerUITag() {}
+	
 	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
 		if(version==null) {
 			version = "1.0.0";

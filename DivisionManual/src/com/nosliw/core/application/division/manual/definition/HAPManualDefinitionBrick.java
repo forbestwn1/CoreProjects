@@ -16,6 +16,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;

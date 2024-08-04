@@ -6,9 +6,14 @@ import com.nosliw.core.application.HAPBrick;
 public interface HAPBlockComplexUICustomerTag  extends HAPBrick, HAPWithUIContent, HAPWithUIId{
 
 	@HAPAttribute
-	public static final String TYPE = "type";
+	public static final String UITAGID = "uiTagId";
 	@HAPAttribute
-	public static final String SCRIPT = "script";
+	public static final String SCRIPTRESOURCEID = "scriptResourceId";
+	@HAPAttribute
+	public static final String BASE = "base";
+
+	
+	
 	@HAPAttribute
 	public static final String VALUESTRUCTURE = "valueStructure";
 	@HAPAttribute

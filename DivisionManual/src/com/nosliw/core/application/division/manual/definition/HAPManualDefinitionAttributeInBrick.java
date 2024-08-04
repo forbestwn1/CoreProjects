@@ -12,6 +12,7 @@ import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.data.core.domain.entity.HAPAttributeEntity;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 

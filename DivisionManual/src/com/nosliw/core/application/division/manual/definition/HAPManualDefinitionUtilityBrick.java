@@ -10,6 +10,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;

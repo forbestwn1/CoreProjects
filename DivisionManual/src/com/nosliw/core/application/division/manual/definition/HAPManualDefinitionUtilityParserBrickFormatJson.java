@@ -14,6 +14,7 @@ import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 import com.nosliw.data.core.domain.HAPContextParser;
@@ -97,7 +98,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			if(relationObjs!=null) {
 				JSONArray relationArray = (JSONArray)relationObjs;
 				for(int i=0; i<relationArray.length(); i++) {
-					out.addRelation(parseRelation(relationArray.getJSONObject(i)));
+					out.addRelation(HAPManualDefinitionBrickRelation.parseRelation(relationArray.getJSONObject(i)));
 				}
 			}
 		}
@@ -167,22 +168,6 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getLocalEntityLocationInfo(parseContext.getBasePath(), entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 		return manualDivisionEntityMan.parseBrickDefinitionWrapper(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat(), parseContext).getBrick();
-	}
-	
-	private static HAPManualDefinitionBrickRelation parseRelation(JSONObject jsonObj) {
-		HAPManualDefinitionBrickRelation out = null;
-		String type = jsonObj.getString(HAPManualDefinitionBrickRelation.TYPE);
-		if(type.equals(HAPConstantShared.MANUAL_RELATION_TYPE_VALUECONTEXT)) {
-			out = new HAPManualDefinitionBrickRelationValueContext();
-		}
-		else if(type.equals(HAPConstantShared.MANUAL_RELATION_TYPE_ATTACHMENT)) {
-			out = new HAPManualDefinitionBrickRelationAttachment();
-		}
-		else if(type.equals(HAPConstantShared.MANUAL_RELATION_TYPE_AUTOPROCESS)) {
-			out = new HAPManualDefinitionBrickRelationAutoProcess();
-		}
-		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
-		return out;
 	}
 	
 	private static HAPManualDefinitionAdapter parseAdapter(JSONObject adapterObj, HAPIdBrickType adatperTypeId, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick textDivisionEntityMan, HAPManagerApplicationBrick entityManager) {

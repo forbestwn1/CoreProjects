@@ -143,6 +143,18 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					loc_expressionContents.push(embededContent);
 				});
 
+			//init custom tag
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
+				success: function(request, attrNode){
+					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
+						var customTag = child.getCoreEntity();
+						loc_customerTagByUIId[customTag.getUIId()] = customTag;
+						customTag.setParentUIEntity(loc_out);
+					});
+				}
+			}));
+
+
 			}));
 
 			return out;

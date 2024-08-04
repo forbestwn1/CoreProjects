@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPWithValueContext;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
@@ -42,8 +43,14 @@ public class HAPUtilityUITagDefinitionParser {
 		parseValueContext(valueContext, jsonObj.getJSONArray(HAPWithValueContext.VALUECONTEXT));
 		out.setValueContext(valueContext);
 
+		//base
+		String baseName = (String)jsonObj.opt(HAPUITagDefinition.BASE);
+		if(baseName!=null) {
+			out.setBase(baseName);
+		}
+		
 		//script
-		Object scriptResourceObj = jsonObj.opt(HAPUITagDefinition.SCRIPT);
+		Object scriptResourceObj = jsonObj.opt(HAPUITagDefinition.SCRIPTRESOURCEID);
 		if(scriptResourceObj==null) {
 		}
 		else {
@@ -58,6 +65,13 @@ public class HAPUtilityUITagDefinitionParser {
 			out.setScriptResourceId(scriptResourceId);
 		}
 		
+		//parent relation
+		JSONArray parentRelationJsonArray = jsonObj.optJSONArray(HAPUITagDefinition.PARENTRELATION);
+		if(parentRelationJsonArray!=null) {
+			for(int i=0; i<parentRelationJsonArray.length(); i++) {
+				out.addParentRelation(HAPManualDefinitionBrickRelation.parseRelation(parentRelationJsonArray.getJSONObject(i)));
+			}
+		}
 		
 		
 /*		

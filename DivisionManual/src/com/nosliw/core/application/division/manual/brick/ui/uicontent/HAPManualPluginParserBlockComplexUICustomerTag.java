@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
@@ -52,6 +53,14 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
 		}
 		uiCustomerTag.setValueContextBrick(valueContextBrick);
+		
+		uiCustomerTag.setBase(uiTagDef.getBase());
+		
+		uiCustomerTag.setScriptResourceId(uiTagDef.getScriptResourceId());
+		
+		for(HAPManualDefinitionBrickRelation parentRelation : uiTagDef.getParentRelations()) {
+			uiCustomerTag.addParentRelation(parentRelation);
+		}
 		
 		//parse customer tag attribute 
 		Attributes eleAttrs = ele.attributes();

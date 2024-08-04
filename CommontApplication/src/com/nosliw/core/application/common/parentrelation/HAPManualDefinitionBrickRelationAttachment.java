@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.definition;
+package com.nosliw.core.application.common.parentrelation;
 
 import java.util.Map;
 

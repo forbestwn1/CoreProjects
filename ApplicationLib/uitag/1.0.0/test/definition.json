@@ -2,6 +2,7 @@
 	"name" : "test",
 	"type" : "data",
 	"description" : "",
+	"base" : "simpleData",
 	"scriptResourceId" : "script|customtag_test",
 	"attribute" : [
 		{
