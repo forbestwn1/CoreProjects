@@ -46,33 +46,6 @@ function(envObj){
 		}, request);
 	};
 
-	var loc_onDataChange = function(data){
-		if(data==undefined){
-			loc_currentData = data;
-		}
-		else{
-			if(loc_currentData==undefined){
-				loc_currentData = data;
-			}
-			else{
-				loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID] = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID]; 
-				loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_VALUE] = data[node_COMMONATRIBUTECONSTANT.DATA_VALUE]; 
-			}
-		}
-		
-		loc_envObj.executeBatchDataOperationRequest([
-			loc_envObj.getDataOperationSet(loc_dataVariable, "", loc_currentData)
-		]);
-		loc_envObj.trigueEvent("valueChanged", loc_currentData);
-	};
-	
-	var loc_trigueEvent = function(eventName, eventData){
-		if(eventName=='dataChanged'){
-			this.onDataChange(eventData);
-		}
-	};
-
-
 	var loc_out = 
 	{
 		
@@ -106,7 +79,8 @@ function(envObj){
 			loc_wrapperView.append(loc_contentView);
 
 			loc_inputView.bind('change', function(){
-				loc_onDataChange(loc_getViewData());
+				loc_envObj.onDataChange(loc_getViewData());
+//				loc_onDataChange(loc_getViewData());
 			});
 			
 //			loc_uiContent.updateView(loc_contentView);					

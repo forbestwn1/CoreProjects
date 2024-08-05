@@ -115,7 +115,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			loc_wrapperView.append(loc_contentView);
 
 			loc_inputView.bind('change', function(){
-				loc_onDataChange(loc_getViewData());
+				loc_envObj.onDataChange(loc_getViewData());
+//				loc_onDataChange(loc_getViewData());
 			});
 			
 //			loc_uiContent.updateView(loc_contentView);					
