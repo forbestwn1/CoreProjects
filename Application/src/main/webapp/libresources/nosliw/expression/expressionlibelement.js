@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createTaskInterface;
 	var node_createValuePortValueFlat;
 	var node_interactiveUtility;
+	var node_buildWithValuePort;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,11 +36,11 @@ var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibr
 	var loc_getExecuteRequest = function(handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 		var dataExpression = loc_expressionDataEleInLibrary[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
-		var withValuePortInterface = {
+		var withValuePortInterface = node_buildWithValuePort({
 			getValuePort : function(valuePortGroup, valuePortName){
 				return loc_interactiveValuePorts.getValuePort(valuePortName);
 			}
-		};
+		});
 		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, withValuePortInterface, undefined, {
 			success : function(request, result){
 				loc_interactiveValuePorts.setResultValue(result);
@@ -91,6 +92,8 @@ nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_cre
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createInteractiveValuePortsExpression", function(){	node_createInteractiveValuePortsExpression = this.getData();	});
+nosliw.registerSetNodeDataEvent("valueport.buildWithValuePort", function(){	node_buildWithValuePort = this.getData();	});
+
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 

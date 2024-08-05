@@ -3,8 +3,6 @@ package com.nosliw.core.application.uitag;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
@@ -13,7 +11,6 @@ import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionI
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityUITagDefinitionParser {
 
@@ -52,16 +49,17 @@ public class HAPUtilityUITagDefinitionParser {
 		//script
 		Object scriptResourceObj = jsonObj.opt(HAPUITagDefinition.SCRIPTRESOURCEID);
 		if(scriptResourceObj==null) {
+			throw new RuntimeException();
 		}
 		else {
-			HAPResourceId scriptResourceId = null;
-			if(scriptResourceObj instanceof String) {
-				scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, null, scriptResourceObj);
-			}
-			else if(scriptResourceObj instanceof JSONObject){
-				scriptResourceId = new HAPResourceIdSimple();
-				scriptResourceId.buildObject(scriptResourceObj, HAPSerializationFormat.JSON);
-			}
+			HAPResourceId scriptResourceId = HAPFactoryResourceId.newInstance(scriptResourceObj);
+//			if(scriptResourceObj instanceof String) {
+//				scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT, null, scriptResourceObj);
+//			}
+//			else if(scriptResourceObj instanceof JSONObject){
+//				scriptResourceId = new HAPResourceIdSimple();
+//				scriptResourceId.buildObject(scriptResourceObj, HAPSerializationFormat.JSON);
+//			}
 			out.setScriptResourceId(scriptResourceId);
 		}
 		

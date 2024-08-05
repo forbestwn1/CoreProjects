@@ -90,8 +90,9 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
 		var baseVar = loc_findBaseVariable(contextVariableInfo);
 		if(baseVar==undefined){
-			nosliw.error(contextVariableInfo);
-			loc_findBaseVariable(contextVariableInfo);
+			return;
+//			nosliw.error(contextVariableInfo);
+//			loc_findBaseVariable(contextVariableInfo);
 		}
 		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
 		return variable;

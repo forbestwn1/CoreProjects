@@ -32,18 +32,14 @@ var node_createUITagPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
-			var tagId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_TAGID);
-			
-			var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_SCRIPTRESOURCEID);
-			
-//			var resourceId = new node_ResourceId(tagId, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAGSCRIPT);
+			var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
 				success : function(requestInfo, resourceData){
-					var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.EXECUTABLESCRIPT_SCRIPT];
+					var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
 					return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure);
 	 			}
 			}));
@@ -101,9 +97,12 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 
 		//---------------------------------variable
 		createVariableByName : function(variableName){
+			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].creatVariableByName(variableName);
+/*			
 			var varsByName = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_VARIABLEBYNAME); 
 			var varId = varsByName[variableName];
 			return loc_valueContext.createVariableById(varId);
+*/			
 		},
 		
 		//---------------------------------operation request
@@ -153,6 +152,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		getParentUIEntity : function(){   return loc_parentUIEntity;     },
 		
 		updateAttributes : function(attributes){    loc_uiTagCore.updateAttributes(attributes);       },
+		
+		creatVariableByName : function(varName){  
+			return loc_valueContext.createVariableByName(varName);    
+		},
 		
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

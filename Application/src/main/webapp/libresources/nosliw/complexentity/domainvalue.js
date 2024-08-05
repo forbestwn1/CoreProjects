@@ -108,6 +108,9 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 	
 	//valueStructures in the context
 	var loc_valueStructures = {};
+	
+	//value structure id in sequence
+	var loc_valueStructureRuntimeIds = [];
 
 
 	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, initValue, buildRootEle){
@@ -181,8 +184,8 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		loc_parentValueContext = parentValueContext;
 		loc_variableMan = variableMan;
 
-		var valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURE];
-		_.each(valueStructureRuntimeIds, function(valueStructureRuntimeId){
+		loc_valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURE];
+		_.each(loc_valueStructureRuntimeIds, function(valueStructureRuntimeId){
 			var valueStructure;
 			if(loc_parentValueContext==undefined || loc_parentValueContext.getValueStructure(valueStructureRuntimeId)==undefined){
 				//value structure not found in parent, then build in current group
@@ -233,6 +236,13 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		createVariableById : function(variableIdEntity){
 			var variableInfo = node_createValuePortElementInfo(variableIdEntity);
 			return this.createVariable(variableInfo.getValueStructureId(), variableInfo.getRootName(), variableInfo.getElementPath());
+		},
+		
+		createVariableByName : function(varName){
+			for(var i in loc_valueStructureRuntimeIds){
+				var variable = this.createVariable(loc_valueStructureRuntimeIds[i], varName);
+				if(variable!=undefined)   return variable;
+			}
 		},
 		
 		//

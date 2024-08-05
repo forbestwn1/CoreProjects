@@ -3,7 +3,7 @@
 	"type" : "data",
 	"description" : "",
 	"base" : "simpleData",
-	"scriptResourceId" : "script|customtag_test",
+	"scriptResourceId" : "script|1.0.0|customtag_test",
 	"attribute" : [
 		{
 			"name" : "data"

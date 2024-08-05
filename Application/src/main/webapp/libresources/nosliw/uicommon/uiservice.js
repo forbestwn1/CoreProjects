@@ -26,7 +26,7 @@ var node_createUIService = function(complexEntityService){
 	var loc_init = function(){
 		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE, "1.0.0", node_createUIPagePlugin());
 		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT, "1.0.0", node_createUIContentPlugin());
-//		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG, node_createUITagPlugin());
+		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, "1.0.0", node_createUITagPlugin());
 	};
 	
 	var loc_out = {

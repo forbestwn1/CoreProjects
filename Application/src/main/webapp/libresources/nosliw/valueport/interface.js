@@ -59,30 +59,50 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 		}
 	};
 	
-	var loc_interfaceEntity = {
-
+	//external value port interface
+	var loc_withValuePortInterfaceExternal = node_buildWithValuePort({
 		getValuePort : function(valuePortGroup, valuePortName){   
 			return loc_getExternalValuePort(valuePortGroup, valuePortName);
 		},
-	};
+	});
 
+	//internal value port interface
+	var loc_withValuePortInterfaceInternal = node_buildWithValuePort({
+		getValuePort : function(valuePortGroup, valuePortName){   
+			return loc_getInternalValuePort(valuePortGroup, valuePortName);
+		},
+		creatVariableByName : function(varName){
+			if(loc_rawEntity.creatVariableByName!=undefined){
+				return loc_rawEntity.creatVariableByName(varName);
+			}
+		}	
+	});
+
+	//interal entity env value port interface
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	if(embededEntityInterface!=null){
-		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_WITHVALUEPORT, {
-			getValuePort : function(valuePortGroup, valuePortName){
-				return loc_getInternalValuePort(valuePortGroup, valuePortName);
-			}
-		});
+		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_WITHVALUEPORT, loc_withValuePortInterfaceInternal);
 	}
 	
-	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_WITHVALUEPORT, loc_interfaceEntity);
+	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_WITHVALUEPORT, loc_withValuePortInterfaceExternal);
 };
 	
 var node_getWithValuePortInterface = function(baseObject){
 	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_WITHVALUEPORT);
 };
 
-//interface for component external env
+var node_buildWithValuePort = function(rawObject){
+	var loc_rawObject = rawObject;
+
+	var interfaceDef	= {
+		getValuePort : function(valuePortGroup, valuePortName){	},
+		creatVariableByName : function(varName){}	
+	};
+	var loc_out = _.extend({}, interfaceDef, loc_rawObject);
+	return loc_out;
+};
+
+//interface for value port
 var node_buildValuePort = function(rawValuePort){
 	var interfaceDef = {
 		
@@ -114,10 +134,10 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){node_createValuePortValueContext = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
-
 //Register Node by Name
 packageObj.createChildNode("makeObjectWithValuePortInterface", node_makeObjectWithValuePortInterface); 
 packageObj.createChildNode("getWithValuePortInterface", node_getWithValuePortInterface); 
 packageObj.createChildNode("buildValuePort", node_buildValuePort); 
+packageObj.createChildNode("buildWithValuePort", node_buildWithValuePort); 
 
 })(packageObj);

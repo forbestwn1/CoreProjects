@@ -142,6 +142,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
 					loc_expressionContents.push(embededContent);
 				});
+			}));
 
 			//init custom tag
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
@@ -154,8 +155,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				}
 			}));
 
-
-			}));
 
 			return out;
 		},

@@ -13,6 +13,7 @@
 		<project>ServiceTest</project>
 		<project>MiniApp</project>
 		<project>DivisionManual</project>
+		<project>CommontApplication</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
