@@ -109,8 +109,25 @@ function(envObj){
 				loc_onDataChange(loc_getViewData());
 			});
 			
-			loc_uiContent.updateView(loc_contentView);					
+//			loc_uiContent.updateView(loc_contentView);					
 			return loc_wrapperView;
+		},
+        
+		updateView : function(data, request){
+			if(data==undefined || data.value==undefined)  loc_inputView.text("");
+			else loc_inputView.text(data.value);
+		},
+
+		updateView1 : function(data, request){
+			var flowDataType = loc_base.getDataFlowType();
+			if(flowDataType!=node_COMMONCONSTANT.DATAFLOW_IN){
+				if(data==undefined || data.value==undefined)  loc_view.val("");
+				else loc_view.val(data.value);
+			}
+			else{
+				if(data==undefined || data.value==undefined)  loc_view.text("");
+				else loc_view.text(data.value);
+			}
 		},
 
 		postInit : function(request){

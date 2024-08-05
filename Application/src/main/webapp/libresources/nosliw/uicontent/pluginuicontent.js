@@ -161,6 +161,15 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		
 		updateView : function(view){
 			loc_viewContainer.appendTo(view);
+
+			//customer tag views
+			_.each(loc_customerTagByUIId, function(uiCustomTag, id){
+				var uiId = loc_getUpdateUIId(uiCustomTag.getUIId());
+				var tagWrapperView = $("<span>BBBBBBBBBBBBBBBBBBBBBB</span>");
+				var tagPostfix = loc_getLocalElementByUIId(uiCustomTag.getUIId()+node_COMMONCONSTANT.UIRESOURCE_CUSTOMTAG_WRAPER_START_POSTFIX);
+				tagWrapperView.insertAfter(tagPostfix);
+				uiCustomTag.updateView(tagWrapperView);
+			});
 		},
 
 		setEnvironmentInterface : function(envInterface){
