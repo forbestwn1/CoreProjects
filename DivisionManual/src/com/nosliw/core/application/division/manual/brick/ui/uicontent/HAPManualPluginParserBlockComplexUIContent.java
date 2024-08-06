@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
@@ -15,6 +17,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPWithValueContext;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
@@ -28,8 +31,6 @@ import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
 import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
-import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionEntityExpressionScriptGroup;
-import com.nosliw.data.core.domain.entity.expression.script.HAPDefinitionExpression;
 import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -111,13 +112,38 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			//process key attribute
 //			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
 			//process elements's attribute that have expression value 
-//			parseScriptExpressionInTagAttribute(ele, uiContentId, false, parserContext);
+			parseScriptExpressionInTagAttribute(ele, uiContent, false, parserContext);
 			//process all descendant tags under this elment
 			parseDescendantTags(ele, uiContent, parserContext);
 			return false;
 		}
 	}
 
+	/*
+	 * process element's attribute that have script expression value
+	 */
+	private void parseScriptExpressionInTagAttribute(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, boolean isCustomerTag, HAPManualDefinitionContextParse parserContext){
+		HAPManualDefinitionContainerScriptExpression scriptEntityGroupEntity = uiContent.getScriptExpressions();
+		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
+		
+		//read attributes
+		Attributes eleAttrs = ele.attributes();
+		for(Attribute eleAttr : eleAttrs){
+			String eleAttrKey = eleAttr.getKey();
+			//replace express attribute value with; create ExpressEle object
+			String attrValue = eleAttr.getValue(); 
+			if(!HAPUtilityScriptExpressionDefinition.isText(attrValue)) {
+				String scriptExpressionId = scriptEntityGroupEntity.addScriptExpression(attrValue);
+				HAPUIEmbededScriptExpressionInAttribute eAttr = new HAPUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
+				if(isCustomerTag) {
+					uiContent.addScriptExpressionInCustomerTagAttribute(eAttr);
+				} else {
+					uiContent.addScriptExpressionInNormalTagAttribute(eAttr);
+				}
+				ele.attr(eleAttrKey, "");
+			}
+		}
+	}
 	
 	/*
 	 * process expression in child text content within element 
@@ -239,36 +265,6 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 
-	
-	/*
-	 * process element's attribute that have script expression value
-	 */
-	private void parseScriptExpressionInTagAttribute(Element ele, HAPIdEntityInDomain uiContentId, boolean isCustomerTag, HAPContextParser parserContext){
-		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
-		HAPDefinitionEntityExpressionScriptGroup scriptEntityGroupEntity = uiContent.getScriptExpressionGroupEntity(parserContext);
-		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-		
-		//read attributes
-		Attributes eleAttrs = ele.attributes();
-		for(Attribute eleAttr : eleAttrs){
-			String eleAttrKey = eleAttr.getKey();
-			//replace express attribute value with; create ExpressEle object
-			String attrValue = eleAttr.getValue(); 
-			if(!HAPUtilityScriptExpressionDefinition.isText(attrValue)) {
-
-				HAPDefinitionExpression expressionDef = HAPUtilityScriptExpressionDefinition.parseDefinitionExpression(attrValue, null, uiContent.getDataExpressionGroupEntity(parserContext), this.getRuntimeEnvironment().getDataExpressionParser());
-				String scriptExpressionId = scriptEntityGroupEntity.addExpression(expressionDef);
-				
-				HAPUIEmbededScriptExpressionInAttribute eAttr = new HAPUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
-				if(isCustomerTag) {
-					uiContent.addScriptExpressionInCustomTagAttribute(eAttr);
-				} else {
-					uiContent.addScriptExpressionInNormalTagAttribute(eAttr);
-				}
-				ele.attr(eleAttrKey, "");
-			}
-		}
-	}
 	
 	/*
 	 * process key attribute within element 

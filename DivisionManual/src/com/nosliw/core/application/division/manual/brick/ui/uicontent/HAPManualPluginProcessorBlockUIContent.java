@@ -29,6 +29,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		uiContentExe.setHtml(uiContentDef.getHtml());
 		
 		uiContentExe.getScriptExpressionInContent().addAll(uiContentDef.getScriptExpressionInContent());
+		uiContentExe.getScriptExpressionInNormalTagAttribute().addAll(uiContentDef.getScriptExpressionInNormalTagAttribute());
 
 		//build script expression container
 		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), processContext.getRuntimeEnv().getDataExpressionParser());

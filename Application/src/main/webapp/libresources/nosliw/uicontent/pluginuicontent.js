@@ -66,7 +66,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 
 	//object store all the functions for js block
-	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT);
+	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPT);
 
 	//all embeded script expression(in content, attribute, ...)
 	var loc_expressionContents = [];
@@ -130,15 +130,23 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_HTML));
 			loc_viewContainer.setContentView(node_uiContentUtility.updateHtmlUIId(html, loc_idNameSpace));
 			
+			//init expression in content
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				//init expression in content
 				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCONTENT), function(embededContentDef, i){
 					var embededContent = node_createEmbededScriptExpressionInContent(embededContentDef);
 					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
-					
 					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
+					loc_expressionContents.push(embededContent);
+				});
+			}));
 
-
+			//init expression in regular tag attribute
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE), function(embededContentDef, i){
+					var embededContent = node_createEmbededScriptExpressionInTagAttribute(embededContentDef);
+					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
+					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
 					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
 					loc_expressionContents.push(embededContent);
 				});

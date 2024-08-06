@@ -20,7 +20,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_inputView;
 	var loc_contentView;
 	
-	var loc_dataVariable;
 	var loc_currentData;
 
 	var loc_uiContent;
@@ -36,52 +35,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		};
 	};
 
-	var loc_updateView1 = function(data, request){
-		if(data==undefined || data.value==undefined)  loc_inputView.val("");
-		else loc_inputView.val(data.value);
-	};
-
-	var loc_updateView = function(request){
-		loc_envObj.executeDataOperationRequestGet(loc_dataVariable, "", {
-			success : function(requestInfo, data){
-				if(data==undefined){
-					loc_currentData = undefined;
-				}
-				else{
-					loc_currentData = data.value;
-				}
-				loc_updateView1(loc_currentData);
-			}
-		}, request);
-	};
-
-	var loc_onDataChange = function(data){
-		if(data==undefined){
-			loc_currentData = data;
-		}
-		else{
-			if(loc_currentData==undefined){
-				loc_currentData = data;
-			}
-			else{
-				loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID] = data[node_COMMONATRIBUTECONSTANT.DATA_DATATYPEID]; 
-				loc_currentData[node_COMMONATRIBUTECONSTANT.DATA_VALUE] = data[node_COMMONATRIBUTECONSTANT.DATA_VALUE]; 
-			}
-		}
-		
-		loc_envObj.executeBatchDataOperationRequest([
-			loc_envObj.getDataOperationSet(loc_dataVariable, "", loc_currentData)
-		]);
-		loc_envObj.trigueEvent("valueChanged", loc_currentData);
-	};
-	
-	var loc_trigueEvent = function(eventName, eventData){
-		if(eventName=='dataChanged'){
-			this.onDataChange(eventData);
-		}
-	};
-
-
 	var loc_out = 
 	{
 		
@@ -91,7 +44,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		
 		preInit : function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
-			loc_dataVariable = loc_envObj.createVariableByName("internal_data");
 			
 			_.each(loc_envObj.getAllAttributeNames(), function(name, i){
 				var attrValue = loc_envObj.getAttributeValue(name);
@@ -116,7 +68,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 			loc_inputView.bind('change', function(){
 				loc_envObj.onDataChange(loc_getViewData());
-//				loc_onDataChange(loc_getViewData());
 			});
 			
 //			loc_uiContent.updateView(loc_contentView);					
@@ -124,8 +75,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		},
         
 		updateView : function(data, request){
-			if(data==undefined || data.value==undefined)  loc_inputView.text("");
-			else loc_inputView.text(data.value);
+			if(data==undefined || data.value==undefined)  loc_inputView.val("");
+			else loc_inputView.val(data.value);
 		},
 
 		updateView1 : function(data, request){
@@ -141,11 +92,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		},
 
 		postInit : function(request){
-			loc_updateView(request);
-			
-			loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, request){
-				loc_updateView(request);
-			}, this);
 		},
 
 		updateAttributes : function(attributes, request){
@@ -156,7 +102,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		},
 
 		destroy : function(request){
-			loc_dataVariable.release();	
 			loc_inputView.remove();
 		},
 	};	

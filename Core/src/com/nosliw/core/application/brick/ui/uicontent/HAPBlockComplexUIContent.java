@@ -17,12 +17,20 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	static final public String SCRIPTEXPRESSIONINCONTENT = "scriptExpressionInContent";
 
 	@HAPAttribute
+	static final public String SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE = "scriptExpressionInNormalTagAttribute";
+	
+	@HAPAttribute
+	static final public String SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE = "scriptExpressionInCustomerTagAttribute";
+
+	@HAPAttribute
 	static final public String SCRIPTEXPRESSIONS = "scriptExpressions";
 
 
 	String getHtml();
 	
 	List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContent();
+	
+	List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttribute();
 	
 	HAPContainerScriptExpression getScriptExpressions();
 
@@ -33,12 +41,6 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	@HAPAttribute
 	static final public String CUSTOMERTAG = "customerTag";  
 	
-	@HAPAttribute
-	static final public String SCRIPTEXPRESSIONINATTRIBUTE = "scriptExpressionInAttribute";
-	
-	@HAPAttribute
-	static final public String SCRIPTEXPRESSIONINTAGATTRIBUTE = "scriptExpressionInTagAttribute";
-
 	@HAPAttribute
 	static final public String NORMALTAGEVENT = "normalTagEvent";  
 	

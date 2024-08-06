@@ -11,7 +11,6 @@ function(envObj){
 	var loc_inputView;
 	var loc_contentView;
 	
-	var loc_dataVariable;
 	var loc_currentData;
 
 	var loc_uiContent;
@@ -27,25 +26,6 @@ function(envObj){
 		};
 	};
 
-	var loc_updateView1 = function(data, request){
-		if(data==undefined || data.value==undefined)  loc_inputView.val("");
-		else loc_inputView.val(data.value);
-	};
-
-	var loc_updateView = function(request){
-		loc_envObj.executeDataOperationRequestGet(loc_dataVariable, "", {
-			success : function(requestInfo, data){
-				if(data==undefined){
-					loc_currentData = undefined;
-				}
-				else{
-					loc_currentData = data.value;
-				}
-				loc_updateView1(loc_currentData);
-			}
-		}, request);
-	};
-
 	var loc_out = 
 	{
 		
@@ -55,7 +35,6 @@ function(envObj){
 		
 		preInit : function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
-			loc_dataVariable = loc_envObj.createVariableByName("internal_data");
 			
 			_.each(loc_envObj.getAllAttributeNames(), function(name, i){
 				var attrValue = loc_envObj.getAttributeValue(name);
@@ -80,7 +59,6 @@ function(envObj){
 
 			loc_inputView.bind('change', function(){
 				loc_envObj.onDataChange(loc_getViewData());
-//				loc_onDataChange(loc_getViewData());
 			});
 			
 //			loc_uiContent.updateView(loc_contentView);					
@@ -88,8 +66,8 @@ function(envObj){
 		},
         
 		updateView : function(data, request){
-			if(data==undefined || data.value==undefined)  loc_inputView.text("");
-			else loc_inputView.text(data.value);
+			if(data==undefined || data.value==undefined)  loc_inputView.val("");
+			else loc_inputView.val(data.value);
 		},
 
 		updateView1 : function(data, request){
@@ -105,11 +83,6 @@ function(envObj){
 		},
 
 		postInit : function(request){
-			loc_updateView(request);
-			
-			loc_dataVariable.registerDataChangeEventListener(undefined, function(event, eventData, request){
-				loc_updateView(request);
-			}, this);
 		},
 
 		updateAttributes : function(attributes, request){
@@ -120,7 +93,6 @@ function(envObj){
 		},
 
 		destroy : function(request){
-			loc_dataVariable.release();	
 			loc_inputView.remove();
 		},
 	};	

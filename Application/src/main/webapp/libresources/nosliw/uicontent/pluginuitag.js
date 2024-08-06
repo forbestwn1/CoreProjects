@@ -98,11 +98,6 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		//---------------------------------variable
 		createVariableByName : function(variableName){
 			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].creatVariableByName(variableName);
-/*			
-			var varsByName = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_VARIABLEBYNAME); 
-			var varId = varsByName[variableName];
-			return loc_valueContext.createVariableById(varId);
-*/			
 		},
 		
 		//---------------------------------operation request

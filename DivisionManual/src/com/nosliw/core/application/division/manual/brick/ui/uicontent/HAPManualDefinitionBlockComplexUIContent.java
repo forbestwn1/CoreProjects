@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
@@ -23,6 +24,8 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 		super(HAPEnumBrickType.UICONTENT_100);
 		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPManualDefinitionContainerScriptExpression());
 		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeWithValueValue(ID_INDEX, new Integer(0));
 	}
 
@@ -51,6 +54,13 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	
 	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContent(){   return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT);       }
 	public void addScriptExpressionInContent(HAPUIEmbededScriptExpressionInContent scriptExpressionInContent) {   this.getScriptExpressionInContent().add(scriptExpressionInContent);    }
+
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE);       }
+	public void addScriptExpressionInNormalTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInNormalTagAttribute().add(scriptExpressionInAttribute);    }
+	
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE);       }
+	public void addScriptExpressionInCustomerTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInCustomerTagAttribute().add(scriptExpressionInAttribute);    }
+	
 	
 	public HAPManualDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
 
