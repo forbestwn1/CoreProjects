@@ -1,5 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 
+import java.util.Map;
+
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
@@ -16,6 +18,7 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
+import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
 import com.nosliw.core.application.uitag.HAPUITagValueContextDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -60,6 +63,11 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		
 		for(HAPManualDefinitionBrickRelation parentRelation : uiTagDef.getParentRelations()) {
 			uiCustomerTag.addParentRelation(parentRelation);
+		}
+		
+		Map<String, HAPUITagAttributeDefinition> attrDefs = uiTagDef.getAttributeDefinition();
+		for(String attrName : attrDefs.keySet()) {
+			uiCustomerTag.addTagAttributeDefinition(attrDefs.get(attrName));
 		}
 		
 		//parse customer tag attribute 

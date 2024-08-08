@@ -34,7 +34,7 @@ var node_createUICustomerTagTest = function(envObj){
 	var loc_updateVariableView = function(varName, request){
 		loc_envObj.executeDataOperationRequestGet(loc_dataVariables[varName], "", {
 			success : function(requestInfo, data){
-				loc_dataUIs.updateView(data);
+				loc_dataUIs[varName].updateView(data.value);
 			}
 		}, request);
 	};
@@ -80,17 +80,17 @@ var node_createUICustomerTagTest = function(envObj){
 			//create variables for each internal 
 			_.each(loc_envObj.getAllAttributeNames(), function(attrName){
 				var dataAttrPrefix = "data_";
-				if(attrName.startWith(dataAttrPrefix)){
+				if(attrName.startsWith(dataAttrPrefix)){
 					var varName = "internal_"+attrName;
 
 					var coreAttrName = attrName.substring(dataAttrPrefix.length);
 					var dataType = coreAttrName;
 					var index = coreAttrName.indexOf("_");
 					if(index!=-1){
-						dataType = coreAttrName.substring(index);
+						dataType = coreAttrName.substring(index+1);
 					}
 
-					node_createTagUITest(varName, dataType, function(varName, data){
+					loc_dataUIs[varName] = node_createTagUITest(varName, dataType, function(varName, data){
 						loc_onDataChange(varName, data);
 					});
 					
@@ -125,7 +125,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("uitag.createTagUITest", function(){node_createTagUITest = this.getData();	});
+nosliw.registerSetNodeDataEvent("uitag.test.createTagUITest", function(){node_createTagUITest = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 

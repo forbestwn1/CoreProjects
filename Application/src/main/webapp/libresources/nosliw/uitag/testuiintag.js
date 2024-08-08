@@ -20,12 +20,12 @@ var node_createTagUITest = function(varName, dataType, dataChangeHandler){
 	var loc_wrapperView;
 	var loc_dataControlView;
 	
-	var loc_dataChangeHandler = datachangeHandler;
+	var loc_dataChangeHandler = dataChangeHandler;
 
 	var loc_createDataControlView = function(){
 		if(loc_dataType=="string"){
 			loc_dataControlView = $('<input type="text" style="display:inline;background:#e6dedc"/>');
-			loc_inputView.bind('change', function(){
+			loc_dataControlView.bind('change', function(){
 				loc_dataChangeHandler(loc_varName, loc_getViewData());
 			});
 		}
@@ -42,31 +42,18 @@ var node_createTagUITest = function(varName, dataType, dataChangeHandler){
 		}
 	};
 
-	var loc_initViews = function(handlers, request){
-		loc_wrapperView = $('<div/>');
-		loc_createDataControlView();
-		loc_contentView = $('<div/>');
-		loc_wrapperView.append(loc_dataControlView);
-		loc_wrapperView.append(loc_contentView);
-
-		loc_stringInputView.bind('change', function(){
-			loc_envObj.onDataChange(loc_getViewData());
-		});
-		
-		return loc_wrapperView;
-	};
-        
 	var loc_updateView = function(data, request){
 		if(loc_dataType=="string"){
-			if(data==undefined || data.value==undefined)  loc_inputView.val("");
-			else loc_inputView.val(data.value);
+			if(data==undefined || data.value==undefined)  loc_dataControlView.val("");
+			else loc_dataControlView.val(data.value);
 		}
 	};
 
 	var loc_out = {
 
 		initViews : function(handlers, request){
-			return loc_initViews(handlers, request);
+			loc_createDataControlView();
+			return loc_dataControlView;
 		},
 
 		updateView : function(data, request){

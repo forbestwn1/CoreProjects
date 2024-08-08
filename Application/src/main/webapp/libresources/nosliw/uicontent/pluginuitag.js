@@ -36,7 +36,7 @@ var node_createUITagPlugin = function(){
 		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
-			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE);
+			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
 			if(uiTagBase=="test"){
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, valueContextId, bundleCore, configure);
@@ -164,12 +164,12 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_ATTRIBUTE);
+			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTE);
 			
-			loc_attributeDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_ATTRIBUTEDEFINITION);
+			loc_attributeDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTEDEFINITION);
 			
 			var uiTagCore;
-			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE); 
+			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE); 
 			if(uiTagBase=="simpleData"){
 				uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_coreEnvObj);
 			}
