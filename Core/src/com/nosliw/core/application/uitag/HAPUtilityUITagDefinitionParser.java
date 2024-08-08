@@ -3,6 +3,7 @@ package com.nosliw.core.application.uitag;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
@@ -71,6 +72,16 @@ public class HAPUtilityUITagDefinitionParser {
 			}
 		}
 		
+		//attribute
+		JSONArray attrArray = jsonObj.optJSONArray(HAPUITagDefinition.ATTRIBUTE);
+		if(attrArray!=null) {
+			for(int i=0; i<attrArray.length(); i++) {
+				HAPUITagAttributeDefinition attr = new HAPUITagAttributeDefinition();
+				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				out.addAttributeDefinition(attr);
+			}
+		}
+
 		
 /*		
 		HAPEntityInfoImp info = new HAPEntityInfoImp();

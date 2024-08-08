@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
+import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
@@ -15,7 +16,11 @@ public class HAPManualBlockComplexUIContent extends HAPManualBrickImp implements
 	public void init() {
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPContainerScriptExpression());
+		
 	}
 	
 	@Override
@@ -31,4 +36,12 @@ public class HAPManualBlockComplexUIContent extends HAPManualBrickImp implements
 	@Override
 	public HAPContainerScriptExpression getScriptExpressions() {   return (HAPContainerScriptExpression)this.getAttributeValueOfValue(SCRIPTEXPRESSIONS);  }
 
+	@Override
+	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
+	public void addNormalTagEvent(HAPElementEvent event) {    this.getNormalTagEvents().add(event);     }
+
+	@Override
+	public List<HAPElementEvent> getCustomerTagEvents() {     return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT);       }
+	public void addCustomerTagEvent(HAPElementEvent event) {   this.getCustomerTagEvents().add(event);      }
+	
 }

@@ -1,7 +1,9 @@
 package com.nosliw.core.application.uitag;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
@@ -17,10 +19,10 @@ public class HAPUITagDefinition{
 	public static final String BASE = "base";
 	@HAPAttribute
 	public static final String PARENTRELATION = "parentRelation";
+	@HAPAttribute
+	public static final String ATTRIBUTE = "attribute";
 
 	
-	@HAPAttribute
-	public static final String ATTRIBUTES = "attributes";
 	@HAPAttribute
 	public static final String TYPE = "type";
 	@HAPAttribute
@@ -37,8 +39,11 @@ public class HAPUITagDefinition{
 	
 	private List<HAPManualDefinitionBrickRelation> m_parentRelations;
 	
+	private Map<String, HAPUITagAttributeDefinition> m_attributes;
+	
 	public HAPUITagDefinition() {
 		this.m_parentRelations = new ArrayList<HAPManualDefinitionBrickRelation>();
+		this.m_attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
 	}
 	
 	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
@@ -53,4 +58,6 @@ public class HAPUITagDefinition{
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){  return this.m_parentRelations;  }
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {     this.m_parentRelations.add(parentRelation);       }
 
+	public void addAttributeDefinition(HAPUITagAttributeDefinition attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
+	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinition() {   return this.m_attributes;    }
 }

@@ -25,6 +25,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_createUIDataOperationRequest;
 	var node_createEventObject;
+	var node_createUICustomerTagTest;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,15 +36,23 @@ var node_createUITagPlugin = function(){
 		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
-			var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
-			
-			out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
-				success : function(requestInfo, resourceData){
-					var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
-					return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure);
-	 			}
-			}));
-			
+			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE);
+			if(uiTagBase=="test"){
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, valueContextId, bundleCore, configure);
+				}));
+			} 
+			else{
+				var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
+				
+				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
+					success : function(requestInfo, resourceData){
+						var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
+						return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure);
+		 			}
+				}));
+			}
+
 			return out;
 		},
 	};
@@ -161,14 +170,14 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			
 			var uiTagCore;
 			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUITAG_BASE); 
-			if(uiTagBase==undefined){
-				uiTagCore = loc_tagDefScriptFun.call(loc_out, loc_coreEnvObj);
-			}
-			else if(uiTagBase=="simpleData"){
+			if(uiTagBase=="simpleData"){
 				uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_coreEnvObj);
 			}
 			else if(uiTagBase=="arrayData"){
 				uiTagCore = node_createUITagOnBaseArray(loc_tagDefScriptFun, loc_coreEnvObj);
+			}
+			else{
+				uiTagCore = loc_tagDefScriptFun.call(loc_out, loc_coreEnvObj);
 			}
 			
 			loc_uiTagCore = node_buildUITagCoreObject(uiTagCore); 
@@ -241,6 +250,7 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.createBatchUIDataOpera
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
+nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function(){node_createUICustomerTagTest = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

@@ -17,6 +17,7 @@ import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPWithValueContext;
+import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
@@ -98,7 +99,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			}
 			else {
 //				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
-//				parseScriptExpressionInTagAttribute(ele, uiContentId, true, parserContext);
+				parseScriptExpressionInTagAttribute(ele, uiContent, true, parserContext);
 				
 				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionEntityManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
 				uiCustomerTag.setUIId(uiId);
@@ -110,12 +111,49 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			//process regular tag
 			parseChildScriptExpressionInContent(ele, uiContent, parserContext);
 			//process key attribute
-//			parseKeyAttributeOnTag(ele, uiContentId, false, parserContext);
+			parseKeyAttributeOnTag(ele, uiContent, false, parserContext);
 			//process elements's attribute that have expression value 
 			parseScriptExpressionInTagAttribute(ele, uiContent, false, parserContext);
 			//process all descendant tags under this elment
 			parseDescendantTags(ele, uiContent, parserContext);
 			return false;
+		}
+	}
+
+	/*
+	 * process key attribute within element 
+	 * key attribute means attribute that have predefined meaning within ui resource
+	 * isCustomertag : whether this element is a customer tag
+	 */
+	private void parseKeyAttributeOnTag(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, boolean isCustomerTag, HAPManualDefinitionContextParse parserContext){
+		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
+		Attributes eleAttrs = ele.attributes();
+		for(Attribute eleAttr : eleAttrs){
+			String eleAttrValue = eleAttr.getValue();
+			String eleAttrName = eleAttr.getKey();
+			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
+			
+			if(keyAttrName!=null){
+				if(keyAttrName.contains(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)){
+					//process event key attribute
+					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstantShared.SEPERATOR_ELEMENT);
+					while(events.hasNext()){
+						String event = events.next();
+						if(isCustomerTag){
+							//this attribute belong to customer tag
+							HAPElementEvent tagEvent = new HAPElementEvent(uiId, event);
+							uiContent.addCustomerTagEvent(tagEvent);
+						}
+						else{
+							//this attribute blong to regular tag
+							HAPElementEvent eleEvent = new HAPElementEvent(uiId, event);
+							uiContent.addNormalTagEvent(eleEvent);
+						}
+					}
+					//remove this attribute from element
+					ele.removeAttr(eleAttrName);
+				}
+			}
 		}
 	}
 
@@ -266,46 +304,6 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	}
 
 	
-	/*
-	 * process key attribute within element 
-	 * key attribute means attribute that have predefined meaning within ui resource
-	 * isCustomertag : whether this element is a customer tag
-	 */
-	private void parseKeyAttributeOnTag(Element ele, HAPIdEntityInDomain uiContentId, boolean isCustomerTag, HAPContextParser parserContext){
-		
-		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
-		
-		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
-		Attributes eleAttrs = ele.attributes();
-		for(Attribute eleAttr : eleAttrs){
-			String eleAttrValue = eleAttr.getValue();
-			String eleAttrName = eleAttr.getKey();
-			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
-			
-			if(keyAttrName!=null){
-				if(keyAttrName.contains(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)){
-					//process event key attribute
-					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstantShared.SEPERATOR_ELEMENT);
-					while(events.hasNext()){
-						String event = events.next();
-						if(isCustomerTag){
-							//this attribute belong to customer tag
-							HAPElementEvent tagEvent = new HAPElementEvent(uiId, event);
-							uiContent.addCustomTagEvent(tagEvent);
-						}
-						else{
-							//this attribute blong to regular tag
-							HAPElementEvent eleEvent = new HAPElementEvent(uiId, event);
-							uiContent.addNormalTagEvent(eleEvent);
-						}
-					}
-					//remove this attribute from element
-					ele.removeAttr(eleAttrName);
-				}
-			}
-		}
-	}
-
 	private void parseService(Element ele, HAPIdEntityInDomain uiContentId, HAPContextParser parserContext) {
 		HAPDefinitionEntityComplexUIContent uiContent = this.getUIContentEntityById(uiContentId, parserContext);
 

@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
+import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
@@ -26,6 +27,8 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeWithValueValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		this.setAttributeWithValueValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
 		this.setAttributeWithValueValue(ID_INDEX, new Integer(0));
 	}
 
@@ -61,10 +64,14 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE);       }
 	public void addScriptExpressionInCustomerTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInCustomerTagAttribute().add(scriptExpressionInAttribute);    }
 	
-	
 	public HAPManualDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
 
-	
+	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
+	public void addNormalTagEvent(HAPElementEvent event) {    this.getNormalTagEvents().add(event);     }
+
+	public List<HAPElementEvent> getCustomerTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.CUSTOMERTAG);       }
+	public void addCustomerTagEvent(HAPElementEvent event) {    this.getCustomerTagEvents().add(event);     }
+
 	@Override
 	public String generateId() {
 		int idIndex = (Integer)this.getAttributeValueWithValue(ID_INDEX);

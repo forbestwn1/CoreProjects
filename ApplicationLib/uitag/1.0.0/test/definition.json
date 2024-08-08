@@ -2,15 +2,15 @@
 	"name" : "test",
 	"type" : "data",
 	"description" : "",
-	"base" : "simpleData",
+	"base" : "test",
 	"scriptResourceId" : "script|1.0.0|customtag_test",
 	"attribute" : [
 		{
 			"name" : "data"
 		},
 		{
-			"name" : "attr1",
-			"defaultValue" : "attr1DefaultValue"
+			"name" : "data_string",
+			"defaultValue1" : "attr1DefaultValue"
 		},
 		{
 			"name" : "attr2",
@@ -22,10 +22,10 @@
 			"groupType" : "public",
 			"valueStructure" : {
 				"root": {
-					"internal_data": {
+					"internal_data_string": {
 						"definition": {
 							"link" : {
-								"elementPath": "<%=&(nosliwattribute_data)&%>"
+								"elementPath": "<%=&(nosliwattribute_data_string)&%>"
 							},
 							"definition" : {
 								"criteria" : "test.string;1.0.0"

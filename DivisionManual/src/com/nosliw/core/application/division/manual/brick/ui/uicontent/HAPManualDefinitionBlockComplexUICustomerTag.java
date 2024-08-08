@@ -10,6 +10,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefinitionBlockComplxWithUIContent{
@@ -20,6 +21,7 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 		super(HAPEnumBrickType.UICUSTOMERTAG_100);
 		this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeWithValueValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
+		this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
 	}
 
 	public String getTagId() {   return (String)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.UITAGID);     }
@@ -34,9 +36,11 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
 	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
 
+	public void addTagAttributeDefinition(HAPUITagAttributeDefinition attrDef) {     this.getTagAttributeDefinitions().put(attrDef.getName(), attrDef);        }
+	public Map<String, HAPUITagAttributeDefinition> getTagAttributeDefinitions(){   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
+
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {    this.getParentRelations().add(parentRelation);      }
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueWithValue(PARENTRELATIONS);	}
-	
 	
 	@Override
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){

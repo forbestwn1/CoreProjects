@@ -23,6 +23,12 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	static final public String SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE = "scriptExpressionInCustomerTagAttribute";
 
 	@HAPAttribute
+	static final public String NORMALTAGEVENT = "normalTagEvent";  
+	
+	@HAPAttribute
+	static final public String CUSTOMTAGEVENT = "customTagEvent";  
+
+	@HAPAttribute
 	static final public String SCRIPTEXPRESSIONS = "scriptExpressions";
 
 
@@ -34,18 +40,14 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	
 	HAPContainerScriptExpression getScriptExpressions();
 
-
+	List<HAPElementEvent> getNormalTagEvents();
 	
+	List<HAPElementEvent> getCustomerTagEvents();
 	
 	
 	@HAPAttribute
 	static final public String CUSTOMERTAG = "customerTag";  
 	
-	@HAPAttribute
-	static final public String NORMALTAGEVENT = "normalTagEvent";  
-	
-	@HAPAttribute
-	static final public String CUSTOMTAGEVENT = "customTagEvent";  
 	
 	@HAPAttribute
 	static final public String SCRIPT = "scripttaskgroup";  

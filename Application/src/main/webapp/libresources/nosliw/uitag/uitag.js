@@ -49,7 +49,7 @@ var packageObj = library;
  * 		tagConfigure : configure infor for generate tag, for instance, mode, name mapping, event mapping, variable matcher
  * 		tagBody : body in tag, it maybe uiresoruce or story node
  */
-var node_createUITag = function(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody){
+var node_createUITag1 = function(uiTagResourceObj, id, attributeValues, parentContext, tagConfigure, tagBody){
 	
 	var loc_uiTagResourceObj = uiTagResourceObj;   //tag definition from resource
 	var loc_tagName = uiTagResourceObj.name;    //tag name
@@ -478,6 +478,6 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("iovalue.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUITag", node_createUITag); 
+packageObj.createChildNode("createUITag1", node_createUITag1); 
 
 })(packageObj);
