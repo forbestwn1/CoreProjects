@@ -23,12 +23,14 @@ var node_createTagUITest = function(varName, dataType, dataChangeHandler){
 	var loc_dataChangeHandler = dataChangeHandler;
 
 	var loc_createDataControlView = function(){
+		loc_wrapperView = $("<div/>");
 		if(loc_dataType=="string"){
 			loc_dataControlView = $('<input type="text" style="display:inline;background:#e6dedc"/>');
 			loc_dataControlView.bind('change', function(){
 				loc_dataChangeHandler(loc_varName, loc_getViewData());
 			});
 		}
+		loc_wrapperView.append(loc_dataControlView);
 	};
 	
 	var loc_getViewData = function(){
@@ -37,7 +39,7 @@ var node_createTagUITest = function(varName, dataType, dataChangeHandler){
 			if(value==undefined || value=="")  return;
 			return {
 				dataTypeId: "test.string;1.0.0",
-				value: loc_dataControlView.val()
+				value: value
 			};
 		}
 	};
@@ -53,7 +55,7 @@ var node_createTagUITest = function(varName, dataType, dataChangeHandler){
 
 		initViews : function(handlers, request){
 			loc_createDataControlView();
-			return loc_dataControlView;
+			return loc_wrapperView;
 		},
 
 		updateView : function(data, request){

@@ -6,8 +6,10 @@ import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
@@ -37,6 +39,9 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		String customTagName = HAPUtilityUIResourceParser.isCustomTag(ele);
 		uiCustomerTag.setTagId(customTagName);
 
+		//content
+		this.parseBrickAttribute(uiCustomerTag, ele, HAPWithUIContent.UICONTENT, HAPEnumBrickType.UICONTENT_100, null, HAPSerializationFormat.HTML, parseContext);
+		
 		HAPUITagDefinition uiTagDef = this.getRuntimeEnvironment().getUITagManager().getUITagDefinition(customTagName, null);
 		HAPUITagValueContextDefinition uiTagDefValueContext = uiTagDef.getValueContext();
 
@@ -57,14 +62,18 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		}
 		uiCustomerTag.setValueContextBrick(valueContextBrick);
 		
+		//base
 		uiCustomerTag.setBase(uiTagDef.getBase());
 		
+		//script
 		uiCustomerTag.setScriptResourceId(uiTagDef.getScriptResourceId());
 		
+		//parent relation
 		for(HAPManualDefinitionBrickRelation parentRelation : uiTagDef.getParentRelations()) {
 			uiCustomerTag.addParentRelation(parentRelation);
 		}
 		
+		//attribute definition
 		Map<String, HAPUITagAttributeDefinition> attrDefs = uiTagDef.getAttributeDefinition();
 		for(String attrName : attrDefs.keySet()) {
 			uiCustomerTag.addTagAttributeDefinition(attrDefs.get(attrName));

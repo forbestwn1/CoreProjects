@@ -11,6 +11,7 @@ var packageObj = library.getChildPackage("test");
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_createTagUITest;
+	var node_requestServiceProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUICustomerTagTest = function(envObj){
@@ -21,7 +22,7 @@ var node_createUICustomerTagTest = function(envObj){
 	var loc_dataCurrent = {};
 	
 	var loc_wrapperView;
-	var loc_stringInputView;
+	var loc_buttonView;
 	var loc_contentView;
 	
 
@@ -66,11 +67,31 @@ var node_createUICustomerTagTest = function(envObj){
 		loc_wrapperView = $('<div/>');
 		_.each(loc_dataUIs, function(dataUI, varName){
 			loc_wrapperView.append($('<br/>'));
+			loc_wrapperView.append($("<br>"+varName+"</br>"));
 			loc_wrapperView.append(dataUI.initViews());
 		});
+		
+		loc_buttonView = $('<button>Click me</button>');
+		loc_buttonView.click(loc_showContent);
+		loc_wrapperView.append(loc_buttonView);
+		
+		loc_contentView = $('<br><br><div/>');
+		loc_wrapperView.append(loc_contentView);
+		
 		return loc_wrapperView;
 	};
 	
+	var loc_showContent = function(){
+		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}));
+		out.addRequest(loc_envObj.getCreateDefaultUIContentRequest(undefined, {
+			success: function(request, uiConentNode){
+				
+//				loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
+			}
+		}));
+		node_requestServiceProcessor.processRequest(out);
+	};
+
 	var loc_out = {
 		
 		created : function(){
@@ -126,6 +147,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createTagUITest", function(){node_createTagUITest = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 

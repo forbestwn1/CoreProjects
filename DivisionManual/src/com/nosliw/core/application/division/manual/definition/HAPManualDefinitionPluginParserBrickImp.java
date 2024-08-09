@@ -115,23 +115,36 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	protected HAPManualManagerBrick getManualDivisionEntityManager() {    return this.m_manualBrickMan;     }
 	
 	//*************************************   Json format parse helper
-	protected void parseBrickAttributeJson(HAPManualDefinitionBrick parentEntity, JSONObject jsonObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
+	protected void parseBrickAttributeJson(HAPManualDefinitionBrick parentBrick, JSONObject jsonObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
 		JSONObject attrEntityObj = jsonObj.optJSONObject(attributeName);
 		if(attrEntityObj!=null) {
-			parseBrickAttributeSelfJson(parentEntity, attrEntityObj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);
+			parseBrickAttributeSelfJson(parentBrick, attrEntityObj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);
 		}
 
 	}
 	
-	protected void parseBrickAttributeSelfJson(HAPManualDefinitionBrick parentEntity, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
+	protected void parseBrickAttributeSelfJson(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
 			HAPManualDefinitionAttributeInBrick attribute = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getBrickManager());
-			parentEntity.setAttribute(attribute);
+			parentBrick.setAttribute(attribute);
 		}
 	}
 
 	
-	
+	protected void parseBrickAttribute(HAPManualDefinitionBrick parentBrick, Object obj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parserContext) {
+		switch(format) {
+		case JSON:
+			parseBrickAttributeJson(parentBrick, (JSONObject)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);			
+			break;
+		case HTML:
+			HAPManualDefinitionBrick brickDef = this.getManualDivisionEntityManager().parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext);
+			parentBrick.setAttributeWithValueBrick(attributeName, brickDef);
+			break;
+		case JAVASCRIPT:
+			break;
+		default:
+		}
+	}
 	
 	
 
