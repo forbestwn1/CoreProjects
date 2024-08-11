@@ -75,7 +75,8 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	@Override
 	public String generateId() {
 		int idIndex = (Integer)this.getAttributeValueWithValue(ID_INDEX);
-		this.setAttributeWithValueValue(ID_INDEX, new Integer(idIndex++));
+		idIndex++;
+		this.setAttributeWithValueValue(ID_INDEX, new Integer(idIndex));
 		return idIndex+"";
 	}
 	

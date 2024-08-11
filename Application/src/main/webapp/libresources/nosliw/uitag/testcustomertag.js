@@ -12,6 +12,7 @@ var packageObj = library.getChildPackage("test");
 	var node_ServiceInfo;
 	var node_createTagUITest;
 	var node_requestServiceProcessor;
+	var node_complexEntityUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUICustomerTagTest = function(envObj){
@@ -85,7 +86,7 @@ var node_createUICustomerTagTest = function(envObj){
 		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}));
 		out.addRequest(loc_envObj.getCreateDefaultUIContentRequest(undefined, {
 			success: function(request, uiConentNode){
-				
+				return node_complexEntityUtility.getInitBrickRequest(uiConentNode.getChildValue().getCoreEntity(), loc_contentView);
 //				loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
 			}
 		}));
@@ -148,6 +149,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createTagUITest", function(){node_createTagUITest = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 

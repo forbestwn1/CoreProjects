@@ -37,6 +37,41 @@ var node_complexEntityUtility = function(){
 
 	var loc_out = {
 		
+		getInitBrickRequest : function(brickCore, view, envInterface){
+			return node_getComponentInterface(brickCore).getPreInitRequest({
+				success : function(request){
+					//try pass envInterface to main entity
+					if(envInterface!=undefined){
+						var embededInterface = node_getEmbededEntityInterface(brickCore);
+						_.each(envInterface, function(interfacee, name){
+							embededInterface.setEnvironmentInterface(name, interfacee);
+						});
+					}
+
+					//update backup state object
+//					var backupStateObj = runtimeContext==undefined?undefined:runtimeContext.backupState;
+//					if(backupStateObj!=undefined)  node_getComponentInterface(brickCore).updateBackupStateObject(backupStateObj);
+
+					//update lifecycle entity
+//					var lifecycleEntity = runtimeContext==undefined?undefined:runtimeContext.lifecycleEntity;
+//					if(lifecycleEntity==undefined)  lifecycleEntity = node_createLifeCycleRuntimeContext("application");
+//					node_getComponentInterface(application).updateLifecycleEntityObject(lifecycleEntity);
+
+					//update view
+					if(view){
+						node_getComponentInterface(brickCore).updateView(view);
+					}
+
+					return node_getComponentInterface(brickCore).getPostInitRequest({
+						success : function(request){
+							return brickCore;
+						}
+					});
+				}
+			});
+			
+		},
+		
 		traverseNode : function(entity, processorInfo){
 			var entityCore = node_getObjectType(entity)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?entity.getCorenEntity():entity;
 			processorInfo.processRoot(entityCore);
