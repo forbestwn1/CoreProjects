@@ -33,30 +33,22 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 
-		var entityType = node_getObjectType(data1);
-		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
-			loc_out.prv_variable = data1;
-		}
-		else{
-			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
-			loc_out.prv_variable = nosliw.runtime.getVariableManager().createVariable(data1, data2, adapterInfo, requestInfo);
-		}
-		
-		//use variable when created
-		loc_out.prv_variable.use();
-		
 		//event source for event that communicate operation information with outsiders
 		loc_out.prv_dataOperationEventObject = node_createEventObject();
 		loc_out.prv_dataChangeEventObject = node_createEventObject();
 
-		//receive event from variable and trigue new same event
-		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
-		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
-			if(loc_out.prv_dataOperationEventObject!=undefined) loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);
-		}, loc_out);
-		loc_out.prv_variable.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){
-			if(loc_out.prv_dataChangeEventObject!=undefined) loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);
-		}, loc_out);
+		var entityType = node_getObjectType(data1);
+		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_EMPTY){
+			return;
+		}
+		
+		if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE && node_basicUtility.isStringEmpty(data2) && adapterInfo==undefined){
+			loc_setVariable(data1);
+		}
+		else{
+			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
+			loc_setVariable(nosliw.runtime.getVariableManager().createVariable(data1, data2, adapterInfo, requestInfo));
+		}
 	};	
 
 	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_DESTROY] = function(){
@@ -70,9 +62,28 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		delete loc_out.prv_variable;
 	};	
 	
+	var loc_setVariable = function(variable){
+		loc_out.prv_variable = variable;
+		
+		//use variable when created
+		loc_out.prv_variable.use();
+		
+		//receive event from variable and trigue new same event
+		//the purpose of re-trigue the new event is for release the resources after this variable wrapper is released
+		loc_out.prv_variable.registerDataOperationEventListener(loc_out.prv_dataOperationEventObject, function(event, eventData, request){
+			if(loc_out.prv_dataOperationEventObject!=undefined) loc_out.prv_dataOperationEventObject.triggerEvent(event, eventData, request);
+		}, loc_out);
+		loc_out.prv_variable.registerDataChangeEventListener(loc_out.prv_dataChangeEventObject, function(event, eventData, request){
+			if(loc_out.prv_dataChangeEventObject!=undefined) loc_out.prv_dataChangeEventObject.triggerEvent(event, eventData, request);
+		}, loc_out);
+	};
+	
 	var loc_out = {
 		
 		prv_getVariable : function(){	return this.prv_variable;	},
+
+		setVariable : function(variable){	loc_setVariable(variable);  	},
+		getVariable : function(){	return this.prv_variable;	},
 		
 		createChildVariable : function(path, adapterInfo, requestInfo){	
 			return node_createVariableWrapper(this, path, adapterInfo, requestInfo);

@@ -179,7 +179,8 @@ var node_CONSTANT=
 	  //type for different object
 	  "TYPEDOBJECT_TYPE_EVENTOBJECT" : 						200, 
 	  "TYPEDOBJECT_TYPE_EVENTINFO" : 						201, 
-	  "TYPEDOBJECT_TYPE_VALUE" : 							0, 
+	  "TYPEDOBJECT_TYPE_EMPTY" : 							0, 
+	  "TYPEDOBJECT_TYPE_VALUE" : 							3, 
 	  "TYPEDOBJECT_TYPE_DATA" : 							5, 
 	  "TYPEDOBJECT_TYPE_WRAPPER" :							10, 
 	  "TYPEDOBJECT_TYPE_VARIABLE" : 						15, 

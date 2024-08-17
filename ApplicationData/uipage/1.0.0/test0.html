@@ -4,21 +4,22 @@
 Hellooooooo!!!!!
 
 		<br>
- 		Content:<%=?(child_public)?.value + '   7777 ' %>  
+ 		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
+		<br>
+ 		UrlContent:<%=?(public_url)?.value + '   7777 ' %>  
 
 		<br>
-EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(child_public)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
+EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
-<!-- 		<nosliw-test data_string="child_public">
+ 		<nosliw-test data_string="public_url" data_array="public_array">
 			<br>
-			Hello world!!!!!
+			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%><%=?(element)?.value%>
 			<br>
 		</nosliw-test>
- -->
  
 </body>
- 
+
 	<valuecontext>
 	{
 		"brick": [
@@ -26,16 +27,43 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(child_public)?.value=='red'?'re
 				"groupType" : "public",
 				"valueStructure" : {
 					"root" : {
-						"child_public": {
+						"public_string": {
 							"definition":{
 								"criteria": "test.string;1.0.0"
+							}
+						},
+						"public_url": {
+							"definition":{
+								"criteria": "test.url;1.0.0"
+							}
+						},
+						"public_array": {
+							"definition":{
+								"criteria": "test.array;1.0.0%||element:test.string;1.0.0||%"
 							}
 						}
 					},
 					"initValue": {
-						"child_public": {
+						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of child_public"
+							"value": "default value of public_string"
+						},
+						"public_url": {
+							"dataTypeId": "test.url;1.0.0",
+							"value": "default value of public_url"
+						},
+						"public_array": {
+							"dataTypeId": "test.array;1.0.0",
+							"value": [
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 1111!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 2222!"
+								}
+							]
 						}
 					}
 				}

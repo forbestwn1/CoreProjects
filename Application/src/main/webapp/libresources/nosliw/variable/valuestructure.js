@@ -27,6 +27,7 @@ var node_createUIDataOperationRequest;
 var node_uiDataOperationServiceUtility;
 var node_UIDataOperation;
 var node_createRequestEventGroupHandler;
+var node_createEmptyValue;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -315,7 +316,10 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 
 	var adapterInfo = elementInfo.adapterInfo;
 	//get variable
-	if(elementInfo.valueStructure!=undefined){
+	if(elementInfo.placeholder==true){
+		loc_out.variable= node_createVariableWrapper(node_createEmptyValue(), undefined, adapterInfo, requestInfo);
+	}
+	else if(elementInfo.valueStructure!=undefined){
 		//element by context
 		var eleVariable = elementInfo.valueStructure.createVariable(elementInfo.valueStructureVariable, adapterInfo, requestInfo);
 		//cannot create context element variable
@@ -326,7 +330,7 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 		//element by variable
 		loc_out.variable= node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
 	}
-	else		loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
+	else  loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
 	
 	return loc_out;
 };
@@ -400,6 +404,7 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationR
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
+nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
 
 
 //Register Node by Name

@@ -72,7 +72,7 @@ var node_createUICustomerTagTest = function(envObj){
 			loc_wrapperView.append(dataUI.initViews());
 		});
 		
-		loc_buttonView = $('<button>Click me</button>');
+		loc_buttonView = $('<button>Display content</button>');
 		loc_buttonView.click(loc_showContent);
 		loc_wrapperView.append(loc_buttonView);
 		
@@ -87,7 +87,6 @@ var node_createUICustomerTagTest = function(envObj){
 		out.addRequest(loc_envObj.getCreateDefaultUIContentRequest(undefined, {
 			success: function(request, uiConentNode){
 				return node_complexEntityUtility.getInitBrickRequest(uiConentNode.getChildValue().getCoreEntity(), loc_contentView);
-//				loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
 			}
 		}));
 		node_requestServiceProcessor.processRequest(out);
@@ -112,12 +111,12 @@ var node_createUICustomerTagTest = function(envObj){
 						dataType = coreAttrName.substring(index+1);
 					}
 
-					loc_dataUIs[varName] = node_createTagUITest(varName, dataType, function(varName, data){
-						loc_onDataChange(varName, data);
-					});
-					
 					var dataVariable = loc_envObj.createVariableByName(varName);
 					loc_dataVariables[varName] = dataVariable; 
+
+					loc_dataUIs[varName] = node_createTagUITest(varName, dataVariable, dataType, function(varName, data){
+						loc_onDataChange(varName, data);
+					}, loc_envObj);
 				}
 			});
 			return out;

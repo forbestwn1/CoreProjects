@@ -46,12 +46,24 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		out.putAll(super.getConstantDefinitions());
+
+		Map<String, HAPUITagAttributeDefinition> tagAttrDefs = this.getTagAttributeDefinitions();
+		for(String attrName : tagAttrDefs.keySet()) {
+			String constantName = this.buildAttributeConstantName(attrName);
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantName, tagAttrDefs.get(attrName).getDefaultValue());
+			out.put(constantName, constantDef);
+		}
 		
 		Map<String, String> attrs = this.getTagAttributes();
 		for(String attrName : attrs.keySet()) {
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(attrName, attrs.get(attrName));
-			out.put(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + constantDef.getName(), constantDef);
+			String constantName = this.buildAttributeConstantName(attrName);
+			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantName, attrs.get(attrName));
+			out.put(constantName, constantDef);
 		}
 		return out;
+	}
+
+	private String buildAttributeConstantName(String attrName) {
+		return HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName;
 	}
 }

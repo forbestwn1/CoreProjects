@@ -13,8 +13,16 @@
 			"defaultValue1" : "attr1DefaultValue"
 		},
 		{
-			"name" : "attr2",
-			"defaultValue" : "attr2DefaultValue"
+			"name" : "data_array",
+			"defaultValue1" : "attr1DefaultValue"
+		},
+		{
+			"name" : "arrayelement",
+			"defaultValue" : "element"
+		},
+		{
+			"name" : "arrayindex",
+			"defaultValue" : "arrayindex"
 		}
 	],
 	"valueContext": [
@@ -31,37 +39,47 @@
 								"criteria" : "test.string;1.0.0"
 							}
 						}
+					},
+					"internal_data_array": {
+						"definition": {
+							"link" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>"
+							},
+							"definition" : {
+								"criteria" : "test.array;1.0.0"
+							}
+						}
 					}
+				}
+			}
+		},
+		{
+			"groupType" : "protected",
+			"valueStructure" : {
+				"root": {
+					"<%=&(nosliwattribute_arrayelement)&%>": {
+						"definition": {
+							"reference" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>.element"
+							}
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					},
+					"<%=&(nosliwattribute_arrayindex)&%>" : {
+						"definition" : {
+							"criteria" : "test.integer;1.0.0"
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					}		
 				}
 			}
 		}
 	], 
 	"attachment": {
-		"extra": {
-			"status": "disabled1",
-			"name": "parent attachment" 
-		},
-		"entity": {
-			"value" : [
-				{
-					"name" : "constantValueData",
-					"entity": {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "012345678901234567890"
-					}
-				},
-				{
-					"name" : "constantValueString",
-					"entity": "String value"
-				},
-				{
-					"name" : "constantValueObject",
-					"entity": {
-						"value": 1000
-					}
-				}
-			]
-		}
 	},
 	"parentRelations" : {
 	
