@@ -58,14 +58,6 @@ var node_createTagUITest = function(varName, variable, dataType, dataChangeHandl
 	var loc_getUpdateArrayViewRequest = function(handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
 
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(requestInfo){
-/*
-			for(var i in loc_childVaraibles){
-				loc_out.prv_deleteEle(0, requestInfo);
-			}
-*/			
-		}));
-
 		out.addRequest(loc_handleEachElementProcessor.getLoopRequest({
 			success : function(requestInfo, eles){
 /*
@@ -79,20 +71,27 @@ var node_createTagUITest = function(varName, variable, dataType, dataChangeHandl
 
 				var elesRequest = node_createServiceRequestInfoSequence(undefined);
 				_.each(eles, function(ele, index){
+					var elementVar = ele.elementVar.getVariable();
+					var indexVar = ele.indexVar.getVariable();
+					
 					var variationPoints = {
 						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
 							var loc_valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
-							loc_valueContext.populateVariable(loc_envObj.getAttributeValue("arrayelement"), ele.elementVar.getVariable());
-							loc_valueContext.populateVariable(loc_envObj.getAttributeValue("arrayindex"), ele.indexVar.getVariable());
+							loc_valueContext.populateVariable(loc_envObj.getAttributeValue("arrayelement"), elementVar);
+							loc_valueContext.populateVariable(loc_envObj.getAttributeValue("arrayindex"), indexVar);
 						}
 					}
 	
 					elesRequest.addRequest(loc_envObj.getCreateDefaultUIContentRequest(variationPoints, {
 						success: function(request, uiConentNode){
+							loc_dataControlView.append($("<br>"+"Elment Variable Id:"+elementVar.prv_id+"</br>"));
+							loc_dataControlView.append($("<br>"+"Index Variable Id:"+indexVar.prv_id+"</br>"));
+	
 							return node_complexEntityUtility.getInitBrickRequest(uiConentNode.getChildValue().getCoreEntity(), loc_dataControlView);
 						}
 					}));
 				});
+				elesRequest.setParmData("processMode", "promiseBased");
 				return elesRequest;
 			}
 		}));
@@ -121,6 +120,7 @@ var node_createTagUITest = function(varName, variable, dataType, dataChangeHandl
 
 	var loc_createDataControlView = function(){
 		loc_wrapperView = $("<div/>");
+		loc_wrapperView.append($("<br>"+"Variable Id:"+loc_variable.prv_id+"</br>"));
 		if(loc_dataType=="string"){
 			loc_dataControlView = $('<input type="text" style="display:inline;background:#e6dedc"/>');
 			loc_dataControlView.bind('change', function(){

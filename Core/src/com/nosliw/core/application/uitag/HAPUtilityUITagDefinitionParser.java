@@ -50,7 +50,7 @@ public class HAPUtilityUITagDefinitionParser {
 		//script
 		Object scriptResourceObj = jsonObj.opt(HAPUITagDefinition.SCRIPTRESOURCEID);
 		if(scriptResourceObj==null) {
-			throw new RuntimeException();
+//			throw new RuntimeException();
 		}
 		else {
 			HAPResourceId scriptResourceId = HAPFactoryResourceId.newInstance(scriptResourceObj);

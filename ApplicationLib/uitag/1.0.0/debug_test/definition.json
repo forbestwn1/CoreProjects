@@ -1,9 +1,8 @@
 {
-	"name" : "test",
+	"name" : "debug_test",
 	"type" : "data",
 	"description" : "",
-	"base" : "test",
-	"scriptResourceId" : "script|1.0.0|customtag_test",
+	"base" : "debug_test",
 	"attribute" : [
 		{
 			"name" : "data"

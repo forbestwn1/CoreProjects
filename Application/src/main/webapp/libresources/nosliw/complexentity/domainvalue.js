@@ -31,7 +31,7 @@ var nod_createVariableDomain = function(variableDomainDef){
 	var loc_valueContextIdIndex = 0;
 	
 	//variable pool
-	var loc_variableMan = node_createVariableManager();
+	var loc_variableMan = nosliw.runtime.getVariableManager();
 	
 	var loc_out = {
 		//create variable group according to

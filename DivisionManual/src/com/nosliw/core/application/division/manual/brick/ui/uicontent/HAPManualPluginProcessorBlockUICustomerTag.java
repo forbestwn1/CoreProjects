@@ -37,7 +37,11 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 		}
 		
 		uiCustomerTagExe.setUIId(uiCustomerTagDef.getUIId());
-		uiCustomerTagExe.setBase(uiCustomerTagDef.getBase());
-		uiCustomerTagExe.setScriptResourceId(uiCustomerTagDef.getScriptResourceId());
+		if(uiCustomerTagDef.getBase()!=null) {
+			uiCustomerTagExe.setBase(uiCustomerTagDef.getBase());
+		}
+		if(uiCustomerTagDef.getScriptResourceId()!=null) {
+			uiCustomerTagExe.setScriptResourceId(uiCustomerTagDef.getScriptResourceId());
+		}
 	}
 }

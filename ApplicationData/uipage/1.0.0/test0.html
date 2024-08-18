@@ -12,11 +12,17 @@ Hellooooooo!!!!!
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
- 		<nosliw-test data_string="public_url" data_array="public_array">
+<!-- 
+		<nosliw-debug_contextvalue/>
+ -->
+
+ 		<nosliw-debug_test data_string="public_url" data_array="public_array">
 			<br>
 			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%><%=?(element)?.value%>
 			<br>
-		</nosliw-test>
+			
+			<nosliw-debug_viewvariable/>
+		</nosliw-debug_test>
  
 </body>
 

@@ -26,6 +26,7 @@ var packageObj = library;
 	var node_createUIDataOperationRequest;
 	var node_createEventObject;
 	var node_createUICustomerTagTest;
+	var node_createUICustomerTagViewVariable;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -37,11 +38,16 @@ var node_createUITagPlugin = function(){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
 			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
-			if(uiTagBase=="test"){
+			if(uiTagBase=="debug_test"){
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, valueContextId, bundleCore, configure);
 				}));
 			} 
+			else if(uiTagBase=="debug_viewvariable"){
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagViewVariable, valueContextId, bundleCore, configure);
+				}));
+			}
 			else{
 				var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
 				
@@ -251,6 +257,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function(){node_createUICustomerTagTest = this.getData();	});
+nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", function(){node_createUICustomerTagViewVariable = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

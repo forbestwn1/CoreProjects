@@ -1,10 +1,9 @@
 {
-	"name" : "debug_contextvalue",
-	"type" : "data",
+	"name" : "debug_viewvariable",
 	"description" : "",
-	"scriptResourceId" : "script|1.0.0|customtag_debug_contextvalue",
 	"attribute" : [
 	],
+	"base" : "debug_viewvariable",
 	"valueContext": [
 	], 
 	"attachment": {

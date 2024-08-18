@@ -129,7 +129,7 @@ var node_createTaskGroupItemWatch = function(taskGroupEntityCore, taskItemId, re
 	
 		loc_taskGroupInterface = node_getApplicationInterface(loc_taskGroupEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
 
-		var valueContext = node_getEntityObjectInterface(loc_taskGroupEntityCore).getValueContext()
+		var valueContext = node_getEntityObjectInterface(loc_taskGroupEntityCore).getValueContext();
 		loc_contextVarGroup = node_createVariablesGroup(valueContext, loc_taskGroupInterface.getItemVariableInfos(loc_taskItemId), loc_contextVarsGroupHandler, this);
 	};
 		
