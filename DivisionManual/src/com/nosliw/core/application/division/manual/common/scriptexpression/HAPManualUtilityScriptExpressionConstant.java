@@ -43,7 +43,8 @@ public class HAPManualUtilityScriptExpressionConstant {
 	
 	public static String isIdLterate(String content) {
 		String out = null;
-		if(content.startsWith(SYMBLE_IDLITERATE_START) && content.endsWith(SYMBLE_IDLITERATE_END)) {
+		
+		if(content!=null && content.startsWith(SYMBLE_IDLITERATE_START) && content.endsWith(SYMBLE_IDLITERATE_END)) {
 			out = content.substring(SYMBLE_IDLITERATE_START.length(), content.length()-SYMBLE_IDLITERATE_END.length());
 		}
 		return out;

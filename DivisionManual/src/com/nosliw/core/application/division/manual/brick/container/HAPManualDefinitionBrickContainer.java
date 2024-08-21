@@ -7,10 +7,10 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
-public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 
 	private HAPIdBrickType m_childBrickTypeId;
 	

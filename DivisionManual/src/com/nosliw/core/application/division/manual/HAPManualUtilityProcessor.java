@@ -26,8 +26,6 @@ import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAdapter;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
@@ -164,7 +162,7 @@ public class HAPManualUtilityProcessor {
 								HAPManualPluginProcessorAdapter adapterProcessPlugin = manualBrickMan.getAdapterProcessPlugin(adapterWrapperDef.getBrick().getBrickTypeId());
 								
 								HAPManualBrick brick = (HAPManualBrick)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
-								adapterProcessPlugin.process(brick, (HAPManualDefinitionBrickAdapter)adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot(), processContext.getRuntimeEnv()));
+								adapterProcessPlugin.process(brick, adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), treeNode.getTreeNodeInfo().getPathFromRoot(), processContext.getRuntimeEnv()));
 							}
 							
 							return true;
@@ -211,7 +209,7 @@ public class HAPManualUtilityProcessor {
 						}
 						else {
 							HAPManualPluginProcessorBlockSimple plugin = (HAPManualPluginProcessorBlockSimple)manualBrickMan.getBlockProcessPlugin(entityTypeId);
-							plugin.process(brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
+							plugin.process(brickPair.getRight(), brickPair.getLeft(), processContext);
 						}
 						return true;
 					}
@@ -243,7 +241,7 @@ public class HAPManualUtilityProcessor {
 						}
 						else {
 							HAPManualPluginProcessorBlockSimple plugin = (HAPManualPluginProcessorBlockSimple)manualBrickMan.getBlockProcessPlugin(entityTypeId);
-							plugin.postProcess(brickPair.getRight(), (HAPManualDefinitionBrickBlockSimple)brickPair.getLeft(), processContext);
+							plugin.postProcess(brickPair.getRight(), brickPair.getLeft(), processContext);
 						}
 					}
 				}
@@ -282,7 +280,7 @@ public class HAPManualUtilityProcessor {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
-				HAPManualBrick brick = (HAPManualBrick)this.getBrickFromNode(treeNode);
+				HAPManualBrick brick = this.getBrickFromNode(treeNode);
 				brick.init();
 				return true;
 			}

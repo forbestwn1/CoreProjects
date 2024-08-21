@@ -5,10 +5,10 @@ import java.util.Map;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
-public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrickBlockSimple implements HAPValueStructureDefinition{
+public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrick implements HAPValueStructureDefinition{
 
 	public static final String VALUE = "value";
 

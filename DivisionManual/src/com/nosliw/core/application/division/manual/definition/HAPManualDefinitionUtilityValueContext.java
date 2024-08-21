@@ -32,6 +32,14 @@ public class HAPManualDefinitionUtilityValueContext {
 					String scriptExpressionId = scriptExpressionContainer.addScriptExpression(name);
 					root.setName(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 				}
+				
+				//root status
+				String status = root.getStatus();
+				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(status)) {
+					String scriptExpressionId = scriptExpressionContainer.addScriptExpression(status);
+					root.setStatus(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
+				}
+				
 
 				HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
 					@Override
@@ -66,6 +74,13 @@ public class HAPManualDefinitionUtilityValueContext {
 				String nameId = HAPManualUtilityScriptExpressionConstant.isIdLterate(name);
 				if(nameId!=null) {
 					root.setName(values.get(nameId)+"");
+				}
+
+				//root status
+				String status = root.getStatus();
+				String statusId = HAPManualUtilityScriptExpressionConstant.isIdLterate(status);
+				if(statusId!=null) {
+					root.setStatus(values.get(statusId)+"");
 				}
 
 				HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {

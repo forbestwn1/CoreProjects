@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
-public class HAPManualDefinitionAdapterDataAssociationForExpression extends HAPManualDefinitionBrickAdapter{
+public class HAPManualDefinitionAdapterDataAssociationForExpression extends HAPManualDefinitionBrick{
 
 	public static final String DEFINITION = "definition";
 

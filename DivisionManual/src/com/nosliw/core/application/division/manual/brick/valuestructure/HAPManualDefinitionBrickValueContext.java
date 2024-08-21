@@ -2,21 +2,17 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
-public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBrickBlockSimple implements HAPValueContextDefinition{
+public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBrick implements HAPValueContextDefinition{
 
 	
 	public HAPManualDefinitionBrickValueContext() {
@@ -44,14 +40,4 @@ public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBri
 		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueWithBrick(VALUESTRUCTURE);
 	}
 	
-	@Override
-	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext,	HAPParserDataExpression expressionParser) {
-		for(HAPManualDefinitionBrickWrapperValueStructure valueStructure : this.getValueStructures()) {
-			valueStructure.discoverConstantScript(complexEntityId, parserContext, expressionParser);
-		}
-	}
-
-	@Override
-	public void solidateConstantScript(Map<String, String> values) {}
-
 }

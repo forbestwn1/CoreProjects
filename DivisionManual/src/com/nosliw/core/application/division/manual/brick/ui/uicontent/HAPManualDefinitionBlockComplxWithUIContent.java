@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIId;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
-public class HAPManualDefinitionBlockComplxWithUIContent extends HAPManualDefinitionBrickBlockComplex implements HAPWithUIId{
+public class HAPManualDefinitionBlockComplxWithUIContent extends HAPManualDefinitionBrick implements HAPWithUIId{
 
 	protected HAPManualDefinitionBlockComplxWithUIContent(HAPIdBrickType entityType) {
 		super(entityType);

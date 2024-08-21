@@ -13,7 +13,7 @@ public class HAPPluginProcessorBlockScriptExpressionLibrary extends HAPManualPlu
 	}
 
 	@Override
-	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
+	public void process(HAPManualBrickBlockSimple blockExe, HAPManualDefinitionBrick blockDef, HAPManualContextProcessBrick processContext) {
 		
 	}
 

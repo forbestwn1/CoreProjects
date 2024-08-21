@@ -1,8 +1,9 @@
 package com.nosliw.core.application.common.structure;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
 
-public interface HAPWrapperValueStructure{
+public interface HAPWrapperValueStructure extends HAPEntityInfo{
 
 	public static final String NAME = "name";
 	public static final String GROUPTYPE = "groupType";

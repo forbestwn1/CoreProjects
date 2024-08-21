@@ -9,11 +9,11 @@
 		},
 		{
 			"name" : "data_string",
-			"defaultValue1" : "attr1DefaultValue"
+			"defaultValue" : "empty"
 		},
 		{
 			"name" : "data_array",
-			"defaultValue1" : "attr1DefaultValue"
+			"defaultValue" : "empty"
 		},
 		{
 			"name" : "arrayelement",
@@ -30,6 +30,7 @@
 			"valueStructure" : {
 				"root": {
 					"internal_data_string": {
+						"status": "<%=&(nosliwattribute_data_string)&=='empty'?'disabled':''%>",
 						"definition": {
 							"link" : {
 								"elementPath": "<%=&(nosliwattribute_data_string)&%>"
@@ -40,6 +41,7 @@
 						}
 					},
 					"internal_data_array": {
+						"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 						"definition": {
 							"link" : {
 								"elementPath": "<%=&(nosliwattribute_data_array)&%>"
@@ -54,6 +56,7 @@
 		},
 		{
 			"groupType" : "protected",
+			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 			"valueStructure" : {
 				"root": {
 					"<%=&(nosliwattribute_arrayelement)&%>": {

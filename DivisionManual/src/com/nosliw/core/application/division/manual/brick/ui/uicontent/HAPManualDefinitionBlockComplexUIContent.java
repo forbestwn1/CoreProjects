@@ -14,10 +14,10 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 
-public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitionBrickBlockComplex{
+public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitionBrick{
 
 	private static final String ID_INDEX = "idIndex";
 	

@@ -19,6 +19,9 @@ public class HAPManualUtilityScriptExpressionParser {
 	public static final String EXPRESSION_TOKEN_CLOSE = "|#";
 
 	public static boolean isText(String content) {
+		if(content==null) {
+			return true;
+		}
 		return content.indexOf(LITERATE_TOKEN_OPEN)==-1;
 	}
 

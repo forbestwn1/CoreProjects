@@ -4,11 +4,11 @@ import com.nosliw.common.info.HAPInfo;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrickBlockSimple implements HAPWrapperValueStructure{
+public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrick implements HAPWrapperValueStructure{
 
 	public HAPManualDefinitionBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);

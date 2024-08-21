@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.scriptexpression.libra
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
-public class HAPManualBlockScriptExpressionElementInLibrary extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualBlockScriptExpressionElementInLibrary extends HAPManualDefinitionBrick{
 
 	public HAPManualBlockScriptExpressionElementInLibrary() {
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100);

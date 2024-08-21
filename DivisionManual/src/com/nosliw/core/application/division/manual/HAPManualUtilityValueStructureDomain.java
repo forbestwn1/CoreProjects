@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -38,7 +39,6 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
@@ -304,8 +304,8 @@ public class HAPManualUtilityValueStructureDomain {
 				
 				Pair<HAPManualDefinitionBrick, HAPManualBrick> entityPair = HAPManualDefinitionUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
 				
-				HAPManualDefinitionBrickBlockComplex rootEntityDef = (HAPManualDefinitionBrickBlockComplex)rootEntityDefInfo.getBrick();
-				HAPManualDefinitionBrickBlockComplex complexEntityDef = (HAPManualDefinitionBrickBlockComplex)entityPair.getLeft();
+				HAPManualDefinitionBrick rootEntityDef = rootEntityDefInfo.getBrick();
+				HAPManualDefinitionBrick complexEntityDef = entityPair.getLeft();
 				HAPManualDefinitionBrickValueContext valueContextEntityDef = complexEntityDef.getValueContextBrick();
 				
 				//value context
@@ -316,10 +316,12 @@ public class HAPManualUtilityValueStructureDomain {
 						for(HAPManualDefinitionBrickWrapperValueStructure part : valueContextEntityDef.getManualValueStructures()) {
 							Set<HAPRootInValueStructure> roots = new HashSet<HAPRootInValueStructure>(); 
 							for(HAPRootInValueStructure r : part.getValueStructureBlock().getValue().getRoots().values()) {
-								HAPRootInValueStructure root = new HAPRootInValueStructure();
-								root.setDefinition(r.getDefinition());
-								r.cloneToEntityInfo(root);
-								roots.add(root);
+								if(HAPUtilityEntityInfo.isEnabled(r)) {
+									HAPRootInValueStructure root = new HAPRootInValueStructure();
+									root.setDefinition(r.getDefinition());
+									r.cloneToEntityInfo(root);
+									roots.add(root);
+								}
 							}
 							
 							String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getValueStructureBlock().getValue().getInitValue(), part.getInfo(), part.getName());

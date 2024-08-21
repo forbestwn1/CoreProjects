@@ -5,10 +5,10 @@ import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefinitionBrickBlockComplex{
+public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefinitionBrick{
 
 	public HAPManualDefinitionBlockTestComplexScript() {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100);

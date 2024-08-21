@@ -4,10 +4,10 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionLibrary;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
-public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBrickBlockSimple{
+public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBrick{
 
 	public HAPManualBlockScriptExpressionLibrary() {
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIB_100);

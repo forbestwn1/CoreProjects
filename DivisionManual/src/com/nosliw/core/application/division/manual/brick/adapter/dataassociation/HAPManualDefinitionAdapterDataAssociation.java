@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
-public class HAPManualDefinitionAdapterDataAssociation extends HAPManualDefinitionBrickAdapter{
+public class HAPManualDefinitionAdapterDataAssociation extends HAPManualDefinitionBrick{
 
 	public static final String DEFINITION = "definition";
 
