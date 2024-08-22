@@ -7,9 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
@@ -17,21 +15,13 @@ public class HAPUtilityValueStructureParser {
 
 	static public void parseValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper, JSONObject wrapperObj) {
 
-		String groupName = (String)wrapperObj.opt(HAPWrapperValueStructure.NAME);
-		valueStructureWrapper.setName(groupName);
-
 		String groupType = (String)wrapperObj.opt(HAPWrapperValueStructure.GROUPTYPE);
 		if(groupType==null) {
 			groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
 		}
 		valueStructureWrapper.setGroupType(groupType);
 
-		JSONObject infoJsonObj = wrapperObj.optJSONObject(HAPWrapperValueStructure.INFO);
-		if(infoJsonObj!=null) {
-			HAPInfoImpSimple info = new HAPInfoImpSimple();
-			info.buildObject(infoJsonObj, HAPSerializationFormat.JSON);
-			valueStructureWrapper.setInfo(info);
-		}
+		HAPUtilityEntityInfo.buildEntityInfoByJson(wrapperObj, valueStructureWrapper);
 	}
 	
 	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructureDefinition valueStructure) {

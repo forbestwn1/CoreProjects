@@ -45,17 +45,17 @@ public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 	
 	private String addElementAnom(HAPEntityOrReference brickOrRef) {
 		String attrName = this.generateAttributeName();
-		this.setAttributeWithValueBrick(attrName, brickOrRef);
+		this.setAttributeValueWithBrick(attrName, brickOrRef);
 		return attrName;
 	}
 	
 	private String generateAttributeName() {
-		Integer index = (Integer)this.getAttributeValueWithValue(HAPBrickContainer.ATTRINDEX);
+		Integer index = (Integer)this.getAttributeValueOfValue(HAPBrickContainer.ATTRINDEX);
 		index++;
-		this.setAttributeWithValueValue(HAPBrickContainer.ATTRINDEX, index);
+		this.setAttributeValueWithValue(HAPBrickContainer.ATTRINDEX, index);
 		return HAPConstantShared.PREFIX_ELEMENTID_COTAINER+index+"";
 	}
 	
-	private void setAttributeIndex(Integer index) {		this.setAttributeWithValueValue(HAPBrickContainer.ATTRINDEX, index);	}
+	private void setAttributeIndex(Integer index) {		this.setAttributeValueWithValue(HAPBrickContainer.ATTRINDEX, index);	}
 
 }

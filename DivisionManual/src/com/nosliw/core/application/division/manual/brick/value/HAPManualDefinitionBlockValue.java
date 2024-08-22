@@ -10,8 +10,8 @@ public class HAPManualDefinitionBlockValue extends HAPManualDefinitionBrick{
 		super(HAPEnumBrickType.VALUE_100);
 	}
 
-	public Object getValue() {    return this.getAttributeValueWithValue(HAPBlockValue.VALUE);     }
+	public Object getValue() {    return this.getAttributeValueOfValue(HAPBlockValue.VALUE);     }
 
-	public void setValue(Object obj) {    this.setAttributeWithValueValue(HAPBlockValue.VALUE, obj);      }
+	public void setValue(Object obj) {    this.setAttributeValueWithValue(HAPBlockValue.VALUE, obj);      }
 	
 }

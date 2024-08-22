@@ -10,7 +10,7 @@ public class HAPManualDefinitionBlockDataExpressionElementInLibrary extends HAPM
 		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100);
 	}
 
-	public HAPManualDataExpressionLibraryElement getValue() {   return (HAPManualDataExpressionLibraryElement)this.getAttributeValueWithValue(HAPBlockDataExpressionElementInLibrary.VALUE);      }
-	public void setValue(HAPManualDataExpressionLibraryElement value) {     this.setAttributeWithValueValue(HAPBlockDataExpressionElementInLibrary.VALUE, value);      }
+	public HAPManualDataExpressionLibraryElement getValue() {   return (HAPManualDataExpressionLibraryElement)this.getAttributeValueOfValue(HAPBlockDataExpressionElementInLibrary.VALUE);      }
+	public void setValue(HAPManualDataExpressionLibraryElement value) {     this.setAttributeValueWithValue(HAPBlockDataExpressionElementInLibrary.VALUE, value);      }
 	
 }

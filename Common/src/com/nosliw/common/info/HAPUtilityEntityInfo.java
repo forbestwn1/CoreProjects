@@ -28,20 +28,46 @@ public class HAPUtilityEntityInfo {
 		enable(target, isEnabled(target) && isEnabled(source));
 	}
 	
+	public static void buildEntityInfoByJson(Object json, HAPEntityInfo entityInfo) {
+		JSONObject jsonObj = null;
+		if(json instanceof String) {
+			jsonObj = new JSONObject(json);
+		} else if(json instanceof JSONObject) {
+			jsonObj = (JSONObject)json;
+		} else {
+			return;
+		}
+		
+		entityInfo.setId((String)jsonObj.opt(HAPEntityInfo.ID));
+		entityInfo.setName((String)jsonObj.opt(HAPEntityInfo.NAME));
+		
+		if(entityInfo.getId()==null) {
+			entityInfo.setId(entityInfo.getName());
+		}
+		if(entityInfo.getName()==null) {
+			entityInfo.setName(entityInfo.getId());
+		}
+		
+		entityInfo.setStatus((String)jsonObj.opt(HAPEntityInfo.STATUS));
+		entityInfo.setDisplayName((String)jsonObj.opt(HAPEntityInfo.DISPLAYNAME));
+		entityInfo.setDescription(jsonObj.optString(HAPEntityInfo.DESCRIPTION));
+		HAPInfo info= new HAPInfoImpSimple();
+		info.buildObject(jsonObj.optJSONObject(HAPEntityInfo.INFO), HAPSerializationFormat.JSON);
+		entityInfo.setInfo(info);
+	}
+	
 	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj) {
 		HAPEntityInfo out = new HAPEntityInfoImp();
-		out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+		buildEntityInfoByJson(jsonObj, out);
 		return out;
 	}
 	
 	public static HAPEntityInfo buildEntityInfoFromJson(JSONObject jsonObj, String attrName) {
-		HAPEntityInfo out = new HAPEntityInfoImp();
 		JSONObject entityInfoJson = jsonObj.optJSONObject(attrName);
 		if(entityInfoJson==null) {
 			entityInfoJson = jsonObj;
 		}
-		out.buildObject(entityInfoJson, HAPSerializationFormat.JSON);
-		return out;
+		return buildEntityInfoFromJson(entityInfoJson);
 	}
 	
 	public static void cloneTo(HAPEntityInfo from, HAPEntityInfo to) {

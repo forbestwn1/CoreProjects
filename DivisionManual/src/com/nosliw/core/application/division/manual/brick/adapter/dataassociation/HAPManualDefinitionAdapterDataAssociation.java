@@ -13,10 +13,10 @@ public class HAPManualDefinitionAdapterDataAssociation extends HAPManualDefiniti
 
 	public HAPManualDefinitionAdapterDataAssociation() {
 		super(HAPEnumBrickType.DATAASSOCIATION_100);
-		this.setAttributeWithValueValue(DEFINITION, new ArrayList<HAPManualDataAssociation>());
+		this.setAttributeValueWithValue(DEFINITION, new ArrayList<HAPManualDataAssociation>());
 	}
 	
 	public void addDataAssciation(HAPManualDataAssociation dataAssciation) {    this.getDataAssociation().add(dataAssciation);    }
-	public List<HAPManualDataAssociation> getDataAssociation() {   return (List<HAPManualDataAssociation>)this.getAttributeValueWithValue(DEFINITION);     }
+	public List<HAPManualDataAssociation> getDataAssociation() {   return (List<HAPManualDataAssociation>)this.getAttributeValueOfValue(DEFINITION);     }
 
 }

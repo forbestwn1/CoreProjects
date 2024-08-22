@@ -23,18 +23,18 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	
 	public HAPManualDefinitionBlockComplexUIContent() {
 		super(HAPEnumBrickType.UICONTENT_100);
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPManualDefinitionContainerScriptExpression());
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
-		this.setAttributeWithValueValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
-		this.setAttributeWithValueValue(ID_INDEX, new Integer(0));
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPManualDefinitionContainerScriptExpression());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
+		this.setAttributeValueWithValue(ID_INDEX, new Integer(0));
 	}
 
 	@Override
 	public void init() {
-		this.setAttributeWithValueBrick(HAPBlockComplexUIContent.CUSTOMERTAG, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
+		this.setAttributeValueWithBrick(HAPBlockComplexUIContent.CUSTOMERTAG, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	
 	public void addCustomerTag(HAPManualDefinitionBlockComplexUICustomerTag customerTag) {
@@ -49,34 +49,34 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	}
 	
 	private HAPManualDefinitionBrickContainerList getCustomerTagContainer() {
-		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueWithBrick(HAPBlockComplexUIContent.CUSTOMERTAG);
+		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueOfBrick(HAPBlockComplexUIContent.CUSTOMERTAG);
 	}
 
-	public String getHtml() {    return (String)this.getAttributeValueWithValue(HAPBlockComplexUIContent.HTML);  }
-	public void setHtml(String html) {    this.setAttributeWithValueValue(HAPBlockComplexUIContent.HTML, StringEscapeUtils.escapeHtml(html).replaceAll("(\\r|\\n)", ""));      }
+	public String getHtml() {    return (String)this.getAttributeValueOfValue(HAPBlockComplexUIContent.HTML);  }
+	public void setHtml(String html) {    this.setAttributeValueWithValue(HAPBlockComplexUIContent.HTML, StringEscapeUtils.escapeHtml(html).replaceAll("(\\r|\\n)", ""));      }
 	
-	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContent(){   return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT);       }
+	public List<HAPUIEmbededScriptExpressionInContent> getScriptExpressionInContent(){   return (List<HAPUIEmbededScriptExpressionInContent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT);       }
 	public void addScriptExpressionInContent(HAPUIEmbededScriptExpressionInContent scriptExpressionInContent) {   this.getScriptExpressionInContent().add(scriptExpressionInContent);    }
 
-	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE);       }
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE);       }
 	public void addScriptExpressionInNormalTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInNormalTagAttribute().add(scriptExpressionInAttribute);    }
 	
-	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE);       }
+	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE);       }
 	public void addScriptExpressionInCustomerTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInCustomerTagAttribute().add(scriptExpressionInAttribute);    }
 	
-	public HAPManualDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
+	public HAPManualDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
 
-	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
+	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
 	public void addNormalTagEvent(HAPElementEvent event) {    this.getNormalTagEvents().add(event);     }
 
-	public List<HAPElementEvent> getCustomerTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueWithValue(HAPBlockComplexUIContent.CUSTOMERTAG);       }
+	public List<HAPElementEvent> getCustomerTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.CUSTOMERTAG);       }
 	public void addCustomerTagEvent(HAPElementEvent event) {    this.getCustomerTagEvents().add(event);     }
 
 	@Override
 	public String generateId() {
-		int idIndex = (Integer)this.getAttributeValueWithValue(ID_INDEX);
+		int idIndex = (Integer)this.getAttributeValueOfValue(ID_INDEX);
 		idIndex++;
-		this.setAttributeWithValueValue(ID_INDEX, new Integer(idIndex));
+		this.setAttributeValueWithValue(ID_INDEX, new Integer(idIndex));
 		return idIndex+"";
 	}
 	

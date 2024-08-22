@@ -11,7 +11,7 @@ public class HAPManualBrickInteractive extends HAPManualDefinitionBrick{
 	public HAPManualBrickInteractive() {
 	}
 	
-	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getAttributeValueWithValue(ATTR_INTERACTIVE);  }
+	public HAPDefinitionInteractive getInteractive() {  return (HAPDefinitionInteractive)this.getAttributeValueOfValue(ATTR_INTERACTIVE);  }
 
 	public void setInteractive(HAPDefinitionInteractive interactive) {    this.setAttributeObject(ATTR_INTERACTIVE, new HAPEmbededDefinition(interactive));      }
 	

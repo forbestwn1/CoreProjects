@@ -8,11 +8,11 @@ public class HAPManualDefinitionBlockDataExpressionGroup extends HAPManualDefini
 
 	public HAPManualDefinitionBlockDataExpressionGroup() {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100);
-		this.setAttributeWithValueValue(HAPBlockDataExpressionGroup.VALUE, new HAPManualDefinitionContainerDataExpression());
+		this.setAttributeValueWithValue(HAPBlockDataExpressionGroup.VALUE, new HAPManualDefinitionContainerDataExpression());
 	}
 
 	public HAPManualDefinitionContainerDataExpression getValue() {
-		return (HAPManualDefinitionContainerDataExpression)this.getAttributeValueWithValue(HAPBlockDataExpressionGroup.VALUE);
+		return (HAPManualDefinitionContainerDataExpression)this.getAttributeValueOfValue(HAPBlockDataExpressionGroup.VALUE);
 	}
 	
 }

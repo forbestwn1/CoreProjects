@@ -2,8 +2,6 @@ package com.nosliw.common.info;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -40,7 +38,9 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	@Override
 	public void setId(String id) {
 		this.m_id = id;
-		if(this.m_name==null)   this.m_name = id;
+		if(this.m_name==null) {
+			this.m_name = id;
+		}
 	}
 
 	@Override
@@ -52,7 +52,9 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 	@Override
 	public void setName(String name) {  
 		this.m_name = name;
-		if(this.m_id==null)   this.m_id = name;
+		if(this.m_id==null) {
+			this.m_id = name;
+		}
 	}
 
 	@Override
@@ -63,8 +65,12 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 
 	@Override
 	public String getDisplayName() {  
-		if(this.m_displayName!=null) return this.m_displayName;
-		if(this.m_name!=null)   return this.m_name;
+		if(this.m_displayName!=null) {
+			return this.m_displayName;
+		}
+		if(this.m_name!=null) {
+			return this.m_name;
+		}
 		return this.m_id;
 	}
 
@@ -86,7 +92,9 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 
 	@Override
 	public void setInfo(HAPInfo info) {
-		if(info!=null)		this.m_info = info.cloneInfo();  
+		if(info!=null) {
+			this.m_info = info.cloneInfo();
+		}  
 	}
 	
 	@Override
@@ -113,36 +121,33 @@ public class HAPEntityInfoImp extends HAPSerializableImp implements HAPEntityInf
 		return true;  
 	}
 
-	@Override
+ 	@Override
 	public void buildEntityInfoByJson(Object json) {
-		JSONObject jsonObj = null;
-		if(json instanceof String)  jsonObj = new JSONObject(json);
-		else if(json instanceof JSONObject)  jsonObj = (JSONObject)json;
-		else return;
-		
-		this.setId((String)jsonObj.opt(ID));
-		this.setName((String)jsonObj.opt(NAME));
-		
-		if(this.getId()==null)    this.setId(this.getName());
-		if(this.getName()==null)   this.setName(this.getId());
-		
-		this.setStatus((String)jsonObj.opt(STATUS));
-		this.setDisplayName((String)jsonObj.opt(DISPLAYNAME));
-		this.setDescription(jsonObj.optString(DESCRIPTION));
-		this.m_info = new HAPInfoImpSimple();
-		this.m_info.buildObject(jsonObj.optJSONObject(INFO), HAPSerializationFormat.JSON);
+		HAPUtilityEntityInfo.buildEntityInfoByJson(json, this);
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof HAPEntityInfoImp) {
 			HAPEntityInfoImp infoEntity = (HAPEntityInfoImp)obj;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_id, this.m_id))   return false;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_name, this.m_name))   return false;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_displayName, this.m_displayName))   return false;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_status, this.m_status))   return false;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_description, this.m_description))   return false;;
-			if(!HAPUtilityBasic.isEquals(infoEntity.m_info, this.m_info))  return false;
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_id, this.m_id)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_name, this.m_name)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_displayName, this.m_displayName)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_status, this.m_status)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_description, this.m_description)) {
+				return false;
+			};
+			if(!HAPUtilityBasic.isEquals(infoEntity.m_info, this.m_info)) {
+				return false;
+			}
 			return true;
 		}
 		return false;

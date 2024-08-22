@@ -12,7 +12,7 @@ public class HAPManualDefinitionAdapterDataAssociationForTask extends HAPManualD
 		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100);
 	}
 	
-	public void setDataAssciation(HAPManualDataAssociationForTask dataAssciation) {    this.setAttributeWithValueValue(DEFINITION, dataAssciation);    }
-	public HAPManualDataAssociationForTask getDataAssociation() {   return (HAPManualDataAssociationForTask)this.getAttributeValueWithValue(DEFINITION);     }
+	public void setDataAssciation(HAPManualDataAssociationForTask dataAssciation) {    this.setAttributeValueWithValue(DEFINITION, dataAssciation);    }
+	public HAPManualDataAssociationForTask getDataAssociation() {   return (HAPManualDataAssociationForTask)this.getAttributeValueOfValue(DEFINITION);     }
 	
 }

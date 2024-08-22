@@ -15,9 +15,9 @@ public class HAPManualDefinitionBlockSimpleServiceProvider extends HAPManualDefi
 		super(HAPEnumBrickType.SERVICEPROVIDER_100);
 	}
 
-	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeWithValueValue(SERVICEKEY, serviceKey);	}
+	public void setServiceKey(HAPKeyService serviceKey) {	this.setAttributeValueWithValue(SERVICEKEY, serviceKey);	}
 
-	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueWithValue(SERVICEKEY);	}
+	public HAPKeyService getServiceKey() {	return (HAPKeyService)this.getAttributeValueOfValue(SERVICEKEY);	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

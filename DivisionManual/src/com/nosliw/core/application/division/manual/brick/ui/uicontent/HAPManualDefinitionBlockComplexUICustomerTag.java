@@ -19,28 +19,28 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 	
 	public HAPManualDefinitionBlockComplexUICustomerTag() {
 		super(HAPEnumBrickType.UICUSTOMERTAG_100);
-		this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
-		this.setAttributeWithValueValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
-		this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
+		this.setAttributeValueWithValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
 	}
 
-	public String getTagId() {   return (String)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.UITAGID);     }
-	public void setTagId(String tagId) {   this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.UITAGID, tagId);       }
+	public String getTagId() {   return (String)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.UITAGID);     }
+	public void setTagId(String tagId) {   this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.UITAGID, tagId);       }
 
-	public String getBase() {   return (String)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.BASE);     }
-	public void setBase(String base) {   this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.BASE, base);       }
+	public String getBase() {   return (String)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.BASE);     }
+	public void setBase(String base) {   this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.BASE, base);       }
 	
-	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID);     }
-	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeWithValueValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID, resourceId);         }
+	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID);     }
+	public void setScriptResourceId(HAPResourceId resourceId) {     this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.SCRIPTRESOURCEID, resourceId);         }
 
 	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
-	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
+	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
 
 	public void addTagAttributeDefinition(HAPUITagAttributeDefinition attrDef) {     this.getTagAttributeDefinitions().put(attrDef.getName(), attrDef);        }
-	public Map<String, HAPUITagAttributeDefinition> getTagAttributeDefinitions(){   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
+	public Map<String, HAPUITagAttributeDefinition> getTagAttributeDefinitions(){   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
 
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {    this.getParentRelations().add(parentRelation);      }
-	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueWithValue(PARENTRELATIONS);	}
+	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueOfValue(PARENTRELATIONS);	}
 	
 	@Override
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){

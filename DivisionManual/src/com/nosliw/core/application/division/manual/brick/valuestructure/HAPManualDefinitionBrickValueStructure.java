@@ -14,11 +14,11 @@ public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionB
 
 	public HAPManualDefinitionBrickValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTURE_100);
-		this.setAttributeWithValueValue(VALUE, new HAPValueStructureDefinitionImp());
+		this.setAttributeValueWithValue(VALUE, new HAPValueStructureDefinitionImp());
 	}
 
-	public HAPValueStructureDefinition getValue() {   return (HAPValueStructureDefinition)this.getAttributeValueWithValue(VALUE);       }
-	public void setValue(HAPValueStructureDefinition valueStructureDef) {   this.setAttributeWithValueValue(VALUE, valueStructureDef);     }
+	public HAPValueStructureDefinition getValue() {   return (HAPValueStructureDefinition)this.getAttributeValueOfValue(VALUE);       }
+	public void setValue(HAPValueStructureDefinition valueStructureDef) {   this.setAttributeValueWithValue(VALUE, valueStructureDef);     }
 
 	@Override
 	public Object getInitValue() {    return this.getValue().getInitValue();  }

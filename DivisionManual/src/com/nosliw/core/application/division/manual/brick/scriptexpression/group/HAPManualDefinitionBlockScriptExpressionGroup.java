@@ -11,10 +11,10 @@ public class HAPManualDefinitionBlockScriptExpressionGroup extends HAPManualDefi
 	
 	public HAPManualDefinitionBlockScriptExpressionGroup() {
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100);
-		this.setAttributeWithValueValue(VALUE, new HAPManualDefinitionContainerScriptExpression());
+		this.setAttributeValueWithValue(VALUE, new HAPManualDefinitionContainerScriptExpression());
 	}
 	
 	public HAPManualDefinitionContainerScriptExpression getValue() {
-		return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueWithValue(HAPBlockDataExpressionGroup.VALUE);
+		return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueOfValue(HAPBlockDataExpressionGroup.VALUE);
 	}
 }

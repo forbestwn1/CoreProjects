@@ -15,7 +15,7 @@ public class HAPManualDefinitionBlockDataExpressionLibrary extends HAPManualDefi
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
 	public String addElement(HAPManualDefinitionBlockDataExpressionElementInLibrary element) {
@@ -31,6 +31,6 @@ public class HAPManualDefinitionBlockDataExpressionLibrary extends HAPManualDefi
 	}
 	
 	private HAPManualDefinitionBrickContainer getContainer() {
-		return (HAPManualDefinitionBrickContainer)this.getAttributeValueWithBrick(HAPBlockDataExpressionLibrary.ITEM);
+		return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockDataExpressionLibrary.ITEM);
 	}
 }

@@ -1,14 +1,13 @@
 package com.nosliw.core.application.division.manual.brick.valuestructure;
 
-import com.nosliw.common.info.HAPInfo;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickWithEntityInfo;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrick implements HAPWrapperValueStructure{
+public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrickWithEntityInfo implements HAPWrapperValueStructure{
 
 	public HAPManualDefinitionBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
@@ -19,13 +18,8 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 		this.setValueStructure(valueStructure);
 	}
 	
-	@Override
-	public HAPInfo getInfo() {    return (HAPInfo)this.getAttributeValueWithValue(INFO);     }
-	@Override
-	public void setInfo(HAPInfo info) {   this.setAttributeWithValueValue(INFO, info);     }
-	
-	public HAPManualDefinitionBrickValueStructure getValueStructureBlock() {	return (HAPManualDefinitionBrickValueStructure)this.getAttributeValueWithBrick(VALUESTRUCTURE);   }
-	public void setValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {   this.setAttributeWithValueBrick(VALUESTRUCTURE, valueStructure);  }
+	public HAPManualDefinitionBrickValueStructure getValueStructureBlock() {	return (HAPManualDefinitionBrickValueStructure)this.getAttributeValueOfBrick(VALUESTRUCTURE);   }
+	public void setValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {   this.setAttributeValueWithBrick(VALUESTRUCTURE, valueStructure);  }
 
 	@Override
 	public HAPValueStructureDefinition getValueStructure() {   return this.getValueStructureBlock().getValue();  }
@@ -34,14 +28,9 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 	public void setValueStructure(HAPValueStructureDefinition valueStructure) {   this.getValueStructureBlock().setValue(valueStructure);  }
 
 	@Override
-	public String getName() {   return (String)this.getAttributeValueWithValue(NAME);   }
+	public String getGroupType() {   return (String)this.getAttributeValueOfValue(GROUPTYPE);    }
 	@Override
-	public void setName(String groupName) {   this.setAttributeWithValueValue(NAME, groupName);    }
-	
-	@Override
-	public String getGroupType() {   return (String)this.getAttributeValueWithValue(GROUPTYPE);    }
-	@Override
-	public void setGroupType(String groupType) {    this.setAttributeWithValueValue(GROUPTYPE, groupType);     }
+	public void setGroupType(String groupType) {    this.setAttributeValueWithValue(GROUPTYPE, groupType);     }
 
 	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}

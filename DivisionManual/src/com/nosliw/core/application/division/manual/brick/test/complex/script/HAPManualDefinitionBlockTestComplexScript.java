@@ -12,14 +12,14 @@ public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefiniti
 
 	public HAPManualDefinitionBlockTestComplexScript() {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100);
-		this.setAttributeWithValueValue(HAPBlockTestComplexScript.PARM, new LinkedHashMap<String, Object>());
+		this.setAttributeValueWithValue(HAPBlockTestComplexScript.PARM, new LinkedHashMap<String, Object>());
 	}
 
-	public void setScript(HAPResourceId scriptResourceId) {    this.setAttributeWithValueValue(HAPBlockTestComplexScript.SCRIPT, scriptResourceId);    }
-	public HAPResourceId getScript() {   return (HAPResourceId)this.getAttributeValueWithValue(HAPBlockTestComplexScript.SCRIPT);     }
+	public void setScript(HAPResourceId scriptResourceId) {    this.setAttributeValueWithValue(HAPBlockTestComplexScript.SCRIPT, scriptResourceId);    }
+	public HAPResourceId getScript() {   return (HAPResourceId)this.getAttributeValueOfValue(HAPBlockTestComplexScript.SCRIPT);     }
 	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
-	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getAttributeValueWithValue(HAPBlockTestComplexScript.PARM);    }
+	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.PARM);    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 	
 }

@@ -138,7 +138,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			break;
 		case HTML:
 			HAPManualDefinitionBrick brickDef = this.getManualDivisionEntityManager().parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext);
-			parentBrick.setAttributeWithValueBrick(attributeName, brickDef);
+			parentBrick.setAttributeValueWithBrick(attributeName, brickDef);
 			break;
 		case JAVASCRIPT:
 			break;

@@ -10,7 +10,7 @@ public class HAPManualBlockScriptExpressionElementInLibrary extends HAPManualDef
 		super(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100);
 	}
 
-	public HAPManualScriptExpressionLibraryElement getValue() {   return (HAPManualScriptExpressionLibraryElement)this.getAttributeValueWithValue(HAPBlockScriptExpressionElementInLibrary.VALUE);      }
-	public void setValue(HAPManualScriptExpressionLibraryElement value) {     this.setAttributeWithValueValue(HAPBlockScriptExpressionElementInLibrary.VALUE, value);      }
+	public HAPManualScriptExpressionLibraryElement getValue() {   return (HAPManualScriptExpressionLibraryElement)this.getAttributeValueOfValue(HAPBlockScriptExpressionElementInLibrary.VALUE);      }
+	public void setValue(HAPManualScriptExpressionLibraryElement value) {     this.setAttributeValueWithValue(HAPBlockScriptExpressionElementInLibrary.VALUE, value);      }
 	
 }

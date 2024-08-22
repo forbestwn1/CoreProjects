@@ -11,8 +11,8 @@ public class HAPManualDefinitionBlockData extends HAPManualDefinitionBrick{
 		super(HAPEnumBrickType.DATA_100);
 	}
 
-	public HAPData getData() {    return (HAPData)this.getAttributeValueWithValue(HAPBlockData.DATA);     }
+	public HAPData getData() {    return (HAPData)this.getAttributeValueOfValue(HAPBlockData.DATA);     }
 
-	public void setData(HAPData data) {    this.setAttributeWithValueValue(HAPBlockData.DATA, data);      }
+	public void setData(HAPData data) {    this.setAttributeValueWithValue(HAPBlockData.DATA, data);      }
 	
 }

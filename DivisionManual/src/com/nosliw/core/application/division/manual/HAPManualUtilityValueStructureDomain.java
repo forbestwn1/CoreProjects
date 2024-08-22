@@ -314,23 +314,25 @@ public class HAPManualUtilityValueStructureDomain {
 					{
 						List<HAPManualInfoValueStructure> wrappers = new ArrayList<HAPManualInfoValueStructure>();
 						for(HAPManualDefinitionBrickWrapperValueStructure part : valueContextEntityDef.getManualValueStructures()) {
-							Set<HAPRootInValueStructure> roots = new HashSet<HAPRootInValueStructure>(); 
-							for(HAPRootInValueStructure r : part.getValueStructureBlock().getValue().getRoots().values()) {
-								if(HAPUtilityEntityInfo.isEnabled(r)) {
-									HAPRootInValueStructure root = new HAPRootInValueStructure();
-									root.setDefinition(r.getDefinition());
-									r.cloneToEntityInfo(root);
-									roots.add(root);
+							if(HAPUtilityEntityInfo.isEnabled(part)) {
+								Set<HAPRootInValueStructure> roots = new HashSet<HAPRootInValueStructure>(); 
+								for(HAPRootInValueStructure r : part.getValueStructureBlock().getValue().getRoots().values()) {
+									if(HAPUtilityEntityInfo.isEnabled(r)) {
+										HAPRootInValueStructure root = new HAPRootInValueStructure();
+										root.setDefinition(r.getDefinition());
+										r.cloneToEntityInfo(root);
+										roots.add(root);
+									}
 								}
-							}
-							
-							String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getValueStructureBlock().getValue().getInitValue(), part.getInfo(), part.getName());
-							HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
-							valueStructureWrapperExe.setGroupType(part.getGroupType());
-							wrappers.add(valueStructureWrapperExe);
+								
+								String valueStructureExeId = valueStructureDomain.newValueStructure(roots, part.getValueStructureBlock().getValue().getInitValue(), part.getInfo(), part.getName());
+								HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
+								valueStructureWrapperExe.setGroupType(part.getGroupType());
+								wrappers.add(valueStructureWrapperExe);
 
-							//solidate plain script expression
-//							valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
+								//solidate plain script expression
+//								valueStructureDomain.getValueStructureDefInfoByRuntimeId(valueStructureExeId).getValueStructure().solidateConstantScript(complexEntityExe.getPlainScriptExpressionValues());
+							}
 						}
 						valueContextExe.addPartSimple(wrappers, HAPManualUtilityValueContext.createPartInfoDefault(), valueStructureDomain);
 					}

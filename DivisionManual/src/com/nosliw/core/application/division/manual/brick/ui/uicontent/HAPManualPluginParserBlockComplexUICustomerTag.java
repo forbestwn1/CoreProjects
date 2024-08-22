@@ -53,10 +53,8 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 			HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);
 			manualBrickValueStrucutre.setValue(uiTagDefValueStructure.getValueStructure());
 			manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
-			
 			manualWrapperBrickValueStrucutre.setGroupType(uiTagDefValueStructure.getGroupType());
-			manualWrapperBrickValueStrucutre.setInfo(uiTagDefValueStructure.getInfo());
-			manualWrapperBrickValueStrucutre.setName(uiTagDefValueStructure.getName());
+			uiTagDefValueStructure.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
 		
 			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
 		}

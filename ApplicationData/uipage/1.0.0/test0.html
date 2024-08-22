@@ -16,13 +16,18 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 		<nosliw-debug_contextvalue/>
  -->
 
- 		<nosliw-debug_test data_string="public_url" data_array="public_array">
+<!-- 
+ 		<nosliw-debug_test data_string="public_url">
+		</nosliw-debug_test>
+ -->
+
+ 		<nosliw-debug_test data_array="public_array">
 			<br>
 			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%><%=?(element)?.value%>
 			<br>
-			
-			<nosliw-debug_viewvariable/>
 		</nosliw-debug_test>
+
+		<nosliw-debug_viewvariable/>
  
 </body>
 

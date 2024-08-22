@@ -12,7 +12,7 @@ public class HAPManualDefinitionAdapterDataAssociationForExpression extends HAPM
 		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100);
 	}
 	
-	public void setDataAssciation(HAPManualDataAssociationForExpression dataAssciation) {    this.setAttributeWithValueValue(DEFINITION, dataAssciation);    }
-	public HAPManualDataAssociationForExpression getDataAssociation() {   return (HAPManualDataAssociationForExpression)this.getAttributeValueWithValue(DEFINITION);     }
+	public void setDataAssciation(HAPManualDataAssociationForExpression dataAssciation) {    this.setAttributeValueWithValue(DEFINITION, dataAssciation);    }
+	public HAPManualDataAssociationForExpression getDataAssociation() {   return (HAPManualDataAssociationForExpression)this.getAttributeValueOfValue(DEFINITION);     }
 	
 }

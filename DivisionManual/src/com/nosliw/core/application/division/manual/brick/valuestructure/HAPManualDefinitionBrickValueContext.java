@@ -21,7 +21,7 @@ public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBri
 	
 	@Override
 	protected void init() {
-		this.setAttributeWithValueBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
+		this.setAttributeValueWithBrick(VALUESTRUCTURE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	
 	@Override
@@ -37,7 +37,7 @@ public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBri
 	public void addValueStructure(HAPManualDefinitionBrickWrapperValueStructure valueStructure) {    this.getValueStructureContainer().addElement(valueStructure);    }
 	
 	private HAPManualDefinitionBrickContainerList getValueStructureContainer() {
-		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueWithBrick(VALUESTRUCTURE);
+		return (HAPManualDefinitionBrickContainerList)this.getAttributeValueOfBrick(VALUESTRUCTURE);
 	}
 	
 }

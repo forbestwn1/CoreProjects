@@ -99,24 +99,26 @@ var node_createUICustomerTagTest = function(envObj){
 		preInit : function(request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}), undefined, request);
 			//create variables for each internal 
-			_.each(loc_envObj.getAllAttributeNames(), function(attrName){
-				var dataAttrPrefix = "data_";
-				if(attrName.startsWith(dataAttrPrefix)){
-					var varName = "internal_"+attrName;
-
-					var coreAttrName = attrName.substring(dataAttrPrefix.length);
-					var dataType = coreAttrName;
-					var index = coreAttrName.indexOf("_");
-					if(index!=-1){
-						dataType = coreAttrName.substring(index+1);
+			_.each(loc_envObj.getAttributes(), function(attr, attrName){
+				if(loc_envObj.getAttributeValue(attrName)!=undefined){
+					var dataAttrPrefix = "data_";
+					if(attrName.startsWith(dataAttrPrefix)){
+						var varName = "internal_"+attrName;
+	
+						var coreAttrName = attrName.substring(dataAttrPrefix.length);
+						var dataType = coreAttrName;
+						var index = coreAttrName.indexOf("_");
+						if(index!=-1){
+							dataType = coreAttrName.substring(index+1);
+						}
+	
+						var dataVariable = loc_envObj.createVariableByName(varName);
+						loc_dataVariables[varName] = dataVariable; 
+	
+						loc_dataUIs[varName] = node_createTagUITest(varName, dataVariable, dataType, function(varName, data){
+							loc_onDataChange(varName, data);
+						}, loc_envObj);
 					}
-
-					var dataVariable = loc_envObj.createVariableByName(varName);
-					loc_dataVariables[varName] = dataVariable; 
-
-					loc_dataUIs[varName] = node_createTagUITest(varName, dataVariable, dataType, function(varName, data){
-						loc_onDataChange(varName, data);
-					}, loc_envObj);
 				}
 			});
 			return out;

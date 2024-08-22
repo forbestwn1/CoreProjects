@@ -24,6 +24,13 @@ public class HAPManualDefinitionUtilityValueContext {
 			return;
 		}
 		for(HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper : valueContext.getManualValueStructures()) {
+			//value structure status
+			String vsStatus = valueStructureWrapper.getStatus();
+			if(HAPManualUtilityScriptExpressionParser.isScriptExpression(vsStatus)) {
+				String scriptExpressionId = scriptExpressionContainer.addScriptExpression(vsStatus);
+				valueStructureWrapper.setStatus(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
+			}
+			
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
 			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
 				//root name
@@ -34,9 +41,9 @@ public class HAPManualDefinitionUtilityValueContext {
 				}
 				
 				//root status
-				String status = root.getStatus();
-				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(status)) {
-					String scriptExpressionId = scriptExpressionContainer.addScriptExpression(status);
+				String rootStatus = root.getStatus();
+				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(rootStatus)) {
+					String scriptExpressionId = scriptExpressionContainer.addScriptExpression(rootStatus);
 					root.setStatus(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 				}
 				
@@ -67,6 +74,15 @@ public class HAPManualDefinitionUtilityValueContext {
 			return;
 		}
 		for(HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper : valueContext.getManualValueStructures()) {
+			{
+				//value structure status
+				String vsStatus = valueStructureWrapper.getStatus();
+				String statusId = HAPManualUtilityScriptExpressionConstant.isIdLterate(vsStatus);
+				if(statusId!=null) {
+					valueStructureWrapper.setStatus(values.get(statusId)+"");
+				}
+			}
+
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
 			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
 				//root name
@@ -77,10 +93,12 @@ public class HAPManualDefinitionUtilityValueContext {
 				}
 
 				//root status
-				String status = root.getStatus();
-				String statusId = HAPManualUtilityScriptExpressionConstant.isIdLterate(status);
-				if(statusId!=null) {
-					root.setStatus(values.get(statusId)+"");
+				{
+					String rootStatus = root.getStatus();
+					String statusId = HAPManualUtilityScriptExpressionConstant.isIdLterate(rootStatus);
+					if(statusId!=null) {
+						root.setStatus(values.get(statusId)+"");
+					}
 				}
 
 				HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {

@@ -12,10 +12,10 @@ public class HAPManualDefinitionBlockComplxWithUIContent extends HAPManualDefini
 	}
 
 	@Override
-	public String getUIId() {   return (String)this.getAttributeValueWithValue(HAPWithUIId.UIID);   }
-	public void setUIId(String uiId) {    this.setAttributeWithValueValue(HAPWithUIId.UIID, uiId);    }
+	public String getUIId() {   return (String)this.getAttributeValueOfValue(HAPWithUIId.UIID);   }
+	public void setUIId(String uiId) {    this.setAttributeValueWithValue(HAPWithUIId.UIID, uiId);    }
 	
-	public HAPManualDefinitionBlockComplexUIContent getUIContent() {    return (HAPManualDefinitionBlockComplexUIContent)this.getAttributeValueWithBrick(HAPWithUIContent.UICONTENT);  }
-	public void setUIContent(HAPManualDefinitionBlockComplexUIContent uiContent) {   this.setAttributeWithValueBrick(HAPWithUIContent.UICONTENT, uiContent);     }
+	public HAPManualDefinitionBlockComplexUIContent getUIContent() {    return (HAPManualDefinitionBlockComplexUIContent)this.getAttributeValueOfBrick(HAPWithUIContent.UICONTENT);  }
+	public void setUIContent(HAPManualDefinitionBlockComplexUIContent uiContent) {   this.setAttributeValueWithBrick(HAPWithUIContent.UICONTENT, uiContent);     }
 
 }
