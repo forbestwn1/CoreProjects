@@ -288,7 +288,7 @@ public class HAPManualUtilityProcessor {
 	}
 	
 	public static HAPManualBrick buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan) {
-		HAPManualBrick rootBrickExe = HAPManualExeUtilityBrick.newRootBrickInstance(brickDef.getBrickTypeId(), manualBrickMan); 
+		HAPManualBrick rootBrickExe = HAPManualExeUtilityBrick.newRootBrickInstance(brickDef.getBrickTypeId(), processContext.getCurrentBundle(), manualBrickMan); 
 		buildExecutableTree(brickDef, rootBrickExe, processContext, manualBrickMan);
 		return rootBrickExe;
 	}
@@ -299,10 +299,6 @@ public class HAPManualUtilityProcessor {
 		
 		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 
-		if(manualBrickMan.getBrickTypeInfo(entityTypeId).getIsComplex()) {
-			brick.setValueStructureDomain(bundle.getValueStructureDomain());
-		}
-		
 		List<HAPManualDefinitionAttributeInBrick> attrsDef = brickDef.getAllAttributes();
 		for(HAPManualDefinitionAttributeInBrick attrDef : attrsDef) {
 			if(HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, brickManager)) {
@@ -314,7 +310,7 @@ public class HAPManualUtilityProcessor {
 				String attrValueType = attrValueInfo.getValueType();
 				if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 					HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
-					HAPManualBrick attrBrick = HAPManualExeUtilityBrick.newBrickInstance(attrBrickDef.getBrickTypeId(), manualBrickMan);
+					HAPManualBrick attrBrick = HAPManualExeUtilityBrick.newBrickInstance(attrBrickDef.getBrickTypeId(), processContext.getCurrentBundle(), manualBrickMan);
 					attrExe.setValueWrapper(new HAPManualWrapperValueOfBrick(attrBrick));
 					buildExecutableTree(attrBrickDef, attrBrick, processContext, manualBrickMan);
 				}
@@ -334,7 +330,7 @@ public class HAPManualUtilityProcessor {
 					if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 						//brick
 						HAPManualDefinitionWrapperValueBrick adpaterValueDefWrapperBrick = (HAPManualDefinitionWrapperValueBrick)adapterValueWrapper;
-						HAPManualBrick adapterBrick = HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), manualBrickMan);
+						HAPManualBrick adapterBrick = HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), processContext.getCurrentBundle(), manualBrickMan);
 						adapterValueWrapperExe = new HAPWrapperValueOfBrick(adapterBrick);
 						buildExecutableTree(adpaterValueDefWrapperBrick.getBrick(), adapterBrick, processContext, manualBrickMan);
 					}

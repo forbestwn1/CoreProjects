@@ -11,16 +11,16 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
-import com.nosliw.core.application.common.dataexpression.HAPExecutableExpressionData1;
-import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
 import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
 import com.nosliw.core.application.common.dataexpression.HAPOperandVariable;
 import com.nosliw.core.application.common.dataexpression.HAPUtilityOperand;
-import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
+import com.nosliw.core.application.common.dataexpression1.HAPWrapperOperand;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
@@ -28,7 +28,7 @@ import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.data.core.data.HAPData;
@@ -98,7 +98,7 @@ public class HAPUtilityExpressionProcessor {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_VARIABLE)){
 					HAPOperandVariable variableOperand = (HAPOperandVariable)operand.getOperand();
 
-					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, resolveConfigure, withInternalValuePort).getElementId();
+					HAPIdElement idVariable = HAPUtilityStructureElementReference.resolveNameFromInternal(variableOperand.getVariableName(), HAPConstantShared.IO_DIRECTION_OUT, withInternalValuePort, resolveConfigure).getElementId();
 					String variableKey = varInfos.addVariable(idVariable);
 					variableOperand.setVariableKey(variableKey);
 					variableOperand.setVariableId(idVariable);
@@ -124,7 +124,7 @@ public class HAPUtilityExpressionProcessor {
 					
 					Map<String, HAPWrapperOperand> referenceMapping = referenceOperand.getMapping();
 					for(String varName : referenceMapping.keySet()) {
-						HAPInfoElementResolve varInfo = HAPUtilityStructureElementReference.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, null, brickResourceData);
+						HAPInfoElementResolve varInfo = HAPUtilityStructureElementReference.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, brickResourceData, null);
 						HAPElementStructure eleStructure = varInfo.getElementStructure();
 						String eleType = eleStructure.getType();
 						if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
@@ -168,7 +168,7 @@ public class HAPUtilityExpressionProcessor {
 //				if(dataEle.getStatus().equals(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN)) 
 				{
 					if(!HAPUtilityBasic.isEquals(dataEle.getCriteria(), varCriteriaInfo.getCriteria())){
-						HAPValuePort valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
+						HAPValuePort1111 valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
 						dataEle.setCriteria(varCriteriaInfo.getCriteria());
 						valuePort.updateElement(varId, dataEle);
 //						valueStructureDomain.setIsDirty(true);

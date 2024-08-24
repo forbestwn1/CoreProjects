@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -28,7 +29,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public static final String DEFINITIONBYRUNTIME = "definitionByRuntime";
 
 	//value structure definitions by id
-	private Map<String, HAPInfoValueStructureDefinition> m_valueStructureDefinition;
+	private Map<String, HAPDefinitionStructure> m_structureDefinition;
 	
 	//value structure runtime by id
 	private Map<String, HAPInfoValueStructureRuntime> m_valueStructureRuntime;
@@ -43,7 +44,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_valueStructureDefinition = new LinkedHashMap<String, HAPInfoValueStructureDefinition>();
+		this.m_structureDefinition = new LinkedHashMap<String, HAPDefinitionStructure>();
 		this.m_valueStructureRuntime = new LinkedHashMap<String, HAPInfoValueStructureRuntime>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_isDirty = false;
@@ -52,10 +53,10 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public void setIsDirty(boolean isDirty) {    this.m_isDirty = isDirty;     }
 	public boolean getIsDirty() {     return this.m_isDirty;   }
 	
-	public HAPInfoValueStructureDefinition getValueStructureDefInfoByRuntimeId(String runtimeId) {	return getValueStructureDefinitionInfo(getValueStructureDefinitionIdByRuntimeId(runtimeId));	}
-	public HAPInfoValueStructureDefinition getValueStructureDefinitionInfo(String valueStructureDefId) {    return this.m_valueStructureDefinition.get(valueStructureDefId);     }
+	public HAPDefinitionStructure getStructureDefinitionByRuntimeId(String runtimeId) {	return getStructureDefinition(getStructureDefinitionIdByRuntimeId(runtimeId));	}
+	public HAPDefinitionStructure getStructureDefinition(String structureDefId) {    return this.m_structureDefinition.get(structureDefId);     }
 
-	public String getValueStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
+	public String getStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
 	
 	public HAPInfoValueStructureRuntime getValueStructureRuntimeInfo(String runtimeId) {    return this.m_valueStructureRuntime.get(runtimeId);     }
 	
@@ -69,15 +70,15 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	public String newValueStructure() {
 		String defId = this.m_idGenerator.generateId();
-		this.m_valueStructureDefinition.put(defId, new HAPInfoValueStructureDefinition());
+		this.m_structureDefinition.put(defId, new HAPDefinitionStructure());
 		return this.newRuntime(defId, null, null, null);
 	}
 	
 	//add definition and create runtime id
 	//return runtime id
-	public String newValueStructure(Set<HAPRootInValueStructure> roots, Object initValue, HAPInfo info, String name) {
+	public String newValueStructure(Set<HAPRootInStructure> roots, Object initValue, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
-		this.m_valueStructureDefinition.put(id, new HAPInfoValueStructureDefinition(roots));
+		this.m_structureDefinition.put(id, new HAPDefinitionStructure(roots));
 		return this.newRuntime(id, initValue, info, name);
 	}
 
@@ -95,8 +96,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		Map<String, String> valueStructureDefJson = new LinkedHashMap<String, String>();
-		for(String id : this.m_valueStructureDefinition.keySet()) {
-			valueStructureDefJson.put(id, this.m_valueStructureDefinition.get(id).toStringValue(HAPSerializationFormat.JSON));
+		for(String id : this.m_structureDefinition.keySet()) {
+			valueStructureDefJson.put(id, this.m_structureDefinition.get(id).toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(VALUESTRUCTUREDEFINITION, HAPUtilityJson.buildMapJson(valueStructureDefJson));
 		

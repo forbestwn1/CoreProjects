@@ -40,7 +40,7 @@ public abstract class HAPDefinitionActivityNormal// extends HAPDefinitionActivit
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPValueStructureInValuePort getInputContextStructure(HAPValueStructureInValuePort parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
+	public HAPValueStructureInValuePort11111 getInputContextStructure(HAPValueStructureInValuePort11111 parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
 	
 	public Map<String, HAPDefinitionResultActivityNormal> getResults(){   return this.m_results;  }
 	public HAPDefinitionResultActivityNormal getResult(String resultName){   return this.m_results.get(resultName);  }

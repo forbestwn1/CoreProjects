@@ -14,8 +14,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure1.HAPElementContextStructureValueExecutable;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructure;
@@ -24,12 +24,12 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionGroup;
 
 public class HAPUtilityContext {
 
-	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureInValuePort contextStructure) {
+	public static Map<String, Object> discoverContantsValueFromContextStructure(HAPValueStructureInValuePort11111 contextStructure) {
 		HAPExecutableValueStructure flatContext = buildExecuatableValueStructure(contextStructure);
 		return flatContext.getConstantValue();
 	}
 	
-	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructureInValuePort contextStructure) {
+	public static HAPExecutableValueStructure buildFlatContextFromContextStructure(HAPValueStructureInValuePort11111 contextStructure) {
 		HAPExecutableValueStructure out = null;
 		String type = contextStructure.getDataType();
 		if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
@@ -67,7 +67,7 @@ public class HAPUtilityContext {
 		return out;
 	}
 	
-	public static HAPElementStructure getDescendant(HAPValueStructureInValuePort context, HAPReferenceElementInStructure path) {
+	public static HAPElementStructure getDescendant(HAPValueStructureInValuePort11111 context, HAPReferenceElementInStructure path) {
 		if(context.getDataType().equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_NOTFLAT)) {
 			return getDescendant((HAPValueStructureDefinitionGroup)context, path.getElementPath());
 		}
@@ -115,7 +115,7 @@ public class HAPUtilityContext {
 //		}
 	}
 
-	public static void setDescendant(HAPValueStructureInValuePort contextStructure, HAPReferenceElementInStructure contextPath, HAPElementStructure ele) {
+	public static void setDescendant(HAPValueStructureInValuePort11111 contextStructure, HAPReferenceElementInStructure contextPath, HAPElementStructure ele) {
 		HAPRootStructure targetRoot = contextStructure.getRoot(contextPath.getRootReference().getFullName(), true);
 
 	}
@@ -179,7 +179,7 @@ public class HAPUtilityContext {
 		return createRootWithRelativeElement(parentContextGroup.getElement(contextCategary, refPath), contextCategary, refPath, excludedInfo);
 	}
 
-	public static HAPResultReferenceResolve resolveReferencedContextElement(HAPReferenceElementInStructure contextPath, HAPValueStructureInValuePort parentContext){
+	public static HAPResultReferenceResolve resolveReferencedContextElement(HAPReferenceElementInStructure contextPath, HAPValueStructureInValuePort11111 parentContext){
 		if(parentContext==null)   return null;
 		HAPResultReferenceResolve out = null;
 		String contextType = parentContext.getDataType();

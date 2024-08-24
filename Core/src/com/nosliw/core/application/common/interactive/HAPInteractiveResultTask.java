@@ -22,9 +22,9 @@ import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
@@ -34,8 +34,8 @@ public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
 	
 	private List<HAPResultElementInInteractiveTask> m_output;
 	
-	private HAPValuePort m_internalValuePort;
-	private HAPValuePort m_externalValuePort;
+	private HAPValuePort1111 m_internalValuePort;
+	private HAPValuePort1111 m_externalValuePort;
 
 	public HAPInteractiveResultTask(){
 		this.m_output = new ArrayList<HAPResultElementInInteractiveTask>();
@@ -46,8 +46,8 @@ public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
 	public void addOutput(HAPResultElementInInteractiveTask output) {   this.m_output.add(output);   }
 	public List<HAPResultElementInInteractiveTask> getOutput(){   return this.m_output;  }
 	
-	public HAPValuePort getInternalValuePort() {	return this.m_internalValuePort;	}
-	public HAPValuePort getExternalValuePort() {	return this.m_externalValuePort;	}
+	public HAPValuePort1111 getInternalValuePort() {	return this.m_internalValuePort;	}
+	public HAPValuePort1111 getExternalValuePort() {	return this.m_externalValuePort;	}
 	
 	public HAPInteractiveResultTask cloneInteractiveResult() {
 		HAPInteractiveResultTask out = new HAPInteractiveResultTask();
@@ -99,8 +99,8 @@ class HAPValuePortInteractiveResult1 extends HAPValuePortImp{
 	}
 
 	@Override
-	public HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId) {
-		HAPValueStructureInValuePort out = new HAPValueStructureInValuePort();
+	public HAPValueStructureInValuePort11111 getValueStructureDefintion(String valueStructureId) {
+		HAPValueStructureInValuePort11111 out = new HAPValueStructureInValuePort11111();
 		for(HAPResultElementInInteractiveTask element : this.m_output) {
 			HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(new HAPElementStructureLeafData(element.getCriteria()));
 			element.cloneToEntityInfo(root);

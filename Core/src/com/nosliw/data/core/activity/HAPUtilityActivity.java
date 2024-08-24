@@ -11,14 +11,14 @@ public class HAPUtilityActivity {
 			HAPExecutableActivity activity,
 			HAPDefinitionActivityNormal activityDefinition,
 			String resultName, 
-			HAPValueStructureInValuePort parentContext,
+			HAPValueStructureInValuePort11111 parentContext,
 			HAPBuilderResultContext resultContextBuilder, 
 			HAPRuntimeEnvironment runtimeEnv) {
 		HAPDefinitionResultActivity resultDef = activityDefinition.getResult(resultName);
 		HAPExecutableResultActivity resultExe = new HAPExecutableResultActivity(resultDef);
 		if(resultContextBuilder!=null) {
 			//data association input context
-			HAPValueStructureInValuePort activityOutputValueStructure = resultContextBuilder.buildResultValueStructure(resultName, activity);
+			HAPValueStructureInValuePort11111 activityOutputValueStructure = resultContextBuilder.buildResultValueStructure(resultName, activity);
 			//process data association
 			HAPExecutableDataAssociation outputDataAssociation = HAPProcessorDataAssociation.processDataAssociation(HAPContainerStructure.createDefault(activityOutputValueStructure), resultDef.getOutputDataAssociation(), HAPContainerStructure.createDefault(parentContext), null, runtimeEnv);
 			resultExe.setDataAssociation(outputDataAssociation);
@@ -26,7 +26,7 @@ public class HAPUtilityActivity {
 		return resultExe;
 	}
 
-	public static HAPExecutableDataAssociation processActivityInputDataAssocation(HAPDefinitionActivityNormal activityDefinition, HAPValueStructureInValuePort externalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableDataAssociation processActivityInputDataAssocation(HAPDefinitionActivityNormal activityDefinition, HAPValueStructureInValuePort11111 externalValueStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableDataAssociation da = HAPProcessorDataAssociation.processDataAssociation(
 				HAPContainerStructure.createDefault(externalValueStructure), 
 				activityDefinition.getInputDataAssociation(), 

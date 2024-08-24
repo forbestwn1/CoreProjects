@@ -2,8 +2,6 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
-import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
-
 public interface HAPValueStructureDefinition {
 
 	public static final String ROOT = "root";
@@ -13,7 +11,7 @@ public interface HAPValueStructureDefinition {
 	Object getInitValue(); 
 	void setInitValue(Object initValue);
 	
-	HAPRootInValueStructure addRoot(HAPRootInValueStructure root);
-	Map<String, HAPRootInValueStructure> getRoots();
+	HAPRootInStructure addRoot(HAPRootInStructure root);
+	Map<String, HAPRootInStructure> getRoots();
 
 }

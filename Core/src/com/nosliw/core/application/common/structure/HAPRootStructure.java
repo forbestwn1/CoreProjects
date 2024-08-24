@@ -1,4 +1,4 @@
-package com.nosliw.core.application.valuestructure;
+package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
@@ -10,10 +10,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;

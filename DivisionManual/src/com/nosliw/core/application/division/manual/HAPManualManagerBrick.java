@@ -178,7 +178,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 			HAPManualUtilityProcessor.processComplexValueContextDiscovery(out.getBrickWrapper(), processContext);
 			
 			//update value port element according to var info container after discovery
-			HAPManualUtilityProcessor.processComplexValuePortUpdate(out.getBrickWrapper(), processContext);
+//			HAPManualUtilityProcessor.processComplexValuePortUpdate(out.getBrickWrapper(), processContext);
 			
 		}
 
@@ -303,7 +303,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {	return this.m_brickTypeInfo.get(brickTypeId.getKey());	}
 	public HAPManualDefinitionBrick newBrickDefinition(HAPIdBrickType brickType) {    return this.getBrickParsePlugin(brickType).newBrick();      }
-	public HAPManualBrick newBrick(HAPIdBrickType brickType) {    return this.getBrickProcessPlugin(brickType).newInstance();      }
+	public HAPManualBrick newBrick(HAPIdBrickType brickType, HAPBundle bundle) {    return this.getBrickProcessPlugin(brickType).newInstance(bundle);      }
 	
 	public HAPManualDefinitionPluginParserBrick getBrickParsePlugin(HAPIdBrickType entityTypeId) {   return this.m_brickParserPlugin.get(entityTypeId.getKey());    }
 	public HAPManualPluginProcessorBrick getBrickProcessPlugin(HAPIdBrickType entityTypeId) {   return this.m_brickProcessorPlugin.get(entityTypeId.getKey());    }

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.valuestructure;
+package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
@@ -7,10 +7,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 @HAPEntityWithAttribute
-public class HAPRootInValueStructure extends HAPEntityInfoWritableImp{
+public class HAPRootInStructure extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -18,9 +17,9 @@ public class HAPRootInValueStructure extends HAPEntityInfoWritableImp{
 	//context element definition
 	private HAPElementStructure m_definition;
 	
-	public HAPRootInValueStructure() {}
+	public HAPRootInStructure() {}
 	
-	public HAPRootInValueStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {
+	public HAPRootInStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {
 		this.m_definition = definition;
 		entityInfo.cloneToEntityInfo(this);
 	}
@@ -44,8 +43,8 @@ public class HAPRootInValueStructure extends HAPEntityInfoWritableImp{
 	@Override
 	public boolean equals(Object obj) {
 		boolean out = false;
-		if(obj instanceof HAPRootInValueStructure) {
-			HAPRootInValueStructure root = (HAPRootInValueStructure)obj;
+		if(obj instanceof HAPRootInStructure) {
+			HAPRootInStructure root = (HAPRootInStructure)obj;
 			if(!super.equals(obj)) {
 				return false;
 			}

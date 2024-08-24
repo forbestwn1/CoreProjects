@@ -11,11 +11,11 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPInfoAlias;
 import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPExecutableEntityValueContext;
@@ -41,7 +41,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 
-	public static void discoverDataVariablesInStructure(HAPContainerVariableInfo varCriteriaInfoContainer, String sturctureId, HAPValueStructureInValuePort structure) {
+	public static void discoverDataVariablesInStructure(HAPContainerVariableInfo varCriteriaInfoContainer, String sturctureId, HAPValueStructureInValuePort11111 structure) {
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			varCriteriaInfoContainer.addVariable(HAPUtilityNamingConversion.cascadeComponentPath(sturctureId, idPath), dataVarsInfoByIdPath.get(idPath));
@@ -50,14 +50,14 @@ public class HAPUtilityValueStructure {
 
 
 	
-	public static HAPValueStructureInValuePort newValueStructure(String valueStructureType) {
+	public static HAPValueStructureInValuePort11111 newValueStructure(String valueStructureType) {
 		if(HAPConstantShared.STRUCTURE_TYPE_VALUEFLAT.equals(valueStructureType))  return new HAPValueStructureDefinitionFlat();
 		if(HAPConstantShared.STRUCTURE_TYPE_VALUEGROUP.equals(valueStructureType))  return new HAPValueStructureDefinitionGroup();
 		if(HAPConstantShared.STRUCTURE_TYPE_VALUEEMPTY.equals(valueStructureType))  return new HAPValueStructureDefinitionEmpty();
 		return null;
 	}
 	
-	public static HAPValueStructureInValuePort getValueStructureFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
+	public static HAPValueStructureInValuePort11111 getValueStructureFromWrapper(HAPManualBrickWrapperValueStructure wrapper) {
 		if(wrapper==null)   return null;
 		return wrapper.getValueStructureBlock();
 	}
@@ -76,7 +76,7 @@ public class HAPUtilityValueStructure {
 		return roots.get(0);
 	}
 	
-	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPValueStructureInValuePort valueStructure) {
+	public static HAPExecutableValueStructure buildExecuatableValueStructure(HAPValueStructureInValuePort11111 valueStructure) {
 		if(valueStructure==null)   return null;
 		HAPExecutableValueStructure out = new HAPExecutableValueStructure();
 		for(HAPRootStructure root : valueStructure.getAllRoots()) {
@@ -94,7 +94,7 @@ public class HAPUtilityValueStructure {
 
 	}
 	
-	public static Map<String, Object> replaceValueNameWithId(HAPValueStructureInValuePort valueStructure, Map<String, Object> values){
+	public static Map<String, Object> replaceValueNameWithId(HAPValueStructureInValuePort11111 valueStructure, Map<String, Object> values){
 		Map<String, Object> out = new LinkedHashMap<String, Object>();
 		for(String rootName : values.keySet()) {
 			HAPReferenceRootInStrucutre rootReference = null;
@@ -113,16 +113,16 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static HAPValueStructureInValuePort hardMerge(HAPValueStructureInValuePort child, HAPValueStructureInValuePort parent) {
-		if(child==null) return (HAPValueStructureInValuePort)parent.cloneStructure();
-		if(parent==null)  return (HAPValueStructureInValuePort)child.cloneStructure();
+	public static HAPValueStructureInValuePort11111 hardMerge(HAPValueStructureInValuePort11111 child, HAPValueStructureInValuePort11111 parent) {
+		if(child==null) return (HAPValueStructureInValuePort11111)parent.cloneStructure();
+		if(parent==null)  return (HAPValueStructureInValuePort11111)child.cloneStructure();
 		
 		String type1 = child.getStructureType();
 		String type2 = parent.getStructureType();
 		if(!type1.equals(type2))  throw new RuntimeException();
 		
-		HAPValueStructureInValuePort out = null;
-		out = (HAPValueStructureInValuePort)child.cloneStructure();
+		HAPValueStructureInValuePort11111 out = null;
+		out = (HAPValueStructureInValuePort11111)child.cloneStructure();
 		out.hardMergeWith(parent);
 		return out;
 	}
@@ -138,7 +138,7 @@ public class HAPUtilityValueStructure {
 		return out;
 	}
 	
-	public static void discoverDataVariablesDefinitionInStructure(HAPVariableInfoInStructure varInfoInStructure, String sturctureId, HAPValueStructureInValuePort structure) {
+	public static void discoverDataVariablesDefinitionInStructure(HAPVariableInfoInStructure varInfoInStructure, String sturctureId, HAPValueStructureInValuePort11111 structure) {
 		Map<String, HAPInfoCriteria> dataVarsInfoByIdPath = discoverDataVariablesByIdInStructure(structure);
 		for(String idPath : dataVarsInfoByIdPath.keySet()) {
 			HAPComplexPath path = new HAPComplexPath(idPath);

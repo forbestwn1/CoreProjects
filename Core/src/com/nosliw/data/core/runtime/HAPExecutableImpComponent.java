@@ -25,7 +25,7 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 	private HAPDefinitionEntityComponent m_component;
 	
 	// hook up with real data during runtime
-	private HAPValueStructureInValuePort m_context;
+	private HAPValueStructureInValuePort11111 m_context;
 
 	private HAPResourceDefinitionProcessSuite m_processSuite;
 
@@ -38,8 +38,8 @@ public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implement
 
 	public HAPDefinitionEntityComponent getDefinition() {   return this.m_component;    }
 	
-	public HAPValueStructureInValuePort getContextStructure() {   return this.m_context;   }
-	public void setContextStructure(HAPValueStructureInValuePort context) { 	this.m_context = context;	}
+	public HAPValueStructureInValuePort11111 getContextStructure() {   return this.m_context;   }
+	public void setContextStructure(HAPValueStructureInValuePort11111 context) { 	this.m_context = context;	}
 
 	public void setProcessSuite(HAPResourceDefinitionProcessSuite processSuite) {    this.m_processSuite = processSuite;    }
 	public HAPResourceDefinitionProcess getProcessDefinition(String name) {    return new HAPResourceDefinitionProcess(this.m_processSuite, name);    }

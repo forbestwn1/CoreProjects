@@ -11,7 +11,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPValueContext;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -26,10 +25,6 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
 	
-	@Override
-	public HAPValueContext getValueContext() {
-		return null;
-	}
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
@@ -69,9 +64,8 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
 		
-		if(this.getValueContext()!=null) {
-			jsonMap.put(VALUECONTEXT, this.getValueContext().toStringValue(HAPSerializationFormat.JAVASCRIPT));
-		}
+		jsonMap.put(INTERNALVALUEPORT, this.getInternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EXTERNALVALUEPORT, this.getExternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override

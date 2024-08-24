@@ -8,6 +8,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
@@ -15,7 +16,6 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionConstant;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
-import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
 public class HAPManualDefinitionUtilityValueContext {
 
@@ -32,7 +32,7 @@ public class HAPManualDefinitionUtilityValueContext {
 			}
 			
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
-			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
+			for(HAPRootInStructure root : valueStructure.getRoots().values()) {
 				//root name
 				String name = root.getName();
 				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(name)) {
@@ -84,7 +84,7 @@ public class HAPManualDefinitionUtilityValueContext {
 			}
 
 			HAPValueStructureDefinition valueStructure = valueStructureWrapper.getValueStructureBlock().getValue();
-			for(HAPRootInValueStructure root : valueStructure.getRoots().values()) {
+			for(HAPRootInStructure root : valueStructure.getRoots().values()) {
 				//root name
 				String name = root.getName();
 				String nameId = HAPManualUtilityScriptExpressionConstant.isIdLterate(name);

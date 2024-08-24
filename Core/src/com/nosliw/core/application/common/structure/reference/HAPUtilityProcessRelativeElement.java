@@ -24,6 +24,7 @@ import com.nosliw.core.application.common.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.structure.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
@@ -32,8 +33,7 @@ import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.variable.HAPDataRule;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.valuestructure.HAPInfoValueStructureDefinition;
-import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
+import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
@@ -101,12 +101,12 @@ public class HAPUtilityProcessRelativeElement {
 		return out;
 	}
 	
-	public static void processRelativeInStructure(HAPInfoValueStructureDefinition valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processRelativeInStructure(HAPDefinitionStructure valueStructure, HAPConfigureProcessorRelative processRelativeConfigure, Set<HAPIdValuePortInBundle>  dependency, List<HAPServiceData> errors, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv) {
 		if(processRelativeConfigure==null) {
 			processRelativeConfigure = new HAPConfigureProcessorRelative();
 		} 
 		
-		for(HAPRootInValueStructure rootStructure : valueStructure.getRoots()) {
+		for(HAPRootInStructure rootStructure : valueStructure.getRoots()) {
 			HAPElementStructure rootElement = processRelativeInStructureElement(new HAPInfoElement(rootStructure.getDefinition(), new HAPComplexPath(rootStructure.getName())), processRelativeConfigure, dependency, errors, bundle, runtimeEnv);
 			rootStructure.setDefinition(rootElement);
 		}

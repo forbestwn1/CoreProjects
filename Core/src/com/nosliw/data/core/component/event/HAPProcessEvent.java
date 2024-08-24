@@ -12,7 +12,7 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessEvent {
 
-	public static HAPExecutableEvent processEventDefinition(HAPDefinitionEvent eventDef, HAPValueStructureInValuePort parentStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableEvent processEventDefinition(HAPDefinitionEvent eventDef, HAPValueStructureInValuePort11111 parentStructure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableEvent out = new HAPExecutableEvent();
 		
 		eventDef.cloneToEntityInfo(out);
@@ -35,7 +35,7 @@ public class HAPProcessEvent {
 		return out;
 	}
 	
-	public static HAPExecutableHandlerEvent processEventHandler(HAPDefinitionHandlerEvent eventHandlerDef, HAPExecutableEvent event, HAPValueStructureInValuePort parentStructure, HAPRuntimeEnvironment runtimeEnv){
+	public static HAPExecutableHandlerEvent processEventHandler(HAPDefinitionHandlerEvent eventHandlerDef, HAPExecutableEvent event, HAPValueStructureInValuePort11111 parentStructure, HAPRuntimeEnvironment runtimeEnv){
 		HAPExecutableHandlerEvent out = new HAPExecutableHandlerEvent();
 		out.setEventName(eventHandlerDef.getEventName());
 		out.setHandler(new HAPExecutableHandler(eventHandlerDef.getHandler()));

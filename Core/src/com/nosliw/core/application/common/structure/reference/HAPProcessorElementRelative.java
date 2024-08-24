@@ -19,13 +19,13 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPStructure1;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.variable.HAPDataRule;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;

@@ -41,7 +41,7 @@ public abstract class HAPDefinitionActivityBranch extends HAPDefinitionActivity{
 	//get input context structure for activity
 	//it is for process input mapping
 	//param: parent context structure
-	public HAPValueStructureInValuePort getInputContextStructure(HAPValueStructureInValuePort parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
+	public HAPValueStructureInValuePort11111 getInputContextStructure(HAPValueStructureInValuePort11111 parentContextStructure) {  return HAPValueStructureDefinitionEmpty.flatStructure();   }
 	
 	public List<HAPDefinitionResultActivityBranch> getBranch(){    return this.m_branchs;    }
 	

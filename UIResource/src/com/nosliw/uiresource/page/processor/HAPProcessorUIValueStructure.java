@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafValue;
 import com.nosliw.core.application.common.structure.HAPProcessorEscalate;
 import com.nosliw.core.application.common.structure.HAPProcessorStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;

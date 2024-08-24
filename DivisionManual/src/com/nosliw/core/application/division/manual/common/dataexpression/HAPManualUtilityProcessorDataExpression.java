@@ -59,7 +59,7 @@ public class HAPManualUtilityProcessorDataExpression {
 					
 					Map<String, HAPOperand> referenceMapping = referenceOperand.getMapping();
 					for(String varName : referenceMapping.keySet()) {
-						HAPInfoElementResolve varInfo = HAPUtilityStructureElementReference.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, null, brickResourceData);
+						HAPInfoElementResolve varInfo = HAPUtilityStructureElementReference.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, brickResourceData, null);
 						HAPElementStructure eleStructure = varInfo.getElementStructure();
 						String eleType = eleStructure.getType();
 						if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

@@ -77,7 +77,7 @@ public class HAPUtilityComponent {
 //		return out;
 //	}
 	
-	public static HAPValueStructureInValuePort resolveContextReference(HAPValueStructureInValuePort context, List<HAPContextReference> contextRefs, HAPDefinitionEntityContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
+	public static HAPValueStructureInValuePort11111 resolveContextReference(HAPValueStructureInValuePort11111 context, List<HAPContextReference> contextRefs, HAPDefinitionEntityContainerAttachment attachments, HAPManagerResourceDefinition resourceDefMan) {
 //		String contextType = context.getType();
 //		
 //		for(HAPContextReference contextRef : contextRefs) {
@@ -121,9 +121,9 @@ public class HAPUtilityComponent {
 	}
 
 	
-//	public static HAPValueStructureInValuePort processElementComponentContext(HAPComponentContainerElement component, HAPValueStructureInValuePort extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
-//		HAPValueStructureInValuePort parentContext = HAPUtilityValueStructure.hardMerge(component.getResourceContainer().getValueStructureWrapper().getValueStructure(), extraContext); 
-//		HAPValueStructureInValuePort processedEleContext = HAPProcessorContext.process(component.getValueStructureWrapper().getValueStructure(), HAPContainerStructure.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
+//	public static HAPValueStructureInValuePort11111 processElementComponentContext(HAPComponentContainerElement component, HAPValueStructureInValuePort11111 extraContext, HAPRuntimeEnvironment runtimeEnv, HAPConfigureProcessorStructure processConfigure) {
+//		HAPValueStructureInValuePort11111 parentContext = HAPUtilityValueStructure.hardMerge(component.getResourceContainer().getValueStructureWrapper().getValueStructure(), extraContext); 
+//		HAPValueStructureInValuePort11111 processedEleContext = HAPProcessorContext.process(component.getValueStructureWrapper().getValueStructure(), HAPContainerStructure.createDefault(parentContext), component.getAttachmentContainer(), null, processConfigure, runtimeEnv);
 //		component.getValueStructureWrapper().setValueStructure(processedEleContext);
 //		return HAPUtilityValueStructure.hardMerge(parentContext, processedEleContext);
 //	}

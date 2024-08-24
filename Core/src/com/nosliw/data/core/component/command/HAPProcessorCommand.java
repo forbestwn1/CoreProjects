@@ -14,7 +14,7 @@ import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 
 public class HAPProcessorCommand {
 
-	public static HAPExecutableCommand process(HAPDefinitionCommand commandDef, HAPValueStructureInValuePort parentStructure, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPExecutableCommand process(HAPDefinitionCommand commandDef, HAPValueStructureInValuePort11111 parentStructure, HAPRuntimeEnvironment runtimeEnv) {
 		
 		HAPExecutableCommand out = new HAPExecutableCommand();
 		commandDef.cloneToEntityInfo(out);

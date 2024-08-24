@@ -3,7 +3,6 @@ package com.nosliw.core.application.common.structure;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorElementRule {

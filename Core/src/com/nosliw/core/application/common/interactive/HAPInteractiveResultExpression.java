@@ -18,9 +18,9 @@ import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveResultExpression extends HAPSerializableImp{
@@ -30,8 +30,8 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 	
 	private HAPResultElementInInteractiveExpression m_result;
 	
-	private HAPValuePort m_internalValuePort;
-	private HAPValuePort m_externalValuePort;
+	private HAPValuePort1111 m_internalValuePort;
+	private HAPValuePort1111 m_externalValuePort;
 	
 	public HAPInteractiveResultExpression(HAPResultElementInInteractiveExpression result) {
 		this.m_result = result;
@@ -41,9 +41,9 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 	
 	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  }
 	
-	public HAPValuePort getInternalValuePort() {	return this.m_internalValuePort;	}
+	public HAPValuePort1111 getInternalValuePort() {	return this.m_internalValuePort;	}
 	
-	public HAPValuePort getExternalValuePort() {	return this.m_externalValuePort;	}
+	public HAPValuePort1111 getExternalValuePort() {	return this.m_externalValuePort;	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -62,8 +62,8 @@ class HAPValuePortInteractiveExpressionResult extends HAPValuePortImp{
 	}
 
 	@Override
-	public HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId) {
-		HAPValueStructureInValuePort out = new HAPValueStructureInValuePort();
+	public HAPValueStructureInValuePort11111 getValueStructureDefintion(String valueStructureId) {
+		HAPValueStructureInValuePort11111 out = new HAPValueStructureInValuePort11111();
 		
 		HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(new HAPElementStructureLeafData(this.m_expressionResult.getDataCriteria()));
 		root.setName(HAPConstantShared.NAME_ROOT_RESULT);

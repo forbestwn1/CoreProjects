@@ -8,7 +8,7 @@
 		{
 			"info": {
 				"name" : "dataexpression-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -233,7 +233,7 @@
 			"adapter": [
 				{
 					"name" : "dataassociation",
-					"status": "disabled1",
+					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociation",
 						"version": "1.0.0"

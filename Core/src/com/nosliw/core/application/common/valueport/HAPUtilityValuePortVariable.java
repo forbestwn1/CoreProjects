@@ -23,7 +23,7 @@ public class HAPUtilityValuePortVariable {
 //				if(dataEle.getStatus().equals(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN)) 
 				{
 					if(!HAPUtilityBasic.isEquals(dataEle.getCriteria(), varCriteriaInfo.getCriteria())){
-						HAPValuePort valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
+						HAPValuePort1111 valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
 						dataEle.setCriteria(varCriteriaInfo.getCriteria());
 						valuePort.updateElement(varId, dataEle);
 //						valueStructureDomain.setIsDirty(true);

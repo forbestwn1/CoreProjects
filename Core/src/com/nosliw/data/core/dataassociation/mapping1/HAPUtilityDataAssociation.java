@@ -15,8 +15,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafConst
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 

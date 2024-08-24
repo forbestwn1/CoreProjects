@@ -9,14 +9,14 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
-public class HAPValueStructureInValuePort extends HAPEntityInfoImp{
+public class HAPValueStructureInValuePort11111 extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static final String ROOT = "root";
 
 	private Map<String, HAPRootStructureInValuePort> m_roots;
 	
-	public HAPValueStructureInValuePort() {
+	public HAPValueStructureInValuePort11111() {
 		this.m_roots = new LinkedHashMap<String, HAPRootStructureInValuePort>();
 	}
 

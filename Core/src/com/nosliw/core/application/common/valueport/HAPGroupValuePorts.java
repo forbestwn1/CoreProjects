@@ -9,9 +9,13 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
+//all value ports from same source of entity
 public class HAPGroupValuePorts extends HAPEntityInfoImp{
 
-	private Map<String, HAPWrapperValuePort> m_valuePortByName;
+	private Map<String, HAPValuePort> m_valuePortByName;
+	
+	//type of group, used to instantiate value port
+	private String m_groupType;
 	
 	private String m_inDefaultName;
 
@@ -21,11 +25,12 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 
 	private int m_idIndex = 0;
 	
-	public HAPGroupValuePorts() {
-		this.m_valuePortByName = new LinkedHashMap<String, HAPWrapperValuePort>();
+	public HAPGroupValuePorts(String groupType) {
+		this.m_groupType = groupType;
+		this.m_valuePortByName = new LinkedHashMap<String, HAPValuePort>();
 	}
 	
-	public void addValuePort(HAPWrapperValuePort valuePort, boolean isDefault) {
+	public void addValuePort(HAPValuePort valuePort, boolean isDefault) {
 		String name = valuePort.getName();
 		if(HAPUtilityBasic.isStringEmpty(name)) {
 			name = this.m_idIndex + "";
@@ -34,7 +39,7 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 		this.m_valuePortByName.put(name, valuePort);
 		if(isDefault) {
-			String ioDirection = valuePort.getValuePort().getValuePortInfo().getIODirection();
+			String ioDirection = valuePort.getIODirection();
 			if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_IN)) {
 				this.m_inDefaultName = name;
 			}
@@ -47,15 +52,15 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 	}
 	
-	public Set<HAPWrapperValuePort> getValuePorts(){
-		return new HashSet<HAPWrapperValuePort>(this.m_valuePortByName.values());
+	public Set<HAPValuePort> getValuePorts(){
+		return new HashSet<HAPValuePort>(this.m_valuePortByName.values());
 	}
 
-	public HAPWrapperValuePort getValuePort(String name) {
+	public HAPValuePort getValuePort(String name) {
 		return this.m_valuePortByName.get(name);
 	}
 	
-	public HAPWrapperValuePort getValuePort(String name, String ioDirection) {
+	public HAPValuePort getValuePort(String name, String ioDirection) {
 		if(HAPUtilityBasic.isStringEmpty(name)) {
 			name = this.getDefaultValuePortName(ioDirection);
 		}

@@ -10,6 +10,7 @@ import java.util.Set;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
@@ -19,7 +20,6 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPInfoVa
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPPartInValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPPartInValueContextGroupWithEntity;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPPartInValueContextSimple;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
@@ -239,7 +239,7 @@ public class HAPUtilityValueContext {
 	public static HAPInfoPartValueStructure createPartInfoExtension() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_EXTENSION);	}
 	public static HAPInfoPartValueStructure createPartInfoFromParent() {	return new HAPInfoPartValueStructure(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
 	
-	public static void setValueStructureDefault(HAPManualBrickValueContext valueStructureComplex, HAPValueStructureInValuePort valueStructure) {
+	public static void setValueStructureDefault(HAPManualBrickValueContext valueStructureComplex, HAPValueStructureInValuePort11111 valueStructure) {
 		valueStructureComplex.addPartSimple(valueStructure, HAPUtilityValueContext.createPartInfoDefault());
 	}
 	

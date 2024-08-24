@@ -11,7 +11,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureUnknown;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 
-public abstract class HAPValuePortImp implements HAPValuePort{
+public abstract class HAPValuePortImp implements HAPValuePort1111{
 
 	private HAPInfoValuePort m_valuePortInfo;
 	
@@ -62,7 +62,7 @@ public abstract class HAPValuePortImp implements HAPValuePort{
 		
 		List<HAPResultReferenceResolve> resolveCandidates = new ArrayList<HAPResultReferenceResolve>();
 		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
-			HAPValueStructureInValuePort valueStructure = valueStructureInfo.getValueStructureDefinition();
+			HAPValueStructureInValuePort11111 valueStructure = valueStructureInfo.getStructureDefinition();
 			HAPComplexPath complexPath = new HAPComplexPath(elementPath);
 			String rootName = complexPath.getRoot();
 			String path = complexPath.getPathStr();

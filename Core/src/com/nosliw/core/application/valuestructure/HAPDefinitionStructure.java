@@ -7,32 +7,37 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 
 @HAPEntityWithAttribute
-public class HAPInfoValueStructureDefinition extends HAPSerializableImp{
+public class HAPDefinitionStructure extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ROOT = "root";
 
-	private Map<String, HAPRootInValueStructure> m_roots;
+	private Map<String, HAPRootInStructure> m_roots;
 	
-	public HAPInfoValueStructureDefinition() {
-		this.m_roots = new LinkedHashMap<String, HAPRootInValueStructure>();
+	public HAPDefinitionStructure() {
+		this.m_roots = new LinkedHashMap<String, HAPRootInStructure>();
 	}
 	
-	public HAPInfoValueStructureDefinition(Set<HAPRootInValueStructure> roots) {
+	public HAPDefinitionStructure(Set<HAPRootInStructure> roots) {
 		this();
-		for(HAPRootInValueStructure root : roots) {
+		for(HAPRootInStructure root : roots) {
 			this.m_roots.put(root.getName(), root);
 		}
 	}
 	
-	public Set<HAPRootInValueStructure> getRoots(){
-		return new HashSet<HAPRootInValueStructure>(this.m_roots.values());
+	public Set<HAPRootInStructure> getRoots(){
+		return new HashSet<HAPRootInStructure>(this.m_roots.values());
 	}
+	
+	public HAPRootInStructure getRootByName(String rootName) {   return this.m_roots.get(rootName);  }
+
+	public Set<String> getRootNames(){   return this.m_roots.keySet();    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

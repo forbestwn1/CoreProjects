@@ -47,7 +47,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		HAPManualWrapperOperand operandWrapper = dataExpression.getOperandWrapper();
 		
-		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(blockExe);
+		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(blockExe, processContext.getCurrentBundle().getValueStructureDomain());
 
 		//resolve variable name, build var info container
 		HAPUtilityWithVarible.resolveVariable(dataExpression, varInfoContainer, null, getManualBrickManager());

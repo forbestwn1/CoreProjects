@@ -20,10 +20,10 @@ import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoPathToSolidRoot;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.variable.HAPDataRule;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -54,7 +54,7 @@ public class HAPProcessorContextRelative {
 	public static HAPValueStructureDefinitionGroup process(HAPValueStructureDefinitionGroup contextGroup, HAPContainerStructure parent, Set<String> dependency, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPValueStructureDefinitionGroup out = contextGroup.cloneValueStructureGroup();
 		for(String parentName : allParentName(parent)) {
-			HAPValueStructureInValuePort context = HAPUtilityContext.getReferedStructure(parentName, parent, contextGroup);
+			HAPValueStructureInValuePort11111 context = HAPUtilityContext.getReferedStructure(parentName, parent, contextGroup);
 			out = process(out, parentName, (HAPValueStructureDefinitionGroup)HAPUtilityContextStructure.toSolidContextStructure(context, false), dependency, errors, context.isFlat(), configure, runtimeEnv);			
 		}
 		return out;

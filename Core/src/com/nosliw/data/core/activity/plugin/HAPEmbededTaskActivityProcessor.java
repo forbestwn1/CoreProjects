@@ -70,7 +70,7 @@ public class HAPEmbededTaskActivityProcessor implements HAPProcessorActivity{
 		}
 		
 		@Override
-		public HAPValueStructureInValuePort buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
+		public HAPValueStructureInValuePort11111 buildResultContext(String resultName, HAPExecutableActivityNormal activity) {
 			HAPEmbededTaskActivityExecutable processActivity = (HAPEmbededTaskActivityExecutable)activity;
 			return this.m_processExe.getContext();
 		}

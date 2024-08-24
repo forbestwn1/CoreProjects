@@ -14,9 +14,9 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 public class HAPUtilityValueStructure {

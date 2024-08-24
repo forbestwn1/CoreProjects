@@ -48,7 +48,7 @@ public class HAPLoopActivityDefinition extends HAPDefinitionActivityNormal{
 	public HAPDefinitionWrapperTask<HAPResourceId> getStep(){   return this.m_step;   }
 	
 	@Override
-	public HAPValueStructureInValuePort getInputValueStructure(HAPValueStructureInValuePort parentContextStructure) {  return parentContextStructure;   }
+	public HAPValueStructureInValuePort11111 getInputValueStructure(HAPValueStructureInValuePort11111 parentContextStructure) {  return parentContextStructure;   }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

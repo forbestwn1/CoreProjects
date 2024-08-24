@@ -21,13 +21,13 @@ import com.nosliw.core.application.common.structure.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.HAPPathElementMappingConstantToVariable;
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
@@ -37,7 +37,7 @@ public class HAPUtilityDataAssociation {
 
 	public static List<HAPTunnel> buildRelativePathMapping(HAPItemValueMapping<HAPIdRootElement> valueMappingItem, HAPContextProcessor processContext){
 		HAPIdValuePortInBundle valuePortId = valueMappingItem.getTarget().getValuePortId();
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
+		HAPValuePort1111 valuePort = HAPUtilityValuePort.getValuePort(valuePortId, processContext); 
 		
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
 		HAPUtilityStructure.traverseElement(valueMappingItem.getDefinition(), valueMappingItem.getTarget().getRootName(), new HAPProcessorStructureElement() {

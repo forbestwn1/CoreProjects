@@ -1,15 +1,39 @@
 package com.nosliw.core.application.common.valueport;
 
-import com.nosliw.core.application.common.structure.HAPElementStructure;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface HAPValuePort{
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPEntityInfoImp;
 
-	HAPInfoValuePort getValuePortInfo();
-	
-	HAPResultReferenceResolve resolveReference(HAPReferenceElement elementReference, HAPConfigureResolveElementReference configure);
-	
-	HAPValueStructureInValuePort getValueStructureDefintion(String valueStructureId);
+public class HAPValuePort extends HAPEntityInfoImp{
 
-	void updateElement(HAPIdElement elementId, HAPElementStructure structureElement);
+	@HAPAttribute
+	public static String VALUESTRUCTURE = "valueStructure";
+
+	@HAPAttribute
+	public static String TYPE = "type";
+
+	@HAPAttribute
+	public static String IODIRECTION = "ioDirection";
+
+	private List<String> m_valueStructures;
+
+	private String m_type;
 	
+	private String m_ioDirection; 
+
+	public HAPValuePort(String type, String ioDirection) {
+		this.m_type = type;
+		this.m_ioDirection = ioDirection;
+		this.m_valueStructures = new ArrayList<String>();
+	}
+	
+	public List<String> getValueStructureIds(){    return this.m_valueStructures;     }
+
+	public String getType() {     return this.m_type;    }
+
+	public String getIODirection() {     return this.m_ioDirection;     }
+	public void setIODirection(String ioDirection) {   this.m_ioDirection = ioDirection;   }
+
 }

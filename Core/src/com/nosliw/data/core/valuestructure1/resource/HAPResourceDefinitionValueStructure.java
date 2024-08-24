@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.data.core.resource.HAPResourceDefinition;
 
 public class HAPResourceDefinitionValueStructure extends HAPResourceDefinition{

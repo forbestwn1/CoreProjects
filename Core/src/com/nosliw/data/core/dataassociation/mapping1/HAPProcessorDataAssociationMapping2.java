@@ -17,8 +17,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelat
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPReferenceElementInStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
 import com.nosliw.data.core.domain.entity.attachment.HAPDefinitionEntityContainerAttachment;
 import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
@@ -57,7 +57,7 @@ public class HAPProcessorDataAssociationMapping2 {
 	}
 	
 	//enhance input and output context according to dataassociation
-	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueStructureDefinitionFlat associationDef, HAPValueStructureInValuePort outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
+	private static void enhanceAssociationEndPointContext(HAPContainerStructure input, boolean inputEnhance, HAPValueStructureDefinitionFlat associationDef, HAPValueStructureInValuePort11111 outputStructure, boolean outputEnhance, HAPRuntimeEnvironment runtimeEnv) {
 		associationDef = normalizeOutputNameInDataAssociation(input, associationDef, outputStructure);
 		HAPInfo info = HAPUtilityDAProcess.withModifyInputStructureConfigure(null, inputEnhance);
 		info = HAPUtilityDAProcess.withModifyOutputStructureConfigure(info, outputEnhance);
@@ -95,7 +95,7 @@ public class HAPProcessorDataAssociationMapping2 {
 
 					@Override
 					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-						HAPValueStructureInValuePort outputStructure = (HAPValueStructureInValuePort)value;
+						HAPValueStructureInValuePort11111 outputStructure = (HAPValueStructureInValuePort11111)value;
 						if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE)) {
 							//only relative element
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
@@ -104,7 +104,7 @@ public class HAPProcessorDataAssociationMapping2 {
 							if(!HAPUtilityContext.isLogicallySolved(targetResolvedInfo)) {
 								//target node in output according to path not exist
 								//element in input structure
-								HAPValueStructureInValuePort sourceContextStructure = input.getStructure(relativeEle.getParentValueContextName());
+								HAPValueStructureInValuePort11111 sourceContextStructure = input.getStructure(relativeEle.getParentValueContextName());
 								HAPResultReferenceResolve sourceResolvedInfo = HAPUtilityContext.resolveReferencedContextElement(relativeEle.getPathFormat(), sourceContextStructure);
 								if(HAPUtilityContext.isLogicallySolved(sourceResolvedInfo)) {
 									HAPElementStructure sourceEle = sourceResolvedInfo.finalElement;
@@ -132,7 +132,7 @@ public class HAPProcessorDataAssociationMapping2 {
 	}
 	
 	//make output name in da to be global name according to refference to outputStrucutre
-	private static HAPValueStructureDefinitionFlat normalizeOutputNameInDataAssociation(HAPContainerStructure input, HAPValueStructureDefinitionFlat associationDef, HAPValueStructureInValuePort outputStructure) {
+	private static HAPValueStructureDefinitionFlat normalizeOutputNameInDataAssociation(HAPContainerStructure input, HAPValueStructureDefinitionFlat associationDef, HAPValueStructureInValuePort11111 outputStructure) {
 		HAPValueStructureDefinitionFlat out = associationDef;
 		if(outputStructure instanceof HAPValueStructureDefinitionGroup) {
 			//for output context group only
@@ -150,7 +150,7 @@ public class HAPProcessorDataAssociationMapping2 {
 		return out;
 	}
 
-	private static HAPExecutableMapping processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructureInValuePort outputStructure, HAPDefinitionEntityContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
+	private static HAPExecutableMapping processAssociation(HAPContainerStructure input, HAPValueMapping valueMapping, HAPValueStructureInValuePort11111 outputStructure, HAPDefinitionEntityContainerAttachment attachmentContainer, Set<String> parentDependency, HAPInfo daProcessConfigure, HAPRuntimeEnvironment runtimeEnv) {
 		HAPExecutableMapping out = new HAPExecutableMapping(input, valueMapping, outputStructure);
 
 		valueMapping = normalizeOutputNameInDataAssociation(input, valueMapping, outputStructure);

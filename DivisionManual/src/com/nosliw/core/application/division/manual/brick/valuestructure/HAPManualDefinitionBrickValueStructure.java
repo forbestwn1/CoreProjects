@@ -2,11 +2,11 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 
 import java.util.Map;
 
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
 public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrick implements HAPValueStructureDefinition{
 
@@ -27,9 +27,9 @@ public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionB
 	public void setInitValue(Object initValue) {   this.getValue().setInitValue(initValue);  }
 
 	@Override
-	public HAPRootInValueStructure addRoot(HAPRootInValueStructure root) {   return this.getValue().addRoot(root);  }
+	public HAPRootInStructure addRoot(HAPRootInStructure root) {   return this.getValue().addRoot(root);  }
 
 	@Override
-	public Map<String, HAPRootInValueStructure> getRoots() {  return this.getValue().getRoots();  }
+	public Map<String, HAPRootInStructure> getRoots() {  return this.getValue().getRoots();  }
 	
 }

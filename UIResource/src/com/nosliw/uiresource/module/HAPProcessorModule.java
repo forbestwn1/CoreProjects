@@ -5,7 +5,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPRequirementContextProcessor;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.data.core.component.HAPProcessorComponent;
 import com.nosliw.data.core.component.HAPProcessorEmbededComponent;
 import com.nosliw.data.core.component.HAPUtilityComponent;
@@ -53,7 +53,7 @@ public class HAPProcessorModule {
 //		HAPUtilityComponent.processAttachmentInChild(moduleDefinition, attachmentReferenceContext.getComplexEntity());
 		
 		//process value structure
-//		HAPValueStructureInValuePort processedValueStructure = (HAPValueStructureInValuePort)HAPProcessorStructure.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentValueStructure), moduleDefinition.getAttachmentContainer(), null, contextProcessConfg, runtimeEnv);
+//		HAPValueStructureInValuePort11111 processedValueStructure = (HAPValueStructureInValuePort11111)HAPProcessorStructure.process(moduleDefinition.getValueStructure(), HAPContainerStructure.createDefault(parentValueStructure), moduleDefinition.getAttachmentContainer(), null, contextProcessConfg, runtimeEnv);
 //		out.setValueStructure(processedValueStructure);
 
 		HAPContextProcessor processContext = new HAPContextProcessor(moduleDefinition, runtimeEnv);

@@ -11,6 +11,7 @@ import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementRe
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 public class HAPContainerVariableInfo extends HAPSerializableImp{
@@ -31,12 +32,15 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	
 	private Map<HAPIdElement, String> m_keyByvariableId;
 	
+	private HAPDomainValueStructure m_valueStructureDomain;
+	
 	private int m_nextId = 0;
 	
 	private HAPWithInternalValuePort m_withInternalValuePort;
 	
-	public HAPContainerVariableInfo(HAPWithInternalValuePort withInternalValuePort) {
+	public HAPContainerVariableInfo(HAPWithInternalValuePort withInternalValuePort, HAPDomainValueStructure valueStructureDomain) {
 		this.m_withInternalValuePort = withInternalValuePort;
+		this.m_valueStructureDomain = valueStructureDomain;
 		this.m_criteriaInfosByKey = new LinkedHashMap<String, HAPInfoCriteria>();
 		this.m_variableIdByName = new LinkedHashMap<String, Map<String, HAPIdElement>>();
 		this.m_variableIdByKey = new LinkedHashMap<String, HAPIdElement>();
@@ -46,7 +50,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	public String addVariable(String variableName, String varIODirection, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPIdElement eleId = this.getVariableId(variableName, varIODirection);
 		if(eleId==null) {
-			eleId = HAPUtilityStructureElementReference.resolveNameFromInternal(variableName, varIODirection, resolveConfigure, this.m_withInternalValuePort).getElementId();
+			eleId = HAPUtilityStructureElementReference.resolveNameFromInternal(variableName, varIODirection, this.m_withInternalValuePort, resolveConfigure, this.m_valueStructureDomain).getElementId();
 			Map<String, HAPIdElement> varIdByIoDirection = this.m_variableIdByName.get(variableName);
 			if(varIdByIoDirection==null) {
 				varIdByIoDirection = new LinkedHashMap<String, HAPIdElement>();

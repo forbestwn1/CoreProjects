@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.valuestructure.HAPRootInValueStructure;
 
 public class HAPUtilityValueStructureParser {
 
@@ -33,22 +32,22 @@ public class HAPUtilityValueStructureParser {
 			else {
 				valueStructure.setInitValue(structureJson.opt(HAPValueStructureDefinition.INITVALUE));
 			}
-			List<HAPRootInValueStructure> roots = parseStructureRoots(rootsObj);
-			for(HAPRootInValueStructure root : roots) {
+			List<HAPRootInStructure> roots = parseStructureRoots(rootsObj);
+			for(HAPRootInStructure root : roots) {
 				valueStructure.addRoot(root);
 			}
 		}
 	}
 	
-	static private List<HAPRootInValueStructure> parseStructureRoots(Object rootsObj){
-		List<HAPRootInValueStructure> out = new ArrayList<HAPRootInValueStructure>();
+	static private List<HAPRootInStructure> parseStructureRoots(Object rootsObj){
+		List<HAPRootInStructure> out = new ArrayList<HAPRootInStructure>();
 		if(rootsObj instanceof JSONObject) {
 			JSONObject elementsJson = (JSONObject)rootsObj;
 			Iterator<String> it = elementsJson.keys();
 			while(it.hasNext()){
 				String eleName = it.next();
 				JSONObject eleDefJson = elementsJson.optJSONObject(eleName);
-				HAPRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
+				HAPRootInStructure root = parseStructureRootFromJson(eleDefJson);
 				if(root!=null) {
 					root.setName(eleName);
 					out.add(root);
@@ -59,7 +58,7 @@ public class HAPUtilityValueStructureParser {
 			JSONArray elementsArray = (JSONArray)rootsObj;
 			for(int i=0; i<elementsArray.length(); i++) {
 				JSONObject eleDefJson = elementsArray.getJSONObject(i);
-				HAPRootInValueStructure root = parseStructureRootFromJson(eleDefJson);
+				HAPRootInStructure root = parseStructureRootFromJson(eleDefJson);
 				out.add(root);
 			}
 		}
@@ -67,8 +66,8 @@ public class HAPUtilityValueStructureParser {
 	}
 	
 	//parse context root
-	static private HAPRootInValueStructure parseStructureRootFromJson(JSONObject eleDefJson){
-		HAPRootInValueStructure out = new HAPRootInValueStructure();
+	static private HAPRootInStructure parseStructureRootFromJson(JSONObject eleDefJson){
+		HAPRootInStructure out = new HAPRootInStructure();
 
 		//info
 		out.buildEntityInfoByJson(eleDefJson);
@@ -77,7 +76,7 @@ public class HAPUtilityValueStructureParser {
 		}
 
 		//definition
-		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPRootInValueStructure.DEFINITION);
+		JSONObject defJsonObj = eleDefJson.optJSONObject(HAPRootInStructure.DEFINITION);
 		if(defJsonObj!=null) {
 			out.setDefinition(HAPParserStructure.parseStructureElement(defJsonObj));
 		} else{

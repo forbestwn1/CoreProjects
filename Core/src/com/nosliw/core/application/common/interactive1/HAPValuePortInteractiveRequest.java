@@ -6,6 +6,7 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
@@ -13,7 +14,6 @@ import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReferen
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 
 public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 

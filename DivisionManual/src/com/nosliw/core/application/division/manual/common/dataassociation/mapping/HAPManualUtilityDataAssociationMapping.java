@@ -24,8 +24,8 @@ import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort;
+import com.nosliw.core.application.common.valueport.HAPValuePort1111;
+import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -34,10 +34,10 @@ public class HAPManualUtilityDataAssociationMapping {
 	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
 		
 		HAPIdValuePortInBundle toValuePortRef = rootEleId.getValuePortId();
-		HAPValuePort toValuePort = HAPUtilityValuePort.getValuePortInBundle(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
+		HAPValuePort1111 toValuePort = HAPUtilityValuePort.getValuePortInBundle(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 
 		String toValueStructureId = rootEleId.getValueStructureId();
-		HAPValueStructureInValuePort toValueStructure = toValuePort.getValueStructureDefintion(toValueStructureId); 
+		HAPValueStructureInValuePort11111 toValueStructure = toValuePort.getValueStructureDefintion(toValueStructureId); 
 
 		
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();

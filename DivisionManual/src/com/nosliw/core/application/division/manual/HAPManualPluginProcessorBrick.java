@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual;
 
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -23,11 +24,12 @@ public class HAPManualPluginProcessorBrick {
 	
 	public HAPIdBrickType getBrickType() {    return this.m_brickType;     }
 
-	public HAPManualBrick newInstance() {
+	public HAPManualBrick newInstance(HAPBundle bundle) {
 		HAPManualBrick out = null;
 		try {
 			out = this.m_brickClass.newInstance();
 			out.setBrickType(m_brickType);
+			out.setBundle(bundle);
 			out.setRuntimeEnvironment(this.getRuntimeEnvironment());
 			out.setManualBrickManager(this.m_manualBrickMan);
 		} catch (Exception e) {

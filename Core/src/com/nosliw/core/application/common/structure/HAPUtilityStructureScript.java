@@ -3,7 +3,6 @@ package com.nosliw.core.application.common.structure;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.valuestructure.HAPRootStructure;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 

@@ -122,10 +122,10 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		if(buildRootEle!=false){
 			var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
 			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
-			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTUREDEFINITION_ROOT];
+			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONSTRUCTURE_ROOT];
 								
 			_.each(roots, function(valueStructureDefRootObj, rootName){
-				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTINVALUESTRUCTURE_DEFINITION];
+				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTINSTRUCTURE_DEFINITION];
 				
 				var info = {
 					matchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS],

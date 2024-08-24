@@ -36,8 +36,8 @@ public class HAPProcessorContext {
 	}
 
 
-	public static HAPValueStructureInValuePort process(HAPValueStructureInValuePort valueStructure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
-		HAPValueStructureInValuePort out = null;
+	public static HAPValueStructureInValuePort11111 process(HAPValueStructureInValuePort11111 valueStructure, HAPContainerStructure parent, HAPDefinitionEntityContainerAttachment attachmentContainer, List<HAPServiceData> errors, HAPConfigureProcessorValueStructure configure, HAPRuntimeEnvironment runtimeEnv) {
+		HAPValueStructureInValuePort11111 out = null;
 		if(valueStructure!=null) {
 			String type = valueStructure.getStructureType();
 			if(type.equals(HAPConstantShared.CONTEXTSTRUCTURE_TYPE_FLAT)) {
