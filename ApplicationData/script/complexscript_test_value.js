@@ -29,7 +29,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();
-		loc_valueContext = varDomain.getValueContext(valueContextId);
+		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
 
 		
 /*

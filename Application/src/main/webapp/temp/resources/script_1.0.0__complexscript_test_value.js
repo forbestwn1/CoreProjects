@@ -38,7 +38,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();
-		loc_valueContext = varDomain.getValueContext(valueContextId);
+		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
 
 		
 /*

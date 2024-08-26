@@ -24,7 +24,7 @@ var node_createTestComplex1Plugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createTestComplex1ComponentCore(complexEntityDef, configure);

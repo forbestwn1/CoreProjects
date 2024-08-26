@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage();
 	var node_getInterface;
 	var node_uiDataOperationServiceUtility;
 	var node_createValuePortValueContext;
+	var node_createValuePort;
 	var node_makeObjectWithType;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -23,35 +24,23 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 	
 	var loc_getExternalValuePort = function(valuePortGroup, valuePortName){   
 		var loc_valuePort;
-		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
-			if(complexEntityInterface!=undefined){
-				loc_valuePort = node_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
-			}
-		}
-		else{
-			if(loc_rawEntity.getExternalValuePort!=undefined){
-				loc_valuePort = loc_rawEntity.getExternalValuePort(valuePortGroup, valuePortName);
-			}
+		
+		var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
+		if(complexEntityInterface!=undefined){
+			loc_valuePort = node_createValuePort(complexEntityInterface.getExternalValuePortContainerId(), valuePortGroup, valuePortName, complexEntityInterface.getBundle().getVariableDomain());
 		}
 		
 		if(loc_valuePort!=undefined){
 			return node_buildValuePort(loc_valuePort);
 		}
 	};
-	
+
 	var loc_getInternalValuePort = function(valuePortGroup, valuePortName){   
 		var loc_valuePort;
-		if(valuePortGroup==node_COMMONCONSTANT.VALUEPORT_TYPE_VALUECONTEXT){
-			var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
-			if(complexEntityInterface!=undefined){
-				loc_valuePort = node_createValuePortValueContext(complexEntityInterface.getValueContextId(), complexEntityInterface.getBundle().getVariableDomain());
-			}
-		}
-		else{
-			if(loc_rawEntity.getInternalValuePort!=undefined){
-				loc_valuePort = loc_rawEntity.getInternalValuePort(valuePortGroup, valuePortName);
-			}
+		
+		var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
+		if(complexEntityInterface!=undefined){
+			loc_valuePort = node_createValuePort(complexEntityInterface.getInternalValuePortContainerId(), valuePortGroup, valuePortName, complexEntityInterface.getBundle().getVariableDomain());
 		}
 		
 		if(loc_valuePort!=undefined){
@@ -132,6 +121,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", functi
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){node_createValuePortValueContext = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePort", function(){node_createValuePort = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name

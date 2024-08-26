@@ -1,18 +1,29 @@
 package com.nosliw.core.application.common.valueport;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 //all value ports from same source of entity
+@HAPEntityWithAttribute
 public class HAPGroupValuePorts extends HAPEntityInfoImp{
 
-	private Map<String, HAPValuePort> m_valuePortByName;
+	@HAPAttribute
+	public static String VALUEPORT = "valuePort";
+
+	@HAPAttribute
+	public static String GROUPTYPE = "groupType";
+
+
+	private List<HAPValuePort> m_valuePorts;
 	
 	//type of group, used to instantiate value port
 	private String m_groupType;
@@ -27,7 +38,7 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 	
 	public HAPGroupValuePorts(String groupType) {
 		this.m_groupType = groupType;
-		this.m_valuePortByName = new LinkedHashMap<String, HAPValuePort>();
+		this.m_valuePorts = new ArrayList<HAPValuePort>();
 	}
 	
 	public void addValuePort(HAPValuePort valuePort, boolean isDefault) {
@@ -37,7 +48,7 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 			this.m_idIndex++;
 			valuePort.setName(name);
 		}
-		this.m_valuePortByName.put(name, valuePort);
+		this.m_valuePorts.add(valuePort);
 		if(isDefault) {
 			String ioDirection = valuePort.getIODirection();
 			if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_IN)) {
@@ -52,12 +63,15 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 	}
 	
-	public Set<HAPValuePort> getValuePorts(){
-		return new HashSet<HAPValuePort>(this.m_valuePortByName.values());
-	}
+	public List<HAPValuePort> getValuePorts(){		return this.m_valuePorts;	}
 
 	public HAPValuePort getValuePort(String name) {
-		return this.m_valuePortByName.get(name);
+		for(HAPValuePort valuePort : this.m_valuePorts) {
+			if(name.equals(valuePort.getName())) {
+				return valuePort;
+			}
+		}
+		return null;
 	}
 	
 	public HAPValuePort getValuePort(String name, String ioDirection) {
@@ -89,4 +103,12 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 		return out;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(GROUPTYPE, this.m_groupType);
+		jsonMap.put(VALUEPORT, HAPManagerSerialize.getInstance().toStringValue(this.m_valuePorts, HAPSerializationFormat.JSON));
+	}
+	
 }

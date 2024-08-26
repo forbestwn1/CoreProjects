@@ -19,7 +19,7 @@ var node_createTestComplexScriptPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptCoreEntity"), handlers, request);
 
 			var resourceId = new node_ResourceId(complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_SCRIPT));
@@ -27,7 +27,7 @@ var node_createTestComplexScriptPlugin = function(){
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){
 					var scriptFun = node_resourceUtility.getResourceFromTree(resourceTree, resourceId).resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
-					var rawComplexEntityCore = scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
+					var rawComplexEntityCore = scriptFun(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 					return rawComplexEntityCore;
 	 			}
 			}));

@@ -76,13 +76,13 @@ var node_createComplexEntityRuntimeService = function() {
 		return adapterEntityPlugin.getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), baseCore, handlers, request);
 	};
 
-	var loc_getCreateEntityCoreRequest = function(rawEntityDef, valueContextId, bundleCore, configure, handlers, request){
+	var loc_getCreateEntityCoreRequest = function(rawEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 		var entityType = rawEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		var complexEntityPlugin = loc_entityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var entityDef = node_createEntityDefinition(rawEntityDef);
-		out.addRequest(complexEntityPlugin.getCreateEntityCoreRequest(entityDef, valueContextId, bundleCore, configure, {
+		out.addRequest(complexEntityPlugin.getCreateEntityCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, {
 			success : function(request, entityCore){
 				
 				entityCore = node_makeObjectWithEmbededEntityInterface(entityCore);
@@ -91,7 +91,7 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				entityCore = node_makeObjectBasicEntityObjectInterface(entityCore, entityDef, configure);
 				
-				entityCore = node_makeObjectEntityObjectInterface(entityCore, valueContextId, bundleCore);
+				entityCore = node_makeObjectEntityObjectInterface(entityCore, internalValuePortContainerId, externalValuePortContainerId, bundleCore);
 				
 				entityCore = node_makeObjectWithValuePortInterface(entityCore);
 				
@@ -119,19 +119,19 @@ var node_createComplexEntityRuntimeService = function() {
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		//build value context
-		var valueContextDef = entityDef[node_COMMONATRIBUTECONSTANT.WITHVALUECONTEXT_VALUECONTEXT];
-		var parentValueContextId = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getValueContextId();
-		var valueContextId = bundleCore.getVariableDomain().creatValueContext(valueContextDef, parentValueContextId);
+		var parentValuePortContainerId = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getInternalValuePortContainerId();
+		var externalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHEXTERNALVALUEPORT_EXTERNALVALUEPORT], parentValuePortContainerId);
+		var internalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHINTERNALVALUEPORT_INTERNALVALUEPORT], externalValuePortContainerId);
 		
 		//process raw configure			
 		//get runtime configure & decoration info from configure
 		var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 		
-		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
-		out.addRequest(variationPoints.afterValueContext(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
+//		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
+//		out.addRequest(variationPoints.afterValueContext(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
 		
 		//new complexCore through complex plugin
-		out.addRequest(loc_getCreateEntityCoreRequest(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure, {
+		out.addRequest(loc_getCreateEntityCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure, {
 			success : function(request, componentCore){
 				//create runtime
 				return node_createComponentRuntime(componentCore, runtimeConfigureInfo.decorations, request);

@@ -24,9 +24,11 @@ var nod_createVariableDomain = function(variableDomainDef){
 	//value structure definition domain
 	var loc_variableDomainDefinition = variableDomainDef;
 	
-	var loc_valuePortContainerById = {};
+	var loc_rootContextId;
+	
+	var loc_valueContextById = {};
 
-	var loc_valuePortContainerIdIndex = 0;
+	var loc_valueContextIdIndex = 0;
 	
 	//variable pool
 	var loc_variableMan = nosliw.runtime.getVariableManager();
@@ -36,26 +38,34 @@ var nod_createVariableDomain = function(variableDomainDef){
 		//value structure complex
 		//parent value context
 		//return value context id
-		creatValuePortContainer : function(valuePortContainerDef, parentValuePortContainerId){
-			loc_valuePortContainerIdIndex++;
-			var id = loc_valuePortContainerIdIndex+"";
-			var parentValuePortContainer = this.getValuePortContainer(parentValuePortContainerId);
-			var valuePortContainer; 
-			if(valuePortContainerDef!=undefined){
-				valuePortContainer = loc_createValuePortContainer(id, valuePortContainerDef, loc_variableDomainDefinition, parentValuePortContainer, loc_variableMan);
+		creatValueContext : function(valueContextDef, parentValueContextId){
+			loc_valueContextIdIndex++;
+			var id = loc_valueContextIdIndex+"";
+			var parentValueContext = this.getValueContext(parentValueContextId);
+			var valueContext; 
+			if(valueContextDef!=undefined){
+				valueContext = loc_createValueContext(id, valueContextDef, loc_variableDomainDefinition, parentValueContext, loc_variableMan);
 			}
 			else{
-				valuePortContainer = loc_createEmptyValuePortContainer(id, parentValuePortContainer);
+				valueContext = loc_createEmptyValueContext(id, parentValueContext);
 			}
 			
-			loc_valuePortContainerById[valuePortContainer.getId()] = valuePortContainer;
-			return valuePortContainer.getId();
+			loc_valueContextById[valueContext.getId()] = valueContext;
+			return valueContext.getId();
 		},
 		
-		getValuePortContainer : function(valuePortContainerId){   return loc_valuePortContainerById[valuePortContainerId];  },
+		getValueContext : function(valueContextId){   return loc_valueContextById[valueContextId];  },
 
 		getVariableDomainDefinition : function(){   return loc_variableDomainDefinition;	},
 
+		getVariableValue : function(contextId, variableId){
+			
+		},
+		
+		setVariableValue : function(contextId, variableId, value){
+			
+		},
+		
 	};
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VAIRABLEDOMAIN);
@@ -63,21 +73,19 @@ var nod_createVariableDomain = function(variableDomainDef){
 	return loc_out;
 };
 
-var loc_createEmptyValuePortContainer = function(id, parentValuePortContainer){
+var loc_createEmptyValueContext = function(id, parentValueContext){
 	
 	//value context id
 	var loc_id = id;
 	
 	//parent context which some variable can get from
-	var loc_parentValuePortContainer = parentValuePortContainer;
+	var loc_parentValueContext = parentValueContext;
 	
 	var loc_out = {
 
-		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
+		getParentValueContext : function(){   return loc_parentValueContext;    },
 		
 		getId : function(){  return loc_id;   },
-
-		getValueStructure : function(valueStructureRuntimeId){   return loc_parentValuePortContainer==undefined?undefined : loc_parentValuePortContainer.getValueStructure(valueStructureRuntimeId);	}
 
 	};
 
@@ -89,7 +97,7 @@ var loc_createEmptyValuePortContainer = function(id, parentValuePortContainer){
 //id id assigned to valuecontext
 //
 //it has parent group, so that some variable is from parent
-var loc_createValuePortContainer = function(id, valuePortContainerDef, variableDomainDef, parentValuePortContainer, variableMan){
+var loc_createValueContext = function(id, valueContextDef, variableDomainDef, parentValueContext, variableMan){
 	
 	var loc_variableMan;
 
@@ -97,11 +105,10 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	var loc_id;
 	
 	//parent context which some variable can get from
-	var loc_parentValuePortContainer;
+	var loc_parentValueContext;
 	
 	//valueStructures in the context
 	var loc_valueStructures = {};
-	var loc_valueStructureInfoById = {};
 	
 	//value structure id in sequence
 	var loc_valueStructureRuntimeIds = [];
@@ -172,64 +179,42 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			});
 		}
 		
-		var valueStructureName;// = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
+		var valueStructureName = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
 
 		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, valueStructureName, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
 	
 	
-	var loc_init = function(id, valuePortContainerDef, variableDomainDef, parentValuePortContainer, variableDomain){
+	var loc_init = function(id, valueContextDef, variableDomainDef, parentValueContext, variableDomain){
 		loc_id = id;
-		loc_parentValuePortContainer = parentValuePortContainer;
+		loc_parentValueContext = parentValueContext;
 		loc_variableMan = variableMan;
 
-		_.each(valuePortContainerDef[node_COMMONATRIBUTECONSTANT.CONTAINERVALUEPORTS_VALUEPORTGROUP], function(valuePortGroupDef){
-			var valuePortGroupName = valuePortGroupDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-			var belongToGroup = loc_valueStructures[valuePortGroupName];
-			if(belongToGroup==undefined){
-				belongToGroup = {};
-				loc_valueStructures[valuePortGroupName] = belongToGroup;
-			}
-			
-			_.each(valuePortGroupDef[node_COMMONATRIBUTECONSTANT.GROUPVALUEPORTS_VALUEPORT], function(valuePortDef, i){
-				var valuePortName = valuePortDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-				var belongToValuePort = belongToGroup[valuePortName];
-				if(belongToValuePort==undefined){
-					belongToValuePort = {};
-					belongToGroup[valuePortName] = belongToValuePort;
-				}
+		loc_valueStructureRuntimeIds = valueContextDef==undefined?[] : valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURE];
+		_.each(loc_valueStructureRuntimeIds, function(valueStructureRuntimeId){
+			var valueStructure;
+			if(loc_parentValueContext==undefined || loc_parentValueContext.getValueStructure(valueStructureRuntimeId)==undefined){
+				//value structure not found in parent, then build in current group
+				var valueStructureRuntime = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId];
+				var valueStructureRuntimeInitValue = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INITVALUE];
+				var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INFO];
+				var initMode = valueStructureRuntimeInfo==undefined?undefined:valueStructureRuntimeInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE];
+				if(initMode==undefined)   initMode = node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO;
 				
-				_.each(valuePortDef[node_COMMONATRIBUTECONSTANT.VALUEPORT_VALUESTRUCTURE], function(valueStructureRuntimeId, i){
-					var valueStructure;
-					if(loc_parentValuePortContainer==undefined || loc_parentValuePortContainer.getValueStructure(valueStructureRuntimeId)==undefined){
-						//value structure not found in parent, then build in current group
-						var valueStructureRuntime = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId];
-						var valueStructureRuntimeInitValue = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INITVALUE];
-						var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INFO];
-						var initMode = valueStructureRuntimeInfo==undefined?undefined:valueStructureRuntimeInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE];
-						if(initMode==undefined)   initMode = node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO;
-						
-						if(initMode == node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO){
-							//build with all variable
-							valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue);
-						}
-						else{
-							//build empty value structure
-							valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue, false);
-						}
-					}
-					else{
-						//value structure from parent
-						valueStructure = loc_createSoftValueStructureWrapper(valueStructureRuntimeId, loc_parentValuePortContainer);
-					}
-					belongToValuePort[valueStructureRuntimeId] = valueStructure;
-					loc_valueStructureInfoById[valueStructureRuntimeId] = {
-						groupName : valuePortGroupName,
-						valuePortName : valuePortName
-					};
-					loc_valueStructureRuntimeIds.push(valueStructureRuntimeId);
-				});
-			});
+				if(initMode == node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO){
+					//build with all variable
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue);
+				}
+				else{
+					//build empty value structure
+					valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue, false);
+				}
+			}
+			else{
+				//value structure from parent
+				valueStructure = loc_createSoftValueStructureWrapper(valueStructureRuntimeId, parentValueContext);
+			}
+			loc_valueStructures[valueStructureRuntimeId] = valueStructure;
 		});
 	};
 	
@@ -247,7 +232,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			return out;
 		},
 
-		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
+		getParentValueContext : function(){   return loc_parentValueContext;    },
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
@@ -312,10 +297,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			if(wrapper!=undefined)  return wrapper.getValueStructure();
 		},
 		
-		getValueStructureWrapper : function(valueStructureRuntimeId){
-			var valueStructureInfo = loc_valueStructureInfoById[valueStructureRuntimeId];
-			return valueStructureInfo==undefined?undefined : loc_valueStructures[valueStructureInfo.groupName][valueStructureInfo.valuePortName][valueStructureRuntimeId];   
-		},
+		getValueStructureWrapper : function(valueStructureRuntimeId){   return loc_valueStructures[valueStructureRuntimeId];   },
 		
 		getSolidValueStrcutreWrapper : function(valueStructureRuntimeId){
 			var out = this.getValueStructureWrapper(valueStructureRuntimeId);
@@ -333,7 +315,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		
 	};
 	
-	loc_init(id, valuePortContainerDef, variableDomainDef, parentValuePortContainer, variableMan);
+	loc_init(id, valueContextDef, variableDomainDef, parentValueContext, variableMan);
 	return loc_out;
 };
 
@@ -446,6 +428,6 @@ nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node
 
 
 //Register Node by Name
-packageObj.createChildNode("createVariableDomain", nod_createVariableDomain); 
+packageObj.createChildNode("createVariableDomain11", nod_createVariableDomain); 
 
 })(packageObj);

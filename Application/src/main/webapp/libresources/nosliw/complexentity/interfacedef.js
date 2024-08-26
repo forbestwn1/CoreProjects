@@ -20,11 +20,13 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  **************************************
 
-var node_makeObjectEntityObjectInterface = function(rawEntity, valueContextId, bundleCore){
+var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePortContainerId, externalValuePortContainerId, bundleCore){
 	
 	var loc_rawEntity = rawEntity;
 	
-	var loc_valueContextId = valueContextId;
+	var loc_internalValuePortContainerId = internalValuePortContainerId;
+	
+	var loc_externalValuePortContainerId = externalValuePortContainerId;
 	
 	var loc_bundleCore = bundleCore;
 	
@@ -32,9 +34,13 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, valueContextId, b
 
 		getEntityInitRequest : function(handlers, request){   return loc_rawEntity.getEntityInitRequest==undefined?undefined:loc_rawEntity.getEntityInitRequest(handlers, request);     },
 
-		getValueContextId : function(){   return loc_valueContextId;   },
+		getInternalValuePortContainerId : function(){   return loc_internalValuePortContainerId;   },
 		
-		getValueContext : function(){    return loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);   },
+		getInternalValuePortContainer : function(){    return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_internalValuePortContainerId);   },
+
+		getExternalValuePortContainerId : function(){   return loc_externalValuePortContainerId;   },
+		
+		getExternalValuePortContainer : function(){    return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_externalValuePortContainerId);   },
 
 		getBundle : function(){   return loc_bundleCore;  },
 		

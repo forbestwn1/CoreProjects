@@ -2,26 +2,39 @@ package com.nosliw.core.application.common.valueport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
+@HAPEntityWithAttribute
 public class HAPContainerValuePorts extends HAPSerializableImp{
 
-	private List<HAPGroupValuePorts> m_valuePortGroupByName;
+	@HAPAttribute
+	public static String DEFAULTGROUPNAME = "defaultGroupName";
+	
+	@HAPAttribute
+	public static String VALUEPORTGROUP = "valuePortGroup";
+	
+	
+	private List<HAPGroupValuePorts> m_valuePortGroups;
 
-	private String m_defaultName;
+	private String m_defaultGroupName;
 	
 	private int m_idIndex = 0;
 	
 	public HAPContainerValuePorts() {
-		this.m_valuePortGroupByName = new ArrayList<HAPGroupValuePorts>();
+		this.m_valuePortGroups = new ArrayList<HAPGroupValuePorts>();
 	}
-	
-	public List<HAPGroupValuePorts> getValuePortGroups(){  return this.m_valuePortGroupByName;  }
+	 
+	public List<HAPGroupValuePorts> getValuePortGroups(){  return this.m_valuePortGroups;  }
 	
 	public HAPGroupValuePorts getValuePortGroup(String groupId) {
-		for(HAPGroupValuePorts valuePortGroup : this.m_valuePortGroupByName) {
+		for(HAPGroupValuePorts valuePortGroup : this.m_valuePortGroups) {
 			if(groupId.equals(valuePortGroup.getName())) {
 				return valuePortGroup;
 			}
@@ -32,7 +45,7 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 	public void addValuePortGroup(HAPGroupValuePorts group, boolean isDefault) {
 		HAPGroupValuePorts added = this.addValuePortGroup(group);
 		if(isDefault) {
-			this.m_defaultName = added.getName();
+			this.m_defaultGroupName = added.getName();
 		}
 	}
 
@@ -43,7 +56,7 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 			this.m_idIndex++;
 			group.setName(name);
 		}
-		this.m_valuePortGroupByName.add(group);
+		this.m_valuePortGroups.add(group);
 		return group;
 	}
 
@@ -87,11 +100,18 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 	}
 	
 	private String getDefaultGroupName() {
-		if(this.m_defaultName!=null) {
-			return this.m_defaultName;
+		if(this.m_defaultGroupName!=null) {
+			return this.m_defaultGroupName;
 		} else {
 			//use the first one as default
-			return this.m_valuePortGroupByName.get(0).getName();
+			return this.m_valuePortGroups.get(0).getName();
 		}
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DEFAULTGROUPNAME, this.m_defaultGroupName);
+		jsonMap.put(VALUEPORTGROUP, HAPManagerSerialize.getInstance().toStringValue(m_valuePortGroups, HAPSerializationFormat.JSON));
 	}
 }

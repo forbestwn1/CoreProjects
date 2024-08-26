@@ -16,6 +16,51 @@ var packageObj = library.getChildPackage();
 	var node_uiDataOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createValuePort = function(valuePortContainerId, valuePortGroupId, valuePortId, varDomain){
+
+	var loc_varDomain = varDomain;
+	var loc_valuePortContainer = varDomain.getValuePortContainer(valuePortContainerId);
+	
+	var loc_getValueStructure = function(valueStructureRuntimeId){
+		return loc_valuePortContainer.getValueStructure(valueStructureRuntimeId);
+	}
+	
+	var loc_out = {
+		
+		createVariable : function(elementId){
+			return loc_valuePortContainer.createVariableById(elementId);			
+		},
+		
+		getValueRequest : function(elementId, handlers, request){        
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			out.addRequest(loc_getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+				success: function(request, dataValue){
+					return dataValue.value;
+				}
+			}));
+			return out;
+		},
+
+		setValueRequest : function(elementId, value, handlers, request){        
+			return loc_getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
+		},
+		
+		setValuesRequest : function(setValueInfos, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			_.each(setValueInfos, function(setValueInfo, i){
+				var elementId = setValueInfo.elementId;
+				out.addRequest(loc_getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+			});
+			return out;			
+		},
+		
+	};
+	
+	return loc_out;
+};
+
+
+
 var node_createValuePortValueContext = function(valueContextId, varDomain){
 	
 	var loc_varDomain = varDomain;
@@ -123,5 +168,6 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 //Register Node by Name
 packageObj.createChildNode("createValuePortValueContext", node_createValuePortValueContext); 
 packageObj.createChildNode("createValuePortValueFlat", node_createValuePortValueFlat); 
+packageObj.createChildNode("createValuePort", node_createValuePort); 
 
 })(packageObj);
