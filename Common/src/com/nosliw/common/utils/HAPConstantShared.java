@@ -897,6 +897,11 @@ public class HAPConstantShared {
 
 
 
+		public static final String VALUEPORTGROUP_TYPE_VALUECONTEXT = "valueContext";
+		public static final String VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION = "expressionInteractive";
+
+
+
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
 		public static final String VALUEPORT_TYPE_INTERACTIVE_REQUEST = "interactiveRequest";

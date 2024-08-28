@@ -7,25 +7,24 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 public class HAPUtilityValuePortVariable {
 
-	public static void updateValuePortElements(HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort) {
+	public static void updateValuePortElements(HAPContainerVariableInfo varInfoContainer, HAPDomainValueStructure valueStructureDomain) {
 		Map<String, HAPIdElement> variables = varInfoContainer.getVariables();
 		for(String key : variables.keySet()) {
 			HAPIdElement varId = variables.get(key);
 			HAPInfoCriteria varCriteriaInfo = varInfoContainer.getVaraibleCriteriaInfo(key);
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, withInternalValuePort);
+			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, valueStructureDomain);
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
 //				if(dataEle.getStatus().equals(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN)) 
 				{
 					if(!HAPUtilityBasic.isEquals(dataEle.getCriteria(), varCriteriaInfo.getCriteria())){
-						HAPValuePort1111 valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
 						dataEle.setCriteria(varCriteriaInfo.getCriteria());
-						valuePort.updateElement(varId, dataEle);
 //						valueStructureDomain.setIsDirty(true);
 					}
 				}
@@ -33,11 +32,11 @@ public class HAPUtilityValuePortVariable {
 		}
 	}
 	
-	public static void buildVariableInfo(HAPContainerVariableInfo varInfoContainer, HAPWithInternalValuePort withInternalValuePort) {
+	public static void buildVariableInfo(HAPContainerVariableInfo varInfoContainer, HAPDomainValueStructure valueStructureDomain) {
 		Map<String, HAPIdElement> variables = varInfoContainer.getVariables();
 		for(String key : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = varInfoContainer.getVaraibleCriteriaInfo(key);
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(variables.get(key), withInternalValuePort); 
+			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(variables.get(key), valueStructureDomain); 
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;

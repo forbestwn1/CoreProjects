@@ -15,16 +15,10 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 public class HAPContainerValuePorts extends HAPSerializableImp{
 
 	@HAPAttribute
-	public static String DEFAULTGROUPNAME = "defaultGroupName";
-	
-	@HAPAttribute
 	public static String VALUEPORTGROUP = "valuePortGroup";
-	
 	
 	private List<HAPGroupValuePorts> m_valuePortGroups;
 
-	private String m_defaultGroupName;
-	
 	private int m_idIndex = 0;
 	
 	public HAPContainerValuePorts() {
@@ -42,13 +36,6 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 		return null;
 	}
 	
-	public void addValuePortGroup(HAPGroupValuePorts group, boolean isDefault) {
-		HAPGroupValuePorts added = this.addValuePortGroup(group);
-		if(isDefault) {
-			this.m_defaultGroupName = added.getName();
-		}
-	}
-
 	public HAPGroupValuePorts addValuePortGroup(HAPGroupValuePorts group) {
 		String name = group.getName();
 		if(HAPUtilityBasic.isStringEmpty(name)) {
@@ -100,18 +87,13 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 	}
 	
 	private String getDefaultGroupName() {
-		if(this.m_defaultGroupName!=null) {
-			return this.m_defaultGroupName;
-		} else {
-			//use the first one as default
-			return this.m_valuePortGroups.get(0).getName();
-		}
+		//use the first one as default
+		return this.m_valuePortGroups.get(0).getName();
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DEFAULTGROUPNAME, this.m_defaultGroupName);
 		jsonMap.put(VALUEPORTGROUP, HAPManagerSerialize.getInstance().toStringValue(m_valuePortGroups, HAPSerializationFormat.JSON));
 	}
 }

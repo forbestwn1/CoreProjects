@@ -89,7 +89,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	
 	@Override
 	public HAPContainerVariableInfo clone() {
-		HAPContainerVariableInfo out = new HAPContainerVariableInfo(this.m_withInternalValuePort);
+		HAPContainerVariableInfo out = new HAPContainerVariableInfo(this.m_withInternalValuePort, this.m_valueStructureDomain);
 		out.m_criteriaInfosByKey.putAll(this.m_criteriaInfosByKey);
 		out.m_variableIdByName.putAll(this.m_variableIdByName);
 		return out;

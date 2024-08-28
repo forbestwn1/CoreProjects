@@ -15,7 +15,12 @@ public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implement
 
 	public HAPManualBlockTestComplexScript() {
 	}
-	
+
+	@Override
+	public void init() {
+		super.init();
+	}
+
 	@Override
 	public HAPResourceId getScrip() {		return (HAPResourceId)this.getAttributeValueOfValue(SCRIPT);	}
 	public void setScript(HAPResourceId scriptResourceId) {   this.setAttributeValueWithValue(SCRIPT, scriptResourceId);  }

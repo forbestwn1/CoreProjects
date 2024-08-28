@@ -8,6 +8,7 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickImp imple
 
 	@Override
 	public void init() {	
+		super.init();
 	}
 
 	@Override

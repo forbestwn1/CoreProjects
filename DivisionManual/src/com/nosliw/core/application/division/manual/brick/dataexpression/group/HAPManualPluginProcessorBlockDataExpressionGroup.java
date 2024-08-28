@@ -61,7 +61,7 @@ public class HAPManualPluginProcessorBlockDataExpressionGroup extends HAPManualP
 		}
 		
 		//build var criteria infor in var info container according to value port def
-		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, groupBlock);
+		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, processContext.getCurrentBundle().getValueStructureDomain());
 	}
 
 	@Override

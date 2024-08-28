@@ -51,9 +51,9 @@ import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualUtilityValueStructureDomain {
+public class HAPManualUtilityValueContextProcessor {
 
-	public static void buildValueStructureDomain(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+	public static void processValueContext(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
 		
 		buildValueStructureComplexTree(rootBrickWrapper, processContext, manualBrickMan, runtimeEnv);
 		
@@ -173,7 +173,7 @@ public class HAPManualUtilityValueStructureDomain {
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();
 					for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
 						HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
-						if(!inheritPart.isEmpty()) {
+						if(!inheritPart.isEmpty(valueStructureDomain)) {
 							inheritParts.add(inheritPart);
 						}
 					}

@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 
 //store result for resolve structure element reference path
 //this can be used:
@@ -44,6 +45,7 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String FINALELEMENT = "finalElement";
 	
+	public HAPDomainValueStructure valueStructureDomain;
 	
 	//ref to brick
 	public HAPIdBrickInBundle brickId;

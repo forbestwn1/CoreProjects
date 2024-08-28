@@ -19,6 +19,10 @@ public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPlug
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
+	//build other value port
+	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postProcessOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	
 	//value context extension, variable resolve
 	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}

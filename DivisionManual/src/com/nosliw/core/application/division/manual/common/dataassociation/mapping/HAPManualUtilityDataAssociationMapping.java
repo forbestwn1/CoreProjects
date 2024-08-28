@@ -6,9 +6,11 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelConstant;
 import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelValuePort;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
@@ -23,9 +25,8 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -34,10 +35,12 @@ public class HAPManualUtilityDataAssociationMapping {
 	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
 		
 		HAPIdValuePortInBundle toValuePortRef = rootEleId.getValuePortId();
-		HAPValuePort toValuePort = HAPUtilityValuePort.getValuePortInBundle(toValuePortRef, bundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 
 		String toValueStructureId = rootEleId.getValueStructureId();
-		HAPDefinitionStructure toValueStructure=bundle.getValueStructureDomain().getStructureDefinitionByRuntimeId(toValueStructureId);
+		
+		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
+		
+		HAPDefinitionStructure toValueStructure=toValueStructureDomain.getStructureDefinitionByRuntimeId(toValueStructureId);
 
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
 		HAPUtilityStructure.traverseElement(structureEle, rootEleId.getRootName(), new HAPProcessorStructureElement() {

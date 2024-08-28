@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInValueContext{
 
@@ -26,7 +26,7 @@ public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInV
 	public List<HAPManualPartInValueContext> getChildren(){   return this.m_children;   }
 	
 	public String addChild(HAPManualPartInValueContext child) {
-		if(child.isEmpty()) {
+		if(child.isEmpty(null)) {
 			return null;
 		}
 		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());
@@ -57,10 +57,10 @@ public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInV
 	}
 	
 	@Override
-	public boolean isEmpty() {	
+	public boolean isEmpty(HAPDomainValueStructure valueStructureDomain) {	
 		boolean out = true;
 		for(HAPManualPartInValueContext child : this.m_children) {
-			if(!child.isEmpty()) {
+			if(!child.isEmpty(valueStructureDomain)) {
 				out = false;
 			}
 		}

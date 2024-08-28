@@ -7,13 +7,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
-import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 
 @HAPEntityWithAttribute
-public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive, HAPWithValuePortGroup{
+public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive{
 	
 	private HAPInteractiveRequest m_request;
 	private HAPInteractiveResultExpression m_result;
@@ -51,7 +47,6 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 		HAPIdElement eleId = HAPUtilityStructureElementReference.resolveElementReferenceExternal(ref, null, this);
 		return eleId;
 	}
-*/
 	
 	@Override
 	public HAPGroupValuePorts getExternalValuePortGroup() {
@@ -86,6 +81,7 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 		
 		return group;	
 	}
+*/
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

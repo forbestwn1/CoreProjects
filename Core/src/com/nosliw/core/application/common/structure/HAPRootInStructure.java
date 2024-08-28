@@ -21,7 +21,9 @@ public class HAPRootInStructure extends HAPEntityInfoWritableImp{
 	
 	public HAPRootInStructure(HAPElementStructure definition, HAPEntityInfo entityInfo) {
 		this.m_definition = definition;
-		entityInfo.cloneToEntityInfo(this);
+		if(entityInfo!=null) {
+			entityInfo.cloneToEntityInfo(this);
+		}
 	}
 
 	public HAPElementStructure getDefinition() {   return this.m_definition;   }

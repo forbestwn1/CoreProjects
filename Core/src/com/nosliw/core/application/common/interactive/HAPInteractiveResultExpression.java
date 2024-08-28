@@ -14,11 +14,9 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
@@ -30,21 +28,17 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 	
 	private HAPResultElementInInteractiveExpression m_result;
 	
-	private HAPValuePort1111 m_internalValuePort;
-	private HAPValuePort1111 m_externalValuePort;
+//	private HAPValuePort1111 m_internalValuePort;
+//	private HAPValuePort1111 m_externalValuePort;
 	
 	public HAPInteractiveResultExpression(HAPResultElementInInteractiveExpression result) {
 		this.m_result = result;
-		this.m_internalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_IN);
-		this.m_externalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_OUT);
+//		this.m_internalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_IN);
+//		this.m_externalValuePort = new HAPValuePortInteractiveExpressionResult(this.m_result, HAPConstantShared.IO_DIRECTION_OUT);
 	}
 	
 	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  }
 	
-	public HAPValuePort1111 getInternalValuePort() {	return this.m_internalValuePort;	}
-	
-	public HAPValuePort1111 getExternalValuePort() {	return this.m_externalValuePort;	}
-
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(RESULT, HAPManagerSerialize.getInstance().toStringValue(this.getResult(), HAPSerializationFormat.JSON));

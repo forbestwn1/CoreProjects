@@ -34,6 +34,7 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	}
 	
 	public List<String> getValueStructureIds(){    return this.m_valueStructures;     }
+	public void addValueStructureId(String id) {    this.m_valueStructures.add(id);    }
 
 	public String getType() {     return this.m_type;    }
 

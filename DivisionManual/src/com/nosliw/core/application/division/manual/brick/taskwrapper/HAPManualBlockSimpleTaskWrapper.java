@@ -5,6 +5,10 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
 public class HAPManualBlockSimpleTaskWrapper extends HAPManualBrickImp implements HAPBlockTaskWrapper{
 
+	@Override
+	public void init() {
+		super.init();
+	}
 	
 	@Override
 	public String getTaskType() {	return (String)this.getAttributeValueOfValue(TASKTYPE);	}

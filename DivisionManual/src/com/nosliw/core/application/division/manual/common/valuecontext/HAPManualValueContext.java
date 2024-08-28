@@ -48,7 +48,14 @@ public class HAPManualValueContext extends HAPSerializableImp implements HAPValu
 		return valueStructureIds;
 	}
 	
-	public boolean isEmpty() {   return this.m_parts.isEmpty();      }
+	public boolean isEmpty(HAPDomainValueStructure valueStructureDomain) {
+		for(HAPManualPartInValueContext part : this.m_parts) {
+			if(!part.isEmpty(valueStructureDomain)) {
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	public List<HAPManualPartInValueContext> getParts(){   return this.m_parts;  }
 	

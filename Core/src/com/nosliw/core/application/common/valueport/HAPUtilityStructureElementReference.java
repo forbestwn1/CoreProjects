@@ -99,8 +99,8 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	public static HAPResultReferenceResolve analyzeElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInBundle(reference.getValuePortId(), bundle, resourceMan, runtimeInfo);
-		HAPResultReferenceResolve resolve = analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, bundle.getValueStructureDomain());
+		HAPInfoValuePort valuePortInfo = HAPUtilityValuePort.getValuePortInBundle(reference.getValuePortId(), bundle, resourceMan, runtimeInfo);
+		HAPResultReferenceResolve resolve = analyzeElementReferenceValuePort(reference, valuePortInfo.getValuePort(), resolveConfigure, valuePortInfo.getValueStructureDomain());
 		if(resolve!=null) {
 			resolve.brickId = reference.getValuePortId().getBrickId();
 		}
@@ -120,6 +120,7 @@ public class HAPUtilityStructureElementReference {
 	public static HAPResultReferenceResolve analyzeElementReferenceValuePort(HAPReferenceElement reference, HAPValuePort valuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
 		HAPResultReferenceResolve resolve  = resolveReference(reference, valuePort, resolveConfigure, valueStructureDomain);
 		if(resolve!=null) {
+			resolve.valueStructureDomain = valueStructureDomain;
 			resolve.valuePortId = reference.getValuePortId().getValuePortId();
 			resolve.elementPath = reference.getElementPath();
 		}

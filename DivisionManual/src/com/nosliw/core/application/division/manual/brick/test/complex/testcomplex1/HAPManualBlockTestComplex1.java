@@ -5,4 +5,9 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
 public class HAPManualBlockTestComplex1 extends HAPManualBrickImp implements HAPBlockTestComplex1{
 
+	@Override
+	public void init() {
+		super.init();
+	}
+
 }

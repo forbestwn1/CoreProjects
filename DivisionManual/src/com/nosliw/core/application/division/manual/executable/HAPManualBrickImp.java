@@ -21,6 +21,11 @@ import com.nosliw.data.core.resource.HAPResourceId;
 public class HAPManualBrickImp extends HAPManualBrick{
 
 	@Override
+	public void init() {
+		super.init();
+	}
+	
+	@Override
 	public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan) {
 		switch(format) {
 		case JSON:

@@ -13,12 +13,12 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
-import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
+import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
 @HAPEntityWithAttribute
-public class HAPBlockServiceInterface extends HAPBrickWithEntityInfoSimple{
+public class HAPBlockServiceInterface extends HAPBrickImpWithEntityInfo{
 
 	public static final String CHILD_INTERFACE = "interface";
 

@@ -8,6 +8,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements HAPEntityInfo{
 
 	@Override
+	public void init() {
+		super.init();
+	}
+	
+	@Override
 	public String getId() {   return (String)this.getAttributeValueOfValue(ID);    }
 
 	@Override

@@ -14,6 +14,7 @@ public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implem
 
 	@Override
 	public void init() {
+		super.init();
 		this.setAttributeIndex(0);
 	}
 	

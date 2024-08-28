@@ -11,6 +11,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPWrapperValue;
+import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
@@ -24,7 +26,6 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	public HAPBrickImp() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
-	
 	
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
@@ -44,6 +45,16 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		}
 		return null;
 	}
+	
+	public Object getAttributeValueOfValue(String attributeName) {
+		Object out = null;
+		HAPWrapperValueOfValue valueWrapper = (HAPWrapperValueOfValue)this.getAttributeValueWrapper(attributeName);
+		if(valueWrapper!=null) {
+			out = valueWrapper.getValue();
+		}
+		return out;
+	}
+	
 	public void setAttribute(HAPAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
 			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
@@ -52,6 +63,15 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 			}
 		}
 		this.m_attributes.add(attribute);
+	}
+	
+	protected HAPWrapperValue getAttributeValueWrapper(String attributeName) {
+		HAPWrapperValue out = null; 
+		HAPAttributeInBrick attr = this.getAttribute(attributeName);
+		if(attr!=null) {
+			out = attr.getValueWrapper();
+		}
+		return out;
 	}
 	
 	@Override

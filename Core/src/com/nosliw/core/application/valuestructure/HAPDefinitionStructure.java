@@ -39,6 +39,8 @@ public class HAPDefinitionStructure extends HAPSerializableImp{
 
 	public Set<String> getRootNames(){   return this.m_roots.keySet();    }
 	
+	public boolean isEmpty() {   return this.m_roots.isEmpty();   }
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(ROOT, HAPManagerSerialize.getInstance().toStringValue(m_roots, HAPSerializationFormat.JSON));

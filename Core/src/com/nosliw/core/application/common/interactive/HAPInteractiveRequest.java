@@ -17,7 +17,6 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
@@ -48,15 +47,11 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	}
 
 	private void initValuePort() {
-		this.m_internalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
-		this.m_externalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
+//		this.m_internalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
+//		this.m_externalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
 	}
 	
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }
-	
-	public HAPValuePort1111 getInternalValuePort() {	return this.m_internalValuePort;	}
-	
-	public HAPValuePort1111 getExternalValuePort() {	return this.m_externalValuePort;	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

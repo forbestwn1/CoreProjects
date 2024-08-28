@@ -8,7 +8,7 @@ import java.util.Map;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualPartInValueContextSimple extends HAPManualPartInValueContext{
 
@@ -71,7 +71,19 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 	}
 
 	@Override
-	public boolean isEmpty() {	return this.m_valueStructures.isEmpty();	}
+	public boolean isEmpty(HAPDomainValueStructure valueStructureDomain) {
+		if(!this.m_valueStructures.isEmpty() && valueStructureDomain==null) {
+			return false;
+		}
+		
+		for(HAPManualInfoValueStructure vsInfo : this.m_valueStructures) {
+			boolean isEmpty = valueStructureDomain.getStructureDefinitionByRuntimeId(vsInfo.getValueStructureRuntimeId()).isEmpty();
+			if(!isEmpty) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

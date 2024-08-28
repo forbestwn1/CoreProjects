@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 
 public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
 	
@@ -23,7 +23,7 @@ public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
 	abstract public HAPManualPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
 	abstract public HAPManualPartInValueContext cloneValueContextPart();
 	
-	abstract public boolean isEmpty();
+	abstract public boolean isEmpty(HAPDomainValueStructure valueStructureDomain);
 
 	public void cloneToPartValueContext(HAPManualPartInValueContext part) {
 		this.cloneToEntityInfo(part);

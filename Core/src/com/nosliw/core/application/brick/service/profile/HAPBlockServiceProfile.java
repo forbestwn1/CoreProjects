@@ -14,11 +14,11 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
-import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
+import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute
-public class HAPBlockServiceProfile extends HAPBrickWithEntityInfoSimple{
+public class HAPBlockServiceProfile extends HAPBrickImpWithEntityInfo{
 
 	public static final String CHILD_INTERFACE = "interface";
 	
