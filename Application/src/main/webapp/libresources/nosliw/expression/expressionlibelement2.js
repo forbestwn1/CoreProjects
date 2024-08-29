@@ -23,11 +23,9 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibrary, interactiveValuePortsGroup){
+var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibrary){
 	
 	var loc_expressionDataEleInLibrary = expressionDataEleInLibrary;
-	
-	var loc_interactiveValuePortsGroup = interactiveValuePortsGroup;
 	
 	var loc_interactiveValuePorts =  node_createInteractiveValuePortsExpression();
 	
@@ -43,11 +41,10 @@ var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibr
 				return loc_interactiveValuePorts.getValuePort(valuePortName);
 			}
 		});
-		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, node_buildWithValuePort(loc_interactiveValuePortsGroup.getWithValuePort()), undefined, {
+		out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, withValuePortInterface, undefined, {
 			success : function(request, result){
-				return loc_interactiveValuePortsGroup.getSetResultValueRequest(result);
-//				loc_interactiveValuePorts.setResultValue(result);
-//				return result;
+				loc_interactiveValuePorts.setResultValue(result);
+				return result;
 			}
 		}));
 		return out;
@@ -99,6 +96,6 @@ nosliw.registerSetNodeDataEvent("valueport.buildWithValuePort", function(){	node
 
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 
+packageObj.createChildNode("createDataExpressionElementInLibrary111", node_createDataExpressionElementInLibrary); 
 
 })(packageObj);

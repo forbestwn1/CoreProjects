@@ -27,7 +27,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 		
 		var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
 		if(complexEntityInterface!=undefined){
-			loc_valuePort = node_createValuePort(complexEntityInterface.getExternalValuePortContainerId(), valuePortGroup, valuePortName, complexEntityInterface.getBundle().getVariableDomain());
+			loc_valuePort = node_createValuePort(complexEntityInterface.getExternalValuePortContainerId(), complexEntityInterface.getBundle().getVariableDomain());
 		}
 		
 		if(loc_valuePort!=undefined){
@@ -40,7 +40,7 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 		
 		var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
 		if(complexEntityInterface!=undefined){
-			loc_valuePort = node_createValuePort(complexEntityInterface.getInternalValuePortContainerId(), valuePortGroup, valuePortName, complexEntityInterface.getBundle().getVariableDomain());
+			loc_valuePort = node_createValuePort(complexEntityInterface.getInternalValuePortContainerId(), complexEntityInterface.getBundle().getVariableDomain());
 		}
 		
 		if(loc_valuePort!=undefined){

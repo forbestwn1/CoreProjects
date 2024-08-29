@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
 	var node_createValuePortValueFlat;
+	var node_createValuePort;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -43,6 +44,31 @@ var node_interactiveUtility = function(){
 	
 	return loc_out;
 }();
+
+var node_createInteractiveExpressionValuePortsGroup = function(valuePortContainerId, varDomain){
+	
+	var loc_valuePortContainer = varDomain.getValuePortContainer(valuePortContainerId);
+	var loc_valuePort = node_createValuePort(valuePortContainerId, varDomain);
+	
+	var loc_out = {
+		
+		getSetResultValueRequest : function(resultValue, handlers, request){
+			var valueStructureId = loc_valuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT);
+			return loc_valuePort.getValueRequest(node_createValuePortElementInfo(valueStructureId, node_COMMONCONSTANT.NAME_ROOT_RESULT));
+		},
+		
+		getWithValuePort : function(){
+			return {
+				getValuePort : function(valuePortGroup, valuePortName){
+					return loc_valuePort;
+				}
+			};
+		}
+		
+	};
+
+	return loc_out;
+};
 
 var node_createInteractiveValuePortsExpression = function(){
 	
@@ -135,10 +161,12 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
+nosliw.registerSetNodeDataEvent("valueport.createValuePort", function(){node_createValuePort = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("interactiveUtility", node_interactiveUtility); 
 packageObj.createChildNode("createInteractiveValuePortsExpression", node_createInteractiveValuePortsExpression); 
 packageObj.createChildNode("createInteractiveValuePortsTask", node_createInteractiveValuePortsTask); 
+packageObj.createChildNode("createInteractiveExpressionValuePortsGroup", node_createInteractiveExpressionValuePortsGroup); 
 
 })(packageObj);

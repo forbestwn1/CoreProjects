@@ -102,6 +102,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	//valueStructures in the context
 	var loc_valueStructures = {};
 	var loc_valueStructureInfoById = {};
+	var loc_valueStructureIdByGroupAndValuePortType = {};
 	
 	//value structure id in sequence
 	var loc_valueStructureRuntimeIds = [];
@@ -185,20 +186,28 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 		_.each(valuePortContainerDef[node_COMMONATRIBUTECONSTANT.CONTAINERVALUEPORTS_VALUEPORTGROUP], function(valuePortGroupDef){
 			var valuePortGroupName = valuePortGroupDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+			var valuePortGroupType = valuePortGroupDef[node_COMMONATRIBUTECONSTANT.GROUPVALUEPORTS_GROUPTYPE];
 			var belongToGroup = loc_valueStructures[valuePortGroupName];
 			if(belongToGroup==undefined){
 				belongToGroup = {};
 				loc_valueStructures[valuePortGroupName] = belongToGroup;
 			}
 			
+			var idBelongToGroup = loc_valueStructureIdByGroupAndValuePortType[valuePortGroupType];
+			if(idBelongToGroup==undefined){
+				idBelongToGroup = {};
+				loc_valueStructureIdByGroupAndValuePortType[valuePortGroupType] = idBelongToGroup;
+			}
+			
 			_.each(valuePortGroupDef[node_COMMONATRIBUTECONSTANT.GROUPVALUEPORTS_VALUEPORT], function(valuePortDef, i){
 				var valuePortName = valuePortDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+				var valuePortType = valuePortDef[node_COMMONATRIBUTECONSTANT.VALUEPORT_TYPE];
 				var belongToValuePort = belongToGroup[valuePortName];
 				if(belongToValuePort==undefined){
 					belongToValuePort = {};
 					belongToGroup[valuePortName] = belongToValuePort;
 				}
-				
+
 				_.each(valuePortDef[node_COMMONATRIBUTECONSTANT.VALUEPORT_VALUESTRUCTURE], function(valueStructureRuntimeId, i){
 					var valueStructure;
 					if(loc_parentValuePortContainer==undefined || loc_parentValuePortContainer.getValueStructure(valueStructureRuntimeId)==undefined){
@@ -223,6 +232,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 						valueStructure = loc_createSoftValueStructureWrapper(valueStructureRuntimeId, loc_parentValuePortContainer);
 					}
 					belongToValuePort[valueStructureRuntimeId] = valueStructure;
+					idBelongToGroup[valuePortType] = valueStructureRuntimeId;
 					loc_valueStructureInfoById[valueStructureRuntimeId] = {
 						groupName : valuePortGroupName,
 						valuePortName : valuePortName
@@ -248,6 +258,10 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		},
 
 		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
+
+		getValueStructureIdByGroupAndValuePort : function(groupType, valuePortType){
+			return loc_valueStructureIdByGroupAndValuePortType[groupType][valuePortType];
+		},
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);

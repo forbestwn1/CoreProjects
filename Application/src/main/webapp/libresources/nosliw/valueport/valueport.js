@@ -16,7 +16,7 @@ var packageObj = library.getChildPackage();
 	var node_uiDataOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createValuePort = function(valuePortContainerId, valuePortGroupId, valuePortId, varDomain){
+var node_createValuePort = function(valuePortContainerId, varDomain){
 
 	var loc_varDomain = varDomain;
 	var loc_valuePortContainer = varDomain.getValuePortContainer(valuePortContainerId);

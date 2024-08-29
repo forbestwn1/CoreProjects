@@ -18,6 +18,7 @@ var packageObj = library;
     var node_createTaskContainerInterface;
 	var node_createTaskInterface;
 	var node_createDataExpressionElementInLibrary;
+	var node_createInteractiveExpressionValuePortsGroup;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -25,9 +26,9 @@ var node_createDataExpressionLibraryElementPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createDataExpressionLibraryElementComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createDataExpressionLibraryElementComponentCore(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}, handlers, request);
 		},
 	};
@@ -38,7 +39,7 @@ var node_createDataExpressionLibraryElementPlugin = function(){
 var loc_createDataExpressionLibraryElementComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
-	var loc_expressionData = node_createDataExpressionElementInLibrary(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE));
+	var loc_expressionData = node_createDataExpressionElementInLibrary(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE), node_createInteractiveExpressionValuePortsGroup(valueContextId, bundleCore.getVariableDomain()));
 	
 	var loc_envInterface = {};
 
@@ -89,6 +90,7 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", 
 nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionElementInLibrary", function(){node_createDataExpressionElementInLibrary = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createInteractiveExpressionValuePortsGroup", function(){	node_createInteractiveExpressionValuePortsGroup = this.getData();	});
 
 
 //Register Node by Name

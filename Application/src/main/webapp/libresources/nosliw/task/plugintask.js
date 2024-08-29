@@ -24,7 +24,7 @@ var node_createTaskPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(entityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createTaskCore(entityDef, configure);
 			}, handlers, request);
