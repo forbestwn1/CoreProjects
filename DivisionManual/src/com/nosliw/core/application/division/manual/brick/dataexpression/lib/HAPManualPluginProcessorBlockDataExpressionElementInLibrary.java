@@ -102,12 +102,12 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		externalReqeustValuePort.addValueStructureId(requestVSId);
 		externalValuePortGroup.addValuePort(externalReqeustValuePort, true);
 		
-		HAPValuePort internalResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST, HAPConstantShared.IO_DIRECTION_IN);
+		HAPValuePort internalResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, HAPConstantShared.IO_DIRECTION_IN);
 		internalResultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
 		internalResultValuePort.addValueStructureId(resultVSId);
 		internalValuePortGroup.addValuePort(internalResultValuePort, true);
 		
-		HAPValuePort externalResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST, HAPConstantShared.IO_DIRECTION_BOTH);
+		HAPValuePort externalResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, HAPConstantShared.IO_DIRECTION_BOTH);
 		externalResultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT);
 		externalResultValuePort.addValueStructureId(resultVSId);
 		externalValuePortGroup.addValuePort(externalResultValuePort, true);

@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_getApplicationInterface;
 	var node_createValuePortValueFlat;
 	var node_createValuePort;
+	var node_createValuePortElementInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -54,7 +55,7 @@ var node_createInteractiveExpressionValuePortsGroup = function(valuePortContaine
 		
 		getSetResultValueRequest : function(resultValue, handlers, request){
 			var valueStructureId = loc_valuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT);
-			return loc_valuePort.getValueRequest(node_createValuePortElementInfo(valueStructureId, node_COMMONCONSTANT.NAME_ROOT_RESULT));
+			return loc_valuePort.setValueRequest(node_createValuePortElementInfo(valueStructureId, node_COMMONCONSTANT.NAME_ROOT_RESULT), resultValue, handlers, request);
 		},
 		
 		getWithValuePort : function(){
@@ -162,6 +163,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 nosliw.registerSetNodeDataEvent("valueport.createValuePort", function(){node_createValuePort = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("interactiveUtility", node_interactiveUtility); 
