@@ -125,6 +125,9 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	public HAPContainerValuePorts getOtherInternalValuePortContainer() {   return this.m_otherInternalValuePortsContainer;    }
 	public HAPContainerValuePorts getOtherExternalValuePortContainer() {   return this.m_otherExternalValuePortsContainer;    }
 	
+	public HAPGroupValuePorts addOtherInternalValuePortGroup(HAPGroupValuePorts valuePortGroup) {     return this.getInternalValuePorts().addValuePortGroup(valuePortGroup);      }
+	public HAPGroupValuePorts addOtherExternalValuePortGroup(HAPGroupValuePorts valuePortGroup) {     return this.getExternalValuePorts().addValuePortGroup(valuePortGroup);      }
+	
 	@Override
 	public HAPContainerValuePorts getInternalValuePorts(){
 		HAPContainerValuePorts out = new HAPContainerValuePorts();

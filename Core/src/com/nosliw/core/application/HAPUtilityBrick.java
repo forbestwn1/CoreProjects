@@ -74,8 +74,6 @@ public class HAPUtilityBrick {
 		return new HAPInfoValuePortContainer(brick.getExternalValuePorts(), valueStructureDomain);
 	}
 	
-	
-	
 	public static HAPBrick getDescdentBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick out = null;
 		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
@@ -87,6 +85,10 @@ public class HAPUtilityBrick {
 			out = resourceData.getBrick();
 		}
 		return out;
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPIdBrickInBundle brickInBundleId, HAPBundle bundle) {
+		return getDescdentBrickLocal(bundle.getBrickWrapper(), new HAPPath(brickInBundleId.getIdPath()));
 	}
 	
 	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {

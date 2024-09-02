@@ -31,6 +31,9 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 	@HAPAttribute
 	public static String VARIABLEEXTENDED = "variableExtended";
 	
+	@HAPAttribute
+	public static String EVENT = "event";
+	
 	
 	HAPResourceId getScrip();
 	Map<String, Object> getParms();

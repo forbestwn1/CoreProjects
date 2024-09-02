@@ -30,7 +30,7 @@ var node_EntityIdInDomain = function(parm1, parm2){
 	}
 };	
 
-var node_createEntityDefinition = function(original){
+var node_createBrickDefinition = function(original){
 	var loc_entityDef = original;
 	
 	var loc_getAttributeByName = function(attrName){
@@ -67,6 +67,10 @@ var node_createEntityDefinition = function(original){
 
 		getOtherAttributeValue : function(attrName){
 			return loc_entityDef[attrName];
+		},
+		
+		getBrickType : function(){
+			return loc_entityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		},
 		
 		original : loc_entityDef
@@ -183,6 +187,6 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 
 //Register Node by Name
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
-packageObj.createChildNode("createEntityDefinition", node_createEntityDefinition); 
+packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
 
 })(packageObj);

@@ -48,17 +48,40 @@ var loc_createTaskCore = function(taskDef, configure){
 		return loc_indexId + "";
 	};
 
-	var loc_facadeTask = {
-		getItemVariableInfos : function(){
-		},
+	var loc_getExecuteTaskRequest = function(taskContext, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
-		getRequirement : function(){
+		//create task entity runtime
+		var childId = loc_createTaskId();
+		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(childId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+			success : function(request){
+				var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(childId);
+				var taskCoreEntity = childNodeObj.getChildValue().getCoreEntity();
+				var expressionInterface = node_getApplicationInterface(taskCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+				return expressionInterface.getExecuteRequest(taskContext);
+			}
+		}));
+		
+		return out;			
+	};
+
+	var loc_facadeTaskFactory = {
+		//return a task
+		createTask : function(taskContext){
 			
 		},
+	};
 
-		getExecuteRequest : function(adForTaskName, handlers, request){
-			return loc_taskUtility.getTaskAttributeExecuteRequest(loc_out, node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYTASK_IMPLEMENTATION, extraInfo, handlers, request);
+
+	var loc_facadeTask = {
+
+		getExecuteRequest : function(handlers, request){
+			return loc_getExecuteTaskRequest(handlers, request);
 		},
+		
+		getDestroyRequest : function(){
+			
+		}
 	};
 		
 	var loc_out = {

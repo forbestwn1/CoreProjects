@@ -22,7 +22,7 @@ var packageObj = library;
 	var node_createLifeCycleRuntimeContext;
 	var node_buildComponentInterface;
 	var node_makeObjectWithComponentManagementInterface;
-	var node_createEntityDefinition;
+	var node_createBrickDefinition;
 	var node_getObjectType;
 	var node_createStateBackupService;
 	
@@ -43,6 +43,7 @@ var packageObj = library;
     
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
+	var node_createTestComplexTaskPlugin;
 	var node_createDataAssociationAdapterPlugin;
 	var node_createDataAssociationInteractiveAdapterPlugin;
 	var node_createDataAssociationForTaskAdapterPlugin;
@@ -70,36 +71,39 @@ var node_createComplexEntityRuntimeService = function() {
 	var loc_entityPlugins = {};
 	var loc_adapterPlugins = {};
 
-	var loc_getCreateAdapterRequest = function(adapterDefinition, baseCore, handlers, request){
+	var loc_getCreateAdapterRequest = function(rawAdapterDefinition, baseCore, handlers, request){
 		var entityType = adapterDefinition[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		var adapterEntityPlugin = loc_adapterPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
-		return adapterEntityPlugin.getNewAdapterRequest(node_createEntityDefinition(adapterDefinition), baseCore, handlers, request);
+		var adapterDefinition = node_createBrickDefinition(rawAdapterDefinition);
+		var adapterEntity = adapterEntityPlugin.getNewAdapterRequest(adapterDefinition, baseCore, handlers, request);
+		adapterEntity = node_makeObjectBasicEntityObjectInterface(adapterEntity, adapterDefinition, undefined);
+		return adapterEntity;
 	};
 
 	var loc_getCreateEntityCoreRequest = function(rawEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
-		var entityType = rawEntityDef[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
-		var complexEntityPlugin = loc_entityPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
+		var brickDef = node_createBrickDefinition(rawEntityDef);
+		var brickType = brickDef.getBrickType();
+		var complexEntityPlugin = loc_entityPlugins[brickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][brickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var entityDef = node_createEntityDefinition(rawEntityDef);
-		out.addRequest(complexEntityPlugin.getCreateEntityCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, {
+		out.addRequest(complexEntityPlugin.getCreateEntityCoreRequest(brickDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, {
 			success : function(request, entityCore){
 				
 				entityCore = node_makeObjectWithEmbededEntityInterface(entityCore);
 				
 				entityCore = node_makeObjectEntityTreeNodeInterface(entityCore);
 				
-				entityCore = node_makeObjectBasicEntityObjectInterface(entityCore, entityDef, configure);
+				entityCore = node_makeObjectBasicEntityObjectInterface(entityCore, brickDef, configure);
 				
 				entityCore = node_makeObjectEntityObjectInterface(entityCore, internalValuePortContainerId, externalValuePortContainerId, bundleCore);
 				
 				entityCore = node_makeObjectWithValuePortInterface(entityCore);
 				
-				entityCore = node_makeObjectWithComponentInterface(entityType, entityCore, false);
+				entityCore = node_makeObjectWithComponentInterface(brickType, entityCore, false);
 				
 				entityCore = node_makeObjectWithId(entityCore);
 				
-				entityCore = node_makeObjectWithType(entityCore, entityType);
+				entityCore = node_makeObjectWithType(entityCore, brickType);
 				
 				
 				var out1 = node_createServiceRequestInfoSequence(undefined, {
@@ -145,6 +149,7 @@ var node_createComplexEntityRuntimeService = function() {
 		//complex entity plugin
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK, "1.0.0", node_createTestComplexTaskPlugin());
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
@@ -331,7 +336,7 @@ nosliw.registerSetNodeDataEvent("complexentity.createApplication", function(){no
 nosliw.registerSetNodeDataEvent("component.buildComponentCore", function(){node_buildComponentInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createLifeCycleRuntimeContext", function(){node_createLifeCycleRuntimeContext = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithComponentManagementInterface", function(){node_makeObjectWithComponentManagementInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.entity.createEntityDefinition", function(){node_createEntityDefinition = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createBrickDefinition", function(){node_createBrickDefinition = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createStateBackupService", function(){node_createStateBackupService = this.getData();});
 
@@ -355,6 +360,7 @@ nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityCreationVariati
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexTaskPlugin", function(){node_createTestComplexTaskPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForTaskAdapterPlugin = this.getData();});

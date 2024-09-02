@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_createValuePortElementInfo;
 	var node_getObjectType;
 	var node_ElementIdValuePair;
+	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,31 +28,7 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 	var valuePortRef = valuePortEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
 	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
-	
-	var hostEntityCore = baseEntityCore;
-	if(relativePath!=undefined && relativePath!=""){
-		var segs = relativePath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
-		_.each(segs, function(seg, i){
-			var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
-			if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
-				hostEntityCore = treeNodeInterface.getParentCore();
-				if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-					//for bundle node
-					hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
-				}
-			}
-			else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
-				var ss = seg.split("\\"+node_COMMONCONSTANT.SEPERATOR_LEVEL1);
-				var childTreeNode = treeNodeInterface.getChild(ss[1])
-				hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
-				if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-					//for bundle node
-					hostEntityCore = hostEntityCore.getMainEntityCore();
-				}
-			}
-		});		
-	}
-	
+	var hostEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(baseEntityCore, relativePath);
 	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 };
 
@@ -247,6 +224,7 @@ nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.ElementIdValuePair", function(){node_ElementIdValuePair = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

@@ -4,7 +4,71 @@
 		"description": "include all basic feature"
 	},
 	"brick": [
-	
+		{
+			"info": {
+				"name" : "event-test_complex_script",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
+					"variable" : ["child_public_string"]
+				},
+				"event" : [
+					{
+						"eventInfo" : {
+							"name" : "testEvent1",
+							"handlerId" : {
+								"idPath" : "event-test_complex_task"
+							},
+							"eventDataDefinition" : {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"eventData" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "event data for test event1"
+						}
+					}
+				],
+				"valueContext" : {
+					"brick": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"root" : {
+									"child_public": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									},
+									"child_public_string": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									}
+								},
+								"initValue": {
+									"child_public": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public"
+									},
+									"child_public_string": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public_string"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+			
 		{
 			"info": {
 				"name" : "dataexpression-dataexpressionlibelement",
@@ -47,7 +111,7 @@
 										}
 									},
 									{
-										"status": "disabled1",
+										"status": "disabled",
 										"target" : {
 											"rootName" : "deparm3"
 										},

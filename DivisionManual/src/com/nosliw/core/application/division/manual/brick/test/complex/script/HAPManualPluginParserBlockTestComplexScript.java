@@ -1,10 +1,13 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.script;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.application.brick.test.complex.task.HAPTestEvent;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -28,7 +31,7 @@ public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefini
 		scriptEntity.setScript(scriptResourceId);
 		
 //		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualDefinitionBlockTestComplexScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
+//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualDefinitionBlockTestComplexTask.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexScript.PARM);
@@ -36,6 +39,16 @@ public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefini
 			for(Object key : parms.keySet()) {
 				String parmName = (String)key;
 				scriptEntity.setParm(parmName, parms.opt(parmName));
+			}
+		}
+		
+		//event
+		JSONArray eventArray = jsonObj.optJSONArray(HAPBlockTestComplexScript.EVENT);
+		if(eventArray!=null) {
+			for(int i=0; i<eventArray.length(); i++) {
+				HAPTestEvent eventTest = new HAPTestEvent();
+				eventTest.buildObject(eventArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				scriptEntity.getEvents().add(eventTest);
 			}
 		}
 	}

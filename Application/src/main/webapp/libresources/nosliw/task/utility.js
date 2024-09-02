@@ -21,8 +21,39 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_taskUtility = {
+
+	getExecuteTaskWithAdapterRequest : function(brickTreeNode, taskContext, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var adapters = brickTreeNode.getAdapters();
+		var taskAdapter;
+		for(var name in adapters){
+			var adapter = adapters[name];
+			var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
+			var adapterBrickType = adapterDef.getBrickType(); 
+			if(adapterBrickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK){
+				taskAdapter = adapter;
+			}
+		}
 		
-	getExecuteTaskRequest : function(taskInterface, handlers, request){
+		if(taskAdapter!=undefined){
+			out.addRequest(taskAdapter.getExecuteTaskRequest(taskContext));
+		}
+		else{
+			out.addRequest(this.getExecuteTaskRequest(brickTreeNode.getChildValue().getCoreEntity(), taskContext));
+		}
+		return out;		
+	},
+
+		
+	getExecuteTaskRequest : function(entityCore, taskContext, handlers, request){
+		var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
+		var task = taskFactory.createTask(taskContext);
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(task.getExecuteRequest());
+		return out;
+	},
+		
+	getExecuteTaskRequest1 : function(taskInterface, handlers, request){
 		var result;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(taskInterface.getInitRequest());

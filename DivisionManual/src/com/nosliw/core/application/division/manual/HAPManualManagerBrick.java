@@ -43,6 +43,8 @@ import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualPl
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualPluginProcessorBlockSimpleImpTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualPluginParserBlockTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualPluginProcessorBlockComplexTestComplexScript;
+import com.nosliw.core.application.division.manual.brick.test.complex.task.HAPManualPluginParserBlockTestComplexTask;
+import com.nosliw.core.application.division.manual.brick.test.complex.task.HAPManualPluginProcessorBlockComplexTestComplexTask;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPManualPluginParserBlockTestComplex1;
 import com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1.HAPManualPluginProcessorBlockComplexImpTestComplex1;
 import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPManualPluginParserBlockComplexUIContent;
@@ -218,6 +220,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 	private void init() {
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_1_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTestComplex1(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexImpTestComplex1(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTestComplexScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexScript(this.m_runtimeEnv, this));
+		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_TASK_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTestComplexTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexTask(this.m_runtimeEnv, this));
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.SERVICEPROVIDER_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockServiceProvider(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpServiceProvider(this.m_runtimeEnv, this));
 

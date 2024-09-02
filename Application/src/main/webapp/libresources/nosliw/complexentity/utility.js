@@ -37,6 +37,33 @@ var node_complexEntityUtility = function(){
 
 	var loc_out = {
 		
+		getBrickCoreByRelativePath : function(baseEntityCore, relativePath){
+			var hostEntityCore = baseEntityCore;
+			if(relativePath!=undefined && relativePath!=""){
+				var segs = relativePath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
+				_.each(segs, function(seg, i){
+					var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
+					if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
+						hostEntityCore = treeNodeInterface.getParentCore();
+						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+							//for bundle node
+							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
+						}
+					}
+					else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
+						var ss = seg.split("\\"+node_COMMONCONSTANT.SEPERATOR_LEVEL1);
+						var childTreeNode = treeNodeInterface.getChild(ss[1])
+						hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
+						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+							//for bundle node
+							hostEntityCore = hostEntityCore.getMainEntityCore();
+						}
+					}
+				});		
+			}
+			return hostEntityCore;
+		},
+		
 		getInitBrickRequest : function(brickCore, view, envInterface){
 			return node_getComponentInterface(brickCore).getPreInitRequest({
 				success : function(request){

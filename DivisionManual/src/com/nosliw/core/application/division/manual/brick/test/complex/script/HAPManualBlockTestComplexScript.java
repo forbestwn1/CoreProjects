@@ -1,11 +1,13 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.script;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPExecutableVariableExpected;
 import com.nosliw.core.application.brick.test.complex.script.HAPInfoAttachmentResolve;
+import com.nosliw.core.application.brick.test.complex.task.HAPTestEvent;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
@@ -14,6 +16,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implements HAPBlockTestComplexScript{
 
 	public HAPManualBlockTestComplexScript() {
+		this.setAttributeValueWithValue(HAPBlockTestComplexScript.EVENT, new ArrayList<HAPTestEvent>());
 	}
 
 	@Override
@@ -45,4 +48,6 @@ public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implement
 	public List<HAPInfoAttachmentResolve> getAttachments(){    return (List<HAPInfoAttachmentResolve>)this.getAttributeValueOfValue(ATTACHMENT);         }
 	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setAttributeValueWithValue(ATTACHMENT, attachments);	}
 
+	public List<HAPTestEvent> getEvents(){    return (List<HAPTestEvent>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.EVENT);     }
+	
 }

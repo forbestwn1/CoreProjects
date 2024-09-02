@@ -13,15 +13,24 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createTaskFactoryInterface = function(rawInterfaceObj){
+	
+	var interfaceDef = {
+		
+		createTask : function(){},
+		
+	};
+	return _.extend({}, interfaceDef, rawInterfaceObj);
+};
+
+
 var node_createTaskInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
-		getInitRequest : function(handlers, request){},
-		
 		getExecuteRequest : function(handlers, request){},
 		
-		getDestroyRequest : function(handlers, request){},
+		getFinishRequest : function(handlers, request){},
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
 };
