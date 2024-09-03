@@ -1,11 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.task;
 
-import java.util.List;
 import java.util.Map;
 
-import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
-import com.nosliw.core.application.brick.test.complex.task.HAPTestEvent;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -27,8 +24,5 @@ public class HAPManualBlockTestComplexTask extends HAPManualBrickImp implements 
 	public Map<String, Object> getParms() {		return (Map<String, Object>)this.getAttributeValueOfValue(PARM);	}
 	public void setParms(Map<String, Object> parms) {	this.setAttributeValueWithValue(PARM, parms);	}
 
-	@Override
-	public List<HAPTestEvent> getEvents(){    return (List<HAPTestEvent>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.EVENT);     }
-	
 }
  

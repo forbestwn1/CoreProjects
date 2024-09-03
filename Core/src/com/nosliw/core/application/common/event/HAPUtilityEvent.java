@@ -18,8 +18,10 @@ public class HAPUtilityEvent {
 		HAPGroupValuePorts internalValurPortGroup = new HAPGroupValuePorts(HAPConstantShared.VALUEPORTGROUP_TYPE_EVENT); 
 		HAPGroupValuePorts externalValurPortGroup = new HAPGroupValuePorts(HAPConstantShared.VALUEPORTGROUP_TYPE_EVENT); 
 		
-		HAPValuePort internalValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_EVENT, HAPConstantShared.IO_DIRECTION_OUT); 
+		HAPValuePort internalValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_EVENT, HAPConstantShared.IO_DIRECTION_OUT);
+		internalValuePort.setName(HAPConstantShared.VALUEPORT_NAME_EVENT);
 		HAPValuePort externalValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_EVENT, HAPConstantShared.IO_DIRECTION_IN); 
+		internalValuePort.setName(HAPConstantShared.VALUEPORT_NAME_EVENT);
 		
 		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
 		HAPRootInStructure root = new HAPRootInStructure();
@@ -30,6 +32,9 @@ public class HAPUtilityEvent {
 		String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
 		internalValuePort.addValueStructureId(valueStructureId);
 		externalValuePort.addValueStructureId(valueStructureId);
+		
+		internalValurPortGroup.addValuePort(internalValuePort, true);
+		externalValurPortGroup.addValuePort(externalValuePort, true);
 		
 		return Pair.of(internalValurPortGroup, externalValurPortGroup);
 	}

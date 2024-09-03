@@ -20,12 +20,24 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 	}
 
 	@Override
-	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		HAPBundle bundle = processContext.getCurrentBundle();
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
 		HAPManualDefinitionBlockTestComplexTask definitionBlock = (HAPManualDefinitionBlockTestComplexTask)blockPair.getLeft();
 		HAPManualBlockTestComplexTask executableBlock = (HAPManualBlockTestComplexTask)blockPair.getRight();
 
+		executableBlock.setScript(definitionBlock.getScript());
+		
+	}
+
+	
+	@Override
+	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		HAPBundle bundle = processContext.getCurrentBundle();
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		HAPManualDefinitionBlockTestComplexTask definitionBlock = (HAPManualDefinitionBlockTestComplexTask)blockPair.getLeft();
+		HAPManualBlockTestComplexTask executableBlock = (HAPManualBlockTestComplexTask)blockPair.getRight();
+		
 	}
 
 	@Override

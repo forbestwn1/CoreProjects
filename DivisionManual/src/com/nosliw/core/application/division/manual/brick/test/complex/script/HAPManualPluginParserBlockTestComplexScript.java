@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.task.HAPTestEvent;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestEvent;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -48,6 +48,7 @@ public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefini
 			for(int i=0; i<eventArray.length(); i++) {
 				HAPTestEvent eventTest = new HAPTestEvent();
 				eventTest.buildObject(eventArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				scriptEntity.getEvents().add(eventTest);
 				scriptEntity.getEvents().add(eventTest);
 			}
 		}

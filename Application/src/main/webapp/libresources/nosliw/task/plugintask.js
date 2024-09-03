@@ -34,6 +34,36 @@ var node_createTaskPlugin = function(){
 	return loc_out;
 };
 
+var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
+
+	var loc_taskContext = taskContext;
+	var loc_taskId = taskId;
+	var loc_getEnvInterface = getEnvInterface;
+
+	var loc_getExecuteTaskRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+		//create task entity runtime
+		out.addRequest(loc_getEnvInterface()[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(loc_taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+			success : function(request){
+				var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_taskId);
+				return node_taskUtility.getExecuteTaskWithAdapterRequest(childNodeObj, loc_taskContext);
+			}
+		}));
+		
+		return out;			
+	};
+	
+	var loc_out = {
+		
+		getExecuteRequest : function(handlers, request){
+			return loc_getExecuteTaskRequest(handlers, request);
+		}
+
+	};
+	return loc_out;
+};
+
 
 var loc_createTaskCore = function(taskDef, configure){
 
@@ -68,22 +98,10 @@ var loc_createTaskCore = function(taskDef, configure){
 	var loc_facadeTaskFactory = {
 		//return a task
 		createTask : function(taskContext){
-			
+			return loc_createTaskWrapper(taskContext, loc_createTaskId(), function(){ return loc_envInterface;  });
 		},
 	};
 
-
-	var loc_facadeTask = {
-
-		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteTaskRequest(handlers, request);
-		},
-		
-		getDestroyRequest : function(){
-			
-		}
-	};
-		
 	var loc_out = {
 		
 		getExecuteTaskThroughAdapterRequest : function(adForTaskName, handlers, request){
@@ -126,7 +144,7 @@ var loc_createTaskCore = function(taskDef, configure){
 		
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTask);
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -8,13 +8,15 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONArray;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.task.HAPTestEvent;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestEvent;
 import com.nosliw.core.application.common.event.HAPInfoEvent;
 import com.nosliw.core.application.common.event.HAPUtilityEvent;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
@@ -47,11 +49,14 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 
 		for(HAPTestEvent testEvent : definitionBlock.getEvents()) {
 			HAPInfoEvent eventInfo = testEvent.getEventInfo();
-			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(eventInfo.getHandlerId(), bundle);
+			HAPIdBrickInBundle handlerIdInBundle = eventInfo.getHandlerId();
+			handlerIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(handlerIdInBundle.getIdPath(), executableBlock.getTreeNodeInfo().getPathFromRoot().toString()));
+			
+			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(handlerIdInBundle, bundle);
 			
 			Pair<HAPGroupValuePorts, HAPGroupValuePorts> eventValuePortGroupPair = HAPUtilityEvent.createValuePortGroupForEvent(eventInfo, bundle.getValueStructureDomain());
 			taskWrapperBrick.addOtherInternalValuePortGroup(eventValuePortGroupPair.getLeft());
-			testEvent.setExternalValuePortGroupName(taskWrapperBrick.addOtherExternalValuePortGroup(eventValuePortGroupPair.getRight()).getName());
+			eventInfo.setExternalValuePortGroupName(taskWrapperBrick.addOtherExternalValuePortGroup(eventValuePortGroupPair.getRight()).getName());
 			
 			executableBlock.getEvents().add(testEvent);
 		}

@@ -33,8 +33,7 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 	
 	@HAPAttribute
 	public static String EVENT = "event";
-	
-	
+
 	HAPResourceId getScrip();
 	Map<String, Object> getParms();
 	List<HAPResultReferenceResolve> getVariables();
@@ -42,6 +41,8 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 	List<HAPExecutableVariableExpected> getExtendedVariables();
 	List<HAPInfoAttachmentResolve> getAttachments();
 
+	List<HAPTestEvent> getEvents();
+	
 //	@Override
 //	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
 //		HAPResourceDependency scriptResource = new HAPResourceDependency(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, this.getScriptName()));

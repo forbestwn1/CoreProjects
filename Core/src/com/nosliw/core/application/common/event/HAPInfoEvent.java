@@ -17,13 +17,21 @@ public class HAPInfoEvent extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String EVENTDATADEFINITION = "eventDataDefinition";
 	
+	@HAPAttribute
+	public static final String VALUEPORTGROUPNAME = "valuePortGroupName";
+	
 	private HAPIdBrickInBundle m_handlerId;
 	
 	private HAPElementStructure m_eventDataDefinition;
-	
+
+	private String m_externalValuePortGroupName;
+
 	public HAPIdBrickInBundle getHandlerId() {   return this.m_handlerId;     }
 	
 	public HAPElementStructure getEventDataDefinition() {   return this.m_eventDataDefinition;      }
+	
+	public void setExternalValuePortGroupName(String name) {    this.m_externalValuePortGroupName = name;       }
+	
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

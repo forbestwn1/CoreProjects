@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.test.complex.task;
+package com.nosliw.core.application.brick.test.complex.script;
 
 import org.json.JSONObject;
 
@@ -21,13 +21,9 @@ public class HAPTestEvent extends HAPSerializableImp{
 	
 	private Object m_eventData;
 	
-	private String m_externalValuePortGroupName;
-
 	public HAPInfoEvent getEventInfo() {   return this.m_eventInfo;    }
 	
 	public Object getEventData() {    return this.m_eventData;     }
-	
-	public void setExternalValuePortGroupName(String name) {    this.m_externalValuePortGroupName = name;       }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

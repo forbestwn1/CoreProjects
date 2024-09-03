@@ -39,16 +39,17 @@ var node_taskUtility = {
 			out.addRequest(taskAdapter.getExecuteTaskRequest(taskContext));
 		}
 		else{
-			out.addRequest(this.getExecuteTaskRequest(brickTreeNode.getChildValue().getCoreEntity(), taskContext));
+			var entityCore = brickTreeNode.getChildValue().getCoreEntity();
+			out.addRequest(taskContext.getInitRequest(entityCore));
+			out.addRequest(this.getExecuteTaskRequest(entityCore, taskContext));
 		}
 		return out;		
 	},
-
 		
-	getExecuteTaskRequest : function(entityCore, taskContext, handlers, request){
+	getExecuteTaskOnlyRequest : function(entityCore, taskContext, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 		var task = taskFactory.createTask(taskContext);
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(task.getExecuteRequest());
 		return out;
 	},

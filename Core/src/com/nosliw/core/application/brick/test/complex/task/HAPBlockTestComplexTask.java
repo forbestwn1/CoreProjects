@@ -1,6 +1,5 @@
 package com.nosliw.core.application.brick.test.complex.task;
 
-import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -19,6 +18,5 @@ public interface HAPBlockTestComplexTask extends HAPBrick{
 
 	HAPResourceId getScrip();
 	Map<String, Object> getParms();
-	List<HAPTestEvent> getEvents();
 
 }
