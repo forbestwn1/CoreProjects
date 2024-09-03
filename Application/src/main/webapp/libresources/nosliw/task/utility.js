@@ -17,14 +17,15 @@ var packageObj = library;
 	var node_namingConvensionUtility;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
+	var node_getEntityObjectInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_taskUtility = {
 
-	getExecuteTaskWithAdapterRequest : function(brickTreeNode, taskContext, handlers, request){
+	getExecuteTaskWithAdapterRequest : function(entityCore, taskContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var adapters = brickTreeNode.getAdapters();
+		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
 		var taskAdapter;
 		for(var name in adapters){
 			var adapter = adapters[name];
@@ -39,21 +40,21 @@ var node_taskUtility = {
 			out.addRequest(taskAdapter.getExecuteTaskRequest(taskContext));
 		}
 		else{
-			var entityCore = brickTreeNode.getChildValue().getCoreEntity();
-			out.addRequest(taskContext.getInitRequest(entityCore));
-			out.addRequest(this.getExecuteTaskRequest(entityCore, taskContext));
+			var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
+			var task = taskFactory.createTask(taskContext);
+			out.addRequest(task.getTaskInitRequest({
+				success : function(request){
+					return task.getTaskExecuteRequest({
+						success : function(request){
+							return task;
+						}
+					});
+				}
+			}));
 		}
 		return out;		
 	},
-		
-	getExecuteTaskOnlyRequest : function(entityCore, taskContext, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
-		var task = taskFactory.createTask(taskContext);
-		out.addRequest(task.getExecuteRequest());
-		return out;
-	},
-		
+
 	getExecuteTaskRequest1 : function(taskInterface, handlers, request){
 		var result;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -208,6 +209,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("taskUtility", node_taskUtility); 

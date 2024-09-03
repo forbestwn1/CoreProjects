@@ -17,7 +17,7 @@ var node_createTaskFactoryInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
-		createTask : function(){},
+		createTask : function(taskContext){},
 		
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
@@ -28,9 +28,14 @@ var node_createTaskInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
-		getExecuteRequest : function(handlers, request){},
+		getTaskInitRequest : function(handlers, request){},
 		
-		getFinishRequest : function(handlers, request){},
+		getTaskExecuteRequest : function(handlers, request){},
+		
+		getTaskFinishRequest : function(handlers, request){},
+		
+		getTaskResult : function(){}
+	
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
 };

@@ -1,14 +1,18 @@
 package com.nosliw.core.application.common.event;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
 
+@HAPEntityWithAttribute
 public class HAPInfoEvent extends HAPEntityInfoImp{
 
 	@HAPAttribute
@@ -47,4 +51,11 @@ public class HAPInfoEvent extends HAPEntityInfoImp{
 		return true;  
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(HANDLERID, this.m_handlerId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTDATADEFINITION, m_eventDataDefinition.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(VALUEPORTGROUPNAME, m_externalValuePortGroupName);
+	}
 }

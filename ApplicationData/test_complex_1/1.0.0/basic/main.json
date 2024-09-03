@@ -105,7 +105,7 @@
 				"description" : ""
 			},
 			"brick":{
-				"script": "complextask_test_basic",
+				"script": "complexscript_test_task",
 				"event" : [
 					{
 						"eventInfo" : {

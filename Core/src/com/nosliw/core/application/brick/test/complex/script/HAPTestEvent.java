@@ -1,9 +1,12 @@
 package com.nosliw.core.application.brick.test.complex.script;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.event.HAPInfoEvent;
@@ -37,4 +40,10 @@ public class HAPTestEvent extends HAPSerializableImp{
 		return true;  
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(EVENTINFO, this.m_eventInfo.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(EVENTDATA, HAPManagerSerialize.getInstance().toStringValue(m_eventData, HAPSerializationFormat.JSON));
+	}
 }

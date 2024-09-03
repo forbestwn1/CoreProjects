@@ -104,6 +104,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setParentCore(rawEntity);
 							return loc_createAdaptersRequest(attrDef, entityRuntime, {
 								success : function(request, adapters){
+									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
 									return treeNodeEntityInterface.addChild(childName, entityRuntime, adapters, true);
 								}
 							});
@@ -121,6 +122,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 								success : function(request){
 									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
 										success : function(request, adapters){
+											node_getComponentInterface(bundleRuntime.getCoreEntity()).setAdapters(adapters);
 											return treeNodeEntityInterface.addChild(childName, bundleRuntime, adapters, true);
 										}
 									});
@@ -149,11 +151,16 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	var loc_children = node_newOrderedContainer();
 
 	var loc_parentCore;
+	
+	var loc_adapters;
 
 	var loc_interfaceEntity = {
 
 		getParentCore : function(){   return loc_parentCore;     },
 		setParentCore : function(parentCore){    loc_parentCore = parentCore;    },
+
+		getAdapters : function(){   return loc_adapters;     },
+		setAdapters : function(adapters){    loc_adapters = adapters;    },
 
 		getChildrenName : function(){   return loc_children.getAllKeys();   },
 		

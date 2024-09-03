@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
 	var node_getEntityTreeNodeInterface;
 	var node_getApplicationInterface;
+	var node_taskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -40,24 +41,33 @@ var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
 	var loc_taskId = taskId;
 	var loc_getEnvInterface = getEnvInterface;
 
-	var loc_getExecuteTaskRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+	var loc_taskEntityCore;
+	var loc_task;
 
-		//create task entity runtime
-		out.addRequest(loc_getEnvInterface()[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(loc_taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-			success : function(request){
-				var childNodeObj = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_taskId);
-				return node_taskUtility.getExecuteTaskWithAdapterRequest(childNodeObj, loc_taskContext);
-			}
-		}));
-		
-		return out;			
-	};
-	
 	var loc_out = {
+
+		getTaskInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getEnvInterface()[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(loc_taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+				success : function(request){
+					loc_taskEntityCore = loc_getEnvInterface()[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_taskId).getChildValue().getCoreEntity();
+				}
+			}));
+			return out;
+		},
 		
-		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteTaskRequest(handlers, request);
+		getTaskExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, taskContext, {
+				success : function(request, task){
+					loc_task = task;					
+				}
+			}));
+			return out;
+		},
+
+		getTaskResult : function(){
+			return loc_task.getTaskResult();
 		}
 
 	};
@@ -164,6 +174,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTaskPlugin", node_createTaskPlugin); 

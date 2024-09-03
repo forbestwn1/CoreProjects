@@ -49,7 +49,6 @@ public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefini
 				HAPTestEvent eventTest = new HAPTestEvent();
 				eventTest.buildObject(eventArray.getJSONObject(i), HAPSerializationFormat.JSON);
 				scriptEntity.getEvents().add(eventTest);
-				scriptEntity.getEvents().add(eventTest);
 			}
 		}
 	}
