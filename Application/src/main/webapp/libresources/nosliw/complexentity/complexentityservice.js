@@ -72,12 +72,17 @@ var node_createComplexEntityRuntimeService = function() {
 	var loc_adapterPlugins = {};
 
 	var loc_getCreateAdapterRequest = function(rawAdapterDefinition, baseCore, handlers, request){
-		var entityType = adapterDefinition[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+		var entityType = rawAdapterDefinition[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		var adapterEntityPlugin = loc_adapterPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 		var adapterDefinition = node_createBrickDefinition(rawAdapterDefinition);
-		var adapterEntity = adapterEntityPlugin.getNewAdapterRequest(adapterDefinition, baseCore, handlers, request);
-		adapterEntity = node_makeObjectBasicEntityObjectInterface(adapterEntity, adapterDefinition, undefined);
-		return adapterEntity;
+		out.addRequest(adapterEntityPlugin.getNewAdapterRequest(adapterDefinition, baseCore, {
+			success : function(request, adapterEntity){
+				return node_makeObjectBasicEntityObjectInterface(adapterEntity, adapterDefinition, undefined);
+			}
+		}));
+		return out;
 	};
 
 	var loc_getCreateEntityCoreRequest = function(rawEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){

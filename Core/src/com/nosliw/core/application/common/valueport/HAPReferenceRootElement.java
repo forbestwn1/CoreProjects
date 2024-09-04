@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
@@ -26,6 +26,10 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String ROOTNAME = "rootName";
 
+	@HAPAttribute
+	public static final String IODIRECTION = "ioDirection";
+
+
 	//value port Id
 	private HAPIdValuePortInBundle m_valuePortId;
 	
@@ -37,6 +41,8 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	
 	private String m_rootName;
 
+	private String m_ioDirection;
+	
 	public HAPReferenceRootElement() {}
 	
 	public HAPReferenceRootElement(String rootName) {
@@ -58,6 +64,10 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 	public String getRootName() {   return this.m_rootName;      }
 	public void setRootName(String rootName) {    this.m_rootName = rootName;    }
 
+	public String getIODirection() {    return this.m_ioDirection;      }
+	public void setIODirection(String ioDirection) {    this.m_ioDirection = ioDirection;      }
+	
+	
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
@@ -77,6 +87,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 			}
 			this.m_valuePortName = (String)jsonValue.opt(VALUEPORTNAME);
 			this.m_rootName = (String)jsonValue.opt(ROOTNAME); 
+			this.m_ioDirection = (String)jsonValue.opt(IODIRECTION);
 		}
 		return true;
 	}
@@ -88,6 +99,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 		jsonMap.put(VALUEPORTNAME, this.m_valuePortName);
 		jsonMap.put(ROOTNAME, this.getRootName());
 		jsonMap.put(VALUESTRUCTUREREFERENCE, HAPManagerSerialize.getInstance().toStringValue(this.m_valueStructureReference, HAPSerializationFormat.JSON));
+		jsonMap.put(IODIRECTION, this.getIODirection());
 	}
 	
 	public HAPReferenceRootElement cloneRootElementReference() {
@@ -102,6 +114,7 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 			rootEleRef.m_valuePortId = this.m_valuePortId.cloneValue();
 		}
 		rootEleRef.m_rootName = this.getRootName();
+		rootEleRef.m_ioDirection = this.m_ioDirection;
 	}
 	
 	@Override
@@ -119,6 +132,9 @@ public class HAPReferenceRootElement extends HAPSerializableImp{
 				return false;
 			}
 			if(!HAPUtilityBasic.isEquals(this.getRootName(), ele.getRootName())) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_ioDirection, ele.m_ioDirection)) {
 				return false;
 			}
 			out = true;

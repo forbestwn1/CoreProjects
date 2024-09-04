@@ -54,7 +54,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			
 			var varsRequest = node_createServiceRequestInfoSet(undefined, {
 				success : function(request, variablesResult){
-					loc_taskResult = variablesResult.getResults();
+					loc_taskResult = {};
+					loc_taskResult.data = variablesResult.getResults();
+					loc_taskResult.resultName = "success";
+					return loc_taskResult;
 				}
 			});
 			_.each(loc_variablesInTask, function(varResolve, name){

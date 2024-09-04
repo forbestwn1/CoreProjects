@@ -55,7 +55,7 @@
 			"adapter":[
 				{
 					"name" : "taskAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -66,17 +66,29 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
+										"status": "disabled",
 										"target" : {
-											"rootName" : "serviceParm1",
+											"rootName" : "event",
+											"ioDirection" : "IN",
 											"valuePortId" : {
-												"valuePortKey" : {
-													"name" : "interactiveRequest"
+												"valuePortId" : {
+													"group" : "event"
 												}
 											}
 										},
 										"definition" : {
 											"mapping" : {
 												"elementPath": "parm1"
+											}
+										}
+									},
+									{
+										"target" : {
+											"rootName" : "task_input2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
 											}
 										}
 									}
@@ -92,12 +104,7 @@
 											},
 											"definition" : {
 												"mapping" : {
-													"elementPath": "outputInService1",
-													"valuePortId" : {
-														"valuePortKey" : {
-															"name" : "interactiveResult_success"
-														}
-													}
+													"elementPath": "task_input2"
 												}
 											}
 										}
@@ -323,7 +330,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -433,6 +440,11 @@
 									"criteria": "test.string;1.0.0"
 								}
 							},
+							"parm2": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
 							"<%=&(value1)&%>": {
 								"definition":{
 									"criteria": "test.string;1.0.0"
@@ -469,6 +481,10 @@
 							"parm1": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parm1"
+							},
+							"parm2": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm2"
 							},
 							"output1": {
 								"dataTypeId": "test.string;1.0.0",

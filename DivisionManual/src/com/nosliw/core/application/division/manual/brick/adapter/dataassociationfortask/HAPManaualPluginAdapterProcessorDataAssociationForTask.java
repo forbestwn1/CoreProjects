@@ -12,7 +12,7 @@ import com.nosliw.core.application.division.manual.HAPManualPluginProcessorAdapt
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForTask;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickAdapter;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -26,7 +26,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPM
 	}
 
 	@Override
-	public void process(HAPManualBrick adapterExe, HAPManualDefinitionBrickAdapter adapterDef,	HAPManualContextProcessAdapter processContext) {
+	public void process(HAPManualBrick adapterExe, HAPManualDefinitionBrick adapterDef,	HAPManualContextProcessAdapter processContext) {
 		HAPManualDefinitionAdapterDataAssociationForTask daAdapterDef = (HAPManualDefinitionAdapterDataAssociationForTask)adapterDef;
 		HAPManualAdapterDataAssociationForTask daAdapterExe = (HAPManualAdapterDataAssociationForTask)adapterExe;
 		

@@ -86,7 +86,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 		getExecuteTaskRequest : function(taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
+			var taskFactory = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 			var task = taskFactory.createTask(taskContext);
 
 			//task init			
