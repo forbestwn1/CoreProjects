@@ -17,6 +17,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
 	var node_taskUtility = nosliw.getNodeData("task.taskUtility");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_getWithValuePortInterface = nosliw.getNodeData("valueport.getWithValuePortInterface");
+	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -72,7 +74,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				var eventInfo = event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTINFO];
 				var eventName = eventInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
 				var eventTrigueView = $('<button>Triggue Event : '+eventName+'</button>');
+				var eventResultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 				containerView.append(eventTrigueView);	
+				containerView.append(eventResultView);	
 
 				eventTrigueView.click(function() {
 					var relativePath = eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
@@ -82,11 +86,17 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 						getInitTaskRequest : function(coreEntity, handlers, request){
 							//set event data to value port
 							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
-							return eventValuePort.setValueRequest(node_createValuePortElementInfo(undefined, node_COMMONCONSTANT.NAME_ROOT_EVENT), eventInfo[node_COMMONATRIBUTECONSTANT_EVENTDATA], handlers, request);
+							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getInternalValuePortContainer();
+							var valueStructureId = internalValuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT);
+							return eventValuePort.setValueRequest(node_createValuePortElementInfo(valueStructureId, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
 						}
 					};
 					
-					var taskExeRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(handlerEntityCore, taskContext);
+					var taskExeRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(handlerEntityCore, taskContext, {
+						success : function(request, task){
+							eventResultView.val(JSON.stringify(task.getTaskResult()));
+						}
+					});
 					node_requestServiceProcessor.processRequest(taskExeRequest);
 				});
 			});

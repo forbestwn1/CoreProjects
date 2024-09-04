@@ -44,9 +44,10 @@ var node_taskUtility = {
 			var task = taskFactory.createTask(taskContext);
 			out.addRequest(task.getTaskInitRequest({
 				success : function(request){
+					var task1 = task;
 					return task.getTaskExecuteRequest({
 						success : function(request){
-							return task;
+							return task1;
 						}
 					});
 				}
