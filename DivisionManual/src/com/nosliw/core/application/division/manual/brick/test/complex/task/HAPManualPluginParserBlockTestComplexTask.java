@@ -1,10 +1,14 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.task;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -35,6 +39,24 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 				scriptEntity.setParm(parmName, parms.opt(parmName));
 			}
 		}
-		
+
+		//variables
+		JSONArray variablesArray = jsonObj.optJSONArray(HAPBlockTestComplexScript.VARIABLE);
+		if(variablesArray!=null) {
+			for(int i=0; i<variablesArray.length(); i++) {
+				String varName = null;
+				Object varDefObj = variablesArray.get(i);
+				if(varDefObj instanceof String) {
+					varName = (String)varDefObj;
+				}
+				else if(varDefObj instanceof JSONObject) {
+					varName = ((JSONObject)varDefObj).getString(HAPEntityInfo.NAME);
+				}
+				
+				HAPReferenceElement elementRef = new HAPReferenceElement();
+				elementRef.buildObject(varDefObj, HAPSerializationFormat.JSON);
+				scriptEntity.getVariables().put(varName, elementRef);
+			}
+		}
 	}
 }

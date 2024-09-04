@@ -11,6 +11,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
@@ -23,12 +24,14 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_taskContext;
 	var loc_taskResult;
+	
+	var loc_variablesInTask;
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getVariableDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
+    	loc_variablesInTask = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_VARIABLE);
 	};
-
 
 
 	var loc_facadeTaskFactory = {
@@ -57,11 +60,21 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_taskResult = {
-					aaa : "bbbb"
+			
+			var varsRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, variablesResult){
+					loc_taskResult = variablesResult.getResults();
 				}
-			}));
+			});
+			_.each(loc_variablesInTask, function(varResolve, name){
+				var valuePortId = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_VALUEPORTID];
+				var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+				var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH]);
+				varsRequest.addRequest(name, valuePort.getValueRequest(valuePortEleInfo));
+			});
+
+			out.addRequest(varsRequest);
+			
 			return out;
 		},
 		

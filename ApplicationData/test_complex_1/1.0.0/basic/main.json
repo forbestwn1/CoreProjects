@@ -12,8 +12,18 @@
 			},
 			"brick":{
 				"script": "complextask_test_basic",
-				"parm" : {
-				},
+				"variable" : [
+					{
+						"name" : "eventData",
+						"elementPath": "event",
+						"valuePortId" : {
+							"valuePortId" : {
+								"group" : "event",
+								"name" : "event"
+							}
+						}
+					}
+				],
 				"valueContext" : {
 					"brick": [
 						{

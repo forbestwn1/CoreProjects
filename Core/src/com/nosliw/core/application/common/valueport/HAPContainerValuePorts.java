@@ -27,9 +27,15 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 	 
 	public List<HAPGroupValuePorts> getValuePortGroups(){  return this.m_valuePortGroups;  }
 	
+	//either match with group name or group type
 	public HAPGroupValuePorts getValuePortGroup(String groupId) {
 		for(HAPGroupValuePorts valuePortGroup : this.m_valuePortGroups) {
 			if(groupId.equals(valuePortGroup.getName())) {
+				return valuePortGroup;
+			}
+		}
+		for(HAPGroupValuePorts valuePortGroup : this.m_valuePortGroups) {
+			if(groupId.equals(valuePortGroup.getGroupType())) {
 				return valuePortGroup;
 			}
 		}
