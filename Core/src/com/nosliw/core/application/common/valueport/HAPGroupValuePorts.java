@@ -70,12 +70,12 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 	//name or type
 	public HAPValuePort getValuePort(String name) {
 		for(HAPValuePort valuePort : this.m_valuePorts) {
-			if(name.equals(valuePort.getName())) {
+			if(valuePort.getName().equals(name)) {
 				return valuePort;
 			}
 		}
 		for(HAPValuePort valuePort : this.m_valuePorts) {
-			if(name.equals(valuePort.getType())) {
+			if(valuePort.getType().equals(name)) {
 				return valuePort;
 			}
 		}

@@ -5,7 +5,6 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
@@ -58,7 +57,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		Map<String, HAPReferenceElement> varRefs = definitionBlock.getVariables();
 		for(String varName : varRefs.keySet()) {
 			HAPReferenceElement varRef = varRefs.get(varName);
-			varRef.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(varRef.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableBlock));
+			varRef.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(varRef.getValuePortId(), varRef.getIODirection(), executableBlock));
 			HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain());
 			executableBlock.getVariables().put(varName, resolve);
 		}

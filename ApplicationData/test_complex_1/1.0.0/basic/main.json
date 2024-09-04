@@ -16,10 +16,11 @@
 					{
 						"name" : "eventData",
 						"elementPath": "event",
+						"ioDirection" : "OUT",
 						"valuePortId" : {
 							"valuePortId" : {
 								"group" : "event",
-								"name" : "event"
+								"name1" : "event"
 							}
 						}
 					}

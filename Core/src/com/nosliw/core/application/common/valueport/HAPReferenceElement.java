@@ -17,8 +17,12 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 	//root + leaf path
 	public static final String ELEMENTPATH = "elementPath";
 
+	public static final String IODIRECTION = "ioDirection";
+
 	private String m_elementPath;
 
+	private String m_ioDirection;
+	
 	public HAPReferenceElement() {}
 
 	public HAPReferenceElement(String eleFullPath) {
@@ -43,6 +47,8 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 
 	public String getLeafPath() {   return new HAPComplexPath(this.m_elementPath).getPathStr();   }
 	
+	public String getIODirection() {    return this.m_ioDirection;      }
+	
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
@@ -52,6 +58,7 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 			super.buildObject(value, format);
 			JSONObject jsonValue = (JSONObject)value;
 			this.setElementPath(jsonValue.getString(ELEMENTPATH));
+			this.m_ioDirection = (String)jsonValue.opt(IODIRECTION);
 		}
 		return true;
 	}
@@ -61,12 +68,14 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(LEAFPATH, this.getLeafPath());
 		jsonMap.put(ELEMENTPATH, this.getElementPath());
+		jsonMap.put(IODIRECTION, this.m_ioDirection);
 	}
 	
 	public HAPReferenceElement cloneElementReference() {
 		HAPReferenceElement out = new HAPReferenceElement();
 		this.cloneToRootReference(out);
 		out.m_elementPath = this.m_elementPath;
+		out.m_ioDirection = this.m_ioDirection;
 		return out;
 	}
 	
@@ -80,6 +89,9 @@ public class HAPReferenceElement extends HAPReferenceRootElement{
 		if(obj instanceof HAPReferenceElement) {
 			HAPReferenceElement ele = (HAPReferenceElement)obj;
 			if(!HAPUtilityBasic.isEquals(this.getLeafPath(), ele.getLeafPath())) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_ioDirection, ele.m_ioDirection)) {
 				return false;
 			}
 			out = true;
