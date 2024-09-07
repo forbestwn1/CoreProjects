@@ -11,7 +11,8 @@
 			<definition type="space"/>
 			<definition name="REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES" value="names"/>
 			<definition type="space"/>
-			<definition name="REQUEST_GETDATATYPES_EXISTINGARRAY" value="existingArray"/>
+			<definition name="REQUEST_GETDATATYPES_E
+			XISTINGARRAY" value="existingArray"/>
 			<definition name="REQUEST_GETDATATYPES_REQUESTARRAY" value="requestArray"/>
 			<definition type="space"/>
 			<definition name="ENTITYNAME_ATTRIBUTENAME" value="ENTITYNAME_ATTRIBUTENAME"/>
@@ -571,7 +572,8 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESS" value="process"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_PROCESSSUITE" value="processSuite"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN" value="activityPlugin"/>
-			<definition name="RUNTIME_RESOURCE_TYPE_INTERACTIVEINTERFACE" value="interactiveinterface"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_INTERACTIVETASKINTERFACE" value="interactivetaskinterface"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_INTERACTIVEEXPRESSIONINTERFACE" value="interactiveexpressioninterface"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICE" value="service"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE" value="serviceinterface"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_SERVICEPROFILE" value="serviceprofile"/>
@@ -942,6 +944,7 @@
 			<definition type="space"/>
 			<definition name="VALUEPORTGROUP_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION" value="expressionInteractive"/>
+			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVETASK" value="taskInteractive"/>
 			<definition name="VALUEPORTGROUP_TYPE_EVENT" value="event"/>
 
 			<definition type="space"/>

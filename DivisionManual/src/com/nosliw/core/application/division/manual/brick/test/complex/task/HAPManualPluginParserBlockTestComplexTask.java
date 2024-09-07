@@ -5,16 +5,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefinitionPluginParserBrickImpComplex{
@@ -26,13 +23,9 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 	@Override
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockTestComplexTask scriptEntity = (HAPManualDefinitionBlockTestComplexTask)entityDefinition;
-		//script
-		Object scriptObj = jsonObj.opt(HAPBlockTestComplexScript.SCRIPT);
-		HAPResourceId scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, null, scriptObj, false);
-		scriptEntity.setScript(scriptResourceId);
 		
 		//parms
-		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexScript.PARM);
+		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexTask.PARM);
 		if(parms!=null) {
 			for(Object key : parms.keySet()) {
 				String parmName = (String)key;
@@ -41,7 +34,7 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 		}
 
 		//variables
-		JSONArray variablesArray = jsonObj.optJSONArray(HAPBlockTestComplexScript.VARIABLE);
+		JSONArray variablesArray = jsonObj.optJSONArray(HAPBlockTestComplexTask.VARIABLE);
 		if(variablesArray!=null) {
 			for(int i=0; i<variablesArray.length(); i++) {
 				String varName = null;
@@ -58,5 +51,12 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 				scriptEntity.getVariables().put(varName, elementRef);
 			}
 		}
+		
+		//task interactive
+		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPBlockTestComplexTask.INTERACTIVETASK, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parseContext);
+//		JSONObject taskInteractiveObj = jsonObj.optJSONObject(HAPBlockTestComplexTask.INTERACTIVETASK);
+//		if(taskInteractiveObj!=null) {
+//		}
+		
 	}
 }

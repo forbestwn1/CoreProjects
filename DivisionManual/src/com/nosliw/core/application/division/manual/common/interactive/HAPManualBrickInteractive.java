@@ -1,6 +1,6 @@
 package com.nosliw.core.application.division.manual.common.interactive;
 
-import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPDefinitionInteractive;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
 

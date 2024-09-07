@@ -167,7 +167,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 			HAPValuePort valuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.IO_DIRECTION_BOTH);
 			valuePort.getValueStructureIds().addAll(this.getManualValueContext().getValueStructureIds());
 
-			out.addValuePort(valuePort, true);
+			out.addValuePort(valuePort);
 		}
 		return out;
 	}

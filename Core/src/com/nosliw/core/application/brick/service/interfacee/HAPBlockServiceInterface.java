@@ -12,7 +12,7 @@ import com.nosliw.common.displayresource.HAPDisplayResourceNode;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
 
 //static information for a service. readable, query for service
@@ -40,7 +40,7 @@ public class HAPBlockServiceInterface extends HAPBrickImpWithEntityInfo{
 		this.setAttributeValueWithValue(DISPLAY, new HAPDisplayResourceNode());
 	}
 
-	public HAPBlockInteractiveInterface getActiveInterface() {  return (HAPBlockInteractiveInterface)this.getAttributeValueOfBrick(INTERFACE);  } 
+	public HAPBlockInteractiveInterfaceTask getActiveInterface() {  return (HAPBlockInteractiveInterfaceTask)this.getAttributeValueOfBrick(INTERFACE);  } 
 	
 	public List<String> getTags(){   return (List<String>)this.getAttributeValueOfValue(TAG);    }
 	
@@ -51,7 +51,7 @@ public class HAPBlockServiceInterface extends HAPBrickImpWithEntityInfo{
     @Override
 	protected HAPIdBrickType getAttributeBrickType(String attrName) {
     	if(INTERFACE.equals(attrName)) {
-    		return HAPEnumBrickType.INTERACTIVEINTERFACE_100;
+    		return HAPEnumBrickType.INTERACTIVETASKINTERFACE_100;
     	}
     	return null;     
     }

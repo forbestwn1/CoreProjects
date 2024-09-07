@@ -28,12 +28,6 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 	//type of group, used to instantiate value port
 	private String m_groupType;
 	
-	private String m_inDefaultName;
-
-	private String m_outDefaultName;
-	
-	private String m_bothDefaultName;
-
 	private int m_idIndex = 0;
 	
 	public HAPGroupValuePorts(String groupType) {
@@ -43,7 +37,7 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 	
 	public String getGroupType() {    return this.m_groupType;   }
 	
-	public void addValuePort(HAPValuePort valuePort, boolean isDefault) {
+	public void addValuePort(HAPValuePort valuePort) {
 		String name = valuePort.getName();
 		if(HAPUtilityBasic.isStringEmpty(name)) {
 			name = this.m_idIndex + "";
@@ -51,18 +45,6 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 			valuePort.setName(name);
 		}
 		this.m_valuePorts.add(valuePort);
-		if(isDefault) {
-			String ioDirection = valuePort.getIODirection();
-			if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_IN)) {
-				this.m_inDefaultName = name;
-			}
-			else if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_OUT)) {
-				this.m_outDefaultName = name;
-			}
-			else if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_BOTH)) {
-				this.m_bothDefaultName = name;
-			}
-		}
 	}
 	
 	public List<HAPValuePort> getValuePorts(){		return this.m_valuePorts;	}
@@ -90,26 +72,25 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 	}
 	
 	public String getDefaultValuePortName(String ioDirection) {
+		HAPValuePort out = null;
 		if(ioDirection==null) {
-			ioDirection = HAPConstantShared.IO_DIRECTION_BOTH;
+			out = this.m_valuePorts.get(0);
 		}
-		String out = null;
-		//find specific first
-		if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_IN)) {
-			out = this.m_inDefaultName;
+		else {
+			for(HAPValuePort valuePort : this.m_valuePorts) {
+				if(valuePort.getIODirection().equals(HAPConstantShared.IO_DIRECTION_BOTH)) {
+					out = valuePort;
+					break;
+				}
+				else if(!ioDirection.equals(HAPConstantShared.IO_DIRECTION_BOTH)) {
+					if(ioDirection.equals(valuePort.getIODirection())) {
+						out = valuePort;
+						break;
+					}
+				}
+			}
 		}
-		else if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_OUT)) {
-			out = this.m_outDefaultName;
-		}
-		else if(ioDirection.equals(HAPConstantShared.IO_DIRECTION_BOTH)) {
-			out = this.m_bothDefaultName;
-		}
-		
-		//if no specific, then fall back to both
-		if(out==null) {
-			out = this.m_bothDefaultName;
-		}
-		return out;
+		return out.getName();
 	}
 	
 	@Override

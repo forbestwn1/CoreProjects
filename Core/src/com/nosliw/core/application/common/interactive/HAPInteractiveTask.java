@@ -27,6 +27,11 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 		this.m_request = new HAPInteractiveRequest();
 	}
 	
+	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_request.getRequestParms();  }
+
+	public List<HAPInteractiveResultTask> getResult() {   return this.m_results;  }
+	
+	
 	@Override
 	public HAPGroupValuePorts getInternalValuePortGroup() {
 		HAPGroupValuePorts group = new HAPGroupValuePorts();
@@ -115,7 +120,7 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 //	}
 //}
 
-//protected void cloneToInteractive(HAPBlockInteractiveInterface interactive) {
+//protected void cloneToInteractive(HAPBlockInteractiveInterfaceTask interactive) {
 //	this.cloneToEntityInfo(interactive);
 //	for(HAPRequestParmInInteractive parm : this.m_requestParms) {
 //		interactive.addRequestParm(parm.cloneVariableInfo());

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPDefinitionInteractive;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructure;

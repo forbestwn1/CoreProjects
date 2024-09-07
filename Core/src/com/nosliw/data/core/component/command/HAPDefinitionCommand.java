@@ -3,10 +3,10 @@ package com.nosliw.data.core.component.command;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPDefinitionInteractive;
 
-public class HAPDefinitionCommand extends HAPBlockInteractiveInterface{
+public class HAPDefinitionCommand extends HAPBlockInteractiveInterfaceTask{
 
 	@HAPAttribute
 	public static String TASK = "task";

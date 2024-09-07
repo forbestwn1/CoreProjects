@@ -71,7 +71,7 @@ public class HAPBlockServiceProfile extends HAPBrickImpWithEntityInfo{
     @Override
 	protected HAPIdBrickType getAttributeBrickType(String attrName) {
     	if(INTERFACE.equals(attrName)) {
-    		return HAPEnumBrickType.INTERACTIVEINTERFACE_100;
+    		return HAPEnumBrickType.INTERACTIVETASKINTERFACE_100;
     	}
     	return null;     
     }

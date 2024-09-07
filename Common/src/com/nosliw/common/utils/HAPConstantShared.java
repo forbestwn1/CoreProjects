@@ -482,7 +482,8 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESS = "process";
 		public static final String RUNTIME_RESOURCE_TYPE_PROCESSSUITE = "processSuite";
 		public static final String RUNTIME_RESOURCE_TYPE_ACTIVITYPLUGIN = "activityPlugin";
-		public static final String RUNTIME_RESOURCE_TYPE_INTERACTIVEINTERFACE = "interactiveinterface";
+		public static final String RUNTIME_RESOURCE_TYPE_INTERACTIVETASKINTERFACE = "interactivetaskinterface";
+		public static final String RUNTIME_RESOURCE_TYPE_INTERACTIVEEXPRESSIONINTERFACE = "interactiveexpressioninterface";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICE = "service";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICEINTERFACE = "serviceinterface";
 		public static final String RUNTIME_RESOURCE_TYPE_SERVICEPROFILE = "serviceprofile";
@@ -900,6 +901,7 @@ public class HAPConstantShared {
 
 		public static final String VALUEPORTGROUP_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION = "expressionInteractive";
+		public static final String VALUEPORTGROUP_TYPE_INTERACTIVETASK = "taskInteractive";
 		public static final String VALUEPORTGROUP_TYPE_EVENT = "event";
 
 

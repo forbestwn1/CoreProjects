@@ -33,8 +33,8 @@ public class HAPUtilityEvent {
 		internalValuePort.addValueStructureId(valueStructureId);
 		externalValuePort.addValueStructureId(valueStructureId);
 		
-		internalValurPortGroup.addValuePort(internalValuePort, true);
-		externalValurPortGroup.addValuePort(externalValuePort, true);
+		internalValurPortGroup.addValuePort(internalValuePort);
+		externalValurPortGroup.addValuePort(externalValuePort);
 		
 		return Pair.of(internalValurPortGroup, externalValurPortGroup);
 	}

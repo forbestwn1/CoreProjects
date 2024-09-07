@@ -3,11 +3,11 @@ package com.nosliw.core.application.division.manual.brick.test.complex.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockTestComplexTask extends HAPManualDefinitionBrick{
 
@@ -17,13 +17,12 @@ public class HAPManualDefinitionBlockTestComplexTask extends HAPManualDefinition
 		this.setAttributeValueWithValue(HAPBlockTestComplexTask.VARIABLE, new LinkedHashMap<String, HAPReferenceElement>());
 	}
 
-	public void setScript(HAPResourceId scriptResourceId) {    this.setAttributeValueWithValue(HAPBlockTestComplexTask.SCRIPT, scriptResourceId);    }
-	public HAPResourceId getScript() {   return (HAPResourceId)this.getAttributeValueOfValue(HAPBlockTestComplexTask.SCRIPT);     }
-	
 	public void setParm(String name, Object value) {	this.getParms().put(name, value);	}
 	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getAttributeValueOfValue(HAPBlockTestComplexTask.PARM);    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 
 	public Map<String, HAPReferenceElement> getVariables(){    return (Map<String, HAPReferenceElement>)this.getAttributeValueOfValue(HAPBlockTestComplexTask.VARIABLE);     }
 
+	public HAPEntityOrReference getTaskInteractiveInterface() {		return this.getAttributeValueOfBrick(HAPBlockTestComplexTask.INTERACTIVETASK);	}
+	
 }

@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.common.interactive;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPDefinitionInteractive;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPDefinitionInteractive;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpSimple;

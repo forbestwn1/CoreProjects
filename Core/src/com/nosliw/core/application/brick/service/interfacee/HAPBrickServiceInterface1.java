@@ -2,7 +2,7 @@ package com.nosliw.core.application.brick.service.interfacee;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.division.manual.executable.HAPBrickWithEntityInfoSimple;
 
 @HAPEntityWithAttribute
@@ -12,7 +12,7 @@ public class HAPBrickServiceInterface1 extends HAPBrickWithEntityInfoSimple{
 	public static String INTERACTIVEINTERFACE = "interactiveInterface";
 
 
-	public HAPBlockInteractiveInterface getInterface() {}
+	public HAPBlockInteractiveInterfaceTask getInterface() {}
 	
 	
 //	@Override

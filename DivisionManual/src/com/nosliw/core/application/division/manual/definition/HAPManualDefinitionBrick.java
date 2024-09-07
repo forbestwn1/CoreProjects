@@ -171,12 +171,20 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		return ((HAPManualDefinitionWrapperValueValue)att.getValueWrapper()).getValue();
 	}
 	
-	public HAPManualDefinitionBrick getAttributeValueOfBrick(String attributeName) {
+	public HAPEntityOrReference getAttributeValueOfBrick(String attributeName) {
+		HAPEntityOrReference out = null;
 		HAPManualDefinitionAttributeInBrick attr = this.getAttribute(attributeName);
 		if(attr!=null) {
-			return ((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick();
+			HAPManualDefinitionWrapperValue attrValueWrapper = attr.getValueWrapper();
+			String wrapperType = attrValueWrapper.getValueType();
+			if(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK.equals(wrapperType)) {
+				out = ((HAPManualDefinitionWrapperValueBrick)attr.getValueWrapper()).getBrick();
+			}
+			else if(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE.equals(wrapperType)) {
+				out = ((HAPManualDefinitionWrapperValueReferenceResource)attr.getValueWrapper()).getResourceId();
+			}
 		}
-		return null;
+		return out;
 	}
 
 	@Override

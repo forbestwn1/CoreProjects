@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.service.provider;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
-import com.nosliw.core.application.brick.interactive.interfacee.HAPBlockInteractiveInterface;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPBlockServiceProvider;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
@@ -24,7 +24,7 @@ public class HAPManualBlockSimpleServiceProvider extends HAPManualBrickImp imple
 		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, this.getServiceKey().getServiceId()));
 		HAPResourceIdEmbeded serviceInterfaceResourceId = new HAPResourceIdEmbeded(HAPEnumBrickType.SERVICEINTERFACE_100.getBrickType(), HAPEnumBrickType.SERVICEINTERFACE_100.getVersion(), serviceProfileResourceId, HAPBlockServiceProfile.INTERFACE);
 
-		HAPBlockInteractiveInterface serviceInterfaceService = (HAPBlockInteractiveInterface)HAPUtilityResource.getResourceDataBrick(serviceInterfaceResourceId, getResourceManager(), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo());
+		HAPBlockInteractiveInterfaceTask serviceInterfaceService = (HAPBlockInteractiveInterfaceTask)HAPUtilityResource.getResourceDataBrick(serviceInterfaceResourceId, getResourceManager(), this.getRuntimeEnvironment().getRuntime().getRuntimeInfo());
 		return serviceInterfaceService.getExternalValuePorts();
 	}
 }

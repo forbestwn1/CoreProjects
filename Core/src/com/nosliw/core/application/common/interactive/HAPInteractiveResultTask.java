@@ -22,7 +22,6 @@ import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort1111;
 import com.nosliw.core.application.common.valueport.HAPValuePortImp;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
@@ -34,20 +33,12 @@ public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
 	
 	private List<HAPResultElementInInteractiveTask> m_output;
 	
-	private HAPValuePort1111 m_internalValuePort;
-	private HAPValuePort1111 m_externalValuePort;
-
 	public HAPInteractiveResultTask(){
 		this.m_output = new ArrayList<HAPResultElementInInteractiveTask>();
-		this.m_internalValuePort = new HAPValuePortInteractiveResult1(m_output, HAPConstantShared.IO_DIRECTION_IN);
-		this.m_externalValuePort = new HAPValuePortInteractiveResult1(m_output, HAPConstantShared.IO_DIRECTION_OUT);
 	}
 
 	public void addOutput(HAPResultElementInInteractiveTask output) {   this.m_output.add(output);   }
 	public List<HAPResultElementInInteractiveTask> getOutput(){   return this.m_output;  }
-	
-	public HAPValuePort1111 getInternalValuePort() {	return this.m_internalValuePort;	}
-	public HAPValuePort1111 getExternalValuePort() {	return this.m_externalValuePort;	}
 	
 	public HAPInteractiveResultTask cloneInteractiveResult() {
 		HAPInteractiveResultTask out = new HAPInteractiveResultTask();
