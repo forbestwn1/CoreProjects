@@ -11,11 +11,10 @@
 				"description" : ""
 			},
 			"brick":{
-				"script": "complextask_test_basic",
 				"interactiveTask" : {
 					"request" : [
 						{
-							"name" : "task_request_parm1",
+							"name" : "task_request_string1",
 							"dataInfo" : "test.string;1.0.0"
 						}
 					],
@@ -23,7 +22,7 @@
 						"success": {
 							"output": [
 								{
-									"name" : "task_result_success_output1",
+									"name" : "task_result_success_string1",
 									"criteria" : "test.string;1.0.0"
 								}
 							]
@@ -64,7 +63,7 @@
 									{
 										"status": "disabled1",
 										"target" : {
-											"rootName" : "task_request_parm1",
+											"rootName" : "task_request_string1",
 											"ioDirection" : "IN",
 											"valuePortId" : {
 												"valuePortId" : {
@@ -90,7 +89,7 @@
 											},
 											"definition" : {
 												"mapping" : {
-													"elementPath": "task_result_success_output1",
+													"elementPath": "task_result_success_string1",
 													"valuePortId" : {
 														"valuePortId" : {
 															"group" : "taskInteractive"

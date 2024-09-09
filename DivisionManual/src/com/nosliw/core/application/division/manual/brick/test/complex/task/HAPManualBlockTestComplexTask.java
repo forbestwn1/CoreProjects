@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
@@ -24,10 +25,14 @@ public class HAPManualBlockTestComplexTask extends HAPManualBrickImp implements 
 	public void setParms(Map<String, Object> parms) {	this.setAttributeValueWithValue(PARM, parms);	}
 
 	@Override
-	public Map<String, HAPResultReferenceResolve> getVariables() {    return (Map<String, HAPResultReferenceResolve>)this.getAttributeValueOfValue(VARIABLE);  }
+	public Map<String, HAPIdElement> getVariables() {    return (Map<String, HAPIdElement>)this.getAttributeValueOfValue(VARIABLE);  }
 
 	@Override
 	public HAPBlockInteractiveInterfaceTask getTaskInteractive() {   return (HAPBlockInteractiveInterfaceTask)this.getAttributeValueOfBrick(INTERACTIVETASK);  }
+
+	@Override
+	public String getTaskInteractiveResult() {   return (String)this.getAttributeValueOfValue(INTERACTIVETASKRESULT);  }
+	public void setTaskInteractiveResult(String result) {   this.setAttributeValueWithValue(HAPBlockTestComplexTask.INTERACTIVETASKRESULT, result);  }
 	
 }
  

@@ -22,14 +22,14 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 
 	@Override
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
-		HAPManualDefinitionBlockTestComplexTask scriptEntity = (HAPManualDefinitionBlockTestComplexTask)entityDefinition;
+		HAPManualDefinitionBlockTestComplexTask taskEntity = (HAPManualDefinitionBlockTestComplexTask)entityDefinition;
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexTask.PARM);
 		if(parms!=null) {
 			for(Object key : parms.keySet()) {
 				String parmName = (String)key;
-				scriptEntity.setParm(parmName, parms.opt(parmName));
+				taskEntity.setParm(parmName, parms.opt(parmName));
 			}
 		}
 
@@ -48,15 +48,17 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 				
 				HAPReferenceElement elementRef = new HAPReferenceElement();
 				elementRef.buildObject(varDefObj, HAPSerializationFormat.JSON);
-				scriptEntity.getVariables().put(varName, elementRef);
+				taskEntity.getVariables().put(varName, elementRef);
 			}
 		}
 		
 		//task interactive
 		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPBlockTestComplexTask.INTERACTIVETASK, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parseContext);
-//		JSONObject taskInteractiveObj = jsonObj.optJSONObject(HAPBlockTestComplexTask.INTERACTIVETASK);
-//		if(taskInteractiveObj!=null) {
-//		}
+
+		String interactiveTaskResult = (String)jsonObj.opt(HAPBlockTestComplexTask.INTERACTIVETASKRESULT);
+		if(interactiveTaskResult!=null) {
+			taskEntity.setTaskInteractiveResult(interactiveTaskResult);
+		}
 		
 	}
 }

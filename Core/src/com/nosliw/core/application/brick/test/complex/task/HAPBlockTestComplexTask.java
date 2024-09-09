@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 
 @HAPEntityWithAttribute
 public interface HAPBlockTestComplexTask extends HAPBrick{
@@ -21,11 +21,16 @@ public interface HAPBlockTestComplexTask extends HAPBrick{
 	public static String INTERACTIVETASK = "interactiveTask";
 
 	@HAPAttribute
+	public static String INTERACTIVETASKRESULT = "interactiveTaskResult";
+
+	@HAPAttribute
 	public static String INTERACTIVEEXPRESSION = "interactiveExpression";
 
 	Map<String, Object> getParms();
 
-	Map<String, HAPResultReferenceResolve> getVariables();
+	Map<String, HAPIdElement> getVariables();
 
 	HAPBlockInteractiveInterfaceTask getTaskInteractive();
+
+	String getTaskInteractiveResult();
 }

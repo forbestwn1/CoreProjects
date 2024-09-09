@@ -24,5 +24,9 @@ public class HAPManualDefinitionBlockTestComplexTask extends HAPManualDefinition
 	public Map<String, HAPReferenceElement> getVariables(){    return (Map<String, HAPReferenceElement>)this.getAttributeValueOfValue(HAPBlockTestComplexTask.VARIABLE);     }
 
 	public HAPEntityOrReference getTaskInteractiveInterface() {		return this.getAttributeValueOfBrick(HAPBlockTestComplexTask.INTERACTIVETASK);	}
+
+	public String getTaskInteractiveResult() {   return (String)this.getAttributeValueOfValue(HAPBlockTestComplexTask.INTERACTIVETASKRESULT);  }
+	
+	public void setTaskInteractiveResult(String result) {   this.setAttributeValueWithValue(HAPBlockTestComplexTask.INTERACTIVETASKRESULT, result);  }
 	
 }

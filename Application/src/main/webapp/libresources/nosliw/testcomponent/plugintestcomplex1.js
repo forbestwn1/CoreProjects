@@ -83,7 +83,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				//adapter view
 				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
-				if(childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
+				if(false){ //childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
 					//for task wrapper attribute
 					var childEntityDef = node_getBasicEntityObjectInterface(childEntityCore).getEntityDefinition();
 					var adapterNames = childEntityDef.getAttribute(node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK).getAdapterNames();

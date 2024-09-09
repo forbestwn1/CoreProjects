@@ -15,10 +15,10 @@ import com.nosliw.core.application.common.interactive.HAPResultElementInInteract
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
@@ -42,7 +42,13 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		HAPManualDefinitionBlockTestComplexTask definitionBlock = (HAPManualDefinitionBlockTestComplexTask)blockPair.getLeft();
 		HAPManualBlockTestComplexTask executableBlock = (HAPManualBlockTestComplexTask)blockPair.getRight();
 
-		
+		if(definitionBlock.getTaskInteractiveInterface()!=null) {
+			String interactiveTaskResult = definitionBlock.getTaskInteractiveResult();
+			if(interactiveTaskResult==null) {
+				interactiveTaskResult = HAPConstantShared.TASK_RESULT_SUCCESS;
+			}
+			executableBlock.setTaskInteractiveResult(interactiveTaskResult);
+		}
 	}
 
 	@Override
@@ -96,8 +102,8 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		for(String varName : varRefs.keySet()) {
 			HAPReferenceElement varRef = varRefs.get(varName);
 			varRef.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(varRef.getValuePortId(), varRef.getIODirection(), executableBlock));
-			HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain());
-			executableBlock.getVariables().put(varName, resolve);
+			HAPIdElement varId = HAPUtilityStructureElementReference.resolveElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain()).getElementId();
+			executableBlock.getVariables().put(varName, varId);
 		}
 	}
 }

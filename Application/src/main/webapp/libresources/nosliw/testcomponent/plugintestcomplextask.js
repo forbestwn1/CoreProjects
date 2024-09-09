@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_createValuePortElementInfo;
 	var node_makeObjectWithApplicationInterface;
+	var node_valuePortUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,7 +36,6 @@ var node_createTestComplexTaskPlugin = function(){
 
 var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
-
 	var loc_valueContext;
 
 	var loc_envInterface = {};
@@ -45,14 +45,15 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 	
 	var loc_variablesInTask;
 	var loc_taskInteractive;
+	var loc_taskInteractiveResult;
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getVariableDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
     	loc_variablesInTask = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_VARIABLE);
     	loc_taskInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASK);
+    	loc_taskInteractiveResult = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASKRESULT);
 	};
-
 
 	var loc_facadeTaskFactory = {
 		//return a task
@@ -85,22 +86,48 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 		},
 		
 		getTaskInitRequest : function(handlers, request){
-			return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
+			if(loc_taskContext!=undefined){
+				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
+			}
 		},
 		
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 
 			if(loc_taskInteractive!=undefined){
+				var requestPirs = [];
+				var requestPre = 'task_request_'
+				var resultPre = 'task_result_'
+				
+				//find all rquest/result var pair
 				_.each(loc_variablesInTask, function(varResolve, name){
-					if(name.startWith('task_request_')){
-						
+					if(name.startsWith(requestPre)){
+						var coreName = name.substring(requestPre.length);
+						var resultVarName = resultPre+loc_taskInteractiveResult+"_"+coreName;
+						if(loc_variablesInTask[resultVarName]!=undefined){
+							requestPirs.push([name, resultVarName]);
+						}
 					}
-					
 				});
-								
+				
+				_.each(requestPirs, function(pair, i){
+					var varAssignRequest = node_createServiceRequestInfoSequence();
+					varAssignRequest.addRequest(node_valuePortUtility.getValuePortValueRequest(withValuePort, loc_variablesInTask[pair[0]], {
+						success : function(request, varValue){
+							return node_valuePortUtility.setValuePortValueRequest(withValuePort, loc_variablesInTask[pair[1]], varValue);
+						}
+					}));
+					out.addRequest(varAssignRequest);
+				});
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_taskResult = {};
+					loc_taskResult.resultName = loc_taskInteractiveResult;
+					return loc_taskResult;
+				}));								
 			}
 			else{
+				//
 				var varsRequest = node_createServiceRequestInfoSet(undefined, {
 					success : function(request, variablesResult){
 						loc_taskResult = {};
@@ -109,11 +136,8 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 						return loc_taskResult;
 					}
 				});
-				_.each(loc_variablesInTask, function(varResolve, name){
-					var valuePortId = varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_VALUEPORTID];
-					var valuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
-					var valuePortEleInfo = node_createValuePortElementInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID], varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_FULLPATH]);
-					varsRequest.addRequest(name, valuePort.getValueRequest(valuePortEleInfo));
+				_.each(loc_variablesInTask, function(varId, name){
+					varsRequest.addRequest(name, node_valuePortUtility.getValuePortValueRequest(withValuePort, varId));
 				});
 	
 				out.addRequest(varsRequest);
@@ -148,6 +172,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuePortUtility", function(){node_valuePortUtility = this.getData();});
 
 
 //Register Node by Name
