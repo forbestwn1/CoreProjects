@@ -93,18 +93,21 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 			out.addRequest(task.getTaskInitRequest());
 
 			//input data assocation
-			out.addRequest(loc_dataAssociationIn.getExecuteRequest());
-			
-			//task execute
-			out.addRequest(task.getTaskExecuteRequest({
-				success: function(request, taskResult){
-					return loc_dataAssociationOut[task.getTaskResult().resultName].getExecuteRequest({
-						success : function(request){
-							return task;
+			out.addRequest(loc_dataAssociationIn.getExecuteRequest({
+				success : function(request){
+
+					return task.getTaskExecuteRequest({
+						success: function(request, taskResult){
+							return loc_dataAssociationOut[task.getTaskResult().resultName].getExecuteRequest({
+								success : function(request){
+									return task;
+								}
+							});
 						}
-					});
+					})
 				}
 			}));
+
 			return out;
 		}
 		

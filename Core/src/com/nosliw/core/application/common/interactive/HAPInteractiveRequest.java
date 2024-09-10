@@ -6,24 +6,11 @@ import java.util.Map;
 
 import org.json.JSONArray;
 
-import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort1111;
-import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveRequest extends HAPSerializableImp{
@@ -33,9 +20,6 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	
 	private List<HAPRequestParmInInteractive> m_requestParms;
 
-	private HAPValuePort1111 m_internalValuePort;
-	private HAPValuePort1111 m_externalValuePort;
-	
 	public HAPInteractiveRequest() {
 		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
 	}
@@ -47,8 +31,6 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	}
 
 	private void initValuePort() {
-//		this.m_internalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_BOTH);
-//		this.m_externalValuePort = new HAPValuePortInteractiveRequest(this.m_requestParms, HAPConstantShared.IO_DIRECTION_IN);
 	}
 	
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }
@@ -67,53 +49,6 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(PARM, HAPManagerSerialize.getInstance().toStringValue(this.getRequestParms(), HAPSerializationFormat.JSON));
-	}
-}
-
-class HAPValuePortInteractiveRequest extends HAPValuePortImp{
-
-	private List<HAPRequestParmInInteractive> m_requestParms;
-	
-	public HAPValuePortInteractiveRequest(List<HAPRequestParmInInteractive> requestParms, String ioDirection) {
-		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST, ioDirection));
-		this.m_requestParms = requestParms;
-	}
-
-	@Override
-	public HAPValueStructureInValuePort11111 getValueStructureDefintion(String valueStructureId) {
-		HAPValueStructureInValuePort11111 out = new HAPValueStructureInValuePort11111();
-		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
-			HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(new HAPElementStructureLeafData(parm.getCriteria()));
-			parm.cloneToEntityInfo(root);
-			out.addRoot(root);
-		}
-		return out;
-	}
-
-	@Override
-	protected List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria,
-			HAPConfigureResolveElementReference configure) {
-		return Lists.asList(HAPConstantShared.NAME_DEFAULT, new String[0]);
-	}
-
-	@Override
-	protected HAPResultReferenceResolve extendValueStructure(String valueStructureInValuePort, String elementPath, HAPElementStructure structureEle, HAPConfigureResolveElementReference resolveConfigure) {
-		HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParm(elementPath, null);
-		this.m_requestParms.add(parm);
-		
-		List<HAPInfoValueStructureReference> targetStructures = new ArrayList<HAPInfoValueStructureReference>();
-		targetStructures.add(new HAPInfoValueStructureReference(valueStructureInValuePort, this.getValueStructureDefintion(valueStructureInValuePort)));
-		return analyzeElementReference(elementPath, targetStructures, resolveConfigure);
-	}
-
-	@Override
-	public void updateElement(HAPIdElement elementId, HAPElementStructure structureElement) {
-		for(HAPRequestParmInInteractive parm : this.m_requestParms) {
-			if(parm.getName().equals(elementId.getRootElementId().getRootName())) {
-				parm.setCriteria(((HAPElementStructureLeafData)structureElement).getCriteria());
-				return;
-			}
-		}		
 	}
 }
 

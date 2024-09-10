@@ -26,6 +26,8 @@ var node_createValuePort = function(valuePortContainerId, varDomain){
 	}
 	
 	var loc_out = {
+
+		prv_id : nosliw.generateId(),
 		
 		createVariable : function(elementId){
 			return loc_valuePortContainer.createVariableById(elementId);			

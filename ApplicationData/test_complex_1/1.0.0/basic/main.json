@@ -6,6 +6,19 @@
 	"brick": [
 		{
 			"info": {
+				"name" : "variableshow-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+		{
+			"info": {
 				"name" : "taskinteractive-test_complex_task",
 				"status": "disabled1",
 				"description" : ""

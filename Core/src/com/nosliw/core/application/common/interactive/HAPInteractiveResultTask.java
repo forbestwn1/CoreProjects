@@ -7,23 +7,11 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.google.common.collect.Lists;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
-import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
@@ -78,44 +66,4 @@ public class HAPInteractiveResultTask extends HAPEntityInfoWritableImp{
 		jsonMap.put(OUTPUT, HAPUtilityJson.buildJson(this.m_output, HAPSerializationFormat.JSON));
 	}
 
-}
-
-class HAPValuePortInteractiveResult1 extends HAPValuePortImp{
-
-	private List<HAPResultElementInInteractiveTask> m_output;
-	
-	public HAPValuePortInteractiveResult1(List<HAPResultElementInInteractiveTask> output, String ioDirection) {
-		super(new HAPInfoValuePort(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT, ioDirection));
-		this.m_output = output;
-	}
-
-	@Override
-	public HAPValueStructureInValuePort11111 getValueStructureDefintion(String valueStructureId) {
-		HAPValueStructureInValuePort11111 out = new HAPValueStructureInValuePort11111();
-		for(HAPResultElementInInteractiveTask element : this.m_output) {
-			HAPRootStructureInValuePort root = new HAPRootStructureInValuePort(new HAPElementStructureLeafData(element.getCriteria()));
-			element.cloneToEntityInfo(root);
-			out.addRoot(root);
-		}
-		return out;
-	}
-
-	@Override
-	protected List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria,
-			HAPConfigureResolveElementReference configure) {
-		return Lists.asList(HAPConstantShared.NAME_DEFAULT, new String[0]);
-	}
-
-	@Override
-	public void updateElement(HAPIdElement elementId, HAPElementStructure structureElement) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected HAPResultReferenceResolve extendValueStructure(String valueStructureInValuePort, String elementPath,
-			HAPElementStructure structureEle, HAPConfigureResolveElementReference configure) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

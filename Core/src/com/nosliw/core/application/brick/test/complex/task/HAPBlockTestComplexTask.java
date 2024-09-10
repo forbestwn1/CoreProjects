@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.brick.interactive.interfacee.expression.HAPBlockInteractiveInterfaceExpression;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 
@@ -33,4 +34,7 @@ public interface HAPBlockTestComplexTask extends HAPBrick{
 	HAPBlockInteractiveInterfaceTask getTaskInteractive();
 
 	String getTaskInteractiveResult();
+
+	HAPBlockInteractiveInterfaceExpression getExpressionInteractive();
+
 }

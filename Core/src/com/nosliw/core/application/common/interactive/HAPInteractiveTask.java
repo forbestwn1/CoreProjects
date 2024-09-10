@@ -10,13 +10,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
-import com.nosliw.core.application.common.valueport.HAPWrapperValuePort;
 
-public class HAPInteractiveTask extends HAPSerializableImp implements HAPInteractive, HAPWithValuePortGroup{
+public class HAPInteractiveTask extends HAPSerializableImp implements HAPInteractive{
 
 	private HAPInteractiveRequest m_request;
 
@@ -30,49 +25,6 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_request.getRequestParms();  }
 
 	public List<HAPInteractiveResultTask> getResult() {   return this.m_results;  }
-	
-	
-	@Override
-	public HAPGroupValuePorts getInternalValuePortGroup() {
-		HAPGroupValuePorts group = new HAPGroupValuePorts();
-		
-		//request
-		HAPWrapperValuePort requestValuePortWrapper = new HAPWrapperValuePort(this.m_request.getInternalValuePort());
-		requestValuePortWrapper.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST);
-		group.addValuePort(requestValuePortWrapper, true); 
-
-		//result
-		for(HAPInteractiveResultTask result : this.m_results) {
-			HAPWrapperValuePort resultValuePortWrapper = new HAPWrapperValuePort(result.getInternalValuePort());
-			resultValuePortWrapper.setName(buildResultValuePortName(result.getName()));
-			group.addValuePort(resultValuePortWrapper, true); 
-		}
-		
-		return group;
-	}
-
-	@Override
-	public HAPGroupValuePorts getExternalValuePortGroup() {
-		HAPGroupValuePorts group = new HAPGroupValuePorts();
-		
-		//request
-		HAPWrapperValuePort requestValuePortWrapper = new HAPWrapperValuePort(this.m_request.getExternalValuePort());
-		requestValuePortWrapper.setName(HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST);
-		group.addValuePort(requestValuePortWrapper, true); 
-
-		//result
-		for(HAPInteractiveResultTask result : this.m_results) {
-			HAPWrapperValuePort resultValuePortWrapper = new HAPWrapperValuePort(result.getExternalValuePort());
-			resultValuePortWrapper.setName(buildResultValuePortName(result.getName()));
-			group.addValuePort(resultValuePortWrapper, true); 
-		}
-		
-		return group;
-	}
-	
-	private String buildResultValuePortName(String resultName) {
-		return HAPUtilityNamingConversion.cascadeComponents(HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT, resultName, HAPConstantShared.SEPERATOR_PREFIX);
-	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -120,7 +72,7 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 //	}
 //}
 
-//protected void cloneToInteractive(HAPBlockInteractiveInterfaceTask interactive) {
+//protected void cloneToInteractive(HAPBlockInteractiveInterfaceExpression interactive) {
 //	this.cloneToEntityInfo(interactive);
 //	for(HAPRequestParmInInteractive parm : this.m_requestParms) {
 //		interactive.addRequestParm(parm.cloneVariableInfo());

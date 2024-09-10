@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.task;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -8,6 +9,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
@@ -58,14 +60,21 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		HAPManualDefinitionBlockTestComplexTask definitionBlock = (HAPManualDefinitionBlockTestComplexTask)blockPair.getLeft();
 		HAPManualBlockTestComplexTask executableBlock = (HAPManualBlockTestComplexTask)blockPair.getRight();
 
-		HAPInteractiveTask taskInteractive = executableBlock.getTaskInteractive().getValue();
 		if(definitionBlock.getTaskInteractiveInterface()!=null) {
 			//build value port group
+			HAPInteractiveTask taskInteractive = executableBlock.getTaskInteractive().getValue();
 			Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInteractive, processContext.getCurrentBundle().getValueStructureDomain());
 			executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
 			executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
 		}
 		
+		if(definitionBlock.getExpressionInteractiveInterface()!=null) {
+			//build value port group
+			HAPInteractiveExpression expressionInteractive = executableBlock.getExpressionInteractive().getValue();
+			Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(expressionInteractive, processContext.getCurrentBundle().getValueStructureDomain());
+			executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
+			executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+		}
 	}
 
 	@Override
@@ -80,13 +89,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		if(definitionBlock.getTaskInteractiveInterface()!=null) {
 			HAPInteractiveTask taskInteractive = executableBlock.getTaskInteractive().getValue();
 			//build variable
-			for(HAPRequestParmInInteractive requestParm : taskInteractive.getRequestParms()) {
-				String varName = requestParm.getName();
-				HAPReferenceElement varDef = new HAPReferenceElement(varName);
-				varDef.setIODirection(HAPConstantShared.IO_DIRECTION_OUT);
-				varDef.setValuePortId(new HAPIdValuePortInBundle(null, new HAPIdValuePortInBrick(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK, null)));
-				varRefs.put(varName, varDef);
-			}
+			buildRquestParmsVars(varRefs, taskInteractive.getRequestParms(), HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK);
 			
 			for(HAPInteractiveResultTask taskResult : taskInteractive.getResult()) {
 				for(HAPResultElementInInteractiveTask output : taskResult.getOutput()) {
@@ -98,12 +101,34 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 				}
 			}
 		}
+
+		if(definitionBlock.getExpressionInteractiveInterface()!=null) {
+			HAPInteractiveExpression expressionInteractive = executableBlock.getExpressionInteractive().getValue();
+			//build variable
+			buildRquestParmsVars(varRefs, expressionInteractive.getRequestParms(), HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION);
+			
+			String varName = HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT;
+			HAPReferenceElement varDef = new HAPReferenceElement(varName);
+			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_IN);
+			varDef.setValuePortId(new HAPIdValuePortInBundle(null, new HAPIdValuePortInBrick(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, null)));
+			varRefs.put(varName, varDef);
+		}
 		
 		for(String varName : varRefs.keySet()) {
 			HAPReferenceElement varRef = varRefs.get(varName);
 			varRef.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(varRef.getValuePortId(), varRef.getIODirection(), executableBlock));
 			HAPIdElement varId = HAPUtilityStructureElementReference.resolveElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain()).getElementId();
 			executableBlock.getVariables().put(varName, varId);
+		}
+	}
+
+	private void buildRquestParmsVars(Map<String, HAPReferenceElement> varRefs, List<HAPRequestParmInInteractive> requestParms, String valuePortGroup) {
+		for(HAPRequestParmInInteractive requestParm : requestParms) {
+			String varName = requestParm.getName();
+			HAPReferenceElement varDef = new HAPReferenceElement(varName);
+			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_OUT);
+			varDef.setValuePortId(new HAPIdValuePortInBundle(null, new HAPIdValuePortInBrick(valuePortGroup, null)));
+			varRefs.put(varName, varDef);
 		}
 	}
 }

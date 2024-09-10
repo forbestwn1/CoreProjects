@@ -60,5 +60,8 @@ public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefiniti
 			taskEntity.setTaskInteractiveResult(interactiveTaskResult);
 		}
 		
+		//expression interactive
+		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPBlockTestComplexTask.INTERACTIVEEXPRESSION, HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100, null, parseContext);
+
 	}
 }

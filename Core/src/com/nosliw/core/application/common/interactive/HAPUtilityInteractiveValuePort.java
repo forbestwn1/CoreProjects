@@ -79,7 +79,7 @@ public class HAPUtilityInteractiveValuePort {
 	}
 
 	
-	private static Pair<HAPValuePort, HAPValuePort> createExpressionInteractiveResultValuePort(HAPResultElementInInteractiveExpression interactiveResult, HAPDomainValueStructure valueStructureDomain) {
+	private static Pair<HAPValuePort, HAPValuePort> createExpressionInteractiveResultValuePort(HAPInteractiveResultExpression interactiveResult, HAPDomainValueStructure valueStructureDomain) {
 		//result value structure
 		Set<HAPRootInStructure> resultRoots = new HashSet<HAPRootInStructure>();
 		HAPRootInStructure resultRoot = new HAPRootInStructure(new HAPElementStructureLeafData(interactiveResult.getDataCriteria()), null);

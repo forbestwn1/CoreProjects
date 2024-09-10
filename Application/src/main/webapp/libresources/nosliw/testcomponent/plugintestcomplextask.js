@@ -46,6 +46,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 	var loc_variablesInTask;
 	var loc_taskInteractive;
 	var loc_taskInteractiveResult;
+	var loc_expressionInteractive;
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getVariableDomain();
@@ -53,6 +54,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
     	loc_variablesInTask = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_VARIABLE);
     	loc_taskInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASK);
     	loc_taskInteractiveResult = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASKRESULT);
+    	loc_expressionInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVEEXPRESSION);
 	};
 
 	var loc_facadeTaskFactory = {
@@ -80,6 +82,14 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 				taskInteractiveTrigueView.click(function() {
 					var executeTaskInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, loc_taskContext);
 					node_requestServiceProcessor.processRequest(executeTaskInteractiveRequest);
+				});
+			}
+			else if(loc_expressionInteractive!=undefined){
+				var expressionInteractiveTrigueView = $('<button>Execute Expression Interactive</button>');
+				rootView.append(expressionInteractiveTrigueView);
+				expressionInteractiveTrigueView.click(function() {
+					var executeExpressionInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, loc_taskContext);
+					node_requestServiceProcessor.processRequest(executeExpressionInteractiveRequest);
 				});
 			}
 			
@@ -120,6 +130,25 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 					}));
 					out.addRequest(varAssignRequest);
 				});
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					loc_taskResult = {};
+					loc_taskResult.resultName = loc_taskInteractiveResult;
+					return loc_taskResult;
+				}));								
+			}
+			else if(loc_expressionInteractive!=undefined){
+				var requestPirs = [];
+				var requestForResultVarName = 'expression_request_forresult'
+				var resultVarName = node_COMMONCONSTANT.NAME_ROOT_RESULT;
+
+				var varAssignRequest = node_createServiceRequestInfoSequence();
+				varAssignRequest.addRequest(node_valuePortUtility.getValuePortValueRequest(withValuePort, loc_variablesInTask[requestForResultVarName], {
+					success : function(request, varValue){
+						return node_valuePortUtility.setValuePortValueRequest(withValuePort, loc_variablesInTask[resultVarName], varValue);
+					}
+				}));
+				out.addRequest(varAssignRequest);
+
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					loc_taskResult = {};
 					loc_taskResult.resultName = loc_taskInteractiveResult;

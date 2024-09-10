@@ -11,11 +11,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveExpression;
+import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
 
 public class HAPManualScriptExpressionLibraryElement extends HAPEntityInfoImp implements HAPInteractive{
 
-	private HAPResultElementInInteractiveExpression m_result;
+	private HAPInteractiveResultExpression m_result;
 	
 	private List<HAPRequestParmInInteractive> m_requestParms;
 	
@@ -28,8 +28,8 @@ public class HAPManualScriptExpressionLibraryElement extends HAPEntityInfoImp im
 	public List<HAPRequestParmInInteractive> getRequestParms() {  return this.m_requestParms;  }
 	public void addRequestParm(HAPRequestParmInInteractive requestParm) {	this.getRequestParms().add(requestParm);	}
 	
-	public HAPResultElementInInteractiveExpression getResult() {   return this.m_result;  } 
-	public void setResult(HAPResultElementInInteractiveExpression result) {   this.m_result = result;      }
+	public HAPInteractiveResultExpression getResult() {   return this.m_result;  } 
+	public void setResult(HAPInteractiveResultExpression result) {   this.m_result = result;      }
 	
 	public String getExpression() {	return this.m_expression;	}
 	public void setExpression(String expressionStr) {   this.m_expression = expressionStr;     }
@@ -51,7 +51,7 @@ public class HAPManualScriptExpressionLibraryElement extends HAPEntityInfoImp im
 		
 		JSONObject resultObj = jsonObj.optJSONObject(RESULT);
 		if(resultObj!=null) {
-			HAPResultElementInInteractiveExpression result = new HAPResultElementInInteractiveExpression();
+			HAPInteractiveResultExpression result = new HAPInteractiveResultExpression();
 			result.buildObject(resultObj, HAPSerializationFormat.JSON);
 			this.setResult(result);
 		}
