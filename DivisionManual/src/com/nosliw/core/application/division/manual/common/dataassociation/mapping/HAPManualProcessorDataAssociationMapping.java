@@ -1,6 +1,5 @@
 package com.nosliw.core.application.division.manual.common.dataassociation.mapping;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
@@ -18,16 +16,14 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafProvide;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForMapping;
 import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.structure.reference.HAPProcessorElementRelative;
+import com.nosliw.core.application.common.structure.reference.HAPConfigureProcessorRelative;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
@@ -36,19 +32,9 @@ import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
-import com.nosliw.data.core.dataassociation.HAPUtilityDAProcess;
-import com.nosliw.data.core.domain.HAPRefIdEntity;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
-import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorValueStructure;
-import com.nosliw.data.core.matcher.HAPMatcherUtility;
-import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 
 public class HAPManualProcessorDataAssociationMapping {
 
@@ -189,7 +175,7 @@ public class HAPManualProcessorDataAssociationMapping {
 	
 	
 	
-	
+/*	
 	
 	public static void processValueMapping(
 			HAPDataAssociationMapping out,
@@ -462,4 +448,5 @@ public class HAPManualProcessorDataAssociationMapping {
 		}
 		return out;
 	}
+*/	
 }

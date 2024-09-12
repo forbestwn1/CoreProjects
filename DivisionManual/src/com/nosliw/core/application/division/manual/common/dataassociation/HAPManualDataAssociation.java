@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.dataassociation.HAPDefinitionDataAssociation;
 
 public abstract class HAPManualDataAssociation extends HAPEntityInfoImp{
 
@@ -55,7 +54,7 @@ public abstract class HAPManualDataAssociation extends HAPEntityInfoImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONObject daJsonObj = (JSONObject)json;
 		this.buildEntityInfoByJson(daJsonObj);
-		Object dirObj = daJsonObj.opt(HAPDefinitionDataAssociation.DIRECTION);
+		Object dirObj = daJsonObj.opt(DIRECTION);
 		if(dirObj!=null) {
 			this.m_direction = (String)dirObj;
 		}

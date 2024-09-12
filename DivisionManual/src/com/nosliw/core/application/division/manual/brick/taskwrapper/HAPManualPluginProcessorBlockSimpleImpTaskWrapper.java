@@ -17,7 +17,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginProcessorBlockSimpleImpTaskWrapper extends HAPManualPluginProcessorBlockComplex{
 
 	public HAPManualPluginProcessorBlockSimpleImpTaskWrapper(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.TASKWRAPPER_100, HAPManualBlockSimpleTaskWrapper.class, runtimeEnv, manualBrickMan);
+		super(HAPEnumBrickType.TASKWRAPPER_100, HAPManualBlockTaskWrapper.class, runtimeEnv, manualBrickMan);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class HAPManualPluginProcessorBlockSimpleImpTaskWrapper extends HAPManual
 		
 		HAPIdBrickType brickTypeId = HAPManualDefinitionUtilityBrick.getBrickType(brickInfoPair.getLeft().getAttribute(HAPBlockTaskWrapper.TASK).getValueWrapper());
 		
-		HAPManualBlockSimpleTaskWrapper taskWrapperExe = (HAPManualBlockSimpleTaskWrapper)brickInfoPair.getRight();
+		HAPManualBlockTaskWrapper taskWrapperExe = (HAPManualBlockTaskWrapper)brickInfoPair.getRight();
 		String taskType = processContext.getManualBrickManager().getBrickTypeInfo(brickTypeId).getTaskType();
 		taskWrapperExe.setTaskType(taskType);
 	}

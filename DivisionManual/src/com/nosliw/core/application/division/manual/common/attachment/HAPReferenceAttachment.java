@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.attachment;
+package com.nosliw.core.application.division.manual.common.attachment;
 
 import java.util.Map;
 

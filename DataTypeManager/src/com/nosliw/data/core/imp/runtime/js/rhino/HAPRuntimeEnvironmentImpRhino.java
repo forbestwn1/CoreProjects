@@ -27,8 +27,6 @@ import com.nosliw.data.core.runtime.HAPGatewayManager;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
 import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.script.expression1.HAPManagerScript;
-import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
 
@@ -55,13 +53,11 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 		HAPManagerResourceDefinition resourceDefManager = new HAPManagerResourceDefinition(dynamicResourceManager);
 		HAPManagerService serviceManager = new HAPManagerService(this);
 		HAPParserDataExpression dataExpressionParser = new HAPDataExpressionParserImp();
-		HAPManagerScript scriptMan = new HAPManagerScript(this);
 		HAPManagerTask taskManager = new HAPManagerTask(this);
 		HAPManagerActivity activityMan = new HAPManagerActivity(new HAPManagerActivityPlugin(), this);
 		HAPManagerProcess processMan = new HAPManagerProcess(this);
 		HAPRuntimeProcess processRuntimeMan = null;  //new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
-		HAPManagerStory storyManager = new HAPManagerStory(this); 
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
 		HAPManagerUITag uiTagManager = new HAPManagerUITag();
 		
@@ -75,7 +71,6 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				processMan,
 				processRuntimeMan,
 				dataExpressionParser,
-				scriptMan,
 				new HAPGatewayManager(),
 				serviceManager,
 				dynamicResourceManager,
@@ -83,7 +78,6 @@ public class HAPRuntimeEnvironmentImpRhino extends HAPRuntimeEnvironmentJS{
 				brickManager,
 				uiTagManager,
 				cronJobManager,
-				storyManager,
 				runtime
 		);
 

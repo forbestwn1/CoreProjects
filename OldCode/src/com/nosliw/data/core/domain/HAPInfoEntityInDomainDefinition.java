@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
+import com.nosliw.core.application.division.manual.common.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 //definition entity information in domain 

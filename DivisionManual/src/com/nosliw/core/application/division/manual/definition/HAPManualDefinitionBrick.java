@@ -20,16 +20,15 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
-import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockSimpleTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualDefinitionBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
-import com.nosliw.data.core.domain.entity.HAPEntity;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPEntity, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
+public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
 
 	public final static String ATTRIBUTE = "attribute"; 
 	
@@ -111,7 +110,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {
 			//insert task wrapper if attribute value is task, the reason is wrapper can create instance for each task execute
-			HAPManualDefinitionBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualDefinitionBlockSimpleTaskWrapper)this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.TASKWRAPPER_100); 
+			HAPManualDefinitionBlockTaskWrapper taskWrapperBrick = (HAPManualDefinitionBlockTaskWrapper)this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.TASKWRAPPER_100); 
 			String taskWrapperAttrName = attribute.getName();
 			attribute.setName(HAPBlockTaskWrapper.TASK);
 			taskWrapperBrick.setAttribute(attribute);

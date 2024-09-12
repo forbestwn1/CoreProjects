@@ -24,7 +24,7 @@
 				"description" : ""
 			},
 			"brick":{
-				"interactiveTask" : {
+				"interactiveTask1" : {
 					"request" : [
 						{
 							"name" : "task_request_string1",
@@ -41,10 +41,17 @@
 							]
 						}
 					}
-				
 				},				
 				"interactiveExpression" : {
-					
+					"request" : [
+						{
+							"name" : "expression_request_forresult",
+							"dataInfo" : "test.string;1.0.0"
+						}
+					],
+					"result" : {
+						"criteria" : "test.string;1.0.0"
+					}
 				},				
 				"variable1" : [
 					{
@@ -62,8 +69,62 @@
 			},
 			"adapter":[
 				{
-					"name" : "interactivetaskAdapter",
+					"name" : "interactiveexpressionAdapter",
 					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "expression_request_forresult",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "expressionInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result",
+												"valuePortId" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"

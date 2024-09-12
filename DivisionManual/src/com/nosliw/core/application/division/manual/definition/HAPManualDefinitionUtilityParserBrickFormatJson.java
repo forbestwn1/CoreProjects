@@ -1,7 +1,5 @@
 package com.nosliw.core.application.division.manual.definition;
 
-import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -17,19 +15,8 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPDomainEntityDefinitionLocalComplex;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;
-import com.nosliw.data.core.domain.HAPInfoParentComplex;
-import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
-import com.nosliw.data.core.domain.entity.HAPEmbeded;
-import com.nosliw.data.core.domain.entity.HAPEmbededDefinition;
-import com.nosliw.data.core.domain.entity.HAPInfoAdapterDefinition;
+import com.nosliw.core.application.division.manual.common.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
@@ -206,7 +193,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	
 	
 	
-	
+/*	
 	
 	public static HAPEmbededDefinition parseEmbededEntity(Object obj, HAPIdBrickType entityType, HAPContextParser parserContext, HAPManagerDomainEntityDefinition domainEntityManager, HAPManagerResourceDefinition resourceDefinitionManager) {
 		return parseEmbededEntity(obj, entityType, null, parserContext, domainEntityManager, resourceDefinitionManager);
@@ -297,5 +284,5 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		
 		return out;
 	}
-
+*/
 }

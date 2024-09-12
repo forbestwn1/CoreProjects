@@ -62,27 +62,6 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 	
 	var loc_out = {
 		
-		getExecuteRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			out.addRequest(loc_dataAssociationIn.getExecuteRequest({
-				success : function(request){
-					var taskInterface = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-					
-					return taskInterface.getExecuteRequest({
-						success: function(request, taskResult){
-							return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest({
-								success : function(request){
-									return taskResult;
-								}
-							});
-						}
-					});
-				}
-			}));
-			return out;
-		},
-		
 		getExecuteTaskRequest : function(taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			

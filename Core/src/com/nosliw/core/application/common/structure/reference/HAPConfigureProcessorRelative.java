@@ -1,4 +1,4 @@
-package com.nosliw.data.core.domain.valuecontext;
+package com.nosliw.core.application.common.structure.reference;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;

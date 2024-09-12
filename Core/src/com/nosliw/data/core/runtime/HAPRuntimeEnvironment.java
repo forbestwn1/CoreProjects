@@ -9,15 +9,11 @@ import com.nosliw.data.core.codetable.HAPManagerCodeTable;
 import com.nosliw.data.core.cronjob.HAPManagerCronJob;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
-import com.nosliw.data.core.domain.entity.HAPManagerDomainEntityExecutable;
 import com.nosliw.data.core.process1.HAPManagerProcess;
 import com.nosliw.data.core.process1.HAPRuntimeProcess;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.resource.dynamic.HAPManagerDynamicResource;
-import com.nosliw.data.core.script.expression1.HAPManagerScript;
-import com.nosliw.data.core.story.HAPManagerStory;
 import com.nosliw.data.core.task.HAPManagerTask;
 
 /**
@@ -38,8 +34,6 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPParserDataExpression getDataExpressionParser();
 	
-	HAPManagerScript getScriptManager();
-
 	HAPManagerTask getTaskManager();
 	
 	HAPManagerActivity getActivityManager();
@@ -56,10 +50,6 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerResourceDefinition getResourceDefinitionManager();
 	
-	HAPManagerDomainEntityDefinition getDomainEntityDefinitionManager();
-	
-	HAPManagerDomainEntityExecutable getDomainEntityExecutableManager();
-	
 	HAPManagerApplicationBrick getBrickManager();
 	
 	HAPManagerUITag getUITagManager();
@@ -67,8 +57,6 @@ public interface HAPRuntimeEnvironment {
 	HAPManagerDynamicResource getDynamicResourceManager();
 	
 	HAPManagerCronJob getCronJobManager();
-	
-	HAPManagerStory getStoryManager();
 	
 	HAPRuntime getRuntime();
 

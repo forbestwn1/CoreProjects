@@ -1,12 +1,9 @@
 package com.nosliw.core.application.common.valueport;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
 
 //configure for resolve 
 public class HAPConfigureResolveElementReference extends HAPInfoImpSimple{
@@ -48,7 +45,7 @@ public class HAPConfigureResolveElementReference extends HAPInfoImpSimple{
 	
 	public HAPConfigureResolveElementReference() {
 		this.setSearchMode(HAPConstant.RESOLVEPARENTMODE_BEST);
-		this.setGroupTypes(new HashSet<String>(Arrays.asList(HAPUtilityValueStructure.getVisibleToChildCategaries())));
+//		this.setGroupTypes(new HashSet<String>(Arrays.asList(HAPUtilityValueStructure.getVisibleToChildCategaries())));
 	}
 	
 	

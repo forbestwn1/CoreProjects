@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.structure.reference.HAPConfigureProcessorRelative;
 
 //configure 
 public class HAPConfigureProcessorValueStructure extends HAPSerializableImp{

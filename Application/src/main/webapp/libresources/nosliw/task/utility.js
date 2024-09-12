@@ -31,8 +31,8 @@ var node_taskUtility = {
 		for(var name in adapters){
 			var adapter = adapters[name];
 			var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-			var adapterBrickType = adapterDef.getBrickType(); 
-			if(adapterBrickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK){
+			var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
+			if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
 				taskAdapter = adapter;
 			}
 		}

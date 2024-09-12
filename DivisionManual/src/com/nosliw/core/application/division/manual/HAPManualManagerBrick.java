@@ -35,6 +35,8 @@ import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPM
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualPluginParserBlockDataExpressionLibrary;
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualPluginProcessorBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualPluginProcessorBlockDataExpressionLibrary;
+import com.nosliw.core.application.division.manual.brick.interactive.interfacee.expression.HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression;
+import com.nosliw.core.application.division.manual.brick.interactive.interfacee.expression.HAPManualPluginProcessorBlockSimpleInteractiveInterfaceExpression;
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.task.HAPManualPluginParserBlockSimpleInteractiveInterfaceTask;
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.task.HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask;
 import com.nosliw.core.application.division.manual.brick.scriptexpression.group.HAPManualPluginParserBlockScriptExpressionGroup;
@@ -225,6 +227,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_TASK_100, new HAPInfoBrickType(true, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTestComplexTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexTask(this.m_runtimeEnv, this));
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockSimpleInteractiveInterfaceTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask(this.m_runtimeEnv, this));
+		this.registerBlockPluginInfo(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleInteractiveInterfaceExpression(this.m_runtimeEnv, this));
 
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.SERVICEPROVIDER_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockServiceProvider(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpServiceProvider(this.m_runtimeEnv, this));

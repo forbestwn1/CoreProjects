@@ -107,7 +107,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 			//build variable
 			buildRquestParmsVars(varRefs, expressionInteractive.getRequestParms(), HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION);
 			
-			String varName = HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT;
+			String varName = HAPConstantShared.NAME_ROOT_RESULT;
 			HAPReferenceElement varDef = new HAPReferenceElement(varName);
 			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_IN);
 			varDef.setValuePortId(new HAPIdValuePortInBundle(null, new HAPIdValuePortInBrick(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, null)));

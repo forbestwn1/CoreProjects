@@ -5,7 +5,7 @@ import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
-public class HAPManualBlockSimpleTaskWrapper extends HAPManualBrickImp implements HAPBlockTaskWrapper{
+public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPBlockTaskWrapper{
 
 	@Override
 	public void init() {

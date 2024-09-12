@@ -36,7 +36,6 @@ import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.domain.valuecontext.HAPConfigureProcessorRelative;
 import com.nosliw.data.core.matcher.HAPMatcherUtility;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

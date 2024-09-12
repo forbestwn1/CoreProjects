@@ -17,11 +17,14 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 	private HAPInteractiveRequest m_request;
 	private HAPInteractiveResultExpression m_result;
 
-	public HAPInteractiveExpression() {}
+	public HAPInteractiveExpression() {
+		this.m_request = new HAPInteractiveRequest();
+		this.m_result = new HAPInteractiveResultExpression();
+	}
 	
 	public HAPInteractiveExpression(List<HAPRequestParmInInteractive> requestParms, HAPInteractiveResultExpression result) {
 		this.m_request = new HAPInteractiveRequest(requestParms);
-		this.m_result = new HAPInteractiveResultExpression();
+		this.m_result = result;
 	}
 
 	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_request.getRequestParms();  }

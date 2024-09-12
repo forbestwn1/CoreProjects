@@ -8,8 +8,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.HAPManualBrickSimple;
+import com.nosliw.core.application.division.manual.common.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.attachment.HAPConfigureComplexRelationAttachment;
-import com.nosliw.data.core.domain.attachment.HAPReferenceAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 
 //store all attachment by type and by name

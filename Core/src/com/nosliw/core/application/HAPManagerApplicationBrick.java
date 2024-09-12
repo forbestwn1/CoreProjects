@@ -176,6 +176,7 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrickServiceInterface());
 
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100));
 
 		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary());
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100));

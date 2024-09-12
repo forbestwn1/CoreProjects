@@ -28,7 +28,7 @@ import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
-import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockSimpleTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -52,7 +52,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 			HAPIdBrickInBundle handlerIdInBundle = eventInfo.getHandlerId();
 			handlerIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(handlerIdInBundle.getIdPath(), executableBlock.getTreeNodeInfo().getPathFromRoot().toString()));
 			
-			HAPManualBlockSimpleTaskWrapper taskWrapperBrick = (HAPManualBlockSimpleTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(handlerIdInBundle, bundle);
+			HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(handlerIdInBundle, bundle);
 			
 			Pair<HAPGroupValuePorts, HAPGroupValuePorts> eventValuePortGroupPair = HAPUtilityEvent.createValuePortGroupForEvent(eventInfo, bundle.getValueStructureDomain());
 			taskWrapperBrick.addOtherInternalValuePortGroup(eventValuePortGroupPair.getLeft());

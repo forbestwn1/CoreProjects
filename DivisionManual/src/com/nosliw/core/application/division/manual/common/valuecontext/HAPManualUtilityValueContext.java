@@ -18,10 +18,7 @@ import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
-import com.nosliw.data.core.domain.HAPDomainValueStructure;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructure;
-import com.nosliw.data.core.domain.valuecontext.HAPUtilityValueStructureDomain;
+import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualUtilityValueContext {
 
@@ -145,7 +142,7 @@ public class HAPManualUtilityValueContext {
 				String groupType0 = arg0.getValueStructure().getGroupType();
 				String groupType1 = arg1.getValueStructure().getGroupType();
 				
-				List<String> groups = HAPUtilityValueStructure.getAllCategariesWithResolvePriority();
+				List<String> groups = getAllCategariesWithResolvePriority();
 				int groupPriority0 = groups.indexOf(groupType0);
 				int groupPriority1 = groups.indexOf(groupType1);
 
