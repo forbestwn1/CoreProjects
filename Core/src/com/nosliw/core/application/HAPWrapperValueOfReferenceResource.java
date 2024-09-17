@@ -7,10 +7,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
@@ -29,7 +27,6 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 	public Object getValue() {     return this.m_resourceId;      }
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
-	public HAPInfoResourceIdNormalize getNormalizedResourceId() {   return HAPUtilityResourceId.normalizeResourceId(m_resourceId);    }
 	
 //	public void solidate(HAPManagerApplicationBrick brickMan) {
 //		this.m_referBundle = brickMan.getBrickBundle(m_normalizedResourceId.getRootResourceIdSimple());

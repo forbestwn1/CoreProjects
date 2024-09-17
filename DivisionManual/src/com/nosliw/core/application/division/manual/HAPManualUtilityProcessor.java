@@ -36,7 +36,6 @@ import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualExeUtilityBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualWrapperValueOfBrick;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -318,7 +317,7 @@ public class HAPManualUtilityProcessor {
 				if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 					HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
 					HAPManualBrick attrBrick = HAPManualExeUtilityBrick.newBrickInstance(attrBrickDef.getBrickTypeId(), processContext.getCurrentBundle(), manualBrickMan);
-					attrExe.setValueWrapper(new HAPManualWrapperValueOfBrick(attrBrick));
+					attrExe.setValueWrapper(new HAPWrapperValueOfBrick(attrBrick));
 					buildExecutableTree(attrBrickDef, attrBrick, processContext, manualBrickMan);
 				}
 				else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {

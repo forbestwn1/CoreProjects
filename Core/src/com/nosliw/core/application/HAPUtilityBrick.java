@@ -1,5 +1,6 @@
 package com.nosliw.core.application;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePortContainer;
@@ -7,12 +8,38 @@ import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.resource.HAPUtilityResource;
+import com.nosliw.data.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityBrick {
 
+	public static HAPBrick getBrick(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
+		HAPBrick out = null;
+		String type = brickOrRef.getEntityOrReferenceType();
+		if(type.equals(HAPConstantShared.BRICK)) {
+			out = (HAPBrick)brickOrRef;
+		}
+		else if(type.equals(HAPConstantShared.RESOURCEID)) {
+			out = HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager);			
+		}
+		return out;
+	}
+	
+	public static HAPBrick getAttributeValueOfBrickGlobal(HAPBrick brick, String attributeName, HAPManagerApplicationBrick brickManager) {
+		HAPBrick out = null;
+		
+		HAPResultBrick brickResult = getDescendantBrickResult(brick, new HAPPath(attributeName));
+		out = brickResult.getInternalBrick();
+		
+		if(out==null) {
+			out = HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager);			
+		}
+		return out;	
+	}
+	
 	public static HAPBundle getBrickBundle(HAPResourceIdSimple resourceId, HAPManagerApplicationBrick brickMan) {
 		HAPBundle bundle = brickMan.getBrickBundle(HAPUtilityBrickId.fromResourceId2BrickId(resourceId));
 		HAPUtilityExport.exportBundle(resourceId, bundle);

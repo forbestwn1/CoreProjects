@@ -7,6 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPWrapperValue;
+import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.data.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
@@ -32,7 +33,7 @@ public class HAPManualAttributeInBrick extends HAPAttributeInBrick implements HA
 
 	public List<HAPManualAdapter> getManualAdapters(){    return (List)this.getAdapters();    }
 	
-	public void setValueOfBrick(HAPManualBrick brick) {		this.setValueWrapper(new HAPManualWrapperValueOfBrick(brick));	}
+	public void setValueOfBrick(HAPManualBrick brick) {		this.setValueWrapper(new HAPWrapperValueOfBrick(brick));	}
 
 	@Override
 	public HAPInfoTreeNode getTreeNodeInfo() {  return this.m_tempTreeNodeInfo;  }
@@ -46,7 +47,7 @@ public class HAPManualAttributeInBrick extends HAPAttributeInBrick implements HA
 
 	private void synTreeNodeInfoInBrick() {
 		if(this.m_tempTreeNodeInfo!=null&&this.getValueWrapper()!=null&&this.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			((HAPManualWrapperValueOfBrick)this.getValueWrapper()).getManualBrick().setTreeNodeInfo(m_tempTreeNodeInfo);
+			((HAPManualBrick)((HAPWrapperValueOfBrick)this.getValueWrapper()).getBrick()).setTreeNodeInfo(m_tempTreeNodeInfo);
 		}
 	}
 }

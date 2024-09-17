@@ -1,5 +1,10 @@
 package com.nosliw.test.domain;
 
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrick;
@@ -9,8 +14,41 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
-public class HAPTestDomain {
+class A {
+	private int i = 10;
+	
+	public int getI() {return this.i; } 
+}
 
+class B extends A {
+	private int i = 20;
+	@Override
+	public int getI() {return this.i; } 
+}
+
+public class HAPTestDomain {
+	
+	public static void main1(String[] args) {
+		A a = new B();
+		System.out.println(a.getI());
+		
+		Runnable r = () -> {int kkk = 555;};
+		
+		Function<String, Integer> stringToInterger = Integer::parseInt;
+		stringToInterger.apply("aaa");
+		BiPredicate<List<String>, String> container = List::contains;
+		
+		Predicate<String> check1 = String::isEmpty; 
+		Function<List<String>, List<String>> aaa = aa -> {
+			return aa;
+		};
+		
+//		Collector a = null;
+		
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		HAPRuntimeEnvironmentImpRhino runtimeEnvironment = new HAPRuntimeEnvironmentImpRhino();
 //		HAPDomainEntityDefinitionGlobal globalDomain = new HAPDomainEntityDefinitionGlobal(new HAPGeneratorId(), runtimeEnvironment.getDomainEntityManager(), runtimeEnvironment.getResourceDefinitionManager());

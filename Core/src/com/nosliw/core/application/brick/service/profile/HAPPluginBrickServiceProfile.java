@@ -25,6 +25,4 @@ public class HAPPluginBrickServiceProfile extends HAPPluginBrick{
 
 		return out;
 	}
-	
-	
 }

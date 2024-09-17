@@ -18,7 +18,7 @@ public class HAPBlockScriptExpressionLibrary extends HAPBrickBlockSimple{
 	}
 
 	public HAPBrickContainer getItems() {
-		return (HAPBrickContainer)this.getAttributeValueOfBrick(ITEM);
+		return (HAPBrickContainer)this.getAttributeValueOfBrickLocal(ITEM);
 	}
 
 }

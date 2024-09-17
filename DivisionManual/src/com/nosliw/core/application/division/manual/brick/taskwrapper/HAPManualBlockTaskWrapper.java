@@ -16,7 +16,7 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 	public String getTaskType() {	return (String)this.getAttributeValueOfValue(TASKTYPE);	}
 	public void setTaskType(String taskType) {    this.setAttributeValueWithValue(TASKTYPE, taskType);     }
 
-	public HAPManualBrick getTask() {   return (HAPManualBrick)this.getAttributeValueOfBrick(HAPBlockTaskWrapper.TASK);      }
+	public HAPManualBrick getTask() {   return (HAPManualBrick)this.getAttributeValueOfBrickLocal(HAPBlockTaskWrapper.TASK);      }
 	
 	@Override
 	public HAPGroupValuePorts addOtherInternalValuePortGroup(HAPGroupValuePorts valuePortGroup) {	return this.getTask().addOtherInternalValuePortGroup(valuePortGroup);	}

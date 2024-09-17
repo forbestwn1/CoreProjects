@@ -29,14 +29,14 @@ public class HAPManualBlockTestComplexTask extends HAPManualBrickImp implements 
 	public Map<String, HAPIdElement> getVariables() {    return (Map<String, HAPIdElement>)this.getAttributeValueOfValue(VARIABLE);  }
 
 	@Override
-	public HAPBlockInteractiveInterfaceTask getTaskInteractive() {   return (HAPBlockInteractiveInterfaceTask)this.getAttributeValueOfBrick(INTERACTIVETASK);  }
+	public HAPBlockInteractiveInterfaceTask getTaskInteractive() {   return (HAPBlockInteractiveInterfaceTask)this.getAttributeValueOfBrickLocal(INTERACTIVETASK);  }
 
 	@Override
 	public String getTaskInteractiveResult() {   return (String)this.getAttributeValueOfValue(INTERACTIVETASKRESULT);  }
 	public void setTaskInteractiveResult(String result) {   this.setAttributeValueWithValue(HAPBlockTestComplexTask.INTERACTIVETASKRESULT, result);  }
 
 	@Override
-	public HAPBlockInteractiveInterfaceExpression getExpressionInteractive() {   return (HAPBlockInteractiveInterfaceExpression)this.getAttributeValueOfBrick(INTERACTIVEEXPRESSION);  }
+	public HAPBlockInteractiveInterfaceExpression getExpressionInteractive() {   return (HAPBlockInteractiveInterfaceExpression)this.getAttributeValueOfBrickLocal(INTERACTIVEEXPRESSION);  }
 	
 }
  

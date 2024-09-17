@@ -3,17 +3,13 @@ package com.nosliw.core.application.division.manual.executable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPWrapperValue;
-import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
-import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
@@ -25,7 +21,6 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPManualBrick extends HAPBrickImp{
@@ -78,22 +73,6 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
 	
-	public HAPBrick getAttributeValueOfBrick(String attributeName) {
-		HAPBrick out = null;
-		HAPWrapperValue valueWrapper = this.getAttributeValueWrapper(attributeName);
-		if(valueWrapper!=null) {
-			String valueType = valueWrapper.getValueType();
-			if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-				out = ((HAPManualWrapperValueOfBrick)valueWrapper).getBrick();
-			}
-			else if(valueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-				HAPWrapperValueOfReferenceResource valueWrapperResourceId = (HAPWrapperValueOfReferenceResource)valueWrapper;
-				out = HAPUtilityBrick.getBrickByResource(valueWrapperResourceId.getNormalizedResourceId(), this.getBrickManager());			
-			}
-		}
-		return out;	
-	}
-	
 	public void setAttribute(HAPManualAttributeInBrick attribute) {
 		super.setAttribute(attribute);
 		
@@ -101,17 +80,13 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		attribute.setTreeNodeInfo(treeNodeInfo);
 	}
 	
-	public void setAttributeValueWithValue(String attributeName, Object attrValue) {	this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
-	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
-		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPManualWrapperValueOfBrick((HAPManualBrick)brickOrRef)));
-		}
-		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
-			this.setAttribute(new HAPManualAttributeInBrick(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
-		}
-	}
 	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {
 		this.setAttributeValueWithBrick(attributeName, this.getManualBrickManager().newBrick(brickTypeId));
+	}
+	
+	@Override
+	protected HAPAttributeInBrick newAttribute(String attrName, HAPWrapperValue valueWrapper) {
+		return new HAPManualAttributeInBrick(attrName, valueWrapper);
 	}
 	
 	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){

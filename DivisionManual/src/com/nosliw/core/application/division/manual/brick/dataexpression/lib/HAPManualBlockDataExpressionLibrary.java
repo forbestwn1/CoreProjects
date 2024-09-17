@@ -13,6 +13,6 @@ public class HAPManualBlockDataExpressionLibrary extends HAPManualBrickImp imple
 
 	@Override
 	public HAPBrickContainer getItems() {
-		return (HAPBrickContainer)this.getAttributeValueOfBrick(ITEM);
+		return (HAPBrickContainer)this.getAttributeValueOfBrickLocal(ITEM);
 	}
 }
