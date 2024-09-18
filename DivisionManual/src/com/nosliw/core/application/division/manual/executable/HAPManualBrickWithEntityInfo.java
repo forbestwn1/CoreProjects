@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual.executable;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements HAPEntityInfo{
@@ -66,8 +67,7 @@ public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements H
 
 	@Override
 	public void buildEntityInfoByJson(Object json) {
-		// TODO Auto-generated method stub
-		
+		HAPUtilityEntityInfo.buildEntityInfoByJson(json, this);
 	}
 
 	@Override

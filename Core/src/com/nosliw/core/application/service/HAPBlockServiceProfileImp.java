@@ -19,6 +19,7 @@ import com.nosliw.data.core.resource.HAPResourceId;
 public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo implements HAPBlockServiceProfile{
 
 	public HAPBlockServiceProfileImp(){
+		this.setBrickType(HAPEnumBrickType.SERVICEPROFILE_100);
 	} 
 	
 	public void setInterface(HAPEntityOrReference brickOrRef) {		this.setAttributeValueWithBrick(INTERFACE, brickOrRef);	}

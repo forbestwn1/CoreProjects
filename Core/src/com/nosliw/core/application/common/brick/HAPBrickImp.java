@@ -30,7 +30,7 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	public HAPBrickImp() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 	}
-	
+
 	@Override
 	public String getEntityOrReferenceType() {   return HAPConstantShared.BRICK;   }
 
@@ -109,8 +109,12 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		}
 		jsonMap.put(ATTRIBUTE, HAPUtilityJson.buildArrayJson(attrJsonList.toArray(new String[0])));
 		
-		jsonMap.put(INTERNALVALUEPORT, this.getInternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EXTERNALVALUEPORT, this.getExternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
+		if(this.getInternalValuePorts()!=null) {
+			jsonMap.put(INTERNALVALUEPORT, this.getInternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
+		}
+		if(this.getExternalValuePorts()!=null) {
+			jsonMap.put(EXTERNALVALUEPORT, this.getExternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override

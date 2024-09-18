@@ -38,8 +38,15 @@ public class HAPUtilityEntityInfo {
 			return;
 		}
 		
-		entityInfo.setId((String)jsonObj.opt(HAPEntityInfo.ID));
-		entityInfo.setName((String)jsonObj.opt(HAPEntityInfo.NAME));
+		String id = (String)jsonObj.opt(HAPEntityInfo.ID);
+		if(id!=null) {
+			entityInfo.setId(id);
+		}
+		
+		String name = (String)jsonObj.opt(HAPEntityInfo.NAME);
+		if(name!=null) {
+			entityInfo.setName(name);
+		}
 		
 		if(entityInfo.getId()==null) {
 			entityInfo.setId(entityInfo.getName());
@@ -48,9 +55,21 @@ public class HAPUtilityEntityInfo {
 			entityInfo.setName(entityInfo.getId());
 		}
 		
-		entityInfo.setStatus((String)jsonObj.opt(HAPEntityInfo.STATUS));
-		entityInfo.setDisplayName((String)jsonObj.opt(HAPEntityInfo.DISPLAYNAME));
-		entityInfo.setDescription(jsonObj.optString(HAPEntityInfo.DESCRIPTION));
+		String status = (String)jsonObj.opt(HAPEntityInfo.STATUS);
+		if(status!=null) {
+			entityInfo.setStatus(status);
+		}
+		
+		String displayName = (String)jsonObj.opt(HAPEntityInfo.DISPLAYNAME);
+		if(displayName!=null) {
+			entityInfo.setDisplayName(displayName);
+		}
+		
+		String description = (String)jsonObj.opt(HAPEntityInfo.DESCRIPTION);
+		if(description!=null) {
+			entityInfo.setDescription(description);
+		}
+		
 		HAPInfo info= new HAPInfoImpSimple();
 		info.buildObject(jsonObj.optJSONObject(HAPEntityInfo.INFO), HAPSerializationFormat.JSON);
 		entityInfo.setInfo(info);

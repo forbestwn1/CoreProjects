@@ -2,9 +2,12 @@ package com.nosliw.core.application.common.brick;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 
 abstract public class HAPBrickImpWithEntityInfo extends HAPBrickImp implements HAPEntityInfo{
 
+	public HAPBrickImpWithEntityInfo() {}
+	
 	@Override
 	public String getId() {   return (String)this.getAttributeValueOfValue(ID);    }
 
@@ -59,8 +62,7 @@ abstract public class HAPBrickImpWithEntityInfo extends HAPBrickImp implements H
 
 	@Override
 	public void buildEntityInfoByJson(Object json) {
-		// TODO Auto-generated method stub
-		
+		HAPUtilityEntityInfo.buildEntityInfoByJson(json, this);
 	}
 
 	@Override

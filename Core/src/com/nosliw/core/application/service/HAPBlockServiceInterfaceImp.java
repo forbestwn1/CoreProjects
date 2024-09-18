@@ -5,6 +5,7 @@ import java.util.List;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.displayresource.HAPDisplayResourceNode;
+import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
@@ -27,6 +28,7 @@ public class HAPBlockServiceInterfaceImp extends HAPBrickImpWithEntityInfo imple
 	public static String DISPLAY = "display";
 
 	public HAPBlockServiceInterfaceImp() {
+		this.setBrickType(HAPEnumBrickType.SERVICEINTERFACE_100);
 	}
 	
 	@Override

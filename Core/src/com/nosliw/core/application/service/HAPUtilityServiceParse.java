@@ -10,7 +10,7 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 public class HAPUtilityServiceParse {
 
 	public static HAPBlockInteractiveInterfaceTask parseServiceInterfaceBlock(JSONObject jsonObj) {
-		JSONObject serviceInterfaceJsonObj = jsonObj.getJSONObject(HAPBlockServiceInterface.INTERFACE);
+		JSONObject serviceInterfaceJsonObj = jsonObj.optJSONObject(HAPBlockServiceInterface.INTERFACE);
 		if(serviceInterfaceJsonObj==null) {
 			serviceInterfaceJsonObj = jsonObj;
 		}

@@ -73,11 +73,14 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	public void setBrickTypeInfo(HAPInfoBrickType brickTypeInfo) {    this.m_brickTypeInfo = brickTypeInfo;     }
 	
-	public void setAttribute(HAPManualAttributeInBrick attribute) {
+	@Override
+	public void setAttribute(HAPAttributeInBrick attribute) {
 		super.setAttribute(attribute);
 		
-		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPathFromRoot().appendSegment(attribute.getName()), this);
-		attribute.setTreeNodeInfo(treeNodeInfo);
+		HAPManualAttributeInBrick manualAttr = (HAPManualAttributeInBrick)attribute; 
+		
+		HAPInfoTreeNode treeNodeInfo = new HAPInfoTreeNode(this.getTreeNodeInfo().getPathFromRoot().appendSegment(manualAttr.getName()), this);
+		manualAttr.setTreeNodeInfo(treeNodeInfo);
 	}
 	
 	public void setAttributeValueWithBrickNew(String attributeName, HAPIdBrickType brickTypeId) {
