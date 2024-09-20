@@ -6,6 +6,77 @@
 	"brick": [
 		{
 			"info": {
+				"name" : "task-taskscript",
+				"status": "disabled",
+				"description" : ""
+			},
+			"isTask" : true,
+			"brick":{
+				"script" : "",
+				"interface" : {
+				}
+				
+			},		
+			"adapter":[
+				{
+					"name" : "serviceAdapter",
+					"status": "disabled",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "serviceParm1",
+											"valuePortId" : {
+												"valuePortKey" : {
+													"name" : "interactiveRequest"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "outputInService1",
+													"valuePortId" : {
+														"valuePortKey" : {
+															"name" : "interactiveResult_success"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+		
+		{
+			"info": {
 				"name" : "service-serviceprovider",
 				"status": "disabled1",
 				"description" : ""

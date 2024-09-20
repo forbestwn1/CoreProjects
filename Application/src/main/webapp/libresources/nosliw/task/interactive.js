@@ -27,11 +27,8 @@ var node_interactiveUtility = function(){
 		
 	var loc_out = {
 
-		getInteractiveRequestInitValue : function(obj){
-			var interactive = obj[node_COMMONATRIBUTECONSTANT.WITHINTERACTIVE_INTERACTIVE];
-			if(obj==undefined)  interactive = obj;
-			var out = {};
-			var parmDefs = interactive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST][node_COMMONATRIBUTECONSTANT.INTERACTIVEREQUEST_PARM];
+		getInteractiveRequestInitValue : function(request){
+			var parmDefs = request[node_COMMONATRIBUTECONSTANT.INTERACTIVEREQUEST_PARM];
 			_.each(parmDefs, function(parmDef, i){
 				var defaultValue = parmDef[node_COMMONATRIBUTECONSTANT.REQUESTPARMININTERACTIVE_DEFAULTVALUE];
 				if(defaultValue!=undefined){
@@ -39,7 +36,7 @@ var node_interactiveUtility = function(){
 				}
 			});
 			return out;
-		}
+		},
 		
 	};
 	

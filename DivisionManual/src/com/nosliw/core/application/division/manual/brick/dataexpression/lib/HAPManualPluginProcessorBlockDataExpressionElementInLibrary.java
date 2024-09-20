@@ -47,7 +47,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		exe.setExpression(new HAPManualExpressionData(HAPManualUtilityProcessorDataExpression.buildManualOperand(def.getExpression().getOperand())));
 		
 		//interactive request
-		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
+		exe.setExpressionInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 	}
 
 	
@@ -60,7 +60,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight(); 
 		HAPElementInLibraryDataExpression exe = brick.getValue();;
 		
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(exe.getInteractive(), valueStructureDomain);
+		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(exe.getExpressionInteractive(), valueStructureDomain);
 		
 		brick.getOtherInternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getLeft());
 		brick.getOtherExternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getRight());
@@ -105,7 +105,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//discover
 		Map<String, HAPDataTypeCriteria> expections = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expections.put(HAPPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getInteractive().getResult().getDataCriteria());
+		expections.put(HAPPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getExpressionInteractive().getResult().getDataCriteria());
 		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, getManualBrickManager());
 		varInfoContainer = discoverResult.getLeft();
 		
@@ -114,8 +114,8 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//result
 		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(exe.getInteractive().getResult().getDataCriteria()==null) {
-			exe.getInteractive().getResult().setDataCriteria(resultCriteria);
+		if(exe.getExpressionInteractive().getResult().getDataCriteria()==null) {
+			exe.getExpressionInteractive().getResult().setDataCriteria(resultCriteria);
 		}
 		else {
 			exe.setResultMatchers(discoverResult.getRight().get(HAPPluginProcessorEntityWithVariableDataExpression.RESULT));

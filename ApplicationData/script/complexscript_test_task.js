@@ -76,10 +76,15 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 					var taskContext = {
 						getInitTaskRequest : function(coreEntity, handlers, request){
 							//set event data to value port
-							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
 							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
-							var valueStructureId = internalValuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT);
-							return eventValuePort.setValueRequest(node_createValuePortElementInfo(valueStructureId, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
+							return node_utilityNamedVariable.setValuePortValueRequest(internalValuePortContainer, eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT, event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
+							
+							
+							
+//							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
+//							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+//							var valueStructureId = internalValuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT);
+//							return eventValuePort.setValueRequest(node_createValuePortElementInfo(undefined, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
 						}
 					};
 					

@@ -25,7 +25,7 @@ public class HAPManualPluginParserBrickImpInteractive extends HAPPluginEntityDef
 			HAPDefinitionInteractive interactiveDef = this.m_interactiveClass.newInstance();
 			JSONObject jsonObj = (JSONObject)jsonValue;
 			interactiveDef.buildObject(jsonObj.getJSONObject(HAPManualBrickInteractive.ATTR_INTERACTIVE), HAPSerializationFormat.JSON);
-			entity.setInteractive(interactiveDef);
+			entity.setExpressionInteractive(interactiveDef);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

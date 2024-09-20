@@ -12,7 +12,7 @@ var packageObj = library.getChildPackage();
 	var node_getLifecycleInterface;
 	var node_createRequestEventGroupHandler;
 	var node_createValuePortElementInfo;
-	var node_valuePortUtility;
+	var node_valuePortUtilityResolvedVariable;
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * this is a factory to create variables group
@@ -35,7 +35,7 @@ var node_createVariablesGroup = function(valuePortEnv, variableIdsArray, handler
 	var loc_requestEventGroupHandler = undefined;
 	
 	var loc_addElement = function(variableId){
-		var variable = node_valuePortUtility.createValuePortVariable(loc_valuePortEnv, variableId);
+		var variable = node_valuePortUtilityResolvedVariable.createValuePortVariable(loc_valuePortEnv, variableId);
 		loc_requestEventGroupHandler.addElement(variable.getDataChangeEventObject());
 		loc_variables.push(variable);
 	};
@@ -94,7 +94,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuePortUtility", function(){node_valuePortUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuePortUtilityResolvedVariable", function(){node_valuePortUtilityResolvedVariable = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariablesGroup", node_createVariablesGroup); 

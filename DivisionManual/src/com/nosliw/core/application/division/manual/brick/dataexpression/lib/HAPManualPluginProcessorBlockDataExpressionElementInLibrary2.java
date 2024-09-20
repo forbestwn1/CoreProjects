@@ -45,7 +45,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 		HAPManualExpressionData dataExpression = (HAPManualExpressionData)exe.getExpression();
 		
 		//interactive request
-		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
+		exe.setExpressionInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
 		HAPManualWrapperOperand operandWrapper = dataExpression.getOperandWrapper();
 		
@@ -68,7 +68,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 		List<HAPManualOperand> operands = new ArrayList<HAPManualOperand>();
 		operands.add(operandWrapper.getOperand());
 		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
-		expectOutputs.add(exe.getInteractive().getResult().getDataCriteria());
+		expectOutputs.add(exe.getExpressionInteractive().getResult().getDataCriteria());
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
 		varInfoContainer = HAPManualUtilityOperand.discover(
 				operands,
@@ -83,8 +83,8 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 		
 		//result
 		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(exe.getInteractive().getResult().getDataCriteria()==null) {
-			exe.getInteractive().getResult().setDataCriteria(resultCriteria);
+		if(exe.getExpressionInteractive().getResult().getDataCriteria()==null) {
+			exe.getExpressionInteractive().getResult().setDataCriteria(resultCriteria);
 		}
 		else {
 			exe.setResultMatchers(matchers.get(0));

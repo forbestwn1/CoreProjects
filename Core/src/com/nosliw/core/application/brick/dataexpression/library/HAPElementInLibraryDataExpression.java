@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPWithInteractive;
+import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpression;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
@@ -20,7 +20,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithValuePortGroup{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression, HAPWithValuePortGroup{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -43,8 +43,9 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	public HAPMatchers getResultMatchers() {		return this.m_resultMatchers;	}
 	public void setResultMatchers(HAPMatchers matchers) {    this.m_resultMatchers = matchers;    }
 
-	public HAPInteractiveExpression getInteractive() {    return this.m_interactive;      }
-	public void setInteractive(HAPInteractiveExpression interactive) {    this.m_interactive = interactive;     }
+	@Override
+	public HAPInteractiveExpression getExpressionInteractive() {    return this.m_interactive;      }
+	public void setExpressionInteractive(HAPInteractiveExpression interactive) {    this.m_interactive = interactive;     }
 	
 	@Override
 	public HAPGroupValuePorts getExternalValuePortGroup() {   return this.m_interactive.getExternalValuePortGroup();  }
@@ -55,7 +56,7 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(INTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONINTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));
 	}

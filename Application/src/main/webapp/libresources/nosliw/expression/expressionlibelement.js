@@ -32,7 +32,9 @@ var node_createDataExpressionElementInLibrary = function(expressionDataEleInLibr
 	var loc_interactiveValuePorts =  node_createInteractiveValuePortsExpression();
 	
 	var loc_init = function(){
-		loc_interactiveValuePorts.init(node_interactiveUtility.getInteractiveRequestInitValue(loc_expressionDataEleInLibrary));
+		var requestDef = loc_expressionDataEleInLibrary[node_COMMONATRIBUTECONSTANT.WITHINTERACTIVE_INTERACTIVE][node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
+		
+		loc_interactiveValuePorts.init(node_interactiveUtility.getInteractiveRequestInitValue(requestDef));
 	};
 	
 	var loc_getExecuteRequest = function(handlers, request){

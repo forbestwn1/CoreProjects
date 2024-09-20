@@ -16,7 +16,7 @@ public class HAPPluginSimpleEntityProcessorInteractive extends HAPPluginProcesso
 	protected void process(HAPExecutableEntity entityExe, HAPManualDefinitionBrick entityDef, HAPContextProcessor processContext) {
 		HAPBrickInteractive interactiveExe = (HAPBrickInteractive)entityExe;
 		HAPManualBrickInteractive interactiveDef = (HAPManualBrickInteractive)entityDef;
-		interactiveExe.setInteractive(interactiveDef.getInteractive());
+		interactiveExe.setExpressionInteractive(interactiveDef.getInteractive());
 	}
 
 }

@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_createValuePortElementInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_utility = function(){
+var node_utilityResolvedVariable = function(){
 	
 	var loc_getValuePort = function(withValuePort, varId){
 		var valuePortId = varId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID][node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUEPORTID][node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
@@ -84,6 +84,6 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("valuePortUtility", node_utility); 
+packageObj.createChildNode("valuePortUtilityResolvedVariable", node_utilityResolvedVariable); 
 
 })(packageObj);

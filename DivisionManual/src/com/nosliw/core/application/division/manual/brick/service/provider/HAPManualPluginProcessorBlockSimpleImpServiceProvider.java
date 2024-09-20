@@ -11,6 +11,7 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
+import com.nosliw.core.application.brick.service.provider.HAPKeyService;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
@@ -35,7 +36,19 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPMa
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockSimpleServiceProvider serviceProviderDef = (HAPManualDefinitionBlockSimpleServiceProvider)blockPair.getLeft();
 		HAPManualBlockSimpleServiceProvider serviceProviderExe = (HAPManualBlockSimpleServiceProvider)blockPair.getRight();
-		serviceProviderExe.setServiceKey(serviceProviderDef.getServiceKey());
+	
+		HAPKeyService serviceKey = serviceProviderDef.getServiceKey();
+
+		//service key
+		serviceProviderExe.setServiceKey(serviceKey);
+
+		//service interactive interface
+		HAPManagerApplicationBrick brickMan = this.getRuntimeEnvironment().getBrickManager();
+		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, serviceKey.getServiceId()));
+		HAPBlockServiceProfile serviceProfileBlock = (HAPBlockServiceProfile)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(serviceProfileResourceId), brickMan);
+		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getServiceInterface(), brickMan);
+		HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
+		serviceProviderExe.setTaskInteractive(taskInteractive);
 	}
 	
 	@Override
@@ -43,17 +56,10 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPMa
 		HAPBundle bundle = processContext.getCurrentBundle();
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
 		HAPManualDefinitionBlockSimpleServiceProvider definitionBlock = (HAPManualDefinitionBlockSimpleServiceProvider)blockPair.getLeft();
-		HAPManualBlockSimpleServiceProvider executableBlock = (HAPManualBlockSimpleServiceProvider)blockPair.getRight();
+		HAPManualBlockSimpleServiceProvider serviceProviderExe = (HAPManualBlockSimpleServiceProvider)blockPair.getRight();
 
-		HAPManagerApplicationBrick brickMan = this.getRuntimeEnvironment().getBrickManager();
-		
-		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, executableBlock.getServiceKey().getServiceId()));
-		HAPBlockServiceProfile serviceProfileBlock = (HAPBlockServiceProfile)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(serviceProfileResourceId), brickMan);
-		
-		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getServiceInterface(), brickMan);
-		HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInteractive, processContext.getCurrentBundle().getValueStructureDomain());
-		executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
-		executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(serviceProviderExe.getTaskInteractive(), processContext.getCurrentBundle().getValueStructureDomain());
+		serviceProviderExe.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
+		serviceProviderExe.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
 	}
 }

@@ -244,24 +244,16 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	};
 	
 	var loc_out = {
-		
-		prv_getSolidValueStrucute1 : function(valueStructureRuntimeId){
-			var out = loc_valueStructures[valueStructureRuntimeId];
-			if(out!=undefined){
-				if(!out.isSold()){
-					if(loc_parentVariableGroup!=undefined){
-						out = loc_parentVariableGroup.prv_getSolidValueStrucute(valueStructureRuntimeId);
-					}
-				}
-			}
-			return out;
+
+		createValuePort : function(valuePortGroup, valuePortName){
+			return loc_createValuePort(this, valuePortGroup, valuePortName);
 		},
 
 		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
 
-		getValueStructureIdByGroupAndValuePort : function(groupType, valuePortType){
-			return loc_valueStructureIdByGroupAndValuePortType[groupType][valuePortType];
-		},
+		getValueStructureIdsByGroupNameAndValuePortName : function(groupName, valuePortName){		return loc_valueStructures[groupName][valuePortName];	},
+
+		getValueStructureIdByGroupAndValuePort : function(groupType, valuePortType){	return loc_valueStructureIdByGroupAndValuePortType[groupType][valuePortType];	},
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
@@ -286,6 +278,24 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.IDEELEMENT_ELEMENTPATH]));
 		},
 		
+
+
+
+
+
+		
+		prv_getSolidValueStrucute1 : function(valueStructureRuntimeId){
+			var out = loc_valueStructures[valueStructureRuntimeId];
+			if(out!=undefined){
+				if(!out.isSold()){
+					if(loc_parentVariableGroup!=undefined){
+						out = loc_parentVariableGroup.prv_getSolidValueStrucute(valueStructureRuntimeId);
+					}
+				}
+			}
+			return out;
+		},
+
 		populateVariable : function(varName, variable){
 			for(var i in loc_valueStructureRuntimeIds){
 				var valueStructure = loc_valueStructures[loc_valueStructureRuntimeIds[i]].getValueStructure();
@@ -350,6 +360,70 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	loc_init(id, valuePortContainerDef, variableDomainDef, parentValuePortContainer, variableMan);
 	return loc_out;
 };
+
+var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePortName){
+
+	var loc_valuePortContainer = valuePortContainer;
+	var loc_valuePortGroup = valuePortGroup;
+	var loc_valuePortName = valuePortName;
+	
+	var loc_getValueStructure = function(valueStructureRuntimeId){
+		return loc_valuePortContainer.getValueStructure(valueStructureRuntimeId);
+	};
+	
+	var loc_getValueStructureId = function(varId){
+		var out = varId.getValueStructureId();
+		if(out==undefined){
+			var valueStructures = loc_valuePortContainer.getValueStructureIdsByGroupNameAndValuePortName(loc_valuePortGroup, loc_valuePortName);
+			for(var vsId in valueStructures){
+				var valueStructure = valueStructures[vsId].getValueStructure();
+				if(valueStructure.getElement(varId.getRootName())!=undefined){
+					out = vsId;
+					break;
+				}
+			}
+		}
+		return out;
+	};
+	
+	
+	var loc_out = {
+
+		prv_id : nosliw.generateId(),
+		
+		createVariable : function(elementId){
+			return loc_valuePortContainer.createVariableById(elementId);			
+		},
+		
+		getValueRequest : function(elementId, handlers, request){        
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+				success: function(request, dataValue){
+					return dataValue.value;
+				}
+			}));
+			return out;
+		},
+
+		setValueRequest : function(elementId, value, handlers, request){        
+			return loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
+		},
+		
+		setValuesRequest : function(setValueInfos, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
+			_.each(setValueInfos, function(setValueInfo, i){
+				var elementId = setValueInfo.elementId;
+				out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+			});
+			return out;			
+		},
+		
+	};
+	
+	return loc_out;
+};
+
+
 
 
 var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, valueStructureName, valueStrucutre){

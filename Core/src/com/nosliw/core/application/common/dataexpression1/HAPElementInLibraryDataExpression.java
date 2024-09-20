@@ -9,7 +9,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPWithInteractive;
+import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpression;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractive, HAPWithVariable, HAPWithValuePortGroup{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression, HAPWithVariable, HAPWithValuePortGroup{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -62,7 +62,7 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(INTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONINTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
 		jsonMap.put(HAPWithVariable.VARIABLEINFOS, HAPManagerSerialize.getInstance().toStringValue(this.getVariablesInfo(), HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JSON));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));

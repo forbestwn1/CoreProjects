@@ -43,9 +43,14 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_configure = configure;
 	
+	var loc_envInterface = {};
+
+	var loc_taskContext;
+
+
 	var loc_interactiveValuePort = node_createInteractiveValuePortsTask();
 
-	var loc_getExecuteTaskRequest = function(handlers, request){
+	var loc_getExecuteTaskRequest = function(parms, handlers, request){
 
 		return node_createServiceRequestInfoSimple(undefined, function(request){
 			var result = {
@@ -82,29 +87,50 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		
 	};
 	
-	var loc_facade = node_createTaskInterface({
-		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteTaskRequest(handlers, request);
-		}
-	});
+	var loc_facadeTaskFactory = {
+		//return a task
+		createTask : function(taskContext){
+			loc_taskContext = taskContext;
+			return loc_out;
+		},
+	};
+
 
 	var loc_out = {
 		
-		getExecuteTaskRequest: function(taskInput, handlers, request){
-			return loc_getExecuteTaskRequest(taskInput, handlers, request);
-		},
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		
-		getExternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_interactiveValuePort.getValuePort(valuePortName);
+		getTaskInitRequest : function(handlers, request){
+			if(loc_taskContext!=undefined){
+				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
+			}
 		},
-		
-		getInternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_interactiveValuePort.getValuePort(valuePortName);
+
+		getTaskExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var getParmsRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, result){
+					return loc_getExecuteTaskRequest(result.getResultValue());
+				}
+			});
+			
+    		var taskInteractive = loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHINTERACTIVETASK_TASKINTERACTIVE);
+			var taskInteractiveRequest = taskInteractive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
+			_.each(taskInteractiveRequest[node_COMMONATRIBUTECONSTANT_INTERACTIVEREQUEST_PARM], function(parm){
+				var internalValuePortContainer = node_getEntityObjectInterface(loc_out).getExternalValuePortContainer();
+				var parmName = parm[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+				getParmsRequest.addRequest(parmName, node_utilityNamedVariable.getValuePortValueRequest(internalValuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST, parmName));
+			});
+			
+			out.addRequest(getParmsRequest);
+			return out;
 		},
 		
 	};
 
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facade);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	return loc_out;
 };
 
 //*******************************************   End Node Definition  ************************************** 	
