@@ -6,6 +6,9 @@ var packageObj = library;
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_createServiceRequestInfoSequence;
+	var node_createServiceRequestInfoSimple;
+	var node_createServiceRequestInfoSet;
 	var node_makeObjectWithType;
 	var node_createVariableManager;
 	var node_createValueStructure;
@@ -15,6 +18,8 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_createValuePortElementInfo;
 	var node_createEmptyValue;
+	var node_ServiceInfo;
+	var node_uiDataOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -102,8 +107,8 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	//valueStructures in the context
 	var loc_valueStructures = {};
 	var loc_valueStructureInfoById = {};
-	var loc_valueStructureIdByGroupAndValuePortType = {};
-	
+	var loc_valuePortInfoByGroupTypeAndValuePortId = {};
+
 	//value structure id in sequence
 	var loc_valueStructureRuntimeIds = [];
 
@@ -193,10 +198,10 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 				loc_valueStructures[valuePortGroupName] = belongToGroup;
 			}
 			
-			var idBelongToGroup = loc_valueStructureIdByGroupAndValuePortType[valuePortGroupType];
-			if(idBelongToGroup==undefined){
-				idBelongToGroup = {};
-				loc_valueStructureIdByGroupAndValuePortType[valuePortGroupType] = idBelongToGroup;
+			var valuePortsInfoBelongToGroupType = loc_valuePortInfoByGroupTypeAndValuePortId[valuePortGroupType];
+			if(valuePortsInfoBelongToGroupType==undefined){
+				valuePortsInfoBelongToGroupType = {};
+				loc_valuePortInfoByGroupTypeAndValuePortId[valuePortGroupType] = valuePortsInfoBelongToGroupType;
 			}
 			
 			_.each(valuePortGroupDef[node_COMMONATRIBUTECONSTANT.GROUPVALUEPORTS_VALUEPORT], function(valuePortDef, i){
@@ -207,6 +212,16 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 					belongToValuePort = {};
 					belongToGroup[valuePortName] = belongToValuePort;
 				}
+
+				var valuePortInfosBelongValuePortName = valuePortsInfoBelongToGroupType[valuePortName];
+				if(valuePortInfosBelongValuePortName==undefined){
+					valuePortInfosBelongValuePortName = [];
+					valuePortsInfoBelongToGroupType[valuePortName] = valuePortInfosBelongValuePortName;
+				}
+				valuePortInfosBelongValuePortName.push({
+					groupName : valuePortGroupName,
+					valuePortName : valuePortName
+				});
 
 				_.each(valuePortDef[node_COMMONATRIBUTECONSTANT.VALUEPORT_VALUESTRUCTURE], function(valueStructureRuntimeId, i){
 					var valueStructure;
@@ -232,7 +247,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 						valueStructure = loc_createSoftValueStructureWrapper(valueStructureRuntimeId, loc_parentValuePortContainer);
 					}
 					belongToValuePort[valueStructureRuntimeId] = valueStructure;
-					idBelongToGroup[valuePortType] = valueStructureRuntimeId;
 					loc_valueStructureInfoById[valueStructureRuntimeId] = {
 						groupName : valuePortGroupName,
 						valuePortName : valuePortName
@@ -245,15 +259,18 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	
 	var loc_out = {
 
-		createValuePort : function(valuePortGroup, valuePortName){
-			return loc_createValuePort(this, valuePortGroup, valuePortName);
+		createValuePort : function(valuePortGroupName, valuePortName){		return loc_createValuePort(this, valuePortGroupName, valuePortName);		},
+
+		createValuePortByGroupType : function(valuePortGroupType, valuePortName){    
+			var valuePortInfo = this.getValuePortInfoByGroupTypeAndValuePortName(valuePortGroupType, valuePortName);
+			return this.createValuePort(valuePortInfo.groupName, valuePortInfo.valuePortName);
 		},
 
 		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
 
-		getValueStructureIdsByGroupNameAndValuePortName : function(groupName, valuePortName){		return loc_valueStructures[groupName][valuePortName];	},
+		getValuePortInfoByGroupTypeAndValuePortName : function(groupType, valuePortName){	return loc_valuePortInfoByGroupTypeAndValuePortId[groupType][valuePortName][0];	},
 
-		getValueStructureIdByGroupAndValuePort : function(groupType, valuePortType){	return loc_valueStructureIdByGroupAndValuePortType[groupType][valuePortType];	},
+		getValueStructureIdsByGroupNameAndValuePortName : function(groupName, valuePortName){		return loc_valueStructures[groupName][valuePortName];	},
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
@@ -413,7 +430,9 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
 			_.each(setValueInfos, function(setValueInfo, i){
 				var elementId = setValueInfo.elementId;
-				out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+				out.addRequest(loc_out.setValueRequest(elementId, setValueInfo.value));
+				
+//				out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
 			});
 			return out;			
 		},
@@ -522,6 +541,9 @@ var loc_createVariableInfo = function(name, variableInfo){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
@@ -531,6 +553,8 @@ nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUti
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
+nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
+nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
 
 
 //Register Node by Name

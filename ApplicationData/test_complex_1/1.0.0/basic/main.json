@@ -90,7 +90,7 @@
 			"adapter":[
 				{
 					"name" : "serviceAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -104,8 +104,8 @@
 										"target" : {
 											"rootName" : "serviceParm1",
 											"valuePortId" : {
-												"valuePortKey" : {
-													"name" : "interactiveRequest"
+												"valuePortId" : {
+													"group" : "taskInteractive"
 												}
 											}
 										},
@@ -129,8 +129,8 @@
 												"mapping" : {
 													"elementPath": "outputInService1",
 													"valuePortId" : {
-														"valuePortKey" : {
-															"name" : "interactiveResult_success"
+														"valuePortId" : {
+															"group" : "taskInteractive"
 														}
 													}
 												}

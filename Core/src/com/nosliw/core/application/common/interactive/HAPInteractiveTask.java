@@ -1,6 +1,7 @@
 package com.nosliw.core.application.common.interactive;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 
 public class HAPInteractiveTask extends HAPSerializableImp implements HAPInteractive{
 
@@ -62,7 +64,12 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(REQUEST, HAPManagerSerialize.getInstance().toStringValue(this.m_request, HAPSerializationFormat.JSON));
-		jsonMap.put(RESULT, HAPManagerSerialize.getInstance().toStringValue(this.m_results, HAPSerializationFormat.JSON));
+		
+		Map<String, String> resultMapStr = new LinkedHashMap<String, String>();
+		for(HAPInteractiveResultTask result : this.m_results) {
+			resultMapStr.put(result.getName(), result.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(RESULT, HAPUtilityJson.buildMapJson(resultMapStr));
 	}
 	
 	

@@ -19,6 +19,21 @@ var packageObj = library.getChildPackage();
 	var node_expressionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
+//task result 
+//  resultName : name of the result
+//  result: result value map (value name / value)
+var node_TaskResult = function(resultName, resultValue){
+	this.resultName = resultName;
+	this.resultValue = resultValue; 
+};
+
+
+
+
+
+
+
+
 var node_createTaskInfo = function(entityPath, adapterInfo){
 	
 	var loc_entityPath;
@@ -338,6 +353,9 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("TaskResult", node_TaskResult); 
+
+
 packageObj.createChildNode("ExecutableResult", node_ExecutableResult); 
 packageObj.createChildNode("createTaskGroupItemWatch", node_createTaskGroupItemWatch); 
 packageObj.createChildNode("createTaskInput1", node_createTaskInput1); 

@@ -13,19 +13,30 @@ var node_utilityNamedVariable = function(){
 	
 	var loc_out = {
 		
-		getValuePortValueRequest : function(valuePortContainer, valuePortGroupName, valuePortName, varName, handlers, request){
+		getValuePortValueRequest : function(valuePortContainer, valuePortGroupType, valuePortName, varName, handlers, request){
 			var eleInfo = node_createValuePortElementInfo(undefined, varName);
-			return valuePortContainer.createValuePort(valuePortGroupName, valuePortName).getValueRequest(eleInfo, handlers, request);
+			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).getValueRequest(eleInfo, handlers, request);
 		},
 
-		setValuePortValueRequest : function(valuePortContainer, valuePortGroupName, valuePortName, value, handlers, request){        
+		setValuePortValueRequest : function(valuePortContainer, valuePortGroupType, valuePortName, value, handlers, request){        
 			var eleInfo = node_createValuePortElementInfo(undefined, varName);
-			return valuePortContainer.createValuePort(valuePortGroupName, valuePortName).setValueRequest(eleInfo, value, handlers, request);
+			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).setValueRequest(eleInfo, value, handlers, request);
 		},
 		
-		createValuePortVariable : function(valuePortContainer, valuePortGroupName, valuePortName){
+		setValuesPortValueRequest : function(valuePortContainer, valuePortGroupType, valuePortName, setValueByName, handlers, request){        
+			var setValuesInfo = [];
+			_.each(setValueByName, function(value, name){
+				setValuesInfo.push({
+					elementId : node_createValuePortElementInfo(undefined, name),
+					value : value
+				});
+			});
+			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).setValuesRequest(setValuesInfo, handlers, request);
+		},
+		
+		createValuePortVariable : function(valuePortContainer, valuePortGroupType, valuePortName){
 			var eleInfo = node_createValuePortElementInfo(undefined, varName);
-			return valuePortContainer.createValuePort(valuePortGroupName, valuePortName).createVariable(eleInfo);
+			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).createVariable(eleInfo);
 		},
 		
 	};

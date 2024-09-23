@@ -19,6 +19,8 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
 	var node_createValuePortValueFlat;
 	var node_createInteractiveValuePortsTask;
+	var node_interactiveUtility;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -26,7 +28,7 @@ var node_createDataServiceEntityPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(entityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				return loc_createDataServiceProvider(entityDef, configure);
 			}, handlers, request);
@@ -46,34 +48,36 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	var loc_envInterface = {};
 
 	var loc_taskContext;
+	
+	var loc_taskResult;
 
-
-	var loc_interactiveValuePort = node_createInteractiveValuePortsTask();
 
 	var loc_getExecuteTaskRequest = function(parms, handlers, request){
 
-		return node_createServiceRequestInfoSimple(undefined, function(request){
-			var result = {
-			    "resultName": "success",
-			    "resultValue": {
-			        "outputInService1": {
-			            "dataTypeId": "test.string;1.0.0",
-			            "valueFormat": "JSON",
-			            "value": "default value of parm111111",
-			            "info": {}
-			        },
-			        "outputInService2": {
-			            "dataTypeId": "test.string;1.0.0",
-			            "valueFormat": "JSON",
-			            "value": "default value of parm222222",
-			            "info": {}
-			        }
-			    }
-			};
-			
-			loc_interactiveValuePort.setResultValue(result);
+		var result = {
+		    "resultName": "success",
+		    "resultValue": {
+		        "outputInService1": {
+		            "dataTypeId": "test.string;1.0.0",
+		            "valueFormat": "JSON",
+		            "value": "default value of parm111111",
+		            "info": {}
+		        },
+		        "outputInService2": {
+		            "dataTypeId": "test.string;1.0.0",
+		            "valueFormat": "JSON",
+		            "value": "default value of parm222222",
+		            "info": {}
+		        }
+		    }
+		};
+
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			return result;
-		}, handlers, request);
+		}));
+		return out;
 
 /*		
 		var out = node_createServiceRequestInfoSequence(handlers, request);
@@ -109,23 +113,29 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			var getParmsRequest = node_createServiceRequestInfoSet(undefined, {
-				success : function(request, result){
-					return loc_getExecuteTaskRequest(result.getResultValue());
-				}
-			});
-			
     		var taskInteractive = loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHINTERACTIVETASK_TASKINTERACTIVE);
 			var taskInteractiveRequest = taskInteractive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
-			_.each(taskInteractiveRequest[node_COMMONATRIBUTECONSTANT_INTERACTIVEREQUEST_PARM], function(parm){
-				var internalValuePortContainer = node_getEntityObjectInterface(loc_out).getExternalValuePortContainer();
-				var parmName = parm[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-				getParmsRequest.addRequest(parmName, node_utilityNamedVariable.getValuePortValueRequest(internalValuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST, parmName));
-			});
+			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(taskInteractiveRequest, valuePortContainer, {
+				success : function(request, parmsValue){
+					return loc_getExecuteTaskRequest(parmsValue, {
+						success : function(request, serviceResult){
+							return node_interactiveUtility.setTaskResultToValuePort(serviceResult, taskInteractive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_RESULT], valuePortContainer, {
+								success : function(){
+									loc_taskResult = serviceResult;
+									return serviceResult;
+								}
+							});
+						}
+					});
+				}
+			}));
 			
-			out.addRequest(getParmsRequest);
+			
 			return out;
 		},
+		
+		getTaskResult : function(){   return loc_taskResult;    }
 		
 	};
 
@@ -152,6 +162,9 @@ nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_cre
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createInteractiveValuePortsTask", function(){	node_createInteractiveValuePortsTask = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createDataServiceEntityPlugin", node_createDataServiceEntityPlugin); 
