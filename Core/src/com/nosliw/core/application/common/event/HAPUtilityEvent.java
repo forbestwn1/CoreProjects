@@ -21,7 +21,7 @@ public class HAPUtilityEvent {
 		HAPValuePort internalValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_EVENT, HAPConstantShared.IO_DIRECTION_OUT);
 		internalValuePort.setName(HAPConstantShared.VALUEPORT_NAME_EVENT);
 		HAPValuePort externalValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_EVENT, HAPConstantShared.IO_DIRECTION_IN); 
-		internalValuePort.setName(HAPConstantShared.VALUEPORT_NAME_EVENT);
+		externalValuePort.setName(HAPConstantShared.VALUEPORT_NAME_EVENT);
 		
 		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
 		HAPRootInStructure root = new HAPRootInStructure();

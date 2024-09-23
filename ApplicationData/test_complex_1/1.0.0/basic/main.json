@@ -6,6 +6,148 @@
 	"brick": [
 		{
 			"info": {
+				"name" : "event-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_task",
+				"event" : [
+					{
+						"eventInfo" : {
+							"name" : "testEvent1",
+							"handlerId" : {
+								"idPath" : "eventhandler-test_complex_task"
+							},
+							"eventDataDefinition" : {
+								"criteria": "test.string;1.0.0"
+							}
+						},
+						"eventData" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "event data for test event1"
+						}
+					}
+				]
+			}
+		},
+			
+		{
+			"info": {
+				"name" : "eventhandler-test_complex_task",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complextask_test_basic",
+				"variable" : [
+					{
+						"name" : "eventData",
+						"elementPath": "event",
+						"ioDirection" : "OUT",
+						"valuePortId" : {
+							"valuePortId" : {
+								"group" : "event",
+								"name1" : "event"
+							}
+						}
+					}
+				],
+				"valueContext" : {
+					"brick": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"root" : {
+									"task_input1": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									},
+									"task_input2": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									},
+									"task_result": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			"adapter":[
+				{
+					"name" : "taskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "event",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "event"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									},
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "task_input2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_input2"
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+
+		{
+			"info": {
 				"name" : "task-taskscript",
 				"status": "disabled",
 				"description" : ""
@@ -78,7 +220,7 @@
 		{
 			"info": {
 				"name" : "service-serviceprovider",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -183,7 +325,7 @@
 						}
 					}
 				},				
-				"interactiveExpression" : {
+				"interactiveExpression1" : {
 					"request" : [
 						{
 							"name" : "expression_request_forresult",
@@ -194,7 +336,7 @@
 						"criteria" : "test.string;1.0.0"
 					}
 				},				
-				"variable1" : [
+				"variable" : [
 					{
 						"name" : "eventData",
 						"elementPath": "event",
@@ -276,7 +418,7 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
-										"status": "disabled1",
+										"status": "disabled",
 										"target" : {
 											"rootName" : "task_request_string1",
 											"ioDirection" : "IN",
@@ -321,147 +463,6 @@
 				}
 			]
 		},
-		{
-			"info": {
-				"name" : "eventhandler-test_complex_task",
-				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"script": "complextask_test_basic",
-				"variable" : [
-					{
-						"name" : "eventData",
-						"elementPath": "event",
-						"ioDirection" : "OUT",
-						"valuePortId" : {
-							"valuePortId" : {
-								"group" : "event",
-								"name1" : "event"
-							}
-						}
-					}
-				],
-				"valueContext" : {
-					"brick": [
-						{
-							"groupType" : "public",
-							"valueStructure" : {
-								"root" : {
-									"task_input1": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									},
-									"task_input2": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									},
-									"task_result": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									}
-								}
-							}
-						}
-					]
-				}
-			},
-			"adapter":[
-				{
-					"name" : "taskAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForTask",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"status": "disabled1",
-										"target" : {
-											"rootName" : "event",
-											"ioDirection" : "IN",
-											"valuePortId" : {
-												"valuePortId" : {
-													"group" : "event"
-												}
-											}
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "parm1"
-											}
-										}
-									},
-									{
-										"status": "disabled",
-										"target" : {
-											"rootName" : "task_input2"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "parm2"
-											}
-										}
-									}
-								]
-							},
-							"out1" : {
-								"success" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "output1"
-											},
-											"definition" : {
-												"mapping" : {
-													"elementPath": "task_input2"
-												}
-											}
-										}
-									]
-								}
-							}
-						}
-					}
-				}
-			]
-		},
-		{
-			"info": {
-				"name" : "event-test_complex_script",
-				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"script": "complexscript_test_task",
-				"event" : [
-					{
-						"eventInfo" : {
-							"name" : "testEvent1",
-							"handlerId" : {
-								"idPath" : "eventhandler-test_complex_task"
-							},
-							"eventDataDefinition" : {
-								"criteria": "test.string;1.0.0"
-							}
-						},
-						"eventData" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "event data for test event1"
-						}
-					}
-				]
-			}
-		},
-			
 		{
 			"info": {
 				"name" : "dataexpression-dataexpressionlibelement",

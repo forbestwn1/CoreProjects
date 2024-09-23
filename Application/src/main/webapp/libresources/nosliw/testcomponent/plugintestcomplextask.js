@@ -160,7 +160,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 				var varsRequest = node_createServiceRequestInfoSet(undefined, {
 					success : function(request, variablesResult){
 						loc_taskResult = {};
-						loc_taskResult.data = variablesResult.getResults();
+						loc_taskResult.resultValue = variablesResult.getResults();
 						loc_taskResult.resultName = "success";
 						return loc_taskResult;
 					}

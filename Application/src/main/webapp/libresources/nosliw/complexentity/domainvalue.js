@@ -416,6 +416,7 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
 			out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
 				success: function(request, dataValue){
+					var kkkk = elementId;
 					return dataValue.value;
 				}
 			}));

@@ -10,6 +10,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_getWithValuePortInterface = nosliw.getNodeData("valueport.getWithValuePortInterface");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
+	var node_utilityNamedVariable = nosliw.getNodeData("valueport.utilityNamedVariable");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -77,7 +78,13 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						getInitTaskRequest : function(coreEntity, handlers, request){
 							//set event data to value port
 							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
-							return node_utilityNamedVariable.setValuePortValueRequest(internalValuePortContainer, eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT, event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
+							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
+								internalValuePortContainer,
+								eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME],
+								node_COMMONCONSTANT.VALUEPORT_NAME_EVENT,
+								node_COMMONCONSTANT.NAME_ROOT_EVENT,
+								event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA],
+								handlers, request);
 							
 							
 							
