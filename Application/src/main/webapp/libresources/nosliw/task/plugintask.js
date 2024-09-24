@@ -38,9 +38,9 @@ var node_createTaskPlugin = function(){
 
 var loc_createTaskEntityCoreRequest = function(envInterface, taskId, handlers, request){
 	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-	out.addRequest(envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-		success : function(request){
-			return envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(taskId).getChildValue().getCoreEntity();
+	out.addRequest(envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+		success : function(request, node){
+			return node.getChildValue().getCoreEntity();
 		}
 	}));
 	return out;
@@ -54,14 +54,17 @@ var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
 
 	var loc_taskEntityCore;
 	var loc_task;
+	
+	var loc_taskNode;
 
 	var loc_out = {
 
 		getTaskInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_createTaskEntityCoreRequest(loc_getEnvInterface(), loc_taskId, {
-				success : function(request, taskEntityCore){
-					loc_taskEntityCore = taskEntityCore;
+			out.addRequest(loc_getEnvInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+				success : function(request, node){
+					loc_taskNode = node;
+					loc_taskEntityCore = node_complexEntityUtility.getBrickNode(loc_taskNode).getChildValue().getCoreEntity();
 				}
 			}));
 			return out;
@@ -69,7 +72,7 @@ var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
 		
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, taskContext, {
+			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, loc_taskContext, {
 				success : function(request, task){
 					loc_task = task;					
 				}

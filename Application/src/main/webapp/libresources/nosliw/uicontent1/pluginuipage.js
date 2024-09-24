@@ -47,7 +47,7 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 		
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXWITHUICONTENT_UICONTENT, undefined, {
 				success : function(request, childNode){
 					loc_uiContent = childNode.getChildValue().getCoreEntity();
 					loc_uiContent.setParentUIEntity(loc_out);

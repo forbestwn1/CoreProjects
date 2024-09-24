@@ -42,7 +42,7 @@
 		},
 		{
 			"name" : "reference_resource",
-			"status": "disabled",
+			"status": "disabled1",
 			"description" : "reference_resource",
 			"request" : [
 				{

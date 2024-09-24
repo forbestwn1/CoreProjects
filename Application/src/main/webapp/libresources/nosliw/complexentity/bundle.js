@@ -97,6 +97,8 @@ var node_createBundleCore = function(parm, configure){
 
 		getMainEntityRuntime : function(){ return loc_getMainEntity();  },
 
+		getMainEntityNode : function(){		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME);	},
+
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
 		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},

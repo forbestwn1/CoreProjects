@@ -122,7 +122,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 								success : function(request){
 									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
 										success : function(request, adapters){
-											node_getComponentInterface(bundleRuntime.getCoreEntity()).setAdapters(adapters);
+											node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity().getMainEntityCore()).setAdapters(adapters);
 											return treeNodeEntityInterface.addChild(childName, bundleRuntime, adapters, true);
 										}
 									});
@@ -132,6 +132,20 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					}));
 				}
 
+				return out;
+			},
+			
+			createBrickAttributeRequest : function(attrName, variationPoints, handlers, request){
+				return this.createBrickChildByAttributeRequest(attrName, attrName, variationPoints, handlers, request);
+			},
+			
+			createBrickChildByAttributeRequest : function(childName, attrName, variationPoints, handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				out.addRequest(this.createChildByAttributeRequest(childName, attrName, variationPoints, {
+					success : function(request, childNode){
+						return node_complexEntityUtility.getBrickNode(childNode);
+					}
+				}));
 				return out;
 			},
 		});

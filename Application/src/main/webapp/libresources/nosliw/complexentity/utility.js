@@ -37,6 +37,13 @@ var node_complexEntityUtility = function(){
 
 	var loc_out = {
 		
+		getBrickNode : function(node){
+			if(node_getObjectType(node.getChildValue().getCoreEntity())==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				return node.getChildValue().getCoreEntity().getMainEntityNode();
+			}
+			else return node;					
+		},
+		
 		getBrickCoreByRelativePath : function(baseEntityCore, relativePath){
 			var hostEntityCore = baseEntityCore;
 			if(relativePath!=undefined && relativePath!=""){
