@@ -19,6 +19,8 @@ var packageObj = library;
 	var node_createTaskInterface;
 	var node_createDataExpressionElementInLibrary;
 	var node_createInteractiveExpressionValuePortsGroup;
+	var node_interactiveUtility;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -39,37 +41,46 @@ var node_createDataExpressionLibraryElementPlugin = function(){
 var loc_createDataExpressionLibraryElementComponentCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_complexEntityDef = complexEntityDef;
-	var loc_expressionData = node_createDataExpressionElementInLibrary(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE), node_createInteractiveExpressionValuePortsGroup(valueContextId, bundleCore.getVariableDomain()));
 	
 	var loc_envInterface = {};
 
-	var loc_facade = node_createTaskInterface({
-		getInitRequest : function(handlers, request){
-			return loc_expressionData.getInitRequest(handlers, request);
+	var loc_taskContext;
+
+	var loc_facadeTaskFactory = {
+		//return a task
+		createTask : function(taskContext){
+			loc_taskContext = taskContext;
+			return loc_out;
 		},
-		
-		getExecuteRequest : function(handlers, request){
-			return loc_expressionData.getExecuteRequest(handlers, request);
-		},
-	});
+	};
+
 	
 	var loc_out = {
 
-		getExternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_expressionData.getExternalValuePort(valuePortGroup, valuePortName);
-		},
+		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		
-		getInternalValuePort : function(valuePortGroup, valuePortName){
-			return loc_expressionData.getInternalValuePort(valuePortGroup, valuePortName);
-		},
-		
-		setEnvironmentInterface : function(envInterface){
-			loc_envInterface = envInterface;
+		getTaskInitRequest : function(handlers, request){
+			if(loc_taskContext!=undefined){
+				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
+			}
 		},
 
+		getTaskExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
+			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+			var dataExpression = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE)[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
+			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, {
+				success : function(request, result){
+					return node_interactiveUtility.setExpressionResultToValuePort(result, valuePortContainer);
+				}
+			}));
+			return out;
+		},
+		
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION, node_createTaskInterface(loc_facade));
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	return loc_out;
 };
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -91,6 +102,8 @@ nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionElementInLibrary", function(){node_createDataExpressionElementInLibrary = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createInteractiveExpressionValuePortsGroup", function(){	node_createInteractiveExpressionValuePortsGroup = this.getData();	});
+nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 
 //Register Node by Name

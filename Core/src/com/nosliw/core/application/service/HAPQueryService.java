@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.core.application.brick.service.interfacee.HAPBrickServiceInterface1;
 
 /*
  * Container information to locate service provider instance
@@ -23,12 +22,8 @@ public class HAPQueryService extends HAPSerializableImp{
 
 	private String m_serviceId;
 	
-	private HAPBrickServiceInterface1 m_serviceInterface;
-
 	public String getServiceId() {   return this.m_serviceId;  }
 	public void setServiceId(String id) {  this.m_serviceId = id;  }
-
-	public HAPBrickServiceInterface1 getInterface() {  return this.m_serviceInterface;  } 
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

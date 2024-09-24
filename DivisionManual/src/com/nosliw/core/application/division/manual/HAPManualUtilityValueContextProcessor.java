@@ -168,6 +168,10 @@ public class HAPManualUtilityValueContextProcessor {
 				HAPManualDefinitionBrickRelationValueContext valueContextRelation = resolveValueContextRelation(parentBrickManualDef.getAttribute(attributeName), defaultRelation);
 				
 				String inheritMode = valueContextRelation.getMode();
+				if(!HAPManualUtilityBrick.isBrickComplex(((HAPManualDefinitionWrapperValueBrick)parentBrickManualDef.getAttribute(attributeName).getValueWrapper()).getBrickTypeId(), processContext.getManualBrickManager())) {
+					inheritMode = HAPConstantShared.INHERITMODE_NONE;
+				}
+				
 				if(!HAPConstantShared.INHERITMODE_NONE.equals(inheritMode)) {
 					List<HAPManualPartInValueContext> fromParentParts = parentBrickManual.getValueContextInhertanceDownstream();
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();

@@ -69,6 +69,17 @@ var node_interactiveUtility = function(){
 			
 			out.addRequest(node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, loc_getResultValuePortNameByResultName(resultName), outputValue));
 			return out;			
+		},
+		
+		setExpressionResultToValuePort : function(expressionResult, valuePortContainer, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_utilityNamedVariable.setValuePortValueRequest(
+				valuePortContainer, 
+				node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, 
+				node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_RESULT,
+				node_COMMONCONSTANT.NAME_ROOT_RESULT, 
+				expressionResult));
+			return out;
 		}
 	};
 	

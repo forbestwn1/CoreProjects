@@ -72,22 +72,21 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		    }
 		};
 
-
+/*
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			return result;
 		}));
 		return out;
+*/
 
-/*		
-		var out = node_createServiceRequestInfoSequence(handlers, request);
-		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue([node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID])[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], loc_input, {
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID)[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], parms, {
 			success: function(rquest, resultValue){
-				loc_result = resultValue;
+				return resultValue;
 			}
 		}));
 		return out;
-*/		
 		
 	};
 	
