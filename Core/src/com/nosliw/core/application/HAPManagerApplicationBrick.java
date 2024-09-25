@@ -170,7 +170,10 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100));
 
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASKWRAPPER_100));
-		
+
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100));
+
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100));
 		this.registerBrickPlugin(new HAPPluginBrickServiceProfile());
 		this.registerBrickPlugin(new HAPPluginBrickServiceInterface());

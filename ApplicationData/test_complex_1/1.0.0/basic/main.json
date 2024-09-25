@@ -6,8 +6,52 @@
 	"brick": [
 		{
 			"info": {
+				"name" : "test1-taskTaskScript",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"scriptResourceId": "task_task_test1",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "deparm1",
+							"dataInfo" : "test.string;1.0.0",
+							"defaultValue" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of baseVarNormal"
+							}
+						},
+						{
+							"name" : "deparm2",
+							"dataInfo" : "test.integer;1.0.0",
+							"defaultValue" : {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 1
+							}
+						},
+						{
+							"name" : "deparm3",
+							"dataInfo" : "test.integer;1.0.0",
+							"defaultValue" : {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 6
+							}
+						}
+					],
+					"result" : {
+						"criteria" : "test.string;1.0.0"
+					}
+				}
+			}
+		
+		
+		},
+	
+		{
+			"info": {
 				"name" : "variableshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -57,7 +101,7 @@
 		{
 			"info": {
 				"name" : "dataexpressionremote-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,

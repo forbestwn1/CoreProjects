@@ -338,7 +338,7 @@ var node_utility = function()
 		var refVarsInOperandRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("CalRefVarsInOperandRequest", {"refVarsMapping":refVarsMapping}), {
 			success : function(request, setResult){
 				var out1 = node_createServiceRequestInfoSequence(undefined);
-				out1.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOURCEID], undefined, {
+				out1.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeWithInitRequest(referenceOperand[node_COMMONATRIBUTECONSTANT.OPERAND_RESOURCEID], undefined, {
 					success: function(request, bundleRuntime){
 						var dataExpressionLibEleCore = bundleRuntime.getCoreEntity().getMainEntityCore();
 						valuePortEnv = node_getWithValuePortInterface(dataExpressionLibEleCore);
@@ -352,14 +352,16 @@ var node_utility = function()
 							toValuesInfo.push(new node_ElementIdValuePair(node_createValuePortElementInfo(varsId[name]), value));
 						});
 						var valuePort = valuePortEnv.getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
-						return valuePort.setValuesRequest(toValuesInfo, {
-							success : function(request){
-								var expressionInterface = node_getApplicationInterface(dataExpressionLibEleCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_EXPRESSION);
-								return node_taskUtility.getExecuteTaskRequest(expressionInterface, {
-									success : function(request, expressionResult){
-										return expressionResult;
-									}
-								});
+						
+						var onInitTaskRequest = function(handlers, request){
+							var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+							out.addRequest(valuePort.setValuesRequest(toValuesInfo));
+							return out;
+						};
+						
+						return node_taskUtility.getExecuteTask(dataExpressionLibEleCore, onInitTaskRequest, undefined, undefined, {
+							success : function(request, taskResult){
+								return taskResult;
 							}
 						});
 					}

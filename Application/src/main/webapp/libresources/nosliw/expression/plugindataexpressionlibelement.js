@@ -46,6 +46,8 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 
 	var loc_taskContext;
 
+	var loc_taskResult;
+
 	var loc_facadeTaskFactory = {
 		//return a task
 		createTask : function(taskContext){
@@ -71,11 +73,14 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			var dataExpression = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE)[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, {
 				success : function(request, result){
+					loc_taskResult = result;
 					return node_interactiveUtility.setExpressionResultToValuePort(result, valuePortContainer);
 				}
 			}));
 			return out;
 		},
+		
+		getTaskResult : function(){   return loc_taskResult;    }
 		
 	};
 	

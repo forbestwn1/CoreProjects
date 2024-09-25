@@ -24,6 +24,44 @@ var packageObj = library;
 
 var node_taskUtility = {
 
+	getExecuteTask : function(entityCore, onInitTaskRequest, taskContext, onFinishTaskRequest, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
+		var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
+		var task = taskFactory.createTask(taskContext);
+		
+		if(onInitTaskRequest==undefined){
+			onInitTaskRequest = function(handlers, request){
+				return node_createServiceRequestInfoSimple(undefined, function(){}, handlers, request);
+			}
+		}
+
+		if(onFinishTaskRequest==undefined){
+			onFinishTaskRequest = function(task, handlers, request){
+				return node_createServiceRequestInfoSimple(undefined, function(){}, handlers, request);
+			}
+		}
+		
+		//task init			
+		out.addRequest(task.getTaskInitRequest());
+
+		out.addRequest(onInitTaskRequest({
+			success : function(request){
+				return task.getTaskExecuteRequest({
+					success : function(request){
+						return onFinishTaskRequest(task, {
+							success : function(request){
+								return task.getTaskResult();
+							}
+						});
+					}
+				});
+			}
+		}));
+
+		return out;		
+	},
+
 	getExecuteTaskWithAdapterRequest : function(entityCore, taskContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
@@ -56,8 +94,6 @@ var node_taskUtility = {
 		}
 		return out;		
 	},
-
-
 
 
 

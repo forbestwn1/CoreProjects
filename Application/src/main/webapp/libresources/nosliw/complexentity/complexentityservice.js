@@ -56,6 +56,7 @@ var packageObj = library;
 	var node_createExpressionGroupPlugin;
 	var node_createExpressionSinglePlugin;
 	var node_createTaskPlugin;
+	var node_createScriptTaskTaskPlugin;
 	var node_createDecorationScriptPlugin;
 	var node_createComplexEntityContainerPlugin;
 	var node_createScriptTaskGroupEntityPlugin;
@@ -181,8 +182,10 @@ var node_createComplexEntityRuntimeService = function() {
 
 		//simple entity plugin
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SERVICEPROVIDER, "1.0.0", node_createDataServiceEntityPlugin());
+
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER, "1.0.0", node_createTaskPlugin());
 
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT, "1.0.0", node_createScriptTaskTaskPlugin());
 
 
 		//adapter plugin
@@ -282,6 +285,23 @@ var node_createComplexEntityRuntimeService = function() {
 				return bundleRuntime;
 			}, handlers, request);
 		},
+
+		getCreateBundleRuntimeWithInitRequest : function(parm, configure, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple("createBundleRuntimeRequest", function(request){
+				var bundleCore = node_createBundleCore(parm, configure);
+				bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
+				var bundleRuntime = node_createComponentRuntime(bundleCore, undefined);
+				return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
+					success : function(request){
+						return bundleRuntime;
+					}
+				});
+			}));
+			return out;
+		},
+				
+
 				
 		getCreateBundleRuntimeRequest1 : function(parm, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence("createBundleRuntimeRequest", handlers, request);
@@ -376,6 +396,7 @@ nosliw.registerSetNodeDataEvent("expression.createScriptExpressionGroupPlugin", 
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionLibraryElementPlugin", function(){node_createDataExpressionLibraryElementPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskPlugin", function(){node_createTaskPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("taskscript.createScriptTaskTaskPlugin", function(){node_createScriptTaskTaskPlugin = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});

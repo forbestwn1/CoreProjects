@@ -59,14 +59,17 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		return out;
 	}
 	
-	public void setAttribute(HAPAttributeInBrick attribute) {
-		for(int i=0; i<this.m_attributes.size(); i++) {
-			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
-				this.m_attributes.remove(i);
-				break;
-			}
+	public HAPEntityOrReference getAttributeValueOfBrick(String attributeName) {
+		HAPEntityOrReference out = null;
+		HAPWrapperValue valueWrapper = this.getAttributeValueWrapper(attributeName);
+		String valueWrapperType = valueWrapper.getValueType();
+		if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+			out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
 		}
-		this.m_attributes.add(attribute);
+		else if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+			out = ((HAPWrapperValueOfReferenceResource)valueWrapper).getResourceId();
+		}
+		return out;
 	}
 	
 	public HAPBrick getAttributeValueOfBrickLocal(String attributeName) {
@@ -78,6 +81,16 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		return out;	
 	}
 
+	public void setAttribute(HAPAttributeInBrick attribute) {
+		for(int i=0; i<this.m_attributes.size(); i++) {
+			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
+				this.m_attributes.remove(i);
+				break;
+			}
+		}
+		this.m_attributes.add(attribute);
+	}
+	
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {		this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
 	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
 		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
