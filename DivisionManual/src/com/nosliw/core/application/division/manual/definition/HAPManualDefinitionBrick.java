@@ -47,7 +47,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	private HAPManualManagerBrick m_manualBrickMan;
 	
-	protected HAPManualDefinitionBrick (HAPIdBrickType brickTypeId) {
+	public HAPManualDefinitionBrick (HAPIdBrickType brickTypeId) {
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
 		this.m_attachment = new HAPManualDefinitionAttachment();
 		this.m_brickTypeId = brickTypeId;

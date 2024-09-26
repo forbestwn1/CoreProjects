@@ -236,10 +236,12 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		getDataOperationRequest : function(eleName, operationService, handlers, request){
 			var operationPath = operationService.parms.path;
 			var baseVariable = loc_findBaseVariable(node_createValueStructureVariableInfo(eleName, operationPath));
-			if(operationPath!=undefined){
-				operationService.parms.path = baseVariable.path;
+			if(baseVariable!=undefined){
+				if(operationPath!=undefined){
+					operationService.parms.path = baseVariable.path;
+				}
+				return baseVariable.variable.getDataOperationRequest(operationService, handlers, request);
 			}
-			return baseVariable.variable.getDataOperationRequest(operationService, handlers, request);
 		},
 		
 		createHandleEachElementProcessor : function(name, path){

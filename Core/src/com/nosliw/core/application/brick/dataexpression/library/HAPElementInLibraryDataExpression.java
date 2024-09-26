@@ -11,8 +11,6 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpression;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithValuePortGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -20,7 +18,7 @@ import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression, HAPWithValuePortGroup{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
@@ -44,19 +42,13 @@ public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInf
 	public void setResultMatchers(HAPMatchers matchers) {    this.m_resultMatchers = matchers;    }
 
 	@Override
-	public HAPInteractiveExpression getExpressionInteractive() {    return this.m_interactive;      }
+	public HAPInteractiveExpression getExpressionInterface() {    return this.m_interactive;      }
 	public void setExpressionInteractive(HAPInteractiveExpression interactive) {    this.m_interactive = interactive;     }
 	
 	@Override
-	public HAPGroupValuePorts getExternalValuePortGroup() {   return this.m_interactive.getExternalValuePortGroup();  }
-	
-	@Override
-	public HAPGroupValuePorts getInternalValuePortGroup() {   return this.m_interactive.getInternalValuePortGroup();  }
-
-	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(EXPRESSIONINTERACTIVE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPRESSIONINTERFACE, HAPManagerSerialize.getInstance().toStringValue(this.m_interactive, HAPSerializationFormat.JSON));
 		jsonMap.put(EXPRESSION, HAPManagerSerialize.getInstance().toStringValue(this.getExpression(), HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(RESULTMATCHERS, HAPUtilityJson.buildJson(this.getResultMatchers(), HAPSerializationFormat.JSON));
 	}

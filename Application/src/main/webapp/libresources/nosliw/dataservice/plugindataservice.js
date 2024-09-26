@@ -62,24 +62,17 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		            "valueFormat": "JSON",
 		            "value": "default value of parm111111",
 		            "info": {}
-		        },
-		        "outputInService2": {
-		            "dataTypeId": "test.string;1.0.0",
-		            "valueFormat": "JSON",
-		            "value": "default value of parm222222",
-		            "info": {}
 		        }
 		    }
 		};
 
-/*
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			return result;
 		}));
 		return out;
-*/
 
+/*
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID)[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], parms, {
 			success: function(rquest, resultValue){
@@ -87,6 +80,7 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			}
 		}));
 		return out;
+*/
 		
 	};
 	
@@ -111,15 +105,12 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-    		var taskInteractive = loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHINTERACTIVETASK_TASKINTERACTIVE);
-			var taskInteractiveRequest = taskInteractive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_REQUEST];
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
-			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(taskInteractiveRequest, valuePortContainer, {
+			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(valuePortContainer, {
 				success : function(request, parmsValue){
 					return loc_getExecuteTaskRequest(parmsValue, {
 						success : function(request, serviceResult){
-							return node_interactiveUtility.setTaskResultToValuePort(serviceResult, taskInteractive[node_COMMONATRIBUTECONSTANT.INTERACTIVE_RESULT], valuePortContainer, {
+							return node_interactiveUtility.setTaskResultToValuePort(serviceResult, valuePortContainer, {
 								success : function(){
 									loc_taskResult = serviceResult;
 									return serviceResult;
@@ -129,7 +120,6 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 					});
 				}
 			}));
-			
 			
 			return out;
 		},

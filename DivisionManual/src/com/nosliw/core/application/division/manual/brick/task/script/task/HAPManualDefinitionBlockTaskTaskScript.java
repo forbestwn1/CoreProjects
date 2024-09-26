@@ -8,8 +8,8 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockTaskTaskScript extends HAPManualDefinitionBrick{
 
-	protected HAPManualDefinitionBlockTaskTaskScript() {
-		super(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100);
+	public HAPManualDefinitionBlockTaskTaskScript() {
+		super(HAPEnumBrickType.TASK_TASK_SCRIPT_100);
 	}
 
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(HAPBlockTaskTaskScript.TASKINTERFACE);  }

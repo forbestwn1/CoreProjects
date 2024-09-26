@@ -29,7 +29,8 @@ var node_interactiveUtility = function(){
 		return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
 	};
 
-	var loc_getRequestValuesFromValuePort = function(taskInteractiveRequest, valuePortContainer, valuePortGroup, handlers, request){
+	var loc_getRequestValuesFromValuePort = function(valuePortContainer, valuePortGroup, handlers, request){
+		
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var getParmsRequest = node_createServiceRequestInfoSet(undefined, {
 			success : function(request, result){
@@ -37,37 +38,36 @@ var node_interactiveUtility = function(){
 			}
 		});
 		
-		_.each(taskInteractiveRequest[node_COMMONATRIBUTECONSTANT.INTERACTIVEREQUEST_PARM], function(parm){
-			var parmName = parm[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-			getParmsRequest.addRequest(parmName, node_utilityNamedVariable.getValuePortValueRequest(valuePortContainer, valuePortGroup, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST, parmName));
+		var valuePortInfo = valuePortContainer.getValuePortInfoByGroupTypeAndValuePortName(valuePortGroup, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST);
+		var valueStructures = valuePortContainer.getValueStructuresByGroupNameAndValuePortName(valuePortInfo.groupName, valuePortInfo.valuePortName);
+		_.each(valueStructures, function(valueStructure, i){
+			var eleNames = valueStructure.getElementsName();
+			_.each(eleNames, function(eleName, i){
+				var eleVar = valueStructure.getElement(eleName);
+				getParmsRequest.addRequest(eleName, eleVar.getGetValueRequest());
+			});
 		});
-		
 		out.addRequest(getParmsRequest);
 		return out;
 	};
 
 	var loc_out = {
 		
-		getTaskRequestValuesFromValuePort : function(taskInteractiveRequest, valuePortContainer, handlers, request){
-			return loc_getRequestValuesFromValuePort(taskInteractiveRequest, valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, handlers, request);
+		getTaskRequestValuesFromValuePort : function(valuePortContainer, handlers, request){
+			return loc_getRequestValuesFromValuePort(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, handlers, request);
 		},
 	
-		getExpressionRequestValuesFromValuePort : function(taskInteractiveRequest, valuePortContainer, handlers, request){
-			return loc_getRequestValuesFromValuePort(taskInteractiveRequest, valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, handlers, request);
+		getExpressionRequestValuesFromValuePort : function(valuePortContainer, handlers, request){
+			return loc_getRequestValuesFromValuePort(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, handlers, request);
 		},
 	
-		setTaskResultToValuePort : function(taskResult, taskResultDef, valuePortContainer, handlers, request){
+		setTaskResultToValuePort : function(taskResult, valuePortContainer, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var resultName = taskResult.resultName;
 			var resultValue = taskResult.resultValue;
-			var outputValue = {};
-			_.each(taskResultDef[resultName][node_COMMONATRIBUTECONSTANT.INTERACTIVERESULTTASK_OUTPUT], function(output, i){
-				var outputName = output[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-				outputValue[outputName] = resultValue[outputName]; 
-			});
 			
-			out.addRequest(node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, loc_getResultValuePortNameByResultName(resultName), outputValue));
+			out.addRequest(node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, loc_getResultValuePortNameByResultName(resultName), resultValue));
 			return out;			
 		},
 		

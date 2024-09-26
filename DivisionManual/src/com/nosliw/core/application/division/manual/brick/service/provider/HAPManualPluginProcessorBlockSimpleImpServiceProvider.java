@@ -12,7 +12,6 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
-import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
@@ -46,9 +45,11 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPMa
 		HAPManagerApplicationBrick brickMan = this.getRuntimeEnvironment().getBrickManager();
 		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, serviceKey.getServiceId()));
 		HAPBlockServiceProfile serviceProfileBlock = (HAPBlockServiceProfile)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(serviceProfileResourceId), brickMan);
-		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getServiceInterface(), brickMan);
-		HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
-		serviceProviderExe.setTaskInteractive(taskInteractive);
+//		serviceProviderExe.setTaskInterface(serviceProfileBlock.getServiceInterface());
+		
+//		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getServiceInterface(), brickMan);
+//		HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
+//		serviceProviderExe.setTaskInterface(taskInteractive);
 	}
 	
 	@Override
@@ -57,8 +58,15 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPMa
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
 		HAPManualDefinitionBlockSimpleServiceProvider definitionBlock = (HAPManualDefinitionBlockSimpleServiceProvider)blockPair.getLeft();
 		HAPManualBlockSimpleServiceProvider serviceProviderExe = (HAPManualBlockSimpleServiceProvider)blockPair.getRight();
+		HAPManagerApplicationBrick brickMan = this.getRuntimeEnvironment().getBrickManager();
 
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(serviceProviderExe.getTaskInteractive(), processContext.getCurrentBundle().getValueStructureDomain());
+//		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProviderExe.getTaskInterface(), brickMan);
+
+		HAPResourceIdSimple serviceProfileResourceId = HAPUtilityBrickId.fromBrickId2ResourceId(new HAPIdBrick(HAPEnumBrickType.SERVICEPROFILE_100, null, serviceProviderExe.getServiceKey().getServiceId()));
+		HAPBlockServiceProfile serviceProfileBlock = (HAPBlockServiceProfile)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(serviceProfileResourceId), brickMan);
+		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getServiceInterface(), brickMan);
+		
+		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInterfaceBlock.getValue(), processContext.getCurrentBundle().getValueStructureDomain());
 		serviceProviderExe.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
 		serviceProviderExe.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
 	}

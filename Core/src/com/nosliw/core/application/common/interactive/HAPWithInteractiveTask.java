@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 public interface HAPWithInteractiveTask {
 
 	@HAPAttribute
-	public static final String TASKINTERACTIVE = "taskInteractive";
+	public static final String TASKINTERFACE = "taskInteractive";
 
-	HAPInteractiveTask getTaskInteractive();
+	HAPInteractiveTask getTaskInterface();
 	
 }

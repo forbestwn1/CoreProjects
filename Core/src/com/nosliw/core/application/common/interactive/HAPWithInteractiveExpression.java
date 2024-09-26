@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 public interface HAPWithInteractiveExpression {
 
 	@HAPAttribute
-	public static String EXPRESSIONINTERACTIVE = "expressionInteractive";
+	public static String EXPRESSIONINTERFACE = "expressionInterface";
 
-	HAPInteractiveExpression getExpressionInteractive();
+	HAPInteractiveExpression getExpressionInterface();
 	
 }

@@ -21,7 +21,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPluginProcessorBlockComplex{
 
 	public HAPManualPluginProcessorBlockTaskTaskScript(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100, HAPManualBlockTaskTaskScript.class, runtimeEnv, manualBrickMan);
+		super(HAPEnumBrickType.TASK_TASK_SCRIPT_100, HAPManualBlockTaskTaskScript.class, runtimeEnv, manualBrickMan);
 	}
 
 	@Override

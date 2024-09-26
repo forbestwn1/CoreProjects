@@ -22,7 +22,7 @@ var node_createScriptTaskTaskPlugin = function(){
 		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptCoreEntity"), handlers, request);
 
-			var resourceId = new node_ResourceId(complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHSCRIPTREFERENCE_SCRIPT));
+			var resourceId = new node_ResourceId(complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHSCRIPTREFERENCE_SCRIPTRESOURCEID));
 			
 			out.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(resourceId, {
 				success : function(requestInfo, resourceTree){

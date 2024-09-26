@@ -13,6 +13,6 @@ public class HAPManualBlockTaskTaskScript extends HAPManualBrickImp implements H
 
 	@Override
 	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueOfValue(SCRIPTRESOURCEID);  }
-	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithBrick(SCRIPTRESOURCEID, resourceId);      }
+	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(SCRIPTRESOURCEID, resourceId);  }
 
 }

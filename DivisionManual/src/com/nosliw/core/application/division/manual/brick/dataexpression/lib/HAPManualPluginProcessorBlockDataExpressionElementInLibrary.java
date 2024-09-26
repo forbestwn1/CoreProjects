@@ -60,7 +60,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight(); 
 		HAPElementInLibraryDataExpression exe = brick.getValue();;
 		
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(exe.getExpressionInteractive(), valueStructureDomain);
+		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(exe.getExpressionInterface(), valueStructureDomain);
 		
 		brick.getOtherInternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getLeft());
 		brick.getOtherExternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getRight());
@@ -105,7 +105,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//discover
 		Map<String, HAPDataTypeCriteria> expections = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expections.put(HAPPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getExpressionInteractive().getResult().getDataCriteria());
+		expections.put(HAPPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getExpressionInterface().getResult().getDataCriteria());
 		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, getManualBrickManager());
 		varInfoContainer = discoverResult.getLeft();
 		
@@ -114,8 +114,8 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//result
 		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(exe.getExpressionInteractive().getResult().getDataCriteria()==null) {
-			exe.getExpressionInteractive().getResult().setDataCriteria(resultCriteria);
+		if(exe.getExpressionInterface().getResult().getDataCriteria()==null) {
+			exe.getExpressionInterface().getResult().setDataCriteria(resultCriteria);
 		}
 		else {
 			exe.setResultMatchers(discoverResult.getRight().get(HAPPluginProcessorEntityWithVariableDataExpression.RESULT));
