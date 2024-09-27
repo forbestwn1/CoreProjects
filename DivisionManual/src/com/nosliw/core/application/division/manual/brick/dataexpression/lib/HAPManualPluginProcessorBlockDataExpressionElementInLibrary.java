@@ -41,7 +41,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 		
-		def.cloneToEntityInfo(exe);
+		((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).cloneToEntityInfo(((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()));
 		
 		//build expression in executable
 		exe.setExpression(new HAPManualExpressionData(HAPManualUtilityProcessorDataExpression.buildManualOperand(def.getExpression().getOperand())));

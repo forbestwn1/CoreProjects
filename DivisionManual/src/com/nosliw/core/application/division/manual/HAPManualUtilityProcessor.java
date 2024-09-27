@@ -27,7 +27,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueReferenceResource;
@@ -210,8 +210,8 @@ public class HAPManualUtilityProcessor {
 					HAPIdBrickType entityTypeId = null;
 					boolean process = true;
 					HAPManualBrick block = null;
-					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrick) {
-						entityTypeId = ((HAPManualDefinitionWrapperBrick)treeNodeDef).getBrickTypeId();
+					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrickRoot) {
+						entityTypeId = ((HAPManualDefinitionWrapperBrickRoot)treeNodeDef).getBrickTypeId();
 					}
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
@@ -236,8 +236,8 @@ public class HAPManualUtilityProcessor {
 					HAPIdBrickType entityTypeId = null;
 					boolean process = true;
 					HAPManualBrick block = null;
-					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrick) {
-						entityTypeId = ((HAPManualDefinitionWrapperBrick)treeNodeDef).getBrickTypeId();
+					if(treeNodeDef instanceof HAPManualDefinitionWrapperBrickRoot) {
+						entityTypeId = ((HAPManualDefinitionWrapperBrickRoot)treeNodeDef).getBrickTypeId();
 					}
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;

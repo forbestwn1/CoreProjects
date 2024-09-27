@@ -14,11 +14,11 @@ import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpressi
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
+import com.nosliw.data.core.runtime.HAPExecutableImp;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
-public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression{
+public class HAPElementInLibraryDataExpression extends HAPExecutableImp implements HAPWithInteractiveExpression{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";

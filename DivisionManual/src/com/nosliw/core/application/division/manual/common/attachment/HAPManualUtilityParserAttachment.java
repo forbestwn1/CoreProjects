@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 
 public class HAPManualUtilityParserAttachment{
 
@@ -22,7 +22,7 @@ public class HAPManualUtilityParserAttachment{
 				String brickVersion = (String)versionKey;
 				JSONArray brickWrapperJsonArray = byVersionJsonObj.getJSONArray(brickVersion);
 				for(int i=0; i<brickWrapperJsonArray.length(); i++) {
-					HAPManualDefinitionWrapperBrick brickWrapper = manualBrickMan.parseBrickDefinitionWrapper(brickWrapperJsonArray.get(i), new HAPIdBrickType(brickType, brickVersion), HAPSerializationFormat.JSON, parseContext);
+					HAPManualDefinitionWrapperBrickRoot brickWrapper = manualBrickMan.parseBrickDefinitionWrapper(brickWrapperJsonArray.get(i), new HAPIdBrickType(brickType, brickVersion), HAPSerializationFormat.JSON, parseContext);
 					attachment.addItem(brickWrapper);
 				}
 			}

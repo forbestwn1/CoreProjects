@@ -78,7 +78,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrickLocation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueReferenceResource;
 import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
@@ -123,7 +123,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 
 		//get definition
-		HAPManualDefinitionWrapperBrick brickDefWrapper = this.parseBrickDefinitionWrapper(content, brickId.getBrickTypeId(), format, parseContext);
+		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = this.parseBrickDefinitionWrapper(content, brickId.getBrickTypeId(), format, parseContext);
 		HAPManualDefinitionBrick brickDef = brickDefWrapper.getBrick();
 		
 		//build parent and 
@@ -201,7 +201,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		return out;
 	}
 
-	private void normalizeDivisionInReferredResource(HAPManualDefinitionWrapperBrick brickWrapper) {
+	private void normalizeDivisionInReferredResource(HAPManualDefinitionWrapperBrickRoot brickWrapper) {
 		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 
 			@Override
@@ -283,14 +283,14 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		return entityParserPlugin.parse(entityObj, format, parseContext);
 	}
 
-	public HAPManualDefinitionWrapperBrick parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
-		HAPManualDefinitionWrapperBrick out = null;
+	public HAPManualDefinitionWrapperBrickRoot parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
+		HAPManualDefinitionWrapperBrickRoot out = null;
 		switch(format) {
 		case JSON:
-			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseBrickWrapper((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext, this, this.getBrickManager());
+			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseRootBrickWrapper((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext, this, this.getBrickManager());
 			break;
 		case HTML:
-			out = new HAPManualDefinitionWrapperBrick(parseBrickDefinition(entityObj, brickTypeId, HAPSerializationFormat.HTML, parseContext));
+			out = new HAPManualDefinitionWrapperBrickRoot(parseBrickDefinition(entityObj, brickTypeId, HAPSerializationFormat.HTML, parseContext));
 			break;
 		case JAVASCRIPT:
 			break;

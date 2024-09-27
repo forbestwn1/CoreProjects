@@ -9,7 +9,7 @@ import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
 public class HAPManualUtilityAttachment {
@@ -20,15 +20,15 @@ public class HAPManualUtilityAttachment {
 
 	public static final String ATTRIBUTE_FLAG_OVERRIDE = "flagOveride"; 
 
-	public static void setOverridenByParent(HAPManualDefinitionWrapperBrick ele) {
+	public static void setOverridenByParent(HAPManualDefinitionWrapperBrickRoot ele) {
 		ele.getInfo().setValue(ATTRIBUTE_FLAG_OVERRIDE, Boolean.TRUE);
 	}
 	
-	public static boolean isOverridenByParent(HAPManualDefinitionWrapperBrick ele) {
+	public static boolean isOverridenByParent(HAPManualDefinitionWrapperBrickRoot ele) {
 		return Boolean.TRUE.equals(ele.getInfo().getValue(ATTRIBUTE_FLAG_OVERRIDE));
 	}
 	
-	public static boolean isOverridenByParentMode(HAPManualDefinitionWrapperBrick ele) {
+	public static boolean isOverridenByParentMode(HAPManualDefinitionWrapperBrickRoot ele) {
 		String mode = (String)ele.getInfo().getValue(ATTRIBUTE_OVERRIDE_MODE);
 		if(mode==null) {
 			mode =  OVERRIDE_MODE_NONE;

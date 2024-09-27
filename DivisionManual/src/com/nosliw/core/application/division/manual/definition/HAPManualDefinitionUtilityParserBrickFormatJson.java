@@ -21,22 +21,13 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
 
-	public static HAPManualDefinitionWrapperBrick parseBrickWrapper(JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
-		HAPManualDefinitionWrapperBrick out = new HAPManualDefinitionWrapperBrick();
+	public static HAPManualDefinitionWrapperBrickRoot parseRootBrickWrapper(JSONObject jsonObj, HAPIdBrickType brickTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionBrickMan, HAPManagerApplicationBrick brickManager) {
+		HAPManualDefinitionWrapperBrickRoot out = new HAPManualDefinitionWrapperBrickRoot();
 		
-		//try with definition
-		Object brickTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickTypeObj, entityTypeIfNotProvided, entityManager);
-		
-		Object brickObj = jsonObj.opt(HAPManualWithBrick.BRICK);
-		if(brickObj==null)
-		{
-			brickObj = jsonObj;    //if no entity node, then using root
-		}
-		HAPManualDefinitionBrick brickDef = manualDivisionEntityMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+		HAPManualDefinitionBrick brickDef = parseBrick(jsonObj, brickTypeIfNotProvided, parseContext, manualDivisionBrickMan, brickManager);
 		out.setBrick(brickDef);
 		
-		Object infoObj = jsonObj.opt(HAPManualDefinitionWrapperBrick.INFO);
+		Object infoObj = jsonObj.opt(HAPManualDefinitionWrapperBrickRoot.INFO);
 		out.buildEntityInfoByJson(infoObj);
 		
 		return out;
@@ -92,14 +83,26 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		
 		return out;
 	}
-	
+
+	public static HAPManualDefinitionBrick parseBrick(JSONObject jsonObj, HAPIdBrickType brickTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionBrickMan, HAPManagerApplicationBrick brickManager) {
+		Object brickTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
+		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickTypeObj, brickTypeIfNotProvided, brickManager);
+		
+		Object brickObj = jsonObj.opt(HAPManualWithBrick.BRICK);
+		if(brickObj==null)
+		{
+			brickObj = jsonObj;    //if no entity node, then using root
+		}
+		return manualDivisionBrickMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+	}	
+		
 	//parse entity as attribute value (value may be entity or reference(resource, attachment, local))
 	public static HAPManualDefinitionWrapperValue parseWrapperValue(JSONObject jsonObj, HAPIdBrickType brickTypeIfNotProvided, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick entityManager) {
 		HAPManualDefinitionWrapperValue out = null;
 
 		//try with definition
 		Object entityTypeObj = jsonObj.opt(HAPManualWithBrick.BRICKTYPEID);   //if entity type is defined in entity, then override provided
-		HAPIdBrickType entityTypeId = HAPUtilityBrickId.parseBrickTypeId(entityTypeObj, brickTypeIfNotProvided, entityManager);
+		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(entityTypeObj, brickTypeIfNotProvided, entityManager);
 		
 		//local entity reference
 		if(out==null) {
@@ -115,7 +118,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		if(out==null) {
 			Object resourceObj = jsonObj.opt(HAPManualDefinitionWrapperValueReferenceResource.RESOURCEID);
 			if(resourceObj!=null) {
-				HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(entityTypeId.getBrickType(), entityTypeId.getVersion(), resourceObj);
+				HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(brickTypeId.getBrickType(), brickTypeId.getVersion(), resourceObj);
 				out = new HAPManualDefinitionWrapperValueReferenceResource(resourceId);
 			}
 		}
@@ -124,7 +127,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		if(out==null) {
 			Object referenceObj = jsonObj.opt(HAPManualDefinitionWrapperValueReferenceAttachment.REFERENCE);
 			if(referenceObj!=null) {
-				HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, entityTypeId.getBrickType());
+				HAPReferenceAttachment reference = HAPReferenceAttachment.newInstance(referenceObj, brickTypeId.getBrickType());
 				out = new HAPManualDefinitionWrapperValueReferenceAttachment(reference);
 			}
 		}
@@ -139,13 +142,13 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		
 		//entity
 		if(out==null) {
-			Object entityObj = jsonObj.opt(HAPManualDefinitionWrapperValueBrick.BRICK);
-			if(entityObj==null)
+			Object brickObj = jsonObj.opt(HAPManualDefinitionWrapperValueBrick.BRICK);
+			if(brickObj==null)
 			{
-				entityObj = jsonObj;    //if no entity node, then using root
+				brickObj = jsonObj;    //if no entity node, then using root
 			}
-			HAPManualDefinitionBrick entityDef = manualDivisionEntityMan.parseBrickDefinition(entityObj, entityTypeId, HAPSerializationFormat.JSON, parseContext);
-			out = new HAPManualDefinitionWrapperValueBrick(entityDef);
+			HAPManualDefinitionBrick brickDef = manualDivisionEntityMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+			out = new HAPManualDefinitionWrapperValueBrick(brickDef);
 		}
 
 		return out;

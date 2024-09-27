@@ -74,7 +74,7 @@
 				"criteria" : "test.string;1.0.0"
 			},
 			"expression1" : "?(deparm1)?",
-			"expression" : "<(dataexpressionlibelement|1.0.0|@ContainerElement_1=dataexpressionlibrary|1.0.0|test2;manual)>.with(deparm21:?(deparm1)?,deparm22:?(deparm2)?,deparm23:?(deparm3)?)"
+			"expression" : "<(dataexpressionlibelement|1.0.0|@dataexpression1=dataexpressionlibrary|1.0.0|test2;manual)>.with(deparm21:?(deparm1)?,deparm22:?(deparm2)?,deparm23:?(deparm3)?)"
 		},
 		{
 			"name" : "extension",

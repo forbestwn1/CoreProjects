@@ -190,10 +190,10 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		
-		Map<String, HAPManualDefinitionWrapperBrick> valueItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.VALUE_100.getBrickType(), HAPEnumBrickType.VALUE_100.getVersion());
+		Map<String, HAPManualDefinitionWrapperBrickRoot> valueItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.VALUE_100.getBrickType(), HAPEnumBrickType.VALUE_100.getVersion());
 		if(valueItems!=null) {
 			for(String name : valueItems.keySet()) {
-				HAPManualDefinitionWrapperBrick itemWrapper = valueItems.get(name);
+				HAPManualDefinitionWrapperBrickRoot itemWrapper = valueItems.get(name);
 				HAPManualDefinitionBlockValue valueItem = (HAPManualDefinitionBlockValue)itemWrapper.getBrick();
 				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 				itemWrapper.cloneToEntityInfo(constantDef);
@@ -202,10 +202,10 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 			}
 		}
 
-		Map<String, HAPManualDefinitionWrapperBrick> dataItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.DATA_100.getBrickType(), HAPEnumBrickType.DATA_100.getVersion());
+		Map<String, HAPManualDefinitionWrapperBrickRoot> dataItems =  this.getAttachment().getItemsByBrickType(HAPEnumBrickType.DATA_100.getBrickType(), HAPEnumBrickType.DATA_100.getVersion());
 		if(dataItems!=null) {
 			for(String name : dataItems.keySet()) {
-				HAPManualDefinitionWrapperBrick itemWrapper = dataItems.get(name);
+				HAPManualDefinitionWrapperBrickRoot itemWrapper = dataItems.get(name);
 				HAPManualDefinitionBlockData dataItem = (HAPManualDefinitionBlockData)itemWrapper.getBrick();
 				HAPDefinitionConstant constantDef = new HAPDefinitionConstant();
 				itemWrapper.cloneToEntityInfo(constantDef);

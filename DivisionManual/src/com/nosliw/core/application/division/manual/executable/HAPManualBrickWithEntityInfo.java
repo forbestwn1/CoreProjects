@@ -18,9 +18,11 @@ public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements H
 
 	@Override
 	public void setId(String id) {   
-		this.setAttributeValueWithValue(ID, id);
-		if(this.getName()==null) {
-			this.setName(id);
+		if(id!=null) {
+			this.setAttributeValueWithValue(ID, id);
+			if(this.getName()==null) {
+				this.setName(id);
+			}
 		}
 	}
 
@@ -29,9 +31,11 @@ public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements H
 
 	@Override
 	public void setName(String name) {
-		this.setAttributeValueWithValue(NAME, name);
-		if(this.getId()==null) {
-			this.setId(name);
+		if(name!=null) {
+			this.setAttributeValueWithValue(NAME, name);
+			if(this.getId()==null) {
+				this.setId(name);
+			}
 		}
 	}
 
@@ -39,30 +43,45 @@ public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements H
 	public String getStatus() {    return (String)this.getAttributeValueOfValue(STATUS);    }
 
 	@Override
-	public void setStatus(String status) {   this.setAttributeValueWithValue(STATUS, status);  }
+	public void setStatus(String status) {
+		if(status!=null) {
+			this.setAttributeValueWithValue(STATUS, status);  
+		}
+	}
 
 	@Override
 	public String getDisplayName() {    return (String)this.getAttributeValueOfValue(DISPLAYNAME);    }
 
 	@Override
-	public void setDisplayName(String name) {    this.setAttributeValueWithValue(DISPLAYNAME, name);  }
+	public void setDisplayName(String name) {
+		if(name!=null) {
+			this.setAttributeValueWithValue(DISPLAYNAME, name);  
+		}
+	}
 
 	@Override
 	public String getDescription() {   return (String)this.getAttributeValueOfValue(DESCRIPTION);    }
 
 	@Override
-	public void setDescription(String description) {   this.setAttributeValueWithValue(DESCRIPTION, description);  }
+	public void setDescription(String description) {
+		if(description!=null) {
+			this.setAttributeValueWithValue(DESCRIPTION, description);  
+		}
+	}
 
 	@Override
 	public HAPInfo getInfo() {   return (HAPInfo)this.getAttributeValueOfValue(INFO);  }
 
 	@Override
-	public void setInfo(HAPInfo info) {   this.setAttributeValueWithValue(INFO, info);   }
+	public void setInfo(HAPInfo info) {
+		if(info!=null) {
+			this.setAttributeValueWithValue(INFO, info);   
+		}
+	}
 
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
-		// TODO Auto-generated method stub
-		
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 
 	@Override

@@ -41,7 +41,7 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -163,7 +163,7 @@ public class HAPManualUtilityValueContextProcessor {
 
 				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(parentBrickManual, new HAPPath(attributeName));
 				
-				HAPManualDefinitionWrapperBrick rootBrickWrapper = (HAPManualDefinitionWrapperBrick)bundle.getExtraData();
+				HAPManualDefinitionWrapperBrickRoot rootBrickWrapper = (HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData();
 				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootBrickWrapper, parentBrickManual.getTreeNodeInfo().getPathFromRoot());
 				HAPManualDefinitionBrickRelationValueContext valueContextRelation = resolveValueContextRelation(parentBrickManualDef.getAttribute(attributeName), defaultRelation);
 				
@@ -304,7 +304,7 @@ public class HAPManualUtilityValueContextProcessor {
 
 				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
 				
-				HAPManualDefinitionWrapperBrick rootEntityDefInfo = (HAPManualDefinitionWrapperBrick)bundle.getExtraData(); 
+				HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = (HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData(); 
 				
 				Pair<HAPManualDefinitionBrick, HAPManualBrick> entityPair = HAPManualDefinitionUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
 				

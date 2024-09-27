@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.container;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -9,6 +10,7 @@ import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 
 public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 
@@ -37,6 +39,18 @@ public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 		String attrName = generateAttributeName();
 		this.setAttributeWithValueWrapper(attrName, valueWrapper);
 		return attrName;
+	}
+	
+	public String addElementBrick(HAPManualDefinitionBrick brick) {
+		String out = null;
+		if(brick instanceof HAPEntityInfo) {
+			HAPManualDefinitionAttributeInBrick attr = new HAPManualDefinitionAttributeInBrick(((HAPEntityInfo)brick).getName(), new HAPManualDefinitionWrapperValueBrick(brick));
+			out = this.addElement(attr);
+		}
+		else {
+			out = this.addElement(brick);
+		}
+		return out;
 	}
 	
 	public String addElement(HAPEntityOrReference brickOrRef) {

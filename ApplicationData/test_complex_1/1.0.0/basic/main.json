@@ -20,8 +20,83 @@
 
 		{
 			"info": {
-				"name" : "service-serviceprovider",
+				"name" : "dataexpressionremote-dataexpressionlibelement",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"isTask" : true,
+			"resourceId":"dataexpressionlibelement|1.0.0|@dataexpression1=dataexpressionlibrary|1.0.0|test1",  
+			"adapter":[
+				{
+					"name" : "dataExpressionAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "deparm1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									},
+									{
+										"target" : {
+											"rootName" : "deparm2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer1"
+											}
+										}
+									},
+									{
+										"status": "disabled",
+										"target" : {
+											"rootName" : "deparm3"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result"
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name" : "service-serviceprovider",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -211,81 +286,6 @@
 							]
 						}
 					}						
-				}
-			]
-		},
-		
-		{
-			"info": {
-				"name" : "dataexpressionremote-dataexpressionlibelement",
-				"status": "disabled",
-				"description" : ""
-			},
-			"isTask" : true,
-			"resourceId":"dataexpressionlibelement|1.0.0|@ContainerElement_2=dataexpressionlibrary|1.0.0|test1",  
-			"adapter":[
-				{
-					"name" : "dataExpressionAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForExpression",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "deparm1"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "parm1"
-											}
-										}
-									},
-									{
-										"target" : {
-											"rootName" : "deparm2"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "integer1"
-											}
-										}
-									},
-									{
-										"status": "disabled",
-										"target" : {
-											"rootName" : "deparm3"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "integer2"
-											}
-										}
-									}
-								]
-							},
-							"out" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "output1"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "result"
-											}
-										}
-									}
-								]
-							}
-						}
-					}
 				}
 			]
 		},

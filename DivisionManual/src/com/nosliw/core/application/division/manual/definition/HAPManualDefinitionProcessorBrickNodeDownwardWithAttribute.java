@@ -5,12 +5,12 @@ import com.nosliw.common.path.HAPPath;
 public abstract class HAPManualDefinitionProcessorBrickNodeDownwardWithAttribute extends HAPManualDefinitionProcessorBrickNodeDownwardWithPath{
 
 	@Override
-	public boolean processBrickNode(HAPManualDefinitionWrapperBrick rootBrickWrapper, HAPPath path, Object data) {
+	public boolean processBrickNode(HAPManualDefinitionWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
 		
 	}
 
 	@Override
-	public void postProcessBrickNode(HAPManualDefinitionWrapperBrick rootBrickWrapper, HAPPath path, Object data) {}
+	public void postProcessBrickNode(HAPManualDefinitionWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {}
 
 	@Override
 	protected boolean isRoot(HAPPath path) {

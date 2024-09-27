@@ -9,15 +9,15 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 
-public class HAPManualDefinitionWrapperBrick extends HAPEntityInfoImp implements HAPManualWithBrick, HAPTreeNode{
+public class HAPManualDefinitionWrapperBrickRoot extends HAPEntityInfoImp implements HAPManualWithBrick, HAPTreeNode{
 
 	public static final String INFO = "info";
 
 	private HAPManualDefinitionBrick m_brick;
 
-	public HAPManualDefinitionWrapperBrick() {	}
+	public HAPManualDefinitionWrapperBrickRoot() {	}
 
-	public HAPManualDefinitionWrapperBrick(HAPManualDefinitionBrick brick) {
+	public HAPManualDefinitionWrapperBrickRoot(HAPManualDefinitionBrick brick) {
 		this.m_brick = brick;
 	}
 	
@@ -37,8 +37,8 @@ public class HAPManualDefinitionWrapperBrick extends HAPEntityInfoImp implements
 	@Override
 	public Object getNodeValue() {  return this.m_brick;  }
 
-	public HAPManualDefinitionWrapperBrick cloneBrickWrapper() {
-		HAPManualDefinitionWrapperBrick out = new HAPManualDefinitionWrapperBrick();
+	public HAPManualDefinitionWrapperBrickRoot cloneBrickWrapper() {
+		HAPManualDefinitionWrapperBrickRoot out = new HAPManualDefinitionWrapperBrickRoot();
 		this.cloneToEntityInfo(out);
 		out.m_brick = this.m_brick;
 		return out;

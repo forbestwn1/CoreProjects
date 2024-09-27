@@ -10,7 +10,7 @@ import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 public class HAPManualDefinitionUtilityBrickTraverse {
 
 	
-	public static void traverseBrickTreeLeaves(HAPManualDefinitionWrapperBrick rootBrickWrapper, HAPManualDefinitionProcessorBrickNodeDownwardWithPath processor, Object data) {
+	public static void traverseBrickTreeLeaves(HAPManualDefinitionWrapperBrickRoot rootBrickWrapper, HAPManualDefinitionProcessorBrickNodeDownwardWithPath processor, Object data) {
 		traverseBrickTreeLeaves(rootBrickWrapper.getBrick(), null, processor, data);
 	}
 
