@@ -8,7 +8,7 @@
       "list",
       "output"
    ],
-   "interface":{
+   "taskInterface":{
       "request":[
          {
             "name":"parm1",

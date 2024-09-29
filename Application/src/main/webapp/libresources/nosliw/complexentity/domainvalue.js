@@ -259,6 +259,10 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	
 	var loc_out = {
 
+		export : function(){
+			
+		},
+
 		createValuePort : function(valuePortGroupName, valuePortName){		return loc_createValuePort(this, valuePortGroupName, valuePortName);		},
 
 		createValuePortByGroupType : function(valuePortGroupType, valuePortName){    

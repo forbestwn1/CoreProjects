@@ -9,7 +9,7 @@
       "element",
       "rating"
    ],
-   "interface":{
+   "taskInterface":{
       "request":[
          {
             "name":"schoolTypeInService",

@@ -3,6 +3,10 @@ package com.nosliw.uiresource;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodePage;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIData;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIHtml;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagOther;
 import com.nosliw.data.core.component.HAPUtilityComponent;
 import com.nosliw.data.core.component.HAPWithNameMapping;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
@@ -26,10 +30,6 @@ import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
 import com.nosliw.uiresource.page.execute.HAPExecutableUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIPage;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodePage;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIData;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITagOther;
 
 public class HAPUIResourceManager {
 

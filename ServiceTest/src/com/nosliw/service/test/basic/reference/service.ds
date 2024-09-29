@@ -9,7 +9,7 @@
 		"display" : {
 			"displayName" : "Test Template Service3 English",
 			"description" : "test service implemented by process",
-			"interface" : {
+			"taskInterface" : {
 				"parm" : {
 					"serviceParm1" : {
 						"displayName" : "serviceParm1 English"

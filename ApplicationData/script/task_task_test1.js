@@ -13,6 +13,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 	var node_utilityNamedVariable = nosliw.getNodeData("valueport.utilityNamedVariable");
 	var node_makeObjectWithApplicationInterface = nosliw.getNodeData("component.makeObjectWithApplicationInterface");
+	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 
 	var loc_valueContext;
 
@@ -50,6 +51,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 			
 			var result = {
@@ -65,9 +67,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			};
 
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				loc_taskResult = result;
-				return result;
+			
+			out.addRequest(node_interactiveUtility.setTaskResultToValuePort(result, valuePortContainer, {
+				success : function(){
+					loc_taskResult = result;
+					return result;
+				}
 			}));
 			return out;
 		},

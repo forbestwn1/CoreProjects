@@ -4,13 +4,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
-import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 
 public class HAPUtilityServiceParse {
 
-	public static HAPBlockInteractiveInterfaceTask parseServiceInterfaceBlock(JSONObject jsonObj) {
-		JSONObject serviceInterfaceJsonObj = jsonObj.optJSONObject(HAPBlockServiceInterface.INTERFACE);
+	public static HAPBlockInteractiveInterfaceTask parseTaskInterfaceInterfaceBlock(JSONObject jsonObj) {
+		JSONObject serviceInterfaceJsonObj = jsonObj.optJSONObject(HAPWithBlockInteractiveTask.TASKINTERFACE);
 		if(serviceInterfaceJsonObj==null) {
 			serviceInterfaceJsonObj = jsonObj;
 		}

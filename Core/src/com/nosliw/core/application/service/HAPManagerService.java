@@ -152,7 +152,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			
-			HAPBlockInteractiveInterfaceTask serviceInterface = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceInstance.getDefinition().getServiceInterface(), this.m_runtimeEnv.getBrickManager());
+			HAPBlockInteractiveInterfaceTask serviceInterface = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceInstance.getDefinition().getTaskInterface(), this.m_runtimeEnv.getBrickManager());
 			for(HAPRequestParmInInteractive parm : serviceInterface.getValue().getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;

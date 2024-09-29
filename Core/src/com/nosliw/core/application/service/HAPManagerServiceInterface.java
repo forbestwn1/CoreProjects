@@ -25,7 +25,7 @@ public class HAPManagerServiceInterface{
 		out.buildEntityInfoByJson(jsonObj);
 		
 		//interface
-		out.setTaskInteractiveInterface(HAPUtilityServiceParse.parseServiceInterfaceBlock(jsonObj));
+		out.setTaskInteractiveInterface(HAPUtilityServiceParse.parseTaskInterfaceInterfaceBlock(jsonObj));
 		
 		return out;
 	}

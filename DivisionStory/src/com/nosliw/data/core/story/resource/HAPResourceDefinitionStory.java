@@ -4,22 +4,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.nosliw.core.application.division.story.HAPStoryAliasElement;
+import com.nosliw.core.application.division.story.HAPStoryIdElement;
+import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
+import com.nosliw.core.application.division.story.HAPStoryStory;
+import com.nosliw.core.application.division.story.HAPStoryImp;
+import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
+import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
+import com.nosliw.core.application.division.story.brick.HAPStoryElement;
+import com.nosliw.core.application.division.story.brick.HAPStoryNode;
+import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
+import com.nosliw.core.application.division.story.change.HAPStoryHandlerChange;
+import com.nosliw.core.application.division.story.change.HAPStoryRequestChange;
+import com.nosliw.core.application.division.story.change.HAPStoryResultTransaction;
 import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
-import com.nosliw.data.core.story.HAPAliasElement;
-import com.nosliw.data.core.story.HAPConnection;
-import com.nosliw.data.core.story.HAPElementGroup;
-import com.nosliw.data.core.story.HAPIdElement;
-import com.nosliw.data.core.story.HAPReferenceElement;
-import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.HAPStoryElement;
-import com.nosliw.data.core.story.HAPStoryImp;
-import com.nosliw.data.core.story.HAPStoryNode;
-import com.nosliw.data.core.story.change.HAPChangeItem;
-import com.nosliw.data.core.story.change.HAPHandlerChange;
-import com.nosliw.data.core.story.change.HAPRequestChange;
-import com.nosliw.data.core.story.change.HAPResultTransaction;
 
-public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp implements HAPStory{
+public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp implements HAPStoryStory{
 
 	private HAPStoryImp m_story;
 	
@@ -43,16 +43,16 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	public HAPStoryNode getNode(String id) {  return this.m_story.getNode(id); }
 
 	@Override
-	public Set<HAPConnection> getConnections() {  return this.m_story.getConnections(); }
+	public Set<HAPStoryConnection> getConnections() {  return this.m_story.getConnections(); }
 
 	@Override
-	public HAPConnection getConnection(String id) {  return this.m_story.getConnection(id);  }
+	public HAPStoryConnection getConnection(String id) {  return this.m_story.getConnection(id);  }
 
 	@Override
-	public Set<HAPElementGroup> getElementGroups() {   return this.m_story.getElementGroups();  }
+	public Set<HAPStoryElementGroup> getElementGroups() {   return this.m_story.getElementGroups();  }
 
 	@Override
-	public HAPElementGroup getElementGroup(String id) {  return this.m_story.getElementGroup(id);  }
+	public HAPStoryElementGroup getElementGroup(String id) {  return this.m_story.getElementGroup(id);  }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -61,13 +61,13 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	}
 
 	@Override
-	public HAPStoryElement addElement(HAPStoryElement element, HAPAliasElement alias) {
+	public HAPStoryElement addElement(HAPStoryElement element, HAPStoryAliasElement alias) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPStoryElement getElement(HAPReferenceElement elementRef) {
+	public HAPStoryElement getElement(HAPStoryReferenceElement elementRef) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -79,19 +79,19 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	}
 
 	@Override
-	public HAPIdElement getElementId(String alias) {
+	public HAPStoryIdElement getElementId(String alias) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPIdElement setAlias(HAPAliasElement alias, HAPIdElement eleId) {
+	public HAPStoryIdElement setAlias(HAPStoryAliasElement alias, HAPStoryIdElement eleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPAliasElement getAlias(HAPIdElement eleId) {
+	public HAPStoryAliasElement getAlias(HAPStoryIdElement eleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -115,13 +115,13 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	}
 
 	@Override
-	public HAPConnection addConnection(HAPConnection connection) {
+	public HAPStoryConnection addConnection(HAPStoryConnection connection) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPElementGroup addElementGroup(HAPElementGroup connectionGroup) {
+	public HAPStoryElementGroup addElementGroup(HAPStoryElementGroup connectionGroup) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -133,7 +133,7 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	}
 
 	@Override
-	public HAPResultTransaction commitTransaction() {
+	public HAPStoryResultTransaction commitTransaction() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -145,37 +145,37 @@ public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp 
 	}
 
 	@Override
-	public HAPAliasElement generateTemporaryAlias() {
+	public HAPStoryAliasElement generateTemporaryAlias() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void registerChangeHandler(HAPHandlerChange handler) {
+	public void registerChangeHandler(HAPStoryHandlerChange handler) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void unregisterChangeHandler(HAPHandlerChange handler) {
+	public void unregisterChangeHandler(HAPStoryHandlerChange handler) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<HAPChangeItem> change(HAPRequestChange changeRequest) {
+	public List<HAPStoryChangeItem> change(HAPStoryRequestChange changeRequest) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPStoryElement deleteElement(HAPIdElement eleId) {
+	public HAPStoryElement deleteElement(HAPStoryIdElement eleId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public HAPRequestChange newRequestChange(Boolean extend) {
+	public HAPStoryRequestChange newRequestChange(Boolean extend) {
 		// TODO Auto-generated method stub
 		return null;
 	}

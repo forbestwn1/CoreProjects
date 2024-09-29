@@ -40,7 +40,7 @@ public class HAPInfoServiceStatic extends HAPEntityInfoWritableImp{
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {  
 //		this.m_processedInterface = (HAPBlockServiceInterface)HAPUtilityResource.solidateResource(m_interface, runtimeEnv);
-		this.m_interface.process(runtimeEnv);	
+//		this.m_interface.process(runtimeEnv);	
 	}
 	
 	@Override

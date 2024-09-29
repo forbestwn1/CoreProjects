@@ -7,7 +7,7 @@
       "basic",
       "interface"
    ],
-   "interface":{
+   "taskInterface":{
 		"request" : [
 			{
 				"name" : "serviceParm1",

@@ -5,7 +5,7 @@
 		"name": "TestBasicService",
 		"description" : "test service implemented by process",
 		"tag" : ["test", "public"],
-		"interface" : {
+		"taskInterface" : {
 			"request" : [
 				{
 					"name" : "serviceParm1",

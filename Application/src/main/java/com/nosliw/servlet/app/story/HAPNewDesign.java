@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.story.HAPStory;
+import com.nosliw.core.application.division.story.HAPStoryStory;
 
 @HAPEntityWithAttribute
 public class HAPNewDesign extends HAPEntityInfoImp{
@@ -29,9 +29,9 @@ public class HAPNewDesign extends HAPEntityInfoImp{
 	
 	private String m_storyId;
 	
-	private HAPStory m_story;
+	private HAPStoryStory m_story;
 	
-	public void setStory(HAPStory story) {   this.m_story = story;    }
+	public void setStory(HAPStoryStory story) {   this.m_story = story;    }
 	
 	public void setDesignId(String id) {   this.m_designId = id;   }
 	

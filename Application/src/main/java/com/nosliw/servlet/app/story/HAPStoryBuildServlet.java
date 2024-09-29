@@ -7,15 +7,15 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.division.story.HAPStoryManagerStory;
+import com.nosliw.core.application.division.story.HAPStoryStory;
+import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
+import com.nosliw.core.application.division.story.change.HAPStoryParserChange;
+import com.nosliw.core.application.division.story.design.wizard.HAPStoryAnswer;
+import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignStory;
+import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
-import com.nosliw.data.core.story.HAPManagerStory;
-import com.nosliw.data.core.story.HAPStory;
-import com.nosliw.data.core.story.change.HAPChangeItem;
-import com.nosliw.data.core.story.change.HAPParserChange;
-import com.nosliw.data.core.story.design.HAPAnswer;
-import com.nosliw.data.core.story.design.HAPDesignStory;
-import com.nosliw.data.core.story.design.HAPRequestDesign;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 
@@ -58,32 +58,32 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		HAPServiceData out = null;
 		
 		HAPRuntimeEnvironmentImpBrowser env = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);
-		HAPManagerStory storyManager = env.getStoryManager();
+		HAPStoryManagerStory storyManager = env.getStoryManager();
 		
 		switch(command){
 		case COMMAND_GETDESIGN:
 		{
 			String designId = parms.optString(COMMAND_GETDESIGN_ID);
-			HAPDesignStory design = storyManager.getStoryDesign(designId);
+			HAPStoryDesignStory design = storyManager.getStoryDesign(designId);
 			out = HAPServiceData.createSuccessData(design);
 			break;
 		}
 		case COMMAND_NEWDESIGN:
 		{
 			String directorId = parms.optString(COMMAND_NEWDESIGN_DIRECTORID);
-			HAPDesignStory design = storyManager.newStoryDesign(directorId);
+			HAPStoryDesignStory design = storyManager.newStoryDesign(directorId);
 			out = HAPServiceData.createSuccessData(design);
 			break;
 		}
 		case COMMAND_DESIGN:
 		{
 			String designId = parms.optString(COMMAND_DESIGN_DESIGNID);
-			HAPRequestDesign changeRequest = new HAPRequestDesign(designId);
+			HAPStoryRequestDesign changeRequest = new HAPStoryRequestDesign(designId);
 
 			JSONArray answerArray = parms.optJSONArray(COMMAND_DESIGN_ANSWER);
 			for(int i=0; i<answerArray.length(); i++) {
 				JSONObject answerObj = answerArray.getJSONObject(i);
-				HAPAnswer answer = new HAPAnswer();
+				HAPStoryAnswer answer = new HAPStoryAnswer();
 				answer.buildObject(answerObj, HAPSerializationFormat.JSON);
 				changeRequest.addAnswer(answer);
 			}
@@ -92,7 +92,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 			if(extraChangesArray!=null) {
 				for(int i=0; i<extraChangesArray.length(); i++) {
 					JSONObject changeObj = extraChangesArray.getJSONObject(i);
-					HAPChangeItem changeItem = HAPParserChange.parseChangeItem(changeObj);
+					HAPStoryChangeItem changeItem = HAPStoryParserChange.parseChangeItem(changeObj);
 					changeRequest.addExtraChange(changeItem);
 				}
 			}
@@ -107,8 +107,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		case COMMAND_CONVERTTOSHOW:
 		{
 			String designId = parms.optString(COMMAND_CONVERTTOSHOW_DESIGNID);
-			HAPDesignStory design = storyManager.getStoryDesign(designId);
-			HAPStory story = design.getStory();
+			HAPStoryDesignStory design = storyManager.getStoryDesign(designId);
+			HAPStoryStory story = design.getStory();
 			HAPResourceDefinition1 resourceDef = storyManager.buildShow(story);
 			out = HAPServiceData.createSuccessData(resourceDef.getResourceId());
 			break;

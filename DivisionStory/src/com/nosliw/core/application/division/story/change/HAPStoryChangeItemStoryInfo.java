@@ -1,0 +1,53 @@
+package com.nosliw.core.application.division.story.change;
+
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPConstantShared;
+
+public class HAPStoryChangeItemStoryInfo extends HAPStoryChangeItem{
+
+	public static final String MYCHANGETYPE = HAPConstantShared.STORYDESIGN_CHANGETYPE_STORYINFO;
+
+	@HAPAttribute
+	public static final String INFONAME = "infoName";
+
+	@HAPAttribute
+	public static final String INFOVALUE = "infoValue";
+
+	private String m_infoName;
+	
+	private Object m_infoValue;
+	
+	public HAPStoryChangeItemStoryInfo() {
+		super(HAPConstantShared.STORYDESIGN_CHANGETYPE_STORYINFO);
+	}
+	
+	public HAPStoryChangeItemStoryInfo(String infoName, Object infoValue) {
+		this();
+		this.m_infoName = infoName;
+		this.m_infoValue = infoValue;
+	}
+	
+	public String getInfoName() {    return this.m_infoName;    }
+	public Object getInfoValue() {    return this.m_infoValue;     }
+	
+	@Override
+	protected boolean buildObjectByJson(Object json){
+		JSONObject jsonObj = (JSONObject)json;
+		super.buildObjectByJson(jsonObj);
+		this.m_infoName = jsonObj.getString(INFONAME);
+		this.m_infoValue = jsonObj.get(INFOVALUE);
+		return true;  
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(INFONAME, this.m_infoName);
+		jsonMap.put(INFOVALUE, this.m_infoValue+"");
+		typeJsonMap.put(INFOVALUE, this.m_infoValue.getClass());
+	}
+}

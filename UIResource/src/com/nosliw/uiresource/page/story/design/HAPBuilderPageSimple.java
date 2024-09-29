@@ -20,6 +20,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.variable.HAPVariableDefinition;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIHtml;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITag;
 import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
@@ -43,8 +45,6 @@ import com.nosliw.data.core.story.element.node.HAPStoryNodeVariable;
 import com.nosliw.ui.tag.HAPManagerUITag;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.definition.HAPParserPage;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUIHtml;
-import com.nosliw.uiresource.page.story.element.HAPStoryNodeUITag;
 
 public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilderShow{
 

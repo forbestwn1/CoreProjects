@@ -28,6 +28,15 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 
 	public List<HAPInteractiveResultTask> getResult() {   return this.m_results;  }
 	
+	public HAPInteractiveResultTask getResult(String resultName) {
+		for(HAPInteractiveResultTask result : this.m_results) {
+			if(result.getName().equals(resultName)) {
+				return result;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
