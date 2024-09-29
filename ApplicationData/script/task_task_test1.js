@@ -57,7 +57,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var result = {
 			    "resultName": "success",
 			    "resultValue": {
-			        "task_request_string1": {
+			        "task_result_success_string1": {
 			            "dataTypeId": "test.string;1.0.0",
 			            "valueFormat": "JSON",
 			            "value": "default value of parm111111",

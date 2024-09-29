@@ -4,6 +4,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_getObjectType = nosliw.getNodeData("common.objectwithtype.getObjectType");
+	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
+	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 
 	var loc_configure;
 
@@ -12,9 +15,11 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_envInterface = {};
 	
 	var loc_varDomain;
+	var loc_bundleCore;
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
+		loc_bundleCore = bundleCore;
 		loc_varDomain = bundleCore.getVariableDomain();
 	};
 
@@ -37,19 +42,23 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			$(view).append(rootView);
 
 			trigueView.click(function() {
-				var valuePortContainerId = intputView.val();
-				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
-				if(valuePortContainer!=undefined){
-					var request = valuePortContainer.getExportRequest({
-						success : function(request, values){
-							resultView.val(JSON.stringify(values));
-						}
-					});
-					node_requestServiceProcessor.processRequest(request);
-				}
-				else{
-					resultView.val("not exist");
-				}
+				var brickPath = intputView.val();
+				
+				var brickCore = node_complexEntityUtility.getDescendantCore(loc_bundleCore.getMainEntityCore(), brickPath);
+				var brickType = node_getObjectType(brickCore);
+				var valuePortContainer = node_getEntityObjectInterface(brickCore).getInternalValuePortContainer();
+				
+				var output = {};
+				output.brickType = brickType;
+				output.valuePortContainerId = valuePortContainer.getId(); 
+				
+				var request = valuePortContainer.getExportRequest({
+					success : function(request, values){
+						output.valuePortContainer  = values;
+						resultView.val(JSON.stringify(output));
+					}
+				});
+				node_requestServiceProcessor.processRequest(request);
 			});
 		},
 	};

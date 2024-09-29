@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.data.core.resource.HAPResourceId;
 
-public class HAPUITagDefinition{
+public class HAPUITagDefinition extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
@@ -45,6 +46,8 @@ public class HAPUITagDefinition{
 		this.m_parentRelations = new ArrayList<HAPManualDefinitionBrickRelation>();
 		this.m_attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
 	}
+	
+	public String getType() {  return null;    }
 	
 	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
 	public void setValueContext(HAPUITagValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }

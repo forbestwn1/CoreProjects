@@ -70,6 +70,25 @@ var node_complexEntityUtility = function(){
 			}
 			return hostEntityCore;
 		},
+
+		getDescendantCore : function(entity, path){
+			var out = entity;
+			var out = node_getObjectType(out)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?out.getCorenEntity():out;
+			
+			var pathSegs;
+			if(node_basicUtility.isArray(path)){
+				pathSegs = path;
+			}
+			else{
+				if(node_basicUtility.isStringEmpty(path)) return out;
+				pathSegs = node_namingConvensionUtility.parsePathInfos(path);
+			}
+			
+			_.each(pathSegs, function(pathSeg, i){
+				out = node_getEntityTreeNodeInterface(out).getChild(pathSeg).getChildValue().getCoreEntity();
+			})
+			return out;
+		},
 		
 		getInitBrickRequest : function(brickCore, view, envInterface){
 			return node_getComponentInterface(brickCore).getPreInitRequest({
@@ -110,25 +129,6 @@ var node_complexEntityUtility = function(){
 			var entityCore = node_getObjectType(entity)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?entity.getCorenEntity():entity;
 			processorInfo.processRoot(entityCore);
 			loc_traverseNode(entityCore, processorInfo);
-		},
-		
-		getDescendant : function(entity, path){
-			var pathSegs;
-			if(node_basicUtility.isArray(path)){
-				pathSegs = path;
-			}
-			else{
-				if(node_basicUtility.isStringEmpty(path)) return entity;
-				pathSegs = node_namingConvensionUtility.parsePathInfos(path);
-			}
-			
-			var out = entity;
-			var entityCore = node_getObjectType(entity)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?entity.getCorenEntity():entity;
-			_.each(pathSegs, function(pathSeg, i){
-				out = node_getEntityTreeNodeInterface(entityCore).getChild(pathSeg).getChildValue();
-				entityCore = out.getCoreEntity();
-			})
-			return out;
 		},
 		
 		getCoreEntity : function(obj){

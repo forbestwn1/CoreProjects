@@ -259,8 +259,33 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	
 	var loc_out = {
 
-		export : function(){
+		getId : function(){  return loc_id;   },
+		
+		getExportRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
+			var outValue = {};
+			_.each(loc_valueStructures, function(vsByValuePortName, valuePortGroup){
+				var valueByValuePortName = {};
+				outValue[valuePortGroup] = valueByValuePortName;
+				_.each(vsByValuePortName, function(vses, valuePortName){
+					var vsById = {};
+					valueByValuePortName[valuePortName] = vsById;
+					_.each(vses, function(vs, vsId){
+						out.addRequest(vs.getValueStructure().getAllElementsValuesRequest({
+							success : function(request, vsValues){
+								vsById[vsId] = vsValues;
+							}
+						}));
+					})
+				});
+			});
+			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return outValue;
+			}));
+			
+			return out;
 		},
 
 		createValuePort : function(valuePortGroupName, valuePortName){		return loc_createValuePort(this, valuePortGroupName, valuePortName);		},
@@ -374,8 +399,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		},
 		
 			
-		getId : function(){  return loc_id;   },
-		
 		getVariableInfosByValueStructure : function(valueStructureId){   return loc_variablesByValueStructure[valueStructureId];  },
 		
 		getVariableInfo : function(variableId){

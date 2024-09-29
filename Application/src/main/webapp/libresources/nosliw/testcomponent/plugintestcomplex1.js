@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_basicUtility;
 	var node_getBasicEntityObjectInterface;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -76,14 +77,20 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
 				var attrName = child.getChildName();
 				
+				var childCoreEntity = node_complexEntityUtility.getBrickNode(child).getChildValue().getCoreEntity();
+				var childValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
+				
 				//not nosliw attribute
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
+				var valuePortView = $('<div>valuePortContainerId: '+childValuePortContainer.getId()+'</div>');
+				attributeView.append(valuePortView);
+				
 
 				//adapter view
 				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
-				if(false){ //childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
+				if(false){  //childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
 					//for task wrapper attribute
 					var childEntityDef = node_getBasicEntityObjectInterface(childEntityCore).getEntityDefinition();
 					var adapterNames = childEntityDef.getAttribute(node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK).getAdapterNames();
@@ -211,6 +218,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 
 //Register Node by Name

@@ -288,6 +288,22 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 			return outRequest;
 		},
 		
+		getAllElementsValuesRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			var setRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, result){
+					return result.getResults();
+				}
+			});
+			
+			_.each(this.getElementsName(), function(varName, i){
+				setRequest.addRequest(varName, loc_out.getElement(varName).getGetValueRequest());
+			});
+			
+			out.addRequest(setRequest);
+			return out;
+		},
+		
 		registerValueChangeEventListener : function(listener, handler, thisContext){	return loc_out.prv_valueChangeEventSource.registerListener(undefined, listener, handler, thisContext);},
 		unregisterValueChangeEventListener : function(listener){	return loc_out.prv_valueChangeEventSource.unregister(listener);},
 		

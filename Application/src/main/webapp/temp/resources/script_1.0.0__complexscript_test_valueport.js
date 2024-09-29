@@ -1,4 +1,13 @@
-function(complexEntityDef, valueContextId, bundleCore, configure){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
+"version":"1.0.0"
+},
+"id":"*complexscript_test_valueport"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
@@ -39,17 +48,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			trigueView.click(function() {
 				var valuePortContainerId = intputView.val();
 				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
-				if(valuePortContainer!=undefined){
-					var request = valuePortContainer.getExportRequest({
-						success : function(request, values){
-							resultView.val(JSON.stringify(values));
-						}
-					});
-					node_requestServiceProcessor.processRequest(request);
-				}
-				else{
-					resultView.val("not exist");
-				}
+				var request = valuePortContainer.getExportRequest({
+					success : function(request, values){
+						resultView.val(JSON.stringify(values));
+					}
+				});
+				node_requestServiceProcessor.processRequest(request);
 			});
 		},
 	};
@@ -57,3 +61,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
 	return loc_out;
 }
+
+}, {"loadPattern":"file"
+});
+
