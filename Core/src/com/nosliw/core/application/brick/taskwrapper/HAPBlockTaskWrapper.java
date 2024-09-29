@@ -7,6 +7,8 @@ import com.nosliw.core.application.HAPBrick;
 @HAPEntityWithAttribute
 public interface HAPBlockTaskWrapper extends HAPBrick{
 
+	public static final String CHILD_TASK = "task";
+
 	@HAPAttribute
 	public static String TASK = "task";
 	

@@ -15,6 +15,7 @@ import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDa
 import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
+import com.nosliw.core.application.brick.taskwrapper.HAPPluginBrickTaskWrapper;
 import com.nosliw.data.core.resource.HAPResourceId;
 import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -169,7 +170,7 @@ public class HAPManagerApplicationBrick {
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100));
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100));
 
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASKWRAPPER_100));
+		this.registerBrickPlugin(new HAPPluginBrickTaskWrapper());
 
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100));
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100));
