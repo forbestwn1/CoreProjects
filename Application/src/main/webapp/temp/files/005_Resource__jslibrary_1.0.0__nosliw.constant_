@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.constant;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/constant/0_package_constant.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/constant/COMMONATRIBUTECONSTANT.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/constant/COMMONCONSTANT.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/constant/constant.js"]
+}, {});
+

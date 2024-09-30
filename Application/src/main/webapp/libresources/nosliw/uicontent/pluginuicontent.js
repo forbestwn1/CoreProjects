@@ -37,9 +37,9 @@ var node_createUIContentPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createUIContentComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createUIContentComponentCore(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}, handlers, request);
 		}
 	};
@@ -52,18 +52,8 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 
 	var loc_envInterface = {};
-
-	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
-	var loc_envValuePort = {
-		getValuePort : function(valuePortGroup, valuePortName){
-			return loc_valuePort;
-		}
-	};
-
-
 
 	//object store all the functions for js block
 	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPT);
@@ -107,6 +97,11 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	 */
 	var loc_getLocalElementByUIId = function(id){return loc_findLocalElement("["+node_COMMONCONSTANT.UIRESOURCE_ATTRIBUTE_UIID+"='"+loc_getUpdateUIId(id)+"']");};
 
+	var loc_getValuePortEnv = function(){
+		return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
+	};
+
+
 	var loc_out = {
 		
 		setParentUIEntity : function(parentUIEntity){	loc_parentUIEntity = parentUIEntity;	},
@@ -136,7 +131,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					var embededContent = node_createEmbededScriptExpressionInContent(embededContentDef);
 					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
 					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
-					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_getValuePortEnv());
 					loc_expressionContents.push(embededContent);
 				});
 			}));
@@ -147,7 +142,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					var embededContent = node_createEmbededScriptExpressionInTagAttribute(embededContentDef);
 					var viewEle = loc_getLocalElementByUIId(embededContent.getUIId());
 					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
-					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_envValuePort);
+					node_getLifecycleInterface(embededContent).init(viewEle, scriptExpressionGroup, loc_getValuePortEnv());
 					loc_expressionContents.push(embededContent);
 				});
 			}));

@@ -14,6 +14,7 @@ public class HAPManualBlockComplexUIContent extends HAPManualBrickImp implements
 
 	@Override
 	public void init() {
+		super.init();
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 

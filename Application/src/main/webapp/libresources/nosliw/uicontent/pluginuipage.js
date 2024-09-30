@@ -23,9 +23,9 @@ var node_createUIPagePlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createUIPageComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createUIPageComponentCore(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}, handlers, request);
 		}
 	};
@@ -38,7 +38,6 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	
 	var loc_uiContent;

@@ -147,7 +147,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 							var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
 	
 							var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
-							var parentValueStructure = parentValueContext.getValueStructure(parentValueStructureRuntimeId);
+							var parentValueStructure = loc_parentValuePortContainer.getValueStructure(parentValueStructureRuntimeId);
 							
 							var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
 							var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];

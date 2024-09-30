@@ -22,9 +22,9 @@ var node_createComplexEntityContainerPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateComplexEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateComplexEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createComplexEntityContainerComponentCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createComplexEntityContainerComponentCore(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}, handlers, request);
 		},
 	};

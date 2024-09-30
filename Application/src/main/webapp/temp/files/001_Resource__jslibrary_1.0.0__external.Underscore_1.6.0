@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*external.Underscore;1.6.0"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/external/Underscore/1.6.0/underscore.js"]
+}, {});
+

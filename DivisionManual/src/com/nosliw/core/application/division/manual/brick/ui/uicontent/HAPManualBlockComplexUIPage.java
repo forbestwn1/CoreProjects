@@ -5,4 +5,9 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 
 public class HAPManualBlockComplexUIPage extends HAPManualBrickImp implements HAPBlockComplexUIPage{
 
+	@Override
+	public void init() {
+		super.init();
+	}
+
 }

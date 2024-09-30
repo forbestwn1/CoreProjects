@@ -63,7 +63,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		HAPManualUtilityScriptExpression.processScriptExpressionContainerVariableResolve(uiContentExe.getScriptExpressions(), varInfoContainer, null, getManualBrickManager());
 		
 		//build var criteria infor in var info container according to value port def
-		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, uiContentExe);
+		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, processContext.getCurrentBundle().getValueStructureDomain());
 		
 		
 	}

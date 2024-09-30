@@ -12,6 +12,7 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 
 	@Override
 	public void init() {
+		super.init();
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
 	}

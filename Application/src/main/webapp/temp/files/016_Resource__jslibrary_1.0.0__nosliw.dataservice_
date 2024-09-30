@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.dataservice;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/dataservice/0_package_dataservice.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/dataservice/dataservice.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/dataservice/plugindataservice.js"]
+}, {});
+

@@ -16,9 +16,9 @@ var node_createContainerPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createContainerCore(complexEntityDef, valueContextId, bundleCore, configure);
+				return loc_createContainerCore(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}, handlers, request);
 		}
 	};

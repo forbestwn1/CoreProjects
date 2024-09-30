@@ -27,6 +27,7 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_createUICustomerTagTest;
 	var node_createUICustomerTagViewVariable;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -34,18 +35,18 @@ var node_createUITagPlugin = function(){
 	
 	var loc_out = {
 
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
 			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
 			if(uiTagBase=="debug_test"){
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, valueContextId, bundleCore, configure);
+					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, internalValuePortContainerId, bundleCore, configure);
 				}));
 			} 
 			else if(uiTagBase=="debug_viewvariable"){
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagViewVariable, valueContextId, bundleCore, configure);
+					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagViewVariable, internalValuePortContainerId, bundleCore, configure);
 				}));
 			}
 			else{
@@ -54,7 +55,7 @@ var node_createUITagPlugin = function(){
 				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
 					success : function(requestInfo, resourceData){
 						var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
-						return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure);
+						return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, internalValuePortContainerId, bundleCore, configure);
 		 			}
 				}));
 			}
@@ -71,7 +72,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
+//	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_uiTagCore;
 
@@ -163,8 +164,8 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		updateAttributes : function(attributes){    loc_uiTagCore.updateAttributes(attributes);       },
 		
-		creatVariableByName : function(varName){  
-			return loc_valueContext.createVariableByName(varName);    
+		creatVariableByName : function(varName){ 
+			return node_getEntityObjectInterface(loc_out).getInternalValuePortContainer().createVariableByName(varName) 
 		},
 		
 		getEntityInitRequest : function(handlers, request){
@@ -258,6 +259,7 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationR
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function(){node_createUICustomerTagTest = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", function(){node_createUICustomerTagViewVariable = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

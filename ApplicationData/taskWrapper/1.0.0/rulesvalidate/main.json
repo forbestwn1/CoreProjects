@@ -1,6 +1,6 @@
 {
 	"info": {
-		"name": "test0",
+		"name": "rulesvalidate",
 		"description": "test expression group entity"
 	},
 	"brick": {
@@ -13,7 +13,7 @@
 			"taskInterface" : {
 				"request" : [
 					{
-						"name" : "task_request_string1",
+						"name" : "tasks",
 						"dataInfo" : "test.string;1.0.0",
 						"defaultValue" : {
 							"dataTypeId": "test.string;1.0.0",

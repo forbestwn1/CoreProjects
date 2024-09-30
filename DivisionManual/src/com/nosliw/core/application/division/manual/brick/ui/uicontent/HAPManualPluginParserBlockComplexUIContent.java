@@ -28,11 +28,6 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImp;
 import com.nosliw.data.core.component.HAPWithAttachment;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.domain.entity.container.HAPDefinitionEntityContainerComplex;
-import com.nosliw.data.core.domain.entity.container.HAPUtilityEntityContainer;
-import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinitionPluginParserBrickImp{
@@ -170,7 +165,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			String attrValue = eleAttr.getValue(); 
-			if(!HAPUtilityScriptExpressionDefinition.isText(attrValue)) {
+			if(!HAPManualUtilityScriptExpressionParser.isText(attrValue)) {
 				String scriptExpressionId = scriptEntityGroupEntity.addScriptExpression(attrValue);
 				HAPUIEmbededScriptExpressionInAttribute eAttr = new HAPUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
 				if(isCustomerTag) {
