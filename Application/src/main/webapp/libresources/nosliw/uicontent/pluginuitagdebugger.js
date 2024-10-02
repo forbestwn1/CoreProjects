@@ -38,7 +38,7 @@ var node_createUITagDebuggerPlugin = function(){
 		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
-			var uiTagDefinition = complexEntityDef.getAttributeValue(BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
+			var uiTagDefinition = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
 
 			var uiTagBase = uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_BASE];
 			if(uiTagBase=="debug_test"){
@@ -72,7 +72,7 @@ var node_createUITagDebuggerPlugin = function(){
 var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure){
 	var loc_tagDefScriptFun = tagDefScriptFun;
 	var loc_complexEntityDef = complexEntityDef;
-	var loc_uiTagDefinition = loc_complexEntityDef.getAttributeValue(BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
+	var loc_uiTagDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_envInterface = {};
