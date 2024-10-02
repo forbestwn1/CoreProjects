@@ -48,5 +48,6 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType UICONTENT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICONTENT, "1.0.0");
 	public static HAPIdBrickType UIPAGE_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIPAGE, "1.0.0");
 	public static HAPIdBrickType UICUSTOMERTAG_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, "1.0.0");
+	public static HAPIdBrickType UICUSTOMERTAGDEBUGGER_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAGDEBUGGER, "1.0.0");
 
 }

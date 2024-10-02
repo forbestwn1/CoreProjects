@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_createUIContentPlugin;
 	var node_createUIPagePlugin;
 	var node_createUITagPlugin;
+	var node_createUITagDebuggerPlugin;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,6 +28,7 @@ var node_createUIService = function(complexEntityService){
 		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE, "1.0.0", node_createUIPagePlugin());
 		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT, "1.0.0", node_createUIContentPlugin());
 		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, "1.0.0", node_createUITagPlugin());
+		loc_complexEntityService.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAGDEBUGGER, "1.0.0", node_createUITagDebuggerPlugin());
 	};
 	
 	var loc_out = {
@@ -55,6 +57,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("uicontent.createUIContentPlugin", function(){node_createUIContentPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createUIPagePlugin", function(){node_createUIPagePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createUITagPlugin", function(){node_createUITagPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.createUITagDebuggerPlugin", function(){node_createUITagDebuggerPlugin = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIService", node_createUIService); 

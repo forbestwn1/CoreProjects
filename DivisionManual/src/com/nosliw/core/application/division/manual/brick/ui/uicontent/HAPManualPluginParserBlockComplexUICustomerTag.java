@@ -45,6 +45,9 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		HAPUITagDefinition uiTagDef = this.getRuntimeEnvironment().getUITagManager().getUITagDefinition(customTagName, null);
 		HAPUITagValueContextDefinition uiTagDefValueContext = uiTagDef.getValueContext();
 
+		//tag definition
+		uiCustomerTag.setUITagDefinition(uiTagDef);
+		
 		//build value context
 		HAPManualDefinitionBrickValueContext valueContextBrick = (HAPManualDefinitionBrickValueContext)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100);
 		for(HAPWrapperValueStructure uiTagDefValueStructure : uiTagDefValueContext.getValueStructures()) {

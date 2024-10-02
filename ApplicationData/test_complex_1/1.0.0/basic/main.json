@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "variableshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -18,6 +18,20 @@
 			}
 		},
 
+		{
+			"info": {
+				"name" : "test1-uicustomertagdebugger",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"uiTagId" : "debug_test",
+				"attribute" : {
+					"data_string" : "output1"
+				}
+			}
+		},
+		
 		{
 			"info": {
 				"name" : "valueportshow-test_complex_script",
@@ -32,7 +46,7 @@
 		{
 			"info": {
 				"name" : "test1-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  

@@ -12,6 +12,11 @@ public interface HAPBlockComplexUICustomerTag  extends HAPBrick, HAPWithUIConten
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
 	@HAPAttribute
+	public static final String TAGDEFINITION = "tagDefinition";
+	
+
+	
+	@HAPAttribute
 	public static final String SCRIPTRESOURCEID = "scriptResourceId";
 	@HAPAttribute
 	public static final String BASE = "base";

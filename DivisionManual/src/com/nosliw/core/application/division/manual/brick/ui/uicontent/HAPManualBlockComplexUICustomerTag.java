@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.uitag.HAPUITagDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implements HAPBlockComplexUICustomerTag{
@@ -27,6 +28,10 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
 	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
 
+	public HAPUITagDefinition getUITagDefinition() {    return (HAPUITagDefinition)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.TAGDEFINITION);      }
+	public void setUITagDefinition(HAPUITagDefinition tagDef) {    this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.TAGDEFINITION, tagDef);     }
+	
+	
 	public String getBase() {   return (String)this.getAttributeValueOfValue(BASE);    }
 	public void setBase(String base) {     this.setAttributeValueWithValue(BASE, base);      }
 	

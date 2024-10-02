@@ -31,14 +31,16 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUITagPlugin = function(){
+var node_createUITagDebuggerPlugin = function(){
 	
 	var loc_out = {
 
 		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
-			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
+			var uiTagDefinition = complexEntityDef.getAttributeValue(BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
+
+			var uiTagBase = uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_BASE];
 			if(uiTagBase=="debug_test"){
 				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, internalValuePortContainerId, bundleCore, configure);
@@ -50,7 +52,7 @@ var node_createUITagPlugin = function(){
 				}));
 			}
 			else{
-				var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
+				var resourceId = uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_SCRIPTRESOURCEID];
 				
 				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
 					success : function(requestInfo, resourceData){
@@ -70,6 +72,7 @@ var node_createUITagPlugin = function(){
 var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, valueContextId, bundleCore, configure){
 	var loc_tagDefScriptFun = tagDefScriptFun;
 	var loc_complexEntityDef = complexEntityDef;
+	var loc_uiTagDefinition = loc_complexEntityDef.getAttributeValue(BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_TAGDEFINITION);
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 	var loc_envInterface = {};
@@ -175,12 +178,11 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTE);
-			
-			loc_attributeDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTEDEFINITION);
+			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_ATTRIBUTE);
+			loc_attributeDefinition = loc_uiTagDefinition[node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTEDEFINITION];
 			
 			var uiTagCore;
-			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE); 
+			var uiTagBase = loc_uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_BASE]; 
 			if(uiTagBase=="simpleData"){
 				uiTagCore = node_createUITagOnBaseSimple(loc_tagDefScriptFun, loc_coreEnvObj);
 			}
@@ -266,6 +268,6 @@ nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", fu
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 
+packageObj.createChildNode("createUITagDebuggerPlugin", node_createUITagDebuggerPlugin); 
 
 })(packageObj);

@@ -204,6 +204,7 @@ public class HAPManagerApplicationBrick {
 		
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UICONTENT_100));
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UIPAGE_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100));
 	}
 
 

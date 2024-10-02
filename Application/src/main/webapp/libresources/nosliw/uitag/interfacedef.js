@@ -14,6 +14,7 @@ var node_buildUITagCoreObject = function(rawEntity){
 	var loc_rawEntity = rawEntity;
 	
 	var loc_out = {
+		created : function(){    return loc_rawEntity.created==undefined?undefined:loc_rawEntity.created();     },
 		preInit : function(request){    return loc_rawEntity.preInit==undefined?undefined:loc_rawEntity.preInit(request);     },
 		initViews : function(request){    return loc_rawEntity.initViews==undefined?undefined:loc_rawEntity.initViews(request);     },
 		postInit : function(request){    return loc_rawEntity.postInit==undefined?undefined:loc_rawEntity.postInit(request);     },
@@ -21,7 +22,6 @@ var node_buildUITagCoreObject = function(rawEntity){
 		updateAttributes : function(attributes, request){return loc_rawEntity.updateAttributes==undefined?undefined:loc_rawEntity.updateAttributes(attributes, request);     },
 
 		findFunctionDown : function(name){    return loc_rawEntity.findFunctionDown==undefined?undefined:loc_rawEntity.findFunctionDown(name);     },	
-		created : function(){    return loc_rawEntity.created==undefined?undefined:loc_rawEntity.created();     },
 		getChildUIViews : function(){    return loc_rawEntity.getChildUIViews==undefined?undefined:loc_rawEntity.getChildUIViews();     },
 		getValidateDataRequest : function(handlers, request){    return loc_rawEntity.getValidateDataRequest==undefined?undefined:loc_rawEntity.getValidateDataRequest(handlers, request);     },
 		createContextForDemo : function(id, parentContext){    return loc_rawEntity.createContextForDemo==undefined?undefined:loc_rawEntity.createContextForDemo(handlers, request);     },

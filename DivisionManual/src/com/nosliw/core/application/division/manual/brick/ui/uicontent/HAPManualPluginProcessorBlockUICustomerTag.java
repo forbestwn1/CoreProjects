@@ -26,6 +26,8 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 		HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTagDef = (HAPManualDefinitionBlockComplexUICustomerTag)blockPair.getLeft();
 		HAPManualBlockComplexUICustomerTag uiCustomerTagExe = (HAPManualBlockComplexUICustomerTag)blockPair.getRight();
 
+		uiCustomerTagExe.setUITagDefinition(uiCustomerTagDef.getUITagDefinition());
+		
 		Map<String, String> attrValues = uiCustomerTagDef.getTagAttributes();
 		for(String attrName : attrValues.keySet()) {
 			uiCustomerTagExe.addTagAttribute(attrName, attrValues.get(attrName));

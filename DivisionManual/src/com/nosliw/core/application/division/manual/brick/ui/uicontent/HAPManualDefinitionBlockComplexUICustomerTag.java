@@ -5,12 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.uitag.HAPUITagDefinition;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefinitionBlockComplxWithUIContent{
@@ -24,6 +24,9 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
 	}
 
+	public HAPUITagDefinition getUITagDefinition() {    return (HAPUITagDefinition)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.TAGDEFINITION);      }
+	public void setUITagDefinition(HAPUITagDefinition tagDef) {    this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.TAGDEFINITION, tagDef);     }
+	
 	public String getTagId() {   return (String)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.UITAGID);     }
 	public void setTagId(String tagId) {   this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.UITAGID, tagId);       }
 
@@ -46,24 +49,7 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		out.putAll(super.getConstantDefinitions());
-
-		Map<String, HAPUITagAttributeDefinition> tagAttrDefs = this.getTagAttributeDefinitions();
-		for(String attrName : tagAttrDefs.keySet()) {
-			String constantName = this.buildAttributeConstantName(attrName);
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantName, tagAttrDefs.get(attrName).getDefaultValue());
-			out.put(constantName, constantDef);
-		}
-		
-		Map<String, String> attrs = this.getTagAttributes();
-		for(String attrName : attrs.keySet()) {
-			String constantName = this.buildAttributeConstantName(attrName);
-			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantName, attrs.get(attrName));
-			out.put(constantName, constantDef);
-		}
+		out.putAll(HAPUtilityUITag.getConstantDefinitions(this.getUITagDefinition(), this.getTagAttributes()));
 		return out;
-	}
-
-	private String buildAttributeConstantName(String attrName) {
-		return HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName;
 	}
 }

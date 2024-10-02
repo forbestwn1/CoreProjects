@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.data.core.resource.HAPResourceId;
 
+@HAPEntityWithAttribute
 public class HAPUITagDefinition extends HAPEntityInfoImp{
 
 	@HAPAttribute
@@ -63,4 +67,17 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 
 	public void addAttributeDefinition(HAPUITagAttributeDefinition attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
 	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinition() {   return this.m_attributes;    }
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(BASE, this.m_base);
+		if(this.m_scriptResourceId!=null) {
+			jsonMap.put(SCRIPTRESOURCEID, this.m_scriptResourceId.toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(VALUECONTEXT, this.m_valueContext.toStringValue(HAPSerializationFormat.JSON));
+		
+		jsonMap.put(ATTRIBUTE, HAPManagerSerialize.getInstance().toStringValue(this.m_attributes, HAPSerializationFormat.JSON));
+		
+	}
 }
