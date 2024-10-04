@@ -194,6 +194,7 @@ public class HAPManagerApplicationBrick {
 
 		
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINER_100));
+		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINERLIST_100));
 		
 		
 		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATION_100));

@@ -26,7 +26,7 @@ public class HAPManualPluginParserBlockScriptExpressionLibrary extends HAPManual
 		for(int i=0; i<scriptExpressionArray.length(); i++) {
 			JSONObject elementObj = scriptExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				scriptExpressionLibrary.addElement(HAPManualDefinitionUtilityParserBrickFormatJson.parseWrapperValue(elementObj, HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
+				scriptExpressionLibrary.addElement((HAPManualBlockScriptExpressionElementInLibrary)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
 			}
 		}
 	}

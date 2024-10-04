@@ -58,11 +58,10 @@ var packageObj = library;
 	var node_createTaskPlugin;
 	var node_createScriptTaskTaskPlugin;
 	var node_createDecorationScriptPlugin;
-	var node_createComplexEntityContainerPlugin;
 	var node_createScriptTaskGroupEntityPlugin;
 	
 	var node_createContainerPlugin;
-	var node_createSimpleEntityContainerPlugin;
+	var node_createContainerListPlugin;
 	var node_makeObjectWithValuePortInterface;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -171,9 +170,8 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "1.0.0", node_createScriptBasedPlugin());
 
-		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERCOMPLEX, "1.0.0", node_createComplexEntityContainerPlugin());
-		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERSIMPLE, "1.0.0", node_createSimpleEntityContainerPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINER, "1.0.0", node_createContainerPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONTAINERLIST, "1.0.0", node_createContainerListPlugin());
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, "1.0.0", node_createScriptTaskGroupEntityPlugin());
 
@@ -401,11 +399,10 @@ nosliw.registerSetNodeDataEvent("taskscript.createScriptTaskTaskPlugin", functio
 
 nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createExpressionSinglePlugin", function(){node_createExpressionSinglePlugin = this.getData();});
-nosliw.registerSetNodeDataEvent("entitycontainer.createComplexEntityContainerPlugin", function(){node_createComplexEntityContainerPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlugin", function(){node_createScriptTaskGroupEntityPlugin = this.getData();});
 
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerPlugin", function(){node_createContainerPlugin = this.getData();});
-nosliw.registerSetNodeDataEvent("entitycontainer.createSimpleEntityContainerPlugin", function(){node_createSimpleEntityContainerPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", function(){node_createContainerListPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.makeObjectWithValuePortInterface", function(){node_makeObjectWithValuePortInterface = this.getData();});
 
 

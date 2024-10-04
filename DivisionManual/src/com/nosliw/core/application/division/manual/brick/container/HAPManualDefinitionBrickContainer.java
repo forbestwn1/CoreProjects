@@ -9,7 +9,6 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 
 public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
@@ -27,7 +26,7 @@ public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 		this.setAttributeIndex(0);
 	}
 	
-	public String addElement(HAPManualDefinitionAttributeInBrick attr) {
+	public String addElementWithAttribute(HAPManualDefinitionAttributeInBrick attr) {
 		if(HAPUtilityBasic.isStringEmpty(attr.getName())) {
 			attr.setName(this.generateAttributeName());
 		}
@@ -35,26 +34,20 @@ public class HAPManualDefinitionBrickContainer extends HAPManualDefinitionBrick{
 		return attr.getName();
 	}
 	
-	public String addElement(HAPManualDefinitionWrapperValue valueWrapper) {
-		String attrName = generateAttributeName();
-		this.setAttributeWithValueWrapper(attrName, valueWrapper);
-		return attrName;
+	public String addElementWithBrickOrReference(HAPEntityOrReference brickOrRef) {
+		return this.addElementAnom(brickOrRef);
 	}
 	
-	public String addElementBrick(HAPManualDefinitionBrick brick) {
+	public String addElementWithBrick(HAPManualDefinitionBrick brick) {
 		String out = null;
 		if(brick instanceof HAPEntityInfo) {
 			HAPManualDefinitionAttributeInBrick attr = new HAPManualDefinitionAttributeInBrick(((HAPEntityInfo)brick).getName(), new HAPManualDefinitionWrapperValueBrick(brick));
-			out = this.addElement(attr);
+			out = this.addElementWithAttribute(attr);
 		}
 		else {
-			out = this.addElement(brick);
+			out = this.addElementWithBrickOrReference(brick);
 		}
 		return out;
-	}
-	
-	public String addElement(HAPEntityOrReference brickOrRef) {
-		return this.addElementAnom(brickOrRef);
 	}
 	
 	private String addElementAnom(HAPEntityOrReference brickOrRef) {

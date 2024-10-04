@@ -4,10 +4,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTagDebugger;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfo;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
 
-public class HAPManualBlockComplexUICustomerTagDebugger extends HAPManualBrickImp implements HAPBlockComplexUICustomerTagDebugger{
+public class HAPManualBlockComplexUICustomerTagDebugger extends HAPManualBrickWithEntityInfo implements HAPBlockComplexUICustomerTagDebugger{
 
 	@Override
 	public void init() {

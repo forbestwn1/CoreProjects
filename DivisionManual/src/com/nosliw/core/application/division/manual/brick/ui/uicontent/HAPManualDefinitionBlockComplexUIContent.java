@@ -45,7 +45,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 		for(HAPManualDefinitionBrickRelation relation : customerTag.getParentRelations()) {
 			attr.addRelation(relation);
 		}
-		container.addElement(attr);
+		container.addElementWithAttribute(attr);
 	}
 	
 	private HAPManualDefinitionBrickContainerList getCustomerTagContainer() {

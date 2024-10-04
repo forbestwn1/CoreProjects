@@ -5,7 +5,6 @@ import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScript
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 
 public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBrick{
 
@@ -19,15 +18,11 @@ public class HAPManualBlockScriptExpressionLibrary extends HAPManualDefinitionBr
 	}
 
 	public String addElement(HAPManualBlockScriptExpressionElementInLibrary element) {
-		return this.getContainer().addElement(element);
-	}
-	
-	public String addElement(HAPManualDefinitionWrapperValue elementValueWrapper) {
-		return this.getContainer().addElement(elementValueWrapper);
+		return this.getContainer().addElementWithBrickOrReference(element);
 	}
 	
 	public String addElement(HAPManualDefinitionAttributeInBrick element) {
-		return this.getContainer().addElement(element);
+		return this.getContainer().addElementWithAttribute(element);
 	}
 	
 	private HAPManualDefinitionBrickContainer getContainer() {

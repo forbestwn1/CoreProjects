@@ -28,6 +28,7 @@ import com.nosliw.core.application.division.manual.brick.adapter.dataassociation
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainer;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualPluginProcessorBlockContainerList;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualPluginParserBlockData;
 import com.nosliw.core.application.division.manual.brick.dataexpression.group.HAPManualPluginParserBlockDataExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.dataexpression.group.HAPManualPluginProcessorBlockDataExpressionGroup;
@@ -260,7 +261,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINER_100, new HAPInfoBrickType(false), new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINER_100, HAPManualDefinitionBrickContainer.class, this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpEmpty(HAPEnumBrickType.CONTAINER_100, HAPManualBrickContainer.class, this.m_runtimeEnv, this)); 
-		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINERLIST_100, new HAPInfoBrickType(false), new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINERLIST_100, HAPManualDefinitionBrickContainerList.class, this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpEmpty(HAPEnumBrickType.CONTAINERLIST_100, null, this.m_runtimeEnv, this)); 
+		this.registerBlockPluginInfo(HAPEnumBrickType.CONTAINERLIST_100, new HAPInfoBrickType(false), new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINERLIST_100, HAPManualDefinitionBrickContainerList.class, this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockContainerList(this.m_runtimeEnv, this)); 
 		
 		
 		this.registerAdapterPluginInfo(HAPEnumBrickType.DATAASSOCIATION_100, new HAPInfoBrickType(false), new HAPManualPluginParserAdapterDataAssociation(this, this.m_runtimeEnv), new HAPManaualPluginAdapterProcessorDataAssociation(this.m_runtimeEnv, this));

@@ -17,7 +17,7 @@ public class HAPManualDefinitionBlockDataExpressionLibrary extends HAPManualDefi
 	}
 
 	public String addElement(HAPManualDefinitionBlockDataExpressionElementInLibrary element) {
-		return this.getContainer().addElementBrick(element);
+		return this.getContainer().addElementWithBrick(element);
 	}
 	
 	private HAPManualDefinitionBrickContainer getContainer() {

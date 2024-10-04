@@ -152,10 +152,11 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		//---------------------------------ui resource view
 		getCreateDefaultUIContentRequest : function(variationPoints, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeRequest(node_COMMONATRIBUTECONSTANT.WITHUICONTENT_UICONTENT, variationPoints, {
-				success : function(request, childNode){
-					childNode.getChildValue().getCoreEntity().setParentUIEntity(loc_out);
-					return childNode;
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_CHILD, undefined, {
+				success: function(request, attrNode){
+					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
+						var customTag = child.getCoreEntity();
+					});
 				}
 			}));
 			return out;
