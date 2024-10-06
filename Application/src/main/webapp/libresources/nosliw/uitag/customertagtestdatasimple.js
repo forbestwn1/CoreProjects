@@ -15,38 +15,53 @@ var packageObj = library.getChildPackage("test");
 	var node_complexEntityUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createUICustomerTagTest = function(envObj){
+var node_createUICustomerTagTestDataSimple = function(envObj){
 	var loc_envObj = envObj;
 
-	var loc_dataVariables = {};
-	var loc_dataUIs = {};
-	var loc_dataCurrent = {};
-	
+	var loc_inputDataInfo = {};
 	var loc_wrapperView;
-	var loc_buttonView;
-	var loc_contentView;
-	
 
-	var loc_getUpdateViewsRequest = function(handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		_.each(loc_dataVariables, function(dataVar, varName){
-			out.addRequest(loc_getUpdateVariableViewRequest(varName));
+	var loc_initViews = function(handlers, request){
+		loc_wrapperView = $('<div/>');
+		_.each(loc_inputDataInfo, function(dataInfo, varName){
+			loc_wrapperView.append($('<br/>'));
+			loc_createDataControlView(varName);
+			loc_wrapperView.append(dataInfo.wrapperView);
 		});
-		return out;
+		return loc_wrapperView;
 	};
 	
-	var loc_getUpdateVariableViewRequest = function(varName, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(loc_envObj.getDataOperationRequestGet(loc_dataVariables[varName], "", {
-			success : function(requestInfo, data){
-				loc_dataUIs[varName].updateView(data.value);
-			}
-		}));
-		return out;
+	var loc_createDataControlView = function(varName){
+		var dataInfo = loc_inputDataInfo[varName];
+		
+		var wrapperView = $("<div/>");
+		wrapperView.append($("<br>Variable Name: "+varName+"</br>"));
+		wrapperView.append($("<br>"+"Variable Id:"+dataInfo.variable.prv_id+"</br>"));
+		if(dataInfo.dataType=="string"){
+			var dataControlView = $('<input type="text" style="display:inline;background:#e6dedc"/>');
+			dataInfo.view = dataControlView;
+			dataControlView.bind('change', function(){
+				var viewData;
+				var value = dataControlView.val();
+				if(value==undefined || value==""){}
+				else{
+					viewData = {
+						dataTypeId: "test.string;1.0.0",
+						value: value
+					};
+				}
+				loc_onDataChange(varName, viewData);
+			});
+		}
+		wrapperView.append(dataControlView);
+		dataInfo.wrapperView = wrapperView;
 	};
+
 
 	var loc_onDataChange = function(varName, data){
-		var currentData = loc_dataCurrent[varName];
+		var dataInfo = loc_inputDataInfo[varName];
+		
+		var currentData = dataInfo.currentData;
 		if(data==undefined){
 			currentData = data;
 		}
@@ -60,40 +75,37 @@ var node_createUICustomerTagTest = function(envObj){
 			}
 		}
 		
-		loc_dataCurrent[varName] = currentData;
+		dataInfo.currentData = currentData;
 		
 		loc_envObj.executeBatchDataOperationRequest([
-			loc_envObj.getDataOperationSet(loc_dataVariables[varName], "", currentData)
+			loc_envObj.getDataOperationSet(dataInfo.variable, "", currentData)
 		]);
-		loc_envObj.trigueEvent("valueChanged", loc_currentData);
+		loc_envObj.trigueEvent("valueChanged", {
+			varName : varName,
+			data : currentData
+		});
 	};
 
-	var loc_initViews = function(handlers, request){
-		loc_wrapperView = $('<div/>');
-		_.each(loc_dataUIs, function(dataUI, varName){
-			loc_wrapperView.append($('<br/>'));
-			loc_wrapperView.append($("<br>"+varName+"</br>"));
-			loc_wrapperView.append(dataUI.initViews());
+	var loc_getUpdateViewsRequest = function(handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		_.each(loc_inputDataInfo, function(dataInfo, varName){
+			out.addRequest(loc_getUpdateVariableViewRequest(varName));
 		});
-		
-		loc_buttonView = $('<button>Display content</button>');
-		loc_buttonView.click(loc_showContent);
-		loc_wrapperView.append(loc_buttonView);
-		
-		loc_contentView = $('<br><br><div/>');
-		loc_wrapperView.append(loc_contentView);
-		
-		return loc_wrapperView;
+		return out;
 	};
-	
-	var loc_showContent = function(){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("uiTagPreInitRequest", {}));
-		out.addRequest(loc_envObj.getCreateDefaultUIContentRequest(undefined, {
-			success: function(request, uiConentNode){
-				return node_complexEntityUtility.getInitBrickRequest(uiConentNode.getChildValue().getCoreEntity(), loc_contentView);
+
+	var loc_getUpdateVariableViewRequest = function(varName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var dataInfo = loc_inputDataInfo[varName];
+		out.addRequest(loc_envObj.getDataOperationRequestGet(dataInfo.variable, "", {
+			success : function(requestInfo, data){
+				if(dataInfo.dataType=="string"){
+					if(data==undefined || data.value==undefined)  dataInfo.view.val("");
+					else dataInfo.view.val(data.value.value);
+				}
 			}
 		}));
-		node_requestServiceProcessor.processRequest(out);
+		return out;
 	};
 
 	var loc_out = {
@@ -117,11 +129,12 @@ var node_createUICustomerTagTest = function(envObj){
 						}
 	
 						var dataVariable = loc_envObj.createVariableByName(varName);
-						loc_dataVariables[varName] = dataVariable; 
-	
-						loc_dataUIs[varName] = node_createTagUITest(varName, dataVariable, dataType, function(varName, data){
-							loc_onDataChange(varName, data);
-						}, loc_envObj);
+						
+						loc_inputDataInfo[varName] = {
+							variable : dataVariable,
+							variableName : varName,
+							dataType : dataType,
+						};
 					}
 				}
 			});
@@ -157,6 +170,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 
+packageObj.createChildNode("createUICustomerTagTestDataSimple", node_createUICustomerTagTestDataSimple); 
 
 })(packageObj);

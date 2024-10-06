@@ -21,31 +21,43 @@
 		{
 			"info": {
 				"name" : "test_string-uicustomertagdebugger",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
-				"uiTagId" : "debug_test",
+				"uiTagId" : "debug_test_data_simple",
 				"attribute" : {
 					"data_string" : "output1"
-				},
-				"child" : [
-				
-				]
+				}
 			}
 		},
 		
 		{
 			"info": {
 				"name" : "test_array-uicustomertagdebugger",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
 				"uiTagId" : "debug_test",
 				"attribute" : {
 					"data_array" : "parent_public_array"
-				}
+				},
+				"child" : [
+					{
+						"info": {
+							"name" : "testchild_string-uicustomertagdebugger",
+							"status": "disabled",
+							"description" : ""
+						},
+						"brick":{
+							"uiTagId" : "debug_test",
+							"attribute" : {
+								"data_string" : "element"
+							}
+						}
+					}
+				]
 			}
 		},
 		

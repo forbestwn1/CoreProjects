@@ -1,0 +1,44 @@
+{
+	"name" : "debug_test",
+	"type" : "data",
+	"description" : "",
+	"base" : "debug_test_data_simple",
+	"attribute" : [
+		{
+			"name" : "data"
+		},
+		{
+			"name" : "data_string",
+			"defaultValue" : "empty"
+		}
+	],
+	"valueContext": [
+		{
+			"groupType" : "public",
+			"valueStructure" : {
+				"root": {
+					"internal_data_string": {
+						"status": "<%=&(nosliwattribute_data_string)&=='empty'?'disabled':''%>",
+						"definition": {
+							"link" : {
+								"elementPath": "<%=&(nosliwattribute_data_string)&%>"
+							},
+							"definition" : {
+								"criteria" : "test.string;1.0.0"
+							}
+						}
+					}
+				}
+			}
+		}
+	], 
+	"attachment": {
+	},
+	"parentRelations" : {
+	
+	},
+	
+	"childRelationConfigure" : {
+	
+	}
+}
