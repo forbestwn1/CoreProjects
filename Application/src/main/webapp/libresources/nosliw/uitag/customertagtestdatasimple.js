@@ -36,7 +36,7 @@ var node_createUICustomerTagTestDataSimple = function(envObj){
 		
 		var wrapperView = $("<div/>");
 		wrapperView.append($("<br>Variable Name: "+varName+"</br>"));
-		wrapperView.append($("<br>"+"Variable Id:"+dataInfo.variable.prv_id+"</br>"));
+		wrapperView.append($("<br>"+"Variable Id:"+dataInfo.variable.getVariable().prv_id+"</br>"));
 		if(dataInfo.dataType=="string"){
 			var dataControlView = $('<input type="text" style="display:inline;background:#e6dedc"/>');
 			dataInfo.view = dataControlView;

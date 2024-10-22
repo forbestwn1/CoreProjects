@@ -3,6 +3,7 @@ package com.nosliw.core.application;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.data.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.data.core.resource.HAPIdResourceType;
@@ -105,7 +106,7 @@ public class HAPUtilityBrickId {
 	}
 	
 	public static HAPResourceIdSimple fromBrickId2ResourceId(HAPIdBrick brickId) {
-		return new HAPResourceIdSimple(brickId.getBrickTypeId().getBrickType(), brickId.getBrickTypeId().getVersion(), HAPUtilityNamingConversion.cascadeLevel1(brickId.getId(), brickId.getDivision()));
+		return new HAPResourceIdSimple(brickId.getBrickTypeId().getBrickType(), brickId.getBrickTypeId().getVersion(), HAPUtilityNamingConversion.cascadeElements(brickId.getId(), brickId.getDivision(), HAPConstantShared.SEPERATOR_LEVEL1));
 	}
 
 	public static HAPIdBrickType getBrickTypeIdFromResourceId(HAPResourceId resourceId) {

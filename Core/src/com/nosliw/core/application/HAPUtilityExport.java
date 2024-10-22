@@ -28,7 +28,8 @@ public class HAPUtilityExport {
 		String mainFolderSession = getResourceFolder(getRootFolderSession(sessionId), resourceId);
 		exportBundleToFolder(bundle, mainFolderSession);
 		
-		String mailFolderTemp = getResourceFolder(getRootFolderTemp(sessionId), resourceId);
+		String rootFolderTmp = getRootFolderTemp(sessionId);
+		String mailFolderTemp = getResourceFolder(rootFolderTmp, resourceId);
 		exportBundleToFolder(bundle, mailFolderTemp);
 	}
 	

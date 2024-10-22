@@ -57,6 +57,35 @@
 		
 		{
 			"info": {
+				"name" : "test_array1-uicustomertagdebugger",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"uiTagId" : "debug_test_data_collection",
+				"attribute" : {
+					"data_array" : "parent_public_array"
+				},
+				"content" : [
+					{
+						"info": {
+							"name" : "debug_test_data_simple",
+							"status": "disabled1",
+							"description" : ""
+						},
+						"brick":{
+							"uiTagId" : "debug_test_data_simple",
+							"attribute" : {
+								"data_string" : "element"
+							}
+						}
+					}
+				]
+			}
+		},
+		
+		{
+			"info": {
 				"name": "valueContext",
 				"status": "disabled1"
 			},
