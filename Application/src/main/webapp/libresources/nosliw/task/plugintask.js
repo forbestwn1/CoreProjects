@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_getApplicationInterface;
 	var node_taskUtility;
 	var node_requestServiceProcessor;
+	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -61,7 +62,7 @@ var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
 
 		getTaskInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_getEnvInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+			out.addRequest(loc_getEnvInterface()[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
 				success : function(request, node){
 					loc_taskNode = node;
 					loc_taskEntityCore = node_complexEntityUtility.getBrickNode(loc_taskNode).getChildValue().getCoreEntity();
@@ -161,6 +162,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTaskPlugin", node_createTaskPlugin); 

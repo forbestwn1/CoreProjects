@@ -55,7 +55,10 @@ public class HAPTestDomain {
 
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT, "decoration_taskgroup");
 
-		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic1");
+//		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "basic1");
+		
+		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "event");
+		
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "test.entity.valuestructure.merge");
 		
 //		HAPResourceIdSimple resourceId = createResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIB, "test1");
