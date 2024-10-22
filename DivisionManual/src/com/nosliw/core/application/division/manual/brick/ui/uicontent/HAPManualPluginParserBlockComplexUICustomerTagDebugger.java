@@ -58,6 +58,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPM
 			manualBrickValueStrucutre.setValue(uiTagDefValueStructure.getValueStructure());
 			manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
 			manualWrapperBrickValueStrucutre.setGroupType(uiTagDefValueStructure.getGroupType());
+			manualWrapperBrickValueStrucutre.setInheritMode(uiTagDefValueStructure.getInheritMode());
 			uiTagDefValueStructure.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
 		
 			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
@@ -65,14 +66,16 @@ public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPM
 		debuggerBrickDef.setValueContextBrick(valueContextBrick);
 
 		//child
-		JSONArray childJsonArray = jsonObj.optJSONArray(HAPBlockComplexUICustomerTagDebugger.CHILD);
+		JSONArray childJsonArray = jsonObj.optJSONArray(HAPBlockComplexUICustomerTagDebugger.CONTENT);
 		if(childJsonArray!=null){
+			HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger wrapperBlockDef = (HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger)this.getManualDivisionEntityManager().newBrickDefinition(HAPEnumBrickType.UIWRAPPERCONTENTCUSTOMERTAGDEBUGGER_100);
 			for(int i=0; i<childJsonArray.length(); i++) {
 				JSONObject elementObj = childJsonArray.getJSONObject(i);
 				if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-					debuggerBrickDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
+					wrapperBlockDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
 				}
 			}
+			debuggerBrickDef.setContentWrapper(wrapperBlockDef);
 		}
 		
 	}

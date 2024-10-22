@@ -271,12 +271,34 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 				_.each(vsByValuePortName, function(vses, valuePortName){
 					var vsById = {};
 					valueByValuePortName[valuePortName] = vsById;
-					_.each(vses, function(vs, vsId){
-						out.addRequest(vs.getValueStructure().getAllElementsValuesRequest({
+					_.each(vses, function(vsWrapper, vsId){
+						var values = {};
+						vsById[vsId] = values;
+						var vs = vsWrapper.getValueStructure();
+						var vsEleNames = vs.getElementsName();
+						_.each(vsEleNames, function(eleName){
+							var vsEleVar = vs.getElement(eleName);
+							out.addRequest(vsEleVar.getGetValueRequest({
+								success : function(request, value){
+									var varIdPath = [];
+									vsEleVar.getVariable().prv_buildVarPath(varIdPath);
+									values[eleName] = {
+										value : value,
+										variableId : vsEleVar.getVariable().prv_id,
+										variableIdPath : varIdPath.reverse().join("--") 
+									};
+								}
+							}));
+						});
+						
+/*						
+						out.addRequest(vsWrapper.getValueStructure().getAllElementsValuesRequest({
 							success : function(request, vsValues){
 								vsById[vsId] = vsValues;
 							}
 						}));
+*/
+						
 					})
 				});
 			});
@@ -310,6 +332,14 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		getValueStructure : function(valueStructureRuntimeId){
 			var wrapper = this.getValueStructureWrapper(valueStructureRuntimeId);
 			if(wrapper!=undefined)  return wrapper.getValueStructure();
+			else if(loc_parentValuePortContainer!=undefined){
+				return loc_parentValuePortContainer.getValueStructure(valueStructureRuntimeId);
+			}
+		},
+		
+		getValueStructureWrapper : function(valueStructureRuntimeId){
+			var valueStructureInfo = loc_valueStructureInfoById[valueStructureRuntimeId];
+			return valueStructureInfo==undefined?undefined : loc_valueStructures[valueStructureInfo.groupName][valueStructureInfo.valuePortName][valueStructureRuntimeId];   
 		},
 		
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
@@ -334,6 +364,21 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID]);
 			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.IDEELEMENT_ELEMENTPATH]));
 		},
+
+		populateVariable : function(varName, variable){
+			for(var i in loc_valueStructureRuntimeIds){
+				var valueStructure = loc_out.getValueStructure(loc_valueStructureRuntimeIds[i]);
+				var varWrapper = valueStructure.getElement(varName);
+				if(varWrapper!=undefined && varWrapper.getVariable()==undefined){
+					varWrapper.setVariable(variable);
+					return;
+				}
+			}
+		},
+
+
+
+
 		
 
 
@@ -351,17 +396,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 				}
 			}
 			return out;
-		},
-
-		populateVariable : function(varName, variable){
-			for(var i in loc_valueStructureRuntimeIds){
-				var valueStructure = loc_valueStructures[loc_valueStructureRuntimeIds[i]].getValueStructure();
-				var varWrapper = valueStructure.getElement(varName);
-				if(varWrapper!=undefined && varWrapper.getVariable()==undefined){
-					varWrapper.setVariable(variable);
-					return;
-				}
-			}
 		},
 
 		getValueStructureRuntimeIdByName : function(valueStructureName){
@@ -386,11 +420,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 				solid : solid,
 				soft : soft
 			};
-		},
-		
-		getValueStructureWrapper : function(valueStructureRuntimeId){
-			var valueStructureInfo = loc_valueStructureInfoById[valueStructureRuntimeId];
-			return valueStructureInfo==undefined?undefined : loc_valueStructures[valueStructureInfo.groupName][valueStructureInfo.valuePortName][valueStructureRuntimeId];   
 		},
 		
 		getSolidValueStrcutreWrapper : function(valueStructureRuntimeId){

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -48,9 +49,29 @@ public class HAPManualValueContext extends HAPSerializableImp implements HAPValu
 		return valueStructureIds;
 	}
 	
+	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		for(int i=this.m_parts.size()-1; i>=0; i--) {
+			HAPManualPartInValueContext part = this.m_parts.get(i);
+			part.cleanValueStucture(valueStrucutreIds);
+			if(part.isEmpty()) {
+				this.m_parts.remove(i);
+			}
+		}
+		
+		for(String vsId : valueStrucutreIds) {
+			this.m_valueStructureRuntimeNameById.remove(vsId);
+		}
+		
+		for(String name : this.m_valueStructureRuntimeIdByName.keySet()) {
+			if(valueStrucutreIds.contains(this.m_valueStructureRuntimeIdByName.get(name))) {
+				this.m_valueStructureRuntimeIdByName.remove(name);
+			}
+		}
+	}
+	
 	public boolean isEmpty(HAPDomainValueStructure valueStructureDomain) {
 		for(HAPManualPartInValueContext part : this.m_parts) {
-			if(!part.isEmpty(valueStructureDomain)) {
+			if(!part.isEmptyOfValueStructure(valueStructureDomain)) {
 				return false;
 			}
 		}

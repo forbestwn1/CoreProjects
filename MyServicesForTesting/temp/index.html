@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- Required meta tags-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Color theme for statusbar -->
+    <meta name="theme-color" content="#2196f3">
+    <style>
+    	.aa1 { color : red }
+    	.aa { font-weight : bold }
+    </style>
+    <!-- Your app title -->
+    <title>My App</title>
+    <script src="libs/jQuery/3.4.1/jquery.js"></script>
+	<script src="libs/vue/vue.js"></script>
+	<script src="./js/parent.js"></script>
+	<script src="./js/child.js"></script>
+	<script src="./js/main.js"></script>
+</head>
+
+<body>
+<div id="appDiv"/>
+</body>
+
+<script>
+//	init1($("#appDiv").val);
+	Vue.component('parent-component', parentComponent);
+
+	let vue = new Vue({
+		el: "#appDiv",
+		data: {
+			num : 555,
+			text : "textinroot",
+			array : ["bb", "aa", "cc"],
+			booleanValue : false,
+			arrayObj : [
+				{
+					name : "aaa"
+				},
+				{
+					name : "ccc"
+				},
+				{
+					name : "bbb"
+				}
+			]
+		},
+		components : {
+			"child-component": childComponent
+		},
+		computed : {
+		},
+		methods : {
+			reverseArray : function(event){
+				this.array.reverse();
+			},
+			reverseText : function(event){
+				this.text = this.text.split("").reverse().join("");
+			},
+			sortArray : function(event){
+				this.array = this.array.sort();
+			},
+			sortArrayObj : function(event){
+				this.arrayObj = this.arrayObj.sort((a, b)=>{
+					return a.name.localeCompare(b.name);
+				});
+			},
+			desctruction : function({a:aa, b, c='abcd'}){
+				this.text = aa;
+			}
+		},
+		filters : {
+			toUpperCase : function(value){
+				return value.toUpperCase();
+			}
+		},
+		template : 
+			`
+			<div>
+				
+				<a href="" v-on:click.preventDefault="reverseArray">reverseArray</a>
+				</br>
+				<button v-on:click.preventDefault="reverseArray">reverseArray</button>
+				</br>
+				<button v-on:click.preventDefault="sortArray">sortArray</button>
+				</br>
+				<button v-on:click.preventDefault="sortArrayObj">sortArrayObj</button>
+				</br>
+				<button v-on:click.preventDefault="reverseText">reverseText</button>
+				</br>
+				<button v-on:click.preventDefault="desctruction({a:'aaaaaa',b:'bbbbbb'})">emit</button>
+				</br>
+				<span style="color:red" v-if="booleanValue">text in root : {{text|toUpperCase}} </span>
+				</br>
+				<span id="modifyText" class="aa bb cc">modify text in root : <input v-bind:disabled="text=='abc'" v-model="text"/></span>
+				</br>
+				<input type="checkbox" v-model="booleanValue" id="checkbox"></input>
+				<label for="checkbox">{{booleanValue}}</label>
+				</br>
+				<input type="checkbox" v-model="array" value="checkbox1" id="checkbox1"/>
+				<label for="checkbox1">checkbox1</label>
+				</br>
+				<input type="checkbox" v-model="array" value="checkbox2" id="checkbox2"/>
+				<label for="checkbox2">checkbox2</label>
+				</br>
+				<input type="radio" v-model="text" value="radio1" id="radio1"/>		
+				<label for="radio1">radio1</label>
+				</br>
+				<input type="radio" v-model="text" value="radio2" id="radio2"/>		
+				<label for="radio2">radio2</label>
+				</br>
+				<select type="select" v-model="text">
+					<option>option1</option>
+					<option>option2</option>
+					<option>option3</option>
+				</select>
+				
+				
+				</br>
+				<p v-for="(arrayItem, index) in arrayObj">{{arrayItem.name}} -- {{index}}</p>
+				</br>
+				<p v-for="(arrayItem, index) in array">{{arrayItem}} -- {{index}}</p>
+				</br>
+				
+				
+				
+				<parent-component :pro1="num" v-slot="slotPro">
+					<br/>-----inslot----<br/>
+					slotPro: {{slotPro.slotPro1.aaa}}
+					<br/>
+					slot input : <input v-model="slotPro.slotPro1.aaa"/>
+					<br/>
+					<child-component :pro1="num"/>
+					<br/>-----inslot----<br/>
+				</parent-component>
+			</div>
+			`
+	});
+
+</script>
+
+</html>

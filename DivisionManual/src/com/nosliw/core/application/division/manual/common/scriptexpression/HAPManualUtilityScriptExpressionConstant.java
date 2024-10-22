@@ -18,7 +18,6 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrickTraverse;
-import com.nosliw.data.core.domain.entity.expression.script.HAPUtilityScriptExpressionDefinition;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

@@ -1,5 +1,6 @@
 package com.nosliw.core.application.valuestructure;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -12,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -60,12 +62,41 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPInfoValueStructureRuntime getValueStructureRuntimeInfo(String runtimeId) {    return this.m_valueStructureRuntime.get(runtimeId);     }
 	
+	public Set<String> cleanupEmptyValueStructure() {
+		Set<String> out = new HashSet<String>();
+		
+		Set<String> vsDefIds = new HashSet<String>();
+		for(String vsDefId : this.m_structureDefinition.keySet()) {
+			HAPDefinitionStructure vsDef = this.m_structureDefinition.get(vsDefId);
+			if(vsDef.isEmpty()) {
+				vsDefIds.add(vsDefId);
+			}
+		}
+
+		for(String vsDefId : vsDefIds) {
+			this.m_structureDefinition.remove(vsDefId);
+		}
+		
+		for(String vsId : this.m_definitionIdByRuntimeId.keySet()) {
+			if(vsDefIds.contains(this.m_definitionIdByRuntimeId.get(vsId))) {
+				out.add(vsId);
+			}
+		}
+
+		for(String vsId : out) {
+			this.m_definitionIdByRuntimeId.remove(vsId);
+			this.m_valueStructureRuntime.remove(vsId);
+		}
+		
+		return out;
+	}
 	
 	//create another runtime that has common definition
 	//return new runtime id
 	public String cloneRuntime(String runtimeId) {
 		String definitionId = this.m_definitionIdByRuntimeId.get(runtimeId);
-		return this.newRuntime(definitionId, null, null, null);
+		String newDefId = cloneDefinition(definitionId);
+		return this.newRuntime(newDefId, null, null, null);
 	}
 
 	public String newValueStructure() {
@@ -82,6 +113,22 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		return this.newRuntime(id, initValue, info, name);
 	}
 
+	private String cloneDefinition(String defId) {
+		HAPDefinitionStructure structureDef = this.getStructureDefinition(defId);
+		String id = this.m_idGenerator.generateId();
+		
+		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+		for(HAPRootInStructure oldRoot : structureDef.getRoots()) {
+			HAPRootInStructure newRoot = new HAPRootInStructure();
+			oldRoot.cloneToEntityInfo(newRoot);
+			newRoot.setDefinition(HAPUtilityStructure.solidateStructureElement(oldRoot.getDefinition()));
+			roots.add(newRoot);
+		}
+		
+		this.m_structureDefinition.put(id, new HAPDefinitionStructure(roots));
+		return id;
+	}
+	
 	//create new runtime according to definition id 
 	private String newRuntime(String definitionId, Object initValue, HAPInfo info, String name) {
 		String runtimeId = this.m_idGenerator.generateId();

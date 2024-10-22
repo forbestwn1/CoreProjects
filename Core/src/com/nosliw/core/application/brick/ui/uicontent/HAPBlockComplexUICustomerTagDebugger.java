@@ -13,7 +13,7 @@ public interface HAPBlockComplexUICustomerTagDebugger extends HAPBrick, HAPEntit
 	@HAPAttribute
 	public static final String ATTRIBUTE = "attribute";
 	@HAPAttribute
-	public static final String CHILD = "child";
+	public static final String CONTENT = "content";
 	@HAPAttribute
 	public static final String TAGDEFINITION = "tagDefinition";
 

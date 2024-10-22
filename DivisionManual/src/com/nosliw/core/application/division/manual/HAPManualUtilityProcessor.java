@@ -35,12 +35,33 @@ import com.nosliw.core.application.division.manual.executable.HAPHandlerDownward
 import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.executable.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.core.application.division.manual.executable.HAPManualExeUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessor {
 
+	public static void cleanupEmptyValueStructure(HAPBundle bundle, HAPManagerApplicationBrick brickMan) {
+		Set<String> vsIds = bundle.getValueStructureDomain().cleanupEmptyValueStructure();
+
+		HAPWrapperBrickRoot rootBrickWrapper = bundle.getBrickWrapper();
+		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+
+			@Override
+			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
+				HAPManualBrickImp brick = (HAPManualBrickImp)HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+				brick.getManualValueContext().cleanValueStucture(vsIds);
+				return true;
+			}
+
+			@Override
+			public void postProcessBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
+			}
+
+		}, brickMan, null);
+	}
+	
 	public static void processComplexBrickInit(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
 

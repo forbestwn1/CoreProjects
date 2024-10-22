@@ -48,12 +48,17 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			trigueView.click(function() {
 				var valuePortContainerId = intputView.val();
 				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
-				var request = valuePortContainer.getExportRequest({
-					success : function(request, values){
-						resultView.val(JSON.stringify(values));
-					}
-				});
-				node_requestServiceProcessor.processRequest(request);
+				if(valuePortContainer!=undefined){
+					var request = valuePortContainer.getExportRequest({
+						success : function(request, values){
+							resultView.val(JSON.stringify(values));
+						}
+					});
+					node_requestServiceProcessor.processRequest(request);
+				}
+				else{
+					resultView.val("not exist");
+				}
 			});
 		},
 	};

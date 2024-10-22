@@ -1,0 +1,76 @@
+{
+	"name" : "debug_test_data_collection",
+	"type" : "data",
+	"description" : "",
+	"base" : "debug_test_data_collection",
+	"attribute" : [
+		{
+			"name" : "data_array",
+			"defaultValue" : "empty"
+		},
+		{
+			"name" : "arrayelement",
+			"defaultValue" : "element"
+		},
+		{
+			"name" : "arrayindex",
+			"defaultValue" : "arrayindex"
+		}
+	],
+	"valueContext": [
+		{
+			"groupType" : "public",
+			"valueStructure" : {
+				"root": {
+					"internal_data_array": {
+						"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
+						"definition": {
+							"link" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>"
+							},
+							"definition" : {
+								"criteria" : "test.array;1.0.0"
+							}
+						}
+					}
+				}
+			}
+		},
+		{
+			"groupType" : "protected",
+			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
+			"inheritMode" : "definition",
+			"valueStructure" : {
+				"root": {
+					"<%=&(nosliwattribute_arrayelement)&%>": {
+						"definition": {
+							"reference" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>.element"
+							}
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					},
+					"<%=&(nosliwattribute_arrayindex)&%>" : {
+						"definition" : {
+							"criteria" : "test.integer;1.0.0"
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					}		
+				}
+			}
+		}
+	], 
+	"attachment": {
+	},
+	"parentRelations" : {
+	
+	},
+	
+	"childRelationConfigure" : {
+	
+	}
+}

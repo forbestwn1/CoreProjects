@@ -162,6 +162,5 @@ public class HAPUtilityUITagDefinitionParser {
 			valueContext.getValueStructures().add(valueStructureWrapper);
 		}
 	}
-	
-	
+
 }

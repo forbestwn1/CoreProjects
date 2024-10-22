@@ -49,6 +49,13 @@ var loc_createContainerCore = function(complexEntityDef, valueContextId, bundleC
 			return out;
 		},
 
+		updateView : function(view){
+			_.each(loc_childrenEntity, function(child){
+				child.getCoreEntity().updateView(view);
+			});
+			return view;
+		},
+
 		getChildrenEntity : function(){   return loc_childrenEntity;      },
 		
 		setEnvironmentInterface : function(envInterface){

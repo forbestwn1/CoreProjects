@@ -609,6 +609,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uipage"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG" value="uicustomertag"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UICUSTOMERTAGDEBUGGER" value="uicustomertagdebugger"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_UIWRAPPERCONTENTCUSTOMERTAGDEBUGGER" value="uiwrappercontentcustomertagdebugger"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAGDEFINITION" value="uitagdefinition"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UITAGSCRIPT" value="uitagscript"/>
 

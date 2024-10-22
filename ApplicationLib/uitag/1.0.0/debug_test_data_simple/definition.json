@@ -1,5 +1,5 @@
 {
-	"name" : "debug_test",
+	"name" : "debug_test_data_simple",
 	"type" : "data",
 	"description" : "",
 	"base" : "debug_test_data_simple",

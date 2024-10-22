@@ -14,6 +14,19 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
+	public static boolean isValuePortContainerEmpty(HAPContainerValuePorts valuePortContainer, HAPDomainValueStructure valueStructureDomain) {
+		for(HAPGroupValuePorts valuePortGroup : valuePortContainer.getValuePortGroups()) {
+			for(HAPValuePort valuePort : valuePortGroup.getValuePorts()) {
+				for(String valueStructureId : valuePort.getValueStructureIds()) {
+					if(!valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).isEmpty()) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPDomainValueStructure valueStructureDomain) {
 		HAPDefinitionStructure structureDef = valueStructureDomain.getStructureDefinitionByRuntimeId(varId.getRootElementId().getValueStructureId());
 		HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(structureDef.getRootByName(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());

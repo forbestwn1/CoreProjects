@@ -134,11 +134,14 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		//---------------------------------ui resource view
 		getCreateDefaultUIContentRequest : function(variationPoints, handlers, requestInfo){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_CHILD, variationPoints, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_CONTENT, variationPoints, {
 				success: function(request, attrNode){
+					return attrNode;
+/*					
 					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
 						var customTag = child.getCoreEntity();
 					});
+*/					
 				}
 			}));
 			return out;
@@ -162,7 +165,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAGDEBUGGER_ATTRIBUTE);
-			loc_attributeDefinition = loc_uiTagDefinition[node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTEDEFINITION];
+			loc_attributeDefinition = loc_uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_ATTRIBUTE];
 			
 			var uiTagCore;
 			var uiTagBase = loc_uiTagDefinition[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_BASE]; 
@@ -195,7 +198,12 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		},
 
 		updateView : function(view){
-			view.append(loc_uiTagCore.initViews());
+			var wrapperView = $("<div/>");
+			var childValuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+			wrapperView.append($("<br>ValuePortContainerId uitagdebugger: "+childValuePortContainer.getId()+"</br>"));
+			wrapperView.append(loc_uiTagCore.initViews());
+
+			view.append(wrapperView);
 		},
 		
 		getPostInitRequest : function(handlers, request){

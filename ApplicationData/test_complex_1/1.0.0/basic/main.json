@@ -6,8 +6,8 @@
 	"brick": [
 		{
 			"info": {
-				"name" : "variableshow-test_complex_script",
-				"status": "disabled1",
+				"name" : "variablebynameshow-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -20,8 +20,30 @@
 
 		{
 			"info": {
-				"name" : "test_string-uicustomertagdebugger",
+				"name" : "variablebyidshow-test_complex_script",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_variable"
+			}
+		},
+
+		{
+			"info": {
+				"name" : "valueportshow-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_valueport"
+			}
+		},
+		
+		{
+			"info": {
+				"name" : "test_string-uicustomertagdebugger",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -35,40 +57,29 @@
 		{
 			"info": {
 				"name" : "test_array-uicustomertagdebugger",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
-				"uiTagId" : "debug_test",
+				"uiTagId" : "debug_test_data_collection",
 				"attribute" : {
 					"data_array" : "parent_public_array"
 				},
 				"child" : [
 					{
 						"info": {
-							"name" : "testchild_string-uicustomertagdebugger",
-							"status": "disabled",
+							"name" : "debug_test_data_simple",
+							"status": "disabled1",
 							"description" : ""
 						},
 						"brick":{
-							"uiTagId" : "debug_test",
+							"uiTagId" : "debug_test_data_simple",
 							"attribute" : {
 								"data_string" : "element"
 							}
 						}
 					}
 				]
-			}
-		},
-		
-		{
-			"info": {
-				"name" : "valueportshow-test_complex_script",
-				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"script": "complexscript_test_brickinfo"
 			}
 		},
 		

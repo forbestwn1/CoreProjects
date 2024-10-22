@@ -40,6 +40,13 @@ public class HAPManualDefinitionUtilityValueContext {
 					root.setName(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 				}
 				
+				//root id 
+				String id = root.getId();
+				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(id)) {
+					String scriptExpressionId = scriptExpressionContainer.addScriptExpression(id);
+					root.setId(HAPManualUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
+				}
+				
 				//root status
 				String rootStatus = root.getStatus();
 				if(HAPManualUtilityScriptExpressionParser.isScriptExpression(rootStatus)) {
@@ -90,6 +97,12 @@ public class HAPManualDefinitionUtilityValueContext {
 				String nameId = HAPManualUtilityScriptExpressionConstant.isIdLterate(name);
 				if(nameId!=null) {
 					root.setName(values.get(nameId)+"");
+				}
+
+				String id = root.getId();
+				String idId = HAPManualUtilityScriptExpressionConstant.isIdLterate(name);
+				if(idId!=null) {
+					root.setId(values.get(idId)+"");
 				}
 
 				//root status

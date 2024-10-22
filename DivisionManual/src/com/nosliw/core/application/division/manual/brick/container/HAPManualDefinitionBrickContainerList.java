@@ -8,7 +8,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainerList;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 
-public class HAPManualDefinitionBrickContainerList extends HAPManualDefinitionBrickContainer{
+public class HAPManualDefinitionBrickContainerList extends HAPManualDefinitionBrickContainerBase{
 
 	public HAPManualDefinitionBrickContainerList() {
 		super(HAPEnumBrickType.CONTAINERLIST_100);

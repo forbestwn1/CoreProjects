@@ -13,6 +13,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 public class HAPUtilityValueStructureParser {
 
 	static public void parseValueStructureWrapper(HAPWrapperValueStructure valueStructureWrapper, JSONObject wrapperObj) {
+		HAPUtilityEntityInfo.buildEntityInfoByJson(wrapperObj, valueStructureWrapper);
 
 		String groupType = (String)wrapperObj.opt(HAPWrapperValueStructure.GROUPTYPE);
 		if(groupType==null) {
@@ -20,7 +21,10 @@ public class HAPUtilityValueStructureParser {
 		}
 		valueStructureWrapper.setGroupType(groupType);
 
-		HAPUtilityEntityInfo.buildEntityInfoByJson(wrapperObj, valueStructureWrapper);
+		String inheritMode = (String)wrapperObj.opt(HAPWrapperValueStructure.INHERITMODE);
+		if(inheritMode!=null) {
+			valueStructureWrapper.setInheritMode(inheritMode);
+		}
 	}
 	
 	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructureDefinition valueStructure) {

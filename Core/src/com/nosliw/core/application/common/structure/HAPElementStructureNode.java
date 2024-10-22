@@ -7,10 +7,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
-import com.nosliw.data.core.scriptexpression.HAPUtilityScriptExpression;
 
 //branch in value structure tree
 public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
@@ -57,7 +53,9 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_children!=null)		jsonMap.put(CHILD, HAPUtilityJson.buildJson(m_children, HAPSerializationFormat.JSON));
+		if(this.m_children!=null) {
+			jsonMap.put(CHILD, HAPUtilityJson.buildJson(m_children, HAPSerializationFormat.JSON));
+		}
 	}
 
 	@Override
@@ -73,40 +71,6 @@ public class HAPElementStructureNode extends HAPElementStructureLeafVariable{
 		HAPElementStructureNode that = (HAPElementStructureNode)out;
 		for(String name : this.m_children.keySet()) {
 			that.addChild(name, this.m_children.get(name).cloneStructureElement());
-		}
-	}
-	
-	@Override
-	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {
-		Map<String, String> nameToIdMapping = new LinkedHashMap<String, String>();
-		
-		for(String name : this.getChildren().keySet()){
-			String scriptExpressionId = HAPUtilityScriptExpression.discoverConstantScript(name, complexEntityId, parserContext, expressionParser);
-			if(scriptExpressionId!=null) {
-				nameToIdMapping.put(name, scriptExpressionId);
-			}
-			
-			this.getChild(name).discoverConstantScript(complexEntityId, parserContext, expressionParser);
-		}
-		
-		for(String name : nameToIdMapping.keySet()) {
-			this.getChildren().put(HAPUtilityScriptExpression.makeIdLiterate(nameToIdMapping.get(name)), this.getChildren().remove(name));
-		}
-	}
-	
-	@Override
-	public void solidateConstantScript(Map<String, String> values) {
-		Map<String, String> idToValueMapping = new LinkedHashMap<String, String>();
-		
-		for(String name : this.getChildren().keySet()){
-			String id = HAPUtilityScriptExpression.isIdLterate(name);
-			if(id!=null) {
-				idToValueMapping.put(name, values.get(id));
-			}
-		}
-		
-		for(String id : idToValueMapping.keySet()) {
-			this.getChildren().put(idToValueMapping.get(id), this.getChildren().remove(id));
 		}
 	}
 }

@@ -515,6 +515,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uipage";
 		public static final String RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG = "uicustomertag";
 		public static final String RUNTIME_RESOURCE_TYPE_UICUSTOMERTAGDEBUGGER = "uicustomertagdebugger";
+		public static final String RUNTIME_RESOURCE_TYPE_UIWRAPPERCONTENTCUSTOMERTAGDEBUGGER = "uiwrappercontentcustomertagdebugger";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAGDEFINITION = "uitagdefinition";
 		public static final String RUNTIME_RESOURCE_TYPE_UITAGSCRIPT = "uitagscript";
 		public static final String RUNTIME_RESOURCE_TYPE_UIRESOURCE = "uiResource";

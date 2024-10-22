@@ -6,11 +6,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataWrapper;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 @HAPEntityWithAttribute
 public class HAPElementStructureLeafConstant extends HAPElementStructure{
@@ -41,15 +38,12 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 	public HAPData getDataValue(){
 		HAPDataWrapper out = new HAPDataWrapper();
 		boolean isData = out.buildObjectByLiterate(this.m_value.toString());
-		if(isData)  return out;
-		else return null;
+		if(isData) {
+			return out;
+		} else {
+			return null;
+		}
 	}
-
-	@Override
-	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
-
-	@Override
-	public void solidateConstantScript(Map<String, String> values) {}
 
 	@Override
 	public HAPElementStructure cloneStructureElement() {
@@ -74,12 +68,16 @@ public class HAPElementStructureLeafConstant extends HAPElementStructure{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(!super.equals(obj))  return false;
+		if(!super.equals(obj)) {
+			return false;
+		}
 
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafConstant) {
 			HAPElementStructureLeafConstant ele = (HAPElementStructureLeafConstant)obj;
-			if(!HAPUtilityBasic.isEquals(this.m_value, ele.m_value))  return false;
+			if(!HAPUtilityBasic.isEquals(this.m_value, ele.m_value)) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

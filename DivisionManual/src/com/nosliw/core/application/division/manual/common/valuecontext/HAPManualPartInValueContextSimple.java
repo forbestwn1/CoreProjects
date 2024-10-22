@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -30,7 +30,8 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 			this.m_valueStructures.add(valueStructure);
 		}   
 	}
-	
+
+/*	
 	@Override
 	public HAPManualPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates) {
 		HAPManualPartInValueContextSimple out = new HAPManualPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
@@ -59,19 +60,24 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 		}
 		return out;
 	}
+*/	
 	
 	@Override
-	public HAPManualPartInValueContext cloneValueContextPart() {
-		HAPManualPartInValueContextSimple out = new HAPManualPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
-		this.cloneToPartValueContext(out);
-		for(HAPManualInfoValueStructure valueStructureWrapper : this.m_valueStructures) {
-			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
+	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		for(int i=0; i<m_valueStructures.size(); i++) {
+			if(valueStrucutreIds.contains(this.m_valueStructures.get(i).getValueStructureRuntimeId())) {
+				this.m_valueStructures.remove(i);
+			}
 		}
-		return out;
 	}
 
 	@Override
-	public boolean isEmpty(HAPDomainValueStructure valueStructureDomain) {
+	public boolean isEmpty() {
+		return this.m_valueStructures.isEmpty();
+	}
+
+	@Override
+	public boolean isEmptyOfValueStructure(HAPDomainValueStructure valueStructureDomain) {
 		if(!this.m_valueStructures.isEmpty() && valueStructureDomain==null) {
 			return false;
 		}
@@ -83,6 +89,16 @@ public class HAPManualPartInValueContextSimple extends HAPManualPartInValueConte
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public HAPManualPartInValueContext cloneValueContextPart() {
+		HAPManualPartInValueContextSimple out = new HAPManualPartInValueContextSimple(this.getPartInfo().cloneValueStructurePartInfo());
+		this.cloneToPartValueContext(out);
+		for(HAPManualInfoValueStructure valueStructureWrapper : this.m_valueStructures) {
+			out.m_valueStructures.add(valueStructureWrapper.cloneValueStructureWrapper());
+		}
+		return out;
 	}
 
 	@Override

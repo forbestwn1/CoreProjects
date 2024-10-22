@@ -136,8 +136,8 @@ var node_createComplexEntityRuntimeService = function() {
 		//get runtime configure & decoration info from configure
 		var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 		
-//		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
-//		out.addRequest(variationPoints.afterValueContext(entityDef, valueContextId, bundleCore, runtimeConfigureInfo.coreConfigure));
+		variationPoints = node_buildComplexEntityCreationVariationPointObject(variationPoints);
+		out.addRequest(variationPoints.afterValueContext(entityDef, internalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure));
 		
 		//new complexCore through complex plugin
 		out.addRequest(loc_getCreateEntityCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure, {

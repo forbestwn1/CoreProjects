@@ -33,6 +33,13 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 	public void setGroupType(String groupType) {    this.setAttributeValueWithValue(GROUPTYPE, groupType);     }
 
 	@Override
+	public String getInheritMode() {   return (String)this.getAttributeValueOfValue(INHERITMODE);  }
+
+	@Override
+	public void setInheritMode(String mode) {    this.setAttributeValueWithValue(INHERITMODE, mode);  }
+
+
+	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}
 
 	public HAPManualDefinitionBrickWrapperValueStructure cloneValueStructureWrapper() {

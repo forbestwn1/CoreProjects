@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -20,11 +21,15 @@ public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
 	
 	abstract public String getPartType();
 	
-	abstract public HAPManualPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
+//	abstract public HAPManualPartInValueContext inheritValueContextPart(HAPDomainValueStructure valueStructureDomain, String mode, String[] groupTypeCandidates);
 	abstract public HAPManualPartInValueContext cloneValueContextPart();
 	
-	abstract public boolean isEmpty(HAPDomainValueStructure valueStructureDomain);
+	abstract public void cleanValueStucture(Set<String> valueStrucutreIds);
+	
+	abstract public boolean isEmptyOfValueStructure(HAPDomainValueStructure valueStructureDomain);
 
+	abstract public boolean isEmpty();
+	
 	public void cloneToPartValueContext(HAPManualPartInValueContext part) {
 		this.cloneToEntityInfo(part);
 	}

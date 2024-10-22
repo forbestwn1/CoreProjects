@@ -6,12 +6,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable{
 
@@ -89,12 +86,6 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 		}
 		dataEle.m_status = this.m_status;
 	}
-
-	@Override
-	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext, HAPParserDataExpression expressionParser) {	}
-
-	@Override
-	public void solidateConstantScript(Map<String, String> values) {}
 
 	@Override
 	public boolean equals(Object obj) {

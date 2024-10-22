@@ -10,6 +10,8 @@ public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements H
 	
 	//group type for value structure (public, private, protected, internal)
 	private String m_groupType;
+
+	private String m_inheritMode;
 	
 	@Override
 	public HAPValueStructureDefinition getValueStructure() {   return  this.m_valueStructure;  } 
@@ -22,5 +24,11 @@ public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements H
 
 	@Override
 	public void setGroupType(String groupType) {   this.m_groupType = groupType;  }
+
+	@Override
+	public String getInheritMode() {    return this.m_inheritMode;    }
+	
+	@Override
+	public void setInheritMode(String mode) {     this.m_inheritMode = mode;       }
 
 }

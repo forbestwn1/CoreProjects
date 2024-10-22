@@ -353,6 +353,19 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				return current;
 			},
 			
+			prv_buildVarPath : function(pathArray){
+				var ele = loc_out.prv_id;
+				if(loc_out.prv_isBase!=true){
+					var relativeInfo = loc_out.prv_getRelativeVariableInfo();
+					pathArray.push(ele+"|"+relativeInfo.path);
+					var parent = relativeInfo.parent;
+					parent.prv_buildVarPath(pathArray);
+				}
+				else{
+					pathArray.push(ele);
+				}
+			},
+			
 			prv_newWrapper : function(){
 				loc_setWrapper(node_wrapperFactory.createWrapper(undefined, loc_out.prv_wrapperType), requestInfo);
 			},
