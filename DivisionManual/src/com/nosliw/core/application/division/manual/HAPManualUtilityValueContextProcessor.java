@@ -149,6 +149,23 @@ public class HAPManualUtilityValueContextProcessor {
 		
 	}
 	
+	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle, HAPManualContextProcessBrick processContext) {
+		HAPPath parentPath = HAPUtilityPath.getParentPath(path);
+		while(parentPath!=null) {
+			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), parentPath);
+			if(!HAPUtilityValuePort.isValuePortContainerEmpty(parentBrick.getInternalValuePorts(), bundle.getValueStructureDomain())) {
+				return parentPath;
+			}
+			
+//			HAPManualDefinitionBrick parentBrickDef = HAPManualDefinitionUtilityBrick.getBrick(parentPath, bundle);
+//			if(HAPManualUtilityBrick.isBrickComplex(parentBrick.getBrickTypeId(), processContext.getManualBrickManager())) {
+//			if(!parentBrickDef.isValueContextEmpty()) {
+//				return parentPath;
+//			}
+			parentPath = HAPUtilityPath.getParentPath(parentPath);
+		}
+		return new HAPPath();
+	}
 	
 	
 	public static void resolveRelativeElement(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
@@ -213,24 +230,6 @@ public class HAPManualUtilityValueContextProcessor {
 				return true;
 			}
 		}, processContext.getRuntimeEnv().getBrickManager(), processContext);
-	}
-	
-	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle, HAPManualContextProcessBrick processContext) {
-		HAPPath parentPath = HAPUtilityPath.getParentPath(path);
-		while(parentPath!=null) {
-			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), parentPath);
-			if(!HAPUtilityValuePort.isValuePortContainerEmpty(parentBrick.getInternalValuePorts(), bundle.getValueStructureDomain())) {
-				return parentPath;
-			}
-			
-//			HAPManualDefinitionBrick parentBrickDef = HAPManualDefinitionUtilityBrick.getBrick(parentPath, bundle);
-//			if(HAPManualUtilityBrick.isBrickComplex(parentBrick.getBrickTypeId(), processContext.getManualBrickManager())) {
-//			if(!parentBrickDef.isValueContextEmpty()) {
-//				return parentPath;
-//			}
-			parentPath = HAPUtilityPath.getParentPath(parentPath);
-		}
-		return null;
 	}
 	
 	private static void processInheriatage(HAPWrapperBrickRoot rootBrickWrapper, HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {

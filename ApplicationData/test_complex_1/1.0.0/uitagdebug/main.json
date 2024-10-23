@@ -1,0 +1,207 @@
+{
+	"info": {
+		"name": "basic entity",
+		"description": "include all basic feature"
+	},
+	"brick": [
+		{
+			"info": {
+				"name" : "test_array-uicustomertagdebugger",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"uiTagId" : "debug_test_data_collection",
+				"attribute" : {
+					"data_array" : "parent_public_array"
+				},
+				"content" : [
+					{
+						"info": {
+							"name" : "debug_test_data_simple",
+							"status": "disabled1",
+							"description" : ""
+						},
+						"brick":{
+							"uiTagId" : "debug_test_data_simple",
+							"attribute" : {
+								"data_string" : "element"
+							}
+						}
+					}
+				]
+			}
+		},
+		
+		{
+			"info": {
+				"name" : "test_array1-uicustomertagdebugger",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"uiTagId" : "debug_test_data_collection",
+				"attribute" : {
+					"data_array" : "parent_public_array"
+				},
+				"content" : [
+					{
+						"info": {
+							"name" : "debug_test_data_simple",
+							"status": "disabled1",
+							"description" : ""
+						},
+						"brick":{
+							"uiTagId" : "debug_test_data_simple",
+							"attribute" : {
+								"data_string" : "element"
+							}
+						}
+					}
+				]
+			}
+		},
+		
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"parent_public": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parent_public_url": {
+								"definition":{
+									"criteria": "test.url;1.0.0"
+								}
+							},
+							"parent_public_array": {
+								"definition":{
+									"criteria": "test.array;1.0.0%||element:test.string;1.0.0||%"
+								}
+							},
+							"parm1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parm2": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"<%=&(value1)&%>": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"integer1": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"integer2": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"parent_public_constant_string": {
+								"definition":{
+									"value": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "value of parent_public_constant_string"
+									} 
+								}
+							}
+						},
+						"initValue": {
+							"parent_public": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							},
+							"parent_public_url": {
+								"dataTypeId": "test.url;1.0.0",
+								"value": "default value of parent_public_url"
+							},
+							"parent_public_array": {
+								"dataTypeId": "test.array;1.0.0",
+								"value": [
+									{
+										"dataTypeId": "test.string;1.0.0",
+										"value": "This is my world 1111!"
+									},
+									{
+										"dataTypeId": "test.string;1.0.0",
+										"value": "This is my world 2222!"
+									}
+								]
+							},
+							"parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm1"
+							},
+							"parm2": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm2"
+							},
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							},
+							"integer1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"integer2": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
+							}
+						}
+					}
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name" : "attachment", 
+				"status": "disabled1"
+			},
+			"attachment": {
+				"data" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "constant", 
+								"status": "disabled1"
+							},
+							"brick": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						}
+					]
+				},
+				"value" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "value1", 
+								"status": "disabled1"
+							},
+							"brick": "output1"
+						}
+					]
+				}
+			}
+		}
+		
+	]
+}

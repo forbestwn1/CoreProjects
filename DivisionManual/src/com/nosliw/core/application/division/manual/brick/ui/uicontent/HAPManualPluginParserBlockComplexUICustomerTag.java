@@ -11,18 +11,13 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
-import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
-import com.nosliw.core.application.uitag.HAPUITagValueContextDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDefinitionPluginParserBrickImpComplex{
@@ -43,24 +38,12 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		this.parseBrickAttribute(uiCustomerTag, ele, HAPWithUIContent.UICONTENT, HAPEnumBrickType.UICONTENT_100, null, HAPSerializationFormat.HTML, parseContext);
 		
 		HAPUITagDefinition uiTagDef = this.getRuntimeEnvironment().getUITagManager().getUITagDefinition(customTagName, null);
-		HAPUITagValueContextDefinition uiTagDefValueContext = uiTagDef.getValueContext();
 
 		//tag definition
 		uiCustomerTag.setUITagDefinition(uiTagDef);
 		
-		//build value context
-		HAPManualDefinitionBrickValueContext valueContextBrick = (HAPManualDefinitionBrickValueContext)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100);
-		for(HAPWrapperValueStructure uiTagDefValueStructure : uiTagDefValueContext.getValueStructures()) {
-			HAPManualDefinitionBrickWrapperValueStructure manualWrapperBrickValueStrucutre = (HAPManualDefinitionBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
-
-			HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);
-			manualBrickValueStrucutre.setValue(uiTagDefValueStructure.getValueStructure());
-			manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
-			manualWrapperBrickValueStrucutre.setGroupType(uiTagDefValueStructure.getGroupType());
-			uiTagDefValueStructure.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
-		
-			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
-		}
+		//build value context from ui tag definition
+		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionEntityManager());
 		uiCustomerTag.setValueContextBrick(valueContextBrick);
 		
 		//base

@@ -28,6 +28,7 @@ var packageObj = library;
 	var node_createUICustomerTagTest;
 	var node_createUICustomerTagViewVariable;
 	var node_getEntityObjectInterface;
+	var node_uiTagUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -36,6 +37,18 @@ var node_createUITagPlugin = function(){
 	var loc_out = {
 
 		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
+			var uiTagDefinition = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_TAGDEFINITION);
+			out.addRequest(node_uiTagUtility.getUITagFunctionRequest(uiTagDefinition, {
+				success : function(request, tagDefScriptFun){
+					return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun.fun, internalValuePortContainerId, bundleCore, configure);
+				}
+			}));
+			return out;
+		},
+
+
+		getCreateEntityCoreRequest1 : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
 
 			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
@@ -264,6 +277,7 @@ nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){nod
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function(){node_createUICustomerTagTest = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", function(){node_createUICustomerTagViewVariable = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.uiTagUtility", function(){node_uiTagUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

@@ -3,10 +3,10 @@
 <body>
 Hellooooooo!!!!!
 
-	 		<nosliw-debug_test data_string="public_string">
-			</nosliw-debug_test>
-
 <!-- 
+	 		<nosliw-debug_test_data_simple data_string="public_string">
+			</nosliw-debug_test_data_simple>
+
 
 		<br>
  		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
@@ -28,13 +28,17 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 		</nosliw-debug_test>
  -->
 
- 		<nosliw-debug_test data_array="public_array">
+ 		<nosliw-debug_test_data_collection data_array="public_array">
 			<br>
-			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%><%=?(element)?.value%>
+ 			<%=?(element)?.value%>
 			<br>
-	 		<nosliw-debug_test data_string="element">
-			</nosliw-debug_test>
-		</nosliw-debug_test>
+			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%>
+			<br>
+<!-- 
+	 		<nosliw-debug_test_data_simple data_string="element">
+			</nosliw-debug_test_data_simple>
+ -->
+		</nosliw-debug_test_data_collection>
 
 		<nosliw-debug_viewvariable/>
  
