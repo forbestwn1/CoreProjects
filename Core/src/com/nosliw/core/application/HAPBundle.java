@@ -26,7 +26,7 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDependency{
 
 	@HAPAttribute
-	public final static String BRICK = "brick"; 
+	public final static String MAINBRICK = "mainBrick"; 
 
 	@HAPAttribute
 	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
@@ -34,8 +34,11 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	@HAPAttribute
 	public final static String EXTRADATA = "extraData"; 
 
-	private HAPWrapperBrickRoot m_brickWrapper;
+	private HAPWrapperBrickRoot m_mainBrickWrapper;
 
+	//other brick that support main brick, for instance, global task
+	private Map<String, HAPWrapperBrickRoot> m_supportBrick;
+	
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
@@ -82,8 +85,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	
 	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}
 	
-	public HAPWrapperBrickRoot getBrickWrapper() {    return this.m_brickWrapper;     }
-	public void setBrickWrapper(HAPWrapperBrickRoot brickWrapper) {     this.m_brickWrapper = brickWrapper;      }
+	public HAPWrapperBrickRoot getMainBrickWrapper() {    return this.m_mainBrickWrapper;     }
+	public void setMainBrickWrapper(HAPWrapperBrickRoot brickWrapper) {     this.m_mainBrickWrapper = brickWrapper;      }
 	
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }
@@ -100,7 +103,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(MAINBRICK, this.m_mainBrickWrapper.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JSON));
 	}
@@ -108,13 +111,13 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICK, this.m_brickWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(MAINBRICK, this.m_mainBrickWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JAVASCRIPT));
 	}
 	
 	@Override
 	public void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo) {
-		this.m_brickWrapper.buildResourceDependency(dependency, runtimeInfo);
+		this.m_mainBrickWrapper.buildResourceDependency(dependency, runtimeInfo);
 	}
 }

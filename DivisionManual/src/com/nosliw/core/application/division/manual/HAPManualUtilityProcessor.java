@@ -45,7 +45,7 @@ public class HAPManualUtilityProcessor {
 	public static void cleanupEmptyValueStructure(HAPBundle bundle, HAPManagerApplicationBrick brickMan) {
 		Set<String> vsIds = bundle.getValueStructureDomain().cleanupEmptyValueStructure();
 
-		HAPWrapperBrickRoot rootBrickWrapper = bundle.getBrickWrapper();
+		HAPWrapperBrickRoot rootBrickWrapper = bundle.getMainBrickWrapper();
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
 
 			@Override

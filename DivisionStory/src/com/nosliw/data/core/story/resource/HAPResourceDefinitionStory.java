@@ -8,7 +8,7 @@ import com.nosliw.core.application.division.story.HAPStoryAliasElement;
 import com.nosliw.core.application.division.story.HAPStoryIdElement;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
-import com.nosliw.core.application.division.story.HAPStoryImp;
+import com.nosliw.core.application.division.story.HAPStoryStoryImp;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
 import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
@@ -21,12 +21,12 @@ import com.nosliw.data.core.component.HAPResourceDefinitionComplexImp;
 
 public class HAPResourceDefinitionStory extends HAPResourceDefinitionComplexImp implements HAPStoryStory{
 
-	private HAPStoryImp m_story;
+	private HAPStoryStoryImp m_story;
 	
 	public HAPResourceDefinitionStory() {
 	}
 
-	public void setStory(HAPStoryImp story) {   this.m_story = story;   }
+	public void setStory(HAPStoryStoryImp story) {   this.m_story = story;   }
 	
 	@Override
 	public String getShowType() {   return this.m_story.getShowType();  }

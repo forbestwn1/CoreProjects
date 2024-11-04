@@ -9,13 +9,14 @@ import com.nosliw.core.application.division.story.HAPStoryInfoElement;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
+import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 
 public class HAPStoryRequestChangeWrapper {
 
 	private HAPStoryStory m_story;
 	
+	//current request
 	private HAPStoryRequestChange m_changeRequest;
 	
 	private boolean m_isAutoApply = false;
@@ -39,10 +40,12 @@ public class HAPStoryRequestChangeWrapper {
 		}
 	}
 	
-	public void addChange(HAPStoryChangeItem changeItem) {	this.processRequest(changeItem);	}
+	public void addChange(HAPStoryChangeItem changeItem) {	this.processChange(changeItem);	}
 	
 	public void addChanges(List<HAPStoryChangeItem> changeItems) {
-		for(HAPStoryChangeItem changeItem : changeItems)  this.addChange(changeItem);
+		for(HAPStoryChangeItem changeItem : changeItems) {
+			this.addChange(changeItem);
+		}
 	}
 
 	public HAPStoryChangeItemNew addNewChange(HAPStoryElement storyElement) {
@@ -50,29 +53,34 @@ public class HAPStoryRequestChangeWrapper {
 	}
 	
 	public HAPStoryChangeItemNew addNewChange(HAPStoryElement storyElement, String alias) {
-		if(HAPUtilityBasic.isStringEmpty(storyElement.getId())) storyElement.setId(HAPStoryUtilityStory.buildStoryElementId(storyElement, this.m_story.getNextId()));
+		if(HAPUtilityBasic.isStringEmpty(storyElement.getId())) {
+			storyElement.setId(HAPStoryUtilityStory.buildStoryElementId(storyElement, this.m_story.getNextId()));
+		}
 		HAPStoryAliasElement aliasObj = null;
-		if(alias!=null)		aliasObj = new HAPStoryAliasElement(alias, false);
-		else aliasObj = this.m_story.generateTemporaryAlias();
+		if(alias!=null) {
+			aliasObj = new HAPStoryAliasElement(alias, false);
+		} else {
+			aliasObj = this.m_story.generateTemporaryAlias();
+		}
 		HAPStoryChangeItemNew out = new HAPStoryChangeItemNew(storyElement, aliasObj);
-		this.processRequest(out);
+		this.processChange(out);
 		return out;
 	}
 	
 	public HAPStoryChangeItemPatch addPatchChange(HAPStoryReferenceElement targetRef, String path, Object value){
 		HAPStoryChangeItemPatch change = new HAPStoryChangeItemPatch(targetRef, path, value);
-		this.processRequest(change);
+		this.processChange(change);
 		return change;
 	}
 	
 	public HAPStoryChangeItemPatch addPatchChangeGroupAppendElement(HAPStoryReferenceElement targetReference, HAPStoryInfoElement eleInfo) {
 		eleInfo.setId(this.m_story.getNextId());
 		HAPStoryChangeItemPatch change = new HAPStoryChangeItemPatch(targetReference, HAPStoryElementGroup.ELEMENT, eleInfo);
-		this.processRequest(change);
+		this.processChange(change);
 		return change;
 	}
 	
-	private void processRequest(HAPStoryChangeItem changeItem) {
+	private void processChange(HAPStoryChangeItem changeItem) {
 		if(this.m_isAutoApply) {
 			HAPStoryRequestChange changeRequest = newChangeRequest(); 
 			changeRequest.addChange(changeItem);
@@ -87,7 +95,9 @@ public class HAPStoryRequestChangeWrapper {
 	
 	private void applyChangeRequest(HAPStoryRequestChange changeRequest) {
 		List<HAPStoryChangeItem> allChanges = this.m_story.change(changeRequest);
-		if(allChanges!=null)  this.m_allChanages.addAll(allChanges);
+		if(allChanges!=null) {
+			this.m_allChanages.addAll(allChanges);
+		}
 	}
 	
 	public List<HAPStoryChangeItem> close() {

@@ -49,7 +49,7 @@ public class HAPManualDefinitionUtilityBrick {
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath path, HAPBundle bundle){
 		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = (HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData();
 		HAPManualDefinitionBrick entityDef = getDescendantBrickDefinition(rootEntityDefInfo, path);
-		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), path);
+		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getMainBrickWrapper(), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	

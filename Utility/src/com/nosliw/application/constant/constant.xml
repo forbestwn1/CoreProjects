@@ -604,6 +604,8 @@
 
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER" value="valuestructurewrapper"/>
 
+			<definition name="RUNTIME_RESOURCE_TYPE_MODULE" value="module"/>
+
 
 			<definition name="RUNTIME_RESOURCE_TYPE_UICONTENT" value="uicontent"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_UIPAGE" value="uipage"/>

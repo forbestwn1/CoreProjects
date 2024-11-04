@@ -152,7 +152,7 @@ public class HAPManualUtilityValueContextProcessor {
 	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle, HAPManualContextProcessBrick processContext) {
 		HAPPath parentPath = HAPUtilityPath.getParentPath(path);
 		while(parentPath!=null) {
-			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle.getBrickWrapper(), parentPath);
+			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle.getMainBrickWrapper(), parentPath);
 			if(!HAPUtilityValuePort.isValuePortContainerEmpty(parentBrick.getInternalValuePorts(), bundle.getValueStructureDomain())) {
 				return parentPath;
 			}

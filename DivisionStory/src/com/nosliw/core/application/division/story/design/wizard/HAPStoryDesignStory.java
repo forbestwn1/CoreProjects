@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.division.story.HAPStoryParserStory;
 import com.nosliw.core.application.division.story.HAPStoryStory;
-import com.nosliw.core.application.division.story.HAPStoryImp;
+import com.nosliw.core.application.division.story.HAPStoryStoryImp;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
@@ -41,7 +41,7 @@ public class HAPStoryDesignStory extends HAPEntityInfoImp{
 	
 	public HAPStoryDesignStory(HAPStoryManagerChange changeMan) {
 		this.m_changeMan = changeMan;
-		this.m_story = new HAPStoryImp(changeMan);
+		this.m_story = new HAPStoryStoryImp(changeMan);
 		this.m_changeHistory = new ArrayList<HAPStoryDesignStep>();
 	}
 	

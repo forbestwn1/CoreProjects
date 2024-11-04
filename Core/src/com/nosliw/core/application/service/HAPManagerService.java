@@ -62,12 +62,12 @@ public class HAPManagerService implements HAPPluginDivision{
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
 		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
 			HAPBundle bundle = new HAPBundle();
-			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
+			bundle.setMainBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInfo(brickId.getId()).getServiceProfileInfo()));
 			return bundle;
 		} 
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
 			HAPBundle bundle = new HAPBundle();
-			bundle.setBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
+			bundle.setMainBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
 			return bundle;
 		}
 		return null;

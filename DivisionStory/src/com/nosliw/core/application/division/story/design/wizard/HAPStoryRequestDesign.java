@@ -31,4 +31,5 @@ public class HAPStoryRequestDesign {
 	
 	public List<HAPStoryChangeItem> getExtraChanges(){   return this.m_extraChanges;    }
 	public void addExtraChange(HAPStoryChangeItem change) {   this.m_extraChanges.add(change);   }
+
 }

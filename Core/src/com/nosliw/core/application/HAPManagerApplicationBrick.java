@@ -76,7 +76,7 @@ public class HAPManagerApplicationBrick {
 		HAPPluginDivision divisionPlugin = this.m_divisionPlugin.get(division);
 		HAPBundle bundle = divisionPlugin.getBundle(brickId);
 		
-		List<HAPInfoExportResource> exposes = this.getBrickPlugin(brickId.getBrickTypeId()).getExposeResourceInfo(bundle.getBrickWrapper().getBrick());
+		List<HAPInfoExportResource> exposes = this.getBrickPlugin(brickId.getBrickTypeId()).getExposeResourceInfo(bundle.getMainBrickWrapper().getBrick());
 		for(HAPInfoExportResource expose : exposes) {
 			bundle.addExportResourceInfo(expose);
 		}

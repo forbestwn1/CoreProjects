@@ -11,8 +11,8 @@ import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 
 public class HAPStoryParserStory {
 
-	public static HAPStoryImp parseStory(JSONObject jsonObj, HAPStoryManagerChange changeMan) {
-		HAPStoryImp out = new HAPStoryImp(changeMan);
+	public static HAPStoryStoryImp parseStory(JSONObject jsonObj, HAPStoryManagerChange changeMan) {
+		HAPStoryStoryImp out = new HAPStoryStoryImp(changeMan);
 		
 		out.buildEntityInfoByJson(jsonObj);
 		

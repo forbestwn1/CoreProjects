@@ -23,7 +23,7 @@ import com.nosliw.core.application.division.story.change.HAPStoryResultTransacti
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPStoryImp extends HAPEntityInfoImp implements HAPStoryStory{
+public class HAPStoryStoryImp extends HAPEntityInfoImp implements HAPStoryStory{
 	
 	private HAPStoryManagerChange m_changeMan;
 	
@@ -47,7 +47,7 @@ public class HAPStoryImp extends HAPEntityInfoImp implements HAPStoryStory{
 
 	private Set<String> m_temporyAlias;
 	
-	public HAPStoryImp(HAPStoryManagerChange changeMan) {
+	public HAPStoryStoryImp(HAPStoryManagerChange changeMan) {
 		this.m_changeMan = changeMan;
 		this.m_nodes = new LinkedHashMap<String, HAPStoryNode>();
 		this.m_connections = new LinkedHashMap<String, HAPStoryConnection>();

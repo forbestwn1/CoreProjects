@@ -93,7 +93,7 @@ public class HAPUtilityExport {
 		HAPUtilityFile.writeJsonFile(bundleFolder, "extra.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 		
 		//write package executable
-		HAPUtilityFile.writeJsonFile(bundleFolder, "executable.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
+		HAPUtilityFile.writeJsonFile(bundleFolder, "executable.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getMainBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
 		
 		//external complex entity dependency
 		Set<HAPResourceIdSimple> dependency = bundle.getResourceDependency();
