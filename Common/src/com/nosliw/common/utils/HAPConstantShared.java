@@ -511,6 +511,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT = "taskTaskScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT = "taskExpressionScript";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER = "valuestructurewrapper";
+		public static final String RUNTIME_RESOURCE_TYPE_MODULE = "module";
 		public static final String RUNTIME_RESOURCE_TYPE_UICONTENT = "uicontent";
 		public static final String RUNTIME_RESOURCE_TYPE_UIPAGE = "uipage";
 		public static final String RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG = "uicustomertag";
@@ -601,6 +602,11 @@ public class HAPConstantShared {
 
 
 		public static final String ACTIVITY_OUTPUTVARIABLE_OUTPUT = "output";
+
+
+
+		public static final String TASK_TRIGGUER_EVENTHANDLE = "eventHandle";
+		public static final String TASK_TRIGGUER_DATAVALIDATION = "dataValidation";
 
 
 
@@ -906,12 +912,14 @@ public class HAPConstantShared {
 		public static final String VALUEPORTGROUP_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION = "expressionInteractive";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVETASK = "taskInteractive";
-		public static final String VALUEPORTGROUP_TYPE_EVENT = "event";
+		public static final String VALUEPORTGROUP_TYPE_EVENTDATA = "eventData";
+		public static final String VALUEPORTGROUP_TYPE_VALIDATIONDATA = "validationData";
 
 
 
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
+		public static final String VALUEPORT_TYPE_VALIDATIONDATA = "validationData";
 		public static final String VALUEPORT_TYPE_INTERACTIVE_REQUEST = "interactiveRequest";
 		public static final String VALUEPORT_TYPE_INTERACTIVE_RESULT = "interactiveResult";
 
@@ -925,6 +933,7 @@ public class HAPConstantShared {
 
 		public static final String VALUEPORT_NAME_SELF = "self";
 		public static final String VALUEPORT_NAME_EVENT = "event";
+		public static final String VALUEPORT_NAME_VALIDATIONDATA = "validationData";
 		public static final String VALUEPORT_NAME_INTERACT_REQUEST = "interactiveRequest";
 		public static final String VALUEPORT_NAME_INTERACT_RESULT = "interactiveResult";
 
@@ -973,6 +982,7 @@ public class HAPConstantShared {
 
 		public static final String NAME_ROOT_RESULT = "result";
 		public static final String NAME_ROOT_EVENT = "event";
+		public static final String NAME_ROOT_DATA = "data";
 
 
 

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.script.HAPTestEvent;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.data.core.resource.HAPResourceId;
 
@@ -16,7 +16,7 @@ public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefiniti
 	public HAPManualDefinitionBlockTestComplexScript() {
 		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100);
 		this.setAttributeValueWithValue(HAPBlockTestComplexScript.PARM, new LinkedHashMap<String, Object>());
-		this.setAttributeValueWithValue(HAPBlockTestComplexScript.EVENT, new ArrayList<HAPTestEvent>());
+		this.setAttributeValueWithValue(HAPBlockTestComplexScript.TASKTRIGGUER, new ArrayList<HAPTestTaskTrigguer>());
 	}
 
 	public void setScript(HAPResourceId scriptResourceId) {    this.setAttributeValueWithValue(HAPBlockTestComplexScript.SCRIPT, scriptResourceId);    }
@@ -26,5 +26,5 @@ public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefiniti
 	public Map<String, Object> getParms(){   return (Map<String, Object>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.PARM);    }
 	public Object getParm(String name) {   return this.getParms().get(name);    }
 
-	public List<HAPTestEvent> getEvents(){   return (List<HAPTestEvent>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.EVENT);    }
+	public List<HAPTestTaskTrigguer> getTaskTrigguers(){   return (List<HAPTestTaskTrigguer>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.TASKTRIGGUER);    }
 }

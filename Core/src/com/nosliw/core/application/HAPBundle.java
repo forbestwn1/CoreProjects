@@ -2,6 +2,7 @@ package com.nosliw.core.application;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +30,9 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public final static String MAINBRICK = "mainBrick"; 
 
 	@HAPAttribute
+	public final static String SUPPORTBRICKS = "supportBricks"; 
+
+	@HAPAttribute
 	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
 
 	@HAPAttribute
@@ -37,7 +41,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	private HAPWrapperBrickRoot m_mainBrickWrapper;
 
 	//other brick that support main brick, for instance, global task
-	private Map<String, HAPWrapperBrickRoot> m_supportBrick;
+	private Map<String, HAPWrapperBrickRoot> m_supportBricks;
 	
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
@@ -49,6 +53,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public HAPBundle() {
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_exportResourceInfos = new ArrayList<HAPInfoExportResource>();
+		this.m_supportBricks = new LinkedHashMap<String, HAPWrapperBrickRoot>();
 		
 		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
 		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
@@ -74,8 +79,12 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		HAPResourceDataBrick out = null;
 		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot());
 		if(brickResult.isInternalBrick()) {
-			HAPBrick brick = brickResult.getInternalBrick();
-			out = new HAPResourceDataBrick(brick, this.m_valueStructureDomain);
+			Map<String, HAPBrick> suportBricks = new LinkedHashMap<String, HAPBrick>();
+			for(String n : this.m_supportBricks.keySet()) {
+				suportBricks.put(n, this.m_supportBricks.get(n).getBrick());
+			}
+			
+			out = new HAPResourceDataBrick(brickResult.getInternalBrick(), suportBricks, this.m_valueStructureDomain);
 		}
 		else {
 			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();

@@ -7,41 +7,40 @@
 
 		{
 			"info": {
-				"name" : "event-test_complex_script",
-				"status": "disabled1",
+				"name" : "taskinteractive-test_complex_task",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
-				"script": "complexscript_test_task",
-				"taskTrigguer" : [
-					{
-						"trigguerInfo" : {
-							"trigguerType" : "eventHandle",
-							"name" : "testEvent1",
-							"handlerId" : {
-								"idPath" : "eventhandler-test_complex_task"
-							},
-							"dataDefinition" : {
-								"criteria": "test.string;1.0.0"
-							}
-						},
-						"testData" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "event data for test event1"
+				"interactiveTask1" : {
+					"request" : [
+						{
+							"name" : "task_request_string1",
+							"dataInfo" : "test.string;1.0.0"
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"criteria" : "test.string;1.0.0"
+								}
+							]
 						}
 					}
-				]
-			}
-		},
-			
-		{
-			"info": {
-				"name" : "eventhandler-test_complex_task",
-				"status": "disabled1",
-				"description" : ""
-			},
-			"brick":{
-				"script": "complextask_test_basic",
+				},				
+				"interactiveExpression1" : {
+					"request" : [
+						{
+							"name" : "expression_request_forresult",
+							"dataInfo" : "test.string;1.0.0"
+						}
+					],
+					"result" : {
+						"criteria" : "test.string;1.0.0"
+					}
+				},				
 				"variable" : [
 					{
 						"name" : "eventData",
@@ -49,41 +48,70 @@
 						"ioDirection" : "OUT",
 						"valuePortId" : {
 							"valuePortId" : {
-								"group" : "eventData"
+								"group" : "event",
+								"name1" : "event"
 							}
 						}
 					}
-				],
-				"valueContext" : {
-					"brick": [
-						{
-							"groupType" : "public",
-							"valueStructure" : {
-								"root" : {
-									"task_input1": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									},
-									"task_input2": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									},
-									"task_result": {
-										"definition":{
-											"criteria": "test.string;1.0.0"
-										}
-									}
-								}
-							}
-						}
-					]
-				}
+				]
 			},
 			"adapter":[
 				{
-					"name" : "taskAdapter",
+					"name" : "interactiveexpressionAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "expression_request_forresult",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "expressionInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result",
+												"valuePortId" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"name" : "interactivetaskAdapter",
 					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
@@ -95,30 +123,19 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
-										"status": "disabled1",
+										"status": "disabled",
 										"target" : {
-											"rootName" : "event",
+											"rootName" : "task_request_string1",
 											"ioDirection" : "IN",
 											"valuePortId" : {
 												"valuePortId" : {
-													"group" : "eventData"
+													"group" : "taskInteractive"
 												}
 											}
 										},
 										"definition" : {
 											"mapping" : {
 												"elementPath": "parm1"
-											}
-										}
-									},
-									{
-										"status": "disabled1",
-										"target" : {
-											"rootName" : "task_input2"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "parm2"
 											}
 										}
 									}
@@ -134,7 +151,12 @@
 											},
 											"definition" : {
 												"mapping" : {
-													"elementPath": "task_input2"
+													"elementPath": "task_result_success_string1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
 												}
 											}
 										}

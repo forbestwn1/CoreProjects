@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.event;
+package com.nosliw.core.application.common.task;
 
 import java.util.Map;
 
@@ -13,26 +13,33 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
 
 @HAPEntityWithAttribute
-public class HAPInfoEvent extends HAPEntityInfoImp{
+public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 
+	@HAPAttribute
+	public static final String TRIGGUERTYPE = "trigguerType";
+	
+	@HAPAttribute
+	public static final String DATADEFINITION = "dataDefinition";
+	
 	@HAPAttribute
 	public static final String HANDLERID = "handlerId";
 	
 	@HAPAttribute
-	public static final String EVENTDATADEFINITION = "eventDataDefinition";
-	
-	@HAPAttribute
 	public static final String VALUEPORTGROUPNAME = "valuePortGroupName";
+
+	private String m_trigguerType;
 	
+	private HAPElementStructure m_dataDefinition;
+
 	private HAPIdBrickInBundle m_handlerId;
 	
-	private HAPElementStructure m_eventDataDefinition;
-
 	private String m_externalValuePortGroupName;
 
-	public HAPIdBrickInBundle getHandlerId() {   return this.m_handlerId;     }
+	public String getTrigguerType() {     return this.m_trigguerType;       }
 	
-	public HAPElementStructure getEventDataDefinition() {   return this.m_eventDataDefinition;      }
+	public HAPElementStructure getEventDataDefinition() {   return this.m_dataDefinition;      }
+	
+	public HAPIdBrickInBundle getHandlerId() {   return this.m_handlerId;     }
 	
 	public void setExternalValuePortGroupName(String name) {    this.m_externalValuePortGroupName = name;       }
 	
@@ -43,19 +50,22 @@ public class HAPInfoEvent extends HAPEntityInfoImp{
 		
 		this.buildEntityInfoByJson(jsonObj);
 		
+		this.m_trigguerType = (String)jsonObj.opt(TRIGGUERTYPE);
+		
+		this.m_dataDefinition = HAPParserStructure.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION));
+		
 		this.m_handlerId = new HAPIdBrickInBundle();
 		this.m_handlerId.buildObject(jsonObj.opt(HANDLERID), HAPSerializationFormat.JSON);
 
-		this.m_eventDataDefinition = HAPParserStructure.parseStructureElement(jsonObj.optJSONObject(EVENTDATADEFINITION));
-		
 		return true;  
 	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TRIGGUERTYPE, this.m_trigguerType);
+		jsonMap.put(DATADEFINITION, m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(HANDLERID, this.m_handlerId.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(EVENTDATADEFINITION, m_eventDataDefinition.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUEPORTGROUPNAME, m_externalValuePortGroupName);
 	}
 }

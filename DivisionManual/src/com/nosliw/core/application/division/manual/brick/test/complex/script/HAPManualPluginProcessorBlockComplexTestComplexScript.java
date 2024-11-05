@@ -16,9 +16,9 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.script.HAPTestEvent;
-import com.nosliw.core.application.common.event.HAPInfoEvent;
-import com.nosliw.core.application.common.event.HAPUtilityEvent;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
+import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
+import com.nosliw.core.application.common.task.HAPUtilityTaskTrigguerValuePort;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
@@ -47,18 +47,27 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
 		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
 
-		for(HAPTestEvent testEvent : definitionBlock.getEvents()) {
-			HAPInfoEvent eventInfo = testEvent.getEventInfo();
-			HAPIdBrickInBundle handlerIdInBundle = eventInfo.getHandlerId();
+		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
+			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
+			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
 			handlerIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(handlerIdInBundle.getIdPath(), executableBlock.getTreeNodeInfo().getPathFromRoot().toString()));
 			
 			HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(handlerIdInBundle, bundle);
 			
-			Pair<HAPGroupValuePorts, HAPGroupValuePorts> eventValuePortGroupPair = HAPUtilityEvent.createValuePortGroupForEvent(eventInfo, bundle.getValueStructureDomain());
-			taskWrapperBrick.addOtherInternalValuePortGroup(eventValuePortGroupPair.getLeft());
-			eventInfo.setExternalValuePortGroupName(taskWrapperBrick.addOtherExternalValuePortGroup(eventValuePortGroupPair.getRight()).getName());
+			Pair<HAPGroupValuePorts, HAPGroupValuePorts> taskValuePortGroupPair = null;
+			String trigguerType = trigguerInfo.getTrigguerType();
+			if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE)) {
+				taskValuePortGroupPair = HAPUtilityTaskTrigguerValuePort.createValuePortGroupForEventHandle(trigguerInfo, bundle.getValueStructureDomain());
+			}
+			else if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_DATAVALIDATION)) {
+				taskValuePortGroupPair = HAPUtilityTaskTrigguerValuePort.createValuePortGroupForDataValidation(trigguerInfo, bundle.getValueStructureDomain());
+			}
 			
-			executableBlock.getEvents().add(testEvent);
+					
+			taskWrapperBrick.addOtherInternalValuePortGroup(taskValuePortGroupPair.getLeft());
+			trigguerInfo.setExternalValuePortGroupName(taskWrapperBrick.addOtherExternalValuePortGroup(taskValuePortGroupPair.getRight()).getName());
+			
+			executableBlock.getTaskTrigguers().add(taskTrigguer);
 		}
 	}
 

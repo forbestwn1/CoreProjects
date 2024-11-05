@@ -695,6 +695,11 @@
 			<definition name="ACTIVITY_OUTPUTVARIABLE_OUTPUT" value="output"/>
 
 			<definition type="space"/>
+			<definition name="TASK_TRIGGUER_EVENTHANDLE" value="eventHandle"/>
+			<definition name="TASK_TRIGGUER_DATAVALIDATION" value="dataValidation"/>
+
+
+			<definition type="space"/>
 			<definition name="TASK_RESULT_SUCCESS" value="success"/>
 			<definition name="TASK_RESULT_FAIL" value="fail"/>
 			<definition name="TASK_RESULT_EXCEPTION" value="exception"/>
@@ -952,11 +957,13 @@
 			<definition name="VALUEPORTGROUP_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION" value="expressionInteractive"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVETASK" value="taskInteractive"/>
-			<definition name="VALUEPORTGROUP_TYPE_EVENT" value="event"/>
+			<definition name="VALUEPORTGROUP_TYPE_EVENTDATA" value="eventData"/>
+			<definition name="VALUEPORTGROUP_TYPE_VALIDATIONDATA" value="validationData"/>
 
 			<definition type="space"/>
 			<definition name="VALUEPORT_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORT_TYPE_EVENT" value="event"/>
+			<definition name="VALUEPORT_TYPE_VALIDATIONDATA" value="validationData"/>
 			<definition name="VALUEPORT_TYPE_INTERACTIVE_REQUEST" value="interactiveRequest"/>
 			<definition name="VALUEPORT_TYPE_INTERACTIVE_RESULT" value="interactiveResult"/>
 
@@ -969,6 +976,7 @@
 			<definition type="space"/>
 			<definition name="VALUEPORT_NAME_SELF" value="self"/>
 			<definition name="VALUEPORT_NAME_EVENT" value="event"/>
+			<definition name="VALUEPORT_NAME_VALIDATIONDATA" value="validationData"/>
 			<definition name="VALUEPORT_NAME_INTERACT_REQUEST" value="interactiveRequest"/>
 			<definition name="VALUEPORT_NAME_INTERACT_RESULT" value="interactiveResult"/>
 
@@ -1010,6 +1018,7 @@
 			<definition type="space"/>
 			<definition name="NAME_ROOT_RESULT" value="result"/>
 			<definition name="NAME_ROOT_EVENT" value="event"/>
+			<definition name="NAME_ROOT_DATA" value="data"/>
 
 			<definition type="space"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>

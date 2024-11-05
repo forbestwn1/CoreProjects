@@ -81,7 +81,7 @@ public class HAPProcessorComponent {
 	}
 	
 	public static void processEvent(HAPDefinitionEntityComponent definition, HAPExecutableComponent executable, HAPRuntimeEnvironment runtimeEnv) {
-		for(HAPDefinitionEvent eventDef : definition.getEvents()) {
+		for(HAPDefinitionEvent eventDef : definition.getTaskTrigguers()) {
 			HAPExecutableEvent eventExe = HAPProcessEvent.processEventDefinition(eventDef, definition.getValueStructureWrapper().getValueStructureBlock(), runtimeEnv);
 			executable.addEvent(eventExe);
 		}

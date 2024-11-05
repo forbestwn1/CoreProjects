@@ -1,5 +1,6 @@
 package com.nosliw.core.application.resource;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,19 +22,26 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 	public final static String BRICK = "brick"; 
 
 	@HAPAttribute
+	public final static String SUPPORTBRICKS = "supportBricks"; 
+
+	@HAPAttribute
 	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
 
 	private HAPBrick m_brick;
 	
+	private Map<String, HAPBrick> m_supportBricks;
+	
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPResourceDataBrick(HAPBrick brick) {
+	public HAPResourceDataBrick(HAPBrick brick, Map<String, HAPBrick> supportBricks) {
+		this.m_supportBricks = new LinkedHashMap<String, HAPBrick>();
+		this.m_supportBricks.putAll(supportBricks);
 		this.m_brick = brick;
 	}
 	
-	public HAPResourceDataBrick(HAPBrick brick, HAPDomainValueStructure valueStructureDomain) {
-		this(brick);
+	public HAPResourceDataBrick(HAPBrick brick, Map<String, HAPBrick> supportBricks, HAPDomainValueStructure valueStructureDomain) {
+		this(brick, supportBricks);
 		this.m_valueStructureDomain = valueStructureDomain;
 	}
 	

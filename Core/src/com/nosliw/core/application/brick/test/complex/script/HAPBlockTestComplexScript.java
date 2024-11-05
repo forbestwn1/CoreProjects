@@ -32,7 +32,7 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 	public static String VARIABLEEXTENDED = "variableExtended";
 	
 	@HAPAttribute
-	public static String EVENT = "event";
+	public static String TASKTRIGGUER = "taskTrigguer";
 
 	HAPResourceId getScrip();
 	Map<String, Object> getParms();
@@ -41,7 +41,7 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 	List<HAPExecutableVariableExpected> getExtendedVariables();
 	List<HAPInfoAttachmentResolve> getAttachments();
 
-	List<HAPTestEvent> getEvents();
+	List<HAPTestTaskTrigguer> getTaskTrigguers();
 	
 //	@Override
 //	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {

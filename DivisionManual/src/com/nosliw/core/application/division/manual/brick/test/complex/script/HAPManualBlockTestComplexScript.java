@@ -7,7 +7,7 @@ import java.util.Map;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPExecutableVariableExpected;
 import com.nosliw.core.application.brick.test.complex.script.HAPInfoAttachmentResolve;
-import com.nosliw.core.application.brick.test.complex.script.HAPTestEvent;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
@@ -21,7 +21,7 @@ public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implement
 	@Override
 	public void init() {
 		super.init();
-		this.setAttributeValueWithValue(HAPBlockTestComplexScript.EVENT, new ArrayList<HAPTestEvent>());
+		this.setAttributeValueWithValue(HAPBlockTestComplexScript.TASKTRIGGUER, new ArrayList<HAPTestTaskTrigguer>());
 	}
 
 	@Override
@@ -49,6 +49,6 @@ public class HAPManualBlockTestComplexScript extends HAPManualBrickImp implement
 	public void setAttachment(List<HAPInfoAttachmentResolve> attachments) {    this.setAttributeValueWithValue(ATTACHMENT, attachments);	}
 
 	@Override
-	public List<HAPTestEvent> getEvents(){    return (List<HAPTestEvent>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.EVENT);     }
+	public List<HAPTestTaskTrigguer> getTaskTrigguers(){    return (List<HAPTestTaskTrigguer>)this.getAttributeValueOfValue(HAPBlockTestComplexScript.TASKTRIGGUER);     }
 	
 }

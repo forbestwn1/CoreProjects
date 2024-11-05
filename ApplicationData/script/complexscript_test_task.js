@@ -14,6 +14,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_parms;
     var loc_scriptVars;
+    var loc_taskTrigguers;
+    
 	var loc_configure;
 
 	var loc_tasks;
@@ -25,7 +27,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		
 		loc_parms = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCTESTCOMPLEXSCRIPT_PARM);
-    	loc_events = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_EVENT);
+    	loc_taskTrigguers = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_TASKTRIGGUER);
 		loc_configure = configure;
 	
 		var varDomain = bundleCore.getVariableDomain();
@@ -62,16 +64,16 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			$(view).append(rootView);
 			
 			var containerView =  $('<div></div>');
-			_.each(loc_events, function(event, i){
-				var eventInfo = event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTINFO];
-				var eventName = eventInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-				var eventTrigueView = $('<button>Triggue Event : '+eventName+'</button>');
+			_.each(loc_taskTrigguers, function(taskTrigguer, i){
+				var trigguerInfo = taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TRIGGUERINFO];
+				var trigguerName = trigguerInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+				var taskTrigueView = $('<button>Triggue Task : '+trigguerName+'</button>');
 				var eventResultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
-				containerView.append(eventTrigueView);	
+				containerView.append(taskTrigueView);	
 				containerView.append(eventResultView);	
 
-				eventTrigueView.click(function() {
-					var relativePath = eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+				taskTrigueView.click(function() {
+					var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 					var handlerEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
 					
 					var taskContext = {
@@ -80,18 +82,18 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
 							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
 								internalValuePortContainer,
-								eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME],
+								trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
 								node_COMMONCONSTANT.VALUEPORT_NAME_EVENT,
 								node_COMMONCONSTANT.NAME_ROOT_EVENT,
-								event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA],
+								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
 								handlers, request);
 							
 							
 							
-//							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOEVENT_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
+//							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
 //							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
 //							var valueStructureId = internalValuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT);
-//							return eventValuePort.setValueRequest(node_createValuePortElementInfo(undefined, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTEVENT_EVENTDATA], handlers, request);
+//							return eventValuePort.setValueRequest(node_createValuePortElementInfo(undefined, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA], handlers, request);
 						}
 					};
 					

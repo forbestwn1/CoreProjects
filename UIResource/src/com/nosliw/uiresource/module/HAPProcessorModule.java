@@ -101,7 +101,7 @@ public class HAPProcessorModule {
 //			String eventName = eventHandlerDef.getName();
 //			HAPRootStructure eventRootNode = buildContextRootFromEvent(out.getPage().getBody().getEventDefinition(eventName));
 //			HAPValueStructureDefinitionGroup eventContext = new HAPValueStructureDefinitionGroup();
-//			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("EVENT"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+//			eventContext.addRoot(HAPNosliwUtility.buildNosliwFullName("TASKTRIGGUER"), eventRootNode, HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 //			HAPResourceDefinitionProcess processDef = moduleExe.getProcessDefinition(eventHandlerDef.getTask().getTaskDefinition());
 //			HAPExecutableProcess eventProcessor = HAPProcessorProcess.process(processDef, eventContext, serviceProviders, processMan, runtimeEnv, processTracker);
 //			HAPExecutableWrapperTask processExeWrapper = HAPProcessorDataAssociation.processDataAssociationWithTask(eventHandlerDef.getTask(), eventProcessor, HAPContainerStructure.createDefault(moduleExe.getContext()), null, runtimeEnv);			
