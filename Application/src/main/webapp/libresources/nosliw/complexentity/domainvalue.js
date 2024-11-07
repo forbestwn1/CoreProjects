@@ -321,6 +321,11 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 		getValuePortInfoByGroupTypeAndValuePortName : function(groupType, valuePortName){	return loc_valuePortInfoByGroupTypeAndValuePortId[groupType][valuePortName][0];	},
 
+		getValueStructuresByGroupTypeAndValuePortName : function(groupType, valuePortName){
+			var valuePortInfo = this.getValuePortInfoByGroupTypeAndValuePortName(groupType, valuePortName);
+			return this.getValueStructuresByGroupNameAndValuePortName(valuePortInfo.groupName, valuePortInfo.valuePortName);
+		},
+
 		getValueStructuresByGroupNameAndValuePortName : function(groupName, valuePortName){
 			var out = {};
 			_.each(loc_valueStructures[groupName][valuePortName], function(valueStructureWrapper, vsId){
@@ -340,6 +345,16 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		getValueStructureWrapper : function(valueStructureRuntimeId){
 			var valueStructureInfo = loc_valueStructureInfoById[valueStructureRuntimeId];
 			return valueStructureInfo==undefined?undefined : loc_valueStructures[valueStructureInfo.groupName][valueStructureInfo.valuePortName][valueStructureRuntimeId];   
+		},
+		
+		getVariableByName : function(groupType, valuePortName, variableName){
+			var out;
+			var valueStructures = this.getValueStructuresByGroupTypeAndValuePortName(groupType, valuePortName);
+			for(var i in valueStructures){
+				var valueStructure = valueStructures[i];
+				out = valueStructure.getElement(variableName);
+				if(out!=undefined)  return out;
+			}
 		},
 		
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){

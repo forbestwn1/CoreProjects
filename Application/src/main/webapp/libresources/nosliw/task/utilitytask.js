@@ -81,6 +81,20 @@ var node_taskUtility = {
 		else{
 			var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 			var task = taskFactory.createTask(taskContext);
+			
+			var initRequestWrapper = node_createServiceRequestInfoSequence(undefined, {
+				success : function(request){
+					return task.getTaskExecuteRequest({
+						success : function(request){
+							return task;
+						}
+					});
+				}
+			});
+			initRequestWrapper.addRequest(task.getTaskInitRequest());
+			out.addRequest(initRequestWrapper);
+
+/*
 			out.addRequest(task.getTaskInitRequest({
 				success : function(request){
 					var task1 = task;
@@ -91,6 +105,7 @@ var node_taskUtility = {
 					});
 				}
 			}));
+*/			
 		}
 		return out;		
 	},

@@ -62,12 +62,14 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	public HAPEntityOrReference getAttributeValueOfBrick(String attributeName) {
 		HAPEntityOrReference out = null;
 		HAPWrapperValue valueWrapper = this.getAttributeValueWrapper(attributeName);
-		String valueWrapperType = valueWrapper.getValueType();
-		if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-			out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
-		}
-		else if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
-			out = ((HAPWrapperValueOfReferenceResource)valueWrapper).getResourceId();
+		if(valueWrapper!=null) {
+			String valueWrapperType = valueWrapper.getValueType();
+			if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+				out = ((HAPWrapperValueOfBrick)valueWrapper).getBrick();
+			}
+			else if(valueWrapperType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+				out = ((HAPWrapperValueOfReferenceResource)valueWrapper).getResourceId();
+			}
 		}
 		return out;
 	}

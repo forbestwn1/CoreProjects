@@ -1,4 +1,13 @@
-function(complexEntityDef, valueContextId, bundleCore, configure){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
+"version":"1.0.0"
+},
+"id":"*complexscript_test_triggueevent"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
@@ -80,11 +89,24 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						getInitTaskRequest : function(coreEntity, handlers, request){
 							//set event data to value port
 							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+							
+							var valuePortName;
+							var rootEleName;
+							var trigguerType = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_TRIGGUERTYPE];
+							if(trigguerType==node_COMMONCONSTANT.TASK_TRIGGUER_DATAVALIDATION){
+								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_VALIDATIONDATA;
+								rootEleName = node_COMMONCONSTANT.NAME_ROOT_DATA;
+							}
+							else if(trigguerType==node_COMMONCONSTANT.TASK_TRIGGUER_EVENTHANDLE){
+								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_EVENT;
+								rootEleName = node_COMMONCONSTANT.NAME_ROOT_EVENT;
+							}
+							
 							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
 								internalValuePortContainer,
 								trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
-								node_COMMONCONSTANT.VALUEPORT_NAME_EVENT,
-								node_COMMONCONSTANT.NAME_ROOT_EVENT,
+								valuePortName,
+								rootEleName,
 								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
 								handlers, request);
 							
@@ -113,3 +135,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
 	return loc_out;
 }
+
+}, {"loadPattern":"file"
+});
+

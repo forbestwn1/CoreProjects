@@ -54,6 +54,36 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 			
+			
+			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(valuePortContainer, {
+				success : function(request, requestValues){
+					var resultValues = {};
+					_.each(requestValues, function(data, name){
+						var resultName = "success";
+						var requestPre = 'task_request_';
+						var resultPre = 'task_result_';
+						if(name.startsWith(requestPre)){
+							var coreName = name.substring(requestPre.length);
+							var resultVarName = resultPre+resultName+"_"+coreName;
+							resultValues[resultVarName] = data;
+						}
+					});
+					
+					var result = {
+					    "resultName": "success",
+					    "resultValue": resultValues
+					};
+					return  node_interactiveUtility.setTaskResultToValuePort(result, valuePortContainer, {
+						success : function(){
+							loc_taskResult = result;
+							return result;
+						}
+					});
+				}
+			}));
+			
+
+/*			
 			var result = {
 			    "resultName": "success",
 			    "resultValue": {
@@ -67,13 +97,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			};
 
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
 			out.addRequest(node_interactiveUtility.setTaskResultToValuePort(result, valuePortContainer, {
 				success : function(){
 					loc_taskResult = result;
 					return result;
 				}
 			}));
+*/
+			
 			return out;
 		},
 		

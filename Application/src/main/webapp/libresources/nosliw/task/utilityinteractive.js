@@ -29,7 +29,7 @@ var node_interactiveUtility = function(){
 		return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
 	};
 
-	var loc_getRequestValuesFromValuePort = function(valuePortContainer, valuePortGroup, handlers, request){
+	var loc_getRequestValuesFromValuePort = function(valuePortContainer, valuePortGroupType, handlers, request){
 		
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var getParmsRequest = node_createServiceRequestInfoSet(undefined, {
@@ -38,8 +38,7 @@ var node_interactiveUtility = function(){
 			}
 		});
 		
-		var valuePortInfo = valuePortContainer.getValuePortInfoByGroupTypeAndValuePortName(valuePortGroup, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST);
-		var valueStructures = valuePortContainer.getValueStructuresByGroupNameAndValuePortName(valuePortInfo.groupName, valuePortInfo.valuePortName);
+		var valueStructures = valuePortContainer.getValueStructuresByGroupTypeAndValuePortName(valuePortGroupType, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST);
 		_.each(valueStructures, function(valueStructure, i){
 			var eleNames = valueStructure.getElementsName();
 			_.each(eleNames, function(eleName, i){

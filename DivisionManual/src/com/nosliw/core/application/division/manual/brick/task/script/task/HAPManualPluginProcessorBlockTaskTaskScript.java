@@ -2,6 +2,7 @@ package com.nosliw.core.application.division.manual.brick.task.script.task;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
@@ -42,11 +43,14 @@ public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPlugin
 		HAPManualBlockTaskTaskScript executableBlock = (HAPManualBlockTaskTaskScript)blockPair.getRight();
 
 		//build value port group
-		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(executableBlock.getTaskInterface(), processContext.getRuntimeEnv().getBrickManager());
-		HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInteractive, processContext.getCurrentBundle().getValueStructureDomain());
-		executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
-		executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+		HAPEntityOrReference taskInterface = executableBlock.getTaskInterface();
+		if(taskInterface!=null) {
+			HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(taskInterface, processContext.getRuntimeEnv().getBrickManager());
+			HAPInteractiveTask taskInteractive = taskInterfaceBlock.getValue();
+			Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInteractive, processContext.getCurrentBundle().getValueStructureDomain());
+			executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
+			executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+		}
 	}
 
 	@Override

@@ -964,6 +964,7 @@
 			<definition name="VALUEPORT_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORT_TYPE_EVENT" value="event"/>
 			<definition name="VALUEPORT_TYPE_VALIDATIONDATA" value="validationData"/>
+			<definition name="VALUEPORT_TYPE_ERROR" value="error"/>
 			<definition name="VALUEPORT_TYPE_INTERACTIVE_REQUEST" value="interactiveRequest"/>
 			<definition name="VALUEPORT_TYPE_INTERACTIVE_RESULT" value="interactiveResult"/>
 
@@ -1019,6 +1020,7 @@
 			<definition name="NAME_ROOT_RESULT" value="result"/>
 			<definition name="NAME_ROOT_EVENT" value="event"/>
 			<definition name="NAME_ROOT_DATA" value="data"/>
+			<definition name="NAME_ROOT_ERROR" value="error"/>
 
 			<definition type="space"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>

@@ -920,6 +920,7 @@ public class HAPConstantShared {
 		public static final String VALUEPORT_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORT_TYPE_EVENT = "event";
 		public static final String VALUEPORT_TYPE_VALIDATIONDATA = "validationData";
+		public static final String VALUEPORT_TYPE_ERROR = "error";
 		public static final String VALUEPORT_TYPE_INTERACTIVE_REQUEST = "interactiveRequest";
 		public static final String VALUEPORT_TYPE_INTERACTIVE_RESULT = "interactiveResult";
 
@@ -983,6 +984,7 @@ public class HAPConstantShared {
 		public static final String NAME_ROOT_RESULT = "result";
 		public static final String NAME_ROOT_EVENT = "event";
 		public static final String NAME_ROOT_DATA = "data";
+		public static final String NAME_ROOT_ERROR = "error";
 
 
 
