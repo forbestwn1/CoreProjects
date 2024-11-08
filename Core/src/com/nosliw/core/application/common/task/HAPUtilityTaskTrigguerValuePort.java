@@ -67,7 +67,9 @@ public class HAPUtilityTaskTrigguerValuePort {
 		//value port for result
 		{
 			HAPValuePort internalErrorResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_ERROR, HAPConstantShared.IO_DIRECTION_IN); 
+			internalErrorResultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_ERROR);
 			HAPValuePort externalErrorResultValuePort = new HAPValuePort(HAPConstantShared.VALUEPORT_TYPE_ERROR, HAPConstantShared.IO_DIRECTION_OUT); 
+			externalErrorResultValuePort.setName(HAPConstantShared.VALUEPORT_NAME_ERROR);
 			
 			Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
 			HAPRootInStructure root = new HAPRootInStructure();

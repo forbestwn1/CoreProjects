@@ -935,6 +935,7 @@ public class HAPConstantShared {
 		public static final String VALUEPORT_NAME_SELF = "self";
 		public static final String VALUEPORT_NAME_EVENT = "event";
 		public static final String VALUEPORT_NAME_VALIDATIONDATA = "validationData";
+		public static final String VALUEPORT_NAME_ERROR = "error";
 		public static final String VALUEPORT_NAME_INTERACT_REQUEST = "interactiveRequest";
 		public static final String VALUEPORT_NAME_INTERACT_RESULT = "interactiveResult";
 

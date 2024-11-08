@@ -68,17 +68,24 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				success : function(request, dataValue){
 					var taskResult;
 					if(dataValue==undefined){
-						taskResult = {
-						    "resultName": "error",
-						    "resultValue": "value should not be empty"
-						};
+						var errorMessage = "value should not be empty";
+						var errorValue = {};
+						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
+						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_VALIDATIONDATA, node_COMMONCONSTANT.NAME_ROOT_ERROR, errorValue, {
+							success : function(request){
+								loc_taskResult = {
+								    "resultName": "error",
+								    "resultValue": errorMessage
+								};
+							}
+						});
 					}
 					else{
-						taskResult = {
+						loc_taskResult = {
 						    "resultName": "success"
 						};
 					}
-					loc_taskResult = taskResult;
+					
 					return taskResult;
 				}
 			}));

@@ -4,6 +4,19 @@
 		"description": "include all basic feature"
 	},
 	"brick": [
+		{
+			"info": {
+				"name" : "variablebynameshow-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["value1"]
+				}
+			}
+		},
 
 		{
 			"info": {
@@ -25,7 +38,7 @@
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData1" : {
+						"testData" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -42,7 +55,61 @@
 			},
 			"brick":{
 				"scriptResourceId": "task_datavalidation_mandatory"
-			}
+			},
+			"adapter":[
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "value1"
+											},
+											"definition" : {
+												"value" : "validation success"
+											}
+										}
+									]
+								},
+								"error" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "value1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "error",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "validationData"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]		
 		},
 
 		{
@@ -55,8 +122,101 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
+							"parent_public": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parent_public_url": {
+								"definition":{
+									"criteria": "test.url;1.0.0"
+								}
+							},
+							"parent_public_array": {
+								"definition":{
+									"criteria": "test.array;1.0.0%||element:test.string;1.0.0||%"
+								}
+							},
+							"parm1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parm2": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"output1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"value1": {
+								"definition":{
+								}
+							},
+							"integer1": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"integer2": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"parent_public_constant_string": {
+								"definition":{
+									"value": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "value of parent_public_constant_string"
+									} 
+								}
+							}
 						},
 						"initValue": {
+							"parent_public": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							},
+							"parent_public_url": {
+								"dataTypeId": "test.url;1.0.0",
+								"value": "default value of parent_public_url"
+							},
+							"parent_public_array": {
+								"dataTypeId": "test.array;1.0.0",
+								"value": [
+									{
+										"dataTypeId": "test.string;1.0.0",
+										"value": "This is my world 1111!"
+									},
+									{
+										"dataTypeId": "test.string;1.0.0",
+										"value": "This is my world 2222!"
+									}
+								]
+							},
+							"parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm1"
+							},
+							"parm2": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm2"
+							},
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							},
+							"integer1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"integer2": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
+							}
 						}
 					}
 				}

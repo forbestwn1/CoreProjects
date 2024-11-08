@@ -89,14 +89,14 @@ public class HAPManualUtilityDataAssociationMapping {
 					return Pair.of(false, null);
 				}
 				else if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT)) {
-				HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
+					HAPElementStructureLeafConstant constantEle = (HAPElementStructureLeafConstant)eleInfo.getElement();
 					List<HAPPathElementMapping> mappingPaths = new ArrayList<HAPPathElementMapping>();
 					HAPUtilityStructure.mergeElement(eleInfo.getElement(),  toElement, false, mappingPaths, null, runtimeEnv);
 					for(HAPPathElementMapping mappingPath : mappingPaths) {
 						//from constant
 						HAPPathElementMappingConstantToVariable mappingPath1 = (HAPPathElementMappingConstantToVariable)mappingPath;
 						HAPMatchers matchers = mappingPath1.getMatcher();
-						if(matchers.isVoid()) {
+						if(matchers!=null&&matchers.isVoid()) {
 							matchers = null;
 						}
 						HAPEndPointInTunnelConstant fromEndPoint = new HAPEndPointInTunnelConstant(mappingPath1.getFromConstant());

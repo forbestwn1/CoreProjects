@@ -362,6 +362,12 @@ public class HAPUtilityStructure {
 				mappingPaths.add(new HAPPathElementMappingConstantToVariable(dataFrom.getValue(), path, matcher));
 				break;
 			}
+			case HAPConstantShared.CONTEXT_ELEMENTTYPE_VALUE:
+			{
+				HAPElementStructureLeafConstant dataFrom = (HAPElementStructureLeafConstant)fromDef.getSolidStructureElement();
+				mappingPaths.add(new HAPPathElementMappingConstantToVariable(dataFrom.getValue(), path, null));
+				break;
+			}
 			default:
 			{
 				HAPErrorUtility.invalid("");
