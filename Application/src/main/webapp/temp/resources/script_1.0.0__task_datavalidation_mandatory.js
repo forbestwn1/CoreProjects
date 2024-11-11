@@ -63,7 +63,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 
-			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORT_TYPE_VALIDATIONDATA, node_COMMONCONSTANT.VALUEPORT_NAME_VALIDATIONDATA, node_COMMONCONSTANT.NAME_ROOT_DATA);
+			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST, node_COMMONCONSTANT.NAME_ROOT_DATA);
 			out.addRequest(dataVariable.getGetValueRequest({
 				success : function(request, dataValue){
 					var taskResult;
@@ -71,10 +71,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 						var errorMessage = "value should not be empty";
 						var errorValue = {};
 						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
-						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_VALIDATIONDATA, node_COMMONCONSTANT.NAME_ROOT_ERROR, errorValue, {
+						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, "interactiveResult_"+node_COMMONCONSTANT.TASK_RESULT_FAIL, errorValue, {
 							success : function(request){
 								loc_taskResult = {
-								    "resultName": "error",
+								    "resultName": "fail",
 								    "resultValue": errorMessage
 								};
 							}

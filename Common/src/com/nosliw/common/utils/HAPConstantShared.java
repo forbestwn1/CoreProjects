@@ -975,6 +975,7 @@ public class HAPConstantShared {
 
 		public static final String TUNNELENDPOINT_TYPE_CONSTANT = "constant";
 		public static final String TUNNELENDPOINT_TYPE_VALUEPORT = "valuePort";
+		public static final String TUNNELENDPOINT_TYPE_RUNTIME = "runtime";
 
 
 
@@ -991,6 +992,11 @@ public class HAPConstantShared {
 
 		public static final String WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION = "dataExpression";
 		public static final String WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION = "scriptExpression";
+
+
+
+		public static final int VALUESTRUCTURE_PRIORITY_DEFINED = 0;
+		public static final int VALUESTRUCTURE_PRIORITY_IMPLIED = 10;
 
 
 }

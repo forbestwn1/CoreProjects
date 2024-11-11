@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.interactive;
+package com.nosliw.core.application.division.manual.common.task;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.interactive;
+package com.nosliw.core.application.division.manual.common.task;
 
 import com.nosliw.core.application.common.interactive1.HAPBrickInteractive;
 import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionSimpleImp;

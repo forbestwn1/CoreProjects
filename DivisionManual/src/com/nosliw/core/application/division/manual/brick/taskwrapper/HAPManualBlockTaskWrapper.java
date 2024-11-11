@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.taskwrapper;
 
 import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
+import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
@@ -22,5 +23,10 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 	public HAPGroupValuePorts addOtherInternalValuePortGroup(HAPGroupValuePorts valuePortGroup) {	return this.getTask().addOtherInternalValuePortGroup(valuePortGroup);	}
 	@Override
 	public HAPGroupValuePorts addOtherExternalValuePortGroup(HAPGroupValuePorts valuePortGroup) {     return this.getTask().addOtherExternalValuePortGroup(valuePortGroup);	}
+
+	@Override
+	public HAPContainerValuePorts getOtherInternalValuePortContainer() {   return this.getTask().getOtherInternalValuePortContainer();    }
+	@Override
+	public HAPContainerValuePorts getOtherExternalValuePortContainer() {   return this.getTask().getOtherExternalValuePortContainer();    }
 
 }

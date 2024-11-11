@@ -2,7 +2,9 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
-public interface HAPValueStructureDefinition {
+import com.nosliw.common.serialization.HAPSerializable;
+
+public interface HAPValueStructureDefinition extends HAPSerializable{
 
 	public static final String ROOT = "root";
 

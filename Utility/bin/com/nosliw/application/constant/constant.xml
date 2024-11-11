@@ -11,8 +11,7 @@
 			<definition type="space"/>
 			<definition name="REQUEST_GETENTITYDEFINITIONBYNAMES_NAMES" value="names"/>
 			<definition type="space"/>
-			<definition name="REQUEST_GETDATATYPES_E
-			XISTINGARRAY" value="existingArray"/>
+			<definition name="REQUEST_GETDATATYPES_EXISTINGARRAY" value="existingArray"/>
 			<definition name="REQUEST_GETDATATYPES_REQUESTARRAY" value="requestArray"/>
 			<definition type="space"/>
 			<definition name="ENTITYNAME_ATTRIBUTENAME" value="ENTITYNAME_ATTRIBUTENAME"/>
@@ -1013,6 +1012,7 @@
 			<definition type="space"/>
 			<definition name="TUNNELENDPOINT_TYPE_CONSTANT" value="constant"/>
 			<definition name="TUNNELENDPOINT_TYPE_VALUEPORT" value="valuePort"/>
+			<definition name="TUNNELENDPOINT_TYPE_RUNTIME" value="runtime"/>
 
 			<definition type="space"/>
 			<definition name="VERSION_DEFAULT" value="1.0.0"/>
@@ -1026,6 +1026,10 @@
 			<definition type="space"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION" value="scriptExpression"/>
+
+			<definition type="space"/>
+			<definition name="VALUESTRUCTURE_PRIORITY_DEFINED" value="0" type="int"/>
+			<definition name="VALUESTRUCTURE_PRIORITY_IMPLIED" value="10" type="int"/>
 
 
 		</definitions>

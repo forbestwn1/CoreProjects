@@ -10,8 +10,6 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
@@ -22,6 +20,7 @@ import com.nosliw.core.application.division.manual.common.dataexpression.HAPManu
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualWrapperOperand;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -59,11 +58,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight(); 
 		HAPElementInLibraryDataExpression exe = brick.getValue();;
-		
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(exe.getExpressionInterface(), valueStructureDomain);
-		
-		brick.getOtherInternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getLeft());
-		brick.getOtherExternalValuePortContainer().addValuePortGroup(valuePortGroupPair.getRight());
+		HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(brick, exe.getExpressionInterface(), valueStructureDomain);
 	}
 
 	@Override

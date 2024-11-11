@@ -12,11 +12,10 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.brick.service.provider.HAPKeyService;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -66,8 +65,6 @@ public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPMa
 		HAPBlockServiceProfile serviceProfileBlock = (HAPBlockServiceProfile)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(serviceProfileResourceId), brickMan);
 		HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceProfileBlock.getTaskInterface(), brickMan);
 		
-		Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInterfaceBlock.getValue(), processContext.getCurrentBundle().getValueStructureDomain());
-		serviceProviderExe.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
-		serviceProviderExe.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+		HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(serviceProviderExe, taskInterfaceBlock.getValue(), processContext.getCurrentBundle().getValueStructureDomain());
 	}
 }

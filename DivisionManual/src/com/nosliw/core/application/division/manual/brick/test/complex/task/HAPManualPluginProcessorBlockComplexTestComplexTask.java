@@ -14,9 +14,7 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveValuePort;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
@@ -26,6 +24,7 @@ import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -62,18 +61,12 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 
 		if(definitionBlock.getTaskInteractiveInterface()!=null) {
 			//build value port group
-			HAPInteractiveTask taskInteractive = executableBlock.getTaskInteractive().getValue();
-			Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveTask(taskInteractive, processContext.getCurrentBundle().getValueStructureDomain());
-			executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
-			executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+			HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(executableBlock, executableBlock.getTaskInteractive().getValue(), processContext.getCurrentBundle().getValueStructureDomain());
 		}
 		
 		if(definitionBlock.getExpressionInteractiveInterface()!=null) {
 			//build value port group
-			HAPInteractiveExpression expressionInteractive = executableBlock.getExpressionInteractive().getValue();
-			Pair<HAPGroupValuePorts, HAPGroupValuePorts> valuePortGroupPair = HAPUtilityInteractiveValuePort.buildValuePortGroupForInteractiveExpression(expressionInteractive, processContext.getCurrentBundle().getValueStructureDomain());
-			executableBlock.addOtherInternalValuePortGroup(valuePortGroupPair.getLeft());
-			executableBlock.addOtherExternalValuePortGroup(valuePortGroupPair.getRight());
+			HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(executableBlock, executableBlock.getExpressionInteractive().getValue(), processContext.getCurrentBundle().getValueStructureDomain());
 		}
 	}
 

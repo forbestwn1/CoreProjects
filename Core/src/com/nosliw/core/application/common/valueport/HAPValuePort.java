@@ -3,11 +3,13 @@ package com.nosliw.core.application.common.valueport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPValuePort extends HAPEntityInfoImp{
@@ -21,7 +23,7 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String IODIRECTION = "ioDirection";
 
-	private List<String> m_valueStructures;
+	private List<HAPInfoValueStructure> m_valueStructures;
 
 	private String m_type;
 	
@@ -30,11 +32,15 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	public HAPValuePort(String type, String ioDirection) {
 		this.m_type = type;
 		this.m_ioDirection = ioDirection;
-		this.m_valueStructures = new ArrayList<String>();
+		this.m_valueStructures = new ArrayList<HAPInfoValueStructure>();
 	}
 	
-	public List<String> getValueStructureIds(){    return this.m_valueStructures;     }
-	public void addValueStructureId(String id) {    this.m_valueStructures.add(id);    }
+	public List<String> getValueStructureIds(){	return this.m_valueStructures.stream().map(HAPInfoValueStructure::getValueStructureId).collect(Collectors.toList());	}
+	public void addValueStructureId(String id) {    this.addValueStructureId(id, HAPConstantShared.VALUESTRUCTURE_PRIORITY_DEFINED);    }
+	public void addValueStructureId(String id, int priority) {
+		this.m_valueStructures.add(new HAPInfoValueStructure(id, priority));
+		this.m_valueStructures.sort((v1, v2)->v2.getPriority()-v1.getPriority());
+	}
 
 	public String getType() {     return this.m_type;    }
 
@@ -46,6 +52,23 @@ public class HAPValuePort extends HAPEntityInfoImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(IODIRECTION, this.getIODirection());
-		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(this.m_valueStructures.toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(this.getValueStructureIds().toArray(new String[0])));
+	}
+
+	class HAPInfoValueStructure{
+		
+		private String m_valueStructureId;
+		
+		private int m_priority;
+		
+		public HAPInfoValueStructure(String valueStructureId, int priority) {
+			this.m_valueStructureId = valueStructureId;
+			this.m_priority = priority;
+		}
+		
+		public String getValueStructureId() {    return this.m_valueStructureId;     }
+		
+		public int getPriority() {   return this.m_priority;    }
+		
 	}
 }

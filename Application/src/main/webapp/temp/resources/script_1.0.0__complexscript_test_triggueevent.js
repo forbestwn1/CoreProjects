@@ -94,11 +94,11 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 							var rootEleName;
 							var trigguerType = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_TRIGGUERTYPE];
 							if(trigguerType==node_COMMONCONSTANT.TASK_TRIGGUER_DATAVALIDATION){
-								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_VALIDATIONDATA;
+								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST;
 								rootEleName = node_COMMONCONSTANT.NAME_ROOT_DATA;
 							}
 							else if(trigguerType==node_COMMONCONSTANT.TASK_TRIGGUER_EVENTHANDLE){
-								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_EVENT;
+								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST;
 								rootEleName = node_COMMONCONSTANT.NAME_ROOT_EVENT;
 							}
 							

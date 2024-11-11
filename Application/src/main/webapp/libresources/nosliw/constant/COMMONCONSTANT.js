@@ -603,13 +603,16 @@ var COMMONCONSTANT=
   "MANUAL_RELATION_TYPE_AUTOPROCESS": "autoProcess",
   "TUNNELENDPOINT_TYPE_CONSTANT": "constant",
   "TUNNELENDPOINT_TYPE_VALUEPORT": "valuePort",
+  "TUNNELENDPOINT_TYPE_RUNTIME": "runtime",
   "VERSION_DEFAULT": "1.0.0",
   "NAME_ROOT_RESULT": "result",
   "NAME_ROOT_EVENT": "event",
   "NAME_ROOT_DATA": "data",
   "NAME_ROOT_ERROR": "error",
   "WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION": "dataExpression",
-  "WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION": "scriptExpression"
+  "WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION": "scriptExpression",
+  "VALUESTRUCTURE_PRIORITY_DEFINED": 0,
+  "VALUESTRUCTURE_PRIORITY_IMPLIED": 10
 };
 
 //*******************************************   End Node Definition  ************************************** 	

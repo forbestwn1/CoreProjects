@@ -49,7 +49,7 @@
 						"ioDirection" : "OUT",
 						"valuePortId" : {
 							"valuePortId" : {
-								"group" : "eventData"
+								"group" : "taskInteractive"
 							}
 						}
 					}
@@ -95,13 +95,13 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
-										"status": "disabled1",
+										"status": "disabled",
 										"target" : {
 											"rootName" : "event",
 											"ioDirection" : "IN",
 											"valuePortId" : {
 												"valuePortId" : {
-													"group" : "eventData"
+													"group" : "taskInteractive"
 												}
 											}
 										},

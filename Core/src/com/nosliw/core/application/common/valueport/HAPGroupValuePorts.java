@@ -51,11 +51,23 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 
 	//name or type
 	public HAPValuePort getValuePort(String name) {
+		HAPValuePort out = this.getValuePortByName(name);
+		if(out==null) {
+			out = this.getValuePortByType(name);
+		}
+		return out;
+	}
+
+	public HAPValuePort getValuePortByName(String name) {
 		for(HAPValuePort valuePort : this.m_valuePorts) {
 			if(valuePort.getName().equals(name)) {
 				return valuePort;
 			}
 		}
+		return null;
+	}
+
+	public HAPValuePort getValuePortByType(String name) {
 		for(HAPValuePort valuePort : this.m_valuePorts) {
 			if(valuePort.getType().equals(name)) {
 				return valuePort;
@@ -63,6 +75,7 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 		return null;
 	}
+	
 	
 	public HAPValuePort getValuePort(String name, String ioDirection) {
 		if(HAPUtilityBasic.isStringEmpty(name)) {

@@ -1,5 +1,7 @@
 package com.nosliw.core.application.common.valueport;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.core.application.HAPBundle;
@@ -14,6 +16,32 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
+	public static Pair<HAPValuePort, HAPValuePort> getOrCreateValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainers, String valuePortGroupType, String valuePortType, String valuePortName, Pair<String, String> io){
+		HAPContainerValuePorts internalValuePortContainer = valuePortContainers.getLeft();
+		HAPContainerValuePorts externalValuePortContainer = valuePortContainers.getRight();
+		
+		HAPGroupValuePorts internalValuePortGroup = internalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
+		HAPGroupValuePorts externalValuePortGroup = externalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
+		if(internalValuePortGroup==null) {
+			internalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
+			externalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
+			internalValuePortContainer.addValuePortGroup(internalValuePortGroup);
+			externalValuePortContainer.addValuePortGroup(externalValuePortGroup);
+		}
+		
+		HAPValuePort internalValuePort = internalValuePortGroup.getValuePortByName(valuePortName);
+		HAPValuePort externalValuePort = externalValuePortGroup.getValuePortByName(valuePortName);
+		if(internalValuePort==null) {
+			internalValuePort = new HAPValuePort(valuePortType, io.getLeft());
+			internalValuePort.setName(valuePortName);
+			internalValuePortGroup.addValuePort(internalValuePort);
+			externalValuePort = new HAPValuePort(valuePortType, io.getRight());
+			externalValuePort.setName(valuePortName);
+			externalValuePortGroup.addValuePort(externalValuePort);
+		}
+		return Pair.of(internalValuePort, externalValuePort);
+	}
+	
 	public static boolean isValuePortContainerEmpty(HAPContainerValuePorts valuePortContainer, HAPDomainValueStructure valueStructureDomain) {
 		for(HAPGroupValuePorts valuePortGroup : valuePortContainer.getValuePortGroups()) {
 			for(HAPValuePort valuePort : valuePortGroup.getValuePorts()) {
