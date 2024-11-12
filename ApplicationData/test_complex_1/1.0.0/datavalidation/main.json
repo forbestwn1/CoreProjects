@@ -13,7 +13,7 @@
 			"brick":{
 				"script": "complexscript_test_value",
 				"parm" : {
-					"variable" : ["value1"]
+					"variable" : ["output1"]
 				}
 			}
 		},
@@ -32,13 +32,15 @@
 							"trigguerType" : "dataValidation",
 							"name" : "testDataValidation1",
 							"handlerId" : {
-								"idPath" : "datavalidation_mandatory-taskTaskScript"
+								"idPath0" : "datavalidation_mandatory-taskTaskScript",
+								"idPath1" : "datavalidation_enum-taskTaskScript",
+								"idPath" : "datavalidation_mandatory-taskWrapper"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData1" : {
+						"testData" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -49,8 +51,17 @@
 			
 		{
 			"info": {
-				"name" : "datavalidation_mandatory-taskTaskScript",
+				"name" : "datavalidation_mandatory-taskWrapper",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory"  
+		},
+		
+		{
+			"info": {
+				"name" : "datavalidation_mandatory-taskTaskScript",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -69,6 +80,107 @@
 							"in" : {
 								"type" : "mapping",
 								"mapping" : [
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"value" : {
+													"dataTypeId": "test.string;1.0.0",
+													"value": "validation success"
+												} 
+											}
+										}
+									]
+								},
+								"fail" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "error",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]		
+		},
+
+		{
+			"info": {
+				"name" : "datavalidation_enum-taskTaskScript",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"scriptResourceId": "task_datavalidation_enum",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "enum",
+							"dataInfo" : "test.array;1.0.0"
+						}
+					]
+				}
+			},
+			"adapter":[
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "enum",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"value" : {
+												"dataTypeId": "test.array;1.0.0",
+												"value": [
+													{
+														"dataTypeId": "test.string;1.0.0",
+														"value": "item1"
+													},
+													{
+														"dataTypeId": "test.string;1.0.0",
+														"value": "item2"
+													}
+												]
+											}
+										}
+									}
 								]
 							},
 							"out" : {
@@ -180,10 +292,11 @@
 									"mapping" : [
 										{
 											"target" : {
-												"rootName" : "value1"
+												"rootName" : "output1"
 											},
 											"definition" : {
-												"value" : "validation success"
+												"dataTypeId": "test.string;1.0.0",
+												"value": "validation success"
 											}
 										}
 									]
@@ -193,105 +306,7 @@
 									"mapping" : [
 										{
 											"target" : {
-												"rootName" : "value1"
-											},
-											"definition" : {
-												"mapping" : {
-													"elementPath": "error",
-													"valuePortId" : {
-														"valuePortId" : {
-															"group" : "validationData"
-														}
-													}
-												}
-											}
-										}
-									]
-								}
-							}
-						}
-					}
-				}
-			]		
-		},
-
-		{
-			"info": {
-				"name" : "datavalidation_enum-taskTaskScript",
-				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"scriptResourceId": "task_datavalidation_enum",
-				"taskInterface" : {
-					"request" : [
-						{
-							"name" : "enum",
-							"dataInfo" : "test.array;1.0.0"
-						}
-					]
-				}
-			},
-			"adapter":[
-				{
-					"name" : "interactivetaskAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForTask",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "enum",
-											"valuePortId" : {
-												"valuePortId" : {
-													"group" : "validationData"
-												}
-											}
-										},
-										"definition" : {
-											"value" : {
-												"dataTypeId": "test.array;1.0.0",
-												"value": [
-													{
-														"dataTypeId": "test.string;1.0.0",
-														"value": "item1"
-													},
-													{
-														"dataTypeId": "test.string;1.0.0",
-														"value": "item2"
-													}
-												]
-											}
-										}
-									}
-								]
-							},
-							"out" : {
-								"success" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "value1"
-											},
-											"definition" : {
-												"value" : "validation success"
-											}
-										}
-									]
-								},
-								"error" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "value1"
+												"rootName" : "output1"
 											},
 											"definition" : {
 												"mapping" : {

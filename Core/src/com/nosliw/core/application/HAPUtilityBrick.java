@@ -29,15 +29,15 @@ public class HAPUtilityBrick {
 	}
 	
 	public static HAPBrick getAttributeValueOfBrickGlobal(HAPBrick brick, String attributeName, HAPManagerApplicationBrick brickManager) {
-		HAPBrick out = null;
-		
+		return getAttributeResultOfBrickGlobal(brick, attributeName, brickManager).getBrick();
+	}
+	
+	public static HAPResultBrick getAttributeResultOfBrickGlobal(HAPBrick brick, String attributeName, HAPManagerApplicationBrick brickManager) {
 		HAPResultBrick brickResult = getDescendantBrickResult(brick, new HAPPath(attributeName));
-		out = brickResult.getInternalBrick();
-		
-		if(out==null) {
-			out = HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager);			
+		if(brickResult.getBrick()==null) {
+			brickResult.setBrick(HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager));			
 		}
-		return out;	
+		return brickResult;	
 	}
 	
 	public static HAPBundle getBrickBundle(HAPResourceIdSimple resourceId, HAPManagerApplicationBrick brickMan) {
@@ -90,7 +90,7 @@ public class HAPUtilityBrick {
 		HAPDomainValueStructure valueStructureDomain = null;
 		HAPResultBrick brickResult = getDescdentBrickResult(bundle, path);
 		if(brickResult.isInternalBrick()) {
-			brick = brickResult.getInternalBrick();
+			brick = brickResult.getBrick();
 			valueStructureDomain = bundle.getValueStructureDomain();
 		}
 		else {
@@ -105,7 +105,7 @@ public class HAPUtilityBrick {
 		HAPBrick out = null;
 		HAPResultBrick brickResult = getDescdentBrickResult(rootBrickWrapper, path);
 		if(brickResult.isInternalBrick()) {
-			out = brickResult.getInternalBrick();
+			out = brickResult.getBrick();
 		}
 		else {
 			HAPResourceDataBrick resourceData =(HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();
@@ -125,7 +125,7 @@ public class HAPUtilityBrick {
 	public static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
 		HAPResultBrick brickResult = getDescendantBrickResult(brick, path);
 		if(brickResult!=null) {
-			return brickResult.getInternalBrick();
+			return brickResult.getBrick();
 		}
 		return null;
 	}

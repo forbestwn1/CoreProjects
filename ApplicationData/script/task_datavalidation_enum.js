@@ -1,13 +1,4 @@
-
-if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
-"version":"1.0.0"
-},
-"id":"*task_datavalidation_mandatory"
-},
-"children":[],
-"dependency":{},
-"info":{}
-}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
+function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -68,16 +59,13 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				success : function(request, dataValue){
 					var taskResult;
 					if(dataValue==undefined){
-						var errorMessage = {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "value should not be empty"
-						};
+						var errorMessage = "value should not be empty";
 						var errorValue = {};
 						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
-						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(node_COMMONCONSTANT.TASK_RESULT_FAIL), errorValue, {
+						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, "interactiveResult_"+node_COMMONCONSTANT.TASK_RESULT_FAIL, errorValue, {
 							success : function(request){
 								loc_taskResult = {
-								    "resultName": node_COMMONCONSTANT.TASK_RESULT_FAIL,
+								    "resultName": "fail",
 								    "resultValue": errorMessage
 								};
 							}
@@ -104,7 +92,3 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
 	return loc_out;
 }
-
-}, {"loadPattern":"file"
-});
-

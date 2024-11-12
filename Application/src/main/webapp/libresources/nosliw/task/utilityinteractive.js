@@ -25,10 +25,6 @@ var packageObj = library;
 
 var node_interactiveUtility = function(){
 
-	var loc_getResultValuePortNameByResultName = function(resultName){
-		return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
-	};
-
 	var loc_getRequestValuesFromValuePort = function(valuePortContainer, valuePortGroupType, handlers, request){
 		
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -52,6 +48,10 @@ var node_interactiveUtility = function(){
 
 	var loc_out = {
 		
+		getResultValuePortNameByResultName : function(resultName){
+			return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
+		},
+		
 		getTaskRequestValuesFromValuePort : function(valuePortContainer, handlers, request){
 			return loc_getRequestValuesFromValuePort(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, handlers, request);
 		},
@@ -66,7 +66,7 @@ var node_interactiveUtility = function(){
 			var resultName = taskResult.resultName;
 			var resultValue = taskResult.resultValue;
 			
-			out.addRequest(node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, loc_getResultValuePortNameByResultName(resultName), resultValue));
+			out.addRequest(node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, this.getResultValuePortNameByResultName(resultName), resultValue));
 			return out;			
 		},
 		

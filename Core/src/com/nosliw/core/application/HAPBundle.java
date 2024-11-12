@@ -84,7 +84,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 				suportBricks.put(n, this.m_supportBricks.get(n).getBrick());
 			}
 			
-			out = new HAPResourceDataBrick(brickResult.getInternalBrick(), suportBricks, this.m_valueStructureDomain);
+			out = new HAPResourceDataBrick(brickResult.getBrick(), suportBricks, this.m_valueStructureDomain);
 		}
 		else {
 			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();

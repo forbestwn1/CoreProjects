@@ -23,9 +23,13 @@ import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.data.HAPData;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
+import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityTask {
 
@@ -46,40 +50,59 @@ public class HAPManualUtilityTask {
 		requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
 	}
 	
-	public static void buildValuePortGroupForInteractiveTaskDataValidation(HAPManualBrick brick, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain) {
-		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer());
+	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPManualBlockTaskWrapper taskWrapperBrick, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain, HAPRuntimeEnvironment runtimeEnv) {
+		HAPMatchers out = null;
 		
-		//request
-		{
-			Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+		String dataRootName = HAPConstantShared.NAME_ROOT_DATA;
+		if(taskWrapperBrick.isLocalTask()) {
+			Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(taskWrapperBrick.getOtherInternalValuePortContainer(), taskWrapperBrick.getOtherExternalValuePortContainer());
 			
-			Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
-			HAPRootInStructure root = new HAPRootInStructure();
-			root.setDefinition(dataElement);
-			root.setName(HAPConstantShared.NAME_ROOT_DATA);
-			roots.add(root);
+			//request
+			{
+				Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+				HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
+				if(dataEle==null) {
+					//if data root is not defined, then add it
+					Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+					HAPRootInStructure root = new HAPRootInStructure();
+					root.setDefinition(dataElement);
+					root.setName(dataRootName);
+					roots.add(root);
+					
+					String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
+					requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+					requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				}
+			}
 			
-			String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-			requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-			requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+			//result
+			{
+				String errorRootName = HAPConstantShared.NAME_ROOT_ERROR;
+				Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateTaskInteractiveResultValuePort(HAPConstantShared.TASK_RESULT_FAIL, valuePortContainerPair);
+				HAPElementStructure errorEle = HAPUtilityValuePort.getStructureElementInValuePort(errorRootName, resultValuePortPair.getLeft(), valueStructureDomain);
+				if(errorEle==null) {
+					Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+					HAPRootInStructure root = new HAPRootInStructure();
+					root.setDefinition(new HAPElementStructureLeafData(HAPParserCriteria.getInstance().parseCriteria("test.string;1.0.0")));
+					root.setName(errorRootName);
+					roots.add(root);
+					
+					String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
+					resultValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+					resultValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				}
+			}
 		}
 		
-		//result
-		{
-			Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateTaskInteractiveResultValuePort(HAPConstantShared.TASK_RESULT_FAIL, valuePortContainerPair);
-			
-			Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
-			HAPRootInStructure root = new HAPRootInStructure();
-			root.setDefinition(new HAPElementStructureLeafValue());
-			root.setName(HAPConstantShared.NAME_ROOT_ERROR);
-			roots.add(root);
-			
-			String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-			resultValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-			resultValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-			
+		//calculate matchers
+		if(dataElement.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+			//external need different vlaue structuredomain
+//			Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(Pair.of(taskWrapperBrick.getInternalValuePorts(), taskWrapperBrick.getExternalValuePorts()));
+//			HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
+//			out = HAPUtilityCriteria.isMatchable(((HAPElementStructureLeafData)dataElement).getCriteria(), ((HAPElementStructureLeafData)dataEle).getCriteria(), runtimeEnv.getDataTypeHelper());
 		}
 		
+		return out;
 	}
 	
 	public static void buildValuePortGroupForInteractiveTask(HAPManualBrick brick, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
@@ -140,7 +163,13 @@ public class HAPManualUtilityTask {
 		Set<HAPRootInStructure> requestRoots = new HashSet<HAPRootInStructure>();
 		Map<String, HAPData> defaultValue = new LinkedHashMap<String, HAPData>(); 
 		for(HAPRequestParmInInteractive parm : requestParms) {
-			HAPRootInStructure root = new HAPRootInStructure(new HAPElementStructureLeafData(parm.getCriteria()), parm);
+			HAPRootInStructure root = null;
+			if(parm.getCriteria()!=null) {
+				root = new HAPRootInStructure(new HAPElementStructureLeafData(parm.getCriteria()), parm);
+			}
+			else {
+				root = new HAPRootInStructure(new HAPElementStructureLeafValue(), parm);
+			}
 			requestRoots.add(root);
 			defaultValue.put(parm.getName(), parm.getDefaultValue());
 		}
@@ -157,7 +186,14 @@ public class HAPManualUtilityTask {
 	private static void buildTaskInteractiveResultValuePort(Pair<HAPValuePort, HAPValuePort> valuePortPair, HAPInteractiveResultTask interactiveResult, HAPDomainValueStructure valueStructureDomain) {
 		Set<HAPRootInStructure> outputRoots = new HashSet<HAPRootInStructure>();
 		for(HAPResultElementInInteractiveTask element : interactiveResult.getOutput()) {
-			HAPRootInStructure root = new HAPRootInStructure(new HAPElementStructureLeafData(element.getCriteria()), element);
+			HAPRootInStructure root = null;
+			if(element.getCriteria()!=null) {
+				root = new HAPRootInStructure(new HAPElementStructureLeafData(element.getCriteria()), element);
+			}
+			else {
+				root = new HAPRootInStructure(new HAPElementStructureLeafValue(), element);
+			}
+			
 			outputRoots.add(root);
 		}
 		String resultVSId = valueStructureDomain.newValueStructure(outputRoots, null, null, null);

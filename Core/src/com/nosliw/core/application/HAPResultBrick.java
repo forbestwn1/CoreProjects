@@ -16,9 +16,10 @@ public class HAPResultBrick {
 		this.m_resourceId = resourceId;
 	}
 	
-	public boolean isInternalBrick() {    return this.m_brick!=null;    }
+	public boolean isInternalBrick() {    return this.m_resourceId==null;    }
 	
-	public HAPBrick getInternalBrick() {   return this.m_brick;  }
+	public HAPBrick getBrick() {   return this.m_brick;  }
+	public void setBrick(HAPBrick brick) {    this.m_brick = brick;      }
 	
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	

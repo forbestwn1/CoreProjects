@@ -59,13 +59,16 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				success : function(request, dataValue){
 					var taskResult;
 					if(dataValue==undefined){
-						var errorMessage = "value should not be empty";
+						var errorMessage = {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "value should not be empty"
+						};
 						var errorValue = {};
 						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
-						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, "interactiveResult_"+node_COMMONCONSTANT.TASK_RESULT_FAIL, errorValue, {
+						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(node_COMMONCONSTANT.TASK_RESULT_FAIL), errorValue, {
 							success : function(request){
 								loc_taskResult = {
-								    "resultName": "fail",
+								    "resultName": node_COMMONCONSTANT.TASK_RESULT_FAIL,
 								    "resultValue": errorMessage
 								};
 							}

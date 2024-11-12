@@ -8,6 +8,7 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -53,6 +54,16 @@ public class HAPUtilityValuePort {
 			}
 		}
 		return true;
+	}
+	
+	public static HAPElementStructure getStructureElementInValuePort(String eleRootName, HAPValuePort valuePort, HAPDomainValueStructure valueStructureDomain) {
+		for(String valueStructureId : valuePort.getValueStructureIds()) {
+			HAPRootInStructure root = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRootByName(eleRootName);
+			if(root!=null) {
+				return root.getDefinition();
+			}
+		}
+		return null;
 	}
 	
 	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPDomainValueStructure valueStructureDomain) {
