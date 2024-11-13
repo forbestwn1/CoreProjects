@@ -8,8 +8,14 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPEnumBrickType;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
@@ -21,6 +27,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafValue;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.common.valueport.HAPInfoValuePortContainer;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockTaskWrapper;
@@ -29,10 +36,27 @@ import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualUtilityTask {
 
+	public static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath) {
+		HAPPath out = idPath;
+		HAPBrick brick = HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath);
+		if(brick!=null&&brick.getBrickType().equals(HAPEnumBrickType.TASKWRAPPER_100)) {
+			out = idPath.appendSegment(HAPBlockTaskWrapper.TASK);
+		}
+		return out;
+	}
+	
+	public static String getExternalValuePortGroupNameOfInteractiveTask(HAPBundle bundle, HAPPath idPath, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		idPath = figureoutTaskPath(bundle, idPath);
+		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, idPath, resourceMan, runtimeInfo);
+		return valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePortGroupByType(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK).getName();
+	}
+	
 	public static void buildValuePortGroupForInteractiveTaskEventHandler(HAPManualBrick brick, HAPElementStructure eventDataElement, HAPDomainValueStructure valueStructureDomain) {
 		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer());
 		
@@ -49,6 +73,70 @@ public class HAPManualUtilityTask {
 		requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
 		requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
 	}
+
+	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPBundle bundle, HAPPath idPath, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain, HAPRuntimeEnvironment runtimeEnv) {
+		HAPMatchers out = null;
+		
+		String dataRootName = HAPConstantShared.NAME_ROOT_DATA;
+		
+		idPath = figureoutTaskPath(bundle, idPath);
+		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath);
+		if(childBrick!=null) {
+			Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(childBrick.getOtherInternalValuePortContainer(), childBrick.getOtherExternalValuePortContainer());
+			
+			//request
+			{
+				Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+				HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
+				if(dataEle==null) {
+					//if data root is not defined, then add it
+					Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+					HAPRootInStructure root = new HAPRootInStructure();
+					root.setDefinition(dataElement);
+					root.setName(dataRootName);
+					roots.add(root);
+					
+					String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
+					requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+					requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				}
+			}
+			
+			//result
+			{
+				String errorRootName = HAPConstantShared.NAME_ROOT_ERROR;
+				Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateTaskInteractiveResultValuePort(HAPConstantShared.TASK_RESULT_FAIL, valuePortContainerPair);
+				HAPElementStructure errorEle = HAPUtilityValuePort.getStructureElementInValuePort(errorRootName, resultValuePortPair.getLeft(), valueStructureDomain);
+				if(errorEle==null) {
+					Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+					HAPRootInStructure root = new HAPRootInStructure();
+					root.setDefinition(new HAPElementStructureLeafData(HAPParserCriteria.getInstance().parseCriteria("test.string;1.0.0")));
+					root.setName(errorRootName);
+					roots.add(root);
+					
+					String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
+					resultValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+					resultValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				}
+			}
+			
+		}
+		
+		//calculate matchers
+		if(dataElement.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+			//external need different vlaue structuredomain
+//			HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, idPath, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
+//			valuePortContainerInfo.getValuePortContainerPair()
+			
+//			Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(Pair.of(taskWrapperBrick.getInternalValuePorts(), taskWrapperBrick.getExternalValuePorts()));
+//			HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
+//			out = HAPUtilityCriteria.isMatchable(((HAPElementStructureLeafData)dataElement).getCriteria(), ((HAPElementStructureLeafData)dataEle).getCriteria(), runtimeEnv.getDataTypeHelper());
+		}
+		
+		return out;
+		
+	}
+
 	
 	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPManualBlockTaskWrapper taskWrapperBrick, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain, HAPRuntimeEnvironment runtimeEnv) {
 		HAPMatchers out = null;

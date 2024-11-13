@@ -3,6 +3,8 @@ package com.nosliw.core.application.common.valueport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -105,6 +107,15 @@ public class HAPGroupValuePorts extends HAPEntityInfoImp{
 		}
 		return out.getName();
 	}
+	
+	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		this.m_valuePorts = this.m_valuePorts.stream().map(valuePort->{
+			valuePort.cleanValueStucture(valueStrucutreIds);
+			return valuePort;
+		}).filter(valuePort->!valuePort.isEmpty()).collect(Collectors.toList());
+	}
+	
+	public boolean isEmpty() {    return this.m_valuePorts.isEmpty();     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

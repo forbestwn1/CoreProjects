@@ -909,6 +909,11 @@ public class HAPConstantShared {
 
 
 
+		public static final String VALUEPORTGROUP_SIDE_INTERNAL = "internal";
+		public static final String VALUEPORTGROUP_SIDE_EXTERNAL = "external";
+
+
+
 		public static final String VALUEPORTGROUP_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION = "expressionInteractive";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVETASK = "taskInteractive";

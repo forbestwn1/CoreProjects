@@ -168,7 +168,7 @@ public class HAPManualProcessorDataAssociationMapping {
 	}
 	
 	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), ioDirection, blockPathFromRoot, currentBundle, resourceMan, runtimeInfo));
+		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL, ioDirection, blockPathFromRoot, currentBundle, resourceMan, runtimeInfo));
 	}
 	
 

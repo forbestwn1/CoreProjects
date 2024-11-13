@@ -3,6 +3,7 @@ package com.nosliw.core.application.common.valueport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -47,6 +48,14 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	public String getIODirection() {     return this.m_ioDirection;     }
 	public void setIODirection(String ioDirection) {   this.m_ioDirection = ioDirection;   }
 
+	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		this.m_valueStructures =  this.m_valueStructures.stream().filter(vsInfo->!valueStrucutreIds.contains(vsInfo.getValueStructureId())).collect(Collectors.toList());
+	}
+
+	public boolean isEmpty() {
+		return this.m_valueStructures.isEmpty();
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

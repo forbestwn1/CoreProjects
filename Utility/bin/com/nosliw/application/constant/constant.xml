@@ -953,6 +953,10 @@
 			<definition name="IODATASET_PROVIDE" value="PROVIDE"/>
 
 			<definition type="space"/>
+			<definition name="VALUEPORTGROUP_SIDE_INTERNAL" value="internal"/>
+			<definition name="VALUEPORTGROUP_SIDE_EXTERNAL" value="external"/>
+
+			<definition type="space"/>
 			<definition name="VALUEPORTGROUP_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION" value="expressionInteractive"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVETASK" value="taskInteractive"/>

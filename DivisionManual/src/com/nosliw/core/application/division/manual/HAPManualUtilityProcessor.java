@@ -52,6 +52,8 @@ public class HAPManualUtilityProcessor {
 			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
 				HAPManualBrickImp brick = (HAPManualBrickImp)HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
 				brick.getManualValueContext().cleanValueStucture(vsIds);
+				brick.getOtherExternalValuePortContainer().cleanValueStucture(vsIds);
+				brick.getOtherInternalValuePortContainer().cleanValueStucture(vsIds);
 				return true;
 			}
 

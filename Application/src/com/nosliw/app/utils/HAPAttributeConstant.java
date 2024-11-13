@@ -11,7 +11,7 @@ public class HAPAttributeConstant {
 
 
 
-		public static final String REQUEST_GETDATATYPES_E    XISTINGARRAY = "existingArray";
+		public static final String REQUEST_GETDATATYPES_EXISTINGARRAY = "existingArray";
 		public static final String REQUEST_GETDATATYPES_REQUESTARRAY = "requestArray";
 
 

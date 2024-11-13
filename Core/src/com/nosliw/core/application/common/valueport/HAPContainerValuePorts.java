@@ -3,6 +3,8 @@ package com.nosliw.core.application.common.valueport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -103,6 +105,13 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 			}
 		}
 		return out;
+	}
+	
+	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		this.m_valuePortGroups = this.m_valuePortGroups.stream().map(group->{
+			group.cleanValueStucture(valueStrucutreIds);
+			return group;
+		}).filter(group->!group.isEmpty()).collect(Collectors.toList());
 	}
 	
 	private String getDefaultGroupName() {

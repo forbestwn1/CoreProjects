@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
@@ -84,7 +85,7 @@ public class HAPUtilityValuePort {
 	}
 
 	
-	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valueGroupContainerSide, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
@@ -99,7 +100,16 @@ public class HAPUtilityValuePort {
 
 		//normalize value port id
 		HAPIdValuePortInBrick valuePortIdInBrick = out.getValuePortId();
-		valuePortIdInBrick = HAPUtilityBrick.getDescdentValuePortContainerInfo(currentBundle, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainer().normalizeValuePortId(valuePortIdInBrick, ioDirection);
+		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = HAPUtilityBrick.getDescdentValuePortContainerInfo(currentBundle, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainerPair();
+		HAPContainerValuePorts valuePortContainer;
+		if(valueGroupContainerSide.equals(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL)) {
+			valuePortContainer = valuePortContainerPair.getLeft();
+		}
+		else {
+			valuePortContainer = valuePortContainerPair.getRight();
+		}
+		
+		valuePortIdInBrick = valuePortContainer.normalizeValuePortId(valuePortIdInBrick, ioDirection);
 		out.setValuePortId(valuePortIdInBrick);
 		
 		return out;
@@ -140,7 +150,7 @@ public class HAPUtilityValuePort {
 
 	public static HAPInfoValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
-		return new HAPInfoValuePort(valuePortContainerInfo.getValuePortContainer().getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
+		return new HAPInfoValuePort(valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
 	}
 	
 }
