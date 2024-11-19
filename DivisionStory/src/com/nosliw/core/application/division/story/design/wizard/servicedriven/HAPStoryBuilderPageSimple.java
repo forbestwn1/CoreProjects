@@ -59,6 +59,8 @@ import com.nosliw.core.application.division.story.design.wizard.HAPStoryResponse
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryStageInfo;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryUtilityDesign;
 import com.nosliw.core.application.uitag.HAPManagerUITag;
+import com.nosliw.core.application.uitag.HAPUITagInfo;
+import com.nosliw.core.application.uitag.HAPUITageQueryData;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
@@ -263,10 +265,10 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 				HAPDisplayResourceNode outputDisplayResource = interfaceDisplayResource.getResourceNode(HAPInteractive.RESULT);
 				for(HAPResultElementInInteractiveTask output : successResult.getOutput()) {
 					
-					HAPVariableDefinition parm1
+//					HAPVariableDefinition parm1
 					String parmName = output.getName();
 					HAPOutputBranchInfo parmBranchInfo = new HAPOutputBranchInfo();
-					parmBranchInfo.outputDef = parm;
+					parmBranchInfo.outputDef = HAPVariableDefinition.buildVariableInfo(parmName, output.getCriteria());
 					parmBranchInfo.displayResource = outputDisplayResource.getResourceNode("success").getResourceNode("output").getResourceNode(parmName);
 
 					//parm and connection to input

@@ -14,6 +14,7 @@ import com.nosliw.core.application.division.story.change.HAPStoryParserChange;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryAnswer;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
+import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryBuilderPageSimple;
 import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.servlet.HAPServiceServlet;
@@ -21,6 +22,8 @@ import com.nosliw.servlet.core.HAPInitServlet;
 
 @HAPEntityWithAttribute
 public class HAPStoryBuildServlet extends HAPServiceServlet{
+
+	public static final String NAME_STORY_MANAGER = "STORYMANAGER";
 
 	@HAPAttribute
 	public static final String COMMAND_GETDESIGN = "getDesign";
@@ -58,7 +61,13 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		HAPServiceData out = null;
 		
 		HAPRuntimeEnvironmentImpBrowser env = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);
-		HAPStoryManagerStory storyManager = env.getStoryManager();
+		
+		HAPStoryManagerStory storyManager = (HAPStoryManagerStory)this.getServletContext().getAttribute(NAME_STORY_MANAGER);
+		if(storyManager==null) {
+			storyManager = new HAPStoryManagerStory(env);
+			storyManager.registerDesignDirector(HAPStoryBuilderPageSimple.BUILDERID, new HAPStoryBuilderPageSimple(env.getUITagManager(), env));
+			this.getServletContext().setAttribute(NAME_STORY_MANAGER, storyManager);
+		}
 		
 		switch(command){
 		case COMMAND_GETDESIGN:
