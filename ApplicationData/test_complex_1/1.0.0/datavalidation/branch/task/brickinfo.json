@@ -1,0 +1,8 @@
+{
+	"info": {
+		"name" : "variablebyidshow-test_complex_script",
+		"status": "disabled1",
+		"description" : ""
+	},
+	"brickTypeId": "taskWrapper;1.0.0"
+}

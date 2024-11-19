@@ -19,7 +19,7 @@ public class HAPPluginResourceManagerConfigure implements HAPPluginResourceManag
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {
 		String configureId = simpleResourceId.getId();
-		String configureFileName = HAPSystemFolderUtility.getManualEntityBaseFolder() + HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE + "/" + configureId + ".json";
+		String configureFileName = HAPSystemFolderUtility.getManualBrickBaseFolder() + HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE + "/" + configureId + ".json";
 		File configureFile = new File(configureFileName);
 		String configureStr = HAPUtilityFile.readFile(configureFile);
 		

@@ -155,7 +155,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	}
 
 	private static HAPManualDefinitionBrick parseLocalValue(HAPIdBrick entityId, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualDivisionEntityMan) {
-		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getLocalEntityLocationInfo(parseContext.getBasePath(), entityId);
+		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getLocalBrickLocationInfo(parseContext.getBasePath(), entityId);
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 		return manualDivisionEntityMan.parseBrickDefinitionWrapper(content, entityId.getBrickTypeId(), entityLocationInfo.getFormat(), parseContext).getBrick();
 	}

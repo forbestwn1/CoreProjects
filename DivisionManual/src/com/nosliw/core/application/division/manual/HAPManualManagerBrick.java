@@ -17,6 +17,7 @@ import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
+import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociation.HAPManaualPluginAdapterProcessorDataAssociation;
@@ -118,8 +119,130 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 	
 	@Override
 	public HAPBundle getBundle(HAPIdBrick brickId) {
+		HAPBundle out = new HAPBundle();
 		
-		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getEntityLocationInfo(brickId);
+		Map<String, HAPManualDefinitionWrapperBrickRoot> definitions = new LinkedHashMap();
+		
+		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getBrickLocationInfo(brickId);
+		//branch
+		Map<String, HAPManualDefinitionInfoBrickLocation> branchInfos = HAPManualDefinitionUtilityBrickLocation.getBranchBrickLocationInfos(entityLocationInfo.getBasePath().getPath());
+		for(String branchName : branchInfos.keySet()) {
+			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(branchName, branchInfos.get(branchName), out);
+			definitions.put(branchName, rootBrick.getDefinition());
+		}
+		
+		//main 
+		{
+			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(HAPConstantShared.NAME_ROOTBRICK_MAIN, entityLocationInfo, out);
+			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
+		}
+		
+		HAPManualUtilityProcessor.cleanupEmptyValueStructure(out, this.getBrickManager());
+		
+		out.setExtraData(definitions);
+		
+		return out;
+	}
+
+	
+	
+	private HAPWrapperBrickRoot createRootBrick(String rootBrickName, HAPManualDefinitionInfoBrickLocation entityLocationInfo, HAPBundle bundle) {
+		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), HAPConstantShared.BRICK_DIVISION_MANUAL);
+		
+		HAPSerializationFormat format = entityLocationInfo.getFormat();
+		
+		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
+
+		//get definition
+		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = this.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext);
+		HAPManualDefinitionBrick brickDef = brickDefWrapper.getBrick();
+		
+		//build parent and 
+		
+		
+		//build path from root
+		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickDefWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+			@Override
+			public boolean processBrickNode(HAPManualDefinitionBrick rootEntityInfo, HAPPath path, Object data) {
+				if(path!=null&&!path.isEmpty()) {
+					HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootEntityInfo, path);
+					attr.setPathFromRoot(path);
+				}
+				return true;
+			}
+		}, brickDefWrapper);
+		
+
+		//normalize division infor in referred resource id
+		normalizeDivisionInReferredResource(brickDefWrapper);
+		
+		HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(bundle, rootBrickName, this.m_runtimeEnv, this);
+
+		//build attachment
+		HAPManualUtilityAttachment.processAttachment(brickDef, null, processContext);
+
+		//process constant
+		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, this);
+		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, this);
+		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, this);
+		
+		//build executable tree
+		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this));
+		out.setName(rootBrickName);
+		out.setDefinition(brickDefWrapper);
+		bundle.addRootBrickWrapper(out);
+		
+		//brick init
+		HAPManualUtilityProcessor.initBricks(out, processContext, this, m_runtimeEnv);
+
+		//init
+		HAPManualUtilityProcessor.processComplexBrickInit(out, processContext);
+
+		//complex entity, build value context domain, create extension value structure if needed
+//		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
+
+		//build value context in complex block
+		HAPManualUtilityValueContextProcessor.buildValueContext(out, processContext, this, this.m_runtimeEnv);
+		
+		//build other value port
+		HAPManualUtilityProcessor.processOtherValuePortBuild(out, processContext);
+		
+		//generate extra value structure for variable extension
+		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(out, processContext, this, this.m_runtimeEnv);
+		
+		//
+		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(out, null, processContext);
+		
+		
+		//variable resolve (variable extension)-----impact data container
+		HAPManualUtilityProcessor.processComplexVariableResolve(out, processContext);
+	
+		//build var criteria infor in var info container according to value port def
+		HAPManualUtilityProcessor.processComplexVariableInfoResolve(out, processContext);
+		
+		//variable criteria discovery ---- impact data container and value structure in context domain
+		HAPManualUtilityProcessor.processComplexValueContextDiscovery(out, processContext);
+		
+		//update value port element according to var info container after discovery
+//		HAPManualUtilityProcessor.processComplexValuePortUpdate(out.getBrickWrapper(), processContext);
+		
+		//process entity
+		HAPManualUtilityProcessor.processBrick(out, processContext, this.getBrickManager());
+		
+		//process adapter
+		HAPManualUtilityProcessor.processAdapter(out, processContext, this.getBrickManager());
+		
+		return out;
+	}
+	
+	@Override
+	public HAPBundle getBundle1(HAPIdBrick brickId) {
+		
+		//process definition
+		HAPBundle out = new HAPBundle();
+		
+		
+		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getBrickLocationInfo(brickId);
 		
 		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), brickId.getDivision());
 		
@@ -150,12 +273,6 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		//normalize division infor in referred resource id
 		normalizeDivisionInReferredResource(brickDefWrapper);
 		
-		//process definition
-		HAPBundle out = new HAPBundle();
-		
-		//store manual definition
-		out.setExtraData(brickDefWrapper);
-
 		HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, this.m_runtimeEnv, this);
 
 		//build attachment
@@ -212,8 +329,15 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		//process adapter
 		HAPManualUtilityProcessor.processAdapter(out.getMainBrickWrapper(), processContext, this.getBrickManager());
 		
+		
+		
+		
+		
 		HAPManualUtilityProcessor.cleanupEmptyValueStructure(out, this.getBrickManager());
 		
+		//store manual definition
+		out.setExtraData(brickDefWrapper);
+
 		out.setExtraData(brickDefWrapper);
 //		this.getEntityProcessorInfo(entityId.getEntityTypeId()).getProcessorPlugin().process(entityDefInfo);
 		

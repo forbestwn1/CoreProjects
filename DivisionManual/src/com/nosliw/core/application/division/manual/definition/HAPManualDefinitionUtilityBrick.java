@@ -14,15 +14,12 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
+import com.nosliw.core.application.division.manual.HAPManualWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 
 public class HAPManualDefinitionUtilityBrick {
 
-	public static HAPManualDefinitionBrick getBrick(HAPPath pathFromRoot, HAPBundle bundle) {
-		return getDescendantBrickDefinition(((HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData()).getBrick(), pathFromRoot);
-	}
-	
 	public static HAPIdBrickType getBrickType(HAPManualDefinitionWrapperValue attrValueWrapper) {
 		HAPIdBrickType out = null;
 		String attrValueWrapperType = attrValueWrapper.getValueType();
@@ -46,10 +43,10 @@ public class HAPManualDefinitionUtilityBrick {
 		return out;
 	}
 	
-	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath path, HAPBundle bundle){
-		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = (HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData();
+	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(String rootName, HAPPath path, HAPBundle bundle){
+		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = getBrickRootDefinition(rootName, bundle);
 		HAPManualDefinitionBrick entityDef = getDescendantBrickDefinition(rootEntityDefInfo, path);
-		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getMainBrickWrapper(), path);
+		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getRootBrickWrapper(rootName), path);
 		return Pair.of(entityDef, entityExe);
 	}
 	
@@ -100,9 +97,12 @@ public class HAPManualDefinitionUtilityBrick {
 		return out;
 	}
 
+	public static HAPManualDefinitionWrapperBrickRoot getBrickRootDefinition(String rootBrickName, HAPBundle bundle) {
+		return ((HAPManualWrapperBrickRoot)bundle.getRootBrickWrapper(rootBrickName)).getDefinition();
+	}
 	
-	public static HAPTreeNode getDefTreeNodeFromExeTreeNode(HAPTreeNodeBrick treeNodeExe, HAPBundle bundle) {
-		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = (HAPManualDefinitionWrapperBrickRoot)bundle.getExtraData();
+	public static HAPTreeNode getDefTreeNodeFromExeTreeNode(String rootBrickName, HAPTreeNodeBrick treeNodeExe, HAPBundle bundle) {
+		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = getBrickRootDefinition(rootBrickName, bundle);
 		return HAPManualDefinitionUtilityBrick.getDescdentTreeNode(rootEntityDefInfo, treeNodeExe.getTreeNodeInfo().getPathFromRoot());
 	}
 

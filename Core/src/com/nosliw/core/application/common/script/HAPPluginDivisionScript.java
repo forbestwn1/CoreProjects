@@ -22,7 +22,7 @@ public class HAPPluginDivisionScript implements HAPPluginDivision{
 	public HAPBundle getBundle(HAPIdBrick brickId) {
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
 		
-		String scriptFileName = HAPSystemFolderUtility.getManualEntityBaseFolder() + brickTypeId.getBrickType() + "/" + brickId.getId() + ".js";
+		String scriptFileName = HAPSystemFolderUtility.getManualBrickBaseFolder() + brickTypeId.getBrickType() + "/" + brickId.getId() + ".js";
 		File scriptFile = new File(scriptFileName);
 		String script = HAPUtilityFile.readFile(scriptFile);
 

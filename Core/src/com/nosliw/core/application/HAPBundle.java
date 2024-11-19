@@ -30,7 +30,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public final static String MAINBRICK = "mainBrick"; 
 
 	@HAPAttribute
-	public final static String SUPPORTBRICKS = "supportBricks"; 
+	public final static String BRANCHBRICKS = "branchBricks"; 
 
 	@HAPAttribute
 	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
@@ -41,7 +41,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	private HAPWrapperBrickRoot m_mainBrickWrapper;
 
 	//other brick that support main brick, for instance, global task
-	private Map<String, HAPWrapperBrickRoot> m_supportBricks;
+	private Map<String, HAPWrapperBrickRoot> m_branchBricks;
 	
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
@@ -53,7 +53,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public HAPBundle() {
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_exportResourceInfos = new ArrayList<HAPInfoExportResource>();
-		this.m_supportBricks = new LinkedHashMap<String, HAPWrapperBrickRoot>();
+		this.m_branchBricks = new LinkedHashMap<String, HAPWrapperBrickRoot>();
 		
 		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
 		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
@@ -80,8 +80,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentResultWithLocalBrick(this, exportInfo.getPathFromRoot());
 		if(brickResult.isInternalBrick()) {
 			Map<String, HAPBrick> suportBricks = new LinkedHashMap<String, HAPBrick>();
-			for(String n : this.m_supportBricks.keySet()) {
-				suportBricks.put(n, this.m_supportBricks.get(n).getBrick());
+			for(String n : this.m_branchBricks.keySet()) {
+				suportBricks.put(n, this.m_branchBricks.get(n).getBrick());
 			}
 			
 			out = new HAPResourceDataBrick(brickResult.getBrick(), suportBricks, this.m_valueStructureDomain);
@@ -94,8 +94,30 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	
 	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}
 	
+	public void addRootBrickWrapper(HAPWrapperBrickRoot brickWrapper) {
+		String name = brickWrapper.getName();
+		if(HAPConstantShared.NAME_ROOTBRICK_MAIN.equals(name)) {
+			this.setMainBrickWrapper(brickWrapper);
+		}
+		else {
+			this.setBranchBrickWrapper(name, brickWrapper);
+		}
+	}
+	public HAPWrapperBrickRoot getRootBrickWrapper(String name) {
+		if(HAPConstantShared.NAME_ROOTBRICK_MAIN.equals(name)) {
+			return this.getMainBrickWrapper();
+		}
+		else {
+			return this.getBranchBrickWrapper(name);
+		}
+	}
+	
 	public HAPWrapperBrickRoot getMainBrickWrapper() {    return this.m_mainBrickWrapper;     }
 	public void setMainBrickWrapper(HAPWrapperBrickRoot brickWrapper) {     this.m_mainBrickWrapper = brickWrapper;      }
+	
+	public void setBranchBrickWrapper(String branch, HAPWrapperBrickRoot brickWrapper) {     this.m_branchBricks.put(branch, brickWrapper);        }
+	public HAPWrapperBrickRoot getBranchBrickWrapper(String branch) {     return this.m_branchBricks.get(branch);         }
+	public Map<String, HAPWrapperBrickRoot> getBranchBrickWrappers() {     return this.m_branchBricks;         }
 	
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }

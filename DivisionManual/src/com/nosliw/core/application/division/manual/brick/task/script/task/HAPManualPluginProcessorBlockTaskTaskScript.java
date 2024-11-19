@@ -4,7 +4,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
@@ -13,7 +12,6 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -25,8 +23,7 @@ public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPlugin
 
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
-		HAPBundle bundle = processContext.getCurrentBundle();
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockTaskTaskScript definitionBlock = (HAPManualDefinitionBlockTaskTaskScript)blockPair.getLeft();
 		HAPManualBlockTaskTaskScript executableBlock = (HAPManualBlockTaskTaskScript)blockPair.getRight();
 
@@ -35,8 +32,7 @@ public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPlugin
 
 	@Override
 	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
-		HAPBundle bundle = processContext.getCurrentBundle();
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockTaskTaskScript definitionBlock = (HAPManualDefinitionBlockTaskTaskScript)blockPair.getLeft();
 		HAPManualBlockTaskTaskScript executableBlock = (HAPManualBlockTaskTaskScript)blockPair.getRight();
 

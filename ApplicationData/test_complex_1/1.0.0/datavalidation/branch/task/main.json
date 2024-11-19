@@ -1,0 +1,37 @@
+{
+	"info": {
+		"name": "datavalidationmandatory",
+		"description": "datavalidationmandatory"
+	},
+	"brick": {
+		"taskBrickType" : {
+			"brickType" : "taskTaskScript",
+			"version" : "1.0.0"
+		},
+		"task" : {
+			"scriptResourceId": "task_datavalidation_mandatory",
+			"taskInterface" : {
+				"request" : [
+					{
+						"name" : "data",
+						"dataInfo" : ""
+					}
+				],
+				"result" : {
+					"success": {
+						"output": [
+						]
+					},
+					"fail": {
+						"output": [
+							{
+								"name" : "error",
+								"criteria" : "test.string;1.0.0"
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}

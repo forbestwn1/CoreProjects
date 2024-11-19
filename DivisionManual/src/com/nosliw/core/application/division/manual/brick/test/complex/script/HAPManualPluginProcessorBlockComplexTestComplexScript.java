@@ -30,7 +30,6 @@ import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlock
 import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -43,7 +42,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 	@Override
 	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		HAPBundle bundle = processContext.getCurrentBundle();
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
 		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
 
@@ -72,10 +71,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 
 	@Override
 	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
-		
-		HAPBundle bundle = processContext.getCurrentBundle();
-		
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, bundle);
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
 		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
 		

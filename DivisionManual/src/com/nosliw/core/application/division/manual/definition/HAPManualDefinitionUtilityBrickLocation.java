@@ -6,12 +6,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONObject;
 
 import com.google.common.io.Files;
 import com.nosliw.common.exception.HAPErrorUtility;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
@@ -25,68 +29,65 @@ public class HAPManualDefinitionUtilityBrickLocation {
 		m_extensionToFormat.put("js", HAPSerializationFormat.JAVASCRIPT);
 	}
 
-	public static HAPManualDefinitionInfoBrickLocation getEntityLocationInfo(HAPIdBrick entityId) {
-		return getEntityLocationInfo(HAPSystemFolderUtility.getManualEntityBaseFolder(), entityId);
+	public static HAPManualDefinitionInfoBrickLocation getBrickLocationInfo(HAPIdBrick brickId) {
+		return getBrickLocationInfo(HAPSystemFolderUtility.getManualBrickBaseFolder(), brickId);
 	}
 
-	public static HAPManualDefinitionInfoBrickLocation getLocalEntityLocationInfo(String basePath, HAPIdBrick entityId) {
-		return getEntityLocationInfo(basePath, entityId);
+	public static Map<String, HAPManualDefinitionInfoBrickLocation> getBranchBrickLocationInfos(String basePath) {
+		Map<String, HAPManualDefinitionInfoBrickLocation> out = new LinkedHashMap<String, HAPManualDefinitionInfoBrickLocation>();
+		
+		File[] branchFiles = new File(basePath + "branch/").listFiles();
+		if(branchFiles!=null) {
+			for(File branchFolder : branchFiles) {
+				if(branchFolder.isDirectory()) {
+					String branchName = branchFolder.getName();
+					JSONObject brickInfoObj = new JSONObject(HAPUtilityFile.readFile(new File(branchFolder.getAbsolutePath()+"/brickinfo.json")));
+					if(HAPUtilityEntityInfo.isEnabled(brickInfoObj)) {
+						Pair<File, HAPSerializationFormat> result = findBrickFile(branchFolder, "main");
+						HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickInfoObj.get("brickTypeId"));
+						out.put(branchName, new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(basePath)));
+					}				
+				}
+			}
+		}
+		return out;
 	}
 
-	private static HAPManualDefinitionInfoBrickLocation getEntityLocationInfo(String basePath, HAPIdBrick entityId) {
-		HAPIdBrickType entityTypeId = entityId.getBrickTypeId(); 
-		basePath = basePath + entityTypeId.getBrickType() + "/";
-		if(entityTypeId.getVersion()!=null) {
-			basePath = basePath + entityTypeId.getVersion()+ "/";
+	public static HAPManualDefinitionInfoBrickLocation getLocalBrickLocationInfo(String basePath, HAPIdBrick brickId) {
+		return getBrickLocationInfo(basePath+"local/", brickId);
+	}
+
+	private static HAPManualDefinitionInfoBrickLocation getBrickLocationInfo(String basePath, HAPIdBrick brickId) {
+		HAPIdBrickType brickTypeId = brickId.getBrickTypeId(); 
+		basePath = basePath + brickTypeId.getBrickType() + "/";
+		if(brickTypeId.getVersion()!=null) {
+			basePath = basePath + brickTypeId.getVersion()+ "/";
 		}
 		
-		String newBasePath = basePath+entityId.getId()+ "/";
+		String newBasePath = basePath+brickId.getId()+ "/";
 		File folder = new File(newBasePath);
 		Pair<File, HAPSerializationFormat> result;
 		if(folder.isDirectory()&&folder.exists()) {
 			//from folder
-			result = findEntityFile(folder, "main");
+			result = findBrickFile(folder, "main");
 		}
 		else {
 			//from file
 			newBasePath = basePath;
-			result = findEntityFile(new File(newBasePath), entityId.getId());
+			result = findBrickFile(new File(newBasePath), brickId.getId());
 		}
 		
 		if(result!=null) {
-			return new HAPManualDefinitionInfoBrickLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
+			return new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
 		}
 		else {
-			HAPErrorUtility.invalid("Cannot find module resource " + entityId);
+			HAPErrorUtility.invalid("Cannot find module resource " + brickId);
 		}
 		return null;
 	}
 
 	
-	private static HAPManualDefinitionInfoBrickLocation getEntityLocationInfo(String basePath, String id) {
-		String newBasePath = basePath+"/"+id;
-		File folder = new File(newBasePath);
-		Pair<File, HAPSerializationFormat> result;
-		if(folder.isDirectory()&&folder.exists()) {
-			//from folder
-			result = findEntityFile(folder, "main");
-		}
-		else {
-			//from file
-			newBasePath = basePath;
-			result = findEntityFile(new File(newBasePath), id);
-		}
-		
-		if(result!=null) {
-			return new HAPManualDefinitionInfoBrickLocation(result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
-		}
-		else {
-			HAPErrorUtility.invalid("Cannot find module resource " + id);
-		}
-		return null;
-	}
-
-	private static Pair<File, HAPSerializationFormat> findEntityFile(File dir, String fileName){
+	private static Pair<File, HAPSerializationFormat> findBrickFile(File dir, String fileName){
 		File[] matches = dir.listFiles(new FilenameFilter(){
 		  @Override
 			public boolean accept(File dir, String name){

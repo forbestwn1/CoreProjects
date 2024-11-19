@@ -19,6 +19,7 @@ public class HAPParserStructure {
 		Object valueJsonObj = eleDefJson.opt(HAPElementStructureLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPElementStructureNode.CHILD);
 		String constantName = (String)eleDefJson.opt(HAPElementStructureLeafConstantReference.CONSTANT);
+		Object runtimeObj = eleDefJson.opt(HAPElementStructureLeafRuntime.RUNTIME);
 		
 		if(defRefObj!=null) {
 			//relative for definition
@@ -32,7 +33,9 @@ public class HAPParserStructure {
 			parseRelativeElement(relativeEle, linkRefObj, eleDefJson);
 			
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelativeForValue.DEFINITION);
-			if(definitionJsonObj!=null) 	relativeEle.setDefinition(parseStructureElement(definitionJsonObj));
+			if(definitionJsonObj!=null) {
+				relativeEle.setDefinition(parseStructureElement(definitionJsonObj));
+			}
 		}
 		else if(mappingRefObj!=null) {
 			//relative for mapping
@@ -75,6 +78,9 @@ public class HAPParserStructure {
 		else if(constantName!=null) {
 			//constant reference
 			out = new HAPElementStructureLeafConstantReference(constantName);
+		}
+		else if(runtimeObj!=null) {
+			out = new HAPElementStructureLeafRuntime();
 		}
 		else {
 			//value

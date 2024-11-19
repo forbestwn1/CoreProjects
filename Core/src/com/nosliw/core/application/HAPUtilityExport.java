@@ -92,9 +92,12 @@ public class HAPUtilityExport {
 		//write package definition
 		HAPUtilityFile.writeJsonFile(bundleFolder, "extra.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 		
-		//write package executable
+		//write main executable
 		HAPUtilityFile.writeJsonFile(bundleFolder, "executable.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getMainBrickWrapper(), HAPSerializationFormat.JAVASCRIPT));
-		
+
+		//write branch executable
+		HAPUtilityFile.writeJsonFile(bundleFolder, "branches.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getBranchBrickWrappers(), HAPSerializationFormat.JAVASCRIPT));
+
 		//external complex entity dependency
 		Set<HAPResourceIdSimple> dependency = bundle.getResourceDependency();
 		List<String> dependencyArray = new ArrayList<String>();

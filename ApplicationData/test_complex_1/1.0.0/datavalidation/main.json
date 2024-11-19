@@ -32,9 +32,10 @@
 							"trigguerType" : "dataValidation",
 							"name" : "testDataValidation1",
 							"handlerId" : {
+								"idPath" : "#task",
 								"idPath0" : "datavalidation_mandatory-taskTaskScript",
 								"idPath1" : "datavalidation_enum-taskTaskScript",
-								"idPath" : "datavalidation_mandatory-taskWrapper"
+								"idPath2" : "datavalidation_mandatory-taskWrapper"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
@@ -51,6 +52,110 @@
 			
 		{
 			"info": {
+				"name" : "datavalidation_group-taskTaskScript",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"scriptResourceId": "task_datavalidation_group",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "tasks"
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"criteria" : "test.string;1.0.0"
+								}
+							]
+						}
+					}
+				}
+			},
+			"adapter":[
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "tasks",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"runtime" : [
+												{
+													"name" : "",
+													"brickId" : {
+														"idPath" : "datavalidation_mandatory-taskTaskScript"
+													}
+												}
+											],
+											"handler" : ""
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"dataTypeId": "test.string;1.0.0",
+												"value": "validation success"
+											}
+										}
+									]
+								},
+								"error" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "error",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]		
+		},
+
+		{
+			"info": {
 				"name" : "datavalidation_mandatory-taskWrapper",
 				"status": "disabled1",
 				"description" : ""
@@ -59,7 +164,7 @@
 			"adapter":[
 				{
 					"name" : "interactivetaskAdapter",
-					"status": "disabled1",
+					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -118,7 +223,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskTaskScript",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -267,110 +372,6 @@
 													"valuePortId" : {
 														"valuePortId" : {
 															"group" : "taskInteractive"
-														}
-													}
-												}
-											}
-										}
-									]
-								}
-							}
-						}
-					}
-				}
-			]		
-		},
-
-		{
-			"info": {
-				"name" : "datavalidation_group-taskTaskScript",
-				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"scriptResourceId": "task_datavalidation_group",
-				"taskInterface" : {
-					"request" : [
-						{
-							"name" : "tasks"
-						}
-					],
-					"result" : {
-						"success": {
-							"output": [
-								{
-									"name" : "task_result_success_string1",
-									"criteria" : "test.string;1.0.0"
-								}
-							]
-						}
-					}
-				}
-			},
-			"adapter":[
-				{
-					"name" : "interactivetaskAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForTask",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "tasks",
-											"valuePortId" : {
-												"valuePortId" : {
-													"group" : "validationData"
-												}
-											}
-										},
-										"definition" : {
-											"runtime" : {
-												"bricks" : [
-													{
-														"brickId" : {
-															"idPath" : "datavalidation_mandatory-taskTaskScript"
-														}
-													}
-												]
-											}
-										}
-									}
-								]
-							},
-							"out" : {
-								"success" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "output1"
-											},
-											"definition" : {
-												"dataTypeId": "test.string;1.0.0",
-												"value": "validation success"
-											}
-										}
-									]
-								},
-								"error" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "output1"
-											},
-											"definition" : {
-												"mapping" : {
-													"elementPath": "error",
-													"valuePortId" : {
-														"valuePortId" : {
-															"group" : "validationData"
 														}
 													}
 												}

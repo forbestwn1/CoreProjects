@@ -28,7 +28,7 @@ public class HAPSystemFolderUtility {
 	public static String getCodeTableFolder(){  return getApplicationDataFolder() + "codetable/";  }
 
 	public static String getEntityTextFolder(String entityType) {    return getApplicationDataFolder() + entityType + "/";     }
-	public static String getManualEntityBaseFolder() {    return getApplicationDataFolder();     }
+	public static String getManualBrickBaseFolder() {    return getApplicationDataFolder();     }
 	
 	public static String getResourceFolder(String resourceType) {    return getApplicationDataFolder() + resourceType + "/";     }
 	

@@ -104,7 +104,6 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 		
 		story.startTransaction();
 		HAPStoryRequestChangeWrapper changeRequest = new HAPStoryRequestChangeWrapper(story);
-
 		changeRequest.addChange(new HAPStoryChangeItemNew(new HAPStoryNodeService(), ELEMENT_SERVICE));
 		changeRequest.close();
 		HAPStoryResultTransaction transactionResult = story.commitTransaction();

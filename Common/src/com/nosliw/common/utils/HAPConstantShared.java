@@ -192,6 +192,7 @@ public class HAPConstantShared {
 		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
 		public static final String CONTEXT_ELEMENTTYPE_UNKNOW = "unknow";
 		public static final String CONTEXT_ELEMENTTYPE_PROVIDE = "provide";
+		public static final String CONTEXT_ELEMENTTYPE_RUNTIME = "runtime";
 
 
 
@@ -1002,6 +1003,10 @@ public class HAPConstantShared {
 
 		public static final int VALUESTRUCTURE_PRIORITY_DEFINED = 0;
 		public static final int VALUESTRUCTURE_PRIORITY_IMPLIED = 10;
+
+
+
+		public static final String NAME_ROOTBRICK_MAIN = "main";
 
 
 }

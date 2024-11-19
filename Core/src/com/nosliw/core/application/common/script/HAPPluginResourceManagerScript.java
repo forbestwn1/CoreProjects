@@ -20,7 +20,7 @@ public class HAPPluginResourceManagerScript implements HAPPluginResourceManager{
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {
 		String scriptId = simpleResourceId.getId();
-		String scriptFileName = HAPSystemFolderUtility.getManualEntityBaseFolder() + this.m_resourceType + "/" + scriptId + ".js";
+		String scriptFileName = HAPSystemFolderUtility.getManualBrickBaseFolder() + this.m_resourceType + "/" + scriptId + ".js";
 		File scriptFile = new File(scriptFileName);
 		String script = HAPUtilityFile.readFile(scriptFile);
 		
