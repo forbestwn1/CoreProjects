@@ -32,13 +32,13 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityDataAssociationMapping {
 
-	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, HAPRuntimeEnvironment runtimeEnv){
+	public static List<HAPTunnel> buildRelativePathMapping(HAPIdRootElement rootEleId, HAPElementStructure structureEle, HAPBundle bundle, String rootBrickName, HAPRuntimeEnvironment runtimeEnv){
 		
 		HAPIdValuePortInBundle toValuePortRef = rootEleId.getValuePortId();
 
 		String toValueStructureId = rootEleId.getValueStructureId();
 		
-		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
+		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, rootBrickName, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
 		
 		HAPDefinitionStructure toValueStructure=toValueStructureDomain.getStructureDefinitionByRuntimeId(toValueStructureId);
 

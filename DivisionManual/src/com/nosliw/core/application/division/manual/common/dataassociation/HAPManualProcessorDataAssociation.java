@@ -15,12 +15,13 @@ public class HAPManualProcessorDataAssociation {
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
+			String rootBrickName,
 			HAPRuntimeEnvironment runtimeEnv) {
 		
 		HAPDataAssociation out = null;
 		String daType = daDef.getType();
 		if(daType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-			out = HAPManualProcessorDataAssociationMapping.processValueMapping((HAPManualDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, runtimeEnv);
+			out = HAPManualProcessorDataAssociationMapping.processValueMapping((HAPManualDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, runtimeEnv);
 		}
 		
 		return out;

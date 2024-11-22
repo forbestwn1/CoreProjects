@@ -63,8 +63,8 @@ var node_createModuleStoryBuilder = function(parm){
 	//process design step from backend
 	var loc_processNewStep = function(step, processChange){
 		
-		var changes = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_CHANGES];
-		var questionair = step[node_COMMONATRIBUTECONSTANT.DESIGNSTEP_QUESTIONAIRE];
+		var changes = step[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTEP_CHANGES];
+		var questionair = step[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTEP_QUESTIONAIRE];
 
 		//apply step changes
 		if(processChange!=false){
@@ -75,8 +75,8 @@ var node_createModuleStoryBuilder = function(parm){
 			});
 		}
 
-		var question = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_QUESTIONS];
-		var answers = questionair[node_COMMONATRIBUTECONSTANT.QUESTIONNAIRE_ANSWERS];
+		var question = questionair[node_COMMONATRIBUTECONSTANT.STORYQUESTIONNAIRE_QUESTIONS];
+		var answers = questionair[node_COMMONATRIBUTECONSTANT.STORYQUESTIONNAIRE_ANSWERS];
 		loc_processQuestion(question, answers);
 		
 		var out = new node_DesignStep(changes, question, step[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO]);
@@ -86,22 +86,22 @@ var node_createModuleStoryBuilder = function(parm){
 	};
 	
 	var loc_processQuestion = function(question, answers){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		var type = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			var children = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_CHILDREN];
 			_.each(children, function(child, i){
 				loc_processQuestion(child, answers);
 			});
 		}
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
 			//find target element
-			var targetRef = question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF];
+			var targetRef = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TARGETREF];
 			var element = node_storyUtility.getStoryElementByRef(loc_componentData.story, targetRef);
 			question.element = element;
 			
 			//assign answer to question
 			var answerInfo = answers[question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]];
-			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+			if(answerInfo!=undefined)  question.answer = answerInfo[node_COMMONATRIBUTECONSTANT.STORYANSWER_CHANGES];
 			if(question.answer==undefined || question.answer.length()==0){
 				question.answer = [];
 				question.answered = false;
@@ -117,9 +117,9 @@ var node_createModuleStoryBuilder = function(parm){
 	
 	//update answers in question
 	var loc_updateQuestion = function(question, answers){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		var type = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			var children = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_CHILDREN];
 			_.each(children, function(child, i){
 				loc_updateQuestion(child, answers);
 			});
@@ -132,7 +132,7 @@ var node_createModuleStoryBuilder = function(parm){
 					existingAnswersById[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = change;
 				});
 				
-				var newChanges = answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES];
+				var newChanges = answer[node_COMMONATRIBUTECONSTANT.STORYANSWER_CHANGES];
 				//find extend change and apply
 				_.each(newChanges, function(change, i){
 					if(existingAnswersById[change[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]]==undefined){
@@ -165,9 +165,9 @@ var node_createModuleStoryBuilder = function(parm){
 				nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, extraChanges, loc_componentData.stepCursor, {
 					success : function(request, serviceData){
 						if(node_errorUtility.isSuccess(serviceData)){
-							var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
-							var stepRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_STEP];
-							var answersRes = response[node_COMMONATRIBUTECONSTANT.RESPONSEDESIGN_ANSWER];
+							var response = serviceData[node_COMMONATRIBUTECONSTANT.STORYSERVICEDATA_DATA];
+							var stepRes = response[node_COMMONATRIBUTECONSTANT.STORYRESPONSEDESIGN_STEP];
+							var answersRes = response[node_COMMONATRIBUTECONSTANT.STORYRESPONSEDESIGN_ANSWER];
 							loc_updateQuestion(loc_getCurrentStep().question, answersRes);
 							var step = loc_processNewStep(stepRes);
 							loc_componentData.errorMessages = [];
@@ -184,7 +184,7 @@ var node_createModuleStoryBuilder = function(parm){
 							}
 						}
 						else{
-							loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
+							loc_componentData.errorMessages = serviceData[node_COMMONATRIBUTECONSTANT.STORYSERVICEDATA_DATA];
 						}
 					}
 				}));
@@ -348,9 +348,9 @@ var node_createModuleStoryBuilder = function(parm){
 			out.addRequest(loc_storyService.getNewDesignRequest(undefined, "pageSimple", {
 				success : function(request, design){
 					loc_componentData.designId = design[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
-					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+					loc_componentData.story = design[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTORY_STORY];
 					loc_componentData.stageInfos = node_designUtility.getDesignStages(design);
-					var changeHistory = design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_CHANGEHISTORY];
+					var changeHistory = design[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTORY_CHANGEHISTORY];
 					_.each(changeHistory, function(changeStep, i){
 						loc_processNewStep(changeStep, false);
 					});

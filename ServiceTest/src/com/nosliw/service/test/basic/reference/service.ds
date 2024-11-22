@@ -4,7 +4,7 @@
 		"status":"disabled1",
 		"name": "TestReferenceService",
 		"description" : "test service implemented by process",
-		"tag" : ["test", "public"],
+		"tag" : ["demo1", "test", "public"],
 		"interface" : "interactiveinterface|1.0.0|@interface=serviceinterface|1.0.0|basicinterface",
 		"display" : {
 			"displayName" : "Test Template Service3 English",

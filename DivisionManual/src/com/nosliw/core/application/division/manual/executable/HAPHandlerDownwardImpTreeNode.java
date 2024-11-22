@@ -1,23 +1,26 @@
 package com.nosliw.core.application.division.manual.executable;
 
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWithBrick;
-import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.HAPManualWrapperBrickRoot;
 
 public abstract class HAPHandlerDownwardImpTreeNode extends HAPHandlerDownward{
 
 	@Override
-	public boolean processBrickNode(HAPWrapperBrickRoot rootEntityInfo, HAPPath path, Object data) {
-		HAPTreeNodeBrick childTreeNode = HAPManualExeUtilityBrick.getDescdentTreeNode((HAPManualWrapperBrickRoot)rootEntityInfo, path);
+	public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+		HAPTreeNodeBrick childTreeNode = getDescdentTreeNode(bundle, path);
 		return this.processTreeNode(childTreeNode, data);
 	}
 
 	@Override
-	public void postProcessBrickNode(HAPWrapperBrickRoot rootEntityInfo, HAPPath path, Object data) {
-		HAPTreeNodeBrick childTreeNode = HAPManualExeUtilityBrick.getDescdentTreeNode((HAPManualWrapperBrickRoot)rootEntityInfo, path);
+	public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+		HAPTreeNodeBrick childTreeNode = getDescdentTreeNode(bundle, path);
 		this.postProcessTreeNode(childTreeNode, data);
 	}
 
@@ -40,4 +43,19 @@ public abstract class HAPHandlerDownwardImpTreeNode extends HAPHandlerDownward{
 		return out;
 	}
 
+	protected HAPTreeNodeBrick getDescdentTreeNode(HAPBundle bundle, HAPPath path) {
+		HAPTreeNodeBrick out = null;
+
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
+		HAPManualWrapperBrickRoot rootWrapper = (HAPManualWrapperBrickRoot)bundle.getBranchBrickWrapper(fullPathInfo.getRoot());
+		if(fullPathInfo.getPath()==null || fullPathInfo.getPath().isEmpty()) {
+			out = rootWrapper;
+		}
+		else {
+			out = (HAPManualAttributeInBrick)HAPUtilityBrick.getDescendantAttribute(rootWrapper.getBrick(), fullPathInfo.getPath());
+		}
+		return out;
+	}
+
+	
 }

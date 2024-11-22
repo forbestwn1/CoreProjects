@@ -42,18 +42,18 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualUtilityTask {
 
-	public static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath) {
+	public static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide) {
 		HAPPath out = idPath;
-		HAPBrick brick = HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath);
+		HAPBrick brick = HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);
 		if(brick!=null&&brick.getBrickType().equals(HAPEnumBrickType.TASKWRAPPER_100)) {
 			out = idPath.appendSegment(HAPBlockTaskWrapper.TASK);
 		}
 		return out;
 	}
 	
-	public static String getExternalValuePortGroupNameOfInteractiveTask(HAPBundle bundle, HAPPath idPath, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		idPath = figureoutTaskPath(bundle, idPath);
-		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, idPath, resourceMan, runtimeInfo);
+	public static String getExternalValuePortGroupNameOfInteractiveTask(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		idPath = figureoutTaskPath(bundle, idPath, rootNameIfNotProvide);
+		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, rootNameIfNotProvide, idPath, resourceMan, runtimeInfo);
 		return valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePortGroupByType(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK).getName();
 	}
 	
@@ -74,13 +74,13 @@ public class HAPManualUtilityTask {
 		requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
 	}
 
-	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPBundle bundle, HAPPath idPath, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain, HAPRuntimeEnvironment runtimeEnv) {
+	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain, HAPRuntimeEnvironment runtimeEnv) {
 		HAPMatchers out = null;
 		
 		String dataRootName = HAPConstantShared.NAME_ROOT_DATA;
 		
-		idPath = figureoutTaskPath(bundle, idPath);
-		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath);
+		idPath = figureoutTaskPath(bundle, idPath, rootNameIfNotProvide);
+		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);
 		if(childBrick!=null) {
 			Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(childBrick.getOtherInternalValuePortContainer(), childBrick.getOtherExternalValuePortContainer());
 			

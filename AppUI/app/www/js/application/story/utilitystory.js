@@ -18,19 +18,19 @@ var node_utility = function(){
 
 	var loc_isValidElement = function(element, validOnly){
 		if(validOnly==false)  return true;
-		else return element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]!=false;
+		else return element[node_COMMONATRIBUTECONSTANT.STORYSTORYELEMENT_ENABLE]!=false;
 	};
 	
 	var loc_getChildNodesInfo = function(parent, story, validOnly) {
 		var out = [];
 		var childConnectionEnds = loc_getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 		_.each(childConnectionEnds, function(connectionEnd, i){
-			var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID];
+			var connectionId = connectionEnd[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_CONNECTIONID];
 			var connection = loc_getConnectionById(story, connectionId);
 			if(loc_isValidElement(connection, validOnly)){
-				var childNode = loc_getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
+				var childNode = loc_getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_NODEREF]);
 				if(loc_isValidElement(childNode, validOnly)){
-					out.push(new node_ChildStoryNodeInfo(childNode, connectionId, connection[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID]));
+					out.push(new node_ChildStoryNodeInfo(childNode, connectionId, connection[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONCONTAIN_CHILDID]));
 				}
 			}
 		});
@@ -39,7 +39,7 @@ var node_utility = function(){
 
 	var loc_getStoryElementByRef = function(story, ref){
 		var elementId = loc_getElementIdByReference(story, ref);
-		return loc_getStoryElement(story, elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+		return loc_getStoryElement(story, elementId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID]);
 	};
 
 	var loc_getNodeConnectionEnd = function(node1, connectionType, profile1, node2Type, profile2, story) {
@@ -52,10 +52,10 @@ var node_utility = function(){
 			var connection = loc_getConnectionById(story, connectionId);
 			if(connectionType==undefined || connection[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]==connectionType){
 				var node1End = loc_getConnectionEnd(story, connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
-				if(profile1==undefined || node1End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile1){
+				if(profile1==undefined || node1End[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_PROFILE]==profile1){
 					var node2End = loc_getOtherConnectionEnd(story, connection, node[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]);
-					if(profile2==undefined || node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_PROFILE]==profile2){
-						if(node2Type==undefined || loc_getStoryElementByRef(node2End[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
+					if(profile2==undefined || node2End[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_PROFILE]==profile2){
+						if(node2Type==undefined || loc_getStoryElementByRef(node2End[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
 							out.push(node2End);
 						}
 					}
@@ -79,26 +79,26 @@ var node_utility = function(){
 		return out;
 	};
 
-	var loc_getNodeById = function(story, nodeId){	return story[node_COMMONATRIBUTECONSTANT.STORY_NODE][nodeId];	};
-	var loc_getConnectionById = function(story, connectionId){	return story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];	};
-	var loc_getGroupById = function(story, groupId){	return story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];	};
+	var loc_getNodeById = function(story, nodeId){	return story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE][nodeId];	};
+	var loc_getConnectionById = function(story, connectionId){	return story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION][connectionId];	};
+	var loc_getGroupById = function(story, groupId){	return story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ELEMENTGROUP][groupId];	};
 
 	var loc_getElementIdByReference = function(story, reference){
-		if(reference[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY]!=null)  return reference;
-		else return story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][reference[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]];
+		if(reference[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY]!=null)  return reference;
+		else return story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ALIAS][reference[node_COMMONATRIBUTECONSTANT.STORYALIASELEMENT_NAME]];
 	};
 
 	var loc_getConnectionEnd = function(story, connection, nodeId) {
-		var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
-		var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-		if(loc_getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end1;
+		var end1 = connection[node_COMMONATRIBUTECONSTANT.STORYCONNECTION_END1];
+		var end2 = connection[node_COMMONATRIBUTECONSTANT.STORYCONNECTION_END2];
+		if(loc_getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID]==nodeId)  return end1;
 		else return end2;
 	};
 
 	var loc_getOtherConnectionEnd = function(story, connection, nodeId) {
-		var end1 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END1];
-		var end2 = connection[node_COMMONATRIBUTECONSTANT.CONNECTION_END2];
-		if(loc_getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]==nodeId)  return end2;
+		var end1 = connection[node_COMMONATRIBUTECONSTANT.STORYCONNECTION_END1];
+		var end2 = connection[node_COMMONATRIBUTECONSTANT.STORYCONNECTION_END2];
+		if(loc_getElementIdByReference(story, end1[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_NODEREF])[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID]==nodeId)  return end2;
 		else return end1;
 	};
 
@@ -130,10 +130,10 @@ var node_utility = function(){
 		getElementIdByReference : function(story, reference){	return loc_getElementIdByReference(story, reference);	},	
 			
 		getQuestionTargetElement : function(story, question){
-			return loc_getStoryElementByRef(story, question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF]);
+			return loc_getStoryElementByRef(story, question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TARGETREF]);
 		},
 			
-		getAllNodes : function(story){  return story[node_COMMONATRIBUTECONSTANT.STORY_NODE];   },
+		getAllNodes : function(story){  return story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE];   },
 		
 		addStoryElement : function(story, element, aliasObj){
 			var elementCategary = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
@@ -143,17 +143,17 @@ var node_utility = function(){
 				element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = elementId;
 			}
 			if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_NODE){
-				story[node_COMMONATRIBUTECONSTANT.STORY_NODE][elementId] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE][elementId] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_CONNECTION){
-				story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][elementId] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION][elementId] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
 				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][elementId] = element;
 			}
 			//process alias
 			if(aliasObj!=undefined){
-				story[node_COMMONATRIBUTECONSTANT.STORY_ALIAS][aliasObj[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME]] = new node_ElementId(elementCategary, elementId); 
+				story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ALIAS][aliasObj[node_COMMONATRIBUTECONSTANT.STORYALIASELEMENT_NAME]] = new node_ElementId(elementCategary, elementId); 
 			}
 			return element;
 		},
@@ -164,7 +164,7 @@ var node_utility = function(){
 		
 		deleteStoryElementByRef : function(story, ref){
 			var elementId = loc_getElementIdByReference(story, ref);
-			return this.deleteStoryElement(elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID]);
+			return this.deleteStoryElement(elementId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY], elementId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID]);
 		},
 		
 		deleteStoryElement : function(story, elementCategary, elementId){
@@ -183,7 +183,7 @@ var node_utility = function(){
 		
 		getStoryNodeByTypes : function(story, nodeTypes){
 			var out = [];
-			_.each(story[node_COMMONATRIBUTECONSTANT.STORY_NODE], function(node, id){
+			_.each(story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE], function(node, id){
 				if(nodeTypes.includes(node[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE])){
 					out.push(node);
 				}
@@ -193,7 +193,7 @@ var node_utility = function(){
 		
 		getStoryNodeByType : function(story, nodeType) {
 			var out = [];
-			_.each(story[node_COMMONATRIBUTECONSTANT.STORY_NODE], function(node, id){
+			_.each(story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE], function(node, id){
 				if(nodeType==node[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]){
 					out.push(node);
 				}
@@ -207,8 +207,8 @@ var node_utility = function(){
 		getChildNodeByChildId : function(parent, childId, story) {
 			var childConnectionEnds = loc_getNodeConnectionEnd(parent, node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN, node_COMMONCONSTANT.STORYNODE_PROFILE_CONTAINER, undefined, undefined, story);
 			_.each(childConnectionEnds, function(connectionEnd, i){
-				var id = loc_getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.CONNECTIONCONTAIN_CHILDID];
-				if(id==childId)   return loc_getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.CONNECTIONEND_NODEREF]);
+				var id = loc_getConnectionById(story, connectionEnd[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_CONNECTIONID])[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONCONTAIN_CHILDID];
+				if(id==childId)   return loc_getStoryElementByRef(story, connectionEnd[node_COMMONATRIBUTECONSTANT.STORYCONNECTIONEND_NODEREF]);
 			});
 			return;
 		},
@@ -228,20 +228,20 @@ var node_utility = function(){
 		getGroupById : function(story, groupId){	return loc_getGroupById(story, groupId);	},
 		
 		deleteNodeById : function(story, nodeId){
-			var out = story[node_COMMONATRIBUTECONSTANT.STORY_NODE][nodeId];
-			delete story[node_COMMONATRIBUTECONSTANT.STORY_NODE][nodeId];
+			var out = story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE][nodeId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORYSTORY_NODE][nodeId];
 			return out;
 		},
 		
 		deleteConnectionById : function(story, connectionId){	
-			var out = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];
-			delete story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION][connectionId];
+			var out = story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION][connectionId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION][connectionId];
 			return out;
 		},
 
 		deleteGroupById : function(story, groupId){	
-			var out = story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];
-			delete story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][groupId];
+			var out = story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ELEMENTGROUP][groupId];
+			delete story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ELEMENTGROUP][groupId];
 			return out;
 		},
 		

@@ -1,11 +1,12 @@
 package com.nosliw.core.application.division.manual.executable;
 
-import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
 
 public class HAPManualExeUtilityBrick {
 
@@ -18,18 +19,12 @@ public class HAPManualExeUtilityBrick {
 		brick.setTreeNodeInfo(new HAPInfoTreeNode());
 		return brick;
 	}
-	
-	public static HAPTreeNodeBrick getDescdentTreeNode(HAPManualWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		HAPTreeNodeBrick out = null;
-		if(path==null || path.isEmpty()) {
-			out = rootBrickWrapper;
-		}
-		else {
-			out = (HAPManualAttributeInBrick)HAPUtilityBrick.getDescendantAttribute(rootBrickWrapper.getBrick(), path);
-		}
-		return out;
-	}
 
+
+	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPInfoTreeNode treeNodeInfo) {
+		HAPComplexPath pathInfo = HAPManualUtilityBrick.getBrickFullPathInfo(treeNodeInfo);
+		return HAPUtilityBrick.getDescdentBrickLocal(HAPUtilityBrick.getBrickRoot(pathInfo.getRoot(), bundle).getBrick(), pathInfo.getPath());
+	}
 
 
 }

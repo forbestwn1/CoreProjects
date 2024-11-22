@@ -1,7 +1,9 @@
 package com.nosliw.core.application.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -31,6 +33,7 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 	
 	@Override
 	public List<String> getTags(){   return (List<String>)this.getAttributeValueOfValue(TAG);    }
+	public void setTags(List<String> tags) {    this.setAttributeValueWithValue(TAG, tags);       }
 	
 	@Override
 	public HAPDisplayResourceNode getDisplayResource() {    return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);  }
@@ -56,6 +59,16 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 		else {
 			this.setTaskInterface(HAPUtilityServiceParse.parseTaskInterfaceInterfaceBlock(jsonObj));
 		}
+		
+		List<String> tags = new ArrayList<String>();
+		JSONArray tagArray = jsonObj.optJSONArray(TAG);
+		if(tagArray!=null) {
+			for(int i=0; i<tagArray.length(); i++) {
+				tags.add(tagArray.getString(i));
+			}
+		}
+		this.setTags(tags);
+		
 		return true;  
 	}
 

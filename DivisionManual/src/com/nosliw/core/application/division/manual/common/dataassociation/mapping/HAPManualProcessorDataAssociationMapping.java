@@ -43,6 +43,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
+			String rootBrickName,
 			HAPRuntimeEnvironment runtimeEnv) 
 	{
 		HAPDataAssociationMapping out = new HAPDataAssociationMapping();
@@ -60,7 +61,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), new HAPConfigureProcessorRelative(), baseBlockPath, null, null, currentBundle, runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo());
 			
-			List<HAPTunnel> tunnels = HAPManualUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, runtimeEnv);
+			List<HAPTunnel> tunnels = HAPManualUtilityDataAssociationMapping.buildRelativePathMapping(targetRootEleId, processedItem, currentBundle, rootBrickName, runtimeEnv);
 			for(HAPTunnel tunnel : tunnels) {
 				out.addTunnel(tunnel);
 			}

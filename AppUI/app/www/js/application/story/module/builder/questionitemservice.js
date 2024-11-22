@@ -24,16 +24,15 @@ var node_createComponentQuestionItemService = function(availableService){
 			success : function(request, serviceDefs){
 				var services = [];
 				_.each(serviceDefs, function(serviceDef, i){
-					var serviceStatic = serviceDef[node_COMMONATRIBUTECONSTANT.DEFINITIONSERVICE_STATIC];
-					var displayResource = serviceStatic[node_COMMONATRIBUTECONSTANT.INFOSERVICEINTERFACE_DISPLAY];
+					var displayResource = serviceDef[node_COMMONATRIBUTECONSTANT.INFOSERVICEINTERFACE_DISPLAY];
 					var displayName = displayResource!=undefined?displayResource[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME]:undefined;
-					if(displayName==undefined)  displayName = serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME];   
+					if(displayName==undefined)  displayName = serviceDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DISPLAYNAME];   
 					var service = {
-						id : serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], 
-						name : serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME], 
+						id : serviceDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID], 
+						name : serviceDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME], 
 						displayName : displayName, 
-						description : serviceStatic[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION], 
-						sinterface :  serviceStatic[node_COMMONATRIBUTECONSTANT.INFOSERVICESTATIC_INTERFACE],
+						description : serviceDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_DESCRIPTION], 
+						sinterface :  serviceDef[node_COMMONATRIBUTECONSTANT.SERVICEPROFILE_INTERFACE],
 					};
 					services.push(service);
 				});

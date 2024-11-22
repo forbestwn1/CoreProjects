@@ -4,7 +4,7 @@
 		"status":"disabled1",
 		"name": "TestBasicService",
 		"description" : "test service implemented by process",
-		"tag" : ["test", "public"],
+		"tag" : ["demo", "test", "public"],
 		"taskInterface" : {
 			"request" : [
 				{

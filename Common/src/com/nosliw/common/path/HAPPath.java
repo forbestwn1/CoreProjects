@@ -58,6 +58,14 @@ public class HAPPath {
 		return out;
 	}
 	
+	public Pair<String, HAPPath> trimFirst() {
+		HAPPath path = new HAPPath();
+		for(int i=1; i<this.m_pathSegs.length; i++) {
+			path = path.appendSegment(m_pathSegs[i]);
+		}
+		return Pair.of(this.isEmpty()?"":this.m_pathSegs[0], path);
+	}
+
 	public Pair<HAPPath, String> trimLast() {
 		HAPPath path = new HAPPath();
 		for(int i=0; i<this.m_pathSegs.length-1; i++) {

@@ -41,7 +41,6 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -88,8 +87,7 @@ public class HAPManualUtilityValueContextProcessor {
 				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(parentBrickManual, new HAPPath(attributeName));
 				HAPManualValueContext valueContextExe = childBrick.getManualValueContext();
 
-				HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper = rootBrickWrapper.getDefinition();
-				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootBrickDefWrapper, parentBrickManual.getTreeNodeInfo().getPathFromRoot());
+				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(bundle, parentBrickManual.getTreeNodeInfo());
 				HAPManualDefinitionBrickRelationValueContext valueContextRelation = resolveValueContextRelation(parentBrickManualDef.getAttribute(attributeName), defaultRelation);
 				
 				//process value context inheritage
@@ -120,7 +118,7 @@ public class HAPManualUtilityValueContextProcessor {
 							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
 									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(childBrick.getTreeNodeInfo().getPathFromRoot(), bundle, processContext);
+									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(childBrick.getTreeNodeInfo().getPathFromRoot(), processContext);
 									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
 									relativeEle.getReference().setValuePortId(normalizedValuePortId);
 									return Pair.of(false, null);
@@ -148,11 +146,11 @@ public class HAPManualUtilityValueContextProcessor {
 		
 	}
 	
-	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPBundle bundle, HAPManualContextProcessBrick processContext) {
+	private static HAPPath findDefaultParentValueContext(HAPPath path, HAPManualContextProcessBrick processContext) {
 		HAPPath parentPath = HAPUtilityPath.getParentPath(path);
 		while(parentPath!=null) {
-			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle.getMainBrickWrapper(), parentPath);
-			if(!HAPUtilityValuePort.isValuePortContainerEmpty(parentBrick.getInternalValuePorts(), bundle.getValueStructureDomain())) {
+			HAPBrick parentBrick = HAPUtilityBrick.getDescdentBrickLocal(processContext.getCurrentBundle(), parentPath, processContext.getRootBrickName());
+			if(!HAPUtilityValuePort.isValuePortContainerEmpty(parentBrick.getInternalValuePorts(), processContext.getCurrentBundle().getValueStructureDomain())) {
 				return parentPath;
 			}
 			
@@ -212,7 +210,7 @@ public class HAPManualUtilityValueContextProcessor {
 							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
 									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(treeNode.getTreeNodeInfo().getPathFromRoot(), bundle, processContext);
+									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(treeNode.getTreeNodeInfo().getPathFromRoot(), processContext);
 									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
 									relativeEle.getReference().setValuePortId(normalizedValuePortId);
 									return Pair.of(false, null);
@@ -247,7 +245,7 @@ public class HAPManualUtilityValueContextProcessor {
 
 				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(parentBrickManual, new HAPPath(attributeName));
 				
-				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(rootBrickWrapper.getDefinition(), parentBrickManual.getTreeNodeInfo().getPathFromRoot());
+				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(bundle, parentBrickManual.getTreeNodeInfo());
 				HAPManualDefinitionBrickRelationValueContext valueContextRelation = resolveValueContextRelation(parentBrickManualDef.getAttribute(attributeName), defaultRelation);
 				
 				String inheritMode = valueContextRelation.getMode();

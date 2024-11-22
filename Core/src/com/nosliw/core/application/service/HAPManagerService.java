@@ -25,10 +25,12 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 @HAPEntityWithAttribute
 public class HAPManagerService implements HAPPluginDivision{
 
+	//all service definition
 	private Map<String, HAPInfoService> m_servicesInfo;
 	
 	private Map<String, HAPFactoryService> m_serviceFactorys;
 	
+	//all service runtime
 	private Map<String, HAPInstanceService> m_serviceInstances;
 	
 	private HAPManagerServiceInterface m_serviceInterfaceMan;
@@ -84,19 +86,28 @@ public class HAPManagerService implements HAPPluginDivision{
 		return out;
 	}
 	
-	public List<HAPBlockServiceProfile> queryDefinition(HAPQueryServiceDefinition query){
-		List<HAPBlockServiceProfile> out = new ArrayList<HAPBlockServiceProfile>();
+	public List<HAPServiceProfile> queryDefinition(HAPQueryServiceDefinition query){
+		List<HAPServiceProfile> out = new ArrayList<HAPServiceProfile>();
 		for(String id : this.getAllServicesInfo().keySet()) {
 			boolean found = true;
-			HAPBlockServiceProfile def = this.getAllServicesInfo().get(id).getServiceProfileInfo();
-			List<String> tags = def.getTags();
+			HAPBlockServiceProfile profileBlock = this.getAllServicesInfo().get(id).getServiceProfileInfo();
+			List<String> tags = profileBlock.getTags();
 			for(String keyword : query.getKeywords()) {
 				if(!tags.contains(keyword)) {
 					found = false;
 				}
 			}
+			
 			if(found) {
-				out.add(def);
+				HAPServiceProfile profile = new HAPServiceProfile();
+				profileBlock.cloneToEntityInfo(profile);
+				profile.setTags(profileBlock.getTags());
+				profile.setDisplayResource(profileBlock.getDisplayResource());
+				
+				HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(profileBlock.getTaskInterface(), this.m_runtimeEnv.getBrickManager());
+				profile.setInterface(taskInterfaceBlock.getValue());
+				
+				out.add(profile);
 			}
 		}
 		return out;

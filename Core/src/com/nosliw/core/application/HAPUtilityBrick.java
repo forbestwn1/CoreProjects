@@ -3,6 +3,7 @@ package com.nosliw.core.application;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePortContainer;
@@ -18,6 +19,54 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityBrick {
 
+	public static HAPWrapperBrickRoot getBrickRoot(String rootBrickName, HAPBundle bundle) {
+		return bundle.getRootBrickWrapper(rootBrickName);
+	}
+
+	public static HAPResultBrick getDescdentResultWithLocalBrick(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
+		return getDescendantBrickResult(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
+		return getDescdentBrickLocal(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path) {
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
+		return getDescdentBrickLocal(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPIdBrickInBundle brickInBundleId, String rootNameIfNotProvide) {
+		return getDescdentBrickLocal(bundle, new HAPPath(brickInBundleId.getIdPath()), rootNameIfNotProvide);
+	}
+
+	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
+		
+		return getDescdentBrickLocal(rootBrickWrapper.getBrick(), path);
+	}
+
+
+	
+	
+	
+	
+	public static HAPResultBrick getDescdentResultWithBrick1(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide, HAPManagerApplicationBrick brickManager) {
+		return getDescdentResultWithBrick1(bundle.getMainBrickWrapper().getBrick(), path, brickManager);
+	}
+	
+	public static HAPResultBrick getDescdentResultWithBrick1(HAPBrick brick, HAPPath path, HAPManagerApplicationBrick brickManager) {
+		HAPResultBrick brickResult = getDescendantBrickResult(brick, new HAPPath(path));
+		if(brickResult.getBrick()==null) {
+			brickResult.setBrick(HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager));			
+		}
+		return brickResult;	
+	}
+	
+	
+	
+	
 	public static HAPBundle getBrickBundle(HAPResourceIdSimple resourceId, HAPManagerApplicationBrick brickMan) {
 		HAPBundle bundle = brickMan.getBrickBundle(HAPUtilityBrickId.fromResourceId2BrickId(resourceId));
 		HAPUtilityExport.exportBundle(resourceId, bundle);
@@ -58,10 +107,10 @@ public class HAPUtilityBrick {
 		return out;
 	}
 
-	public static HAPInfoValuePortContainer getDescdentValuePortContainerInfo(HAPBundle bundle, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPInfoValuePortContainer getDescdentValuePortContainerInfo(HAPBundle bundle, String rootBrickNameIfNotProvide, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick brick = null;
 		HAPDomainValueStructure valueStructureDomain = null;
-		HAPResultBrick brickResult = getDescdentResultWithLocalBrick(bundle, path);
+		HAPResultBrick brickResult = getDescdentResultWithLocalBrick(bundle, path, rootBrickNameIfNotProvide);
 		if(brickResult.isInternalBrick()) {
 			brick = brickResult.getBrick();
 			valueStructureDomain = bundle.getValueStructureDomain();
@@ -90,26 +139,16 @@ public class HAPUtilityBrick {
 	
 	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
 		HAPBundle bundle = getBrickBundle(normalizedResourceId.getRootResourceId(), brickMan);
-		return getDescdentBrickLocal(bundle.getMainBrickWrapper(), normalizedResourceId.getPath());
+		return getDescdentBrickLocal(bundle.getMainBrickWrapper().getBrick(), normalizedResourceId.getPath());
 	}
 	
-	public static HAPBrick getDescdentBrick(HAPBundle bundle, HAPPath path, HAPManagerApplicationBrick brickManager) {
-		return getDescdentResultWithBrick(bundle, path, brickManager).getBrick();
-	}
 
 	
-	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPIdBrickInBundle brickInBundleId) {
-		return getDescdentBrickLocal(bundle.getMainBrickWrapper(), new HAPPath(brickInBundleId.getIdPath()));
-	}
 
-	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path) {
-		return getDescdentBrickLocal(bundle.getMainBrickWrapper(), path);
-	}
-
-	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		return getDescdentBrickLocal(rootBrickWrapper.getBrick(), path);
-	}
-
+	
+	
+	
+	
 	public static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
 		HAPResultBrick brickResult = getDescendantBrickResult(brick, path);
 		if(brickResult!=null) {
@@ -118,27 +157,6 @@ public class HAPUtilityBrick {
 		return null;
 	}
 
-	public static HAPResultBrick getDescdentResultWithBrick(HAPBundle bundle, HAPPath path, HAPManagerApplicationBrick brickManager) {
-		return getDescdentResultWithBrick(bundle.getMainBrickWrapper().getBrick(), path, brickManager);
-	}
-	
-	public static HAPResultBrick getDescdentResultWithBrick(HAPBrick brick, HAPPath path, HAPManagerApplicationBrick brickManager) {
-		HAPResultBrick brickResult = getDescendantBrickResult(brick, new HAPPath(path));
-		if(brickResult.getBrick()==null) {
-			brickResult.setBrick(HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager));			
-		}
-		return brickResult;	
-	}
-	
-	public static HAPResultBrick getDescdentResultWithLocalBrick(HAPBundle bundle, HAPPath path) {
-		HAPResultBrick brickResult =  getDescdentBrickResult(bundle.getMainBrickWrapper(), path);
-		return brickResult;
-	}
-	
-	private static HAPResultBrick getDescdentBrickResult(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		return getDescendantBrickResult(rootBrickWrapper.getBrick(), path);
-	}
-	
 	private static HAPResultBrick getDescendantBrickResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
 			return new HAPResultBrick(brick);

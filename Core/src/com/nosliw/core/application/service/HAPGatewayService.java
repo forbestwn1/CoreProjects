@@ -9,7 +9,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -57,7 +56,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 		{
 			HAPQueryServiceDefinition defQuery = new HAPQueryServiceDefinition();
 			defQuery.buildObject(parms.optJSONObject(COMMAND_SEARCHDEFINITION_QUERY), HAPSerializationFormat.JSON);
-			List<HAPBlockServiceProfile> serviceDefs = this.m_serviceManager.queryDefinition(defQuery);
+			List<HAPServiceProfile> serviceDefs = this.m_serviceManager.queryDefinition(defQuery);
 			out = this.createSuccessWithObject(serviceDefs);
 			return out;
 		}
