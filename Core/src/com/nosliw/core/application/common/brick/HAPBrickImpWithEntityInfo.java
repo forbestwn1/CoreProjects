@@ -56,8 +56,7 @@ abstract public class HAPBrickImpWithEntityInfo extends HAPBrickImp implements H
 	
 	@Override
 	public void cloneToEntityInfo(HAPEntityInfo entityInfo) {
-		// TODO Auto-generated method stub
-		
+		HAPUtilityEntityInfo.cloneTo(this, entityInfo);
 	}
 
 	@Override

@@ -51,6 +51,7 @@ public class HAPServiceProfile extends HAPEntityInfoImp{
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(INTERFACE, HAPManagerSerialize.getInstance().toStringValue(this.m_interface, HAPSerializationFormat.JSON));
 		jsonMap.put(TAG, HAPManagerSerialize.getInstance().toStringValue(this.m_tags, HAPSerializationFormat.JSON));
 		jsonMap.put(DISPLAY, HAPManagerSerialize.getInstance().toStringValue(this.m_displayResource, HAPSerializationFormat.JSON));

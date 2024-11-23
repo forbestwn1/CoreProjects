@@ -128,11 +128,11 @@ var node_createComponentQuestionItemService = function(availableService){
 				Inputs: 
 				<br>
 				<div v-if="currentService.sinterface!=undefined" style="margin-left:25px">
-					<div v-for="parm in currentService.sinterface.request">
+					<div v-for="parm in currentService.sinterface.request.parm">
 						name : {{parm.name}}
-						<br>
+						<!--br>
 						dataType : {{parm.dataInfo.criteria}}
-						<br>
+						<br-->
 						defaultValue : {{parm.defaultValue}}
 						<br>
 						rules : 
@@ -158,9 +158,9 @@ var node_createComponentQuestionItemService = function(availableService){
 				<div v-if="currentService.sinterface!=undefined" style="margin-left:25px">
 					<div v-for="parm in currentService.sinterface.result.success.output">
 						name : {{parm.name}}
-						<br>
-						dataType : {{parm.dataInfo.criteria}}
-						<br>
+						<!--br>
+						dataType : {{parm.criteria}}
+						<br-->
 					</div>
 				</div>
 

@@ -1,0 +1,57 @@
+[{
+	"profile": {
+		"id": "TestBasicService1",
+		"status":"disabled1",
+		"name": "TestBasicService",
+		"description" : "test service implemented by process",
+		"tag" : ["demo", "test", "public"],
+		"taskInterface" : {
+			"request" : [
+				{
+					"name" : "serviceParm1",
+					dataInfo : "test.string;1.0.0",
+				}
+			],
+			"result" : {
+				"success": {
+					"output": [
+						{
+							"name" : "outputInService1",
+							criteria : "test.string;1.0.0",
+						},
+						{
+							"name" : "outputInService2",
+							criteria : "test.string;1.0.0",
+						},
+					]
+				}
+			},
+		},
+		"display" : {
+			"displayName" : "Test Template Service3 English",
+			"description" : "test service implemented by process",
+			"interface" : {
+				"parm" : {
+					"serviceParm1" : {
+						"displayName" : "serviceParm1 English"
+					},
+				},
+				"result" : {
+					"success" : {
+						"output": {
+							"outputInService1" : {
+								"displayName" : "outputInService1 English"
+							},
+							"outputInService2" : {
+								"displayName" : "outputInService2 English"
+							},
+						}
+					}
+				}
+			}
+		}
+	},
+	"runtime": {
+	    "implementation" : "com.nosliw.service.test.basic.HAPServiceImp",
+	}
+}]
