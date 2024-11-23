@@ -81,7 +81,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			if(!relativeStructureElement.isProcessed()){
 				HAPElementStructureLeafRelative defStructureElementRelative = (HAPElementStructureLeafRelative)defStructureElement;
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
-//				pathReference.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(pathReference.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, baseBlockPath, currentBundle, resourceMan, runtimeInfo));
+//				pathReference.setValuePortId(HAPUtilityBrickValuePort.normalizeInBundleValuePortId(pathReference.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, baseBlockPath, currentBundle, resourceMan, runtimeInfo));
 				
 				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
 				

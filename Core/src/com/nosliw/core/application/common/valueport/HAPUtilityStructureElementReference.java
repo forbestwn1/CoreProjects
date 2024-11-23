@@ -262,7 +262,7 @@ public class HAPUtilityStructureElementReference {
 	
 	
 	public static HAPResultReferenceResolve resolveElementReference(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPContextProcessor processContext){
-		HAPValuePort1111 valuePort = HAPUtilityValuePort.getValuePort(reference.getValuePortId(), processContext);
+		HAPValuePort1111 valuePort = HAPUtilityBrickValuePort.getValuePort(reference.getValuePortId(), processContext);
 		List<HAPInfoValueStructureReference> valueStructureInfos = valuePort.discoverCandidateValueStructure(reference.getValueStructureReference());
 		
 		//resolve targeted structure element
@@ -275,7 +275,7 @@ public class HAPUtilityStructureElementReference {
 	}
 
 	public static HAPIdRootElement resolveValueStructureRootReference1(HAPIdRootElement rootEleCriteria, HAPContextProcessor processContext){
-		HAPValuePort1111 valuePort = HAPUtilityValuePort.getValuePort(rootEleCriteria.getValuePortId(), processContext);
+		HAPValuePort1111 valuePort = HAPUtilityBrickValuePort.getValuePort(rootEleCriteria.getValuePortId(), processContext);
 		List<HAPInfoValueStructureReference> candidates = valuePort.discoverCandidateValueStructure(rootEleCriteria.getValueStructureReference());
 
 		if(candidates==null||candidates.size()==0) {

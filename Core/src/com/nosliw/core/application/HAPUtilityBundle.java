@@ -6,8 +6,15 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBundle {
+
+	public static HAPBundle getBrickBundle(HAPResourceIdSimple resourceId, HAPManagerApplicationBrick brickMan) {
+		HAPBundle bundle = brickMan.getBrickBundle(HAPUtilityBrickId.fromResourceId2BrickId(resourceId));
+		HAPUtilityExport.exportBundle(resourceId, bundle);
+		return bundle;
+	}
 
 	public static String buildBranchPathSegment(String branchName) {
 		return HAPConstantShared.SYMBOL_KEYWORD + branchName;

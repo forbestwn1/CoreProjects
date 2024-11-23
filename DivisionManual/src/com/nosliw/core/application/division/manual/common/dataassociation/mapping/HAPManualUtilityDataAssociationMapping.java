@@ -10,7 +10,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickValuePort;
 import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelConstant;
 import com.nosliw.core.application.common.dataassociation.HAPEndPointInTunnelValuePort;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
@@ -38,7 +38,7 @@ public class HAPManualUtilityDataAssociationMapping {
 
 		String toValueStructureId = rootEleId.getValueStructureId();
 		
-		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, rootBrickName, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
+		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(bundle, rootBrickName, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
 		
 		HAPDefinitionStructure toValueStructure=toValueStructureDomain.getStructureDefinitionByRuntimeId(toValueStructureId);
 

@@ -9,8 +9,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
@@ -104,7 +104,7 @@ public class HAPTestDomain {
 //		System.out.println(HAPJsonUtility.formatJson(expandedJsonStr));
 
 		//process
-		HAPBundle bundle = HAPUtilityBrick.getBrickBundle(resourceId, runtimeEnvironment.getBrickManager());
+		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(resourceId, runtimeEnvironment.getBrickManager());
 		
 //		HAPApplicationPackage executablePackage = runtimeEnvironment.getBrickManager().getBrickPackage(resourceId);
 		

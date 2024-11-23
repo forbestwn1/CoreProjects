@@ -7,24 +7,24 @@ import com.nosliw.common.path.HAPPath;
 public abstract class HAPHandlerDownwardImpAttribute extends HAPHandlerDownward{
 
 	@Override
-	public boolean processBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
+	public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
-			this.processRootEntity(rootBrickWrapper.getBrick(), data);
+			this.processRootEntity(HAPUtilityBrick.getDescdentBrickLocal(bundle, path), data);
 			return true;
 		}
 		else {
-			Pair<HAPBrick, String> parentAttrInfo = getParentAttributeInfo(rootBrickWrapper, path);
+			Pair<HAPBrick, String> parentAttrInfo = getParentAttributeInfo(bundle, path);
 			return processAttribute(parentAttrInfo.getLeft(), parentAttrInfo.getRight(), data);
 		}
 	}
 
 	@Override
-	public void postProcessBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
+	public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 		if(this.isRoot(path)) {
-			this.postProcessRootEntity(rootBrickWrapper.getBrick(), data);
+			this.postProcessRootEntity(HAPUtilityBrick.getDescdentBrickLocal(bundle, path), data);
 		}
 		else {
-			Pair<HAPBrick, String> parentAttrInfo = getParentAttributeInfo(rootBrickWrapper, path);
+			Pair<HAPBrick, String> parentAttrInfo = getParentAttributeInfo(bundle, path);
 			postProcessAttribute(parentAttrInfo.getLeft(), parentAttrInfo.getRight(), data);
 		}
 	}

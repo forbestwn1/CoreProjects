@@ -23,8 +23,7 @@ public class HAPManualExeUtilityBrick {
 
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPInfoTreeNode treeNodeInfo) {
 		HAPComplexPath pathInfo = HAPManualUtilityBrick.getBrickFullPathInfo(treeNodeInfo);
-		return HAPUtilityBrick.getDescdentBrickLocal(HAPUtilityBrick.getBrickRoot(pathInfo.getRoot(), bundle).getBrick(), pathInfo.getPath());
+		return HAPUtilityBrick.getDescdentBrickLocal(bundle, pathInfo.getPath());
 	}
-
 
 }

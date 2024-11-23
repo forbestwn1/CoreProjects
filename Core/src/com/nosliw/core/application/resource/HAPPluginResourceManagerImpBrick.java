@@ -1,7 +1,7 @@
 package com.nosliw.core.application.resource;
 
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.data.core.resource.HAPPluginResourceManager;
 import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
@@ -18,7 +18,7 @@ public class HAPPluginResourceManagerImpBrick implements HAPPluginResourceManage
 
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPBundle bundle = HAPUtilityBrick.getBrickBundle(simpleResourceId, this.m_runtimeEnv.getBrickManager()); 
+		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(simpleResourceId, this.m_runtimeEnv.getBrickManager()); 
 		return new HAPWrapperResourceDataBrick(bundle, this.m_runtimeEnv);
 	}
 }

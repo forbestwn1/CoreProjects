@@ -17,8 +17,6 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.HAPUtilityBrickTraverse;
-import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -71,8 +69,8 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 
 	
-	public static void processInheritageAndRelativeElement(HAPManualWrapperBrickRoot rootBrickWrapper, HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownwardImpAttribute() {
+	public static void processInheritageAndRelativeElement(HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownwardImpAttribute() {
 
 			@Override
 			public void processRootEntity(HAPBrick rootEntity, Object data) {}
@@ -84,7 +82,7 @@ public class HAPManualUtilityValueContextProcessor {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(parentBrickManual, new HAPPath(attributeName));
+				HAPManualBrick childBrick = (HAPManualBrick)this.getChildBrick(parentBrickManual, attributeName);
 				HAPManualValueContext valueContextExe = childBrick.getManualValueContext();
 
 				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(bundle, parentBrickManual.getTreeNodeInfo());
@@ -165,8 +163,8 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 	
 	
-	public static void resolveRelativeElement(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+	public static void resolveRelativeElement(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -189,8 +187,8 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 	
 	
-	public static void normalizeRelativeElement(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+	public static void normalizeRelativeElement(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -229,9 +227,9 @@ public class HAPManualUtilityValueContextProcessor {
 		}, processContext.getRuntimeEnv().getBrickManager(), processContext);
 	}
 	
-	private static void processInheriatage(HAPManualWrapperBrickRoot rootBrickWrapper, HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {
+	private static void processInheriatage(HAPManualDefinitionBrickRelationValueContext defaultRelation, HAPManualContextProcessBrick processContext) {
 		
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownwardImpAttribute() {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownwardImpAttribute() {
 
 			@Override
 			public void processRootEntity(HAPBrick rootEntity, Object data) {}
@@ -243,7 +241,7 @@ public class HAPManualUtilityValueContextProcessor {
 				HAPBundle bundle = processContext.getCurrentBundle();
 				HAPDomainValueStructure valueStructureDomain = bundle.getValueStructureDomain();
 
-				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(parentBrickManual, new HAPPath(attributeName));
+				HAPManualBrick childBrick = (HAPManualBrick)this.getChildBrick(parentBrickManual, attributeName);
 				
 				HAPManualDefinitionBrick parentBrickManualDef = HAPManualDefinitionUtilityBrick.getDescendantBrickDefinition(bundle, parentBrickManual.getTreeNodeInfo());
 				HAPManualDefinitionBrickRelationValueContext valueContextRelation = resolveValueContextRelation(parentBrickManualDef.getAttribute(attributeName), defaultRelation);
@@ -355,8 +353,8 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 	
 	//create extension part
-	public static void buildExtensionValueStructure(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
-		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+	public static void buildExtensionValueStructure(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -381,8 +379,8 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	public static void buildValueContext(HAPManualWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
-		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(rootBrickWrapper, new HAPHandlerDownwardImpTreeNode() {
+	public static void buildValueContext(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
 			protected boolean processTreeNode(HAPTreeNodeBrick treeNode, Object data) {
@@ -392,7 +390,7 @@ public class HAPManualUtilityValueContextProcessor {
 
 				HAPManualBrick complexEntityExe = this.getBrickFromNode(treeNode);
 				
-				Pair<HAPManualDefinitionBrick, HAPManualBrick> entityPair = HAPManualDefinitionUtilityBrick.getBrickPair(rootBrickWrapper.getName(), treeNode.getTreeNodeInfo().getPathFromRoot(), bundle);
+				Pair<HAPManualDefinitionBrick, HAPManualBrick> entityPair = HAPManualDefinitionUtilityBrick.getBrickPair(treeNode.getTreeNodeInfo(), bundle);
 				
 				HAPManualDefinitionBrick complexEntityDef = entityPair.getLeft();
 				HAPManualDefinitionBrickValueContext valueContextEntityDef = complexEntityDef.getValueContextBrick();
@@ -524,7 +522,7 @@ public class HAPManualUtilityValueContextProcessor {
 								String valuePortName = rootRef.getValuePortName();
 								HAPIdValuePortInBrick valuePortId = null;
 								if(valuePortName==null) {
-									valuePortId = HAPUtilityValuePort.getDefaultValuePortIdInEntity(parentComplexEntity);
+									valuePortId = HAPUtilityBrickValuePort.getDefaultValuePortIdInEntity(parentComplexEntity);
 								}
 								else if(valuePortName.equals(HAPConstantShared.VALUEPORT_NAME_SELF)) {
 									valuePortId = HAPManualUtilityValueContext.createValuePortIdValueContext(entityExe);

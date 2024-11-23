@@ -43,51 +43,7 @@ public class HAPUtilityBrickTraverse {
 		
 		processor.postProcessBrickNode(bundle, path, data);
 	}
-	
-	
-	
-	//traverse only local brick
-	public static void traverseTreeWithLocalBrick(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseTree(
-			rootBrickWrapper, 
-			new HAPHandlerBrickWrapper(processor) {
-				@Override
-				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
-					if(attr.getValueWrapper() instanceof HAPWithBrick) {
-						return true;
-					}
-					return false;
-				}
-			}, 
-			brickMan,
-			data);
-	}
-	
-	//traverse all leave (complex, simiple, solid, not solid ...)
-	public static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseTree(rootBrickWrapper, null, processor, brickMan, data);
-	}
-	
-	private static void traverseTree(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		if(path==null) {
-			path = new HAPPath();
-		}
-		
-		if(processor.processBrickNode(rootBrickWrapper, path, data)) {
-			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
-			
-			if(leafBrick!=null) {
-				//only process child for brick
-				List<HAPAttributeInBrick> attrsExe = leafBrick.getAttributes();
-				for(HAPAttributeInBrick attrExe : attrsExe) {
-					HAPPath attrPath = path.appendSegment(attrExe.getName());
-					traverseTree(rootBrickWrapper, attrPath, processor, brickMan, data);
-				}
-			}
-		}
-		
-		processor.postProcessBrickNode(rootBrickWrapper, path, data);
-	}
+
 }
 
 

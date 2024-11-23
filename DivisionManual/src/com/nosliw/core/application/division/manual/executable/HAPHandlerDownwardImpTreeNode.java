@@ -52,10 +52,9 @@ public abstract class HAPHandlerDownwardImpTreeNode extends HAPHandlerDownward{
 			out = rootWrapper;
 		}
 		else {
-			out = (HAPManualAttributeInBrick)HAPUtilityBrick.getDescendantAttribute(rootWrapper.getBrick(), fullPathInfo.getPath());
+			out = (HAPManualAttributeInBrick)HAPUtilityBrick.getDescendantAttribute(bundle, path);
 		}
 		return out;
 	}
-
 	
 }

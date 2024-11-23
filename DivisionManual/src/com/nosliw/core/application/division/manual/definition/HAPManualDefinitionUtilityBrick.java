@@ -41,8 +41,7 @@ public class HAPManualDefinitionUtilityBrick {
 
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPInfoTreeNode treeNodeInfo, HAPBundle bundle){
 		HAPComplexPath pathInfo = HAPManualUtilityBrick.getBrickFullPathInfo(treeNodeInfo);
-		
-		
+		return getBrickPair(pathInfo.getRoot(), pathInfo.getPath(), bundle);
 	}
 	
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(String rootName, HAPPath path, HAPBundle bundle){

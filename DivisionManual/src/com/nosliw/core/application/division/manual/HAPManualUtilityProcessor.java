@@ -15,7 +15,6 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
-import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
@@ -35,6 +34,7 @@ import com.nosliw.core.application.division.manual.executable.HAPManualAttribute
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.core.application.division.manual.executable.HAPManualExeUtilityBrick;
+import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -61,115 +61,114 @@ public class HAPManualUtilityProcessor {
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 	
-	public static void processComplexBrickInit(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+	public static void processComplexBrickInit(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).processInit(path, processContext);
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postProcessInit(path, processContext);
 			}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 	
-	public static void processOtherValuePortBuild(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+	public static void processOtherValuePortBuild(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processOtherValuePortBuild(path, processContext);
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessOtherValuePortBuild(path, processContext);
 			}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 
-	public static void processComplexVariableResolve(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+	public static void processComplexVariableResolve(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processVariableResolve(path, processContext);
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessVariableResolve(path, processContext);
 			}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 
-	public static void processComplexVariableInfoResolve(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
-		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+	public static void processComplexVariableInfoResolve(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrick complexBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPManualBrick complexBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				HAPUtilityValuePortVariable.buildVariableInfo(complexBrick.getVariableInfoContainer(), processContext.getCurrentBundle().getValueStructureDomain());
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {	}
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {	}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 
-	public static void processComplexValueContextDiscovery(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+	public static void processComplexValueContextDiscovery(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processValueContextDiscovery(path, processContext);
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessValueContextDiscovery(path, processContext);
 			}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 
-	public static void processComplexValuePortUpdate(HAPWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext) {
+	public static void processComplexValuePortUpdate(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(rootBrickWrapper, new HAPHandlerDownward() {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {
-				HAPManualBrick complexBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(rootBrickWrapper, path);
-				HAPUtilityValuePortVariable.updateValuePortElements(complexBrick.getVariableInfoContainer(), complexBrick);
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPManualBrick complexBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				HAPUtilityValuePortVariable.updateValuePortElements(complexBrick.getVariableInfoContainer(), processContext.getCurrentBundle().getValueStructureDomain());
 				return true;
 			}
 
 			@Override
-			public void postProcessBrickNode(HAPWrapperBrickRoot brickWrapper, HAPPath path, Object data) {	}
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {	}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
@@ -219,10 +218,10 @@ public class HAPManualUtilityProcessor {
 			processContext);
 	}
 	
-	public static void processBrick(HAPManualWrapperBrickRoot rootBrickWrapper, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
+	public static void processBrick(HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
-		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(
-				rootBrickWrapper, 
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(
+				processContext, 
 			new HAPHandlerDownwardImpTreeNode() {
 					
 				@Override

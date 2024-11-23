@@ -195,38 +195,38 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		HAPManualUtilityProcessor.initBricks(processContext, this, m_runtimeEnv);
 
 		//init
-		HAPManualUtilityProcessor.processComplexBrickInit(out, processContext);
+		HAPManualUtilityProcessor.processComplexBrickInit(processContext);
 
 		//complex entity, build value context domain, create extension value structure if needed
 //		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
 
 		//build value context in complex block
-		HAPManualUtilityValueContextProcessor.buildValueContext(out, processContext, this, this.m_runtimeEnv);
+		HAPManualUtilityValueContextProcessor.buildValueContext(processContext, this, this.m_runtimeEnv);
 		
 		//build other value port
-		HAPManualUtilityProcessor.processOtherValuePortBuild(out, processContext);
+		HAPManualUtilityProcessor.processOtherValuePortBuild(processContext);
 		
 		//generate extra value structure for variable extension
-		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(out, processContext, this, this.m_runtimeEnv);
+		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(processContext, this, this.m_runtimeEnv);
 		
 		//
-		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(out, null, processContext);
+		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(null, processContext);
 		
 		
 		//variable resolve (variable extension)-----impact data container
-		HAPManualUtilityProcessor.processComplexVariableResolve(out, processContext);
+		HAPManualUtilityProcessor.processComplexVariableResolve(processContext);
 	
 		//build var criteria infor in var info container according to value port def
-		HAPManualUtilityProcessor.processComplexVariableInfoResolve(out, processContext);
+		HAPManualUtilityProcessor.processComplexVariableInfoResolve(processContext);
 		
 		//variable criteria discovery ---- impact data container and value structure in context domain
-		HAPManualUtilityProcessor.processComplexValueContextDiscovery(out, processContext);
+		HAPManualUtilityProcessor.processComplexValueContextDiscovery(processContext);
 		
 		//update value port element according to var info container after discovery
-//		HAPManualUtilityProcessor.processComplexValuePortUpdate(out.getBrickWrapper(), processContext);
+//		HAPManualUtilityProcessor.processComplexValuePortUpdate(processContext);
 		
 		//process entity
-		HAPManualUtilityProcessor.processBrick(out, processContext, this.getBrickManager());
+		HAPManualUtilityProcessor.processBrick(processContext, this.getBrickManager());
 		
 		//process adapter
 		HAPManualUtilityProcessor.processAdapter(processContext);
