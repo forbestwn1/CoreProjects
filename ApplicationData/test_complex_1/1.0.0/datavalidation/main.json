@@ -33,9 +33,9 @@
 							"name" : "testDataValidation1",
 							"handlerId" : {
 								"idPath11" : "#task",
-								"idPath0" : "datavalidation_mandatory-taskTaskScript",
+								"idPath" : "datavalidation_mandatory-taskTaskScript",
 								"idPath1" : "datavalidation_enum-taskTaskScript",
-								"idPath" : "datavalidation_mandatory-taskWrapper"
+								"idPath2" : "datavalidation_mandatory-taskWrapper"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
@@ -157,7 +157,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskWrapper",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory",  

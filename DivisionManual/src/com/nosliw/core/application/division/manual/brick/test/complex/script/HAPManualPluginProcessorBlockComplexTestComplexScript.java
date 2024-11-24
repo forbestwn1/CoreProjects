@@ -8,13 +8,13 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONArray;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
@@ -49,7 +49,9 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
-			handlerIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(handlerIdInBundle.getIdPath(), executableBlock.getTreeNodeInfo().getPathFromRoot().toString()));
+			HAPUtilityBundle.processBrickIdInBundle(handlerIdInBundle, executableBlock.getTreeNodeInfo().getPathFromRoot().toString());
+			
+//			handlerIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(handlerIdInBundle.getIdPath(), executableBlock.getTreeNodeInfo().getPathFromRoot().toString()));
 			
 			HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(bundle, handlerIdInBundle, processContext.getRootBrickName());
 			

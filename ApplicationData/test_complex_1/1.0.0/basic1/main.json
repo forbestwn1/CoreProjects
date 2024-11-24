@@ -6,8 +6,22 @@
 	"brick": [
 		{
 			"info": {
-				"name" : "variablebyidshow-test_complex_script",
+				"name" : "variablebynameshow-test_complex_script",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+
+		{
+			"info": {
+				"name" : "variablebyidshow-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -18,7 +32,7 @@
 		{
 			"info": {
 				"name" : "valueportshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -28,62 +42,508 @@
 		
 		{
 			"info": {
-				"name" : "test_array-uicustomertagdebugger",
-				"status": "disabled1",
+				"name" : "test1-taskTaskScript",
+				"status": "disabled",
 				"description" : ""
 			},
-			"brick":{
-				"uiTagId" : "debug_test_data_collection",
-				"attribute" : {
-					"data_array" : "parent_public_array"
-				},
-				"content" : [
-					{
-						"info": {
-							"name" : "debug_test_data_simple",
-							"status": "disabled1",
-							"description" : ""
-						},
-						"brick":{
-							"uiTagId" : "debug_test_data_simple",
-							"attribute" : {
-								"data_string" : "element"
+			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
+			"brick1":{
+				"scriptResourceId": "task_task_test1",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "task_request_string1",
+							"dataInfo" : "test.string;1.0.0",
+							"defaultValue" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of request string1"
+							}
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"criteria" : "test.string;1.0.0"
+								}
+							]
+						}
+					}
+				}
+			},
+			"adapter": [
+				{
+					"name" : "taskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "task_request_string1",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_result_success_string1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
 							}
 						}
 					}
-				]
-			}
+				}
+			]
+		},
+		
+
+		{
+			"info": {
+				"name" : "service-serviceprovider",
+				"status": "disabled",
+				"description" : ""
+			},
+			"isTask" : true,
+			"brick":{
+				"serviceKey" : {
+					"id" : "TestBasicService"
+				}
+			},		
+			"adapter":[
+				{
+					"name" : "serviceAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "serviceParm1",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "outputInService1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
 		},
 		
 		{
 			"info": {
-				"name" : "test_array1-uicustomertagdebugger",
+				"name" : "variable_reference-test_complex_script",
 				"status": "disabled1",
 				"description" : ""
 			},
+			"resourceId":"test_complex_script|1.0.0|*variable",
+			"adapter": [
+				{
+					"name" : "dataassociation",
+					"brickTypeId" : {
+						"brickType": "dataAssociation",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"type" : "mapping",
+							"direction" : "downStream",
+							"mapping" : [
+								{
+									"target" : {
+										"rootName" : "child_public"
+									},
+									"definition" : {
+										"mapping" : {
+											"elementPath": "output1"
+										}
+									}
+								}
+							]
+						}
+					}						
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name" : "event-test_complex_script",
+				"status": "disabled",
+				"description" : ""
+			},
 			"brick":{
-				"uiTagId" : "debug_test_data_collection",
-				"attribute" : {
-					"data_array" : "parent_public_array"
-				},
-				"content" : [
+				"script": "complexscript_test_task",
+				"event" : [
 					{
-						"info": {
-							"name" : "debug_test_data_simple",
-							"status": "disabled1",
-							"description" : ""
-						},
-						"brick":{
-							"uiTagId" : "debug_test_data_simple",
-							"attribute" : {
-								"data_string" : "element"
+						"eventInfo" : {
+							"name" : "testEvent1",
+							"handlerId" : {
+								"idPath" : "eventhandler-test_complex_task"
+							},
+							"eventDataDefinition" : {
+								"criteria": "test.string;1.0.0"
 							}
+						},
+						"eventData" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "event data for test event1"
 						}
 					}
 				]
 			}
 		},
-		
+			
+		{
+			"info": {
+				"name" : "eventhandler-test_complex_task",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complextask_test_basic",
+				"variable" : [
+					{
+						"name" : "eventData",
+						"elementPath": "event",
+						"ioDirection" : "OUT",
+						"valuePortId" : {
+							"valuePortId" : {
+								"group" : "event",
+								"name1" : "event"
+							}
+						}
+					}
+				],
+				"valueContext" : {
+					"brick": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"root" : {
+									"task_input1": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									},
+									"task_input2": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									},
+									"task_result": {
+										"definition":{
+											"criteria": "test.string;1.0.0"
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			"adapter":[
+				{
+					"name" : "taskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "event",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "event"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									},
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "task_input2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_input2"
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+
+		{
+			"info": {
+				"name" : "taskinteractive-test_complex_task",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"interactiveTask1" : {
+					"request" : [
+						{
+							"name" : "task_request_string1",
+							"dataInfo" : "test.string;1.0.0"
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"criteria" : "test.string;1.0.0"
+								}
+							]
+						}
+					}
+				},				
+				"interactiveExpression1" : {
+					"request" : [
+						{
+							"name" : "expression_request_forresult",
+							"dataInfo" : "test.string;1.0.0"
+						}
+					],
+					"result" : {
+						"criteria" : "test.string;1.0.0"
+					}
+				},				
+				"variable" : [
+					{
+						"name" : "eventData",
+						"elementPath": "event",
+						"ioDirection" : "OUT",
+						"valuePortId" : {
+							"valuePortId" : {
+								"group" : "event",
+								"name1" : "event"
+							}
+						}
+					}
+				]
+			},
+			"adapter":[
+				{
+					"name" : "interactiveexpressionAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "expression_request_forresult",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "expressionInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result",
+												"valuePortId" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled",
+										"target" : {
+											"rootName" : "task_request_string1",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_result_success_string1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		},
 		{
 			"info": {
 				"name": "valueContext",
@@ -94,13 +554,64 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
+							"parent_public": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parent_public_url": {
+								"definition":{
+									"criteria": "test.url;1.0.0"
+								}
+							},
 							"parent_public_array": {
 								"definition":{
 									"criteria": "test.array;1.0.0%||element:test.string;1.0.0||%"
 								}
+							},
+							"parm1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"parm2": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"<%=&(value1)&%>": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							},
+							"integer1": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"integer2": {
+								"definition":{
+									"criteria": "test.integer;1.0.0"
+								}
+							},
+							"parent_public_constant_string": {
+								"definition":{
+									"value": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "value of parent_public_constant_string"
+									} 
+								}
 							}
 						},
 						"initValue": {
+							"parent_public": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							},
+							"parent_public_url": {
+								"dataTypeId": "test.url;1.0.0",
+								"value": "default value of parent_public_url"
+							},
 							"parent_public_array": {
 								"dataTypeId": "test.array;1.0.0",
 								"value": [
@@ -113,11 +624,66 @@
 										"value": "This is my world 2222!"
 									}
 								]
+							},
+							"parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm1"
+							},
+							"parm2": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm2"
+							},
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							},
+							"integer1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"integer2": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
 							}
 						}
 					}
 				}
 			]
+		},
+		
+		{
+			"info": {
+				"name" : "attachment", 
+				"status": "disabled1"
+			},
+			"attachment": {
+				"data" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "constant", 
+								"status": "disabled1"
+							},
+							"brick": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							}
+						}
+					]
+				},
+				"value" : {
+					"1.0.0" : [
+						{
+							"info": {
+								"name" : "value1", 
+								"status": "disabled1"
+							},
+							"brick": "output1"
+						}
+					]
+				}
+			}
 		}
+		
 	]
 }

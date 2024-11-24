@@ -13,6 +13,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -137,6 +138,12 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		jsonMap.put(MAINBRICK, this.m_mainBrickWrapper.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JSON));
+		
+		Map<String, String> branchJsonMap = new LinkedHashMap<String, String>();
+		for(String branch : this.m_branchBricks.keySet()) {
+			branchJsonMap.put(branch, this.m_branchBricks.get(branch).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(BRANCHBRICKS, HAPUtilityJson.buildMapJson(branchJsonMap));
 	}
 	
 	@Override
@@ -145,6 +152,12 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		jsonMap.put(MAINBRICK, this.m_mainBrickWrapper.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		jsonMap.put(EXTRADATA, HAPManagerSerialize.getInstance().toStringValue(m_extraData, HAPSerializationFormat.JAVASCRIPT));
+
+		Map<String, String> branchJsonMap = new LinkedHashMap<String, String>();
+		for(String branch : this.m_branchBricks.keySet()) {
+			branchJsonMap.put(branch, this.m_branchBricks.get(branch).toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		}
+		jsonMap.put(BRANCHBRICKS, HAPUtilityJson.buildMapJson(branchJsonMap));
 	}
 	
 	@Override

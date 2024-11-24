@@ -7,7 +7,6 @@ import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickValuePort;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
@@ -150,7 +149,7 @@ public class HAPUtilityValuePort {
 	}
 
 	public static HAPInfoValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrick.getDescdentValuePortContainerInfo(bundle, new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
+		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(bundle, null, new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
 		return new HAPInfoValuePort(valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
 	}
 	
