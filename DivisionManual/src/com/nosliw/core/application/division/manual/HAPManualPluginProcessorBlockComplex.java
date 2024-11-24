@@ -40,6 +40,6 @@ public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPlug
 	
 
 	protected Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext){
-		return HAPManualDefinitionUtilityBrick.getBrickPair(processContext.getRootBrickName(), pathFromRoot, processContext.getCurrentBundle());
+		return HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, processContext.getCurrentBundle());
 	}
 }

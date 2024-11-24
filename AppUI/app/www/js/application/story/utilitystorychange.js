@@ -18,16 +18,16 @@ var node_utility = function(){
 
 	var loc_createChangeItemDelete = function(targetCategary, targetId){
 		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF] = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY] = targetCategary;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.IDELEMENT_ID] = targetId;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_DELETE;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF] = {};
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY] = targetCategary;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF][node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID] = targetId;
 		return out;
 	};
 	
 	var loc_createChangeItemNew = function(element, aliasObj, story){           
 		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW;
 		
 		var eleId = element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 		if(eleId==undefined){
@@ -36,34 +36,34 @@ var node_utility = function(){
 			eleId = eleCategary+node_COMMONCONSTANT.SEPERATOR_LEVEL1+eleType+node_COMMONCONSTANT.SEPERATOR_LEVEL1+node_storyUtility.getNextIdForStory(story);
 			element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID] = eleId;
 		}
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT] = element;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ELEMENT] = element;
 
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS] = aliasObj;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ALIAS] = aliasObj;
 		return out;
 	};
 	
 	var loc_createChangeItemPatch = function(targetRef, path, value){
 		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH] = path;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE] = value;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF] = targetRef;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_PATCH;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_PATH] = path;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_VALUE] = value;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF] = targetRef;
 		return out;
 	};
 	
 	var loc_createChangeItemAlias = function(aliasName, elementId){
 		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_ALIAS;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS] = aliasName;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENTID] = elementId;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_ALIAS;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ALIAS] = aliasName;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ELEMENTID] = elementId;
 		return out;
 	};
 
 	var loc_createChangeItemStoryInfo = function(infoName, infoValue){           
 		var out = {};
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_STORYINFO;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFONAME] = infoName;
-		out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFOVALUE] = infoValue;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE] = node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_STORYINFO;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_INFONAME] = infoName;
+		out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_INFOVALUE] = infoValue;
 		return out;
 	};
 	
@@ -72,29 +72,29 @@ var node_utility = function(){
 	var loc_createChangeItemNewForStoryElement = function(element, aliasObj, story){  return loc_createChangeItemNew(element, aliasObj, story);   };
 
 	var loc_applySingleChangeNew = function(story, changeItem, saveRevert){
-		var aliasObj = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ALIAS];
+		var aliasObj = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ALIAS];
 		if(aliasObj!=undefined){
 			var oldAliasEleId = node_storyUtility.getElementIdByReference(story, aliasObj);
 		}
-		var element = node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_ELEMENT], aliasObj);
+		var element = node_storyUtility.addStoryElement(story, changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_ELEMENT], aliasObj);
 		if(loc_isRevertable(saveRevert, changeItem)!=false){
 			var revertChanges = [];
 			revertChanges.push(loc_createChangeItemDelete(element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY], element[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]));
-			if(aliasObj!=undefined)  revertChanges.push(loc_createChangeItemAlias(aliasObj[node_COMMONATRIBUTECONSTANT.ALIASELEMENT_NAME], oldAliasEleId));
-			changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = revertChanges;
+			if(aliasObj!=undefined)  revertChanges.push(loc_createChangeItemAlias(aliasObj[node_COMMONATRIBUTECONSTANT.STORYALIASELEMENT_NAME], oldAliasEleId));
+			changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = revertChanges;
 		}
 	};
 	
 	var loc_applySingleChangeDelete = function(story, changeItem, saveRevert){
-		var element = node_storyUtility.deleteStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
-		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element, undefined, story)];
+		var element = node_storyUtility.deleteStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF]);
+		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = [loc_createChangeItemNew(element, undefined, story)];
 	};
 	
 	//output: a array of new change item
 	var loc_applySingleChangePatch = function(story, changeItem, saveRevert, extend){
-		var path = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_PATH];
-		var value = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_VALUE];
-		var element = node_storyUtility.getStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_TARGETELEMENTREF]);
+		var path = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_PATH];
+		var value = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_VALUE];
+		var element = node_storyUtility.getStoryElementByRef(story, changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_TARGETELEMENTREF]);
 		var eleCategary = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_CATEGARY];
 		var eleType = element[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE];
 
@@ -103,14 +103,14 @@ var node_utility = function(){
 			if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){ 
 				var children = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
 				if(eleType==node_COMMONCONSTANT.STORYGROUP_TYPE_SWITCH){
-					if(path==node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE){
-						var currentChoice = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE];
+					if(path==node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUPSWITCH_CHOICE){
+						var currentChoice = element[node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUPSWITCH_CHOICE];
 						if(currentChoice!=value){
 							if(children.length>=2){
 								_.each(children, function(child, i){
 									var childName = child[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
-									var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
-									var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
+									var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.STORYINFOELEMENT_ELEMENTREF]);
+									var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID])
 									if(childName==value){
 										if(childEle[node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE]==false){
 											out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
@@ -125,8 +125,8 @@ var node_utility = function(){
 							}
 							else{
 								var child = children[0];
-								var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
-								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
+								var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.STORYINFOELEMENT_ELEMENTREF]);
+								var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID])
 								if(value==true){
 									out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, true));
 								}
@@ -140,8 +140,8 @@ var node_utility = function(){
 				else if(eleType==node_COMMONCONSTANT.STORYGROUP_TYPE_BATCH){
 					if(path==node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE){
 						_.each(children, function(child, i){
-							var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]);
-							var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID])
+							var childEleId = node_storyUtility.getElementIdByReference(story, child[node_COMMONATRIBUTECONSTANT.STORYINFOELEMENT_ELEMENTREF]);
+							var childEle = node_storyUtility.getStoryElement(story, childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_CATEGARY], childEleId[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID])
 							out.push(loc_createChangeItemPatchForStoryElement(childEle, node_COMMONATRIBUTECONSTANT.STORYELEMENT_ENABLE, value));
 						});
 					}
@@ -149,24 +149,24 @@ var node_utility = function(){
 			}
 		}
 		
-		if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP && path==node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENT){
+		if(eleCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP && path==node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUP_ELEMENT){
 			//group element patch
-			if(value[node_COMMONATRIBUTECONSTANT.INFOELEMENT_ELEMENTREF]!=undefined){
+			if(value[node_COMMONATRIBUTECONSTANT.STORYINFOELEMENT_ELEMENTREF]!=undefined){
 				//append element
-				element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS].push(value);
+				element[node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUP_ELEMENTS].push(value);
 				if(loc_isRevertable(saveRevert, changeItem)){
-					changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID])];
+					changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, value[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID])];
 				}
 			}
 			else if(typeof value === 'string'){
 				//delete element
-				var children = element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
+				var children = element[node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUP_ELEMENTS];
 				for(var i in children){
 					if(children[i][node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID]==value){
 						var oldValue = children[i];
 						children.splice(i, 1);
 						if(loc_isRevertable(saveRevert, changeItem)){
-							changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
+							changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
 						}
 						break;
 					}
@@ -176,7 +176,7 @@ var node_utility = function(){
 		else{
 			var oldValue = node_objectOperationUtility.operateObject(element, path, node_CONSTANT.WRAPPER_OPERATION_SET, value);
 			if(loc_isRevertable(saveRevert, changeItem)){
-				changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
+				changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = [loc_createChangeItemPatchForStoryElement(element, path, oldValue)];
 			}
 		}
 		
@@ -185,16 +185,16 @@ var node_utility = function(){
 	
 	var loc_applySingleChangeStoryInfo = function(story, changeItem, saveRevert){
 		var info = story[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-		var infoName = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFONAME];
-		var infoValue = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_INFOVALUE];
+		var infoName = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_INFONAME];
+		var infoValue = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_INFOVALUE];
 		var oldInfoValue = info[infoName];
 		info[infoName] = infoValue;
-		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES] = [loc_createChangeItemStoryInfo(infoName, oldInfoValue)];
+		if(loc_isRevertable(saveRevert, changeItem))  changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES] = [loc_createChangeItemStoryInfo(infoName, oldInfoValue)];
 	};
 	
 	var loc_isRevertable = function(saveRevert, changeItem){
 		if(saveRevert==false)  return false;
-		return changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTABLE];
+		return changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTABLE];
 	};
 
 	var loc_applySingleChange = function(story, changeItem, saveRevert, extend){
@@ -206,10 +206,10 @@ var node_utility = function(){
 		}
 
 		//if a change has extended, then don't extend it again
-		if(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED]==true)  extend = false;
+		if(changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_EXTENDED]==true)  extend = false;
 		
 		var extendedChanges;
-		var changeType = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_CHANGETYPE];
+		var changeType = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_CHANGETYPE];
 		if(changeType==node_COMMONCONSTANT.STORYDESIGN_CHANGETYPE_NEW){
 			loc_applySingleChangeNew(story, changeItem, saveRevert);
 		}
@@ -226,10 +226,10 @@ var node_utility = function(){
 		if(extendedChanges!=undefined && extendedChanges.length>0){
 			_.each(extendedChanges, function(extendedChange, i){
 				//extended from
-				extendedChange[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDFROM] = changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+				extendedChange[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_EXTENDFROM] = changeItem[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 			});
 			//mark change as extended
-			if(changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED]!=true)   changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_EXTENDED] = true;   
+			if(changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_EXTENDED]!=true)   changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_EXTENDED] = true;   
 		}
 		return extendedChanges;
 	};
@@ -257,7 +257,7 @@ var node_utility = function(){
 		
 		reverseChange : function(story, changeItem){
 			var that  = this;
-			var reverseChanges = changeItem[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTCHANGES];
+			var reverseChanges = changeItem[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTCHANGES];
 			if(reverseChanges!=undefined){
 				_.each(reverseChanges, function(reverseChange, i){
 					loc_applyChange(story, reverseChange, false, undefined, false);
@@ -269,7 +269,7 @@ var node_utility = function(){
 		
 		createChangeItemStoryIdIndex : function(story){
 			var out = loc_createChangeItemStoryInfo(node_COMMONCONSTANT.STORY_INFO_IDINDEX, node_storyUtility.getIdIndex(story));
-			out[node_COMMONATRIBUTECONSTANT.CHANGEITEM_REVERTABLE] = false;
+			out[node_COMMONATRIBUTECONSTANT.STORYCHANGEITEM_REVERTABLE] = false;
 			return out;
 		},
 	};		

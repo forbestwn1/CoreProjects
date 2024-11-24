@@ -8,6 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickValuePort;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
@@ -85,7 +86,7 @@ public class HAPUtilityValuePort {
 	}
 
 	
-	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valueGroupContainerSide, String ioDirection, HAPPath blockPathFromRoot, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valueGroupContainerSide, String ioDirection, HAPPath blockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
@@ -100,7 +101,7 @@ public class HAPUtilityValuePort {
 
 		//normalize value port id
 		HAPIdValuePortInBrick valuePortIdInBrick = out.getValuePortId();
-		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = HAPUtilityBrick.getDescdentValuePortContainerInfo(currentBundle, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainerPair();
+		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(currentBundle, brickRootNameIfNotProvided, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainerPair();
 		HAPContainerValuePorts valuePortContainer;
 		if(valueGroupContainerSide.equals(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL)) {
 			valuePortContainer = valuePortContainerPair.getLeft();

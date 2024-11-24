@@ -32,10 +32,10 @@
 							"trigguerType" : "dataValidation",
 							"name" : "testDataValidation1",
 							"handlerId" : {
-								"idPath" : "#task",
+								"idPath11" : "#task",
 								"idPath0" : "datavalidation_mandatory-taskTaskScript",
 								"idPath1" : "datavalidation_enum-taskTaskScript",
-								"idPath2" : "datavalidation_mandatory-taskWrapper"
+								"idPath" : "datavalidation_mandatory-taskWrapper"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"

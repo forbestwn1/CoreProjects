@@ -49,6 +49,7 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 		if(displayObj!=null) {
 			HAPDisplayResourceNode displayResource = new HAPDisplayResourceNode();
 			displayResource.buildObject(displayObj, HAPSerializationFormat.JSON);
+			this.setDisplayResource(displayResource);
 		}
 		
 		Object resourceObj = jsonObj.opt(HAPWrapperValueOfReferenceResource.RESOURCEID);

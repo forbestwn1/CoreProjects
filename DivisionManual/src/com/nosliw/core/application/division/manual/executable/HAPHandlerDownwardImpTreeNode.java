@@ -47,7 +47,7 @@ public abstract class HAPHandlerDownwardImpTreeNode extends HAPHandlerDownward{
 		HAPTreeNodeBrick out = null;
 
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
-		HAPManualWrapperBrickRoot rootWrapper = (HAPManualWrapperBrickRoot)bundle.getBranchBrickWrapper(fullPathInfo.getRoot());
+		HAPManualWrapperBrickRoot rootWrapper = (HAPManualWrapperBrickRoot)bundle.getRootBrickWrapper(fullPathInfo.getRoot());
 		if(fullPathInfo.getPath()==null || fullPathInfo.getPath().isEmpty()) {
 			out = rootWrapper;
 		}

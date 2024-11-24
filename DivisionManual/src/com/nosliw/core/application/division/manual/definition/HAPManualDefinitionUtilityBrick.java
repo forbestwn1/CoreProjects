@@ -40,19 +40,19 @@ public class HAPManualDefinitionUtilityBrick {
 	}
 
 	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPInfoTreeNode treeNodeInfo, HAPBundle bundle){
-		HAPComplexPath pathInfo = HAPManualUtilityBrick.getBrickFullPathInfo(treeNodeInfo);
-		return getBrickPair(pathInfo.getRoot(), pathInfo.getPath(), bundle);
+		return getBrickPair(treeNodeInfo.getPathFromRoot(), bundle);
 	}
 	
-	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(String rootName, HAPPath path, HAPBundle bundle){
-		HAPManualDefinitionWrapperBrickRoot rootEntityDefInfo = getBrickRootDefinition(rootName, bundle);
-		HAPManualDefinitionBrick entityDef = getDescendantBrickDefinition(rootEntityDefInfo, path);
-		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle.getRootBrickWrapper(rootName), path);
+	public static Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath path, HAPBundle bundle){
+		Pair<HAPManualDefinitionWrapperBrickRoot, HAPPath> defPathInfo = getDefinitionPathInfo(bundle, new HAPPath(path));
+		HAPManualDefinitionBrick entityDef = getDescendantBrickDefinition(defPathInfo.getLeft(), defPathInfo.getRight());
+
+		HAPManualBrick entityExe = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 		return Pair.of(entityDef, entityExe);
 	}
 	
-	private static Pair<HAPManualDefinitionWrapperBrickRoot, HAPPath> getDefinitionPathInfo(HAPBundle bundle, HAPPath path, String rootNameIfNotProvided){
-		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvided);
+	private static Pair<HAPManualDefinitionWrapperBrickRoot, HAPPath> getDefinitionPathInfo(HAPBundle bundle, HAPPath path){
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString());
 		return Pair.of(((HAPManualWrapperBrickRoot)bundle.getRootBrickWrapper(fullPathInfo.getRoot())).getDefinition(), fullPathInfo.getPath());
 	}
 	

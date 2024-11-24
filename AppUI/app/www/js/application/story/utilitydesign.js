@@ -17,9 +17,9 @@ var packageObj = library.getChildPackage();
 var node_utility = function(){
 
 	var loc_validateQuestionAnswer = function(question, errorMsgs){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		var type = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			var children = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_CHILDREN];
 			_.each(children, function(child, i){
 				loc_validateQuestionAnswer(child, errorMsgs);
 			});
@@ -27,8 +27,8 @@ var node_utility = function(){
 		else if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_ITEM){
 			if(question.element.enable==true){
 				if(question.answered==false){
-					if(question[node_COMMONATRIBUTECONSTANT.QUESTION_ISMANDATORY]==true){
-						errorMsgs.push("'"+question[node_COMMONATRIBUTECONSTANT.QUESTION_QUESTION]+"' is not answered!!!");
+					if(question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_ISMANDATORY]==true){
+						errorMsgs.push("'"+question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_QUESTION]+"' is not answered!!!");
 					}
 				}
 			}
@@ -36,9 +36,9 @@ var node_utility = function(){
 	};
 
 	var loc_discoverAllQuestionChanges = function(question, changes){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		var type = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			var children = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_CHILDREN];
 			_.each(children, function(child, i){
 				loc_discoverAllQuestionChanges(child, changes);
 			});
@@ -51,9 +51,9 @@ var node_utility = function(){
 	};
 
 	var loc_discoverAllQuestionAnswers = function(question, answers){
-		var type = question[node_COMMONATRIBUTECONSTANT.QUESTION_TYPE];
+		var type = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TYPE];
 		if(type==node_COMMONCONSTANT.STORYDESIGN_QUESTIONTYPE_GROUP){
-			var children = question[node_COMMONATRIBUTECONSTANT.QUESTION_CHILDREN];
+			var children = question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_CHILDREN];
 			_.each(children, function(child, i){
 				loc_discoverAllQuestionAnswers(child, answers);
 			});
@@ -64,8 +64,8 @@ var node_utility = function(){
 			_.each(question.answer, function(change, i){
 				changes.push(change);
 			});
-			answer[node_COMMONATRIBUTECONSTANT.ANSWER_CHANGES] = changes;
-			answer[node_COMMONATRIBUTECONSTANT.ANSWER_QUESTIONID] = question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
+			answer[node_COMMONATRIBUTECONSTANT.STORYANSWER_CHANGES] = changes;
+			answer[node_COMMONATRIBUTECONSTANT.STORYANSWER_QUESTIONID] = question[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];
 			answers.push(answer);
 		}
 	};
@@ -83,7 +83,7 @@ var node_utility = function(){
 		},
 		
 		applyPatchFromQuestion : function(story, question, path, value, changesResult){
-			var changeItem = node_storyChangeUtility.createChangeItemPatch(question[node_COMMONATRIBUTECONSTANT.QUESTION_TARGETREF], path, value);
+			var changeItem = node_storyChangeUtility.createChangeItemPatch(question[node_COMMONATRIBUTECONSTANT.STORYQUESTION_TARGETREF], path, value);
 			node_storyChangeUtility.applyChangeAll(story, changeItem, changesResult);
 		},
 

@@ -44,17 +44,17 @@ public class HAPUtilityBrick {
 
 	public static HAPResultBrick getDescdentResultWithLocalBrick(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
-		return getDescendantBrickResult(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+		return getDescendantBrickResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
-		return getDescdentBrickLocal(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+		return getDescdentBrickLocal(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
-		return getDescdentBrickLocal(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+		return getDescdentBrickLocal(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPIdBrickInBundle brickInBundleId, String rootNameIfNotProvide) {
@@ -63,7 +63,7 @@ public class HAPUtilityBrick {
 
 	public static HAPAttributeInBrick getDescendantAttribute(HAPBundle bundle, HAPPath path) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
-		return getDescendantAttribute(bundle.getBranchBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+		return getDescendantAttribute(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 	
 	
@@ -117,41 +117,5 @@ public class HAPUtilityBrick {
 		}
 		return attr;
 	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static HAPBrick getDescdentBrickLocal(HAPWrapperBrickRoot rootBrickWrapper, HAPPath path) {
-		
-		return getDescdentBrickLocal(rootBrickWrapper.getBrick(), path);
-	}
-
-
-	
-	
-	
-	
-	public static HAPResultBrick getDescdentResultWithBrick1(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide, HAPManagerApplicationBrick brickManager) {
-		return getDescdentResultWithBrick1(bundle.getMainBrickWrapper().getBrick(), path, brickManager);
-	}
-	
-	public static HAPResultBrick getDescdentResultWithBrick1(HAPBrick brick, HAPPath path, HAPManagerApplicationBrick brickManager) {
-		HAPResultBrick brickResult = getDescendantBrickResult(brick, new HAPPath(path));
-		if(brickResult.getBrick()==null) {
-			brickResult.setBrick(HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId(brickResult.getResourceId()), brickManager));			
-		}
-		return brickResult;	
-	}
-	
-	
-	
 	
 }

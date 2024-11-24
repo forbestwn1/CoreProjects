@@ -22,7 +22,7 @@ public class HAPUtilityBundle {
 	
 	public static String normalizeBranchPath(String path, String defaultBranch) {
 		String out = path;
-		if(path.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
+		if(!path.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
 			out = HAPUtilityNamingConversion.cascadePath(buildBranchPathSegment(defaultBranch), path);
 		}
 		return out;
@@ -35,7 +35,7 @@ public class HAPUtilityBundle {
 	}
 
 	public static HAPComplexPath getBrickFullPathInfo(String path) {
-		return getBrickFullPathInfo(path.toString());
+		return getBrickFullPathInfo(new HAPPath(path));
 	}
 	
 	public static HAPComplexPath getBrickFullPathInfo(HAPPath path) {
@@ -50,8 +50,4 @@ public class HAPUtilityBundle {
 		}
 		return out;
 	}
-
-	
-	
-	
 }
