@@ -73,7 +73,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 		HAPRuntimeProcess processRuntimeMan = null;  //new HAPRuntimeProcessRhinoImp(this);
 		HAPManagerCronJob cronJobManager = null;  //new HAPManagerCronJob(expressionMan, resourceMan, processMan, runtime, dataTypeHelper, serviceManager.getServiceDefinitionManager(), resourceDefManager);
 		HAPManagerApplicationBrick brickManager = new HAPManagerApplicationBrick(this);
-		HAPManagerUITag uiTagManager = new HAPManagerUITag();
+		HAPManagerUITag uiTagManager = new HAPManagerUITag(this);
 		
 		init(
 			dataTypeManager,

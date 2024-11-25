@@ -65,6 +65,7 @@ import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.data.HAPDataType;
 import com.nosliw.data.core.data.HAPDataTypeId;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.data.core.data.criteria.HAPParserCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -428,7 +429,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 		HAPStoryUINode dataUINode = null;
 		HAPStoryUIDataInfo uiDataInfo = layoutUINode.getDataInfo(varName);
 		HAPVariableDataInfo dataTypeInfo = uiDataInfo.getDataType();
-		HAPDataTypeCriteria dataTypeCriteria = dataTypeInfo.getCriteria();
+		HAPDataTypeCriteria dataTypeCriteria = HAPParserCriteria.getInstance().parseCriteria("test.string;1.0.0");     //dataTypeInfo.getCriteria();  kkkkkk
 		Set<HAPDataTypeId> dataTypeIds = dataTypeCriteria.getValidDataTypeId(this.m_runtimeEnv.getDataTypeHelper());
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
 		HAPDataType dataType = this.m_runtimeEnv.getDataTypeManager().getDataType(dataTypeId);
@@ -492,7 +493,6 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 				return null;
 			}
 		}
-		
 		out.rootEleRef = dataUIGroupAlias;
 		
 		out.switchAlias = changeRequest.addNewChange(new HAPStoryElementGroupSwitch()).getAlias();

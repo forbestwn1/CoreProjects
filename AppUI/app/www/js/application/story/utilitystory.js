@@ -149,7 +149,7 @@ var node_utility = function(){
 				story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION][elementId] = element;
 			}
 			else if(elementCategary==node_COMMONCONSTANT.STORYELEMENT_CATEGARY_GROUP){
-				story[node_COMMONATRIBUTECONSTANT.STORY_ELEMENTGROUP][elementId] = element;
+				story[node_COMMONATRIBUTECONSTANT.STORYSTORY_ELEMENTGROUP][elementId] = element;
 			}
 			//process alias
 			if(aliasObj!=undefined){

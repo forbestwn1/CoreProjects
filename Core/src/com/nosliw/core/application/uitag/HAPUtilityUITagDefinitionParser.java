@@ -1,14 +1,19 @@
 package com.nosliw.core.application.uitag;
 
 import java.io.File;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
 import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
@@ -18,20 +23,44 @@ import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPUtilityUITagDefinitionParser {
 
-	static public HAPUITagDefinition parseUITagDefinition(File file) {
+	static public HAPUITagDefinition parseUITagDefinition(File file, String tagName, String tagVersion) {
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(file));
-		return parseUITagDefinition(jsonObj);
+		return parseUITagDefinition(jsonObj, tagName, tagVersion);
 	}
 	
-	static public HAPUITagDefinition parseUITagDefinition(JSONObject jsonObj) {
+	static public HAPUITagDefinition parseUITagDefinition(JSONObject jsonObj, String tagName, String tagVersion) {
 
-		HAPUITagDefinition out = new HAPUITagDefinition();
+		HAPUITagDefinition out = null;
 
+		//parse uitag type
+		String uiTagType = jsonObj.optString(HAPUITagDefinition.TYPE);
+		if(HAPConstantShared.UITAG_TYPE_DATA.equals(uiTagType)) {
+			out = new HAPUITagDefinitionData();
+		}
+		else {
+			out = new HAPUITagDefinition();
+		}
+		
 		//parse value context
 		HAPUITagValueContextDefinition valueContext = new HAPUITagValueContextDefinition();
 		parseValueContext(valueContext, jsonObj.getJSONArray(HAPWithValueContext.VALUECONTEXT));
 		out.setValueContext(valueContext);
 
+		//parse data type criteria
+		if(HAPConstantShared.UITAG_TYPE_DATA.equals(uiTagType)) {
+			for(HAPWrapperValueStructure wrapper : valueContext.getValueStructures()) {
+				HAPValueStructureDefinition vs = wrapper.getValueStructure();
+				Map<String, HAPRootInStructure> roots = vs.getRoots();
+				for(String rootName : roots.keySet()) {
+					if(HAPConstantShared.NAME_ROOT_TAGDATA.equals(rootName)) {
+						HAPElementStructureLeafRelativeForValue eleStructure = (HAPElementStructureLeafRelativeForValue)roots.get(rootName).getDefinition();
+						((HAPUITagDefinitionData)out).setDataTypeCriteria(((HAPElementStructureLeafData)eleStructure.getDefinition()).getDataInfo().getCriteria());
+						break;
+					}
+				}
+			}
+		}
+		
 		//base
 		String baseName = (String)jsonObj.opt(HAPUITagDefinition.BASE);
 		if(baseName!=null) {
@@ -71,6 +100,13 @@ public class HAPUtilityUITagDefinitionParser {
 				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
 				out.addAttributeDefinition(attr);
 			}
+		}
+		
+		if(out.getName()==null) {
+			out.setName(tagName);
+		}
+		if(out.getVersion()==null) {
+			out.setVersion(tagVersion);
 		}
 
 		

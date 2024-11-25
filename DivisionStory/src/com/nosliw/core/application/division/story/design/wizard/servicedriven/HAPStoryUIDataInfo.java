@@ -42,9 +42,15 @@ public class HAPStoryUIDataInfo extends HAPSerializableImp{
 	
 	public HAPStoryUIDataInfo cloneUIDataInfo() {
 		HAPStoryUIDataInfo out = new HAPStoryUIDataInfo();
-		out.m_dataType = this.m_dataType.cloneVariableDataInfo();
-		out.m_idPath = this.m_idPath.cloneComplexPath();
-		out.m_rootReference = this.m_rootReference.cloneStructureRootReference();
+		if(this.m_dataType!=null) {
+			out.m_dataType = this.m_dataType.cloneVariableDataInfo();
+		}
+		if(this.m_idPath!=null) {
+			out.m_idPath = this.m_idPath.cloneComplexPath();
+		}
+		if(this.m_rootReference!=null) {
+			out.m_rootReference = this.m_rootReference.cloneStructureRootReference();
+		}
 		return out;
 	}
 	
@@ -74,8 +80,14 @@ public class HAPStoryUIDataInfo extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(DATATYPE, this.m_dataType.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(IDPATH, this.m_idPath.toStringValue(HAPSerializationFormat.JSON));
-		jsonMap.put(ROOTREFERENCE, this.m_rootReference.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_dataType!=null) {
+			jsonMap.put(DATATYPE, this.m_dataType.toStringValue(HAPSerializationFormat.JSON));
+		}
+		if(this.m_idPath!=null) {
+			jsonMap.put(IDPATH, this.m_idPath.toStringValue(HAPSerializationFormat.JSON));
+		}
+		if(this.m_rootReference!=null) {
+			jsonMap.put(ROOTREFERENCE, this.m_rootReference.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 }

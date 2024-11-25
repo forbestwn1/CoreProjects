@@ -1027,6 +1027,7 @@
 			<definition name="NAME_ROOT_EVENT" value="event"/>
 			<definition name="NAME_ROOT_DATA" value="data"/>
 			<definition name="NAME_ROOT_ERROR" value="error"/>
+			<definition name="NAME_ROOT_TAGDATA" value="internal_data"/>
 
 			<definition type="space"/>
 			<definition name="WITHVARIABLE_ENTITYTYPE_DATAEXPRESSION" value="dataExpression"/>

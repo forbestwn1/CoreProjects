@@ -1,14 +1,11 @@
 {
-	"name" : "debug_test_data_simple",
-	"type" : "data1",
+	"name" : "debug_test",
+	"type" : "data",
 	"description" : "",
-	"base" : "debug_test_data_simple",
+	"base" : "debug_test",
 	"attribute" : [
 		{
-			"name" : "data"
-		},
-		{
-			"name" : "data_string",
+			"name" : "data",
 			"defaultValue" : "empty"
 		}
 	],
@@ -17,11 +14,10 @@
 			"groupType" : "public",
 			"valueStructure" : {
 				"root": {
-					"internal_data_string": {
-						"status": "<%=&(nosliwattribute_data_string)&=='empty'?'disabled':''%>",
+					"internal_data": {
 						"definition": {
 							"link" : {
-								"elementPath": "<%=&(nosliwattribute_data_string)&%>"
+								"elementPath": "<%=&(nosliwattribute_data)&%>"
 							},
 							"definition" : {
 								"criteria" : "test.string;1.0.0"

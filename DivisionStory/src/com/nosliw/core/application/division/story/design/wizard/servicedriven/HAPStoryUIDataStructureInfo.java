@@ -28,9 +28,9 @@ public class HAPStoryUIDataStructureInfo extends HAPSerializableImp{
 
 	public HAPStoryUIDataStructureInfo cloneUIDataStructureInfo() {
 		HAPStoryUIDataStructureInfo out = new HAPStoryUIDataStructureInfo();
-		if(this.m_context!=null) {
-			out.m_context = this.m_context.cloneValueStructureGroup();
-		}
+//		if(this.m_context!=null) {
+//			out.m_context = this.m_context.cloneValueStructureGroup();
+//		}
 		return out;
 	}
 	
@@ -40,8 +40,8 @@ public class HAPStoryUIDataStructureInfo extends HAPSerializableImp{
 		super.buildObjectByJson(jsonObj);
 		JSONObject contextObj = jsonObj.optJSONObject(CONTEXT);
 		if(contextObj!=null) {
-			this.m_context = new HAPValueStructureDefinitionGroup();
-			this.m_context.buildObject(contextObj, HAPSerializationFormat.JSON);
+//			this.m_context = new HAPValueStructureDefinitionGroup();
+//			this.m_context.buildObject(contextObj, HAPSerializationFormat.JSON);
 		}
 		return true;  
 	}

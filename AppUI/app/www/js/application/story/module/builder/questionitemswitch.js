@@ -28,7 +28,7 @@ var node_createComponentQuestionItemSwitch = function(){
 			choices : {
 				get : function(){
 					var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-					return element[node_COMMONATRIBUTECONSTANT.ELEMENTGROUP_ELEMENTS];
+					return element[node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUP_ELEMENTS];
 				}
 			},
 			choiceId : {
@@ -37,7 +37,7 @@ var node_createComponentQuestionItemSwitch = function(){
 				},
 				
 				set : function(choiceName){
-					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, choiceName, this.question.answer);
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUPSWITCH_CHOICE, choiceName, this.question.answer);
 					this.$emit("answerChange");
 				}
 			},
@@ -47,7 +47,7 @@ var node_createComponentQuestionItemSwitch = function(){
 				},
 				
 				set : function(ifChoose){
-					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.ELEMENTGROUPSWITCH_CHOICE, ifChoose, this.question.answer);
+					node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYELEMENTGROUPSWITCH_CHOICE, ifChoose, this.question.answer);
 					this.$emit("answerChange");
 				}
 			}

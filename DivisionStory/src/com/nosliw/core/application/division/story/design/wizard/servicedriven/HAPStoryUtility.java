@@ -4,21 +4,15 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPProcessorStructure;
-import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.division.story.HAPStoryInfoNodeChild;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodePage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIData;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 import com.nosliw.core.application.uitag.HAPManagerUITag;
-import com.nosliw.data.core.cronjob.HAPUtilityConfiguration;
-import com.nosliw.data.core.process1.HAPUtilityProcess;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryUtility {
@@ -27,20 +21,20 @@ public class HAPStoryUtility {
 	public static HAPStoryUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPValueStructureDefinitionGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPStoryUIDataStructureInfo out = new HAPStoryUIDataStructureInfo();
 
-		String nodeType = uiStoryNode.getType();
-		HAPConfigureProcessorValueStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
-		HAPValueStructureDefinitionGroup childContext = null;
-		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
-			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
-			childContext = HAPUtilityProcess.buildUITagValueStructure(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
-			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
-			out.setContext(childContext);
-		}
-		else {
-			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processStatic(new HAPValueStructureDefinitionGroup(), HAPContainerStructure.createDefault(parentContext), null, null, contextProcessorConfig, runtimeEnv);
-			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
-			out.setContext(childContext);
-		}
+//		String nodeType = uiStoryNode.getType();
+//		HAPConfigureProcessorValueStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
+//		HAPValueStructureDefinitionGroup childContext = null;
+//		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
+//			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
+//			childContext = HAPUtilityProcess.buildUITagValueStructure(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
+//			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
+//			out.setContext(childContext);
+//		}
+//		else {
+//			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processStatic(new HAPValueStructureDefinitionGroup(), HAPContainerStructure.createDefault(parentContext), null, null, contextProcessorConfig, runtimeEnv);
+//			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
+//			out.setContext(childContext);
+//		}
 		return out;
 	}
 	
@@ -49,11 +43,11 @@ public class HAPStoryUtility {
 		Set<HAPStoryNode> varNodes = HAPStoryUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_VARIABLE);
 		for(HAPStoryNode node : varNodes) {
 			HAPStoryNodeVariable varNode = (HAPStoryNodeVariable)node;
-			HAPRootStructure varRoot = new HAPRootStructure(new HAPElementStructureLeafData(varNode.getVariableInfo().getDataInfo()));
-			varRoot.setId(varNode.getId());
-			varRoot.setName(varNode.getVariableInfo().getName());
+//			HAPRootStructure varRoot = new HAPRootStructure(new HAPElementStructureLeafData(varNode.getVariableInfo().getDataInfo()));
+//			varRoot.setId(varNode.getId());
+//			varRoot.setName(varNode.getVariableInfo().getName());
 //			varRoot.setLocalId(varNode.getId());
-			out.getContext().addRootToCategary(null, varRoot);
+//			out.getContext().addRootToCategary(null, varRoot);
 		}
 		return out;
 	}

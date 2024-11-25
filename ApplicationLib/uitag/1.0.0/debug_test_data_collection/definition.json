@@ -1,6 +1,6 @@
 {
 	"name" : "debug_test_data_collection",
-	"type" : "data",
+	"type" : "data1",
 	"description" : "",
 	"base" : "debug_test_data_collection",
 	"attribute" : [

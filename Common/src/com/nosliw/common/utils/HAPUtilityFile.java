@@ -19,6 +19,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 
@@ -28,8 +29,11 @@ public class HAPUtilityFile {
 	
 	public static String getFileCoreName(String fileName) {
 		int index = fileName.indexOf(".");
-		if(index==-1)   return fileName;
-		else return fileName.substring(0, index);
+		if(index==-1) {
+			return fileName;
+		} else {
+			return fileName.substring(0, index);
+		}
 	}
 	
 	public static List<File> sortFiles(Set<File> files){
@@ -44,11 +48,22 @@ public class HAPUtilityFile {
 		return sortedList;
 	}
 	
+	public static Set<File> getChildrenFolder(String path){
+		return getChildren(path).stream().filter(f->f.isDirectory()).collect(Collectors.toSet());
+	}
+	
+	public static Set<File> getChildrenFolder(File folder){
+		return getChildren(folder).stream().filter(f->f.isDirectory()).collect(Collectors.toSet());
+	}
+	
 	public static Set<File> getChildren(String path){
+		return getChildren(new File(path));
+	}
+	
+	public static Set<File> getChildren(File f){
     	Set<File> out = new HashSet<File>();
-        File f = new File(path);
         if (!f.exists()) {
-            System.out.println(path + " not exists");
+            System.out.println(f.getPath() + " not exists");
             return out;
         }
 
@@ -59,6 +74,7 @@ public class HAPUtilityFile {
         }
         return out;
 	}
+
 	
 	public static Set<File> getAllFiles(String path) {
     	Set<File> out = new HashSet<File>();
@@ -134,12 +150,15 @@ public class HAPUtilityFile {
 	
 	private static String getValidFileName(String fileFullName){
 		int index = fileFullName.lastIndexOf("/");
-		if(index==-1)  index = fileFullName.lastIndexOf("\\");
+		if(index==-1) {
+			index = fileFullName.lastIndexOf("\\");
+		}
 		
 		String path = null;
 		String fileName = null;
-		if(index==-1)  fileName = fileFullName;
-		else{
+		if(index==-1) {
+			fileName = fileFullName;
+		} else{
 			fileName = fileFullName.substring(index+1);
 			path = fileFullName.substring(0, index+1);
 		}
@@ -147,7 +166,9 @@ public class HAPUtilityFile {
 		fileName = encodeName(fileName);
 
 		String out = "";
-		if(path!=null)  out = out + path;
+		if(path!=null) {
+			out = out + path;
+		}
 		out = out + fileName;
 		return out;
 	}
@@ -295,7 +316,10 @@ public class HAPUtilityFile {
 
 	
 	private static String normalizeFolderPath(String folder) {
-		if(folder.endsWith("/")||folder.endsWith("\\")) 	return folder;
-		else 	return folder + "/";
+		if(folder.endsWith("/")||folder.endsWith("\\")) {
+			return folder;
+		} else {
+			return folder + "/";
+		}
 	}
 }

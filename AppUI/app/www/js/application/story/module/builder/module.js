@@ -165,7 +165,7 @@ var node_createModuleStoryBuilder = function(parm){
 				nextRequest.addRequest(loc_storyService.getDoDesignRequest(undefined, loc_componentData.designId, answers, extraChanges, loc_componentData.stepCursor, {
 					success : function(request, serviceData){
 						if(node_errorUtility.isSuccess(serviceData)){
-							var response = serviceData[node_COMMONATRIBUTECONSTANT.STORYSERVICEDATA_DATA];
+							var response = serviceData[node_COMMONATRIBUTECONSTANT.SERVICEDATA_DATA];
 							var stepRes = response[node_COMMONATRIBUTECONSTANT.STORYRESPONSEDESIGN_STEP];
 							var answersRes = response[node_COMMONATRIBUTECONSTANT.STORYRESPONSEDESIGN_ANSWER];
 							loc_updateQuestion(loc_getCurrentStep().question, answersRes);

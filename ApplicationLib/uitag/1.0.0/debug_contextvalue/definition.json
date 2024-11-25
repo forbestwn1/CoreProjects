@@ -1,6 +1,5 @@
 {
 	"name" : "debug_contextvalue",
-	"type" : "data",
 	"description" : "",
 	"scriptResourceId" : "script|1.0.0|customtag_debug_contextvalue",
 	"attribute" : [

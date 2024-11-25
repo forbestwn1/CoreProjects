@@ -7,25 +7,26 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerUITag{
 
-	private HAPDataTypeHelper m_dataTypeHelper;
+	private HAPRuntimeEnvironment m_runtimeEnv;
 	
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
 	private Map<String, HAPUITagDefinition> m_otherTagDefs;
 	
-	public HAPManagerUITag() {}
+	public HAPManagerUITag(HAPRuntimeEnvironment runtimeEnv) {
+		this.m_runtimeEnv = runtimeEnv;
+	}
 	
 	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
 		if(version==null) {
@@ -33,29 +34,7 @@ public class HAPManagerUITag{
 		}
 		String fileName = getUITagFolder(tagId, version) + "definition.json";
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(new File(fileName)));
-		return HAPUtilityUITagDefinitionParser.parseUITagDefinition(jsonObj);
-	}
-	
-	
-	private String getUITagFolder(String tagId, String version) {
-		return HAPSystemFolderUtility.getTagDefinitionFolder() + version + "/" + tagId +"/";
-	}
-
-	private void readAllTags() {
-		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
-		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
-		Set<File> files = HAPUtilityFile.getAllFiles(HAPSystemFolderUtility.getTagDefinitionFolder());
-		for(File file : files) {
-			HAPUITagDefinition uiTagDef = HAPUtilityUITagDefinitionParser.parseUITagDefinition(file);
-//			uiTagDef.setSourceFile(file);
-			String type = uiTagDef.getType();
-			if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) {
-				this.m_dataTagDefs.put(uiTagDef.getName(), (HAPUITagDefinitionData)uiTagDef);
-			}
-			else {
-				this.m_otherTagDefs.put(uiTagDef.getName(), uiTagDef);
-			}
-		}
+		return HAPUtilityUITagDefinitionParser.parseUITagDefinition(jsonObj, tagId, version);
 	}
 	
 	public HAPUITagInfo getDefaultUITagData(HAPUITageQueryData query) {
@@ -68,6 +47,31 @@ public class HAPManagerUITag{
 		return result;
 	}
 	
+	
+	private String getUITagFolder(String tagId, String version) {
+		return HAPSystemFolderUtility.getTagDefinitionFolder() + version + "/" + tagId +"/";
+	}
+
+	private void readAllTags() {
+		this.m_dataTagDefs = new LinkedHashMap<String, HAPUITagDefinitionData>();
+		this.m_otherTagDefs = new LinkedHashMap<String, HAPUITagDefinition>();
+		
+		for(File versionFolder : HAPUtilityFile.getChildrenFolder(HAPSystemFolderUtility.getTagDefinitionFolder())) {
+			String version = versionFolder.getName();
+			for(File tagFolder : HAPUtilityFile.getChildrenFolder(versionFolder)) {
+				HAPUITagDefinition uiTagDef = getUITagDefinition(tagFolder.getName(), version);
+//				uiTagDef.setSourceFile(file);
+				String type = uiTagDef.getType();
+				if(HAPConstantShared.UITAG_TYPE_DATA.equals(type)) {
+					this.m_dataTagDefs.put(uiTagDef.getName(), (HAPUITagDefinitionData)uiTagDef);
+				}
+				else {
+					this.m_otherTagDefs.put(uiTagDef.getName(), uiTagDef);
+				}
+			}
+		}
+	}
+	
 	public HAPUITagQueryResultSet queryUITagData(HAPUITageQueryData query) {
 		if(this.m_dataTagDefs==null) {
 			this.readAllTags();
@@ -78,7 +82,7 @@ public class HAPManagerUITag{
 		for(String name : this.m_dataTagDefs.keySet()) {
 			HAPUITagDefinitionData uiTagDef = this.m_dataTagDefs.get(name);
 			HAPDataTypeCriteria tagDataTypeCriteria = uiTagDef.getDataTypeCriteria();
-			HAPMatchers matchers = this.m_dataTypeHelper.convertable(queryDataTypeCriteria, tagDataTypeCriteria);
+			HAPMatchers matchers = this.m_runtimeEnv.getDataTypeHelper().convertable(queryDataTypeCriteria, tagDataTypeCriteria);
 			if(matchers!=null) {
 				double score = matchers.getScore();
 				if(score>0) {

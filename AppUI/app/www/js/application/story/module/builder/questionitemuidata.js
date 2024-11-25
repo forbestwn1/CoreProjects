@@ -71,7 +71,7 @@ var node_createComponentQuestionItemUIData = function(){
 			onSelectTag : function(){
 				loc_setCurrentByTagId(this, this.popSelected);
 				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_TAGNAME, this.popSelected, this.question.answer);
-				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS, this.currentTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFOO_MATCHERS], this.question.answer);
+				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS, this.currentTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], this.question.answer);
 				this.popSelected = undefined;
 			},
 			onCancelSelectTag : function(){

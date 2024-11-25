@@ -9,13 +9,9 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithConstantScriptExpression;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 
 @HAPEntityWithAttribute
-public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWithConstantScriptExpression{
+public class HAPRootStructure extends HAPEntityInfoWritableImp{
 
 	public static final String INHERIT_MODE = "inherit";
 	public static final String INHERIT_MODE_FINAL = "final";
@@ -60,11 +56,15 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 	public boolean isConstant() {		return HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT.equals(this.m_definition.getType());	}
 	
 	public Map<String, HAPElementStructureLeafRelative> getRelativeInfo() {
-		if(this.isConstant())  return null;
+		if(this.isConstant()) {
+			return null;
+		}
 		if(this.m_relativeEleInfo==null) {
 			this.m_relativeEleInfo = HAPUtilityStructure.discoverRelativeElement(this);
 		}
-		if(this.m_relativeEleInfo==null || this.m_relativeEleInfo.isEmpty())  return null;
+		if(this.m_relativeEleInfo==null || this.m_relativeEleInfo.isEmpty()) {
+			return null;
+		}
 		return this.m_relativeEleInfo;
 	}
 	
@@ -73,16 +73,6 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 	public HAPElementStructure getDefinition() {   return this.m_definition;   }
 
 	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition;  }
-
-	@Override
-	public void discoverConstantScript(HAPIdEntityInDomain complexEntityId, HAPContextParser parserContext,	HAPParserDataExpression expressionParser) {
-		this.m_definition.discoverConstantScript(complexEntityId, parserContext, expressionParser);
-	}
-
-	@Override
-	public void solidateConstantScript(Map<String, String> values) {
-		this.m_definition.solidateConstantScript(values);
-	}
 
 	public HAPRootStructure cloneRootBase() {
 		HAPRootStructure out = new HAPRootStructure();
@@ -93,7 +83,9 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 	public HAPRootStructure cloneExceptElement() {
 		HAPRootStructure out = new HAPRootStructure();
 		this.cloneToEntityInfo(out);
-		if(this.m_definition!=null)  out.m_definition = this.m_definition.cloneStructureElement();
+		if(this.m_definition!=null) {
+			out.m_definition = this.m_definition.cloneStructureElement();
+		}
 		out.m_defaultValue = this.m_defaultValue;
 		return out;
 	}
@@ -124,9 +116,15 @@ public class HAPRootStructure extends HAPEntityInfoWritableImp implements HAPWit
 		boolean out = false;
 		if(obj instanceof HAPRootStructure) {
 			HAPRootStructure root = (HAPRootStructure)obj;
-			if(!super.equals(obj))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_defaultValue, root.m_defaultValue))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_definition, root.m_definition)) return false;
+			if(!super.equals(obj)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_defaultValue, root.m_defaultValue)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_definition, root.m_definition)) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

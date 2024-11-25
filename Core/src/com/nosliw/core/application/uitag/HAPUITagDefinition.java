@@ -17,6 +17,8 @@ import com.nosliw.data.core.resource.HAPResourceId;
 public class HAPUITagDefinition extends HAPEntityInfoImp{
 
 	@HAPAttribute
+	public static final String VERSION = "version";
+	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
 	@HAPAttribute
 	public static final String SCRIPTRESOURCEID = "scriptResourceId";
@@ -35,6 +37,7 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static final String EVENT = "event";
 	
+	private String m_version;
 	
 	private HAPUITagValueContextDefinition m_valueContext;
 	
@@ -51,7 +54,10 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 		this.m_attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
 	}
 	
-	public String getType() {  return null;    }
+	public String getType() {  return null;   }
+	
+	public String getVersion() {   return this.m_version;    }
+	public void setVersion(String version) {    this.m_version = version;     }
 	
 	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
 	public void setValueContext(HAPUITagValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }

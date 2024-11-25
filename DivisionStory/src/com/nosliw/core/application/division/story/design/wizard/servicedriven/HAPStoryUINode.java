@@ -3,11 +3,6 @@ package com.nosliw.core.application.division.story.design.wizard.servicedriven;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.division.story.HAPStoryAliasElement;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
@@ -19,7 +14,6 @@ import com.nosliw.core.application.division.story.change.HAPStoryRequestChange;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
 import com.nosliw.core.application.uitag.HAPManagerUITag;
-import com.nosliw.data.core.cronjob.HAPUtilityConfiguration;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryUINode {
@@ -80,15 +74,15 @@ public class HAPStoryUINode {
 	
 	public HAPStoryUIDataInfo getDataInfo(String name) {
 		HAPStoryUIDataInfo out = new HAPStoryUIDataInfo();
-		HAPResultReferenceResolve resolve = HAPUtilityStructure.resolveElementReference(name, this.getStoryNode().getDataStructureInfo().getContext(), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).elementReferenceResolveMode, null);
-		HAPElementStructure resolvedNode = resolve.finalElement;
-		String nodeType = resolvedNode.getType();
-		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-			HAPElementStructureLeafData dataNode = (HAPElementStructureLeafData)resolvedNode;
-			out.setDataType(dataNode.getDataInfo());
-			out.setIdPath(resolve.path);
-			out.setRootReference(resolve.rootReference);
-		}
+//		HAPResultReferenceResolve resolve = HAPUtilityStructure.resolveElementReference(name, this.getStoryNode().getDataStructureInfo().getContext(), HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_RESOURCE).elementReferenceResolveMode, null);
+//		HAPElementStructure resolvedNode = resolve.finalElement;
+//		String nodeType = resolvedNode.getType();
+//		if(nodeType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+//			HAPElementStructureLeafData dataNode = (HAPElementStructureLeafData)resolvedNode;
+//			out.setDataType(dataNode.getDataInfo());
+//			out.setIdPath(resolve.path);
+//			out.setRootReference(resolve.rootReference);
+//		}
 		return out;
 	}
 	
