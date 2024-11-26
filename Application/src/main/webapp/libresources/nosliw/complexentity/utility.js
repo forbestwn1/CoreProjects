@@ -54,16 +54,19 @@ var node_complexEntityUtility = function(){
 						hostEntityCore = treeNodeInterface.getParentCore();
 						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
 							//for bundle node
-							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
+//							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
 						}
 					}
 					else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
 						var childName = seg.substring(node_COMMONCONSTANT.NAME_CHILD.length+node_COMMONCONSTANT.SEPERATOR_LEVEL1.length);
+						if(childName.startsWith(node_COMMONCONSTANT.SYMBOL_KEYWORD)){
+							childName = childName.substring(node_COMMONCONSTANT.SYMBOL_KEYWORD.length);
+						}
 						var childTreeNode = treeNodeInterface.getChild(childName)
 						hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
 						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
 							//for bundle node
-							hostEntityCore = hostEntityCore.getMainEntityCore();
+//							hostEntityCore = hostEntityCore.getMainEntityCore();
 						}
 					}
 				});		

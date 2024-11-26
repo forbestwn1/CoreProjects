@@ -32,8 +32,8 @@
 							"trigguerType" : "dataValidation",
 							"name" : "testDataValidation1",
 							"handlerId" : {
-								"idPath11" : "#task",
-								"idPath" : "datavalidation_mandatory-taskTaskScript",
+								"idPath" : "#task",
+								"idPath0" : "datavalidation_mandatory-taskTaskScript",
 								"idPath1" : "datavalidation_enum-taskTaskScript",
 								"idPath2" : "datavalidation_mandatory-taskWrapper"
 							},
@@ -223,7 +223,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

@@ -65,13 +65,31 @@ var node_createBundleCore = function(parm, configure){
 				success : function(requestInfo, resourceTree){
 					//get bundle definition
 					loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, loc_resourceId).resourceData;
+
+					//build variable domain in bundle
+					loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
+
+					var branchBrickRequest = node_createServiceRequestInfoSequence(undefined, undefined, requestInfo);
+					var brickDefs = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_SUPPORTBRICKS];
+					_.each(brickDefs, function(brickDef, name){
+						branchBrickRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+							//build variable domain in bundle
+							loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
+							return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(brickDef, undefined, loc_out, undefined, loc_configure, {
+								success : function(request, mainEntityRuntime){
+									node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
+									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(name, mainEntityRuntime, undefined, true);
+								}
+							});
+				
+						}));
+					});
+					return branchBrickRequest;
 	 			}
 			}));
 		}
 		
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			//build variable domain in bundle
-			loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
 			return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainEntityRuntime){

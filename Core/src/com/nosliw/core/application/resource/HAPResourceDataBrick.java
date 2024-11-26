@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPResourceDataImp;
@@ -61,6 +62,12 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 		if(this.m_valueStructureDomain!=null) {
 			jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JSON));
 		}
+		
+		Map<String, String> supportBrickMap = new LinkedHashMap<String, String>();
+		for(String name : this.m_supportBricks.keySet()) {
+			supportBrickMap.put(name, this.m_supportBricks.get(name).toStringValue(HAPSerializationFormat.JSON));
+		}
+		jsonMap.put(SUPPORTBRICKS, HAPUtilityJson.buildMapJson(supportBrickMap));
 	}
 	
 	@Override
@@ -70,6 +77,12 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 		if(this.m_valueStructureDomain!=null) {
 			jsonMap.put(VALUESTRUCTUREDOMAIN, this.m_valueStructureDomain.toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
+
+		Map<String, String> supportBrickMap = new LinkedHashMap<String, String>();
+		for(String name : this.m_supportBricks.keySet()) {
+			supportBrickMap.put(name, this.m_supportBricks.get(name).toStringValue(HAPSerializationFormat.JAVASCRIPT));
+		}
+		jsonMap.put(SUPPORTBRICKS, HAPUtilityJson.buildMapJson(supportBrickMap));
 	}
 
 	@Override
