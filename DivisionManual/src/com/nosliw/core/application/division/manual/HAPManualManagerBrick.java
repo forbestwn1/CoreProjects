@@ -41,14 +41,14 @@ import com.nosliw.core.application.division.manual.brick.interactive.interfacee.
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.expression.HAPManualPluginProcessorBlockSimpleInteractiveInterfaceExpression;
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.task.HAPManualPluginParserBlockSimpleInteractiveInterfaceTask;
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.task.HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask;
+import com.nosliw.core.application.division.manual.brick.module.HAPManualPluginParserBlockModule;
+import com.nosliw.core.application.division.manual.brick.module.HAPManualPluginProcessorBlockModule;
 import com.nosliw.core.application.division.manual.brick.scriptexpression.group.HAPManualPluginParserBlockScriptExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.scriptexpression.group.HAPManualPluginProcessorBlockScriptExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginParserBlockServiceProvider;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginProcessorBlockSimpleImpServiceProvider;
 import com.nosliw.core.application.division.manual.brick.task.script.task.HAPManualPluginParserBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.brick.task.script.task.HAPManualPluginProcessorBlockTaskTaskScript;
-import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualPluginParserBlockTaskWrapper;
-import com.nosliw.core.application.division.manual.brick.taskwrapper.HAPManualPluginProcessorBlockSimpleImpTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualPluginParserBlockTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualPluginProcessorBlockComplexTestComplexScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.task.HAPManualPluginParserBlockTestComplexTask;
@@ -69,6 +69,10 @@ import com.nosliw.core.application.division.manual.brick.value.HAPManualPluginPa
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualPluginParserBrickImpValueStructure;
+import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualPluginParserBrickWrapperBrick;
+import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualPluginProcessorBlockSimpleImpWrapperBrick;
+import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualPluginParserBlockTaskWrapper;
+import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualPluginProcessorBlockSimpleImpTaskWrapper;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityAttachment;
 import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
 import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionConstant;
@@ -236,116 +240,6 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		return out;
 	}
 	
-	@Override
-	public HAPBundle getBundle1(HAPIdBrick brickId) {
-		
-		//process definition
-		HAPBundle out = new HAPBundle();
-		
-		
-		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getBrickLocationInfo(brickId);
-		
-		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), brickId.getDivision());
-		
-		HAPSerializationFormat format = entityLocationInfo.getFormat();
-		
-		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
-
-		//get definition
-		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = this.parseBrickDefinitionWrapper(content, brickId.getBrickTypeId(), format, parseContext);
-		HAPManualDefinitionBrick brickDef = brickDefWrapper.getBrick();
-		
-		//build parent and 
-		
-		
-		//build path from root
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickDefWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
-			@Override
-			public boolean processBrickNode(HAPManualDefinitionBrick rootEntityInfo, HAPPath path, Object data) {
-				if(path!=null&&!path.isEmpty()) {
-					HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootEntityInfo, path);
-					attr.setPathFromRoot(path);
-				}
-				return true;
-			}
-		}, brickDefWrapper);
-		
-
-		//normalize division infor in referred resource id
-		normalizeDivisionInReferredResource(brickDefWrapper);
-		
-		HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, this.m_runtimeEnv, this);
-
-		//build attachment
-		HAPManualUtilityAttachment.processAttachment(brickDef, null, processContext);
-
-		//process constant
-		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, this);
-		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, this);
-		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, this);
-		
-		//build executable tree
-		out.setMainBrickWrapper(new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this)));
-
-		//brick init
-		HAPManualUtilityProcessor.initBricks(out.getMainBrickWrapper(), processContext, this, m_runtimeEnv);
-
-		//init
-		HAPManualUtilityProcessor.processComplexBrickInit(out.getMainBrickWrapper(), processContext);
-
-		//complex entity, build value context domain, create extension value structure if needed
-//		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
-
-		//build value context in complex block
-		HAPManualUtilityValueContextProcessor.buildValueContext(out.getMainBrickWrapper(), processContext, this, this.m_runtimeEnv);
-		
-		//build other value port
-		HAPManualUtilityProcessor.processOtherValuePortBuild(out.getMainBrickWrapper(), processContext);
-		
-		//generate extra value structure for variable extension
-		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(out.getMainBrickWrapper(), processContext, this, this.m_runtimeEnv);
-		
-		//
-		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(out.getMainBrickWrapper(), null, processContext);
-		
-		
-		
-
-		
-		//variable resolve (variable extension)-----impact data container
-		HAPManualUtilityProcessor.processComplexVariableResolve(out.getMainBrickWrapper(), processContext);
-	
-		//build var criteria infor in var info container according to value port def
-		HAPManualUtilityProcessor.processComplexVariableInfoResolve(out.getMainBrickWrapper(), processContext);
-		
-		//variable criteria discovery ---- impact data container and value structure in context domain
-		HAPManualUtilityProcessor.processComplexValueContextDiscovery(out.getMainBrickWrapper(), processContext);
-		
-		//update value port element according to var info container after discovery
-//		HAPManualUtilityProcessor.processComplexValuePortUpdate(out.getBrickWrapper(), processContext);
-		
-		//process entity
-		HAPManualUtilityProcessor.processBrick(out.getMainBrickWrapper(), processContext, this.getBrickManager());
-		
-		//process adapter
-		HAPManualUtilityProcessor.processAdapter(out.getMainBrickWrapper(), processContext, this.getBrickManager());
-		
-		
-		
-		
-		
-		HAPManualUtilityProcessor.cleanupEmptyValueStructure(out, this.getBrickManager());
-		
-		//store manual definition
-		out.setExtraData(brickDefWrapper);
-
-		out.setExtraData(brickDefWrapper);
-//		this.getEntityProcessorInfo(entityId.getEntityTypeId()).getProcessorPlugin().process(entityDefInfo);
-		
-		return out;
-	}
-
-	
 	private void normalizeDivisionInReferredResource(HAPManualDefinitionWrapperBrickRoot brickWrapper) {
 		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
 
@@ -369,6 +263,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 	
 	
 	private void init() {
+
+		this.registerBlockPluginInfo(HAPEnumBrickType.MODULE_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockModule(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockModule(this.m_runtimeEnv, this));
+		
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_1_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTestComplex1(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexImpTestComplex1(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTestComplexScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexScript(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TEST_COMPLEX_TASK_100, new HAPInfoBrickType(true, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTestComplexTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockComplexTestComplexTask(this.m_runtimeEnv, this));
@@ -382,6 +279,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskTaskScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskTaskScript(this.m_runtimeEnv, this));
 		
 		
+		this.registerBlockPluginInfo(HAPEnumBrickType.WRAPPERBRICK_100, new HAPInfoBrickType(false), new HAPManualPluginParserBrickWrapperBrick(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpWrapperBrick(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASKWRAPPER_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockTaskWrapper(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpTaskWrapper(this.m_runtimeEnv, this));
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIB_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockDataExpressionLibrary(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockDataExpressionLibrary(this.m_runtimeEnv, this)); 

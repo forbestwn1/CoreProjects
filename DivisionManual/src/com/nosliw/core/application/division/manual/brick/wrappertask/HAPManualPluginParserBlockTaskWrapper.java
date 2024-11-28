@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.taskwrapper;
+package com.nosliw.core.application.division.manual.brick.wrappertask;
 
 import org.json.JSONObject;
 

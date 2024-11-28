@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.taskwrapper;
+package com.nosliw.core.application.brick.wrappertask;
 
 import java.util.ArrayList;
 import java.util.List;

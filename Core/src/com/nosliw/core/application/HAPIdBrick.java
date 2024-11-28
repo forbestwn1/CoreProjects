@@ -1,5 +1,7 @@
 package com.nosliw.core.application;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -43,6 +45,13 @@ public class HAPIdBrick extends HAPSerializableImp{
 	
 	public String getKey() {
 		return HAPUtilityNamingConversion.cascadeLevel2(new String[] {this.m_id, this.m_brickTypeId.getKey(), this.m_division});
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		jsonMap.put(DIVISION, this.m_division);
+		jsonMap.put(BRICKTYPEID, this.m_brickTypeId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(ID, this.m_id);
 	}
 	
 	@Override

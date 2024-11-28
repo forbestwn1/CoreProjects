@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.taskwrapper;
+package com.nosliw.core.application.brick.wrappertask;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;

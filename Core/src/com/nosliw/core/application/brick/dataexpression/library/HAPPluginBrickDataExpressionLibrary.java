@@ -10,7 +10,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
+import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 
 public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrick{
 

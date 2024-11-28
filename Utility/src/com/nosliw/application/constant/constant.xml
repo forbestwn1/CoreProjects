@@ -604,6 +604,7 @@
 
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER" value="valuestructurewrapper"/>
 
+			<definition name="RUNTIME_RESOURCE_TYPE_WRAPPERBRICK" value="wrapperbrick"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_MODULE" value="module"/>
 
 

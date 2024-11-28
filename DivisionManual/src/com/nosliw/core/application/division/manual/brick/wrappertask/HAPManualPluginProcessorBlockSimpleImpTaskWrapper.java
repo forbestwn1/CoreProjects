@@ -1,11 +1,11 @@
-package com.nosliw.core.application.division.manual.brick.taskwrapper;
+package com.nosliw.core.application.division.manual.brick.wrappertask;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.brick.taskwrapper.HAPBlockTaskWrapper;
+import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
