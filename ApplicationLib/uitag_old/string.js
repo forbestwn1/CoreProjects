@@ -102,7 +102,7 @@
 		};
 
 		var loc_getDataFlowType = function(){
-			var out = loc_env.getAttributeValue(node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_ATTRIBUTE_DATAFLOW);
+			var out = loc_env.getAttributeValue(node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_ATTRIBUTE_DATAFLOW);
 			if(out==undefined)	out = node_COMMONCONSTANT.DATAFLOW_IO; 
 			return out;
 		};

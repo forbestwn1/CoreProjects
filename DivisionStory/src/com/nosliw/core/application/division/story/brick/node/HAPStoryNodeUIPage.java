@@ -11,11 +11,11 @@ import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPStoryNodePage extends HAPStoryNodeUI{
+public class HAPStoryNodeUIPage extends HAPStoryNodeUI{
 	
 	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_PAGE; 
 	
-	public HAPStoryNodePage() {
+	public HAPStoryNodeUIPage() {
 		super(STORYNODE_TYPE);
 	}
 	
@@ -26,7 +26,7 @@ public class HAPStoryNodePage extends HAPStoryNodeUI{
 
 	@Override
 	public HAPStoryElement cloneStoryElement() {
-		HAPStoryNodePage out = new HAPStoryNodePage();
+		HAPStoryNodeUIPage out = new HAPStoryNodeUIPage();
 		super.cloneToUIStoryNode(out);
 		return out;
 	}

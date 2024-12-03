@@ -8,7 +8,7 @@ import com.nosliw.core.application.division.story.HAPStoryInfoNodeChild;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodePage;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
@@ -24,8 +24,8 @@ public class HAPStoryUtility {
 //		String nodeType = uiStoryNode.getType();
 //		HAPConfigureProcessorValueStructure contextProcessorConfig = HAPUtilityConfiguration.getContextProcessConfigurationForUIUit(HAPConstantShared.UIRESOURCE_TYPE_TAG); 
 //		HAPValueStructureDefinitionGroup childContext = null;
-//		if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(nodeType)) {
-//			HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
+//		if(HAPConstantShared.STORYNODE_TYPE_UITAGDATA.equals(nodeType)) {
+//			HAPStoryNodeUITagData uiDataStoryNode = (HAPStoryNodeUITagData)uiStoryNode;
 //			childContext = HAPUtilityProcess.buildUITagValueStructure(uiTagMan.getUITagDefinition(new HAPUITagId(uiDataStoryNode.getTagName())), parentContext, uiDataStoryNode.getAttributes(), contextProcessorConfig, runtimeEnv);
 //			childContext = (HAPValueStructureDefinitionGroup)HAPProcessorStructure.processRelative(childContext, HAPContainerStructure.createDefault(parentContext), null, contextProcessorConfig, runtimeEnv);
 //			out.setContext(childContext);
@@ -52,15 +52,15 @@ public class HAPStoryUtility {
 		return out;
 	}
 
-	public static HAPStoryNodePage buildPageStoryNode(HAPStoryStory story) {
-		HAPStoryNodePage out = new HAPStoryNodePage();
+	public static HAPStoryNodeUIPage buildPageStoryNode(HAPStoryStory story) {
+		HAPStoryNodeUIPage out = new HAPStoryNodeUIPage();
 		HAPStoryUIDataStructureInfo dataStructureInfo = buildDataStructureInfoForPageNode(story);
 		out.setDataStructureInfo(dataStructureInfo);
 		return out;
 	}
 	
 	public static HAPStoryUITree buildUITree(HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
-		HAPStoryNodePage pageStoryNode = (HAPStoryNodePage)HAPStoryUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_PAGE).iterator().next();
+		HAPStoryNodeUIPage pageStoryNode = (HAPStoryNodeUIPage)HAPStoryUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_PAGE).iterator().next();
 		HAPStoryUINode uiNode = createUINodeByStoryNode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
 		buildChildUINode(uiNode, story, runtimeEnv, uiTagMan, changeMan);
 		return (HAPStoryUITree)uiNode;

@@ -26,5 +26,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/MiniApp"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DivisionManual"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CommontApplication"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DivisionStory"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

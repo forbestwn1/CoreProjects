@@ -45,36 +45,8 @@ var node_createUITagPlugin = function(){
 				}
 			}));
 			return out;
-		},
+		}
 
-
-		getCreateEntityCoreRequest1 : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
-			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createUITagCoreEntity"), handlers, request);
-
-			var uiTagBase = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE);
-			if(uiTagBase=="debug_test"){
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagTest, internalValuePortContainerId, bundleCore, configure);
-				}));
-			} 
-			else if(uiTagBase=="debug_viewvariable"){
-				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return loc_createUITagComponentCore(complexEntityDef, node_createUICustomerTagViewVariable, internalValuePortContainerId, bundleCore, configure);
-				}));
-			}
-			else{
-				var resourceId = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_SCRIPTRESOURCEID);
-				
-				out.addRequest(nosliw.runtime.getResourceService().getGetResourceDataRequest(resourceId, {
-					success : function(requestInfo, resourceData){
-						var tagDefScriptFun = resourceData[node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT];
-						return loc_createUITagComponentCore(complexEntityDef, tagDefScriptFun, internalValuePortContainerId, bundleCore, configure);
-		 			}
-				}));
-			}
-
-			return out;
-		},
 	};
 
 	return loc_out;
@@ -124,9 +96,6 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			return out;
 		},
 		getAttributes : function(){   return loc_attributes;   },
-
-		//--------------------------------- value structure 
-		getValueContext : function(){   return loc_valueContext;    },
 
 		//---------------------------------variable
 		createVariableByName : function(variableName){

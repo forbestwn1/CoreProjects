@@ -1,6 +1,5 @@
 package com.nosliw.servlet.app.story;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -9,9 +8,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.division.story.HAPStoryManagerStory;
 import com.nosliw.core.application.division.story.HAPStoryStory;
-import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
-import com.nosliw.core.application.division.story.change.HAPStoryParserChange;
-import com.nosliw.core.application.division.story.design.wizard.HAPStoryAnswer;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
 import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryBuilderPageSimple;
@@ -37,6 +33,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	
 	@HAPAttribute
 	public static final String COMMAND_DESIGN = "design";
+	@HAPAttribute
+	public static final String COMMAND_DESIGN_REQUEST = "request";
 	@HAPAttribute
 	public static final String COMMAND_DESIGN_DESIGNID = "designId";
 	@HAPAttribute
@@ -86,28 +84,8 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 		}
 		case COMMAND_DESIGN:
 		{
-			String designId = parms.optString(COMMAND_DESIGN_DESIGNID);
-			HAPStoryRequestDesign changeRequest = new HAPStoryRequestDesign(designId);
-
-			JSONArray answerArray = parms.optJSONArray(COMMAND_DESIGN_ANSWER);
-			for(int i=0; i<answerArray.length(); i++) {
-				JSONObject answerObj = answerArray.getJSONObject(i);
-				HAPStoryAnswer answer = new HAPStoryAnswer();
-				answer.buildObject(answerObj, HAPSerializationFormat.JSON);
-				changeRequest.addAnswer(answer);
-			}
-			
-			JSONArray extraChangesArray = parms.optJSONArray(COMMAND_DESIGN_EXTRACHANGES);
-			if(extraChangesArray!=null) {
-				for(int i=0; i<extraChangesArray.length(); i++) {
-					JSONObject changeObj = extraChangesArray.getJSONObject(i);
-					HAPStoryChangeItem changeItem = HAPStoryParserChange.parseChangeItem(changeObj);
-					changeRequest.addExtraChange(changeItem);
-				}
-			}
-			
-			int stepCursor = parms.optInt(COMMAND_DESIGN_STEPCUSOR, -1);
-			changeRequest.setStepCursor(stepCursor);
+			HAPStoryRequestDesign changeRequest = new HAPStoryRequestDesign();
+			changeRequest.buildObject(parms.getJSONObject(COMMAND_DESIGN_REQUEST), HAPSerializationFormat.JSON);
 			
 			HAPServiceData result = storyManager.designStory(changeRequest);
 			out = HAPServiceData.createSuccessData(result);

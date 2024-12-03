@@ -40,7 +40,7 @@ var node_createComponentQuestionItem = function(){
 				<question-item-service v-if="question.element.type=='service'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				<question-item-switch v-if="question.element.type=='switch'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				<question-item-constant v-if="question.element.type=='constant'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
-				<question-item-uidata v-if="question.element.type=='UI_data'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
+				<question-item-uidata v-if="question.element.type=='UI_tagData'" v-bind:question="question" v-bind:story="story" v-on:answerChange="onAnswerChange"/>
 				</span>
 			</div>
 		`

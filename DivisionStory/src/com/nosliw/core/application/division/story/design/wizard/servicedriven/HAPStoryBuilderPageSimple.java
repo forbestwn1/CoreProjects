@@ -38,7 +38,7 @@ import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeService
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceOutput;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIData;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagData;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIHtml;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagOther;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
@@ -300,7 +300,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 
 				dataLayerChangeRequest.close();
 			}
-			
+
 			{
 				//build ui
 				HAPStoryRequestChangeWrapper uiLayerChangeRequest = new HAPStoryRequestChangeWrapper(story, true, true);
@@ -437,10 +437,10 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 		if(isComplex) {
 			if(dataTypeId.getFullName().contains("array")){
 				//array
-//				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData("loop", story.getNextId(), uiDataInfo, dataFlow);
+//				HAPStoryNodeUITagData uiDataStoryNode = new HAPStoryNodeUITagData("loop", story.getNextId(), uiDataInfo, dataFlow);
 				
 				HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
-				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
+				HAPStoryNodeUITagData uiDataStoryNode = new HAPStoryNodeUITagData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 
 				uiDataStoryNode.addAttribute("data", varName);
 				if(!HAPConstantShared.DATAFLOW_IN.equals(dataFlow)) {
@@ -473,7 +473,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 			//simple
 			HAPUITagInfo uiTagInfo = this.m_uiTagManager.getDefaultUITagData(new HAPUITageQueryData(dataTypeCriteria));
 			if(uiTagInfo!=null) {
-				HAPStoryNodeUIData uiDataStoryNode = new HAPStoryNodeUIData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
+				HAPStoryNodeUITagData uiDataStoryNode = new HAPStoryNodeUITagData(uiTagInfo.getId(), story.getNextId(), uiDataInfo, dataFlow, uiTagInfo.getMatchers());
 				uiDataStoryNode.addAttribute("data", varName);
 				if(!HAPConstantShared.DATAFLOW_IN.equals(dataFlow)) {
 					uiDataStoryNode.addAttribute(HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP, HAPConstantShared.UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION);
@@ -528,10 +528,10 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 			List<HAPStoryUINode> allUINodes = uiTree.getAllUINodes();
 			for(HAPStoryUINode uiNode : allUINodes) {
 				HAPStoryNodeUI uiStoryNode = uiNode.getStoryNode();
-				if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(uiStoryNode.getType())) {
-					HAPStoryNodeUIData uiDataStoryNode = (HAPStoryNodeUIData)uiStoryNode;
+				if(HAPConstantShared.STORYNODE_TYPE_UITAGDATA.equals(uiStoryNode.getType())) {
+					HAPStoryNodeUITagData uiDataStoryNode = (HAPStoryNodeUITagData)uiStoryNode;
 					if(uiDataStoryNode.isEnable()) {
-						if(HAPConstantShared.DATAFLOW_OUT.equals(uiDataStoryNode.getAttributeValue(HAPStoryNodeUIData.ATTRIBUTE_DATAFLOW))) {
+						if(HAPConstantShared.DATAFLOW_OUT.equals(uiDataStoryNode.getAttributeValue(HAPStoryNodeUITagData.ATTRIBUTE_DATAFLOW))) {
 							hasOutUI = true;
 						}
 					}

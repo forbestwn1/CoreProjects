@@ -742,7 +742,7 @@ public class HAPConstantShared {
 		public static final String STORYNODE_TYPE_VARIABLE = "variable";
 		public static final String STORYNODE_TYPE_PAGE = "UI_page";
 		public static final String STORYNODE_TYPE_UITAGOTHER = "UI_tagOther";
-		public static final String STORYNODE_TYPE_UIDATA = "UI_data";
+		public static final String STORYNODE_TYPE_UITAGDATA = "UI_tagData";
 		public static final String STORYNODE_TYPE_HTML = "UI_html";
 
 

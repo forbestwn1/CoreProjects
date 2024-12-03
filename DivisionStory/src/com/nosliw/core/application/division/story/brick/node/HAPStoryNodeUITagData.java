@@ -18,9 +18,9 @@ import com.nosliw.data.core.matcher.HAPMatchersCombo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
-public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
+public class HAPStoryNodeUITagData extends HAPStoryNodeUITag{
 	
-	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_UIDATA; 
+	public final static String STORYNODE_TYPE = HAPConstantShared.STORYNODE_TYPE_UITAGDATA; 
 	
 	@HAPAttribute
 	public static final String DATAINFO = "dataInfo";
@@ -37,11 +37,11 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	//matchers for convert external tag data to internal data
 	private Map<String, HAPMatchersCombo> m_matchers;
 
-	public HAPStoryNodeUIData() {
+	public HAPStoryNodeUITagData() {
 		this.m_matchers = new LinkedHashMap<String, HAPMatchersCombo>();
 	}
 
-	public HAPStoryNodeUIData(String tagName, String id, HAPStoryUIDataInfo uiDataInfo, String dataFlow, Map<String, HAPMatchersCombo> matchers) {
+	public HAPStoryNodeUITagData(String tagName, String id, HAPStoryUIDataInfo uiDataInfo, String dataFlow, Map<String, HAPMatchersCombo> matchers) {
 		super(STORYNODE_TYPE, tagName, id);
 		this.m_matchers = new LinkedHashMap<String, HAPMatchersCombo>();
 		this.m_uiDataInfo = uiDataInfo;
@@ -71,7 +71,7 @@ public class HAPStoryNodeUIData extends HAPStoryNodeUITag{
 	
 	@Override
 	public HAPStoryElement cloneStoryElement() {
-		HAPStoryNodeUIData out = new HAPStoryNodeUIData();
+		HAPStoryNodeUITagData out = new HAPStoryNodeUITagData();
 		this.cloneToUITagStoryNode(out);
 		out.m_uiDataInfo = this.m_uiDataInfo.cloneUIDataInfo();
 		

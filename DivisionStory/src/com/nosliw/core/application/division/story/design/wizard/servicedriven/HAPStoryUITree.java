@@ -9,7 +9,7 @@ import com.nosliw.core.application.division.story.HAPStoryIdElementInfo;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodePage;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
 import com.nosliw.core.application.division.story.change.HAPStoryHandlerChange;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
@@ -31,7 +31,7 @@ public class HAPStoryUITree extends HAPStoryUINode implements HAPStoryHandlerCha
 		init();
 	}
 
-	public HAPStoryUITree(HAPStoryNodePage storyNode, HAPStoryAliasElement alias, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+	public HAPStoryUITree(HAPStoryNodeUIPage storyNode, HAPStoryAliasElement alias, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		super(storyNode, alias, story);
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;

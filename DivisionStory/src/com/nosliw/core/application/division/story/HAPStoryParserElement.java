@@ -8,8 +8,8 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
+import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionDataIO;
@@ -22,6 +22,10 @@ import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeService
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceInputParm;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceOutput;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceOutputItem;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIHtml;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagData;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagOther;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 
 public class HAPStoryParserElement {
@@ -39,6 +43,12 @@ public class HAPStoryParserElement {
 		m_storyNodeClass.put(HAPStoryNodeServiceOutputItem.STORYNODE_TYPE, HAPStoryNodeServiceOutputItem.class);
 		m_storyNodeClass.put(HAPStoryNodeConstant.STORYNODE_TYPE, HAPStoryNodeConstant.class);
 		m_storyNodeClass.put(HAPStoryNodeVariable.STORYNODE_TYPE, HAPStoryNodeVariable.class);
+
+		m_storyNodeClass.put(HAPStoryNodeUIPage.STORYNODE_TYPE, HAPStoryNodeUIPage.class);
+		m_storyNodeClass.put(HAPStoryNodeUIHtml.STORYNODE_TYPE, HAPStoryNodeUIHtml.class);
+		m_storyNodeClass.put(HAPStoryNodeUITagData.STORYNODE_TYPE, HAPStoryNodeUITagData.class);
+		m_storyNodeClass.put(HAPStoryNodeUITagOther.STORYNODE_TYPE, HAPStoryNodeUITagOther.class);
+
 		
 		m_storyConnectionClass.put(HAPStoryConnectionContain.CONNECTION_TYPE, HAPStoryConnectionContain.class);
 		m_storyConnectionClass.put(HAPStoryConnectionDataIO.CONNECTION_TYPE, HAPStoryConnectionDataIO.class);
@@ -53,9 +63,13 @@ public class HAPStoryParserElement {
 	public static HAPStoryElement parseElement(JSONObject jsonObj) {
 		HAPStoryElement out = null;
 		String categary = jsonObj.getString(HAPStoryElement.CATEGARY);
-		if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_NODE))   out = parseNode(jsonObj);
-		else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION))   out = parseConnection(jsonObj);
-		else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP))   out = parseElementGroup(jsonObj);
+		if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_NODE)) {
+			out = parseNode(jsonObj);
+		} else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_CONNECTION)) {
+			out = parseConnection(jsonObj);
+		} else if(categary.equals(HAPConstantShared.STORYELEMENT_CATEGARY_GROUP)) {
+			out = parseElementGroup(jsonObj);
+		}
 		return out;
 	}
 	

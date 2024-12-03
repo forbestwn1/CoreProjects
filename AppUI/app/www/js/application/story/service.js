@@ -102,11 +102,15 @@ var node_createStoryService = function(){
 			var requestInfo = loc_out.getRequestInfo(requester_parent);
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("design", {}), handlers, requestInfo);
 			
+			var designRequest = {};
+			designRequest[node_COMMONATRIBUTECONSTANT.STORYREQUESTDESIGN_DESIGNID] = designId;
+			designRequest[node_COMMONATRIBUTECONSTANT.STORYREQUESTDESIGN_ANSWER] = answers;
+			designRequest[node_COMMONATRIBUTECONSTANT.STORYREQUESTDESIGN_EXTRACHANGES] = extraChanges;
+			designRequest[node_COMMONATRIBUTECONSTANT.STORYREQUESTDESIGN_STEPCUSOR] = stepIndex;
+
 			var parms = {};
-			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_DESIGNID] = designId;
-			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_ANSWER] = answers;
-			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_EXTRACHANGES] = extraChanges;
-			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_STEPCUSOR] = stepIndex;
+			parms[node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN_REQUEST] = designRequest;
+
 			var remoteRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(node_COMMONATRIBUTECONSTANT.STORYBUILDSERVLET_COMMAND_DESIGN, parms), undefined, {
 				success : function(requestInfo, serviceData){
 					return serviceData;

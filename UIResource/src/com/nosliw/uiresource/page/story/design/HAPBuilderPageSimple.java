@@ -265,7 +265,7 @@ public class HAPBuilderPageSimple extends HAPEntityInfoImp implements HAPBuilder
 		
 		if(uiNode.isEnable()) {
 			String uiNodeType = uiNode.getType();
-			if(HAPConstantShared.STORYNODE_TYPE_UIDATA.equals(uiNodeType)||HAPConstantShared.STORYNODE_TYPE_UITAGOTHER.equals(uiNodeType)) {
+			if(HAPConstantShared.STORYNODE_TYPE_UITAGDATA.equals(uiNodeType)||HAPConstantShared.STORYNODE_TYPE_UITAGOTHER.equals(uiNodeType)) {
 				HAPStoryNodeUITag uiDataNode = (HAPStoryNodeUITag)uiNode;
 				HAPHtmlTag tag = new HAPHtmlTag(uiDataNode.getTagName());
 				

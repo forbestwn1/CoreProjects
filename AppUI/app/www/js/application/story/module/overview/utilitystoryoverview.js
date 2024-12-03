@@ -18,7 +18,7 @@ var node_utility = function(){
 	var loc_nodeTypeLayer = {
 		"service" : ["service", "serviceInput", "serviceOutput", "serviceInputParm", "serviceOutputItem"],
 		"data" : ["constant", "variable"],
-		"UI" : ["UI_page", "UI_data", "UI_html"]
+		"UI" : ["UI_page", "UI_tagData", "UI_html"]
 	};
 	
 	var loc_layerByNodeType;
@@ -70,7 +70,7 @@ var node_utility = function(){
 				"constant" : "data",
 				"variable" : "data",
 				"UI_page" : "UI",
-				"UI_data" : "UI",
+				"UI_tagData" : "UI",
 				"UI_html" : "UI",
 			};
 			return loc_getLayerByNodeType()[nodeType];

@@ -63,7 +63,7 @@ var loc_processUINodeViewRequest = function(uiNodeView, parentContext, handlers,
 		//for html related ui node
 		return loc_processUIHtmlViewRequest(uiNodeView, parentContext, handlers, requestInfo);
 	}
-	else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+	else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UITAGDATA){
 		//for tag related ui node
 		return loc_processUITagViewRequest(uiNodeView, parentContext, handlers, requestInfo);
 	}

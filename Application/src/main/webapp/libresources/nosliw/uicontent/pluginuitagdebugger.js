@@ -97,9 +97,6 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		},
 		getAttributes : function(){   return loc_attributes;   },
 
-		//--------------------------------- value structure 
-		getValueContext : function(){   return loc_valueContext;    },
-
 		//---------------------------------variable
 		createVariableByName : function(variableName){
 			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].creatVariableByName(variableName);

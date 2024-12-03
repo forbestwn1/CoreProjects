@@ -61,7 +61,7 @@ var node_createUINodeGroupView = function(uiNodes, id, parentContext){
 var node_createUINodeView = function(uiNode, id, parentContext){
 	var out;
 	var uiNodeType = uiNode.getNodeType();
-	if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+	if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UITAGDATA){
 		out = node_createUINodeTagView(uiNode, uiNode.getId(), parentContext);
 	}
 	else if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_HTML){
@@ -112,7 +112,7 @@ var node_createUINodeHtmlView = function(uiNode, id, parentContext){
 				var childElementId = loc_getChildElementId(childInfo, index);
 				var uiNode = childInfo.childNode;
 				var uiNodeType = uiNode.getNodeType();
-				if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA){
+				if(uiNodeType==node_COMMONCONSTANT.STORYNODE_TYPE_UITAGDATA){
 					replace = replace +  node_UICommonUtility.createStartPlaceHolderWithId(childElementId) + node_UICommonUtility.createEndPlaceHolderWithId(childElementId); 
 					loc_childrenViewById[childElementId] = node_createUINodeView(uiNode, childElementId, loc_parentContext);
 				}

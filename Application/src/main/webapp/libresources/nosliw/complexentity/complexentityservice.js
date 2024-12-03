@@ -63,6 +63,8 @@ var packageObj = library;
 	var node_createContainerPlugin;
 	var node_createContainerListPlugin;
 	var node_makeObjectWithValuePortInterface;
+	var node_createWrapperBrickPlugin;
+	var node_createModulePlugin;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -151,6 +153,11 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 	var loc_init = function(){
+
+//		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_WRAPPERBRICK, "1.0.0", node_createWrapperBrickPlugin());
+
+//		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_MODULE, "1.0.0", node_createModulekPlugin());
+
 		//complex entity plugin
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
@@ -404,6 +411,8 @@ nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlug
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerPlugin", function(){node_createContainerPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", function(){node_createContainerListPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.makeObjectWithValuePortInterface", function(){node_makeObjectWithValuePortInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.createContainerPlugin", function(){node_createWrapperBrickPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("module.createModulePlugin", function(){node_createModulePlugin = this.getData();});
 
 
 //Register Node by Name

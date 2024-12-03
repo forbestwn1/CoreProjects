@@ -1,0 +1,60 @@
+{
+	"designId": "1733204057870",
+	"stepCursor": 0,
+	"extraChanges": [{
+			"infoName": "story_idindex",
+			"infoValue": 6,
+			"revertable": false,
+			"changeType": "storyInfo"
+		}
+	],
+	"answer": [{
+			"questionId": "0_0",
+			"changes": [{
+					"path": "referenceId",
+					"changeType": "patch",
+					"id": "3",
+					"targetElementRef": {
+						"temporary": false,
+						"categary": "node",
+						"name": "service",
+						"id": "node;service;2"
+					},
+					"value": "TestBasicService"
+				}, {
+					"path": "name",
+					"changeType": "patch",
+					"id": "4",
+					"targetElementRef": {
+						"temporary": false,
+						"categary": "node",
+						"name": "service",
+						"id": "node;service;2"
+					},
+					"value": "TestBasicService"
+				}, {
+					"path": "displayName",
+					"changeType": "patch",
+					"id": "5",
+					"targetElementRef": {
+						"temporary": false,
+						"categary": "node",
+						"name": "service",
+						"id": "node;service;2"
+					},
+					"value": "TestBasicService"
+				}, {
+					"path": "description",
+					"changeType": "patch",
+					"id": "6",
+					"targetElementRef": {
+						"temporary": false,
+						"categary": "node",
+						"name": "service",
+						"id": "node;service;2"
+					}
+				}
+			]
+		}
+	]
+}

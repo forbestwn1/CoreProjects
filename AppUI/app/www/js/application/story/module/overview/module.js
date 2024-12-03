@@ -69,11 +69,11 @@ var node_createModuleOverview = function(parm){
 	};
 
 	var loc_buildUIDataConnectionLink = function(node, parent, uiDataConnectionLinks){
-		var story = loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+		var story = loc_design[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTORY_STORY];
 
 		if(parent!=undefined){
-			var uiStoryNodeId = node[node_COMMONATRIBUTECONSTANT.IDELEMENT_ID];
-			var uiDataConnection = node_createUIDataConnectionLink(uiStoryNodeId, parent[node_COMMONATRIBUTECONSTANT.STORYNODEUI_DATASTRUCTURE][node_COMMONATRIBUTECONSTANT.UIDATASTRUCTUREINFO_CONTEXT], loc_out);
+			var uiStoryNodeId = node[node_COMMONATRIBUTECONSTANT.STORYIDELEMENT_ID];
+			var uiDataConnection = node_createUIDataConnectionLink(uiStoryNodeId, parent[node_COMMONATRIBUTECONSTANT.STORYNODEUI_DATASTRUCTURE][node_COMMONATRIBUTECONSTANT.STORYUIDATASTRUCTUREINFO_CONTEXT], loc_out);
 			uiDataConnectionLinks[uiStoryNodeId] = uiDataConnection;
 		}
 		
@@ -92,7 +92,7 @@ var node_createModuleOverview = function(parm){
 			out.addRequest(loc_storyService.getGetDesignRequest(undefined, designId, {
 				success : function(request, design){
 					loc_design = design;
-					var story = loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];
+					var story = loc_design[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTORY_STORY];
 					//build node tree according to contains relationship
 					loc_layerTree = node_storyOverviewUtility.buildOverviewLayerTree(that);
 					
@@ -120,7 +120,7 @@ var node_createModuleOverview = function(parm){
 					});
 					
 					//io data connection link
-					var connections = story[node_COMMONATRIBUTECONSTANT.STORY_CONNECTION];
+					var connections = story[node_COMMONATRIBUTECONSTANT.STORYSTORY_CONNECTION];
 					_.each(connections, function(storyConnection, id){
 						if(storyConnection[node_COMMONATRIBUTECONSTANT.STORYELEMENT_TYPE]!=node_COMMONCONSTANT.STORYCONNECTION_TYPE_CONTAIN){
 							var connectionLink = node_createConnectionLink(id, that);
@@ -142,7 +142,7 @@ var node_createModuleOverview = function(parm){
 			return out;
 		},
 			
-		getStory : function(){  return loc_design[node_COMMONATRIBUTECONSTANT.DESIGNSTORY_STORY];  },
+		getStory : function(){  return loc_design[node_COMMONATRIBUTECONSTANT.STORYDESIGNSTORY_STORY];  },
 		
 		addStoryNodeElement : function(storyNodeElement){  loc_nodeElements[storyNodeElement.getStoryNodeId()] = storyNodeElement;    },
 		

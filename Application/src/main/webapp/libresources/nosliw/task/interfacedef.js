@@ -13,6 +13,20 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createTaskContextInterface = function(rawInterfaceObj){
+	
+	var interfaceDef = {
+		
+		getInitTaskRequest : function(coreEntity, handlers, request){},
+		
+		getRuntimeEnv : function(){}
+		
+	};
+	return _.extend({}, interfaceDef, rawInterfaceObj);
+	
+};
+
+
 var node_createTaskFactoryInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {

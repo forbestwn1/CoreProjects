@@ -89,7 +89,7 @@ public class HAPStoryUINode {
 //	public HAPStoryUINode getFirstDataUINode() {
 //		HAPReferenceElement eleId = this.getStoryElementId();
 //		HAPIdElementInfo idInfo = HAPUtilityStory.parseStoryElementId(eleId.getId());
-//		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UIDATA)) 	return this;
+//		if(idInfo.getType().equals(HAPConstant.STORYNODE_TYPE_UITAGDATA)) 	return this;
 //		for(HAPStoryUIChild child : this.getChildren()) {
 //			HAPStoryUINode firstDataUINode = child.getUINode().getFirstDataUINode();
 //			if(firstDataUINode!=null)  return firstDataUINode;

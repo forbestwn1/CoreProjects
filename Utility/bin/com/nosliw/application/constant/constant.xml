@@ -812,7 +812,7 @@
 			<definition name="STORYNODE_TYPE_VARIABLE" value="variable"/>
 			<definition name="STORYNODE_TYPE_PAGE" value="UI_page"/>
 			<definition name="STORYNODE_TYPE_UITAGOTHER" value="UI_tagOther"/>
-			<definition name="STORYNODE_TYPE_UIDATA" value="UI_data"/>
+			<definition name="STORYNODE_TYPE_UITAGDATA" value="UI_tagData"/>
 			<definition name="STORYNODE_TYPE_HTML" value="UI_html"/>
 			
 			<definition type="space"/>

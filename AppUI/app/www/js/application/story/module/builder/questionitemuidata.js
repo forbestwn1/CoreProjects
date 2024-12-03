@@ -71,7 +71,7 @@ var node_createComponentQuestionItemUIData = function(){
 			onSelectTag : function(){
 				loc_setCurrentByTagId(this, this.popSelected);
 				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUITAG_TAGNAME, this.popSelected, this.question.answer);
-				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS, this.currentTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], this.question.answer);
+				node_designUtility.applyPatchFromQuestion(this.story, this.question, node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_MATCHERS, this.currentTagInfo[node_COMMONATRIBUTECONSTANT.UITAGINFO_MATCHERS], this.question.answer);
 				this.popSelected = undefined;
 			},
 			onCancelSelectTag : function(){
@@ -89,7 +89,7 @@ var node_createComponentQuestionItemUIData = function(){
 		},
 		created : function(){
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-			this.dataInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE];
+			this.dataInfo = element[node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE];
 		},
 		mounted: function () {
 			var that = this;
@@ -99,7 +99,7 @@ var node_createComponentQuestionItemUIData = function(){
 				}
 			});
 			var element = node_storyUtility.getQuestionTargetElement(this.story, this.question);
-			request.addRequest(loc_storyService.getQueryUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE][node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_CRITERIA], {
+			request.addRequest(loc_storyService.getQueryUITagRequest(element[node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_DATAINFO][node_COMMONATRIBUTECONSTANT.UIDATAINFO_DATATYPE][node_COMMONATRIBUTECONSTANT.VARIABLEDATAINFO_CRITERIA], {
 				success : function(request, queryResultSet){
 					var tagInfos = [];
 					_.each(queryResultSet[node_COMMONATRIBUTECONSTANT.UITAGQUERYRESULTSET_ITEMS], function(item, i){

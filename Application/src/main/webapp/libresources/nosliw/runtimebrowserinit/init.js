@@ -39,6 +39,7 @@ nosliw.init = function(configure){
 		"nosliw.complexentity",
 		"nosliw.testcomponent",
 		"nosliw.entitycontainer",
+		"nosliw.module",
 		"nosliw.uimodule",
 		"nosliw.uiapp",
 		"nosliw.iovalue",

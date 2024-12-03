@@ -67,11 +67,11 @@ var node_createUINodeFromStoryNode = function(storyNodeId, story){
 		
 		getBody : function(){	return loc_out;	},
 		
-		getMatchers : function(){   return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_MATCHERS];    },
+		getMatchers : function(){   return this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_MATCHERS];    },
 		
 		getDataInfos : function(){
 			return {
-				internal_data : this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUIDATA_DATAINFO], 
+				internal_data : this.getStoryNode()[node_COMMONATRIBUTECONSTANT.STORYNODEUITAGDATA_DATAINFO], 
 			};
 		},
 	};
@@ -90,7 +90,7 @@ var node_createUINodeByTag = function(tagId, nodeId, attributes, matchers, dataI
 	var loc_out = {
 		
 		getId : function(){   return loc_nodeId;   },
-		getNodeType : function(){  return node_COMMONCONSTANT.STORYNODE_TYPE_UIDATA;	},
+		getNodeType : function(){  return node_COMMONCONSTANT.STORYNODE_TYPE_UITAGDATA;	},
 		
 		getTagId : function(){  return loc_tagId; },
 			

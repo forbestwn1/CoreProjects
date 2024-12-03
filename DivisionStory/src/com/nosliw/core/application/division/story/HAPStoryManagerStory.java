@@ -41,13 +41,18 @@ public class HAPStoryManagerStory {
 	public HAPStoryManagerChange getChangeManager() {    return this.m_changeManager;     }
 	
 	public HAPStoryDesignStory newStoryDesign(String builderId) {
+		return newStoryDesign(builderId, null);
+	}
+
+	public HAPStoryDesignStory newStoryDesign(String builderId, String designId) {
 		HAPStoryBuilderStory storyBuilder = this.getDesignDirector(builderId);
-		HAPStoryDesignStory out = new HAPStoryDesignStory(this.generateId(), builderId, this.m_changeManager);
+		HAPStoryDesignStory out = new HAPStoryDesignStory(designId!=null?designId:this.generateId(), builderId, this.m_changeManager);
 		storyBuilder.initDesign(out);
 		this.saveStoryDesign(out);
 		return out;
 	}
 	
+
 	public HAPServiceData designStory(HAPStoryRequestDesign changeRequest) {
 		HAPStoryDesignStory design = this.getStoryDesign(changeRequest.getDesignId());
 		HAPStoryStory story = design.getStory();
