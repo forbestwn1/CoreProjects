@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.story;
 
+import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnectionEnd;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
@@ -7,7 +8,7 @@ import com.nosliw.core.application.division.story.brick.connection.HAPStoryConne
 
 public class HAPStoryUtilityConnection {
 
-	public static HAPStoryConnectionContain newConnectionContain(HAPStoryReferenceElement containerNodeRef, HAPStoryReferenceElement childNodeRef, String childId) {
+	public static HAPStoryConnectionContain newConnectionContain(HAPStoryReferenceElement containerNodeRef, HAPStoryReferenceElement childNodeRef, String childId, HAPInfo setting) {
 		HAPStoryConnectionContain out = new HAPStoryConnectionContain();
 		HAPStoryConnectionEnd containerEnd = out.getEnd1();
 		containerEnd.setNodeRef(containerNodeRef);

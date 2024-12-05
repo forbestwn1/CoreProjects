@@ -17,13 +17,13 @@ import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
 import com.nosliw.core.application.uitag.HAPManagerUITag;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPStoryUITree extends HAPStoryUINode implements HAPStoryHandlerChange{
+public class HAPStoryUIPage extends HAPStoryUINode implements HAPStoryHandlerChange{
 
 	private HAPRuntimeEnvironment m_runtimeEnv;
 	private HAPManagerUITag m_uiTagMan;
 	private HAPStoryManagerChange m_changeMan;
 	
-	public HAPStoryUITree(HAPStoryReferenceElement nodeRef, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
+	public HAPStoryUIPage(HAPStoryReferenceElement nodeRef, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
 		super(nodeRef, story);
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;
@@ -31,7 +31,7 @@ public class HAPStoryUITree extends HAPStoryUINode implements HAPStoryHandlerCha
 		init();
 	}
 
-	public HAPStoryUITree(HAPStoryNodeUIPage storyNode, HAPStoryAliasElement alias, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+	public HAPStoryUIPage(HAPStoryNodeUIPage storyNode, HAPStoryAliasElement alias, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		super(storyNode, alias, story);
 		this.m_runtimeEnv = runtimeEnv;
 		this.m_uiTagMan = uiTagMan;

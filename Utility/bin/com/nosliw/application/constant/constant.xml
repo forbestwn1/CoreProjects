@@ -802,6 +802,7 @@
 			<definition name="STORYELEMENT_CATEGARY_GROUP" value="group"/>
 
 			<definition type="space"/>
+			<definition name="STORYNODE_TYPE_MODULE" value="module"/>
 			<definition name="STORYNODE_TYPE_SCRIPT" value="script"/>
 			<definition name="STORYNODE_TYPE_SERVICE" value="service"/>
 			<definition name="STORYNODE_TYPE_SERVICEINPUT" value="serviceInput"/>

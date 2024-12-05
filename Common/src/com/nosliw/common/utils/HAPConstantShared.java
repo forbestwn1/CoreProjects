@@ -732,6 +732,7 @@ public class HAPConstantShared {
 
 
 
+		public static final String STORYNODE_TYPE_MODULE = "module";
 		public static final String STORYNODE_TYPE_SCRIPT = "script";
 		public static final String STORYNODE_TYPE_SERVICE = "service";
 		public static final String STORYNODE_TYPE_SERVICEINPUT = "serviceInput";

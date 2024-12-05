@@ -5,16 +5,20 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnectionEnd;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
+import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
 import com.nosliw.data.core.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
@@ -25,6 +29,25 @@ public class HAPStoryUtilityStory {
 
 	static private int index = 0;
 
+	
+	public static void addNodeAsChild(HAPStoryReferenceElement eleRefParent, HAPStoryReferenceElement eleRefChild, String childId, HAPStoryRequestChangeWrapper changeRequest, boolean inheritVar) {
+		if(!inheritVar){
+			HAPStoryStory story = changeRequest.getStory();
+			HAPStoryNode parent = (HAPStoryNode)story.getElement(eleRefParent);
+			HAPStoryNode child = (HAPStoryNode)story.getElement(eleRefChild);
+			
+			//variable to child
+			List<HAPStoryNodeVariable> varNodesFromParent = HAPStoryUtilityVariable.getVariableForChild(parent, changeRequest);
+			for(HAPStoryNodeVariable varNode : varNodesFromParent) {
+				HAPStoryUtilityVariable.addVariableToNode(child.getElementId(), varNode.getElementId(), null, changeRequest);
+			}
+		}
+
+		//build parent-child relation
+		changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(eleRefParent, eleRefChild, childId, null));
+	}
+	
+	
 	public static String buildStoryElementId(HAPStoryElement ele, String id) {
 		return ele.getCategary()+HAPConstantShared.SEPERATOR_LEVEL1+ele.getType()+HAPConstantShared.SEPERATOR_LEVEL1+id;
 	}
@@ -82,10 +105,16 @@ public class HAPStoryUtilityStory {
 		}
 		return out;
 	}
+
+	public static List<HAPStoryInfoNodeChild> getAllChildNodeByType(HAPStoryNode parent, String type, HAPStoryStory story) {return getChildNodeByType(parent, type, story, false);	}
+	public static List<HAPStoryInfoNodeChild> getChildNodeByType(HAPStoryNode parent, String type, HAPStoryStory story) {return getChildNodeByType(parent, type, story, true);	}
+	public static List<HAPStoryInfoNodeChild> getChildNodeByType(HAPStoryNode parent, String type, HAPStoryStory story, boolean onlyEnable) {
+		return getChildNode(parent, story, onlyEnable).stream().filter(node->node.getChildNode().getType().equals(type)).collect(Collectors.toList());
+	}
 	
-	public static List<HAPStoryNode> getAllChildNode(HAPStoryNode parent, String childId, HAPStoryStory story) {  return getChildNode(parent, childId, story, false);  }
-	public static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStoryStory story) {  return getChildNode(parent, childId, story, true);  }
-	private static List<HAPStoryNode> getChildNode(HAPStoryNode parent, String childId, HAPStoryStory story, boolean onlyEnable) {
+	public static List<HAPStoryNode> getAllChildNodesById(HAPStoryNode parent, String childId, HAPStoryStory story) {  return getChildNodesById(parent, childId, story, false);  }
+	public static List<HAPStoryNode> getChildNodeById(HAPStoryNode parent, String childId, HAPStoryStory story) {  return getChildNodesById(parent, childId, story, true);  }
+	private static List<HAPStoryNode> getChildNodesById(HAPStoryNode parent, String childId, HAPStoryStory story, boolean onlyEnable) {
 		List<HAPStoryNode> out = new ArrayList<HAPStoryNode>();
 		List<HAPStoryConnectionEnd> childConnectionEnds = getConnectionEnd(parent, HAPConstantShared.STORYCONNECTION_TYPE_CONTAIN, HAPConstantShared.STORYNODE_PROFILE_CONTAINER, null, null, story);
 		for(HAPStoryConnectionEnd connectionEnd : childConnectionEnds) {
@@ -126,18 +155,37 @@ public class HAPStoryUtilityStory {
 	}
 	
 	public static HAPStoryConnectionEnd getOtherConnectionEnd(HAPStoryConnection connection, String nodeId) {
-		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId()))   return connection.getEnd2();
-		else return connection.getEnd1();
+		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId())) {
+			return connection.getEnd2();
+		} else {
+			return connection.getEnd1();
+		}
 	}
 	
 	public static HAPStoryConnectionEnd getConnectionEnd(HAPStoryConnection connection, String nodeId) {
-		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId()))   return connection.getEnd1();
-		else return connection.getEnd2();
+		if(nodeId.equals(connection.getEnd1().getNodeElementId().getId())) {
+			return connection.getEnd1();
+		} else {
+			return connection.getEnd2();
+		}
 	}
 	
 	public static HAPStoryIdElement getElementIdByReference(HAPStoryReferenceElement eleRef, HAPStoryStory story) {
-		if(eleRef instanceof HAPStoryIdElement)  return (HAPStoryIdElement)eleRef;
-		else if(eleRef instanceof HAPStoryAliasElement)  return story.getElementId(((HAPStoryAliasElement)eleRef).getName());
+		if(eleRef instanceof HAPStoryIdElement) {
+			return (HAPStoryIdElement)eleRef;
+		} else if(eleRef instanceof HAPStoryAliasElement) {
+			return story.getElementId(((HAPStoryAliasElement)eleRef).getName());
+		}
+		return null;
+	}
+	
+	public static HAPStoryElement getStoryElement(HAPEntityOrReference entityOrRef, HAPStoryStory story) {
+		if(entityOrRef instanceof HAPStoryNode) {
+			return (HAPStoryElement)entityOrRef;
+		}
+		else if(entityOrRef instanceof HAPStoryReferenceElement){
+			return story.getElement((HAPStoryReferenceElement)entityOrRef);
+		}
 		return null;
 	}
 	

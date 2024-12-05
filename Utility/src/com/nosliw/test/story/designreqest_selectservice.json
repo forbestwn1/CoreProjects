@@ -1,9 +1,9 @@
 {
-	"designId": "1733204057870",
+	"designId": "1733391124927",
 	"stepCursor": 0,
 	"extraChanges": [{
 			"infoName": "story_idindex",
-			"infoValue": 6,
+			"infoValue": 10,
 			"revertable": false,
 			"changeType": "storyInfo"
 		}
@@ -13,45 +13,45 @@
 			"changes": [{
 					"path": "referenceId",
 					"changeType": "patch",
-					"id": "3",
+					"id": "7",
 					"targetElementRef": {
 						"temporary": false,
 						"categary": "node",
 						"name": "service",
-						"id": "node;service;2"
+						"id": "node;service;4"
 					},
 					"value": "TestBasicService"
 				}, {
 					"path": "name",
 					"changeType": "patch",
-					"id": "4",
+					"id": "8",
 					"targetElementRef": {
 						"temporary": false,
 						"categary": "node",
 						"name": "service",
-						"id": "node;service;2"
+						"id": "node;service;4"
 					},
 					"value": "TestBasicService"
 				}, {
 					"path": "displayName",
 					"changeType": "patch",
-					"id": "5",
+					"id": "9",
 					"targetElementRef": {
 						"temporary": false,
 						"categary": "node",
 						"name": "service",
-						"id": "node;service;2"
+						"id": "node;service;4"
 					},
 					"value": "TestBasicService"
 				}, {
 					"path": "description",
 					"changeType": "patch",
-					"id": "6",
+					"id": "10",
 					"targetElementRef": {
 						"temporary": false,
 						"categary": "node",
 						"name": "service",
-						"id": "node;service;2"
+						"id": "node;service;4"
 					}
 				}
 			]

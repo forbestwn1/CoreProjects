@@ -2,14 +2,15 @@ package com.nosliw.core.application.division.story.design.wizard.servicedriven;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.HAPStoryInfoNodeChild;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 import com.nosliw.core.application.uitag.HAPManagerUITag;
@@ -17,6 +18,11 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryUtility {
 
+	public static List<HAPStoryNodeVariable> getAllChildVariableNodes(HAPStoryNode parentNode, HAPStoryStory story){
+		List<HAPStoryInfoNodeChild> childNodeInfo = HAPStoryUtilityStory.getAllChildNodeByType(parentNode, HAPStoryNodeVariable.STORYNODE_TYPE, story);
+		return childNodeInfo.stream().map(info->(HAPStoryNodeVariable)info.getChildNode()).collect(Collectors.toList());
+	}
+	
 	//build data info in ui story node
 	public static HAPStoryUIDataStructureInfo buildDataStructureInfoForUIStoryNode(HAPStoryNodeUI uiStoryNode, HAPValueStructureDefinitionGroup parentContext, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
 		HAPStoryUIDataStructureInfo out = new HAPStoryUIDataStructureInfo();
@@ -59,11 +65,11 @@ public class HAPStoryUtility {
 		return out;
 	}
 	
-	public static HAPStoryUITree buildUITree(HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
+	public static HAPStoryUIPage buildUITree(HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
 		HAPStoryNodeUIPage pageStoryNode = (HAPStoryNodeUIPage)HAPStoryUtilityStory.getAllStoryNodeByType(story, HAPConstantShared.STORYNODE_TYPE_PAGE).iterator().next();
 		HAPStoryUINode uiNode = createUINodeByStoryNode(pageStoryNode, story, runtimeEnv, uiTagMan, changeMan);
 		buildChildUINode(uiNode, story, runtimeEnv, uiTagMan, changeMan);
-		return (HAPStoryUITree)uiNode;
+		return (HAPStoryUIPage)uiNode;
 	}
 
 	private static HAPStoryUINode createUINodeByStoryNode(HAPStoryNodeUI storyNode, HAPStoryStory story, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan, HAPStoryManagerChange changeMan) {
@@ -72,7 +78,7 @@ public class HAPStoryUtility {
 		String nodeType = storyNode.getType();
 		switch(nodeType) {
 		case HAPConstantShared.STORYNODE_TYPE_PAGE:
-			out = new HAPStoryUITree(storyNode.getElementId(), story, runtimeEnv, uiTagMan, changeMan); 
+			out = new HAPStoryUIPage(storyNode.getElementId(), story, runtimeEnv, uiTagMan, changeMan); 
 			break;
 		default:
 			out = new HAPStoryUINode(storyNode.getElementId(), story); 

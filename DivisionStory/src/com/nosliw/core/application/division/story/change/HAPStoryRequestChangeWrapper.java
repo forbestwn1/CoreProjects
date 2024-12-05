@@ -27,7 +27,7 @@ public class HAPStoryRequestChangeWrapper {
 	private List<HAPStoryChangeItem> m_allChanages;
 	
 	public HAPStoryRequestChangeWrapper(HAPStoryStory story) {
-		this(story, false, null);
+		this(story, true, null);
 	}
 	
 	public HAPStoryRequestChangeWrapper(HAPStoryStory story, boolean isAutoApply, Boolean extend) {
@@ -35,10 +35,14 @@ public class HAPStoryRequestChangeWrapper {
 		this.m_story = story;
 		this.m_isAutoApply = isAutoApply;
 		this.m_extend = extend;
-		if(!this.m_isAutoApply) {
-			m_changeRequest = newChangeRequest();
-		}
 	}
+	
+	public List<HAPStoryChangeItem> close() {
+		applyCurrentChangeRequests();
+		return this.m_allChanages;
+	}
+
+	public HAPStoryStory getStory() {  return this.m_story;    }
 	
 	public void addChange(HAPStoryChangeItem changeItem) {	this.processChange(changeItem);	}
 	
@@ -87,6 +91,9 @@ public class HAPStoryRequestChangeWrapper {
 			this.applyChangeRequest(changeRequest);
 		}
 		else {
+			if(this.m_changeRequest==null) {
+				this.m_changeRequest = new HAPStoryRequestChange(this.m_story);
+			}
 			this.m_changeRequest.addChange(changeItem);
 		}
 	}
@@ -99,12 +106,12 @@ public class HAPStoryRequestChangeWrapper {
 			this.m_allChanages.addAll(allChanges);
 		}
 	}
-	
-	public List<HAPStoryChangeItem> close() {
+
+	private void applyCurrentChangeRequests() {
 		if(this.m_changeRequest!=null) {
 			this.applyChangeRequest(this.m_changeRequest);
 			this.m_changeRequest = null;
 		}
-		return this.m_allChanages;
 	}
+	
 }

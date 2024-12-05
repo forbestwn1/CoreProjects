@@ -9,6 +9,7 @@ import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityConnection;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChange;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
@@ -53,6 +54,10 @@ public class HAPStoryUINode {
 		return null;
 	}
 
+	public void addVariable(HAPStoryNodeVariable variableNode, HAPStoryRequestChangeWrapper changeRequest) {
+		changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(this.getStoryNodeRef(), variableNode.getElementId(), variableNode.getVariableInfo().getName(), null));
+	}
+	
 	public HAPStoryUINode addChildNode(HAPStoryNodeUI childStoryNode, HAPStoryConnectionContain connection) {
 		HAPStoryUIChild child = new HAPStoryUIChild(new HAPStoryUINode(childStoryNode.getElementId(), m_story), connection.getChildId(), connection.getElementId(), m_story);
 		this.m_children.add(child);
@@ -65,7 +70,7 @@ public class HAPStoryUINode {
 		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
 		HAPStoryAliasElement nodeName = changeRequest.addNewChange(childStoryNode, alias).getAlias();
-		HAPStoryAliasElement connectionName = changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId)).getAlias();
+		HAPStoryAliasElement connectionName = changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId, null)).getAlias();
 		
 		HAPStoryUIChild childNode = new HAPStoryUIChild(childStoryNode, nodeName, childId, connectionName, this.m_story);
 		this.m_children.add(childNode);
@@ -150,6 +155,11 @@ public class HAPStoryUINode {
 	
 	public List<HAPStoryUIChild> getChildren(){   return this.m_children;    }
 	public HAPStoryReferenceElement getStoryNodeRef() {   return this.m_nodeRef;    }
+	
+	private List<HAPStoryNodeVariable> getAllVariables(){
+		return HAPStoryUtility.getAllChildVariableNodes(this.getStoryNode(), m_story);
+	}
+	
 	
 //	public String getNodeId() {  return this.m_nodeId; 	}
 //	public HAPReferenceElement getStoryElementId() {    return new HAPReferenceElement(HAPConstant.STORYELEMENT_CATEGARY_NODE, this.m_nodeId);     }

@@ -16,6 +16,7 @@ import com.nosliw.core.application.division.story.brick.connection.HAPStoryConne
 import com.nosliw.core.application.division.story.brick.group.HAPStoryElementGroupBatch;
 import com.nosliw.core.application.division.story.brick.group.HAPStoryElementGroupSwitch;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeConstant;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeModule;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeScript;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeService;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceInput;
@@ -35,6 +36,8 @@ public class HAPStoryParserElement {
 	private static final Map<String, Class<? extends HAPStoryElementGroup>> m_storyGroupClass = new LinkedHashMap<String, Class<? extends HAPStoryElementGroup>>();
 	
 	static {
+		m_storyNodeClass.put(HAPStoryNodeModule.STORYNODE_TYPE, HAPStoryNodeModule.class);
+
 		m_storyNodeClass.put(HAPStoryNodeScript.STORYNODE_TYPE, HAPStoryNodeScript.class);
 		m_storyNodeClass.put(HAPStoryNodeService.STORYNODE_TYPE, HAPStoryNodeService.class);
 		m_storyNodeClass.put(HAPStoryNodeServiceInput.STORYNODE_TYPE, HAPStoryNodeServiceInput.class);
